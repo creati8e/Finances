@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_authorization"
+    android:label="Authorization graph"
+    app:startDestination="@id/authorizationFragment"
+    tools:ignore="UnusedNavigation">
+
+    <fragment
+        android:id="@+id/authorizationFragment"
+        android:name="serg.chuprin.finances.feature.authorization.presentation.view.AuthorizationFragment"
+        android:label="AuthorizationFragment"
+        tools:layout="@layout/fragment_authorization" />
+
+</navigation>

@@ -41,7 +41,8 @@ object Libraries {
             val DEPENDENCIES = listOf(
                 "$ARTIFACT:lifecycle-common-java8:$VER",
                 "$ARTIFACT:lifecycle-extensions:2.2.0",
-                "$ARTIFACT:lifecycle-viewmodel-ktx:$VER"
+                "$ARTIFACT:lifecycle-viewmodel-ktx:$VER",
+                "$ARTIFACT:lifecycle-livedata-ktx:$VER"
             )
         }
 

@@ -75,6 +75,7 @@ dependencies {
     // region Modules.
 
     implementation(project(":core:core-impl"))
+    implementation(project(":feature:feature-authorization"))
 
     // endregion
 
