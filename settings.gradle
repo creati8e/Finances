@@ -1,5 +1,17 @@
 rootProject.name = "Finances"
 include ':app'
 
-include ':feature-authorization'
-project(':feature-authorization').projectDir = new File(rootDir, 'features/feature-authorization')
+
+// region Core
+
+include ':core:core-api'
+include ':core:core-impl'
+
+// endregion
+
+
+// region Features
+
+include ':feature:feature-authorization'
+
+// endregion

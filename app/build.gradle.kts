@@ -113,10 +113,6 @@ dependencies {
     // Networking.
     implementationAll(Libraries.Network.DEPENDENCIES)
 
-    // Room.
-    kapt(Libraries.Room.COMPILER)
-    implementationAll(Libraries.Room.DEPENDENCIES)
-
     // region Testing.
 
     testImplementation(Libraries.Tests.MOCKK)

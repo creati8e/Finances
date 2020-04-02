@@ -88,16 +88,6 @@ object Libraries {
 
     }
 
-    object Room {
-
-        private const val VER = "2.2.5"
-
-        const val COMPILER = "androidx.room:room-compiler:$VER"
-
-        val DEPENDENCIES = listOf("androidx.room:room-ktx:$VER", "androidx.room:room-runtime:$VER")
-
-    }
-
     object Infrastructure {
         const val AUTHENTICATION = "com.google.firebase:firebase-auth:19.3.0"
         const val FIRESTORE = "com.google.firebase:firebase-firestore-ktx:21.4.2"

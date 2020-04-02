@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/starterFragment"
-        android:name="serg.chuprin.finances.StarterFragment"
+        android:name="serg.chuprin.finances.app.StarterFragment"
         android:label="StarterFragment" />
 
 </navigation>

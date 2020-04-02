@@ -1,5 +1,5 @@
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     id("kotlin-android")
     id("kotlin-android-extensions")
     kotlin("plugin.serialization") version BuildScript.Versions.KOTLIN_VER
@@ -42,6 +42,10 @@ dependencies {
 
     // Timber.
     implementation(Libraries.TIMBER)
+
+    // Firebase.
+    implementation(Libraries.Infrastructure.FIRESTORE)
+    implementation(Libraries.Infrastructure.AUTHENTICATION)
 
     // Networking.
     implementationAll(Libraries.Network.DEPENDENCIES)

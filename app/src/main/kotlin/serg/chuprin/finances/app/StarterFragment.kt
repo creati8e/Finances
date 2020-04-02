@@ -1,4 +1,4 @@
-package serg.chuprin.finances
+package serg.chuprin.finances.app
 
 import androidx.fragment.app.Fragment
 
