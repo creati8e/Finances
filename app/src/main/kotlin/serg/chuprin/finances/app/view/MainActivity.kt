@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     private val viewModel by viewModelFromComponent { MainComponent.get() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         viewModel.userAuthorizedLiveData.observe(this, Observer { isAuthorized ->
