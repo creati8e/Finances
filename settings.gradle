@@ -1,2 +1,5 @@
-include ':app'
 rootProject.name = "Finances"
+include ':app'
+
+include ':feature-authorization'
+project(':feature-authorization').projectDir = new File(rootDir, 'features/feature-authorization')
