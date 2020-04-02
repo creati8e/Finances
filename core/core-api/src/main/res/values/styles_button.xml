@@ -12,4 +12,10 @@
         <item name="android:textColor">?android:textColorPrimary</item>
     </style>
 
+    <style name="PrimaryUnelevatedButton.Transparent" parent="PrimaryUnelevatedButton">
+        <item name="rippleColor">?colorControlHighlight</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="iconTint">@null</item>
+    </style>
+
 </resources>

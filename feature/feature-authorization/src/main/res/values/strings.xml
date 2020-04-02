@@ -2,5 +2,6 @@
     <string name="authorization_email_hint">Email</string>
     <string name="authorization_password_hint">Password</string>
     <string name="authorization_login">Login</string>
+    <string name="authorization_sign_in_with_google">Sign in with Google</string>
     <string name="authorization_already_have_account">Already have an account?</string>
 </resources>

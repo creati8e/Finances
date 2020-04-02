@@ -97,4 +97,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/alreadyHaveAnAccountTextView" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/signInWithGoogleButton"
+        style="@style/PrimaryUnelevatedButton.Transparent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/authorization_sign_in_with_google"
+        app:icon="@drawable/ic_google"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
