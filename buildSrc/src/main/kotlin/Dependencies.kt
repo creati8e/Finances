@@ -27,6 +27,7 @@ object Libraries {
 
     const val COIL = "io.coil-kt:coil:0.9.5"
     const val TIMBER = "com.github.ajalt:timberkt:1.5.1"
+    const val JAVAX_ANNOTATIONS = "javax.inject:javax.inject:1"
     const val KOTLIN = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$KOTLIN_VER"
     const val KOTLIN_SERIALIZATION = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0"
 
@@ -72,19 +73,14 @@ object Libraries {
         const val ANDROID = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$VER"
     }
 
-    object Toothpick {
+    object Dagger {
 
-        private const val VER = "3.1.0"
-        private const val ARTIFACT = "com.github.stephanenicolas.toothpick"
+        private const val VER = "2.27"
+        private const val ARTIFACT = "com.google.dagger"
 
-        const val COMPILER = "$ARTIFACT:toothpick-compiler:$VER"
+        const val COMPILER = "$ARTIFACT:dagger-compiler:$VER"
 
-        val DEPENDENCIES = listOf(
-            "$ARTIFACT:ktp:$VER",
-            "$ARTIFACT:smoothie-androidx:$VER",
-            "$ARTIFACT:smoothie-lifecycle-ktp:$VER",
-            "$ARTIFACT:smoothie-lifecycle-viewmodel-ktp:$VER"
-        )
+        val DEPENDENCIES = listOf("$ARTIFACT:dagger:$VER")
 
     }
 

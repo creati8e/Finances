@@ -72,6 +72,12 @@ dependencies {
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf(".*jar"))))
 
+    // region Modules.
+
+    implementation(project(":core:core-impl"))
+
+    // endregion
+
     implementation(Libraries.KOTLIN)
     implementation(Libraries.KOTLIN_SERIALIZATION)
     implementation(Libraries.Coroutines.CORE)
@@ -79,8 +85,8 @@ dependencies {
 
     // region DI.
 
-    implementation(Libraries.Toothpick.COMPILER)
-    implementationAll(Libraries.Toothpick.DEPENDENCIES)
+    kapt(Libraries.Dagger.COMPILER)
+    implementationAll(Libraries.Dagger.DEPENDENCIES)
 
     // endregion
 

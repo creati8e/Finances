@@ -20,6 +20,7 @@ dependencies {
     implementation(Libraries.KOTLIN_SERIALIZATION)
     implementation(Libraries.Coroutines.CORE)
     implementation(Libraries.Coroutines.ANDROID)
+    implementation(Libraries.JAVAX_ANNOTATIONS)
 
     // region UI.
 

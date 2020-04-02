@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
+    id("kotlin-kapt")
     id("kotlin-android-extensions")
     kotlin("plugin.serialization") version BuildScript.Versions.KOTLIN_VER
 }
@@ -15,6 +16,8 @@ fun DependencyHandler.implementationAll(
 dependencies {
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf(".*jar"))))
+
+    api(project(":core:core-api"))
 
     implementation(Libraries.KOTLIN)
     implementation(Libraries.KOTLIN_SERIALIZATION)
@@ -34,6 +37,13 @@ dependencies {
     implementation(Libraries.Android.FRAGMENT)
     implementation(Libraries.Android.APPCOMPAT)
     implementation(Libraries.Android.CONSTRAINT_LAYOUT)
+
+    // endregion
+
+    // region DI.
+
+    kapt(Libraries.Dagger.COMPILER)
+    implementationAll(Libraries.Dagger.DEPENDENCIES)
 
     // endregion
 
