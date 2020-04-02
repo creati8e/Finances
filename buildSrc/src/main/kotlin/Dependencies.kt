@@ -46,10 +46,10 @@ object Libraries {
             )
         }
 
-        const val CORE = "androidx.core:core-ktx:1.3.0-alpha01"
+        const val CORE = "androidx.core:core-ktx:1.3.0-beta01"
 
-        const val APPCOMPAT = "androidx.appcompat:appcompat:1.2.0-alpha03"
-        const val FRAGMENT = "androidx.fragment:fragment-ktx:1.3.0-alpha02"
+        const val APPCOMPAT = "androidx.appcompat:appcompat:1.2.0-beta01"
+        const val FRAGMENT = "androidx.fragment:fragment-ktx:1.3.0-alpha03"
         const val DESIGN = "com.google.android.material:material:1.2.0-alpha05"
         const val CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:2.0.0-beta4"
 
