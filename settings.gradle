@@ -1,6 +1,6 @@
 rootProject.name = "Finances"
 include ':app'
-
+include ':injector'
 
 // region Core
 
@@ -13,6 +13,7 @@ include ':core:core-firebase'
 
 // region Features
 
+include ':feature:feature-dashboard'
 include ':feature:feature-authorization'
 
 // endregion

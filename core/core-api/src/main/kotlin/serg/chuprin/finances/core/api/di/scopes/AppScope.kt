@@ -1,4 +1,4 @@
-package serg.chuprin.finances.core.api.domain.di.scopes
+package serg.chuprin.finances.core.api.di.scopes
 
 import javax.inject.Scope
 
@@ -8,4 +8,4 @@ import javax.inject.Scope
 @Scope
 @MustBeDocumented
 @Retention(AnnotationRetention.RUNTIME)
-annotation class ScreenScope
+annotation class AppScope

@@ -2,7 +2,7 @@ package serg.chuprin.finances.core.impl.di.module
 
 import dagger.Binds
 import dagger.Module
-import serg.chuprin.finances.core.api.domain.di.scopes.AppScope
+import serg.chuprin.finances.core.api.di.scopes.AppScope
 import serg.chuprin.finances.core.api.domain.gateway.AuthenticationGateway
 import serg.chuprin.finances.core.impl.data.gateway.AuthenticationGatewayImpl
 
@@ -12,8 +12,7 @@ import serg.chuprin.finances.core.impl.data.gateway.AuthenticationGatewayImpl
 @Module
 abstract class CoreGatewaysModule {
 
-    @AppScope
-    @Binds
+    @[Binds AppScope]
     abstract fun bindsAuthGateway(impl: AuthenticationGatewayImpl): AuthenticationGateway
 
 }

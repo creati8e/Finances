@@ -17,6 +17,8 @@ object BuildScript {
         const val ANDROID = "com.android.tools.build:gradle:4.0.0-beta03"
         const val JUNIT5 = "de.mannodermaus.gradle.plugins:android-junit5:1.6.0.0"
         const val KOTLIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:$KOTLIN_VER"
+        const val GRAPH_VISUALIZER =
+            "com.vanniktech:gradle-dependency-graph-generator-plugin:0.5.0"
         const val PROGUARD_GENERATOR =
             "gradle.plugin.ru.cleverpumpkin.proguard-dictionaries-generator:plugin:1.0.8"
     }
@@ -81,6 +83,7 @@ object Libraries {
 
         const val COMPILER = "$ARTIFACT:dagger-compiler:$VER"
 
+        val LIBRARY = "$ARTIFACT:dagger:$VER"
         val DEPENDENCIES = listOf("$ARTIFACT:dagger:$VER")
 
     }

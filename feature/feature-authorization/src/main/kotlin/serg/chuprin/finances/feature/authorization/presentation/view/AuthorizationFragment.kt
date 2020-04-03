@@ -1,15 +1,19 @@
 package serg.chuprin.finances.feature.authorization.presentation.view
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
-import com.github.ajalt.timberkt.Timber
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.CommonStatusCodes
 import kotlinx.android.synthetic.main.fragment_authorization.*
+import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
+import serg.chuprin.finances.core.api.presentation.navigation.AuthorizationNavigation
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
+import serg.chuprin.finances.core.api.presentation.view.extensions.shortToast
 import serg.chuprin.finances.feature.authorization.R
+import serg.chuprin.finances.feature.authorization.presentation.di.AuthorizationComponent
+import javax.inject.Inject
 
 
 /**
@@ -22,6 +26,16 @@ class AuthorizationFragment : BaseFragment(R.layout.fragment_authorization) {
         onError = ::handleGoogleSignInError,
         onSuccess = ::handleSuccessfulGoogleSignIn
     )
+
+    @Inject
+    lateinit var navigation: AuthorizationNavigation
+
+    private val component by component { AuthorizationComponent.get() }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        component.inject(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,12 +53,12 @@ class AuthorizationFragment : BaseFragment(R.layout.fragment_authorization) {
         } else {
             R.string.authorization_sign_in_with_google_unknown_error
         }
-        Toast.makeText(requireActivity(), messageStringRes, Toast.LENGTH_SHORT).show()
+        shortToast(messageStringRes)
     }
 
     private fun handleSuccessfulGoogleSignIn() {
-        // TODO: Navigate to Dashboard screen.
-        Timber.d { "handleSuccessfulGoogleSignIn" }
+        shortToast(R.string.authorization_successful_sign_in)
+        navigation.navigateToDashboard(navController)
     }
 
 }

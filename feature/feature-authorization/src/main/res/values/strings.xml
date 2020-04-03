@@ -4,6 +4,7 @@
     <string name="authorization_login">Login</string>
     <string name="authorization_sign_in_with_google">Sign in with Google</string>
     <string name="authorization_already_have_account">Already have an account?</string>
+    <string name="authorization_successful_sign_in">You\'ve signed in successfully</string>
     <string name="authorization_sign_in_with_google_unknown_error">
         Sign in failed due to unknown error
     </string>

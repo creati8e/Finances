@@ -16,9 +16,7 @@ dependencies {
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf(".*jar"))))
 
-    implementation(project(":injector"))
     implementation(project(":core:core-api"))
-    implementation(project(":core:core-firebase"))
 
     implementation(Libraries.KOTLIN)
     implementation(Libraries.KOTLIN_SERIALIZATION)

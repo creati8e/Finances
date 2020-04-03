@@ -1,6 +1,11 @@
 import com.android.build.gradle.LibraryExtension
 import com.android.build.gradle.TestedExtension
 import com.android.build.gradle.internal.dsl.BuildType
+import com.vanniktech.dependency.graph.generator.DependencyGraphGeneratorExtension
+import com.vanniktech.dependency.graph.generator.DependencyGraphGeneratorPlugin
+import guru.nidi.graphviz.attribute.Color
+import guru.nidi.graphviz.attribute.Style
+import guru.nidi.graphviz.model.MutableNode
 import serg.chuprin.finances.config.AppConfig
 
 plugins {
@@ -20,6 +25,7 @@ buildscript {
         classpath(BuildScript.Plugins.JUNIT5)
         classpath(BuildScript.Plugins.ANDROID)
         classpath(BuildScript.Plugins.APP_BADGE)
+        classpath(BuildScript.Plugins.GRAPH_VISUALIZER)
         classpath(BuildScript.Plugins.PROGUARD_GENERATOR)
     }
 }
@@ -128,6 +134,19 @@ fun Project.forceDependencyVersions() {
             }
         }
 }
+
+plugins.apply(DependencyGraphGeneratorPlugin::class)
+
+// Task name is generateDependencyGraphModules.
+val modulesGenerator = DependencyGraphGeneratorExtension.Generator(
+    name = "Modules",
+    children = { false },
+    include = { dependency -> dependency.moduleGroup.startsWith("finances", ignoreCase = true) },
+    dependencyNode = { node: MutableNode, _: ResolvedDependency ->
+        node.add(Style.FILLED, Color.rgb("#FFCB2B"))
+    }
+)
+extensions.getByType(DependencyGraphGeneratorExtension::class).generators = listOf(modulesGenerator)
 
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)

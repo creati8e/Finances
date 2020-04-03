@@ -20,10 +20,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         viewModel.userAuthorizedLiveData.observe(this, Observer { isAuthorized ->
+            val navController = findNavController(R.id.rootFragmentContainer)
             if (isAuthorized) {
-                TODO("Navigate to dashboard screen")
+                navController.setGraph(R.navigation.navigation_dashboard)
             } else {
-                val navController = findNavController(R.id.rootFragmentContainer)
                 navController.setGraph(R.navigation.navigation_authorization)
             }
         })

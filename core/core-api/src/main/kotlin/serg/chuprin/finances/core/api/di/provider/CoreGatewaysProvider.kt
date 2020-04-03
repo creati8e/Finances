@@ -1,4 +1,4 @@
-package serg.chuprin.finances.core.api.domain.di
+package serg.chuprin.finances.core.api.di.provider
 
 import serg.chuprin.finances.core.api.domain.gateway.AuthenticationGateway
 

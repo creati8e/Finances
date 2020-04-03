@@ -2,7 +2,7 @@ package serg.chuprin.finances.app.model.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
-import serg.chuprin.finances.core.api.domain.di.scopes.ScreenScope
+import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.domain.gateway.AuthenticationGateway
 import javax.inject.Inject
 

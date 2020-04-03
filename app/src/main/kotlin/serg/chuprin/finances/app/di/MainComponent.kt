@@ -2,11 +2,11 @@ package serg.chuprin.finances.app.di
 
 import dagger.Component
 import serg.chuprin.finances.app.model.viewmodel.MainViewModel
-import serg.chuprin.finances.core.api.domain.di.CoreGatewaysProvider
-import serg.chuprin.finances.core.api.domain.di.scopes.ScreenScope
+import serg.chuprin.finances.core.api.di.provider.CoreGatewaysProvider
+import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.domain.gateway.AuthenticationGateway
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.ViewModelComponent
-import serg.chuprin.finances.core.impl.di.CoreComponent
+import serg.chuprin.finances.core.impl.di.CoreDependenciesComponent
 
 /**
  * Created by Sergey Chuprin on 02.04.2020.
@@ -30,7 +30,7 @@ interface MainComponent : ViewModelComponent<MainViewModel> {
                 .dependencies(
                     DaggerMainComponent_DependenciesComponent
                         .builder()
-                        .coreGatewaysProvider(CoreComponent.get())
+                        .coreGatewaysProvider(CoreDependenciesComponent.get())
                         .build()
                 )
                 .build()
