@@ -18,6 +18,7 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf(".*jar"))))
 
     implementation(project(":core:core-api"))
+    implementation(project(":core:core-firebase"))
 
     implementation(Libraries.KOTLIN)
     implementation(Libraries.KOTLIN_SERIALIZATION)
@@ -49,9 +50,6 @@ dependencies {
 
     // Architecture components.
     implementationAll(Libraries.Android.Lifecycle.DEPENDENCIES)
-
-    // Timber.
-    implementation(Libraries.TIMBER)
 
     // region Testing.
 

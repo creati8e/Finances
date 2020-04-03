@@ -8,7 +8,6 @@ plugins {
     kotlin("plugin.serialization") version BuildScript.Versions.KOTLIN_VER
     id("ru.cleverpumpkin.badge")
     id("ru.cleverpumpkin.proguard-dictionaries-generator")
-    id("com.google.gms.google-services")
 }
 
 android {
@@ -109,9 +108,6 @@ dependencies {
 
     // Architecture components.
     implementationAll(Libraries.Android.Lifecycle.DEPENDENCIES)
-
-    // Timber.
-    implementation(Libraries.TIMBER)
 
     // Firebase.
     implementation(Libraries.Infrastructure.FIRESTORE)

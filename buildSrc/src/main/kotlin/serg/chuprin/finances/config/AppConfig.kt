@@ -6,7 +6,7 @@ package serg.chuprin.finances.config
 object AppConfig {
 
     const val VERSION_CODE = 1
-    const val VERSION_NAME = "0.1"
+    const val VERSION_NAME = "1.0.0-alpha01"
     const val APPLICATION_ID = "serg.chuprin.finances"
 
     const val MIN_SDK = 21

@@ -42,14 +42,7 @@ dependencies {
     implementationAll(Libraries.Android.Lifecycle.DEPENDENCIES)
 
     // Timber.
-    implementation(Libraries.TIMBER)
-
-    // Firebase.
-    implementation(Libraries.Infrastructure.FIRESTORE)
-    implementation(Libraries.Infrastructure.AUTHENTICATION)
-
-    // Networking.
-    implementationAll(Libraries.Network.DEPENDENCIES)
+    api(Libraries.TIMBER)
 
     // region Testing.
 

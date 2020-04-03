@@ -6,6 +6,7 @@ include ':app'
 
 include ':core:core-api'
 include ':core:core-impl'
+include ':core:core-firebase'
 
 // endregion
 

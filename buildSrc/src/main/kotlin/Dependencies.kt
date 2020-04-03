@@ -14,7 +14,7 @@ object BuildScript {
     object Plugins {
         const val GMS = "com.google.gms:google-services:4.3.3"
         const val APP_BADGE = "gradle.plugin.app-badge:plugin:1.0.2"
-        const val ANDROID = "com.android.tools.build:gradle:4.1.0-alpha04"
+        const val ANDROID = "com.android.tools.build:gradle:4.0.0-beta03"
         const val JUNIT5 = "de.mannodermaus.gradle.plugins:android-junit5:1.6.0.0"
         const val KOTLIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:$KOTLIN_VER"
         const val PROGUARD_GENERATOR =
@@ -88,6 +88,7 @@ object Libraries {
     object Infrastructure {
         const val AUTHENTICATION = "com.google.firebase:firebase-auth:19.3.0"
         const val FIRESTORE = "com.google.firebase:firebase-firestore-ktx:21.4.2"
+        const val GMS_AUTH = "com.google.android.gms:play-services-auth:17.0.0"
     }
 
     object Network {

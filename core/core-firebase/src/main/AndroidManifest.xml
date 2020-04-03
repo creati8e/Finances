@@ -1,0 +1,2 @@
+<!--As far this module incapsulates Firebase stuff, it must have package name the same as in primary app-->
+<manifest package="serg.chuprin.finances" />
