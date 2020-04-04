@@ -17,6 +17,7 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf(".*jar"))))
 
     implementation(project(":core:core-api"))
+    implementation(project(":injector"))
 
     implementation(Libraries.KOTLIN)
     implementation(Libraries.KOTLIN_SERIALIZATION)

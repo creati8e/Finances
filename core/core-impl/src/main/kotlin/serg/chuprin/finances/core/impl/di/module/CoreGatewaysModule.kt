@@ -10,7 +10,7 @@ import serg.chuprin.finances.core.impl.data.gateway.AuthenticationGatewayImpl
  * Created by Sergey Chuprin on 02.04.2020.
  */
 @Module
-abstract class CoreGatewaysModule {
+internal abstract class CoreGatewaysModule {
 
     @[Binds AppScope]
     abstract fun bindsAuthGateway(impl: AuthenticationGatewayImpl): AuthenticationGateway

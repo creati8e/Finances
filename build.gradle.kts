@@ -118,9 +118,12 @@ fun Project.enableInlineClasses() {
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
         kotlinOptions {
             jvmTarget = "1.8"
-            kotlinOptions.freeCompilerArgs = kotlinOptions.freeCompilerArgs + listOf(
+            kotlinOptions.freeCompilerArgs += listOf(
                 "-XXLanguage:+InlineClasses",
-                "-Xuse-experimental=kotlin.ExperimentalStdlibApi"
+                "-Xopt-in=kotlin.RequiresOptIn",
+                "-Xuse-experimental=kotlin.ExperimentalStdlibApi",
+                "-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi",
+                "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi"
             )
         }
     }

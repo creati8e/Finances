@@ -6,14 +6,20 @@ import dagger.Component
 import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
 import serg.chuprin.finances.core.api.di.provider.CoreNavigationProvider
 import serg.chuprin.finances.core.api.di.scopes.AppScope
+import serg.chuprin.finances.core.impl.di.module.CoreDataSourceModule
 import serg.chuprin.finances.core.impl.di.module.CoreGatewaysModule
+import serg.chuprin.finances.core.impl.di.module.CoreRepositoriesModule
 
 /**
  * Created by Sergey Chuprin on 02.04.2020.
  */
 @AppScope
 @Component(
-    modules = [CoreGatewaysModule::class],
+    modules = [
+        CoreGatewaysModule::class,
+        CoreDataSourceModule::class,
+        CoreRepositoriesModule::class
+    ],
     // Navigation is implemented in :app module.
     dependencies = [CoreNavigationProvider::class]
 )

@@ -15,7 +15,7 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
 
     val userAuthorizedLiveData = liveData {
-        emit(authenticationGateway.getCurrentUser() != null)
+        emit(authenticationGateway.isAuthenticated())
     }
 
 }
