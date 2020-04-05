@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import serg.chuprin.finances.app.R
 import serg.chuprin.finances.app.di.MainComponent
+import serg.chuprin.finances.app.model.AppLaunchState
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.R as CoreApiR
 
@@ -20,14 +21,22 @@ class MainActivity : AppCompatActivity() {
         setTheme(CoreApiR.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        viewModel.userAuthorizedLiveData.observe(this, Observer { isAuthorized ->
-            val navController = findNavController(R.id.rootFragmentContainer)
-            if (isAuthorized) {
+        viewModel.userAuthorizedLiveData.observe(this, Observer(::handleAppLaunchState))
+    }
+
+    private fun handleAppLaunchState(appLaunchState: AppLaunchState) {
+        val navController = findNavController(R.id.rootFragmentContainer)
+        return when (appLaunchState) {
+            AppLaunchState.ONBOARDING -> {
+                navController.setGraph(R.navigation.navigation_onboarding)
+            }
+            AppLaunchState.DASHBOARD -> {
                 navController.setGraph(R.navigation.navigation_dashboard)
-            } else {
+            }
+            AppLaunchState.AUTHENTICATION -> {
                 navController.setGraph(R.navigation.navigation_authorization)
             }
-        })
+        }
     }
 
 }

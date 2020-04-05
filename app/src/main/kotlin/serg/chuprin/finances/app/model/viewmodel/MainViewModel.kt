@@ -2,6 +2,7 @@ package serg.chuprin.finances.app.model.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
+import serg.chuprin.finances.app.model.AppLaunchState
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.domain.gateway.AuthenticationGateway
 import serg.chuprin.finances.core.api.domain.repository.OnboardingRepository
@@ -17,7 +18,16 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
 
     val userAuthorizedLiveData = liveData {
-        emit(authenticationGateway.isAuthenticated())
+        val isAuthenticated = authenticationGateway.isAuthenticated()
+        if (isAuthenticated) {
+            if (onboardingRepository.isOnboardingCompleted()) {
+                emit(AppLaunchState.DASHBOARD)
+            } else {
+                emit(AppLaunchState.ONBOARDING)
+            }
+        } else {
+            emit(AppLaunchState.AUTHENTICATION)
+        }
     }
 
 }
