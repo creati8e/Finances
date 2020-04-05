@@ -51,9 +51,13 @@ class AuthorizationFragment : BaseFragment(R.layout.fragment_authorization) {
         signInWithGoogleButton.onClick(googleSignInObserver::signIn)
         viewModel.signInStateLiveData { signInState ->
             when (signInState) {
-                SignInState.Success -> {
-                    shortToast(R.string.authorization_successful_sign_in)
-                    navigation.navigateToDashboard(navController)
+                is SignInState.Success -> {
+                    if (signInState.userIsNew) {
+                        navigation.navigateToOnboarding(navController)
+                    } else {
+                        shortToast(R.string.authorization_successful_sign_in)
+                        navigation.navigateToDashboard(navController)
+                    }
                 }
                 SignInState.Error -> {
                     shortToast(R.string.authorization_sign_in_with_google_unknown_error)

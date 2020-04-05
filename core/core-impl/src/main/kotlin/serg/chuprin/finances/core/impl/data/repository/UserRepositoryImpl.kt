@@ -18,7 +18,7 @@ internal class UserRepositoryImpl @Inject constructor(
     private val dataSource: FirebaseUserDataSource
 ) : UserRepository {
 
-    override suspend fun setCurrentUser(user: User) = dataSource.setCurrentUser(user)
+    override suspend fun createAndSet(user: User): Boolean = dataSource.createAndSetUser(user)
 
     override fun currentUserSingleFlow(): Flow<User> {
         return dataSource

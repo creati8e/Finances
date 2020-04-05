@@ -2,6 +2,7 @@ package serg.chuprin.finances.feature.authorization.domain.usecase
 
 import kotlinx.coroutines.coroutineScope
 import serg.chuprin.finances.core.api.domain.gateway.AuthenticationGateway
+import serg.chuprin.finances.core.api.domain.model.SignInResult
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import javax.inject.Inject
 
@@ -13,13 +14,16 @@ class SignInUseCase @Inject constructor(
     private val authenticationGateway: AuthenticationGateway
 ) {
 
-    suspend fun execute(idToken: String): Boolean {
+    suspend fun execute(idToken: String): SignInResult {
         return coroutineScope {
             val user = authenticationGateway.signIn(idToken)
             if (user != null) {
-                userRepository.setCurrentUser(user)
+                SignInResult.Success(
+                    userIsNew = userRepository.createAndSet(user)
+                )
+            } else {
+                SignInResult.Error
             }
-            user != null
         }
 
     }

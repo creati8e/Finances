@@ -8,7 +8,10 @@ import serg.chuprin.finances.core.api.domain.model.User
  */
 interface UserRepository {
 
-    suspend fun setCurrentUser(user: User)
+    /**
+     * @return true if user is new.
+     */
+    suspend fun createAndSet(user: User): Boolean
 
     fun currentUserSingleFlow(): Flow<User>
 

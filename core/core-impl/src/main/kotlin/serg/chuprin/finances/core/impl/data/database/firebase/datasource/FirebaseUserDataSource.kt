@@ -3,6 +3,7 @@ package serg.chuprin.finances.core.impl.data.database.firebase.datasource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
@@ -25,17 +26,16 @@ internal class FirebaseUserDataSource @Inject constructor(
         private const val COLLECTION_NAME = "user"
     }
 
-    suspend fun setCurrentUser(user: User) {
-        val userStructure = mapOf(
-            FIELD_EMAIL to user.email,
-            FIELD_PHOTO_URL to user.photoUrl,
-            FIELD_DISPLAY_NAME to user.displayName
-        )
-        firestore
-            .collection(COLLECTION_NAME)
-            .document(user.id.value)
-            .set(userStructure)
-            .await()
+    suspend fun createAndSetUser(user: User): Boolean {
+        return coroutineScope {
+            val document = firestore
+                .collection(COLLECTION_NAME)
+                .document(user.id.value)
+            val userIsNew = document.get().await() == null
+            document.set(user.toMap()).await()
+            userIsNew
+        }
+
     }
 
     fun currentUserSingleFlow(): Flow<DocumentSnapshot> {
@@ -48,6 +48,14 @@ internal class FirebaseUserDataSource @Inject constructor(
                 .document(currentUser.uid)
                 .suspending(this, mapper = { documentSnapshot -> documentSnapshot })
         }
+    }
+
+    private fun User.toMap(): Map<String, Any> {
+        return mapOf(
+            FIELD_EMAIL to email,
+            FIELD_PHOTO_URL to photoUrl,
+            FIELD_DISPLAY_NAME to displayName
+        )
     }
 
 }

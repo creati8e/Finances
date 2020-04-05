@@ -5,5 +5,7 @@ package serg.chuprin.finances.feature.authorization.presentation.model
  */
 sealed class SignInState {
     object Error : SignInState()
-    object Success : SignInState()
+    class Success(
+        val userIsNew: Boolean
+    ) : SignInState()
 }

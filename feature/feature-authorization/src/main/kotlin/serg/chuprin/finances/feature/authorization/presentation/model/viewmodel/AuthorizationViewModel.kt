@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
+import serg.chuprin.finances.core.api.domain.model.SignInResult
 import serg.chuprin.finances.feature.authorization.domain.usecase.SignInUseCase
 import serg.chuprin.finances.feature.authorization.presentation.model.SignInState
 import javax.inject.Inject
@@ -25,10 +26,14 @@ class AuthorizationViewModel @Inject constructor(
 
     fun signIn(idToken: String) {
         viewModelScope.launch {
-            signInStateMutableLiveData.value = if (signInUseCase.execute(idToken)) {
-                SignInState.Success
-            } else {
-                SignInState.Error
+            val signInResult = signInUseCase.execute(idToken)
+            signInStateMutableLiveData.value = when (signInResult) {
+                SignInResult.Error -> {
+                    SignInState.Error
+                }
+                is SignInResult.Success -> {
+                    SignInState.Success(signInResult.userIsNew)
+                }
             }
         }
     }
