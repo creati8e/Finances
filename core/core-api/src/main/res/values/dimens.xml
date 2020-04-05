@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <bool name="windowLightStatusBar">true</bool>
-    <item name="cornerRadius" type="dimen">8dp</item>
-    <item name="cornerRadiusSmall" type="dimen">4dp</item>
+    <item name="elevation"
+        type="dimen">4dp
+    </item>
+    <item name="cornerRadius"
+        type="dimen">8dp
+    </item>
+    <item name="cornerRadiusSmall"
+        type="dimen">4dp
+    </item>
 </resources>

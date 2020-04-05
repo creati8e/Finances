@@ -68,6 +68,17 @@ object Libraries {
 
     }
 
+    object Adapter {
+
+        private const val VER = "1.3.0"
+
+        private const val LIBRARY = "serg.chuprin:multiviewadapter:$VER"
+        private const val EXTENSION = "serg.chuprin:multiviewadapter-kt-extensions:$VER"
+
+        val DEPENDENCIES = listOf(LIBRARY, EXTENSION)
+
+    }
+
     object Preferences {
 
         private const val VER = "2.0.3"

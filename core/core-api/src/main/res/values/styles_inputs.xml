@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="OutlineClearableTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+    <style name="OutlineClearableTextInputLayout"
+        parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxCornerRadiusTopEnd">@dimen/cornerRadius</item>
         <item name="boxCornerRadiusTopStart">@dimen/cornerRadius</item>
         <item name="boxCornerRadiusBottomEnd">@dimen/cornerRadius</item>
@@ -11,7 +12,5 @@
         <item name="endIconMode">clear_text</item>
         <item name="hintTextColor">?colorAccent</item>
     </style>
-
-    <style name="EditText"></style>
 
 </resources>

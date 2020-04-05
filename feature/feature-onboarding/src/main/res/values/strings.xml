@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onboarding_currency_choice_hint">Search</string>
+    <string name="onboarding_currency_choice_button">Done!</string>
+    <string name="onboarding_currency_choice_title">Let\'s setup everything</string>
+    <string name="onboarding_currency_choice_subtitle">Choose your primary currency</string>
+</resources>

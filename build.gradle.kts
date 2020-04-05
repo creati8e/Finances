@@ -6,6 +6,7 @@ import com.vanniktech.dependency.graph.generator.DependencyGraphGeneratorPlugin
 import guru.nidi.graphviz.attribute.Color
 import guru.nidi.graphviz.attribute.Style
 import guru.nidi.graphviz.model.MutableNode
+import org.jetbrains.kotlin.gradle.internal.AndroidExtensionsExtension
 import serg.chuprin.finances.config.AppConfig
 
 plugins {
@@ -46,7 +47,7 @@ subprojects {
             .findByType(TestedExtension::class.java)
             ?.apply {
                 with(this) {
-
+                    enableExperimentalKotlinExtensions()
                     defaultConfig {
                         versionCode = AppConfig.VERSION_CODE
                         versionName = AppConfig.VERSION_NAME
@@ -127,6 +128,10 @@ fun Project.enableInlineClasses() {
             )
         }
     }
+}
+
+fun Project.enableExperimentalKotlinExtensions() {
+    extensions.findByType(AndroidExtensionsExtension::class)?.isExperimental = true
 }
 
 fun Project.forceDependencyVersions() {
