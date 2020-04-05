@@ -3,8 +3,8 @@ package serg.chuprin.finances.core.impl.di.module
 import dagger.Binds
 import dagger.Module
 import serg.chuprin.finances.core.api.di.scopes.AppScope
-import serg.chuprin.finances.core.api.domain.gateway.AuthenticationGateway
-import serg.chuprin.finances.core.impl.data.gateway.AuthenticationGatewayImpl
+import serg.chuprin.finances.core.api.domain.gateway.AuthorizationGateway
+import serg.chuprin.finances.core.impl.data.gateway.AuthorizationGatewayImpl
 
 /**
  * Created by Sergey Chuprin on 02.04.2020.
@@ -13,6 +13,6 @@ import serg.chuprin.finances.core.impl.data.gateway.AuthenticationGatewayImpl
 internal abstract class CoreGatewaysModule {
 
     @[Binds AppScope]
-    abstract fun bindsAuthGateway(impl: AuthenticationGatewayImpl): AuthenticationGateway
+    abstract fun bindsAuthGateway(impl: AuthorizationGatewayImpl): AuthorizationGateway
 
 }

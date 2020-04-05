@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
             AppLaunchState.DASHBOARD -> {
                 navController.setGraph(R.navigation.navigation_dashboard)
             }
-            AppLaunchState.AUTHENTICATION -> {
+            AppLaunchState.AUTHORIZATION -> {
                 navController.setGraph(R.navigation.navigation_authorization)
             }
         }

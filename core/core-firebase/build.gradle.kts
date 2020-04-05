@@ -7,7 +7,7 @@ plugins {
 dependencies {
     implementation(Libraries.KOTLIN)
     // Firebase.
-    api(Libraries.Infrastructure.FIRESTORE)
+    api(Libraries.Infrastructure.AUTH)
     api(Libraries.Infrastructure.GMS_AUTH)
-    api(Libraries.Infrastructure.AUTHENTICATION)
+    api(Libraries.Infrastructure.FIRESTORE)
 }

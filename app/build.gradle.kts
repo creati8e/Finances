@@ -114,7 +114,7 @@ dependencies {
 
     // Firebase.
     implementation(Libraries.Infrastructure.FIRESTORE)
-    implementation(Libraries.Infrastructure.AUTHENTICATION)
+    implementation(Libraries.Infrastructure.AUTH)
 
     // Networking.
     implementationAll(Libraries.Network.DEPENDENCIES)

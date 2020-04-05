@@ -3,7 +3,7 @@ package serg.chuprin.finances.feature.main
 import dagger.Component
 import serg.chuprin.finances.core.api.di.provider.CoreGatewaysProvider
 import serg.chuprin.finances.core.api.di.provider.CoreRepositoriesProvider
-import serg.chuprin.finances.core.api.domain.gateway.AuthenticationGateway
+import serg.chuprin.finances.core.api.domain.gateway.AuthorizationGateway
 import serg.chuprin.finances.core.api.domain.repository.OnboardingRepository
 
 /**
@@ -11,7 +11,7 @@ import serg.chuprin.finances.core.api.domain.repository.OnboardingRepository
  */
 interface MainDependencies {
     val onboardingRepository: OnboardingRepository
-    val authenticationGateway: AuthenticationGateway
+    val authorizationGateway: AuthorizationGateway
 }
 
 @Component(

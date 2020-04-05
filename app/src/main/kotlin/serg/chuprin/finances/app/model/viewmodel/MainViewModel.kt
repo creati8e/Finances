@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import serg.chuprin.finances.app.model.AppLaunchState
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
-import serg.chuprin.finances.core.api.domain.gateway.AuthenticationGateway
+import serg.chuprin.finances.core.api.domain.gateway.AuthorizationGateway
 import serg.chuprin.finances.core.api.domain.repository.OnboardingRepository
 import javax.inject.Inject
 
@@ -14,19 +14,19 @@ import javax.inject.Inject
 @ScreenScope
 class MainViewModel @Inject constructor(
     private val onboardingRepository: OnboardingRepository,
-    private val authenticationGateway: AuthenticationGateway
+    private val authorizationGateway: AuthorizationGateway
 ) : ViewModel() {
 
     val userAuthorizedLiveData = liveData {
-        val isAuthenticated = authenticationGateway.isAuthenticated()
-        if (isAuthenticated) {
+        val isAuthorized = authorizationGateway.isAuthorized()
+        if (isAuthorized) {
             if (onboardingRepository.isOnboardingCompleted()) {
                 emit(AppLaunchState.DASHBOARD)
             } else {
                 emit(AppLaunchState.ONBOARDING)
             }
         } else {
-            emit(AppLaunchState.AUTHENTICATION)
+            emit(AppLaunchState.AUTHORIZATION)
         }
     }
 

@@ -5,9 +5,9 @@ import serg.chuprin.finances.core.api.domain.model.User
 /**
  * Created by Sergey Chuprin on 02.04.2020.
  */
-interface AuthenticationGateway {
+interface AuthorizationGateway {
 
-    suspend fun isAuthenticated(): Boolean
+    suspend fun isAuthorized(): Boolean
 
     suspend fun signIn(idToken: String): User?
 
