@@ -1,5 +1,6 @@
 package serg.chuprin.finances.core.api.di.provider
 
+import serg.chuprin.finances.core.api.domain.repository.OnboardingRepository
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 
@@ -9,6 +10,8 @@ import serg.chuprin.finances.core.api.domain.repository.UserRepository
 interface CoreRepositoriesProvider {
 
     val userRepository: UserRepository
+
+    val onboardingRepository: OnboardingRepository
 
     val transactionRepository: TransactionRepository
 

@@ -50,6 +50,8 @@ dependencies {
     // Architecture components.
     implementationAll(Libraries.Android.Lifecycle.DEPENDENCIES)
 
+    implementationAll(Libraries.Preferences.DEPENDENCIES)
+
     // Firebase.
     implementation(Libraries.Infrastructure.FIRESTORE)
     implementation(Libraries.Infrastructure.AUTHENTICATION)

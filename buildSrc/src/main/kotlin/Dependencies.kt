@@ -68,6 +68,14 @@ object Libraries {
 
     }
 
+    object Preferences {
+
+        private const val VER = "2.0.3"
+        private const val ARTIFACT = "com.afollestad.rxkprefs"
+
+        val DEPENDENCIES = listOf("$ARTIFACT:core:$VER", "$ARTIFACT:coroutines:$VER")
+    }
+
     object Coroutines {
 
         private const val VER = "1.3.5"
