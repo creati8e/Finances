@@ -16,8 +16,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
 import serg.chuprin.finances.feature.authorization.R
 
 /**
@@ -25,8 +23,8 @@ import serg.chuprin.finances.feature.authorization.R
  */
 class GoogleSignInResultObserver(
     private val fragment: Fragment,
-    private val onSuccess: () -> Unit,
-    private val onError: (ApiException) -> Unit
+    private val onError: (ApiException) -> Unit,
+    private val onSuccess: (idToken: String) -> Unit
 ) : DefaultLifecycleObserver {
 
     private class GoogleSignInActivityResultContract(
@@ -68,27 +66,12 @@ class GoogleSignInResultObserver(
     private fun handGoogleSignInResultWithFirebase(task: Task<GoogleSignInAccount>) {
         val exception = task.exception
         if (exception != null) {
-            handleError(exception)
+            val apiException = exception as ApiException
+            Timber.d(exception) { "An error occurred when signing in: ${apiException.message}" }
+            onError(apiException)
             return
         }
-        FirebaseAuth
-            .getInstance()
-            // We checked exception above, so using !! here is OK.
-            .signInWithCredential(GoogleAuthProvider.getCredential(task.result!!.idToken, null))
-            .addOnCompleteListener(activity) { signInResultTask ->
-                if (signInResultTask.isSuccessful) {
-                    Timber.d { "Successfully signed in with Firebase" }
-                    onSuccess()
-                } else {
-                    signInResultTask.exception?.let(::handleError)
-                }
-            }
-    }
-
-    private fun handleError(exception: Exception) {
-        val apiException = exception as ApiException
-        Timber.d(exception) { "An error occurred when signing in: ${apiException.message}" }
-        onError(apiException)
+        onSuccess(task.result!!.idToken!!)
     }
 
 }

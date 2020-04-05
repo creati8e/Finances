@@ -1,6 +1,8 @@
 package serg.chuprin.finances.core.impl.data.repository
 
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.Transaction
@@ -17,11 +19,11 @@ internal class TransactionRepositoryImpl @Inject constructor(
     private val firebaseDataSource: FirebaseTransactionDataSource
 ) : TransactionRepository {
 
-    override fun observeUserTransactions(userId: Id): Flow<List<Transaction>> {
-        // TODO: Check flow thread.
+    override fun userTransactionsFlow(userId: Id): Flow<List<Transaction>> {
         return firebaseDataSource
             .userTransactionsFlow(userId)
             .map { transactions -> transactions.mapNotNull(mapper) }
+            .flowOn(Dispatchers.Default)
     }
 
 }

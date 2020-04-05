@@ -1,7 +1,6 @@
 package serg.chuprin.finances.app
 
 import android.app.Application
-import serg.chuprin.finances.BuildConfig
 import serg.chuprin.finances.app.di.navigation.NavigationComponent
 import serg.chuprin.finances.core.impl.di.CoreDependenciesComponent
 import timber.log.Timber

@@ -5,5 +5,7 @@ package serg.chuprin.finances.core.api.domain.model
  */
 data class User(
     val id: Id,
-    val email: String
+    val email: String,
+    val photoUrl: String,
+    val displayName: String
 )

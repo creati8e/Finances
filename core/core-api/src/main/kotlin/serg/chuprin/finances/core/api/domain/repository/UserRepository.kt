@@ -8,6 +8,8 @@ import serg.chuprin.finances.core.api.domain.model.User
  */
 interface UserRepository {
 
+    suspend fun setCurrentUser(user: User)
+
     fun currentUserSingleFlow(): Flow<User>
 
 }

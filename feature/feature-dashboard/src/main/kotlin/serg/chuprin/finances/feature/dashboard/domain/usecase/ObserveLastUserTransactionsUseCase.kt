@@ -23,7 +23,7 @@ class ObserveLastUserTransactionsUseCase @Inject constructor(
             .currentUserSingleFlow()
             .flatMapConcat { user ->
                 transactionRepository
-                    .observeUserTransactions(user.id)
+                    .userTransactionsFlow(user.id)
                     .map { transactions -> transactions.take(5) }
             }
     }

@@ -7,12 +7,14 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.CommonStatusCodes
 import kotlinx.android.synthetic.main.fragment_authorization.*
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
+import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.navigation.AuthorizationNavigation
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
 import serg.chuprin.finances.core.api.presentation.view.extensions.shortToast
 import serg.chuprin.finances.feature.authorization.R
 import serg.chuprin.finances.feature.authorization.presentation.di.AuthorizationComponent
+import serg.chuprin.finances.feature.authorization.presentation.model.SignInState
 import javax.inject.Inject
 
 
@@ -24,11 +26,13 @@ class AuthorizationFragment : BaseFragment(R.layout.fragment_authorization) {
     private val googleSignInObserver = GoogleSignInResultObserver(
         fragment = this,
         onError = ::handleGoogleSignInError,
-        onSuccess = ::handleSuccessfulGoogleSignIn
+        onSuccess = { idToken -> viewModel.signIn(idToken) }
     )
 
     @Inject
     lateinit var navigation: AuthorizationNavigation
+
+    private val viewModel by viewModelFromComponent { component }
 
     private val component by component { AuthorizationComponent.get() }
 
@@ -45,6 +49,17 @@ class AuthorizationFragment : BaseFragment(R.layout.fragment_authorization) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         signInWithGoogleButton.onClick(googleSignInObserver::signIn)
+        viewModel.signInStateLiveData { signInState ->
+            when (signInState) {
+                SignInState.Success -> {
+                    shortToast(R.string.authorization_successful_sign_in)
+                    navigation.navigateToDashboard(navController)
+                }
+                SignInState.Error -> {
+                    shortToast(R.string.authorization_sign_in_with_google_unknown_error)
+                }
+            }
+        }
     }
 
     private fun handleGoogleSignInError(exception: ApiException) {
@@ -54,11 +69,6 @@ class AuthorizationFragment : BaseFragment(R.layout.fragment_authorization) {
             R.string.authorization_sign_in_with_google_unknown_error
         }
         shortToast(messageStringRes)
-    }
-
-    private fun handleSuccessfulGoogleSignIn() {
-        shortToast(R.string.authorization_successful_sign_in)
-        navigation.navigateToDashboard(navController)
     }
 
 }
