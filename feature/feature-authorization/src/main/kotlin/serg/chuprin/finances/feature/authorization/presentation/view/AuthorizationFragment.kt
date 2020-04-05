@@ -10,6 +10,8 @@ import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.co
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.navigation.AuthorizationNavigation
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
+import serg.chuprin.finances.core.api.presentation.view.extensions.makeGone
+import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisible
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
 import serg.chuprin.finances.core.api.presentation.view.extensions.shortToast
 import serg.chuprin.finances.feature.authorization.R
@@ -49,19 +51,27 @@ class AuthorizationFragment : BaseFragment(R.layout.fragment_authorization) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         signInWithGoogleButton.onClick(googleSignInObserver::signIn)
-        viewModel.signInStateLiveData { signInState ->
-            when (signInState) {
-                is SignInState.Success -> {
-                    if (signInState.userIsNew) {
-                        navigation.navigateToOnboarding(navController)
-                    } else {
-                        shortToast(R.string.authorization_successful_sign_in)
-                        navigation.navigateToDashboard(navController)
-                    }
+        viewModel.signInStateLiveData(::handleSignInState)
+    }
+
+    private fun handleSignInState(signInState: SignInState) {
+        return when (signInState) {
+            is SignInState.Success -> {
+                if (signInState.userIsNew) {
+                    navigation.navigateToOnboarding(navController)
+                } else {
+                    shortToast(R.string.authorization_successful_sign_in)
+                    navigation.navigateToDashboard(navController)
                 }
-                SignInState.Error -> {
-                    shortToast(R.string.authorization_sign_in_with_google_unknown_error)
-                }
+            }
+            SignInState.Error -> {
+                progressBar.makeGone()
+                signInWithGoogleButton.isEnabled = true
+                shortToast(R.string.authorization_sign_in_with_google_unknown_error)
+            }
+            SignInState.Progress -> {
+                progressBar.makeVisible()
+                signInWithGoogleButton.isEnabled = false
             }
         }
     }

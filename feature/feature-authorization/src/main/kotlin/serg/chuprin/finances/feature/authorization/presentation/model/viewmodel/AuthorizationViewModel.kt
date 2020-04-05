@@ -26,14 +26,12 @@ class AuthorizationViewModel @Inject constructor(
 
     fun signIn(idToken: String) {
         viewModelScope.launch {
+            signInStateMutableLiveData.value = SignInState.Progress
+
             val signInResult = signInUseCase.execute(idToken)
             signInStateMutableLiveData.value = when (signInResult) {
-                SignInResult.Error -> {
-                    SignInState.Error
-                }
-                is SignInResult.Success -> {
-                    SignInState.Success(signInResult.userIsNew)
-                }
+                SignInResult.Error -> SignInState.Error
+                is SignInResult.Success -> SignInState.Success(signInResult.userIsNew)
             }
         }
     }
