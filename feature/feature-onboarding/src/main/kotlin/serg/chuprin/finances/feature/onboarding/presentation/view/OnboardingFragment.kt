@@ -9,10 +9,12 @@ import androidx.core.view.isVisible
 import com.google.android.material.transition.MaterialArcMotion
 import com.google.android.material.transition.MaterialContainerTransform
 import kotlinx.android.synthetic.main.fragment_onboarding.*
+import kotlinx.android.synthetic.main.view_currency_choice.view.*
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeGone
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisible
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
+import serg.chuprin.finances.core.api.presentation.view.extensions.showKeyboard
 import serg.chuprin.finances.feature.onboarding.R
 import serg.chuprin.finances.feature.onboarding.presentation.model.cells.CurrencyCell
 import java.util.*
@@ -33,8 +35,11 @@ class OnboardingFragment : BaseFragment(R.layout.fragment_onboarding) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        currencyChoiceView.callback = { cell ->
+        currencyChoiceView.onCurrencyCellChosen = { cell ->
             textInputLayout.text = cell.displayName
+            showOrHideCurrencyChoice(show = false)
+        }
+        currencyChoiceView.onCloseClicked = {
             showOrHideCurrencyChoice(show = false)
         }
         textInputLayout.onClick {
@@ -63,6 +68,7 @@ class OnboardingFragment : BaseFragment(R.layout.fragment_onboarding) {
         TransitionManager.beginDelayedTransition(constraintLayout, transform)
         if (show) {
             currencyChoiceView.makeVisible()
+            currencyChoiceView.searchEditText.showKeyboard()
         } else {
             currencyChoiceView.makeGone()
         }

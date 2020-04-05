@@ -4,9 +4,11 @@ import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.StringRes
+import androidx.core.content.getSystemService
 import kotlin.math.max
 import kotlin.math.roundToInt
 
@@ -131,4 +133,14 @@ inline fun EditText.doOnEditorAction(
             false
         }
     }
+}
+
+fun View.showKeyboard() {
+    val context = this.context ?: return
+    requestFocus()
+    context.getSystemService<InputMethodManager>()!!.showSoftInput(this, 0)
+}
+
+fun View.hideKeyboard() {
+    context.getSystemService<InputMethodManager>()!!.hideSoftInputFromWindow(windowToken, 0)
 }

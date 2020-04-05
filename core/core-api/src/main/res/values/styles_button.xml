@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="PrimaryUnelevatedButton" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
+    <style name="PrimaryUnelevatedButton"
+        parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
         <item name="backgroundTint">?colorAccent</item>
         <item name="strokeWidth">1dp</item>
         <item name="android:paddingTop">12dp</item>
@@ -12,10 +13,20 @@
         <item name="android:textColor">?android:textColorPrimary</item>
     </style>
 
-    <style name="PrimaryUnelevatedButton.Transparent" parent="PrimaryUnelevatedButton">
+    <style name="PrimaryUnelevatedButton.Transparent"
+        parent="PrimaryUnelevatedButton">
         <item name="rippleColor">?colorControlHighlight</item>
         <item name="backgroundTint">@android:color/transparent</item>
         <item name="iconTint">@null</item>
+    </style>
+
+    <style name="ImageButton">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:background">@drawable/bg_selection_transparent_rounded</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:padding">12dp</item>
     </style>
 
 </resources>

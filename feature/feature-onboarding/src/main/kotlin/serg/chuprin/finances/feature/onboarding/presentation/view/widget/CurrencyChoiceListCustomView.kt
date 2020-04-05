@@ -4,12 +4,14 @@ import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
 import android.view.View
-import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.view_currency_choice.view.*
 import serg.chuprin.adapter.TypedMultiViewAdapter
 import serg.chuprin.finances.core.api.presentation.view.extensions.dpToPx
 import serg.chuprin.finances.core.api.presentation.view.extensions.getBackgroundColor
+import serg.chuprin.finances.core.api.presentation.view.extensions.hideKeyboard
+import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
 import serg.chuprin.finances.feature.onboarding.R
 import serg.chuprin.finances.feature.onboarding.presentation.model.cells.CurrencyCell
 import serg.chuprin.finances.feature.onboarding.presentation.view.adapter.renderer.CurrencyCellRenderer
@@ -21,14 +23,15 @@ class CurrencyChoiceListCustomView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr) {
+) : RelativeLayout(context, attrs, defStyleAttr) {
 
-    var callback: ((cell: CurrencyCell) -> Unit)? = null
+    var onCloseClicked: (() -> Unit)? = null
+    var onCurrencyCellChosen: ((cell: CurrencyCell) -> Unit)? = null
 
     private val view = View.inflate(context, R.layout.view_currency_choice, this)
     private val cellsAdapter = TypedMultiViewAdapter<CurrencyCell>().apply {
         registerRenderer(CurrencyCellRenderer())
-        clickListener = { cell, _, _ -> callback?.invoke(cell) }
+        clickListener = { cell, _, _ -> onCurrencyCellChosen?.invoke(cell) }
     }
 
     init {
@@ -40,8 +43,11 @@ class CurrencyChoiceListCustomView @JvmOverloads constructor(
             isVerticalFadingEdgeEnabled = true
             setFadingEdgeLength(context.dpToPx(16))
         }
-        orientation = VERTICAL
         background = ColorDrawable(context.getBackgroundColor())
+        view.closeImageView.onClick {
+            view.searchEditText.hideKeyboard()
+            onCloseClicked?.invoke()
+        }
     }
 
     fun setCells(cells: List<CurrencyCell>) = cellsAdapter.setItems(cells)
