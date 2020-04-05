@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_onboarding"
+    android:label="Onboarding Graph"
+    app:startDestination="@id/onboardingFragment"
+    tools:ignore="UnusedNavigation">
+
+    <fragment
+        android:id="@+id/onboardingFragment"
+        android:name="serg.chuprin.finances.feature.onboarding.OnboardingFragment"
+        android:label="OnboardingFragment"
+        tools:layout="@layout/fragment_onboarding" />
+
+</navigation>

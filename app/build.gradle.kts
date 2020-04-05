@@ -75,6 +75,7 @@ dependencies {
 
     implementation(project(":core:core-impl"))
     implementation(project(":feature:feature-dashboard"))
+    implementation(project(":feature:feature-onboarding"))
     implementation(project(":feature:feature-authorization"))
 
     // endregion

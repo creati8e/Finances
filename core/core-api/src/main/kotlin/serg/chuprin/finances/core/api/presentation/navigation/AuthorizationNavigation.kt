@@ -11,4 +11,6 @@ interface AuthorizationNavigation {
 
     fun navigateToDashboard(navController: NavController)
 
+    fun navigateToOnboarding(navController: NavController)
+
 }
