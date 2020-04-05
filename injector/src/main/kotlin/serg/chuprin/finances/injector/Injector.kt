@@ -5,6 +5,8 @@ import serg.chuprin.finances.feature.authorization.dependencies.AuthorizationDep
 import serg.chuprin.finances.feature.authorization.dependencies.DaggerAuthorizationDependenciesComponent
 import serg.chuprin.finances.feature.dashboard.dependencies.DaggerDashboardDependenciesComponent
 import serg.chuprin.finances.feature.dashboard.dependencies.DashboardDependencies
+import serg.chuprin.finances.feature.main.DaggerMainDependenciesComponent
+import serg.chuprin.finances.feature.main.MainDependencies
 
 /**
  * Created by Sergey Chuprin on 03.04.2020.
@@ -25,6 +27,15 @@ object Injector {
         val coreProvider = CoreDependenciesComponent.get()
         return DaggerDashboardDependenciesComponent
             .builder()
+            .coreRepositoriesProvider(coreProvider)
+            .build()
+    }
+
+    fun getMainDependencies(): MainDependencies {
+        val coreProvider = CoreDependenciesComponent.get()
+        return DaggerMainDependenciesComponent
+            .builder()
+            .coreGatewaysProvider(coreProvider)
             .coreRepositoriesProvider(coreProvider)
             .build()
     }

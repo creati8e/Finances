@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.domain.gateway.AuthenticationGateway
+import serg.chuprin.finances.core.api.domain.repository.OnboardingRepository
 import javax.inject.Inject
 
 /**
@@ -11,6 +12,7 @@ import javax.inject.Inject
  */
 @ScreenScope
 class MainViewModel @Inject constructor(
+    private val onboardingRepository: OnboardingRepository,
     private val authenticationGateway: AuthenticationGateway
 ) : ViewModel() {
 
