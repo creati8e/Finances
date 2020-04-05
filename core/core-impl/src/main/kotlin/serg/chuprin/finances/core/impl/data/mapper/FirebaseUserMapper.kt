@@ -1,7 +1,6 @@
 package serg.chuprin.finances.core.impl.data.mapper
 
 import com.google.firebase.auth.FirebaseUser
-import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.User
 import javax.inject.Inject
 
@@ -11,17 +10,11 @@ import javax.inject.Inject
 internal class FirebaseUserMapper @Inject constructor() : ModelMapper<FirebaseUser, User> {
 
     override fun invoke(firebaseUser: FirebaseUser): User? {
-        if (firebaseUser.email.isNullOrEmpty()) {
-            return null
-        }
-        if (firebaseUser.displayName.isNullOrEmpty()) {
-            return null
-        }
-        return User(
-            id = Id(firebaseUser.uid),
-            email = firebaseUser.email.orEmpty(),
-            displayName = firebaseUser.displayName.orEmpty(),
-            photoUrl = firebaseUser.photoUrl?.toString().orEmpty()
+        return User.create(
+            id = firebaseUser.uid,
+            email = firebaseUser.email,
+            displayName = firebaseUser.displayName,
+            photoUrl = firebaseUser.photoUrl?.toString()
         )
     }
 
