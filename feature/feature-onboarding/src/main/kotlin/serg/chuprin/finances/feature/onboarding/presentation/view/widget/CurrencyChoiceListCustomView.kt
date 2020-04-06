@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.RelativeLayout
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_currency_choice.view.*
 import serg.chuprin.adapter.TypedMultiViewAdapter
 import serg.chuprin.finances.core.api.presentation.view.extensions.dpToPx
@@ -31,7 +32,10 @@ class CurrencyChoiceListCustomView @JvmOverloads constructor(
     private val view = View.inflate(context, R.layout.view_currency_choice, this)
     private val cellsAdapter = TypedMultiViewAdapter<CurrencyCell>().apply {
         registerRenderer(CurrencyCellRenderer())
-        clickListener = { cell, _, _ -> onCurrencyCellChosen?.invoke(cell) }
+        clickListener = { cell, _, _ ->
+            hideKeyboard()
+            onCurrencyCellChosen?.invoke(cell)
+        }
     }
 
     init {
@@ -42,14 +46,29 @@ class CurrencyChoiceListCustomView @JvmOverloads constructor(
             // Fading edge is not working from XML.
             isVerticalFadingEdgeEnabled = true
             setFadingEdgeLength(context.dpToPx(16))
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+                        hideKeyboard()
+                    }
+                }
+            })
         }
         background = ColorDrawable(context.getBackgroundColor())
         view.closeImageView.onClick {
-            view.searchEditText.hideKeyboard()
+            hideKeyboard()
             onCloseClicked?.invoke()
         }
     }
 
     fun setCells(cells: List<CurrencyCell>) = cellsAdapter.setItems(cells)
+
+    private fun hideKeyboard() {
+        with(view.searchEditText) {
+            if (isFocused) {
+                hideKeyboard()
+            }
+        }
+    }
 
 }

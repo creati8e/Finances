@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.transition.TransitionManager
 import android.view.View
 import androidx.activity.addCallback
+import androidx.core.transition.doOnEnd
 import androidx.core.view.isVisible
 import com.google.android.material.transition.MaterialArcMotion
 import com.google.android.material.transition.MaterialContainerTransform
@@ -49,7 +50,7 @@ class OnboardingFragment : BaseFragment(R.layout.fragment_onboarding) {
     }
 
     private fun showOrHideCurrencyChoice(show: Boolean) {
-        val transform = MaterialContainerTransform(requireContext()).apply {
+        val transition = MaterialContainerTransform(requireContext()).apply {
             // Manually tell the container transform which Views to transform between.
             startView = if (show) textInputLayout else currencyChoiceView
             endView = if (show) currencyChoiceView else textInputLayout
@@ -63,12 +64,17 @@ class OnboardingFragment : BaseFragment(R.layout.fragment_onboarding) {
             scrimColor = Color.TRANSPARENT
         }
 
+        if (show) {
+            transition.doOnEnd {
+                currencyChoiceView.searchEditText.showKeyboard()
+            }
+        }
+
         // Begin the transition by changing properties on the start and end views or
         // removing/adding them from the hierarchy.
-        TransitionManager.beginDelayedTransition(constraintLayout, transform)
+        TransitionManager.beginDelayedTransition(constraintLayout, transition)
         if (show) {
             currencyChoiceView.makeVisible()
-            currencyChoiceView.searchEditText.showKeyboard()
         } else {
             currencyChoiceView.makeGone()
         }
