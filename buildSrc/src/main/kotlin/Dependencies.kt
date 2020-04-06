@@ -1,5 +1,6 @@
 import BuildScript.Versions.KOTLIN_VER
 import BuildScript.Versions.NAVIGATION_VER
+import Libraries.Coroutines.VER
 
 /**
  * Created by Sergey Chuprin on 16.03.2019.
@@ -89,7 +90,7 @@ object Libraries {
 
     object Coroutines {
 
-        private const val VER = "1.3.5"
+        const val VER = "1.3.5"
 
         const val CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$VER"
         const val ANDROID = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$VER"
@@ -129,14 +130,20 @@ object Libraries {
 
     object Tests {
 
+        private const val JUNIT_VER = "5.6.0"
         private const val SPEK_VER = "2.0.10"
 
         const val MOCKK = "io.mockk:mockk:1.9.3"
         const val STRIKT = "io.strikt:strikt-core:0.25.0"
         const val ASSERTIONS = "org.jetbrains.kotlin:kotlin-test:$KOTLIN_VER"
         const val SPEK_JVM = "org.spekframework.spek2:spek-dsl-jvm:$SPEK_VER"
+        const val COROUTINES = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.5"
         const val KOTLIN_REFLECT = "org.jetbrains.kotlin:kotlin-reflect:$KOTLIN_VER"
         const val SPEK_RUNNER = "org.spekframework.spek2:spek-runner-junit5:$SPEK_VER"
+        const val COROUTINES_DEBUG = "org.jetbrains.kotlinx:kotlinx-coroutines-debug:${VER}"
+
+        const val JUPITER_API = "org.junit.jupiter:junit-jupiter-api:$JUNIT_VER"
+        const val JUPITER_ENGINE = "org.junit.jupiter:junit-jupiter-engine:$JUNIT_VER"
 
     }
 

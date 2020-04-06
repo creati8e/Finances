@@ -51,15 +51,4 @@ dependencies {
     // Architecture components.
     implementationAll(Libraries.Android.Lifecycle.DEPENDENCIES)
 
-    // region Testing.
-
-    testImplementation(Libraries.Tests.MOCKK)
-    testImplementation(Libraries.Tests.STRIKT)
-    testImplementation(Libraries.Tests.SPEK_JVM)
-    testImplementation(Libraries.Tests.ASSERTIONS)
-    testImplementation(Libraries.Tests.SPEK_RUNNER)
-    testImplementation(Libraries.Tests.KOTLIN_REFLECT)
-
-    // endregion
-
 }

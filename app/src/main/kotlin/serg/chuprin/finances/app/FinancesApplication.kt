@@ -13,6 +13,10 @@ class FinancesApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        System.setProperty(
+            "kotlinx.coroutines.debug",
+            if (BuildConfig.DEBUG) "on" else "off"
+        )
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
