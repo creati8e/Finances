@@ -45,12 +45,12 @@ class TestStateStore<I, SE, A, S, E>(
     fun testSubscribe(): Job {
         return scope.launch {
             launch {
-                observeState().collect { newState ->
+                stateFlow().collect { newState ->
                     capturedStates.addLast(newState)
                 }
             }
             launch {
-                observeEvents().collect { newEvent ->
+                eventsFlow().collect { newEvent ->
                     capturedEvents.addLast(newEvent)
                 }
             }

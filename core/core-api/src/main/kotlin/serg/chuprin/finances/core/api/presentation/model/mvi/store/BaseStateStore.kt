@@ -22,11 +22,11 @@ import serg.chuprin.finances.core.api.presentation.model.mvi.reducer.StoreStateR
  * 2. This intent converted to internal action of type [A] using [intentToActionMapper].
  * 3. This action is processed by [executor]. As a result, an effect of type [SE] is produced.
  * 4. This effect processed by [reducer].
- * 5. New state is produced and [observeState] emits new state.
+ * 5. New state is produced and [stateFlow] emits new state.
  *
  * This implementation automatically executes action on background thread.
  */
-@FlowPreview
+@OptIn(FlowPreview::class)
 @Suppress("MemberVisibilityCanBePrivate")
 open class BaseStateStore<I, SE, A, S, E>(
     initialState: S,
@@ -54,12 +54,12 @@ open class BaseStateStore<I, SE, A, S, E>(
 
     override fun accept(t: I) = dispatch(t)
 
-    override fun start(intents: Flow<I>, scope: CoroutineScope): Job {
+    override fun start(intents: Flow<I>, scope: CoroutineScope) {
         require(!isStarted) {
             "Store is started already"
         }
         isStarted = true
-        return scope.launch {
+        scope.launch {
             launch(CoroutineName("Intent dispatcher coroutine")) {
                 intents.collect { intent ->
                     coroutineContext.ensureActive()
@@ -98,9 +98,9 @@ open class BaseStateStore<I, SE, A, S, E>(
         }
     }
 
-    override fun observeState(): Flow<S> = statesChannel.asFlow()
+    override fun stateFlow(): Flow<S> = statesChannel.asFlow()
 
-    override fun observeEvents(): Flow<E> = eventsChannel.asFlow()
+    override fun eventsFlow(): Flow<E> = eventsChannel.asFlow()
 
     override fun dispatch(intent: I) = actionsChannel.sendBlocking(intentToActionMapper(intent))
 

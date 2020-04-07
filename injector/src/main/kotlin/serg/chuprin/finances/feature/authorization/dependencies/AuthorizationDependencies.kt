@@ -24,4 +24,4 @@ interface AuthorizationDependencies {
         CoreRepositoriesProvider::class
     ]
 )
-interface AuthorizationDependenciesComponent : AuthorizationDependencies
+internal interface AuthorizationDependenciesComponent : AuthorizationDependencies

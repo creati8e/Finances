@@ -2,7 +2,6 @@ package serg.chuprin.finances.core.api.presentation.model.mvi.store
 
 import androidx.core.util.Consumer
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 
 
@@ -24,14 +23,14 @@ interface StateStore<I, S, E> : Consumer<I> {
 
     fun dispatch(intent: I)
 
-    fun observeState(): Flow<S>
+    fun stateFlow(): Flow<S>
 
-    fun observeEvents(): Flow<E>
+    fun eventsFlow(): Flow<E>
 
     /**
      * Start a store's loop.
      * After this function call store is ready to receiving intents.
      */
-    fun start(intents: Flow<I>, scope: CoroutineScope): Job
+    fun start(intents: Flow<I>, scope: CoroutineScope)
 
 }

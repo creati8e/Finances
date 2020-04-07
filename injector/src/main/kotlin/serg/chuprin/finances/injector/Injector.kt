@@ -7,6 +7,8 @@ import serg.chuprin.finances.feature.dashboard.dependencies.DaggerDashboardDepen
 import serg.chuprin.finances.feature.dashboard.dependencies.DashboardDependencies
 import serg.chuprin.finances.feature.main.DaggerMainDependenciesComponent
 import serg.chuprin.finances.feature.main.MainDependencies
+import serg.chuprin.finances.feature.onboarding.DaggerOnboardingDependenciesComponent
+import serg.chuprin.finances.feature.onboarding.OnboardingDependencies
 
 /**
  * Created by Sergey Chuprin on 03.04.2020.
@@ -36,6 +38,15 @@ object Injector {
         return DaggerMainDependenciesComponent
             .builder()
             .coreGatewaysProvider(coreProvider)
+            .coreRepositoriesProvider(coreProvider)
+            .build()
+    }
+
+    fun getOnboardingDependencies(): OnboardingDependencies {
+        val coreProvider = CoreDependenciesComponent.get()
+        return DaggerOnboardingDependenciesComponent
+            .builder()
+            .coreNavigationProvider(coreProvider)
             .coreRepositoriesProvider(coreProvider)
             .build()
     }

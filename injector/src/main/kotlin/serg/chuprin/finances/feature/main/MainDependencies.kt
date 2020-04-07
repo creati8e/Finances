@@ -20,4 +20,4 @@ interface MainDependencies {
         CoreRepositoriesProvider::class
     ]
 )
-interface MainDependenciesComponent : MainDependencies
+internal interface MainDependenciesComponent : MainDependencies

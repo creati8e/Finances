@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_onboarding"
-    android:label="Onboarding Graph"
-    app:startDestination="@id/onboardingFragment"
+    android:label="Onboarding Container Graph"
+    app:startDestination="@id/onboardingContainerFragment"
     tools:ignore="UnusedNavigation">
 
     <fragment
-        android:id="@+id/onboardingFragment"
-        android:name="serg.chuprin.finances.feature.onboarding.presentation.view.OnboardingFragment"
-        android:label="OnboardingFragment"
-        tools:layout="@layout/fragment_onboarding" />
+        android:id="@+id/onboardingContainerFragment"
+        android:name="serg.chuprin.finances.feature.onboarding.presentation.view.OnboardingContainerFragment"
+        android:label="OnboardingContainerFragment"
+        tools:layout="@layout/fragment_onboarding_container" />
 
 </navigation>

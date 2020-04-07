@@ -51,6 +51,7 @@ object Libraries {
 
         const val CORE = "androidx.core:core-ktx:1.3.0-beta01"
 
+        const val VIEWPAGER = "androidx.viewpager2:viewpager2:1.0.0"
         const val APPCOMPAT = "androidx.appcompat:appcompat:1.2.0-beta01"
         const val FRAGMENT = "androidx.fragment:fragment-ktx:1.3.0-alpha03"
         const val DESIGN = "com.google.android.material:material:1.2.0-alpha05"

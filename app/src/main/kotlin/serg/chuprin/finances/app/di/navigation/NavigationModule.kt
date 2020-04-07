@@ -5,6 +5,7 @@ import dagger.Module
 import dagger.Provides
 import serg.chuprin.finances.core.api.di.provider.CoreNavigationProvider
 import serg.chuprin.finances.core.api.presentation.navigation.AuthorizationNavigation
+import serg.chuprin.finances.core.api.presentation.navigation.OnboardingNavigation
 import serg.chuprin.finances.feature.dashboard.R as DashboardR
 import serg.chuprin.finances.feature.onboarding.R as OnboardingR
 
@@ -13,6 +14,17 @@ import serg.chuprin.finances.feature.onboarding.R as OnboardingR
  */
 @Module
 class NavigationModule : CoreNavigationProvider {
+
+    @Provides
+    override fun onboardingNavigation(): OnboardingNavigation {
+        return object : OnboardingNavigation {
+
+            override fun navigateToDashboard(navController: NavController) {
+                navController.setGraph(DashboardR.navigation.navigation_dashboard)
+            }
+
+        }
+    }
 
     @Provides
     override fun authorizationNavigation(): AuthorizationNavigation {

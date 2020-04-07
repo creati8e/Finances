@@ -14,4 +14,4 @@ interface DashboardDependencies {
 }
 
 @Component(dependencies = [CoreRepositoriesProvider::class])
-interface DashboardDependenciesComponent : DashboardDependencies
+internal interface DashboardDependenciesComponent : DashboardDependencies

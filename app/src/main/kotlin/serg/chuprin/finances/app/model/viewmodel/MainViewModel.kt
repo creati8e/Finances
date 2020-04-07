@@ -5,6 +5,7 @@ import androidx.lifecycle.liveData
 import serg.chuprin.finances.app.model.AppLaunchState
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.domain.gateway.AuthorizationGateway
+import serg.chuprin.finances.core.api.domain.model.OnboardingStep
 import serg.chuprin.finances.core.api.domain.repository.OnboardingRepository
 import javax.inject.Inject
 
@@ -20,7 +21,7 @@ class MainViewModel @Inject constructor(
     val userAuthorizedLiveData = liveData {
         val isAuthorized = authorizationGateway.isAuthorized()
         if (isAuthorized) {
-            if (onboardingRepository.isOnboardingCompleted()) {
+            if (onboardingRepository.onboardingStep == OnboardingStep.COMPLETED) {
                 emit(AppLaunchState.DASHBOARD)
             } else {
                 emit(AppLaunchState.ONBOARDING)

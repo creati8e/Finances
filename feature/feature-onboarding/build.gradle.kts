@@ -35,6 +35,7 @@ dependencies {
     implementation(Libraries.Android.CORE)
     implementation(Libraries.Android.DESIGN)
     implementation(Libraries.Android.FRAGMENT)
+    implementation(Libraries.Android.VIEWPAGER)
     implementation(Libraries.Android.APPCOMPAT)
     implementation(Libraries.Android.CONSTRAINT_LAYOUT)
 
