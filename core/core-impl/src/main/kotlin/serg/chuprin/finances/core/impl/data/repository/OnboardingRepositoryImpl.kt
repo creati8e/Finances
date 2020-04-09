@@ -1,5 +1,6 @@
 package serg.chuprin.finances.core.impl.data.repository
 
+import kotlinx.coroutines.flow.Flow
 import serg.chuprin.finances.core.api.data.datasource.preferences.Preference
 import serg.chuprin.finances.core.api.data.datasource.preferences.PreferencesAdapter
 import serg.chuprin.finances.core.api.domain.model.OnboardingStep
@@ -31,7 +32,9 @@ internal class OnboardingRepositoryImpl @Inject constructor(
         mapper = OnboardingStepPreferenceMapper()
     )
 
-    override val onboardingStep: OnboardingStep
-        get() = preference.value
+    override var onboardingStep: OnboardingStep by preference.valueDelegate()
+
+    override val onboardingStepFlow: Flow<OnboardingStep>
+        get() = preference.asFlow
 
 }

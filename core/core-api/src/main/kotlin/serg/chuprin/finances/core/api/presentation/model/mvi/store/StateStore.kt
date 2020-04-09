@@ -31,6 +31,6 @@ interface StateStore<I, S, E> : Consumer<I> {
      * Start a store's loop.
      * After this function call store is ready to receiving intents.
      */
-    fun start(intents: Flow<I>, scope: CoroutineScope)
+    fun start(intentsFlow: Flow<I>, scope: CoroutineScope)
 
 }

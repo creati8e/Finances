@@ -9,7 +9,7 @@
 
     <fragment
         android:id="@+id/onboardingContainerFragment"
-        android:name="serg.chuprin.finances.feature.onboarding.presentation.view.OnboardingContainerFragment"
+        android:name="serg.chuprin.finances.feature.onboarding.presentation.common.view.OnboardingContainerFragment"
         android:label="OnboardingContainerFragment"
         tools:layout="@layout/fragment_onboarding_container" />
 

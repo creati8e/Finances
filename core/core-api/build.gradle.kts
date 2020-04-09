@@ -12,13 +12,6 @@ fun DependencyHandler.implementationAll(
     dependencies.forEach(configuration)
 }
 
-fun DependencyHandler.apiAll(
-    dependencies: List<String>,
-    configuration: (dependencyNotation: Any) -> Unit = { api(it) }
-) {
-    dependencies.forEach(configuration)
-}
-
 dependencies {
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf(".*jar"))))
@@ -35,8 +28,6 @@ dependencies {
 
     // Navigation.
     implementationAll(Libraries.Android.Navigation.DEPENDENCIES)
-
-    apiAll(Libraries.Adapter.DEPENDENCIES)
 
     // Android.
     implementation(Libraries.Android.CORE)

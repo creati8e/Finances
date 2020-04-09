@@ -1,5 +1,6 @@
 package serg.chuprin.finances.core.api.domain.repository
 
+import kotlinx.coroutines.flow.Flow
 import serg.chuprin.finances.core.api.domain.model.OnboardingStep
 
 /**
@@ -7,6 +8,8 @@ import serg.chuprin.finances.core.api.domain.model.OnboardingStep
  */
 interface OnboardingRepository {
 
-    val onboardingStep: OnboardingStep
+    var onboardingStep: OnboardingStep
+
+    val onboardingStepFlow: Flow<OnboardingStep>
 
 }

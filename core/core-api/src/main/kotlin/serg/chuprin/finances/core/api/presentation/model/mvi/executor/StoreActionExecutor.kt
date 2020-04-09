@@ -1,8 +1,10 @@
 package serg.chuprin.finances.core.api.presentation.model.mvi.executor
 
 import androidx.core.util.Consumer
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.launch
 
 /**
  * Created by Sergey Chuprin on 09.08.2019.
@@ -12,9 +14,15 @@ import kotlinx.coroutines.flow.emptyFlow
  */
 typealias StoreActionExecutor<T, S, SE, E> = (T, S, Consumer<E>) -> Flow<SE>
 
-inline fun <SE : Any> event(body: () -> Unit): Flow<SE> {
+fun <T> CoroutineScope.flow(block: suspend CoroutineScope.() -> T): Flow<T> {
+    return kotlinx.coroutines.flow.flow {
+        launch {
+            block(this)
+        }
+    }
+}
+
+inline fun <SE : Any> emptyFlowAction(body: () -> Unit): Flow<SE> {
     body()
     return emptyFlow()
 }
-
-fun <SE> emptyObservable(): Flow<SE> = emptyFlow()

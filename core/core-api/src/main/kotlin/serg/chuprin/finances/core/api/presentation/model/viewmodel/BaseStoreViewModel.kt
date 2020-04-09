@@ -1,9 +1,7 @@
 package serg.chuprin.finances.core.api.presentation.model.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
@@ -20,6 +18,10 @@ abstract class BaseStoreViewModel<INTENT> : ViewModel() {
 
     fun dispatchIntent(intent: INTENT) {
         intentsChannel.offer(intent)
+    }
+
+    protected fun <T> Flow<T>.asLiveData(): LiveData<T> {
+        return asLiveData(viewModelScope.coroutineContext)
     }
 
     protected fun <E, STORE : StateStore<*, *, E>> STORE.observeEventsAsLiveData(): LiveData<E> {
@@ -67,6 +69,7 @@ abstract class BaseStoreViewModel<INTENT> : ViewModel() {
         }
     }
 
+    @OptIn(FlowPreview::class)
     protected fun intentsFlow(): Flow<INTENT> = intentsChannel.asFlow()
 
 }

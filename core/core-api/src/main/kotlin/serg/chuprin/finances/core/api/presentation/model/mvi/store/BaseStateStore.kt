@@ -35,7 +35,7 @@ open class BaseStateStore<I, SE, A, S, E>(
     protected val executor: StoreActionExecutor<A, S, SE, E>,
     protected val intentToActionMapper: StoreIntentToActionMapper<I, A>,
     protected val backgroundDispatcher: CoroutineDispatcher = Dispatchers.Default,
-    protected val reducerDispatcher: CoroutineDispatcher = newSingleThreadContext("reducer")
+    protected val reducerDispatcher: CoroutineDispatcher = newSingleThreadContext("Reducer thread")
 ) : StateStore<I, S, E> {
 
     override val state: S
@@ -54,47 +54,15 @@ open class BaseStateStore<I, SE, A, S, E>(
 
     override fun accept(t: I) = dispatch(t)
 
-    override fun start(intents: Flow<I>, scope: CoroutineScope) {
+    override fun start(intentsFlow: Flow<I>, scope: CoroutineScope) {
         require(!isStarted) {
             "Store is started already"
         }
         isStarted = true
         scope.launch {
-            launch(CoroutineName("Intent dispatcher coroutine")) {
-                intents.collect { intent ->
-                    coroutineContext.ensureActive()
-                    dispatch(intent)
-                }
-            }
-
-            launch(CoroutineName("Effect reducer coroutine")) {
-                actionsChannel
-                    .asFlow()
-                    .flatMapConcat { action ->
-                        executor(action, state, eventsChannel.asConsumer())
-                    }
-                    // Execute all actions on background thread.
-                    .flowOn(backgroundDispatcher)
-                    .map { sideEffect ->
-                        reducer(sideEffect, state)
-                    }
-                    // Reduce on single thread to prevent interleaving.
-                    .flowOn(reducerDispatcher)
-                    .distinctUntilChanged()
-                    .collect { newState ->
-                        coroutineContext.ensureActive()
-                        statesChannel.sendBlocking(newState)
-                    }
-            }
-
-            launch(CoroutineName("Bootstrapper coroutine")) {
-                bootstrapper()
-                    .flowOn(backgroundDispatcher)
-                    .collect { action ->
-                        coroutineContext.ensureActive()
-                        actionsChannel.sendBlocking(action)
-                    }
-            }
+            processIntents(this, intentsFlow)
+            processActions(this)
+            bootstrap(this)
         }
     }
 
@@ -105,6 +73,52 @@ open class BaseStateStore<I, SE, A, S, E>(
     override fun dispatch(intent: I) = actionsChannel.sendBlocking(intentToActionMapper(intent))
 
     protected suspend fun dispatchAction(action: A) = actionsChannel.send(action)
+
+    private suspend fun processIntents(coroutineScope: CoroutineScope, intentsFlow: Flow<I>) {
+        coroutineScope.launch(CoroutineName("Intent dispatcher coroutine")) {
+            intentsFlow.collect { intent ->
+                ensureActive()
+                actionsChannel.send(intentToActionMapper(intent))
+            }
+        }
+    }
+
+    private suspend fun bootstrap(coroutineScope: CoroutineScope) {
+        coroutineScope.launch(CoroutineName("Bootstrapper coroutine")) {
+            bootstrapper()
+                .flowOn(backgroundDispatcher)
+                .collect { action ->
+                    ensureActive()
+                    actionsChannel.send(action)
+                }
+        }
+    }
+
+    private suspend fun processActions(coroutineScope: CoroutineScope) {
+        coroutineScope.launch(CoroutineName("Effect reducer coroutine")) {
+            actionsChannel
+                .asFlow()
+                .flatMapConcat { action ->
+                    executor(
+                        action,
+                        state,
+                        eventsChannel.asConsumer()
+                    )
+                }
+                // Execute all actions on background thread.
+                .flowOn(backgroundDispatcher)
+                .map { sideEffect ->
+                    reducer(sideEffect, state)
+                }
+                // Reduce on single thread to prevent interleaving.
+                .flowOn(reducerDispatcher)
+                .distinctUntilChanged()
+                .collect { newState ->
+                    ensureActive()
+                    statesChannel.send(newState)
+                }
+        }
+    }
 
     private fun <T> SendChannel<T>.asConsumer(): Consumer<T> {
         return Consumer { value ->
