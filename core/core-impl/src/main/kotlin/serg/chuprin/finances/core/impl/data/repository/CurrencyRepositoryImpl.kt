@@ -13,8 +13,16 @@ class CurrencyRepositoryImpl @Inject constructor() : CurrencyRepository {
         return Currency.getInstance(Locale.getDefault())
     }
 
-    override suspend fun getAvailableCurrencies(): Set<Currency> {
-        return Currency.getAvailableCurrencies()
+    override suspend fun getAvailableCurrencies(): List<Currency> {
+        return Currency.getAvailableCurrencies().toList()
+    }
+
+    override suspend fun searchCurrencies(searchQuery: String): List<Currency> {
+        return getAvailableCurrencies()
+            .filter { currency ->
+                currency.displayName.contains(searchQuery, ignoreCase = true)
+                        || currency.currencyCode.contains(searchQuery, ignoreCase = true)
+            }
     }
 
 }

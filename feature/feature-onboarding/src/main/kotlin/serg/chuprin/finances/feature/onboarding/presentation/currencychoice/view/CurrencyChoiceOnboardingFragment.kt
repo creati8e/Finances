@@ -49,6 +49,9 @@ class CurrencyChoiceOnboardingFragment :
         currencyChoiceView.onCloseClicked = {
             viewModel.dispatchIntent(CurrencyChoiceOnboardingIntent.CloseCurrencyPicker)
         }
+        currencyChoiceView.onSearchQueryChanged = { searchQuery ->
+            viewModel.dispatchIntent(CurrencyChoiceOnboardingIntent.SearchCurrencies(searchQuery))
+        }
         textInputLayout.onClick {
             viewModel.dispatchIntent(CurrencyChoiceOnboardingIntent.ClickOnCurrencyPicker)
         }

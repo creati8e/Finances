@@ -15,6 +15,10 @@ sealed class CurrencyChoiceOnboardingIntent {
 
     object ClickOnCurrencyPicker : CurrencyChoiceOnboardingIntent()
 
+    class SearchCurrencies(
+        val searchQuery: String
+    ) : CurrencyChoiceOnboardingIntent()
+
     class ChooseCurrency(
         val currencyCell: CurrencyCell
     ) : CurrencyChoiceOnboardingIntent()

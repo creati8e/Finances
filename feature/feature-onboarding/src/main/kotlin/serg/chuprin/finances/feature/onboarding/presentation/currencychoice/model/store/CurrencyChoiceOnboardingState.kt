@@ -12,6 +12,6 @@ data class CurrencyChoiceOnboardingState(
     val doneButtonIsEnabled: Boolean = false,
     val currencyPickerIsVisible: Boolean = false,
     val currencyCells: List<CurrencyCell> = emptyList(),
-    val availableCurrencies: Set<Currency> = emptySet(),
+    val availableCurrencies: List<Currency> = emptyList(),
     val chosenCurrencyDisplayName: String = EMPTY_STRING
 )

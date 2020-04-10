@@ -1,10 +1,14 @@
 package serg.chuprin.finances.feature.onboarding.presentation.currencychoice.model.store
 
 import androidx.core.util.Consumer
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flowOf
+import serg.chuprin.finances.core.api.domain.usecase.SearchCurrenciesUseCase
 import serg.chuprin.finances.core.api.extensions.flowOfSingleValue
+import serg.chuprin.finances.core.api.extensions.takeUntil
 import serg.chuprin.finances.core.api.presentation.model.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.core.api.presentation.model.mvi.executor.emptyFlowAction
 import serg.chuprin.finances.core.api.presentation.model.mvi.invoke
@@ -17,13 +21,15 @@ import javax.inject.Inject
  * Created by Sergey Chuprin on 06.04.2020.
  */
 class CurrencyChoiceOnboardingActionExecutor @Inject constructor(
+    private val searchCurrenciesUseCase: SearchCurrenciesUseCase,
     private val completeCurrencyChoiceOnboardingUseCase: CompleteCurrencyChoiceOnboardingUseCase
 ) : StoreActionExecutor<CurrencyChoiceOnboardingAction, CurrencyChoiceOnboardingState, CurrencyChoiceOnboardingEffect, CurrencyChoiceOnboardingEvent> {
 
     override fun invoke(
         action: CurrencyChoiceOnboardingAction,
         state: CurrencyChoiceOnboardingState,
-        eventConsumer: Consumer<CurrencyChoiceOnboardingEvent>
+        eventConsumer: Consumer<CurrencyChoiceOnboardingEvent>,
+        actionsFlow: Flow<CurrencyChoiceOnboardingAction>
     ): Flow<CurrencyChoiceOnboardingEffect> {
         return when (action) {
             is CurrencyChoiceOnboardingAction.ExecuteIntent -> {
@@ -32,7 +38,13 @@ class CurrencyChoiceOnboardingActionExecutor @Inject constructor(
                         handleClickOnDoneButtonIntent(state)
                     }
                     CurrencyChoiceOnboardingIntent.BackPress -> {
-                        handleBackPress(state, eventConsumer)
+                        handleBackPressIntent(state, eventConsumer)
+                    }
+                    is CurrencyChoiceOnboardingIntent.ChooseCurrency -> {
+                        handleChooseCurrencyIntent(intent, state)
+                    }
+                    is CurrencyChoiceOnboardingIntent.SearchCurrencies -> {
+                        handleSearchCurrenciesIntent(intent, state, actionsFlow)
                     }
                     CurrencyChoiceOnboardingIntent.ClickOnCurrencyPicker -> {
                         handleCurrencyPickerVisibilityChangeIntent(visible = true, state = state)
@@ -40,15 +52,31 @@ class CurrencyChoiceOnboardingActionExecutor @Inject constructor(
                     CurrencyChoiceOnboardingIntent.CloseCurrencyPicker -> {
                         handleCurrencyPickerVisibilityChangeIntent(visible = false, state = state)
                     }
-                    is CurrencyChoiceOnboardingIntent.ChooseCurrency -> {
-                        handleChooseCurrencyIntent(intent, state)
-                    }
                 }
             }
             is CurrencyChoiceOnboardingAction.SetCurrenciesParams -> {
                 handleSetCurrenciesParamsAction(action)
             }
         }
+    }
+
+    private fun handleSearchCurrenciesIntent(
+        intent: CurrencyChoiceOnboardingIntent.SearchCurrencies,
+        state: CurrencyChoiceOnboardingState,
+        actionsFlow: Flow<CurrencyChoiceOnboardingAction>
+    ): Flow<CurrencyChoiceOnboardingEffect> {
+        return flowOfSingleValue {
+            delay(300)
+            CurrencyChoiceOnboardingEffect.CurrenciesFilteredByQuery(
+                buildCurrencyCells(
+                    chosenCurrency = state.chosenCurrency,
+                    currencies = searchCurrenciesUseCase.execute(intent.searchQuery)
+                )
+            )
+        }.takeUntil(actionsFlow.filter { action ->
+            action is CurrencyChoiceOnboardingAction.ExecuteIntent
+                    && action.intent is CurrencyChoiceOnboardingIntent.SearchCurrencies
+        })
     }
 
     private fun handleChooseCurrencyIntent(
@@ -68,7 +96,7 @@ class CurrencyChoiceOnboardingActionExecutor @Inject constructor(
         }
     }
 
-    private fun handleBackPress(
+    private fun handleBackPressIntent(
         state: CurrencyChoiceOnboardingState,
         eventConsumer: Consumer<CurrencyChoiceOnboardingEvent>
     ): Flow<CurrencyChoiceOnboardingEffect> {
@@ -119,8 +147,8 @@ class CurrencyChoiceOnboardingActionExecutor @Inject constructor(
     }
 
     private fun buildCurrencyCells(
-        currencies: Set<Currency>,
-        chosenCurrency: Currency
+        currencies: List<Currency>,
+        chosenCurrency: Currency?
     ): List<CurrencyCell> {
         val locale = Locale.getDefault()
         return currencies

@@ -9,6 +9,8 @@ interface CurrencyRepository {
 
     suspend fun getDefaultCurrency(): Currency
 
-    suspend fun getAvailableCurrencies(): Set<Currency>
+    suspend fun getAvailableCurrencies(): List<Currency>
+
+    suspend fun searchCurrencies(searchQuery: String): List<Currency>
 
 }

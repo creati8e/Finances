@@ -5,6 +5,7 @@ import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
 import android.view.View
 import android.widget.RelativeLayout
+import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_currency_choice.view.*
@@ -27,15 +28,16 @@ class CurrencyChoiceListView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr) {
 
-    var onCloseClicked: (() -> Unit)? = null
-    var onCurrencyCellChosen: ((cell: CurrencyCell) -> Unit)? = null
+    lateinit var onCloseClicked: () -> Unit
+    lateinit var onSearchQueryChanged: (String) -> Unit
+    lateinit var onCurrencyCellChosen: (cell: CurrencyCell) -> Unit
 
     private val view = View.inflate(context, R.layout.view_currency_choice, this)
     private val cellsAdapter = DiffMultiViewAdapter(DiffCallback<CurrencyCell>()).apply {
         registerRenderer(CurrencyCellRenderer())
         clickListener = { cell, _, _ ->
             hideKeyboard()
-            onCurrencyCellChosen?.invoke(cell)
+            onCurrencyCellChosen.invoke(cell)
         }
     }
 
@@ -56,9 +58,12 @@ class CurrencyChoiceListView @JvmOverloads constructor(
             })
         }
         background = ColorDrawable(context.getBackgroundColor())
+        view.searchEditText.doAfterTextChanged { editable ->
+            editable?.toString()?.let(onSearchQueryChanged)
+        }
         view.closeImageView.onClick {
             hideKeyboard()
-            onCloseClicked?.invoke()
+            onCloseClicked.invoke()
         }
     }
 

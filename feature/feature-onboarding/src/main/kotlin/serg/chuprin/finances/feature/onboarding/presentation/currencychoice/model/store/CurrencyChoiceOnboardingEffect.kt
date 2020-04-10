@@ -14,6 +14,10 @@ sealed class CurrencyChoiceOnboardingEffect {
         val updatedCurrencyCells: List<CurrencyCell>
     ) : CurrencyChoiceOnboardingEffect()
 
+    class CurrenciesFilteredByQuery(
+        val currencyCells: List<CurrencyCell>
+    ) : CurrencyChoiceOnboardingEffect()
+
     class CurrencyPickerVisibilityChanged(
         val visible: Boolean
     ) : CurrencyChoiceOnboardingEffect()
@@ -22,7 +26,7 @@ sealed class CurrencyChoiceOnboardingEffect {
         val currentCurrency: Currency,
         val chosenCurrencyDisplayName: String,
         val currencyCells: List<CurrencyCell>,
-        val availableCurrencies: Set<Currency>
+        val availableCurrencies: List<Currency>
     ) : CurrencyChoiceOnboardingEffect()
 
 }

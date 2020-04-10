@@ -46,6 +46,7 @@ object Injector {
         val coreProvider = CoreDependenciesComponent.get()
         return DaggerOnboardingFeatureDependenciesComponent
             .builder()
+            .coreUseCasesProvider(coreProvider)
             .coreNavigationProvider(coreProvider)
             .coreRepositoriesProvider(coreProvider)
             .build()

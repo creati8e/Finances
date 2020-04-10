@@ -32,6 +32,9 @@ class CurrencyChoiceOnboardingStateReducer :
                     chosenCurrencyDisplayName = effect.chosenCurrencyDisplayName
                 )
             }
+            is CurrencyChoiceOnboardingEffect.CurrenciesFilteredByQuery -> {
+                state.copy(currencyCells = effect.currencyCells)
+            }
             is CurrencyChoiceOnboardingEffect.CurrencyPickerVisibilityChanged -> {
                 state.copy(currencyPickerIsVisible = effect.visible)
             }

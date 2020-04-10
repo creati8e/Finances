@@ -5,5 +5,6 @@ package serg.chuprin.finances.core.api.di.provider
  */
 interface CoreDependenciesProvider :
     CoreGatewaysProvider,
+    CoreUseCasesProvider,
     CoreNavigationProvider,
     CoreRepositoriesProvider

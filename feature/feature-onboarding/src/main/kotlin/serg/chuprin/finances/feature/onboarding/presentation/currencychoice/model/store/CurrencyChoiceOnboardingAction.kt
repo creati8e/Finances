@@ -9,7 +9,7 @@ sealed class CurrencyChoiceOnboardingAction {
 
     class SetCurrenciesParams(
         val currentCurrency: Currency,
-        val availableCurrencies: Set<Currency>
+        val availableCurrencies: List<Currency>
     ) : CurrencyChoiceOnboardingAction()
 
     class ExecuteIntent(
