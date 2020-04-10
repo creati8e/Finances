@@ -30,6 +30,7 @@ class CurrencyChoiceOnboardingStateReducer :
                     currentCells = effect.currencyCells,
                     chosenCurrency = effect.currentCurrency,
                     defaultCurrencyCells = effect.currencyCells,
+                    availableCurrencies = effect.availableCurrencies,
                     chosenCurrencyDisplayName = effect.chosenCurrencyDisplayName
                 )
             }

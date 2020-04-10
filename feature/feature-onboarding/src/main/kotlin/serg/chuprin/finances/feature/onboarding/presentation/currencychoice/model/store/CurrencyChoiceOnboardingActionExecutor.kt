@@ -157,6 +157,7 @@ class CurrencyChoiceOnboardingActionExecutor @Inject constructor(
             CurrencyChoiceOnboardingEffect.SetCurrencyParams(
                 currencyCells = currencyCells,
                 currentCurrency = action.currentCurrency,
+                availableCurrencies = action.availableCurrencies,
                 chosenCurrencyDisplayName = action.currentCurrency.buildDisplayName()
             )
         }

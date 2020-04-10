@@ -44,7 +44,8 @@ sealed class CurrencyChoiceOnboardingEffect {
     class SetCurrencyParams(
         val currentCurrency: Currency,
         val chosenCurrencyDisplayName: String,
-        val currencyCells: List<CurrencyCell>
+        val currencyCells: List<CurrencyCell>,
+        val availableCurrencies: List<Currency>
     ) : CurrencyChoiceOnboardingEffect()
 
 }
