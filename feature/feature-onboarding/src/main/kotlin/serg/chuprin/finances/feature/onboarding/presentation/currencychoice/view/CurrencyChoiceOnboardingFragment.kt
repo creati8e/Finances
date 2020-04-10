@@ -7,6 +7,7 @@ import android.view.View
 import androidx.activity.addCallback
 import androidx.core.transition.doOnEnd
 import androidx.core.transition.doOnStart
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.transition.MaterialArcMotion
 import com.google.android.material.transition.MaterialContainerTransform
 import kotlinx.android.synthetic.main.fragment_onboarding_currency_choice.*
@@ -41,6 +42,8 @@ class CurrencyChoiceOnboardingFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        animateFab(savedInstanceState, view)
 
         currencyChoiceView.onCurrencyCellChosen = { cell ->
             viewModel.dispatchIntent(CurrencyChoiceOnboardingIntent.ChooseCurrency(cell))
@@ -98,6 +101,31 @@ class CurrencyChoiceOnboardingFragment :
             currencyChoiceView.makeVisible()
         } else {
             currencyChoiceView.makeGone()
+        }
+    }
+
+    private fun animateFab(savedInstanceState: Bundle?, view: View) {
+
+        fun showFabTextAndExtend() {
+            doneButton.setText(R.string.onboarding_currency_choice_button)
+            doneButton.extend()
+        }
+
+        // Animate on first screen show.
+        if (savedInstanceState == null) {
+            view.postDelayed(
+                {
+                    doneButton?.show(object : ExtendedFloatingActionButton.OnChangedCallback() {
+                        override fun onShown(extendedFab: ExtendedFloatingActionButton?) {
+                            showFabTextAndExtend()
+                        }
+                    })
+                },
+                400
+            )
+        } else {
+            doneButton.makeVisible()
+            showFabTextAndExtend()
         }
     }
 

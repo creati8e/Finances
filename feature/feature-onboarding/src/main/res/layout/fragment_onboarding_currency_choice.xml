@@ -79,14 +79,18 @@
             android:id="@+id/doneButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/onboarding_currency_choice_button"
+            android:enabled="false"
+            android:visibility="invisible"
             app:backgroundTint="?colorAccent"
+            app:extendMotionSpec="@animator/extended_fab_extend_motion_spec"
             app:icon="@drawable/ic_check"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/chosenCurrencyTextView"
-            app:layout_constraintVertical_bias="1" />
+            app:layout_constraintVertical_bias="1"
+            tools:text="@string/onboarding_currency_choice_button"
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
