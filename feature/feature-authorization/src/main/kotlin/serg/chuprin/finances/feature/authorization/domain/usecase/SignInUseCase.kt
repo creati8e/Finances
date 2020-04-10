@@ -2,7 +2,9 @@ package serg.chuprin.finances.feature.authorization.domain.usecase
 
 import kotlinx.coroutines.coroutineScope
 import serg.chuprin.finances.core.api.domain.gateway.AuthorizationGateway
+import serg.chuprin.finances.core.api.domain.model.OnboardingStep
 import serg.chuprin.finances.core.api.domain.model.SignInResult
+import serg.chuprin.finances.core.api.domain.repository.OnboardingRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import javax.inject.Inject
 
@@ -11,6 +13,7 @@ import javax.inject.Inject
  */
 class SignInUseCase @Inject constructor(
     private val userRepository: UserRepository,
+    private val onboardingRepository: OnboardingRepository,
     private val authorizationGateway: AuthorizationGateway
 ) {
 
@@ -18,9 +21,11 @@ class SignInUseCase @Inject constructor(
         return coroutineScope {
             val user = authorizationGateway.signIn(idToken)
             if (user != null) {
-                SignInResult.Success(
-                    userIsNew = userRepository.createAndSet(user)
-                )
+                val userIsNew = userRepository.createAndSet(user)
+                if (!userIsNew) {
+                    onboardingRepository.onboardingStep = OnboardingStep.COMPLETED
+                }
+                SignInResult.Success(userIsNew = userIsNew)
             } else {
                 SignInResult.Error
             }

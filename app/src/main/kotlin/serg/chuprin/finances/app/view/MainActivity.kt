@@ -28,7 +28,6 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.rootFragmentContainer)
         navController.setGraph(R.navigation.navigation_onboarding)
 
-        // TODO: Mark onboarding as completed if user is not new.
         // TODO: Create root graph and navigate between child graphs instead settings the whole graph.
 //        return when (appLaunchState) {
 //            AppLaunchState.ONBOARDING -> {

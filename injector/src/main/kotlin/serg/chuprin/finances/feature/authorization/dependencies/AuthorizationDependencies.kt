@@ -5,6 +5,7 @@ import serg.chuprin.finances.core.api.di.provider.CoreGatewaysProvider
 import serg.chuprin.finances.core.api.di.provider.CoreNavigationProvider
 import serg.chuprin.finances.core.api.di.provider.CoreRepositoriesProvider
 import serg.chuprin.finances.core.api.domain.gateway.AuthorizationGateway
+import serg.chuprin.finances.core.api.domain.repository.OnboardingRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.api.presentation.navigation.AuthorizationNavigation
 
@@ -14,6 +15,7 @@ import serg.chuprin.finances.core.api.presentation.navigation.AuthorizationNavig
 interface AuthorizationDependencies {
     val userRepository: UserRepository
     val authorizationGateway: AuthorizationGateway
+    val onboardingRepository: OnboardingRepository
     val authorizationNavigation: AuthorizationNavigation
 }
 
