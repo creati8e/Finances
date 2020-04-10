@@ -3,8 +3,8 @@ package serg.chuprin.finances.feature.onboarding.presentation.currencychoice.mod
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
+import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.BaseStoreViewModel
-import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.model.cells.CurrencyCell
 import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.model.store.CurrencyChoiceOnboardingEvent
 import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.model.store.CurrencyChoiceOnboardingIntent
 import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.model.store.CurrencyChoiceOnboardingStore
@@ -21,8 +21,8 @@ class CurrencyChoiceOnboardingViewModel @Inject constructor(
     val eventsLiveData: LiveData<CurrencyChoiceOnboardingEvent> =
         store.observeEventsAsLiveData()
 
-    val currencyCellsLiveData: LiveData<List<CurrencyCell>> =
-        store.observeParticularStateAsLiveData { state -> state.currentCurrencyCells }
+    val cellsLiveData: LiveData<List<BaseCell>> =
+        store.observeParticularStateAsLiveData { state -> state.currentCells }
 
     val doneButtonEnabledLiveData: LiveData<Boolean> =
         store.observeParticularStateAsLiveData { state -> state.doneButtonIsEnabled }

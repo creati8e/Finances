@@ -61,7 +61,7 @@ class CurrencyChoiceOnboardingFragment :
         with(viewModel) {
             eventsLiveData(::handleEvent)
             doneButtonEnabledLiveData(doneButton::setEnabled)
-            currencyCellsLiveData(currencyChoiceView::setCells)
+            cellsLiveData(currencyChoiceView::setCells)
             currencyPickerVisibilityLiveData(::showOrHideCurrencyChoice)
             chosenCurrencyDisplayNameLiveData(chosenCurrencyTextView::setText)
         }

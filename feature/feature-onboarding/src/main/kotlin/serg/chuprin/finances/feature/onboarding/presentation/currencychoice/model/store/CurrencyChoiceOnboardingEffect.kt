@@ -1,5 +1,6 @@
 package serg.chuprin.finances.feature.onboarding.presentation.currencychoice.model.store
 
+import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.model.cells.CurrencyCell
 import java.util.*
 
@@ -15,7 +16,7 @@ sealed class CurrencyChoiceOnboardingEffect {
     ) : CurrencyChoiceOnboardingEffect()
 
     class CurrenciesFilteredByQuery(
-        val currencyCells: List<CurrencyCell>
+        val cells: List<BaseCell>
     ) : CurrencyChoiceOnboardingEffect()
 
     class CurrencyPickerVisibilityChanged(

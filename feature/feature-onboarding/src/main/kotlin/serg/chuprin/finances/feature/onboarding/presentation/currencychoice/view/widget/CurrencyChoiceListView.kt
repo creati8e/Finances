@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_currency_choice.view.*
 import serg.chuprin.adapter.DiffMultiViewAdapter
 import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
+import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.view.adapter.diff.DiffCallback
+import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ZeroDataCellRenderer
 import serg.chuprin.finances.core.api.presentation.view.extensions.*
 import serg.chuprin.finances.feature.onboarding.R
 import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.model.cells.CurrencyCell
@@ -30,16 +32,19 @@ class CurrencyChoiceListView @JvmOverloads constructor(
     lateinit var onSearchQueryChanged: (String) -> Unit
     lateinit var onCurrencyCellChosen: (cell: CurrencyCell) -> Unit
 
-    private val view = View.inflate(context, R.layout.view_currency_choice, this)
-    private val cellsAdapter = DiffMultiViewAdapter(DiffCallback<CurrencyCell>()).apply {
+    private val cellsAdapter = DiffMultiViewAdapter(DiffCallback<BaseCell>()).apply {
         registerRenderer(CurrencyCellRenderer())
+        registerRenderer(ZeroDataCellRenderer())
         clickListener = { cell, _, _ ->
             hideKeyboard()
-            onCurrencyCellChosen.invoke(cell)
+            if (cell is CurrencyCell) {
+                onCurrencyCellChosen.invoke(cell)
+            }
         }
     }
 
     init {
+        View.inflate(context, R.layout.view_currency_choice, this)
         with(recyclerView) {
             setHasFixedSize(true)
             adapter = cellsAdapter
@@ -68,7 +73,7 @@ class CurrencyChoiceListView @JvmOverloads constructor(
         }
     }
 
-    fun setCells(cells: List<CurrencyCell>) = cellsAdapter.setItems(cells)
+    fun setCells(cells: List<BaseCell>) = cellsAdapter.setItems(cells)
 
     fun resetScroll() = recyclerView.layoutManager!!.scrollToPosition(0)
 

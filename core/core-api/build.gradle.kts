@@ -25,6 +25,7 @@ dependencies {
     // region UI.
 
     implementation(Libraries.COIL)
+    implementationAll(Libraries.Adapter.DEPENDENCIES)
 
     // Navigation.
     implementationAll(Libraries.Android.Navigation.DEPENDENCIES)

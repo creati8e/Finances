@@ -9,9 +9,11 @@ import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.api.domain.usecase.SearchCurrenciesUseCase
 import serg.chuprin.finances.core.api.extensions.flowOfSingleValue
 import serg.chuprin.finances.core.api.extensions.takeUntil
+import serg.chuprin.finances.core.api.presentation.model.cells.ZeroDataCell
 import serg.chuprin.finances.core.api.presentation.model.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.core.api.presentation.model.mvi.executor.emptyFlowAction
 import serg.chuprin.finances.core.api.presentation.model.mvi.invoke
+import serg.chuprin.finances.feature.onboarding.R
 import serg.chuprin.finances.feature.onboarding.domain.usecase.CompleteCurrencyChoiceOnboardingUseCase
 import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.model.cells.CurrencyCell
 import java.util.*
@@ -67,16 +69,21 @@ class CurrencyChoiceOnboardingActionExecutor @Inject constructor(
     ): Flow<CurrencyChoiceOnboardingEffect> {
         return flowOfSingleValue {
             delay(300)
+            val currencies = searchCurrenciesUseCase.execute(intent.searchQuery)
             CurrencyChoiceOnboardingEffect.CurrenciesFilteredByQuery(
-                buildCurrencyCells(
-                    chosenCurrency = state.chosenCurrency,
-                    currencies = searchCurrenciesUseCase.execute(intent.searchQuery)
-                )
+                if (currencies.isEmpty()) {
+                    listOf(
+                        ZeroDataCell(
+                            iconRes = null,
+                            fillParent = true,
+                            contentMessageRes = null,
+                            titleRes = R.string.onboarding_currency_choice_currencies_not_found
+                        )
+                    )
+                } else
+                    buildCurrencyCells(currencies, state.chosenCurrency)
             )
-        }.takeUntil(actionsFlow.filter { action ->
-            action is CurrencyChoiceOnboardingAction.ExecuteIntent
-                    && action.intent is CurrencyChoiceOnboardingIntent.SearchCurrencies
-        })
+        }.takeUntil(actionsFlow.filter { action -> isSearchCurrenciesAction(action) })
     }
 
     private fun handleChooseCurrencyIntent(
@@ -170,6 +177,11 @@ class CurrencyChoiceOnboardingActionExecutor @Inject constructor(
                     displayName = currency.buildDisplayName(locale)
                 )
             }
+    }
+
+    private fun isSearchCurrenciesAction(action: CurrencyChoiceOnboardingAction): Boolean {
+        return (action is CurrencyChoiceOnboardingAction.ExecuteIntent
+                && action.intent is CurrencyChoiceOnboardingIntent.SearchCurrencies)
     }
 
     private fun Currency.buildDisplayName(locale: Locale = Locale.getDefault()): String {

@@ -1,6 +1,7 @@
 package serg.chuprin.finances.feature.onboarding.presentation.currencychoice.model.store
 
 import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
+import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.model.cells.CurrencyCell
 import java.util.*
 
@@ -16,7 +17,7 @@ data class CurrencyChoiceOnboardingState(
     /**
      * Current cells list could be filtered.
      */
-    val currentCurrencyCells: List<CurrencyCell> = emptyList(),
+    val currentCells: List<BaseCell> = emptyList(),
     /**
      * Default list contains all cells unfiltered.
      */
