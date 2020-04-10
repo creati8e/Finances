@@ -10,6 +10,9 @@ import java.util.*
  */
 data class CurrencyChoiceOnboardingState(
     val chosenCurrency: Currency? = null,
+    /**
+     * Enabled if currency is chosen.
+     */
     val doneButtonIsEnabled: Boolean = false,
     val currencyPickerIsVisible: Boolean = false,
     val availableCurrencies: List<Currency> = emptyList(),
@@ -20,6 +23,7 @@ data class CurrencyChoiceOnboardingState(
     val currentCells: List<BaseCell> = emptyList(),
     /**
      * Default list contains all cells unfiltered.
+     * It is needed to replace current cells list after currency picker closing.
      */
     val defaultCurrencyCells: List<CurrencyCell> = emptyList()
 )

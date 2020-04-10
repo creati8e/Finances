@@ -18,7 +18,8 @@ class CurrencyChoiceOnboardingStateReducer :
                     doneButtonIsEnabled = true,
                     currencyPickerIsVisible = false,
                     chosenCurrency = effect.currency,
-                    currentCells = effect.updatedCurrencyCells,
+                    currentCells = effect.allCurrencyCellsWithChosen,
+                    defaultCurrencyCells = effect.allCurrencyCellsWithChosen,
                     chosenCurrencyDisplayName = effect.chosenCurrencyDisplayName
                 )
             }
@@ -29,7 +30,6 @@ class CurrencyChoiceOnboardingStateReducer :
                     currentCells = effect.currencyCells,
                     chosenCurrency = effect.currentCurrency,
                     defaultCurrencyCells = effect.currencyCells,
-                    availableCurrencies = effect.availableCurrencies,
                     chosenCurrencyDisplayName = effect.chosenCurrencyDisplayName
                 )
             }

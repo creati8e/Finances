@@ -97,7 +97,7 @@ class CurrencyChoiceOnboardingActionExecutor @Inject constructor(
             )
             CurrencyChoiceOnboardingEffect.CurrencyChosen(
                 currency = intent.currencyCell.currency,
-                updatedCurrencyCells = updatedCurrencyCells,
+                allCurrencyCellsWithChosen = updatedCurrencyCells,
                 chosenCurrencyDisplayName = intent.currencyCell.displayName
             )
         }
@@ -157,7 +157,6 @@ class CurrencyChoiceOnboardingActionExecutor @Inject constructor(
             CurrencyChoiceOnboardingEffect.SetCurrencyParams(
                 currencyCells = currencyCells,
                 currentCurrency = action.currentCurrency,
-                availableCurrencies = action.availableCurrencies,
                 chosenCurrencyDisplayName = action.currentCurrency.buildDisplayName()
             )
         }
