@@ -18,7 +18,7 @@ class CurrencyChoiceOnboardingStateReducer :
                     doneButtonIsEnabled = true,
                     currencyPickerIsVisible = false,
                     chosenCurrency = effect.currency,
-                    currencyCells = effect.updatedCurrencyCells,
+                    currentCurrencyCells = effect.updatedCurrencyCells,
                     chosenCurrencyDisplayName = effect.chosenCurrencyDisplayName
                 )
             }
@@ -26,17 +26,21 @@ class CurrencyChoiceOnboardingStateReducer :
                 state.copy(
                     doneButtonIsEnabled = true,
                     currencyPickerIsVisible = false,
-                    currencyCells = effect.currencyCells,
                     chosenCurrency = effect.currentCurrency,
+                    defaultCurrencyCells = effect.currencyCells,
+                    currentCurrencyCells = effect.currencyCells,
                     availableCurrencies = effect.availableCurrencies,
                     chosenCurrencyDisplayName = effect.chosenCurrencyDisplayName
                 )
             }
             is CurrencyChoiceOnboardingEffect.CurrenciesFilteredByQuery -> {
-                state.copy(currencyCells = effect.currencyCells)
+                state.copy(currentCurrencyCells = effect.currencyCells)
             }
             is CurrencyChoiceOnboardingEffect.CurrencyPickerVisibilityChanged -> {
-                state.copy(currencyPickerIsVisible = effect.visible)
+                state.copy(
+                    currencyPickerIsVisible = effect.visible,
+                    currentCurrencyCells = effect.allCurrencyCells
+                )
             }
         }
     }

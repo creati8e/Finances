@@ -22,7 +22,7 @@ class CurrencyChoiceOnboardingViewModel @Inject constructor(
         store.observeEventsAsLiveData()
 
     val currencyCellsLiveData: LiveData<List<CurrencyCell>> =
-        store.observeParticularStateAsLiveData { state -> state.currencyCells }
+        store.observeParticularStateAsLiveData { state -> state.currentCurrencyCells }
 
     val doneButtonEnabledLiveData: LiveData<Boolean> =
         store.observeParticularStateAsLiveData { state -> state.doneButtonIsEnabled }

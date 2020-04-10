@@ -6,16 +6,15 @@ import android.transition.TransitionManager
 import android.view.View
 import androidx.activity.addCallback
 import androidx.core.transition.doOnEnd
+import androidx.core.transition.doOnStart
 import com.google.android.material.transition.MaterialArcMotion
 import com.google.android.material.transition.MaterialContainerTransform
 import kotlinx.android.synthetic.main.fragment_onboarding_currency_choice.*
-import kotlinx.android.synthetic.main.view_currency_choice.view.*
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeGone
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisible
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
-import serg.chuprin.finances.core.api.presentation.view.extensions.showKeyboard
 import serg.chuprin.finances.feature.onboarding.R
 import serg.chuprin.finances.feature.onboarding.presentation.common.di.OnboardingFeatureComponent
 import serg.chuprin.finances.feature.onboarding.presentation.common.view.OnboardingContainerFragment
@@ -52,7 +51,7 @@ class CurrencyChoiceOnboardingFragment :
         currencyChoiceView.onSearchQueryChanged = { searchQuery ->
             viewModel.dispatchIntent(CurrencyChoiceOnboardingIntent.SearchCurrencies(searchQuery))
         }
-        textInputLayout.onClick {
+        chosenCurrencyTextView.onClick {
             viewModel.dispatchIntent(CurrencyChoiceOnboardingIntent.ClickOnCurrencyPicker)
         }
         doneButton.onClick {
@@ -63,8 +62,8 @@ class CurrencyChoiceOnboardingFragment :
             eventsLiveData(::handleEvent)
             doneButtonEnabledLiveData(doneButton::setEnabled)
             currencyCellsLiveData(currencyChoiceView::setCells)
-            chosenCurrencyDisplayNameLiveData(textInputLayout::setText)
             currencyPickerVisibilityLiveData(::showOrHideCurrencyChoice)
+            chosenCurrencyDisplayNameLiveData(chosenCurrencyTextView::setText)
         }
     }
 
@@ -78,16 +77,20 @@ class CurrencyChoiceOnboardingFragment :
 
     private fun showOrHideCurrencyChoice(show: Boolean) {
         val transition = MaterialContainerTransform(requireContext()).apply {
-            startView = if (show) textInputLayout else currencyChoiceView
-            endView = if (show) currencyChoiceView else textInputLayout
+            startView = if (show) chosenCurrencyTextView else currencyChoiceView
+            endView = if (show) currencyChoiceView else chosenCurrencyTextView
 
             scrimColor = Color.TRANSPARENT
             pathMotion = MaterialArcMotion()
             fadeMode = MaterialContainerTransform.FADE_MODE_THROUGH
         }
         if (show) {
+            transition.doOnStart {
+                currencyChoiceView.resetScroll()
+                currencyChoiceView.clearSearchQuery()
+            }
             transition.doOnEnd {
-                currencyChoiceView.searchEditText.showKeyboard()
+                currencyChoiceView.showKeyboard()
             }
         }
         TransitionManager.beginDelayedTransition(constraintLayout, transition)

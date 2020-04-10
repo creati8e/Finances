@@ -10,11 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_currency_choice.view.*
 import serg.chuprin.adapter.DiffMultiViewAdapter
+import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
 import serg.chuprin.finances.core.api.presentation.view.adapter.diff.DiffCallback
-import serg.chuprin.finances.core.api.presentation.view.extensions.dpToPx
-import serg.chuprin.finances.core.api.presentation.view.extensions.getBackgroundColor
-import serg.chuprin.finances.core.api.presentation.view.extensions.hideKeyboard
-import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
+import serg.chuprin.finances.core.api.presentation.view.extensions.*
 import serg.chuprin.finances.feature.onboarding.R
 import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.model.cells.CurrencyCell
 import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.view.adapter.renderer.CurrencyCellRenderer
@@ -42,13 +40,14 @@ class CurrencyChoiceListView @JvmOverloads constructor(
     }
 
     init {
-        with(view.recyclerView) {
+        with(recyclerView) {
             setHasFixedSize(true)
             adapter = cellsAdapter
             layoutManager = LinearLayoutManager(context)
             // Fading edge is not working from XML.
             isVerticalFadingEdgeEnabled = true
             setFadingEdgeLength(context.dpToPx(16))
+
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
@@ -58,10 +57,12 @@ class CurrencyChoiceListView @JvmOverloads constructor(
             })
         }
         background = ColorDrawable(context.getBackgroundColor())
-        view.searchEditText.doAfterTextChanged { editable ->
-            editable?.toString()?.let(onSearchQueryChanged)
+        searchEditText.doAfterTextChanged { editable ->
+            if (!searchEditText.shouldIgnoreChanges) {
+                editable?.toString()?.let(onSearchQueryChanged)
+            }
         }
-        view.closeImageView.onClick {
+        closeImageView.onClick {
             hideKeyboard()
             onCloseClicked.invoke()
         }
@@ -69,8 +70,20 @@ class CurrencyChoiceListView @JvmOverloads constructor(
 
     fun setCells(cells: List<CurrencyCell>) = cellsAdapter.setItems(cells)
 
+    fun resetScroll() = recyclerView.layoutManager!!.scrollToPosition(0)
+
+    fun clearSearchQuery() {
+        if (!searchEditText.text.isNullOrEmpty()) {
+            searchEditText.doIgnoringChanges {
+                setText(EMPTY_STRING)
+            }
+        }
+    }
+
+    fun showKeyboard() = searchEditText.showKeyboard()
+
     private fun hideKeyboard() {
-        with(view.searchEditText) {
+        with(searchEditText) {
             if (isFocused) {
                 hideKeyboard()
             }

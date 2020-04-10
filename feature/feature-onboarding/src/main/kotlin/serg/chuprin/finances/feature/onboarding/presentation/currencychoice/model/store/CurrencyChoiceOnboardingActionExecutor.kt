@@ -101,7 +101,12 @@ class CurrencyChoiceOnboardingActionExecutor @Inject constructor(
         eventConsumer: Consumer<CurrencyChoiceOnboardingEvent>
     ): Flow<CurrencyChoiceOnboardingEffect> {
         if (state.currencyPickerIsVisible) {
-            return flowOf(CurrencyChoiceOnboardingEffect.CurrencyPickerVisibilityChanged(false))
+            return flowOf(
+                CurrencyChoiceOnboardingEffect.CurrencyPickerVisibilityChanged(
+                    visible = false,
+                    allCurrencyCells = state.defaultCurrencyCells
+                )
+            )
         }
         return emptyFlowAction {
             eventConsumer(CurrencyChoiceOnboardingEvent.CloseApp)
@@ -115,7 +120,12 @@ class CurrencyChoiceOnboardingActionExecutor @Inject constructor(
         if (visible == state.currencyPickerIsVisible) {
             return emptyFlow()
         }
-        return flowOf(CurrencyChoiceOnboardingEffect.CurrencyPickerVisibilityChanged(visible))
+        return flowOf(
+            CurrencyChoiceOnboardingEffect.CurrencyPickerVisibilityChanged(
+                visible = visible,
+                allCurrencyCells = state.defaultCurrencyCells
+            )
+        )
     }
 
     private fun handleClickOnDoneButtonIntent(

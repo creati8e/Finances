@@ -11,7 +11,14 @@ data class CurrencyChoiceOnboardingState(
     val chosenCurrency: Currency? = null,
     val doneButtonIsEnabled: Boolean = false,
     val currencyPickerIsVisible: Boolean = false,
-    val currencyCells: List<CurrencyCell> = emptyList(),
     val availableCurrencies: List<Currency> = emptyList(),
-    val chosenCurrencyDisplayName: String = EMPTY_STRING
+    val chosenCurrencyDisplayName: String = EMPTY_STRING,
+    /**
+     * Current cells list could be filtered.
+     */
+    val currentCurrencyCells: List<CurrencyCell> = emptyList(),
+    /**
+     * Default list contains all cells unfiltered.
+     */
+    val defaultCurrencyCells: List<CurrencyCell> = emptyList()
 )

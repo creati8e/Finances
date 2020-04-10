@@ -19,7 +19,8 @@ sealed class CurrencyChoiceOnboardingEffect {
     ) : CurrencyChoiceOnboardingEffect()
 
     class CurrencyPickerVisibilityChanged(
-        val visible: Boolean
+        val visible: Boolean,
+        val allCurrencyCells: List<CurrencyCell>
     ) : CurrencyChoiceOnboardingEffect()
 
     class SetCurrencyParams(
