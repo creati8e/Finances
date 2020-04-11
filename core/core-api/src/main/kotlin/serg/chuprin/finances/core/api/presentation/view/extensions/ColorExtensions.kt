@@ -10,3 +10,8 @@ import androidx.annotation.ColorInt
 fun Context.getBackgroundColor(): Int {
     return getAttributeColor(android.R.attr.colorBackground)
 }
+
+@ColorInt
+fun Context.getPrimaryTextColor(): Int {
+    return getAttributeColor(android.R.attr.textColorPrimary)
+}

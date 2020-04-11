@@ -46,10 +46,12 @@ class OnboardingContainerFragment : BaseFragment(R.layout.fragment_onboarding_co
     private fun handleNavigationEvent(onboardingStep: OnboardingStep) {
         val page = when (onboardingStep) {
             OnboardingStep.ACCOUNT_SETUP -> {
-                if (onboardingViewPager.beginFakeDrag()) {
-                    animatePageChange()
-                }
-                return
+                // TODO: Handle fake drag properly when accounts setup is first fragment.
+                1
+//                if (onboardingViewPager.beginFakeDrag()) {
+//                    animatePageChange()
+//                }
+//                return
             }
             OnboardingStep.CURRENCY_CHOICE -> 0
             OnboardingStep.COMPLETED -> {

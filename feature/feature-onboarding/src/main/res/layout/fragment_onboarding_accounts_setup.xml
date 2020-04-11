@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16sp"
             android:background="@null"
-            android:digits="0123456789."
+            android:digits="0123456789.,"
             android:gravity="center"
             android:hint="0,0"
             android:inputType="number"

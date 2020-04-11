@@ -3,9 +3,7 @@ package serg.chuprin.finances.core.api.presentation.view.extensions
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.TypedValue
-import androidx.annotation.AttrRes
-import androidx.annotation.DimenRes
-import androidx.annotation.DrawableRes
+import androidx.annotation.*
 import androidx.core.content.ContextCompat
 
 /**
@@ -31,6 +29,11 @@ fun Context.getDimenDpFloat(@DimenRes dimenResId: Int): Float {
 }
 
 fun Context.getDimenDpInt(@DimenRes dimenResId: Int): Int = getDimenDpFloat(dimenResId).toInt()
+
+@ColorInt
+fun Context.getColorInt(@ColorRes colorRes: Int): Int {
+    return ContextCompat.getColor(this, colorRes)
+}
 
 fun Context.drawable(@DrawableRes drawableRes: Int): Drawable {
     return ContextCompat.getDrawable(this, drawableRes)!!

@@ -25,12 +25,18 @@ class AmountFormatter {
         decimalSeparator = decimalFormat.decimalSeparator
     }
 
-    fun format(input: String, currency: Currency): String {
+    fun format(input: String, currency: Currency): Pair<String, Boolean> {
         setupFormatter(currency)
 
         var str = input
         if (str.isEmpty()) {
-            str = "0"
+            return "0" to true
+        }
+
+        // User can type both ',' and '.' symbols.
+        // Do not accept symbol if it is not decimal separator.
+        if (!str.last().isDigit() && str.last() != decimalSeparator) {
+            return str.substring(0, str.lastIndex) to true
         }
 
         // Do not allow multiple decimal separators.
@@ -41,7 +47,7 @@ class AmountFormatter {
         // If last char is separator, parsing is unavailable.
         val normalizedStr = str.replace(("\\$groupSeparator").toRegex(), EMPTY_STRING)
         if (normalizedStr.isEmpty() || normalizedStr.last() == decimalSeparator) {
-            return str
+            return str to true
         }
 
         val decimalSeparatorIndex = normalizedStr.indexOf(decimalSeparator)
@@ -50,7 +56,7 @@ class AmountFormatter {
             && (normalizedStr.length - (decimalSeparatorIndex + 1))
             < numberFormat.maximumFractionDigits
         ) {
-            return str
+            return str to true
         }
         return try {
             val bigDecimal = if (normalizedStr.contains(decimalSeparator, true)) {
@@ -58,9 +64,9 @@ class AmountFormatter {
             } else {
                 BigDecimal(normalizedStr)
             }
-            numberFormat.format(bigDecimal)
+            numberFormat.format(bigDecimal) to true
         } catch (e: NumberFormatException) {
-            str
+            str to false
         }
     }
 
@@ -68,7 +74,6 @@ class AmountFormatter {
         if (!isCorrectAmount(amount)) {
             throw IllegalStateException("Incorrect amount")
         }
-
         var normalizedAmount = amount.replace(("\\$groupSeparator").toRegex(), EMPTY_STRING)
         if (normalizedAmount.isEmpty()) {
             throw IllegalStateException("Incorrect amount")
@@ -78,7 +83,6 @@ class AmountFormatter {
         }
         return normalizedAmount.replace(",", ".")
     }
-
 
     private fun setupFormatter(currency: Currency) {
         numberFormat.maximumFractionDigits = currency.defaultFractionDigits
