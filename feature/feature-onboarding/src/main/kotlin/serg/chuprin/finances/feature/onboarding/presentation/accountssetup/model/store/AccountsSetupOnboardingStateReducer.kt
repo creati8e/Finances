@@ -12,7 +12,11 @@ class AccountsSetupOnboardingStateReducer :
         effect: AccountsSetupOnboardingEffect,
         state: AccountsSetupOnboardingState
     ): AccountsSetupOnboardingState {
-        TODO("Not yet implemented")
+        return when (effect) {
+            is AccountsSetupOnboardingEffect.StepChanged -> {
+                state.copy(stepState = effect.stepState)
+            }
+        }
     }
 
 }

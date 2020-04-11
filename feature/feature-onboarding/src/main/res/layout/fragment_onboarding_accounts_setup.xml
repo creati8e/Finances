@@ -75,13 +75,30 @@
             android:gravity="center"
             android:hint="0,0"
             android:inputType="number"
+            android:singleLine="true"
+            android:textAlignment="center"
             android:textSize="30sp"
             android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/doneButton"
+            app:layout_constraintBottom_toTopOf="@+id/acceptAmountButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/subtitleTextView"
-            tools:ignore="HardcodedText" />
+            tools:ignore="HardcodedText"
+            tools:visibility="visible" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/acceptAmountButton"
+            style="@style/MaterialButtonIconCircle"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"
+            app:icon="@drawable/ic_check"
+            app:iconTint="@color/colorOnboardingGreen"
+            app:layout_constraintBottom_toTopOf="@+id/doneButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/amountEditText"
+            app:rippleColor="?colorControlHighlight"
+            tools:visibility="visible" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/doneButton"
@@ -96,6 +113,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/subtitleTextView"
             app:layout_constraintVertical_bias="1" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/buttonsGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="negativeButton,positiveButton" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

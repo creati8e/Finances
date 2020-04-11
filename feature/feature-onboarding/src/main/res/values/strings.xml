@@ -5,4 +5,7 @@
     <string name="onboarding_currency_choice_title">Let\'s setup everything</string>
     <string name="onboarding_currency_choice_subtitle">Choose your primary currency</string>
     <string name="onboarding_currency_choice_currencies_not_found">Currencies not found</string>
+    <string name="onboarding_accounts_setup_subtitle_cash_question">Do you use cash?</string>
+    <string name="onboarding_accounts_setup_subtitle_enter_current_balance">Enter current balance</string>
+    <string name="onboarding_accounts_setup_subtitle_bank_card_question">Do you have bank card?</string>
 </resources>
