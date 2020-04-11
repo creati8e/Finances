@@ -4,6 +4,7 @@ import dagger.Component
 import serg.chuprin.finances.core.api.di.scopes.FeatureScope
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.ViewModelComponent
 import serg.chuprin.finances.feature.onboarding.OnboardingFeatureDependencies
+import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.di.AccountsSetupOnboardingComponent
 import serg.chuprin.finances.feature.onboarding.presentation.common.model.viewmodel.OnboardingContainerViewModel
 import serg.chuprin.finances.feature.onboarding.presentation.common.view.OnboardingContainerFragment
 import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.di.CurrencyChoiceOnboardingComponent
@@ -28,6 +29,8 @@ interface OnboardingFeatureComponent : ViewModelComponent<OnboardingContainerVie
     }
 
     fun inject(fragment: OnboardingContainerFragment)
+
+    fun accountsSetupComponent(): AccountsSetupOnboardingComponent
 
     fun currencyChoiceComponent(): CurrencyChoiceOnboardingComponent
 

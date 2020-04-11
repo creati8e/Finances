@@ -12,5 +12,4 @@ import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.mode
 @Subcomponent(
     modules = [CurrencyChoiceOnboardingModule::class]
 )
-interface CurrencyChoiceOnboardingComponent :
-    ViewModelComponent<CurrencyChoiceOnboardingViewModel>
+interface CurrencyChoiceOnboardingComponent : ViewModelComponent<CurrencyChoiceOnboardingViewModel>
