@@ -47,6 +47,7 @@ object Injector {
         return DaggerOnboardingFeatureDependenciesComponent
             .builder()
             .coreUtilsProvider(coreProvider)
+            .coreManagerProvider(coreProvider)
             .coreUseCasesProvider(coreProvider)
             .coreNavigationProvider(coreProvider)
             .coreFormattersProvider(coreProvider)

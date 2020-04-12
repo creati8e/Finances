@@ -41,30 +41,6 @@
             app:layout_constraintVertical_chainStyle="packed"
             tools:text="Do you use cash?" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/positiveButton"
-            style="@style/MaterialButtonIconCircle"
-            android:layout_marginTop="16dp"
-            app:icon="@drawable/ic_check"
-            app:iconTint="@color/colorOnboardingGreen"
-            app:layout_constraintEnd_toStartOf="@id/negativeButton"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/subtitleTextView"
-            app:rippleColor="?colorControlHighlight" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/negativeButton"
-            style="@style/MaterialButtonIconCircle"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            app:icon="@drawable/ic_close"
-            app:iconTint="@color/colorOnboardingRed"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/positiveButton"
-            app:layout_constraintTop_toBottomOf="@id/subtitleTextView"
-            app:rippleColor="@color/colorOnboardingRedRipple" />
-
         <serg.chuprin.finances.core.api.presentation.view.widget.AmountEditText
             android:id="@+id/amountEditText"
             android:layout_width="match_parent"
@@ -86,13 +62,38 @@
             tools:visibility="visible" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/positiveButton"
+            style="@style/MaterialButtonIconCircle"
+            android:layout_marginTop="16dp"
+            app:icon="@drawable/ic_check"
+            app:iconTint="@color/colorOnboardingGreen"
+            app:layout_constraintEnd_toStartOf="@id/negativeButton"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/amountEditText"
+            app:rippleColor="?colorControlHighlight" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/negativeButton"
+            style="@style/MaterialButtonIconCircle"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:icon="@drawable/ic_close"
+            app:iconTint="@color/colorOnboardingRed"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/positiveButton"
+            app:layout_constraintTop_toBottomOf="@id/amountEditText"
+            app:rippleColor="@color/colorOnboardingRedRipple"
+            tools:layout_marginStart="72dp" />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/acceptAmountButton"
             style="@style/MaterialButtonIconCircle"
             android:layout_marginTop="16dp"
             android:visibility="gone"
             app:icon="@drawable/ic_check"
             app:iconTint="@color/colorOnboardingGreen"
-            app:layout_constraintBottom_toTopOf="@+id/doneButton"
+            app:layout_constraintBottom_toTopOf="@+id/startUsingAppButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/amountEditText"
@@ -100,18 +101,20 @@
             tools:visibility="visible" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/doneButton"
+            android:id="@+id/startUsingAppButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/onboarding_currency_choice_button"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="@string/onboarding_accounts_setup_start_using_app"
             android:visibility="gone"
             app:backgroundTint="?colorAccent"
-            app:icon="@drawable/ic_check"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/subtitleTextView"
-            app:layout_constraintVertical_bias="1" />
+            app:layout_constraintTop_toBottomOf="@id/acceptAmountButton"
+            app:layout_constraintVertical_bias="0"
+            tools:visibility="visible" />
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/buttonsGroup"

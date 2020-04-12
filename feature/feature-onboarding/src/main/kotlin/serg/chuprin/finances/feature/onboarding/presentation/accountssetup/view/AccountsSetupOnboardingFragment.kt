@@ -100,14 +100,15 @@ class AccountsSetupOnboardingFragment : BaseFragment(R.layout.fragment_onboardin
             is AccountsSetupOnboardingStepState.BankCardAmountEnter -> {
                 showAmountEnterStep(stepState.acceptButtonIsVisible)
             }
-            AccountsSetupOnboardingStepState.EverythingIsSetUp -> {
+            is AccountsSetupOnboardingStepState.EverythingIsSetUp -> {
                 TransitionManager.beginDelayedTransition(constraintLayout)
                 buttonsGroup.makeGone()
                 titleTextView.makeGone()
                 amountEditText.makeGone()
                 acceptAmountButton.makeGone()
                 amountEditText.hideKeyboard()
-                subtitleTextView.setText("Everything is ready!")
+                startUsingAppButton.makeVisible()
+                subtitleTextView.setText(stepState.message)
             }
         }
     }

@@ -7,8 +7,10 @@ import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.api.domain.model.AccountBalance
 import serg.chuprin.finances.core.api.extensions.flowOfSingleValue
 import serg.chuprin.finances.core.api.presentation.model.formatter.AmountFormatter
+import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.api.presentation.model.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
+import serg.chuprin.finances.feature.onboarding.R
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.AccountsSetupOnboardingStepState
 import java.util.*
 import javax.inject.Inject
@@ -18,6 +20,7 @@ import javax.inject.Inject
  */
 class AccountsSetupOnboardingActionExecutor @Inject constructor(
     private val amountParser: AmountParser,
+    private val resourceManger: ResourceManger,
     private val amountFormatter: AmountFormatter
 ) : StoreActionExecutor<AccountsSetupOnboardingIntent, AccountsSetupOnboardingState, AccountsSetupOnboardingEffect, AccountsSetupOnboardingEvent> {
 
@@ -78,19 +81,18 @@ class AccountsSetupOnboardingActionExecutor @Inject constructor(
             }
             is AccountsSetupOnboardingStepState.BankCardAmountEnter -> {
                 // TODO: Think about failed parsing.
-                val nextState = AccountsSetupOnboardingStepState.EverythingIsSetUp
                 flowOf(
                     AccountsSetupOnboardingEffect.AccountBalanceEntered(
                         // Use cache balance from previous step.
                         cashBalance = state.cashBalance,
                         bankCardBalance = AccountBalance(amountParser.parse(stepState.enteredAmount)!!)
                     ),
-                    AccountsSetupOnboardingEffect.StepChanged(nextState)
+                    AccountsSetupOnboardingEffect.StepChanged(buildFinalStepState(state))
                 )
             }
             AccountsSetupOnboardingStepState.CashQuestion,
             AccountsSetupOnboardingStepState.BankCardQuestion,
-            AccountsSetupOnboardingStepState.EverythingIsSetUp -> {
+            is AccountsSetupOnboardingStepState.EverythingIsSetUp -> {
                 // Unreachable branch.
                 emptyFlow()
             }
@@ -109,7 +111,7 @@ class AccountsSetupOnboardingActionExecutor @Inject constructor(
                 val stepState = AccountsSetupOnboardingStepState.BankCardAmountEnter()
                 flowOf(AccountsSetupOnboardingEffect.StepChanged(stepState))
             }
-            AccountsSetupOnboardingStepState.EverythingIsSetUp,
+            is AccountsSetupOnboardingStepState.EverythingIsSetUp,
             is AccountsSetupOnboardingStepState.CashAmountEnter,
             is AccountsSetupOnboardingStepState.BankCardAmountEnter -> {
                 // Unreachable state.
@@ -127,17 +129,27 @@ class AccountsSetupOnboardingActionExecutor @Inject constructor(
                 flowOf(AccountsSetupOnboardingEffect.StepChanged(stepState))
             }
             AccountsSetupOnboardingStepState.BankCardQuestion -> {
-                // TODO: Implement logic if not a single bank account was set up.
-                val stepState = AccountsSetupOnboardingStepState.EverythingIsSetUp
-                flowOf(AccountsSetupOnboardingEffect.StepChanged(stepState))
+                flowOf(AccountsSetupOnboardingEffect.StepChanged(buildFinalStepState(state)))
             }
-            AccountsSetupOnboardingStepState.EverythingIsSetUp,
+            is AccountsSetupOnboardingStepState.EverythingIsSetUp,
             is AccountsSetupOnboardingStepState.CashAmountEnter,
             is AccountsSetupOnboardingStepState.BankCardAmountEnter -> {
                 // Unreachable state.
                 emptyFlow()
             }
         }
+    }
+
+    private fun buildFinalStepState(
+        state: AccountsSetupOnboardingState
+    ): AccountsSetupOnboardingStepState {
+        val message = if (state.bankCardBalance == null && state.cashBalance == null) {
+            // User didn't setup any account.
+            resourceManger.getString(R.string.onboarding_accounts_setup_subtitle_no_accounts)
+        } else {
+            resourceManger.getString(R.string.onboarding_accounts_setup_subtitle_setup_finished)
+        }
+        return AccountsSetupOnboardingStepState.EverythingIsSetUp(message)
     }
 
 }

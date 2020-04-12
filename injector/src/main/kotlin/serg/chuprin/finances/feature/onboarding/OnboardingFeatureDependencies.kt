@@ -6,6 +6,7 @@ import serg.chuprin.finances.core.api.domain.repository.CurrencyRepository
 import serg.chuprin.finances.core.api.domain.repository.OnboardingRepository
 import serg.chuprin.finances.core.api.domain.usecase.SearchCurrenciesUseCase
 import serg.chuprin.finances.core.api.presentation.model.formatter.AmountFormatter
+import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
 import serg.chuprin.finances.core.api.presentation.navigation.OnboardingNavigation
 
@@ -15,6 +16,8 @@ import serg.chuprin.finances.core.api.presentation.navigation.OnboardingNavigati
 interface OnboardingFeatureDependencies {
 
     val amountParser: AmountParser
+
+    val resourceManger: ResourceManger
 
     val amountFormatter: AmountFormatter
 
@@ -38,6 +41,7 @@ interface OnboardingFeatureDependencies {
 @Component(
     dependencies = [
         CoreUtilsProvider::class,
+        CoreManagerProvider::class,
         CoreUseCasesProvider::class,
         CoreNavigationProvider::class,
         CoreFormattersProvider::class,

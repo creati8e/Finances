@@ -14,31 +14,32 @@ internal class AmountParserImpl @Inject constructor() : AmountParser {
 
     override fun parse(amount: String): BigDecimal? {
         val decimalFormat = DecimalFormatSymbols.getInstance(Locale.getDefault())
-        val groupSeparator = decimalFormat.groupingSeparator
-        val decimalSeparator = decimalFormat.decimalSeparator
-
-        if (!isCorrectAmount(amount, decimalSeparator, groupSeparator)) {
+        if (!isCorrectAmount(amount, decimalFormat)) {
             return null
         }
-        var normalizedAmount = amount.replace(("\\$groupSeparator").toRegex(), EMPTY_STRING)
+        // Remove all grouping symbols.
+        val normalizedAmount = amount.replace(
+            replacement = EMPTY_STRING,
+            regex = ("\\${decimalFormat.groupingSeparator}").toRegex()
+        )
         if (normalizedAmount.isEmpty()) {
             return null
         }
-        if (normalizedAmount.last() == decimalSeparator) {
-            normalizedAmount = normalizedAmount.substring(0, normalizedAmount.lastIndex)
-        }
-        return BigDecimal(normalizedAmount.replace(",", "."))
+        return BigDecimal(
+            if (normalizedAmount.endsWith(decimalFormat.decimalSeparator)) {
+                normalizedAmount.dropLast(1).replace(",", ".")
+            } else {
+                normalizedAmount.replace(",", ".")
+            }
+        )
     }
 
-    private fun isCorrectAmount(
-        amount: String,
-        decimalSeparator: Char,
-        groupSeparator: Char
-    ): Boolean {
+    private fun isCorrectAmount(amount: String, formatSymbols: DecimalFormatSymbols): Boolean {
         return when {
             amount.isEmpty() -> false
-            // TODO: Take a loot at '0'.
-            amount.all { it == decimalSeparator || it == '0' || it == groupSeparator } -> false
+            amount.all {
+                it == formatSymbols.decimalSeparator || it == formatSymbols.groupingSeparator
+            } -> false
             else -> true
         }
     }

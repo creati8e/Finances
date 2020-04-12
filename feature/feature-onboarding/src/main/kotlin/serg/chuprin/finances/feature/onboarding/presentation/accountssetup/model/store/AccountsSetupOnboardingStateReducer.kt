@@ -43,7 +43,7 @@ class AccountsSetupOnboardingStateReducer :
                     }
                     AccountsSetupOnboardingStepState.BankCardQuestion,
                     AccountsSetupOnboardingStepState.CashQuestion,
-                    AccountsSetupOnboardingStepState.EverythingIsSetUp -> {
+                    is AccountsSetupOnboardingStepState.EverythingIsSetUp -> {
                         // Unreachable branch.
                         state
                     }

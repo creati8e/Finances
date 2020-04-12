@@ -38,7 +38,9 @@ sealed class AccountsSetupOnboardingStepState {
     /**
      * 5 step.
      */
-    object EverythingIsSetUp : AccountsSetupOnboardingStepState()
+    class EverythingIsSetUp(
+        val message: String
+    ) : AccountsSetupOnboardingStepState()
 
     val enteredAmountOrNull: String?
         get() {
