@@ -65,17 +65,16 @@
             app:layout_constraintTop_toBottomOf="@id/subtitleTextView"
             app:rippleColor="@color/colorOnboardingRedRipple" />
 
-        <com.google.android.material.textfield.TextInputEditText
+        <serg.chuprin.finances.core.api.presentation.view.widget.AmountEditText
             android:id="@+id/amountEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16sp"
             android:background="@null"
-            android:digits="0123456789.,"
             android:gravity="center"
-            android:hint="0,0"
-            android:inputType="number"
+            android:imeOptions="actionDone"
             android:singleLine="true"
+            android:text="0"
             android:textAlignment="center"
             android:textSize="30sp"
             android:visibility="gone"

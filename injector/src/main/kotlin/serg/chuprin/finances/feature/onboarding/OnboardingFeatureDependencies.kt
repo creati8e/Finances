@@ -1,12 +1,12 @@
 package serg.chuprin.finances.feature.onboarding
 
 import dagger.Component
-import serg.chuprin.finances.core.api.di.provider.CoreNavigationProvider
-import serg.chuprin.finances.core.api.di.provider.CoreRepositoriesProvider
-import serg.chuprin.finances.core.api.di.provider.CoreUseCasesProvider
+import serg.chuprin.finances.core.api.di.provider.*
 import serg.chuprin.finances.core.api.domain.repository.CurrencyRepository
 import serg.chuprin.finances.core.api.domain.repository.OnboardingRepository
 import serg.chuprin.finances.core.api.domain.usecase.SearchCurrenciesUseCase
+import serg.chuprin.finances.core.api.presentation.model.formatter.AmountFormatter
+import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
 import serg.chuprin.finances.core.api.presentation.navigation.OnboardingNavigation
 
 /**
@@ -14,10 +14,16 @@ import serg.chuprin.finances.core.api.presentation.navigation.OnboardingNavigati
  */
 interface OnboardingFeatureDependencies {
 
+    val amountParser: AmountParser
+
+    val amountFormatter: AmountFormatter
+
     // region Repositories.
 
     val currencyRepository: CurrencyRepository
+
     val onboardingRepository: OnboardingRepository
+
     val onboardingNavigation: OnboardingNavigation
 
     // endregion
@@ -31,8 +37,10 @@ interface OnboardingFeatureDependencies {
 
 @Component(
     dependencies = [
+        CoreUtilsProvider::class,
         CoreUseCasesProvider::class,
         CoreNavigationProvider::class,
+        CoreFormattersProvider::class,
         CoreRepositoriesProvider::class
     ]
 )

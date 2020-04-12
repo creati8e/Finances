@@ -1,15 +1,17 @@
-package serg.chuprin.finances.core.api.presentation.view
+package serg.chuprin.finances.core.impl.presentation.model.formatter
 
 import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
+import serg.chuprin.finances.core.api.presentation.model.formatter.AmountFormatter
 import java.math.BigDecimal
 import java.text.DecimalFormatSymbols
 import java.text.NumberFormat
 import java.util.*
+import javax.inject.Inject
 
 /**
- * Created by Sergey Chuprin on 11.04.2020.
+ * Created by Sergey Chuprin on 12.04.2020.
  */
-class AmountFormatter {
+internal class AmountFormatterImpl @Inject constructor() : AmountFormatter {
 
     private val groupSeparator: Char
     private val decimalSeparator: Char
@@ -18,36 +20,34 @@ class AmountFormatter {
 
     init {
         val locale = Locale.getDefault()
-
         numberFormat = NumberFormat.getInstance(locale)
         decimalFormat = DecimalFormatSymbols.getInstance(locale)
         groupSeparator = decimalFormat.groupingSeparator
         decimalSeparator = decimalFormat.decimalSeparator
     }
 
-    fun format(input: String, currency: Currency): Pair<String, Boolean> {
+    override fun formatInput(input: String, currency: Currency): String {
         setupFormatter(currency)
 
-        var str = input
-        if (str.isEmpty()) {
-            return "0" to true
+        if (input.isEmpty()) {
+            return "0"
         }
 
         // User can type both ',' and '.' symbols.
         // Do not accept symbol if it is not decimal separator.
-        if (!str.last().isDigit() && str.last() != decimalSeparator) {
-            return str.substring(0, str.lastIndex) to true
+        if (!input.last().isDigit() && input.last() != decimalSeparator) {
+            return input.dropLast(1)
         }
 
         // Do not allow multiple decimal separators.
-        if (str.count { char -> char == decimalSeparator } > 1) {
-            str = str.substring(0, str.lastIndex)
+        if (input.count { char -> char == decimalSeparator } > 1) {
+            return input.dropLast(1)
         }
 
         // If last char is separator, parsing is unavailable.
-        val normalizedStr = str.replace(("\\$groupSeparator").toRegex(), EMPTY_STRING)
+        val normalizedStr = input.replace(("\\$groupSeparator").toRegex(), EMPTY_STRING)
         if (normalizedStr.isEmpty() || normalizedStr.last() == decimalSeparator) {
-            return str to true
+            return input
         }
 
         val decimalSeparatorIndex = normalizedStr.indexOf(decimalSeparator)
@@ -56,7 +56,7 @@ class AmountFormatter {
             && (normalizedStr.length - (decimalSeparatorIndex + 1))
             < numberFormat.maximumFractionDigits
         ) {
-            return str to true
+            return input
         }
         return try {
             val bigDecimal = if (normalizedStr.contains(decimalSeparator, true)) {
@@ -64,36 +64,14 @@ class AmountFormatter {
             } else {
                 BigDecimal(normalizedStr)
             }
-            numberFormat.format(bigDecimal) to true
+            numberFormat.format(bigDecimal)
         } catch (e: NumberFormatException) {
-            str to false
+            input
         }
-    }
-
-    private fun normalize(amount: String): String {
-        if (!isCorrectAmount(amount)) {
-            throw IllegalStateException("Incorrect amount")
-        }
-        var normalizedAmount = amount.replace(("\\$groupSeparator").toRegex(), EMPTY_STRING)
-        if (normalizedAmount.isEmpty()) {
-            throw IllegalStateException("Incorrect amount")
-        }
-        if (normalizedAmount.last() == decimalSeparator) {
-            normalizedAmount = normalizedAmount.substring(0, normalizedAmount.lastIndex)
-        }
-        return normalizedAmount.replace(",", ".")
     }
 
     private fun setupFormatter(currency: Currency) {
-        numberFormat.maximumFractionDigits = currency.defaultFractionDigits
-    }
-
-    private fun isCorrectAmount(amount: String): Boolean {
-        return when {
-            amount.isEmpty() -> false
-            amount.all { it == decimalSeparator || it == '0' || it == groupSeparator } -> false
-            else -> true
-        }
+        numberFormat.currency = currency
     }
 
 }

@@ -6,10 +6,7 @@ import dagger.Component
 import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
 import serg.chuprin.finances.core.api.di.provider.CoreNavigationProvider
 import serg.chuprin.finances.core.api.di.scopes.AppScope
-import serg.chuprin.finances.core.impl.di.module.CoreDataSourceModule
-import serg.chuprin.finances.core.impl.di.module.CoreGatewaysModule
-import serg.chuprin.finances.core.impl.di.module.CorePreferencesModule
-import serg.chuprin.finances.core.impl.di.module.CoreRepositoriesModule
+import serg.chuprin.finances.core.impl.di.module.*
 
 /**
  * Created by Sergey Chuprin on 02.04.2020.
@@ -17,8 +14,10 @@ import serg.chuprin.finances.core.impl.di.module.CoreRepositoriesModule
 @AppScope
 @Component(
     modules = [
+        CoreUtilsModule::class,
         CoreGatewaysModule::class,
         CoreDataSourceModule::class,
+        CoreFormattersModule::class,
         CorePreferencesModule::class,
         CoreRepositoriesModule::class
     ],

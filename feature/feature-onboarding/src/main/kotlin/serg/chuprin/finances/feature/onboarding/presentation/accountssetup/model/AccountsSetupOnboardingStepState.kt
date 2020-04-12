@@ -1,11 +1,13 @@
 package serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model
 
-import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
-
 /**
  * Created by Sergey Chuprin on 11.04.2020.
  */
 sealed class AccountsSetupOnboardingStepState {
+
+    private companion object {
+        private const val INITIAL_ENTERED_AMOUNT = "0"
+    }
 
     /**
      * 1 step.
@@ -15,8 +17,9 @@ sealed class AccountsSetupOnboardingStepState {
     /**
      * 2 step.
      */
-    class CashAmountEnter(
-        val amount: String = EMPTY_STRING
+    data class CashAmountEnter(
+        val enteredAmount: String = INITIAL_ENTERED_AMOUNT,
+        val acceptButtonIsVisible: Boolean = false
     ) : AccountsSetupOnboardingStepState()
 
     /**
@@ -27,13 +30,20 @@ sealed class AccountsSetupOnboardingStepState {
     /**
      * 4 step.
      */
-    class BankCardAmountEnter(
-        val amount: String = EMPTY_STRING
+    data class BankCardAmountEnter(
+        val enteredAmount: String = INITIAL_ENTERED_AMOUNT,
+        val acceptButtonIsVisible: Boolean = false
     ) : AccountsSetupOnboardingStepState()
 
     /**
      * 5 step.
      */
     object EverythingIsSetUp : AccountsSetupOnboardingStepState()
+
+    val enteredAmountOrNull: String?
+        get() {
+            return (this as? CashAmountEnter)?.enteredAmount
+                ?: (this as? BankCardAmountEnter)?.enteredAmount
+        }
 
 }

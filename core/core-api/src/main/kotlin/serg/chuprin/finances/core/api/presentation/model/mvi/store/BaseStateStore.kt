@@ -111,7 +111,6 @@ open class BaseStateStore<I, SE, A, S, E>(
                 }
                 // Reduce on single thread to prevent interleaving.
                 .flowOn(reducerDispatcher)
-                .distinctUntilChanged()
                 .collect { newState ->
                     ensureActive()
                     statesChannel.send(newState)

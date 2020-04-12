@@ -9,4 +9,10 @@ sealed class AccountsSetupOnboardingIntent {
 
     object ClickOnNegativeButton : AccountsSetupOnboardingIntent()
 
+    object ClickOnAcceptBalanceButton : AccountsSetupOnboardingIntent()
+
+    class InputAmount(
+        val enteredAmount: String
+    ) : AccountsSetupOnboardingIntent()
+
 }
