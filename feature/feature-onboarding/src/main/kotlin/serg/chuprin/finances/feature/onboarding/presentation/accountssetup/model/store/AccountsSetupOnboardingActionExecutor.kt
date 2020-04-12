@@ -9,8 +9,10 @@ import serg.chuprin.finances.core.api.extensions.flowOfSingleValue
 import serg.chuprin.finances.core.api.presentation.model.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.api.presentation.model.mvi.executor.StoreActionExecutor
+import serg.chuprin.finances.core.api.presentation.model.mvi.executor.emptyFlowAction
 import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
 import serg.chuprin.finances.feature.onboarding.R
+import serg.chuprin.finances.feature.onboarding.domain.usecase.CompleteAccountsSetupOnboardingUseCase
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.AccountsSetupOnboardingStepState
 import java.util.*
 import javax.inject.Inject
@@ -21,7 +23,8 @@ import javax.inject.Inject
 class AccountsSetupOnboardingActionExecutor @Inject constructor(
     private val amountParser: AmountParser,
     private val resourceManger: ResourceManger,
-    private val amountFormatter: AmountFormatter
+    private val amountFormatter: AmountFormatter,
+    private val completeOnboardingUseCase: CompleteAccountsSetupOnboardingUseCase
 ) : StoreActionExecutor<AccountsSetupOnboardingIntent, AccountsSetupOnboardingState, AccountsSetupOnboardingEffect, AccountsSetupOnboardingEvent> {
 
     override fun invoke(
@@ -43,7 +46,19 @@ class AccountsSetupOnboardingActionExecutor @Inject constructor(
             is AccountsSetupOnboardingIntent.InputAmount -> {
                 handleInputAmountIntent(intent)
             }
+            AccountsSetupOnboardingIntent.ClickOnStartUsingAppButton -> {
+                handleClickOnStartUsingAppButton(state)
+            }
         }
+    }
+
+    private fun handleClickOnStartUsingAppButton(
+        state: AccountsSetupOnboardingState
+    ): Flow<AccountsSetupOnboardingEffect> {
+        if (state.stepState is AccountsSetupOnboardingStepState.EverythingIsSetUp) {
+            return emptyFlowAction(completeOnboardingUseCase::execute)
+        }
+        return emptyFlow()
     }
 
     private fun handleInputAmountIntent(

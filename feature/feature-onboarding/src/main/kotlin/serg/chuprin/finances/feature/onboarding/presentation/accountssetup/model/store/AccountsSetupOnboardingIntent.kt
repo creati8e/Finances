@@ -11,6 +11,8 @@ sealed class AccountsSetupOnboardingIntent {
 
     object ClickOnAcceptBalanceButton : AccountsSetupOnboardingIntent()
 
+    object ClickOnStartUsingAppButton : AccountsSetupOnboardingIntent()
+
     class InputAmount(
         val enteredAmount: String
     ) : AccountsSetupOnboardingIntent()

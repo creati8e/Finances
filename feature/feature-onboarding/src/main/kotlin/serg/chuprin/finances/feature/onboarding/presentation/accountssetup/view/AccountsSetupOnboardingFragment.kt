@@ -55,6 +55,10 @@ class AccountsSetupOnboardingFragment : BaseFragment(R.layout.fragment_onboardin
             doOnEditorAction(func = ::acceptEnteredBalance)
         }
 
+        startUsingAppButton.onClick {
+            viewModel.dispatchIntent(AccountsSetupOnboardingIntent.ClickOnStartUsingAppButton)
+        }
+
         acceptAmountButton.onClick(::acceptEnteredBalance)
 
         positiveButton.onClick {
