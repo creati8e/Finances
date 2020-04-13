@@ -15,8 +15,8 @@ import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
 import serg.chuprin.finances.feature.onboarding.R
 import serg.chuprin.finances.feature.onboarding.domain.OnboardingMoneyAccountCreationParams
 import serg.chuprin.finances.feature.onboarding.domain.usecase.CompleteAccountsSetupOnboardingUseCase
+import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.AccountsSetupOnboardingAction
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.AccountsSetupOnboardingStepState
-import java.util.*
 import javax.inject.Inject
 
 /**
@@ -27,31 +27,44 @@ class AccountsSetupOnboardingActionExecutor @Inject constructor(
     private val resourceManger: ResourceManger,
     private val amountFormatter: AmountFormatter,
     private val completeOnboardingUseCase: CompleteAccountsSetupOnboardingUseCase
-) : StoreActionExecutor<AccountsSetupOnboardingIntent, AccountsSetupOnboardingState, AccountsSetupOnboardingEffect, AccountsSetupOnboardingEvent> {
+) : StoreActionExecutor<AccountsSetupOnboardingAction, AccountsSetupOnboardingState, AccountsSetupOnboardingEffect, AccountsSetupOnboardingEvent> {
 
     override fun invoke(
-        intent: AccountsSetupOnboardingIntent,
+        action: AccountsSetupOnboardingAction,
         state: AccountsSetupOnboardingState,
         eventConsumer: Consumer<AccountsSetupOnboardingEvent>,
-        actionsFlow: Flow<AccountsSetupOnboardingIntent>
+        actionsFlow: Flow<AccountsSetupOnboardingAction>
     ): Flow<AccountsSetupOnboardingEffect> {
-        return when (intent) {
-            AccountsSetupOnboardingIntent.ClickOnPositiveButton -> {
-                handleClickOnPositiveButtonIntent(state)
+        return when (action) {
+            is AccountsSetupOnboardingAction.SetCurrency -> {
+                handleSetCurrencyAction(action)
             }
-            AccountsSetupOnboardingIntent.ClickOnNegativeButton -> {
-                handleClickOnNegativeButtonIntent(state)
-            }
-            is AccountsSetupOnboardingIntent.ClickOnAcceptBalanceButton -> {
-                handleClickOnAcceptBalanceButtonIntent(state)
-            }
-            is AccountsSetupOnboardingIntent.InputAmount -> {
-                handleInputAmountIntent(intent)
-            }
-            AccountsSetupOnboardingIntent.ClickOnStartUsingAppButton -> {
-                handleClickOnStartUsingAppButton(state)
+            is AccountsSetupOnboardingAction.ExecuteIntent -> {
+                when (val intent = action.intent) {
+                    AccountsSetupOnboardingIntent.ClickOnPositiveButton -> {
+                        handleClickOnPositiveButtonIntent(state)
+                    }
+                    AccountsSetupOnboardingIntent.ClickOnNegativeButton -> {
+                        handleClickOnNegativeButtonIntent(state)
+                    }
+                    is AccountsSetupOnboardingIntent.ClickOnAcceptBalanceButton -> {
+                        handleClickOnAcceptBalanceButtonIntent(state)
+                    }
+                    is AccountsSetupOnboardingIntent.InputAmount -> {
+                        handleInputAmountIntent(intent, state)
+                    }
+                    AccountsSetupOnboardingIntent.ClickOnStartUsingAppButton -> {
+                        handleClickOnStartUsingAppButton(state)
+                    }
+                }
             }
         }
+    }
+
+    private fun handleSetCurrencyAction(
+        action: AccountsSetupOnboardingAction.SetCurrency
+    ): Flow<AccountsSetupOnboardingEffect> {
+        return flowOf(AccountsSetupOnboardingEffect.CurrencyIsSet(action.currency))
     }
 
     private fun handleClickOnStartUsingAppButton(
@@ -78,13 +91,13 @@ class AccountsSetupOnboardingActionExecutor @Inject constructor(
     }
 
     private fun handleInputAmountIntent(
-        intent: AccountsSetupOnboardingIntent.InputAmount
+        intent: AccountsSetupOnboardingIntent.InputAmount,
+        state: AccountsSetupOnboardingState
     ): Flow<AccountsSetupOnboardingEffect> {
         return flowOfSingleValue {
-            // TODO: Use currency from onboarding.
             val formattedAmount = amountFormatter.formatInput(
-                intent.enteredAmount,
-                Currency.getInstance(Locale.getDefault())
+                currency = state.currency,
+                input = intent.enteredAmount
             )
             AccountsSetupOnboardingEffect.AmountEntered(
                 acceptButtonIsVisible = true,

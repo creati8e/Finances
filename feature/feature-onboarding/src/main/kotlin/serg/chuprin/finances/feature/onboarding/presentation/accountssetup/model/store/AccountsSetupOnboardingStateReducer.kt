@@ -23,31 +23,41 @@ class AccountsSetupOnboardingStateReducer :
                     bankCardBalance = effect.bankCardBalance
                 )
             }
+            is AccountsSetupOnboardingEffect.CurrencyIsSet -> {
+                state.copy(currency = effect.currency)
+            }
             is AccountsSetupOnboardingEffect.AmountEntered -> {
-                when (val stepState = state.stepState) {
-                    is AccountsSetupOnboardingStepState.CashAmountEnter -> {
-                        state.copy(
-                            stepState = stepState.copy(
-                                enteredAmount = effect.formattedAmount,
-                                acceptButtonIsVisible = effect.acceptButtonIsVisible
-                            )
-                        )
-                    }
-                    is AccountsSetupOnboardingStepState.BankCardAmountEnter -> {
-                        state.copy(
-                            stepState = stepState.copy(
-                                enteredAmount = effect.formattedAmount,
-                                acceptButtonIsVisible = effect.acceptButtonIsVisible
-                            )
-                        )
-                    }
-                    AccountsSetupOnboardingStepState.BankCardQuestion,
-                    AccountsSetupOnboardingStepState.CashQuestion,
-                    is AccountsSetupOnboardingStepState.EverythingIsSetUp -> {
-                        // Unreachable branch.
-                        state
-                    }
-                }
+                reduceAmountEnteredEffect(state, effect)
+            }
+        }
+    }
+
+    private fun reduceAmountEnteredEffect(
+        state: AccountsSetupOnboardingState,
+        effect: AccountsSetupOnboardingEffect.AmountEntered
+    ): AccountsSetupOnboardingState {
+        return when (val stepState = state.stepState) {
+            is AccountsSetupOnboardingStepState.CashAmountEnter -> {
+                state.copy(
+                    stepState = stepState.copy(
+                        enteredAmount = effect.formattedAmount,
+                        acceptButtonIsVisible = effect.acceptButtonIsVisible
+                    )
+                )
+            }
+            is AccountsSetupOnboardingStepState.BankCardAmountEnter -> {
+                state.copy(
+                    stepState = stepState.copy(
+                        enteredAmount = effect.formattedAmount,
+                        acceptButtonIsVisible = effect.acceptButtonIsVisible
+                    )
+                )
+            }
+            AccountsSetupOnboardingStepState.BankCardQuestion,
+            AccountsSetupOnboardingStepState.CashQuestion,
+            is AccountsSetupOnboardingStepState.EverythingIsSetUp -> {
+                // Unreachable branch.
+                state
             }
         }
     }

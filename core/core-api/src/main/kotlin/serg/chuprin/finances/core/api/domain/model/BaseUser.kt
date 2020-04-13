@@ -1,5 +1,7 @@
 package serg.chuprin.finances.core.api.domain.model
 
+import java.util.*
+
 /**
  * Created by Sergey Chuprin on 13.04.2020.
  */
@@ -71,4 +73,8 @@ data class User(
             )
         }
     }
+
+    val defaultCurrency: Currency
+        get() = Currency.getInstance(defaultCurrencyCode)
+
 }
