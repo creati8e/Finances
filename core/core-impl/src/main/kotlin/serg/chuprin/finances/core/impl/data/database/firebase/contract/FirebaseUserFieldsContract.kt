@@ -7,4 +7,5 @@ internal object FirebaseUserFieldsContract {
     const val FIELD_EMAIL = "email"
     const val FIELD_PHOTO_URL = "photo_url"
     const val FIELD_DISPLAY_NAME = "display_name"
+    const val FIELD_DEFAULT_CURRENCY_CODE = "default_currency_code"
 }
