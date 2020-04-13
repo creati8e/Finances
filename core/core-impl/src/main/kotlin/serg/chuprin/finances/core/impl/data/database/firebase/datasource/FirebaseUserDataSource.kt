@@ -8,6 +8,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
+import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract.COLLECTION_NAME
 import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract.FIELD_DISPLAY_NAME
 import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract.FIELD_EMAIL
 import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract.FIELD_PHOTO_URL
@@ -24,17 +25,11 @@ internal class FirebaseUserDataSource @Inject constructor(
     private val firestore: FirebaseFirestore
 ) {
 
-    // TODO: Move to contracts.
-    private companion object {
-        private const val COLLECTION_NAME = "user"
-    }
-
     suspend fun createAndSetUser(firebaseUser: FirebaseUser): Result<Boolean> {
         return coroutineScope {
             try {
                 val fieldsMap = requireNotNull(firebaseUser.toMap()) {
                     "Mapping firebase user to user failed"
-
                 }
                 val document = firestore
                     .collection(COLLECTION_NAME)

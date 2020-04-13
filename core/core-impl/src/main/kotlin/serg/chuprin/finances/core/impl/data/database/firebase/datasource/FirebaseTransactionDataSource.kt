@@ -7,6 +7,7 @@ import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import serg.chuprin.finances.core.api.domain.model.Id
+import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseTransactionFieldsContract.COLLECTION_NAME
 import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_USER_ID
 import serg.chuprin.finances.core.impl.data.database.firebase.suspending
 import javax.inject.Inject
@@ -17,10 +18,6 @@ import javax.inject.Inject
 internal class FirebaseTransactionDataSource @Inject constructor(
     private val firestore: FirebaseFirestore
 ) {
-
-    private companion object {
-        private const val COLLECTION = "transaction"
-    }
 
     init {
         // TODO: Move setup to other place.
@@ -34,7 +31,7 @@ internal class FirebaseTransactionDataSource @Inject constructor(
     fun userTransactionsFlow(userId: Id): Flow<List<DocumentSnapshot>> {
         return callbackFlow {
             firestore
-                .collection(COLLECTION)
+                .collection(COLLECTION_NAME)
                 .whereEqualTo(FIELD_USER_ID, userId.value)
                 .suspending(
                     this@callbackFlow,
