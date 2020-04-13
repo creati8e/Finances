@@ -154,6 +154,7 @@ fun Project.addKotlinCompilerFlags() {
             jvmTarget = "1.8"
             kotlinOptions.freeCompilerArgs += listOf(
                 "-XXLanguage:+InlineClasses",
+                "-Xallow-result-return-type",
                 "-Xopt-in=kotlin.RequiresOptIn",
                 "-Xuse-experimental=kotlin.ExperimentalStdlibApi",
                 "-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi",

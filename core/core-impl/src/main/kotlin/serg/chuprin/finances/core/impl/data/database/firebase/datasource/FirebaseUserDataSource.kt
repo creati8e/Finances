@@ -1,18 +1,20 @@
 package serg.chuprin.finances.core.impl.data.database.firebase.datasource
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
-import serg.chuprin.finances.core.api.domain.model.User
 import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract.FIELD_DISPLAY_NAME
 import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract.FIELD_EMAIL
 import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract.FIELD_PHOTO_URL
 import serg.chuprin.finances.core.impl.data.database.firebase.suspending
 import javax.inject.Inject
+import kotlin.Result.Companion.failure
+import kotlin.Result.Companion.success
 
 /**
  * Created by Sergey Chuprin on 04.04.2020.
@@ -22,20 +24,28 @@ internal class FirebaseUserDataSource @Inject constructor(
     private val firestore: FirebaseFirestore
 ) {
 
+    // TODO: Move to contracts.
     private companion object {
         private const val COLLECTION_NAME = "user"
     }
 
-    suspend fun createAndSetUser(user: User): Boolean {
+    suspend fun createAndSetUser(firebaseUser: FirebaseUser): Result<Boolean> {
         return coroutineScope {
-            val document = firestore
-                .collection(COLLECTION_NAME)
-                .document(user.id.value)
-            val userIsNew = document.get().await() == null
-            document.set(user.toMap()).await()
-            userIsNew
-        }
+            try {
+                val fieldsMap = requireNotNull(firebaseUser.toMap()) {
+                    "Mapping firebase user to user failed"
 
+                }
+                val document = firestore
+                    .collection(COLLECTION_NAME)
+                    .document(firebaseUser.uid)
+                val userIsNew = document.get().await() == null
+                document.set(fieldsMap).await()
+                success(userIsNew)
+            } catch (throwable: Throwable) {
+                failure<Boolean>(throwable)
+            }
+        }
     }
 
     fun currentUserSingleFlow(): Flow<DocumentSnapshot> {
@@ -50,11 +60,14 @@ internal class FirebaseUserDataSource @Inject constructor(
         }
     }
 
-    private fun User.toMap(): Map<String, Any> {
+    private fun FirebaseUser.toMap(): Map<String, Any>? {
+        if (email.isNullOrEmpty()) {
+            return null
+        }
         return mapOf(
-            FIELD_EMAIL to email,
-            FIELD_PHOTO_URL to photoUrl,
-            FIELD_DISPLAY_NAME to displayName
+            FIELD_EMAIL to email.orEmpty(),
+            FIELD_DISPLAY_NAME to displayName.orEmpty(),
+            FIELD_PHOTO_URL to photoUrl?.toString().orEmpty()
         )
     }
 
