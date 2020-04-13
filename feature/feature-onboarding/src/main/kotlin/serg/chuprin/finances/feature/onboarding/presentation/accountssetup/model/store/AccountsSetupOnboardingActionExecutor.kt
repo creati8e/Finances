@@ -1,17 +1,19 @@
 package serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store
 
+import androidx.annotation.StringRes
 import androidx.core.util.Consumer
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import serg.chuprin.finances.core.api.domain.model.AccountBalance
+import serg.chuprin.finances.core.api.domain.model.MoneyAccountBalance
 import serg.chuprin.finances.core.api.extensions.flowOfSingleValue
 import serg.chuprin.finances.core.api.presentation.model.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.api.presentation.model.mvi.executor.StoreActionExecutor
-import serg.chuprin.finances.core.api.presentation.model.mvi.executor.emptyFlowAction
 import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
 import serg.chuprin.finances.feature.onboarding.R
+import serg.chuprin.finances.feature.onboarding.domain.OnboardingMoneyAccountCreationParams
 import serg.chuprin.finances.feature.onboarding.domain.usecase.CompleteAccountsSetupOnboardingUseCase
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.AccountsSetupOnboardingStepState
 import java.util.*
@@ -41,7 +43,7 @@ class AccountsSetupOnboardingActionExecutor @Inject constructor(
                 handleClickOnNegativeButtonIntent(state)
             }
             is AccountsSetupOnboardingIntent.ClickOnAcceptBalanceButton -> {
-                handleClickOnAcceptBalanceButtonIntent(intent, state)
+                handleClickOnAcceptBalanceButtonIntent(state)
             }
             is AccountsSetupOnboardingIntent.InputAmount -> {
                 handleInputAmountIntent(intent)
@@ -56,7 +58,21 @@ class AccountsSetupOnboardingActionExecutor @Inject constructor(
         state: AccountsSetupOnboardingState
     ): Flow<AccountsSetupOnboardingEffect> {
         if (state.stepState is AccountsSetupOnboardingStepState.EverythingIsSetUp) {
-            return emptyFlowAction(completeOnboardingUseCase::execute)
+            return flow {
+                // TODO: Show progress.
+                val bankCardAccountCreationParams = state.bankCardBalance?.let { balance ->
+                    val name = getString(R.string.bank_card_money_account_default_name)
+                    OnboardingMoneyAccountCreationParams(name, balance)
+                }
+                val cashAccountCreationParams = state.cashBalance?.let { balance ->
+                    val name = getString(R.string.cash_money_account_default_name)
+                    OnboardingMoneyAccountCreationParams(name, balance)
+                }
+                completeOnboardingUseCase.execute(
+                    cashAccountParams = cashAccountCreationParams,
+                    bankAccountCardParams = bankCardAccountCreationParams
+                )
+            }
         }
         return emptyFlow()
     }
@@ -78,7 +94,6 @@ class AccountsSetupOnboardingActionExecutor @Inject constructor(
     }
 
     private fun handleClickOnAcceptBalanceButtonIntent(
-        intent: AccountsSetupOnboardingIntent.ClickOnAcceptBalanceButton,
         state: AccountsSetupOnboardingState
     ): Flow<AccountsSetupOnboardingEffect> {
         return when (val stepState = state.stepState) {
@@ -89,7 +104,7 @@ class AccountsSetupOnboardingActionExecutor @Inject constructor(
                     AccountsSetupOnboardingEffect.AccountBalanceEntered(
                         // Bank card balance not entered on this step yet.
                         bankCardBalance = null,
-                        cashBalance = AccountBalance(amountParser.parse(stepState.enteredAmount)!!)
+                        cashBalance = MoneyAccountBalance(amountParser.parse(stepState.enteredAmount)!!)
                     ),
                     AccountsSetupOnboardingEffect.StepChanged(nextStepState)
                 )
@@ -100,7 +115,7 @@ class AccountsSetupOnboardingActionExecutor @Inject constructor(
                     AccountsSetupOnboardingEffect.AccountBalanceEntered(
                         // Use cache balance from previous step.
                         cashBalance = state.cashBalance,
-                        bankCardBalance = AccountBalance(amountParser.parse(stepState.enteredAmount)!!)
+                        bankCardBalance = MoneyAccountBalance(amountParser.parse(stepState.enteredAmount)!!)
                     ),
                     AccountsSetupOnboardingEffect.StepChanged(buildFinalStepState(state))
                 )
@@ -160,11 +175,15 @@ class AccountsSetupOnboardingActionExecutor @Inject constructor(
     ): AccountsSetupOnboardingStepState {
         val message = if (state.bankCardBalance == null && state.cashBalance == null) {
             // User didn't setup any account.
-            resourceManger.getString(R.string.onboarding_accounts_setup_subtitle_no_accounts)
+            getString(R.string.onboarding_accounts_setup_subtitle_no_accounts)
         } else {
-            resourceManger.getString(R.string.onboarding_accounts_setup_subtitle_setup_finished)
+            getString(R.string.onboarding_accounts_setup_subtitle_setup_finished)
         }
         return AccountsSetupOnboardingStepState.EverythingIsSetUp(message)
+    }
+
+    private fun getString(@StringRes stringRes: Int): String {
+        return resourceManger.getString(stringRes)
     }
 
 }

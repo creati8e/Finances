@@ -7,7 +7,17 @@ internal object FirebaseTransactionFieldsContract {
 
     const val COLLECTION_NAME = "transaction"
 
+    const val FIELD_TYPE = "type"
     const val FIELD_DATE = "date"
     const val FIELD_AMOUNT = "amount"
-    const val FIELD_USER_ID = "user_id"
+    const val FIELD_OWNER_ID = "owner_id"
+    const val FIELD_CURRENCY_CODE = "currency_code"
+    const val FIELD_MONEY_ACCOUNT_ID = "money_account_id"
+
+    object Type {
+        const val INCOME = "income"
+        const val BALANCE = "balance"
+        const val EXPENSE = "expense"
+    }
+
 }

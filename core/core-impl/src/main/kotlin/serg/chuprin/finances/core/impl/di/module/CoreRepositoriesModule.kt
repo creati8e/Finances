@@ -3,14 +3,8 @@ package serg.chuprin.finances.core.impl.di.module
 import dagger.Binds
 import dagger.Module
 import serg.chuprin.finances.core.api.di.scopes.AppScope
-import serg.chuprin.finances.core.api.domain.repository.CurrencyRepository
-import serg.chuprin.finances.core.api.domain.repository.OnboardingRepository
-import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
-import serg.chuprin.finances.core.api.domain.repository.UserRepository
-import serg.chuprin.finances.core.impl.data.repository.CurrencyRepositoryImpl
-import serg.chuprin.finances.core.impl.data.repository.OnboardingRepositoryImpl
-import serg.chuprin.finances.core.impl.data.repository.TransactionRepositoryImpl
-import serg.chuprin.finances.core.impl.data.repository.UserRepositoryImpl
+import serg.chuprin.finances.core.api.domain.repository.*
+import serg.chuprin.finances.core.impl.data.repository.*
 
 /**
  * Created by Sergey Chuprin on 04.04.2020.
@@ -29,5 +23,8 @@ internal abstract class CoreRepositoriesModule {
 
     @[Binds AppScope]
     abstract fun bindTransactionRepository(impl: TransactionRepositoryImpl): TransactionRepository
+
+    @[Binds AppScope]
+    abstract fun bindMoneyAccountRepository(impl: MoneyAccountRepositoryImpl): MoneyAccountRepository
 
 }

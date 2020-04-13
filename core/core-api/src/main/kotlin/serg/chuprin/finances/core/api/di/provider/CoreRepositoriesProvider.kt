@@ -1,9 +1,6 @@
 package serg.chuprin.finances.core.api.di.provider
 
-import serg.chuprin.finances.core.api.domain.repository.CurrencyRepository
-import serg.chuprin.finances.core.api.domain.repository.OnboardingRepository
-import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
-import serg.chuprin.finances.core.api.domain.repository.UserRepository
+import serg.chuprin.finances.core.api.domain.repository.*
 
 /**
  * Created by Sergey Chuprin on 04.04.2020.
@@ -17,5 +14,7 @@ interface CoreRepositoriesProvider {
     val onboardingRepository: OnboardingRepository
 
     val transactionRepository: TransactionRepository
+
+    val moneyAccountRepository: MoneyAccountRepository
 
 }

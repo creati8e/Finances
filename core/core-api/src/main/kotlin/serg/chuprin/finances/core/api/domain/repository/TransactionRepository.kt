@@ -9,6 +9,8 @@ import serg.chuprin.finances.core.api.domain.model.Transaction
  */
 interface TransactionRepository {
 
+    suspend fun createTransaction(transaction: Transaction)
+
     fun userTransactionsFlow(userId: Id): Flow<List<Transaction>>
 
 }

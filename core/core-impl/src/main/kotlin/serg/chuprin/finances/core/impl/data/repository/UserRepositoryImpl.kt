@@ -30,6 +30,10 @@ internal class UserRepositoryImpl @Inject constructor(
 
     override suspend fun updateUser(user: User) = dataSource.updateUser(user)
 
+    override suspend fun getCurrentUser(): User {
+        return userMapper(dataSource.getCurrentUser())!!
+    }
+
     override suspend fun getIncompleteUser(): IncompleteUser {
         return incompleteUserMapper(dataSource.getIncompleteUser())!!
     }

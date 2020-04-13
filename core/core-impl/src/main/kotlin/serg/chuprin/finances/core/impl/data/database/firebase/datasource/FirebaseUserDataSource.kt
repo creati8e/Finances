@@ -1,5 +1,6 @@
 package serg.chuprin.finances.core.impl.data.database.firebase.datasource
 
+import com.github.ajalt.timberkt.Timber
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentSnapshot
@@ -9,6 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import serg.chuprin.finances.core.api.domain.model.User
+import serg.chuprin.finances.core.impl.data.database.firebase.awaitWithLogging
 import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract.COLLECTION_NAME
 import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract.FIELD_DEFAULT_CURRENCY_CODE
 import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract.FIELD_DISPLAY_NAME
@@ -44,7 +46,12 @@ internal class FirebaseUserDataSource @Inject constructor(
                     .collection(COLLECTION_NAME)
                     .document(firebaseUser.uid)
                 val userIsNew = !document.get().await().exists()
-                document.set(fieldsMap).await()
+                document
+                    .set(fieldsMap)
+                    .await()
+                    .also {
+                        Timber.d { "User created" }
+                    }
                 success(userIsNew)
             } catch (throwable: Throwable) {
                 failure<Boolean>(throwable)
@@ -57,16 +64,17 @@ internal class FirebaseUserDataSource @Inject constructor(
             .collection(COLLECTION_NAME)
             .document(currentFirebaseUser.uid)
             .set(user.toMap())
-            .await()
+            .awaitWithLogging {
+                "An error occurred when updating user: $user"
+            }
+            .also {
+                Timber.d { "User updated: $user" }
+            }
     }
 
-    suspend fun getIncompleteUser(): DocumentSnapshot {
-        return firestore
-            .collection(COLLECTION_NAME)
-            .document(currentFirebaseUser.uid)
-            .get()
-            .await()!!
-    }
+    suspend fun getCurrentUser(): DocumentSnapshot = internalGetCurrentUser()
+
+    suspend fun getIncompleteUser(): DocumentSnapshot = internalGetCurrentUser()
 
     fun currentUserSingleFlow(): Flow<DocumentSnapshot> {
         return callbackFlow {
@@ -75,6 +83,16 @@ internal class FirebaseUserDataSource @Inject constructor(
                 .document(currentFirebaseUser.uid)
                 .suspending(this, mapper = { documentSnapshot -> documentSnapshot })
         }
+    }
+
+    private suspend fun internalGetCurrentUser(): DocumentSnapshot {
+        return firestore
+            .collection(COLLECTION_NAME)
+            .document(currentFirebaseUser.uid)
+            .get()
+            .awaitWithLogging {
+                "An error occurring when getting user"
+            }!!
     }
 
     private fun User.toMap(): Map<String, Any> {

@@ -29,7 +29,7 @@ import serg.chuprin.finances.core.api.presentation.model.mvi.reducer.StoreStateR
 @OptIn(FlowPreview::class)
 @Suppress("MemberVisibilityCanBePrivate")
 open class BaseStateStore<I, SE, A, S, E>(
-    initialState: S,
+    protected val initialState: S,
     protected val reducer: StoreStateReducer<SE, S>,
     protected val bootstrapper: StoreBootstrapper<A>,
     protected val executor: StoreActionExecutor<A, S, SE, E>,
@@ -96,18 +96,19 @@ open class BaseStateStore<I, SE, A, S, E>(
 
     private suspend fun processActions(coroutineScope: CoroutineScope) {
         coroutineScope.launch(CoroutineName("Effect reducer coroutine")) {
-            actionsChannel.asFlow().flatMapMerge { action ->
-                executor(
-                    action,
-                    state,
-                    eventsChannel.asConsumer(),
-                    actionsChannel.asFlow()
-                )
-            }
+            actionsChannel.asFlow()
+                .flatMapMerge { action ->
+                    executor(
+                        action,
+                        state,
+                        eventsChannel.asConsumer(),
+                        actionsChannel.asFlow()
+                    )
+                }
                 // Execute all actions on background thread.
                 .flowOn(backgroundDispatcher)
-                .map { sideEffect ->
-                    reducer(sideEffect, state)
+                .scan(initialState) { prevState, sideEffect ->
+                    reducer(sideEffect, prevState)
                 }
                 // Reduce on single thread to prevent interleaving.
                 .flowOn(reducerDispatcher)

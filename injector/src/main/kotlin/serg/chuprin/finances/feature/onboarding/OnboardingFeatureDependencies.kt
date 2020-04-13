@@ -2,9 +2,7 @@ package serg.chuprin.finances.feature.onboarding
 
 import dagger.Component
 import serg.chuprin.finances.core.api.di.provider.*
-import serg.chuprin.finances.core.api.domain.repository.CurrencyRepository
-import serg.chuprin.finances.core.api.domain.repository.OnboardingRepository
-import serg.chuprin.finances.core.api.domain.repository.UserRepository
+import serg.chuprin.finances.core.api.domain.repository.*
 import serg.chuprin.finances.core.api.domain.usecase.SearchCurrenciesUseCase
 import serg.chuprin.finances.core.api.presentation.model.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
@@ -22,6 +20,8 @@ interface OnboardingFeatureDependencies {
 
     val amountFormatter: AmountFormatter
 
+    val onboardingNavigation: OnboardingNavigation
+
     // region Repositories.
 
     val userRepository: UserRepository
@@ -30,7 +30,9 @@ interface OnboardingFeatureDependencies {
 
     val onboardingRepository: OnboardingRepository
 
-    val onboardingNavigation: OnboardingNavigation
+    val transactionRepository: TransactionRepository
+
+    val moneyAccountRepository: MoneyAccountRepository
 
     // endregion
 

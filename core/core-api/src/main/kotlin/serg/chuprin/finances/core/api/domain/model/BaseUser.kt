@@ -30,8 +30,8 @@ data class IncompleteUser(
             if (id.isNullOrBlank()) return null
             if (email.isNullOrBlank()) return null
             return IncompleteUser(
-                id = Id(id),
                 email = email,
+                id = Id.existing(id),
                 photoUrl = photoUrl.orEmpty(),
                 displayName = displayName.orEmpty()
             )
@@ -63,8 +63,8 @@ data class User(
             if (email.isNullOrBlank()) return null
             if (defaultCurrencyCode.isNullOrEmpty()) return null
             return User(
-                id = Id(id),
                 email = email,
+                id = Id.existing(id),
                 photoUrl = photoUrl.orEmpty(),
                 displayName = displayName.orEmpty(),
                 defaultCurrencyCode = defaultCurrencyCode

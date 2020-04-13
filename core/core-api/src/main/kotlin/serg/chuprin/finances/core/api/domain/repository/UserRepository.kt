@@ -13,6 +13,8 @@ interface UserRepository {
 
     suspend fun updateUser(user: User)
 
+    suspend fun getCurrentUser(): User
+
     /**
      * @return user who has not completed onboarding.
      * This method should not be called outside user onboarding flow.

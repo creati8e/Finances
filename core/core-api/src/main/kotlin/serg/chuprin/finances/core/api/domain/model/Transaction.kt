@@ -6,11 +6,14 @@ import java.util.*
  * Created by Sergey Chuprin on 03.04.2020.
  */
 @Suppress("DataClassPrivateConstructor")
-data class Transaction private constructor(
+data class Transaction(
     val id: Id,
     val date: Date,
-    val userId: Id,
-    val amount: String
+    val ownerId: Id,
+    val amount: String,
+    val moneyAccountId: Id,
+    val type: TransactionType,
+    val currencyCode: String
 ) {
 
     companion object {
@@ -18,18 +21,27 @@ data class Transaction private constructor(
         fun create(
             id: String?,
             date: Date?,
-            userId: String?,
-            amount: String?
+            ownerId: String?,
+            amount: String?,
+            currencyCode: String?,
+            type: TransactionType?,
+            moneyAccountId: String?
         ): Transaction? {
+            if (type == null) return null
             if (date == null) return null
+            if (ownerId == null) return null
             if (id.isNullOrBlank()) return null
-            if (userId.isNullOrBlank()) return null
+            if (moneyAccountId == null) return null
             if (amount.isNullOrBlank()) return null
+            if (currencyCode.isNullOrEmpty()) return null
             return Transaction(
-                id = Id(id),
+                type = type,
                 date = date,
                 amount = amount,
-                userId = Id(userId)
+                id = Id.existing(id),
+                currencyCode = currencyCode,
+                ownerId = Id.existing(ownerId),
+                moneyAccountId = Id.existing(moneyAccountId)
             )
         }
 
