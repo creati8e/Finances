@@ -43,7 +43,7 @@ internal class FirebaseUserDataSource @Inject constructor(
                 val document = firestore
                     .collection(COLLECTION_NAME)
                     .document(firebaseUser.uid)
-                val userIsNew = document.get().await() == null
+                val userIsNew = !document.get().await().exists()
                 document.set(fieldsMap).await()
                 success(userIsNew)
             } catch (throwable: Throwable) {

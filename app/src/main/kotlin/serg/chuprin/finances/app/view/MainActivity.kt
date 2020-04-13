@@ -26,19 +26,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleAppLaunchState(appLaunchState: AppLaunchState) {
         val navController = findNavController(R.id.rootFragmentContainer)
-        navController.setGraph(R.navigation.navigation_onboarding)
 
         // TODO: Create root graph and navigate between child graphs instead settings the whole graph.
-//        return when (appLaunchState) {
-//            AppLaunchState.ONBOARDING -> {
-//            }
-//            AppLaunchState.DASHBOARD -> {
-//                navController.setGraph(R.navigation.navigation_dashboard)
-//            }
-//            AppLaunchState.AUTHORIZATION -> {
-//                navController.setGraph(R.navigation.navigation_authorization)
-//            }
-//        }
+        return when (appLaunchState) {
+            AppLaunchState.ONBOARDING -> {
+                navController.setGraph(R.navigation.navigation_onboarding)
+            }
+            AppLaunchState.DASHBOARD -> {
+                navController.setGraph(R.navigation.navigation_dashboard)
+            }
+            AppLaunchState.AUTHORIZATION -> {
+                navController.setGraph(R.navigation.navigation_authorization)
+            }
+        }
     }
 
 }
