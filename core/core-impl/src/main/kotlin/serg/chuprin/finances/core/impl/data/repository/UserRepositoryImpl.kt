@@ -4,9 +4,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.mapNotNull
+import serg.chuprin.finances.core.api.domain.model.IncompleteUser
 import serg.chuprin.finances.core.api.domain.model.User
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.impl.data.database.firebase.datasource.FirebaseUserDataSource
+import serg.chuprin.finances.core.impl.data.mapper.IncompleteUserMapper
 import serg.chuprin.finances.core.impl.data.mapper.UserMapper
 import javax.inject.Inject
 
@@ -15,7 +17,8 @@ import javax.inject.Inject
  */
 internal class UserRepositoryImpl @Inject constructor(
     private val userMapper: UserMapper,
-    private val dataSource: FirebaseUserDataSource
+    private val dataSource: FirebaseUserDataSource,
+    private val incompleteUserMapper: IncompleteUserMapper
 ) : UserRepository {
 
     override fun currentUserSingleFlow(): Flow<User> {
@@ -23,6 +26,12 @@ internal class UserRepositoryImpl @Inject constructor(
             .currentUserSingleFlow()
             .mapNotNull { documentSnapshot -> userMapper(documentSnapshot) }
             .flowOn(Dispatchers.Default)
+    }
+
+    override suspend fun updateUser(user: User) = dataSource.updateUser(user)
+
+    override suspend fun getIncompleteUser(): IncompleteUser {
+        return incompleteUserMapper(dataSource.getIncompleteUser())!!
     }
 
 }

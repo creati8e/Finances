@@ -1,6 +1,7 @@
 package serg.chuprin.finances.core.api.domain.repository
 
 import kotlinx.coroutines.flow.Flow
+import serg.chuprin.finances.core.api.domain.model.IncompleteUser
 import serg.chuprin.finances.core.api.domain.model.User
 
 /**
@@ -9,5 +10,13 @@ import serg.chuprin.finances.core.api.domain.model.User
 interface UserRepository {
 
     fun currentUserSingleFlow(): Flow<User>
+
+    suspend fun updateUser(user: User)
+
+    /**
+     * @return user who has not completed onboarding.
+     * This method should not be called outside user onboarding flow.
+     */
+    suspend fun getIncompleteUser(): IncompleteUser
 
 }

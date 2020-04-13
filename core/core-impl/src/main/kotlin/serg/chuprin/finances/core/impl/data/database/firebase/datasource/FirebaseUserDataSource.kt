@@ -8,7 +8,9 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
+import serg.chuprin.finances.core.api.domain.model.User
 import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract.COLLECTION_NAME
+import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract.FIELD_DEFAULT_CURRENCY_CODE
 import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract.FIELD_DISPLAY_NAME
 import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract.FIELD_EMAIL
 import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract.FIELD_PHOTO_URL
@@ -24,6 +26,13 @@ internal class FirebaseUserDataSource @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
     private val firestore: FirebaseFirestore
 ) {
+
+    private val currentFirebaseUser: FirebaseUser
+        get() {
+            return requireNotNull(firebaseAuth.currentUser) {
+                "Current user does not exist"
+            }
+        }
 
     suspend fun createAndSetUser(firebaseUser: FirebaseUser): Result<Boolean> {
         return coroutineScope {
@@ -43,16 +52,38 @@ internal class FirebaseUserDataSource @Inject constructor(
         }
     }
 
+    suspend fun updateUser(user: User) {
+        firestore
+            .collection(COLLECTION_NAME)
+            .document(currentFirebaseUser.uid)
+            .set(user.toMap())
+            .await()
+    }
+
+    suspend fun getIncompleteUser(): DocumentSnapshot {
+        return firestore
+            .collection(COLLECTION_NAME)
+            .document(currentFirebaseUser.uid)
+            .get()
+            .await()!!
+    }
+
     fun currentUserSingleFlow(): Flow<DocumentSnapshot> {
         return callbackFlow {
-            val currentUser = requireNotNull(firebaseAuth.currentUser) {
-                "Current user does not exist"
-            }
             firestore
                 .collection(COLLECTION_NAME)
-                .document(currentUser.uid)
+                .document(currentFirebaseUser.uid)
                 .suspending(this, mapper = { documentSnapshot -> documentSnapshot })
         }
+    }
+
+    private fun User.toMap(): Map<String, Any> {
+        return mapOf(
+            FIELD_EMAIL to email,
+            FIELD_PHOTO_URL to photoUrl,
+            FIELD_DISPLAY_NAME to displayName,
+            FIELD_DEFAULT_CURRENCY_CODE to defaultCurrencyCode
+        )
     }
 
     private fun FirebaseUser.toMap(): Map<String, Any>? {

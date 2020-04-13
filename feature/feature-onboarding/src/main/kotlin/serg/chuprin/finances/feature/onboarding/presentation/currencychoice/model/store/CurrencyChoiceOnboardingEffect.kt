@@ -38,6 +38,10 @@ sealed class CurrencyChoiceOnboardingEffect {
         val allCurrencyCells: List<CurrencyCell>
     ) : CurrencyChoiceOnboardingEffect()
 
+    class UserCreationInProgress(
+        val progressVisible: Boolean
+    ) : CurrencyChoiceOnboardingEffect()
+
     /**
      * Initial effect produced as result of store bootstrapping.
      */

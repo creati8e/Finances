@@ -34,14 +34,18 @@ class CurrencyChoiceOnboardingStateReducer :
                     chosenCurrencyDisplayName = effect.chosenCurrencyDisplayName
                 )
             }
-            is CurrencyChoiceOnboardingEffect.CurrenciesFilteredByQuery -> {
-                state.copy(currentCells = effect.cells)
-            }
             is CurrencyChoiceOnboardingEffect.CurrencyPickerVisibilityChanged -> {
                 state.copy(
                     currentCells = effect.allCurrencyCells,
                     currencyPickerIsVisible = effect.visible
                 )
+            }
+            is CurrencyChoiceOnboardingEffect.CurrenciesFilteredByQuery -> {
+                state.copy(currentCells = effect.cells)
+            }
+            is CurrencyChoiceOnboardingEffect.UserCreationInProgress -> {
+                // TODO: Render new property.
+                state.copy(progressIsVisible = effect.progressVisible)
             }
         }
     }

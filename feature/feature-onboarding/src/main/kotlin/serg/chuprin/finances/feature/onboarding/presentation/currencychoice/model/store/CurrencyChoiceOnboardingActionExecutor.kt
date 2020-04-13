@@ -2,10 +2,7 @@ package serg.chuprin.finances.feature.onboarding.presentation.currencychoice.mod
 
 import androidx.core.util.Consumer
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.*
 import serg.chuprin.finances.core.api.domain.usecase.SearchCurrenciesUseCase
 import serg.chuprin.finances.core.api.extensions.flowOfSingleValue
 import serg.chuprin.finances.core.api.extensions.takeUntil
@@ -141,8 +138,10 @@ class CurrencyChoiceOnboardingActionExecutor @Inject constructor(
         if (state.chosenCurrency == null) {
             return emptyFlow()
         }
-        return emptyFlowAction {
-            completeCurrencyChoiceOnboardingUseCase.execute()
+        return flow {
+            emit(CurrencyChoiceOnboardingEffect.UserCreationInProgress(progressVisible = true))
+            completeCurrencyChoiceOnboardingUseCase.execute(state.chosenCurrency)
+            emit(CurrencyChoiceOnboardingEffect.UserCreationInProgress(progressVisible = false))
         }
     }
 
