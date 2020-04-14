@@ -1,6 +1,9 @@
 package serg.chuprin.finances.app
 
 import android.app.Application
+import com.google.firebase.firestore.FirebaseFirestoreSettings
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import serg.chuprin.finances.app.di.navigation.NavigationComponent
 import serg.chuprin.finances.core.impl.di.CoreDependenciesComponent
 import timber.log.Timber
@@ -21,6 +24,12 @@ class FinancesApplication : Application() {
             Timber.plant(Timber.DebugTree())
         }
         initializeComponents()
+        // TODO: Move setup to other place.
+        val settings = FirebaseFirestoreSettings
+            .Builder()
+            .setPersistenceEnabled(true)
+            .build()
+        Firebase.firestore.firestoreSettings = settings
     }
 
     private fun initializeComponents() {

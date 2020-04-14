@@ -12,6 +12,7 @@ import androidx.annotation.StringRes
 import androidx.core.transition.doOnEnd
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
+import com.google.android.material.transition.MaterialSharedAxis
 import com.google.android.material.transition.Scale
 import kotlinx.android.synthetic.main.fragment_onboarding_accounts_setup.*
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
@@ -47,6 +48,16 @@ class AccountsSetupOnboardingFragment : BaseFragment(R.layout.fragment_onboardin
     override fun onAttach(context: Context) {
         super.onAttach(context)
         component.inject(this)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val forward = MaterialSharedAxis.create(requireContext(), MaterialSharedAxis.X, true)
+        enterTransition = forward
+
+        val backward = MaterialSharedAxis.create(requireContext(), MaterialSharedAxis.X, false)
+        returnTransition = backward
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

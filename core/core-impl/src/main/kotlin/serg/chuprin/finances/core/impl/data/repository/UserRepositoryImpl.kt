@@ -28,7 +28,7 @@ internal class UserRepositoryImpl @Inject constructor(
             .flowOn(Dispatchers.Default)
     }
 
-    override suspend fun updateUser(user: User) = dataSource.updateUser(user)
+    override fun updateUser(user: User) = dataSource.updateUser(user)
 
     override suspend fun getCurrentUser(): User {
         return userMapper(dataSource.getCurrentUser())!!

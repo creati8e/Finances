@@ -10,6 +10,7 @@ import androidx.core.transition.doOnStart
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.transition.MaterialArcMotion
 import com.google.android.material.transition.MaterialContainerTransform
+import com.google.android.material.transition.MaterialSharedAxis
 import kotlinx.android.synthetic.main.fragment_onboarding_currency_choice.*
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
@@ -36,6 +37,12 @@ class CurrencyChoiceOnboardingFragment :
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             viewModel.dispatchIntent(CurrencyChoiceOnboardingIntent.BackPress)
         }
+
+        val backward = MaterialSharedAxis.create(requireContext(), MaterialSharedAxis.X, false)
+        reenterTransition = backward
+
+        val forward = MaterialSharedAxis.create(requireContext(), MaterialSharedAxis.X, true)
+        exitTransition = forward
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -11,7 +11,7 @@ interface UserRepository {
 
     fun currentUserSingleFlow(): Flow<User>
 
-    suspend fun updateUser(user: User)
+    fun updateUser(user: User)
 
     suspend fun getCurrentUser(): User
 

@@ -5,6 +5,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Source
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -59,17 +60,11 @@ internal class FirebaseUserDataSource @Inject constructor(
         }
     }
 
-    suspend fun updateUser(user: User) {
+    fun updateUser(user: User) {
         firestore
             .collection(COLLECTION_NAME)
             .document(currentFirebaseUser.uid)
             .set(user.toMap())
-            .awaitWithLogging {
-                "An error occurred when updating user: $user"
-            }
-            .also {
-                Timber.d { "User updated: $user" }
-            }
     }
 
     suspend fun getCurrentUser(): DocumentSnapshot = internalGetCurrentUser()
@@ -89,7 +84,7 @@ internal class FirebaseUserDataSource @Inject constructor(
         return firestore
             .collection(COLLECTION_NAME)
             .document(currentFirebaseUser.uid)
-            .get()
+            .get(Source.CACHE)
             .awaitWithLogging {
                 "An error occurring when getting user"
             }!!

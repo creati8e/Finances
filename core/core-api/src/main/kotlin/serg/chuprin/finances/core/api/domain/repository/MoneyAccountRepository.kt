@@ -7,6 +7,6 @@ import serg.chuprin.finances.core.api.domain.model.MoneyAccount
  */
 interface MoneyAccountRepository {
 
-    suspend fun createAccount(account: MoneyAccount)
+    fun createAccount(account: MoneyAccount)
 
 }
