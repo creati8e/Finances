@@ -18,6 +18,7 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf(".*jar"))))
 
     api(project(":core:core-api"))
+    api(project(":core:core-firebase"))
 
     implementation(Libraries.KOTLIN)
     implementation(Libraries.KOTLIN_SERIALIZATION)
@@ -51,11 +52,6 @@ dependencies {
     implementationAll(Libraries.Android.Lifecycle.DEPENDENCIES)
 
     implementationAll(Libraries.Preferences.DEPENDENCIES)
-
-    // Firebase.
-    implementation(Libraries.Infrastructure.FIRESTORE)
-    implementation(Libraries.Infrastructure.AUTH)
-    implementation(Libraries.Infrastructure.PLAY_SERVICES_KTX)
 
     // Networking.
     implementationAll(Libraries.Network.DEPENDENCIES)

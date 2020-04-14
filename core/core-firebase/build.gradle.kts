@@ -6,8 +6,11 @@ plugins {
 
 dependencies {
     implementation(Libraries.KOTLIN)
+    implementation(project(":core:core-api"))
+
     // Firebase.
     api(Libraries.Infrastructure.AUTH)
     api(Libraries.Infrastructure.GMS_AUTH)
     api(Libraries.Infrastructure.FIRESTORE)
+    api(Libraries.Infrastructure.PLAY_SERVICES_KTX)
 }
