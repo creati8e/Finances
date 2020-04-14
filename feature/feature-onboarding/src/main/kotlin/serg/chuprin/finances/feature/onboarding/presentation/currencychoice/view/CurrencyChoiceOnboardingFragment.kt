@@ -18,7 +18,6 @@ import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisible
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
 import serg.chuprin.finances.feature.onboarding.R
 import serg.chuprin.finances.feature.onboarding.presentation.common.di.OnboardingFeatureComponent
-import serg.chuprin.finances.feature.onboarding.presentation.common.view.OnboardingContainerFragment
 import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.model.store.CurrencyChoiceOnboardingEvent
 import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.model.store.CurrencyChoiceOnboardingIntent
 
@@ -28,10 +27,9 @@ import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.mode
 class CurrencyChoiceOnboardingFragment :
     BaseFragment(R.layout.fragment_onboarding_currency_choice) {
 
-    private val viewModel by viewModelFromComponent { parentComponent.currencyChoiceComponent() }
-
-    private val parentComponent: OnboardingFeatureComponent
-        get() = (parentFragment as OnboardingContainerFragment).component
+    private val viewModel by viewModelFromComponent {
+        OnboardingFeatureComponent.get().currencyChoiceComponent()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,6 +72,9 @@ class CurrencyChoiceOnboardingFragment :
         return when (event) {
             CurrencyChoiceOnboardingEvent.CloseApp -> {
                 requireActivity().finishAndRemoveTask()
+            }
+            CurrencyChoiceOnboardingEvent.NavigateToAccountsSetup -> {
+                navController.navigate(R.id.action_currency_choice_to_accounts_setup)
             }
         }
     }

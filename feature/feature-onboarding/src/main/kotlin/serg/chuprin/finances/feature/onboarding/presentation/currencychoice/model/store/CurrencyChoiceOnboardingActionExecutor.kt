@@ -34,7 +34,7 @@ class CurrencyChoiceOnboardingActionExecutor @Inject constructor(
             is CurrencyChoiceOnboardingAction.ExecuteIntent -> {
                 when (val intent = action.intent) {
                     CurrencyChoiceOnboardingIntent.ClickOnDoneButton -> {
-                        handleClickOnDoneButtonIntent(state)
+                        handleClickOnDoneButtonIntent(state, eventConsumer)
                     }
                     CurrencyChoiceOnboardingIntent.BackPress -> {
                         handleBackPressIntent(state, eventConsumer)
@@ -133,7 +133,8 @@ class CurrencyChoiceOnboardingActionExecutor @Inject constructor(
     }
 
     private fun handleClickOnDoneButtonIntent(
-        state: CurrencyChoiceOnboardingState
+        state: CurrencyChoiceOnboardingState,
+        eventConsumer: Consumer<CurrencyChoiceOnboardingEvent>
     ): Flow<CurrencyChoiceOnboardingEffect> {
         if (state.chosenCurrency == null) {
             return emptyFlow()
@@ -141,7 +142,7 @@ class CurrencyChoiceOnboardingActionExecutor @Inject constructor(
         return flow {
             emit(CurrencyChoiceOnboardingEffect.UserCreationInProgress(progressVisible = true))
             completeCurrencyChoiceOnboardingUseCase.execute(state.chosenCurrency)
-            emit(CurrencyChoiceOnboardingEffect.UserCreationInProgress(progressVisible = false))
+            eventConsumer(CurrencyChoiceOnboardingEvent.NavigateToAccountsSetup)
         }
     }
 

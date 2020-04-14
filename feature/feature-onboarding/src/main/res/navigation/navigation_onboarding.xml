@@ -11,6 +11,40 @@
         android:id="@+id/onboardingContainerFragment"
         android:name="serg.chuprin.finances.feature.onboarding.presentation.common.view.OnboardingContainerFragment"
         android:label="OnboardingContainerFragment"
-        tools:layout="@layout/fragment_onboarding_container" />
+        tools:layout="@layout/fragment_onboarding_container">
+
+        <action
+            android:id="@+id/action_onboarding_to_currency_choice"
+            app:destination="@id/currencyChoiceOnboardingFragment"
+            app:popUpTo="@layout/fragment_onboarding_container"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_onboarding_to_accounts_setup"
+            app:destination="@id/accountsSetupOnboardingFragment"
+            app:popUpTo="@layout/fragment_onboarding_container"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/currencyChoiceOnboardingFragment"
+        android:name="serg.chuprin.finances.feature.onboarding.presentation.currencychoice.view.CurrencyChoiceOnboardingFragment"
+        android:label="CurrencyChoiceOnboardingFragment"
+        tools:layout="@layout/fragment_onboarding_currency_choice">
+
+        <action
+            android:id="@+id/action_currency_choice_to_accounts_setup"
+            app:destination="@id/accountsSetupOnboardingFragment"
+            app:popUpTo="@layout/fragment_onboarding_container"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/accountsSetupOnboardingFragment"
+        android:name="serg.chuprin.finances.feature.onboarding.presentation.accountssetup.view.AccountsSetupOnboardingFragment"
+        android:label="AccountsSetupOnboardingFragment"
+        tools:layout="@layout/fragment_onboarding_accounts_setup" />
 
 </navigation>

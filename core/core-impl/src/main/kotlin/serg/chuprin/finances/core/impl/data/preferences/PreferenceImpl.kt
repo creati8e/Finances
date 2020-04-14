@@ -1,7 +1,6 @@
 package serg.chuprin.finances.core.impl.data.preferences
 
 import com.afollestad.rxkprefs.Pref
-import com.afollestad.rxkprefs.coroutines.asFlow
 import kotlinx.coroutines.flow.Flow
 import serg.chuprin.finances.core.api.data.datasource.preferences.Preference
 

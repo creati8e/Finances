@@ -7,4 +7,6 @@ sealed class CurrencyChoiceOnboardingEvent {
 
     object CloseApp : CurrencyChoiceOnboardingEvent()
 
+    object NavigateToAccountsSetup : CurrencyChoiceOnboardingEvent()
+
 }

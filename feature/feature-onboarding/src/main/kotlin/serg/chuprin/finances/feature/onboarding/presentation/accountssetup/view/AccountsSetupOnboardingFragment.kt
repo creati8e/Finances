@@ -1,5 +1,6 @@
 package serg.chuprin.finances.feature.onboarding.presentation.accountssetup.view
 
+import android.content.Context
 import android.os.Bundle
 import android.text.TextWatcher
 import android.transition.AutoTransition
@@ -13,14 +14,17 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.transition.Scale
 import kotlinx.android.synthetic.main.fragment_onboarding_accounts_setup.*
+import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
+import serg.chuprin.finances.core.api.presentation.navigation.OnboardingNavigation
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.extensions.*
 import serg.chuprin.finances.feature.onboarding.R
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.AccountsSetupOnboardingStepState
+import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.AccountsSetupOnboardingEvent
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.AccountsSetupOnboardingIntent
 import serg.chuprin.finances.feature.onboarding.presentation.common.di.OnboardingFeatureComponent
-import serg.chuprin.finances.feature.onboarding.presentation.common.view.OnboardingContainerFragment
+import javax.inject.Inject
 
 /**
  * Created by Sergey Chuprin on 07.04.2020.
@@ -31,16 +35,24 @@ class AccountsSetupOnboardingFragment : BaseFragment(R.layout.fragment_onboardin
         private const val TRANSITION_DURATION = 150L
     }
 
-    private val viewModel by viewModelFromComponent { parentComponent.accountsSetupComponent() }
+    @Inject
+    lateinit var onboardingNavigation: OnboardingNavigation
 
-    private val parentComponent: OnboardingFeatureComponent
-        get() = (parentFragment as OnboardingContainerFragment).component
+    private val viewModel by viewModelFromComponent { component }
+
+    private val component by component { OnboardingFeatureComponent.get().accountsSetupComponent() }
 
     private var textWatcher: TextWatcher? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        component.inject(this)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(viewModel) {
+            eventsLiveData(::handleEvent)
             stepStateLiveData(::handleStepState)
             formattedAmountLiveData { amount ->
                 amountEditText.doIgnoringChanges {
@@ -84,6 +96,14 @@ class AccountsSetupOnboardingFragment : BaseFragment(R.layout.fragment_onboardin
         super.onStop()
         amountEditText.removeTextChangedListener(textWatcher)
         textWatcher = null
+    }
+
+    private fun handleEvent(event: AccountsSetupOnboardingEvent) {
+        return when (event) {
+            AccountsSetupOnboardingEvent.NavigateToDashboard -> {
+                onboardingNavigation.navigateToDashboard(navController)
+            }
+        }
     }
 
     private fun handleStepState(stepState: AccountsSetupOnboardingStepState) {

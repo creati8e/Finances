@@ -86,7 +86,7 @@ object Libraries {
         private const val VER = "2.0.3"
         private const val ARTIFACT = "com.afollestad.rxkprefs"
 
-        val DEPENDENCIES = listOf("$ARTIFACT:core:$VER", "$ARTIFACT:coroutines:$VER")
+        val DEPENDENCIES = listOf("$ARTIFACT:core:$VER")
     }
 
     object Coroutines {

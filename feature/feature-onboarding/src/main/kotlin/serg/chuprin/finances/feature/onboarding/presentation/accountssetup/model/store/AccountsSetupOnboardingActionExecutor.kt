@@ -11,6 +11,7 @@ import serg.chuprin.finances.core.api.extensions.flowOfSingleValue
 import serg.chuprin.finances.core.api.presentation.model.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.api.presentation.model.mvi.executor.StoreActionExecutor
+import serg.chuprin.finances.core.api.presentation.model.mvi.invoke
 import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
 import serg.chuprin.finances.feature.onboarding.R
 import serg.chuprin.finances.feature.onboarding.domain.OnboardingMoneyAccountCreationParams
@@ -54,7 +55,7 @@ class AccountsSetupOnboardingActionExecutor @Inject constructor(
                         handleInputAmountIntent(intent, state)
                     }
                     AccountsSetupOnboardingIntent.ClickOnStartUsingAppButton -> {
-                        handleClickOnStartUsingAppButton(state)
+                        handleClickOnStartUsingAppButton(state, eventConsumer)
                     }
                 }
             }
@@ -68,10 +69,12 @@ class AccountsSetupOnboardingActionExecutor @Inject constructor(
     }
 
     private fun handleClickOnStartUsingAppButton(
-        state: AccountsSetupOnboardingState
+        state: AccountsSetupOnboardingState,
+        eventConsumer: Consumer<AccountsSetupOnboardingEvent>
     ): Flow<AccountsSetupOnboardingEffect> {
         if (state.stepState is AccountsSetupOnboardingStepState.EverythingIsSetUp) {
             return flow {
+                // TODO: Do request before clicking button.
                 // TODO: Show progress.
                 val bankCardAccountCreationParams = state.bankCardBalance?.let { balance ->
                     val name = getString(R.string.bank_card_money_account_default_name)
@@ -85,6 +88,7 @@ class AccountsSetupOnboardingActionExecutor @Inject constructor(
                     cashAccountParams = cashAccountCreationParams,
                     bankAccountCardParams = bankCardAccountCreationParams
                 )
+                eventConsumer(AccountsSetupOnboardingEvent.NavigateToDashboard)
             }
         }
         return emptyFlow()

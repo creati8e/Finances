@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.mapNotNull
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.BaseStoreViewModel
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.AccountsSetupOnboardingStepState
+import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.AccountsSetupOnboardingEvent
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.AccountsSetupOnboardingIntent
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.AccountsSetupOnboardingState
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.AccountsSetupOnboardingStore
@@ -19,6 +20,8 @@ class AccountsSetupOnboardingViewModel @Inject constructor(
 
     val stepStateLiveData: LiveData<AccountsSetupOnboardingStepState> =
         store.observeParticularStateAsLiveData(AccountsSetupOnboardingState::stepState)
+
+    val eventsLiveData: LiveData<AccountsSetupOnboardingEvent> = store.observeEventsAsLiveData()
 
     /**
      * Do not do any diffing in order to properly display formatted amount and replace existing input.
