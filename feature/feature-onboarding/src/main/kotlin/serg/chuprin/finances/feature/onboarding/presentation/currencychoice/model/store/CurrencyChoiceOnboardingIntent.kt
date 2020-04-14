@@ -7,18 +7,30 @@ import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.mode
  */
 sealed class CurrencyChoiceOnboardingIntent {
 
+    /**
+     * User pressed back. Maybe he want to close currency picker or close the app.
+     */
     object BackPress : CurrencyChoiceOnboardingIntent()
 
+    /**
+     * User has chosen currency and want to accept it.
+     */
     object ClickOnDoneButton : CurrencyChoiceOnboardingIntent()
 
     object CloseCurrencyPicker : CurrencyChoiceOnboardingIntent()
 
+    /**
+     * User want to open currency picker.
+     */
     object ClickOnCurrencyPicker : CurrencyChoiceOnboardingIntent()
 
     class SearchCurrencies(
         val searchQuery: String
     ) : CurrencyChoiceOnboardingIntent()
 
+    /**
+     * User has chosen a particular currency from currencies list.
+     */
     class ChooseCurrency(
         val currencyCell: CurrencyCell
     ) : CurrencyChoiceOnboardingIntent()
