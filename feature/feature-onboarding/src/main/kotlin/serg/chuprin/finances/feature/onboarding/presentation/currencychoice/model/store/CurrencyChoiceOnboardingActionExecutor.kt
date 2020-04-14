@@ -4,8 +4,8 @@ import androidx.core.util.Consumer
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import serg.chuprin.finances.core.api.domain.usecase.SearchCurrenciesUseCase
-import serg.chuprin.finances.core.api.extensions.flowOfSingleValue
-import serg.chuprin.finances.core.api.extensions.takeUntil
+import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
+import serg.chuprin.finances.core.api.extensions.flow.takeUntil
 import serg.chuprin.finances.core.api.presentation.model.cells.ZeroDataCell
 import serg.chuprin.finances.core.api.presentation.model.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.core.api.presentation.model.mvi.executor.emptyFlowAction
@@ -77,8 +77,9 @@ class CurrencyChoiceOnboardingActionExecutor @Inject constructor(
                             titleRes = R.string.onboarding_currency_choice_currencies_not_found
                         )
                     )
-                } else
+                } else {
                     buildCurrencyCells(currencies, state.chosenCurrency)
+                }
             )
         }.takeUntil(actionsFlow.filter { action -> isSearchCurrenciesAction(action) })
     }

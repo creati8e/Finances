@@ -3,7 +3,6 @@ package serg.chuprin.finances.core.api.presentation.model.mvi.bootstrapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
-
 /**
  * Created by Sergey Chuprin on 01.09.2019.
  */

@@ -1,8 +1,8 @@
-package serg.chuprin.finances.core.api.extensions
+package serg.chuprin.finances.core.api.extensions.flow
 
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import serg.chuprin.finances.core.api.extensions.flow.FlowTakeUntil
 
 /**
  * Created by Sergey Chuprin on 08.04.2020.
@@ -13,6 +13,7 @@ fun <T> flowOfSingleValue(block: suspend () -> T): Flow<T> {
     }
 }
 
+@OptIn(FlowPreview::class)
 fun <T> Flow<T>.takeUntil(otherFlow: Flow<Any>): Flow<T> {
     return FlowTakeUntil(this, otherFlow)
 }

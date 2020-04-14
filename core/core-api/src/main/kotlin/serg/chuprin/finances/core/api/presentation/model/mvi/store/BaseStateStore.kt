@@ -27,7 +27,7 @@ import serg.chuprin.finances.core.api.presentation.model.mvi.reducer.StoreStateR
  * This implementation automatically executes action on background thread.
  */
 @OptIn(FlowPreview::class)
-@Suppress("MemberVisibilityCanBePrivate")
+@Suppress("MemberVisibilityCanBePrivate", "unused")
 open class BaseStateStore<I, SE, A, S, E>(
     protected val initialState: S,
     protected val reducer: StoreStateReducer<SE, S>,
