@@ -1,13 +1,13 @@
-package serg.chuprin.finances.feature.onboarding.presentation.common.di
+package serg.chuprin.finances.feature.onboarding.presentation.launch.di
 
 import dagger.Component
 import serg.chuprin.finances.core.api.di.scopes.FeatureScope
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.ViewModelComponent
 import serg.chuprin.finances.feature.onboarding.OnboardingFeatureDependencies
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.di.AccountsSetupOnboardingComponent
-import serg.chuprin.finances.feature.onboarding.presentation.common.model.viewmodel.OnboardingContainerViewModel
-import serg.chuprin.finances.feature.onboarding.presentation.common.view.OnboardingContainerFragment
 import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.di.CurrencyChoiceOnboardingComponent
+import serg.chuprin.finances.feature.onboarding.presentation.launch.model.viewmodel.OnboardingLaunchViewModel
+import serg.chuprin.finances.feature.onboarding.presentation.launch.view.OnboardingLaunchFragment
 import serg.chuprin.finances.injector.Injector
 
 /**
@@ -15,7 +15,7 @@ import serg.chuprin.finances.injector.Injector
  */
 @FeatureScope
 @Component(dependencies = [OnboardingFeatureDependencies::class])
-interface OnboardingFeatureComponent : ViewModelComponent<OnboardingContainerViewModel> {
+interface OnboardingFeatureComponent : ViewModelComponent<OnboardingLaunchViewModel> {
 
     companion object {
 
@@ -28,7 +28,7 @@ interface OnboardingFeatureComponent : ViewModelComponent<OnboardingContainerVie
 
     }
 
-    fun inject(fragment: OnboardingContainerFragment)
+    fun inject(fragment: OnboardingLaunchFragment)
 
     fun accountsSetupComponent(): AccountsSetupOnboardingComponent
 

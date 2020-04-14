@@ -74,8 +74,6 @@ class AccountsSetupOnboardingActionExecutor @Inject constructor(
     ): Flow<AccountsSetupOnboardingEffect> {
         if (state.stepState is AccountsSetupOnboardingStepState.EverythingIsSetUp) {
             return flow {
-                // TODO: Do request before clicking button.
-                // TODO: Show progress.
                 val bankCardAccountCreationParams = state.bankCardBalance?.let { balance ->
                     val name = getString(R.string.bank_card_money_account_default_name)
                     OnboardingMoneyAccountCreationParams(name, balance)

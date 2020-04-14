@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.onboarding.presentation.common.model.viewmodel
+package serg.chuprin.finances.feature.onboarding.presentation.launch.model.viewmodel
 
 import androidx.lifecycle.LiveData
 import serg.chuprin.finances.core.api.di.scopes.FeatureScope
@@ -15,7 +15,7 @@ import javax.inject.Inject
  * It observes current onboarding step and sends commands to navigate to other steps or screens.
  */
 @FeatureScope
-class OnboardingContainerViewModel @Inject constructor(
+class OnboardingLaunchViewModel @Inject constructor(
     onboardingRepository: OnboardingRepository
 ) : BaseStoreViewModel<CurrencyChoiceOnboardingIntent>() {
 

@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.onboarding.presentation.common.view
+package serg.chuprin.finances.feature.onboarding.presentation.launch.view
 
 import android.os.Bundle
 import android.view.View
@@ -6,14 +6,12 @@ import serg.chuprin.finances.core.api.domain.model.OnboardingStep
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.feature.onboarding.R
-import serg.chuprin.finances.feature.onboarding.presentation.common.di.OnboardingFeatureComponent
+import serg.chuprin.finances.feature.onboarding.presentation.launch.di.OnboardingFeatureComponent
 
 /**
  * Created by Sergey Chuprin on 06.04.2020.
- *
- * TODO: Rename to OnboardingLaunch
  */
-class OnboardingContainerFragment : BaseFragment(R.layout.fragment_onboarding_container) {
+class OnboardingLaunchFragment : BaseFragment(R.layout.fragment_onboarding_launch) {
 
     private val viewModel by viewModelFromComponent { OnboardingFeatureComponent.get() }
 

@@ -18,9 +18,9 @@ import serg.chuprin.finances.core.api.presentation.view.extensions.makeGone
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisible
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
 import serg.chuprin.finances.feature.onboarding.R
-import serg.chuprin.finances.feature.onboarding.presentation.common.di.OnboardingFeatureComponent
 import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.model.store.CurrencyChoiceOnboardingEvent
 import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.model.store.CurrencyChoiceOnboardingIntent
+import serg.chuprin.finances.feature.onboarding.presentation.launch.di.OnboardingFeatureComponent
 
 /**
  * Created by Sergey Chuprin on 05.04.2020.

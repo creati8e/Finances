@@ -24,7 +24,7 @@ import serg.chuprin.finances.feature.onboarding.R
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.AccountsSetupOnboardingStepState
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.AccountsSetupOnboardingEvent
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.AccountsSetupOnboardingIntent
-import serg.chuprin.finances.feature.onboarding.presentation.common.di.OnboardingFeatureComponent
+import serg.chuprin.finances.feature.onboarding.presentation.launch.di.OnboardingFeatureComponent
 import javax.inject.Inject
 
 /**
