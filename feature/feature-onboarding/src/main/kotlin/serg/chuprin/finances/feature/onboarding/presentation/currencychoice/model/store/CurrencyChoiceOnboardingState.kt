@@ -10,7 +10,6 @@ import java.util.*
  */
 data class CurrencyChoiceOnboardingState(
     val chosenCurrency: Currency? = null,
-    val progressIsVisible: Boolean = false,
     /**
      * Enabled if currency is chosen.
      */

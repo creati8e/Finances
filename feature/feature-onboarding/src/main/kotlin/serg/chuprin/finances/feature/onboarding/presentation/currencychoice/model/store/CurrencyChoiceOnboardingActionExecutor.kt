@@ -140,7 +140,6 @@ class CurrencyChoiceOnboardingActionExecutor @Inject constructor(
             return emptyFlow()
         }
         return flow {
-            emit(CurrencyChoiceOnboardingEffect.UserCreationInProgress(progressVisible = true))
             completeCurrencyChoiceOnboardingUseCase.execute(state.chosenCurrency)
             eventConsumer(CurrencyChoiceOnboardingEvent.NavigateToAccountsSetup)
         }

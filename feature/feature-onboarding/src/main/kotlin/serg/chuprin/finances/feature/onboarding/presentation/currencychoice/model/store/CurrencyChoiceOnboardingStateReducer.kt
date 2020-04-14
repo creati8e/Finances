@@ -43,10 +43,6 @@ class CurrencyChoiceOnboardingStateReducer :
             is CurrencyChoiceOnboardingEffect.CurrenciesFilteredByQuery -> {
                 state.copy(currentCells = effect.cells)
             }
-            is CurrencyChoiceOnboardingEffect.UserCreationInProgress -> {
-                // TODO: Render new property.
-                state.copy(progressIsVisible = effect.progressVisible)
-            }
         }
     }
 
