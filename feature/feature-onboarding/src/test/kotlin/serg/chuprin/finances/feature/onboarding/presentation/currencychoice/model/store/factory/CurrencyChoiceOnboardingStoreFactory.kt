@@ -2,8 +2,6 @@ package serg.chuprin.finances.feature.onboarding.presentation.currencychoice.mod
 
 import io.mockk.mockk
 import serg.chuprin.finances.core.api.domain.repository.CurrencyRepository
-import serg.chuprin.finances.core.api.domain.repository.OnboardingRepository
-import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.api.domain.usecase.SearchCurrenciesUseCase
 import serg.chuprin.finances.core.test.utils.TestStateStore
 import serg.chuprin.finances.feature.onboarding.domain.usecase.CompleteCurrencyChoiceOnboardingUseCase
@@ -15,9 +13,9 @@ import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.mode
 object CurrencyChoiceOnboardingStoreFactory {
 
     fun build(): CurrencyChoiceOnboardingStoreParams {
-        val userRepository = mockk<UserRepository>()
         val currencyRepository = mockk<CurrencyRepository>()
-        val onboardingRepository = mockk<OnboardingRepository>()
+        val completeCurrencyChoiceOnboardingUseCase =
+            mockk<CompleteCurrencyChoiceOnboardingUseCase>()
 
         val store = TestStateStore(
             CurrencyChoiceOnboardingState(),
@@ -25,15 +23,14 @@ object CurrencyChoiceOnboardingStoreFactory {
             CurrencyChoiceOnboardingStoreBootstrapper(currencyRepository),
             CurrencyChoiceOnboardingActionExecutor(
                 SearchCurrenciesUseCase(currencyRepository),
-                CompleteCurrencyChoiceOnboardingUseCase(userRepository, onboardingRepository)
+                completeCurrencyChoiceOnboardingUseCase
             ),
             CurrencyChoiceOnboardingIntentToActionMapper()
         )
         return CurrencyChoiceOnboardingStoreParams(
             store,
-            userRepository,
             currencyRepository,
-            onboardingRepository
+            completeCurrencyChoiceOnboardingUseCase
         )
     }
 

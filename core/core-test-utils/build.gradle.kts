@@ -12,10 +12,10 @@ dependencies {
     implementation(Libraries.KOTLIN_SERIALIZATION)
     implementation(Libraries.Coroutines.CORE)
     implementation(Libraries.JAVAX_ANNOTATIONS)
-    implementation(Libraries.Tests.COROUTINES)
+    api(Libraries.Tests.COROUTINES)
     implementation(Libraries.Tests.COROUTINES_DEBUG)
 
     // Timber.
-    implementation(Libraries.TIMBER)
+    api(Libraries.TIMBER)
 
 }

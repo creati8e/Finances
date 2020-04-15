@@ -1,6 +1,5 @@
 package serg.chuprin.finances.core.test.utils
 
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.emptyFlow
@@ -22,14 +21,16 @@ class TestStateStore<I, SE, A, S, E>(
     reducer: StoreStateReducer<SE, S>,
     bootstrapper: StoreBootstrapper<A>,
     executor: StoreActionExecutor<A, S, SE, E>,
-    stateStoreIntentToActionMapper: StoreIntentToActionMapper<I, A>
+    stateStoreIntentToActionMapper: StoreIntentToActionMapper<I, A>,
+    val reducerTestDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher(),
+    val backgroundTestDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()
 ) : BaseStateStore<I, SE, A, S, E>(
     reducer = reducer,
     executor = executor,
     initialState = initialState,
     bootstrapper = bootstrapper,
-    reducerDispatcher = TestCoroutineDispatcher(),
-    backgroundDispatcher = TestCoroutineDispatcher(),
+    reducerDispatcher = reducerTestDispatcher,
+    backgroundDispatcher = backgroundTestDispatcher,
     intentToActionMapper = stateStoreIntentToActionMapper
 ) {
 
@@ -39,7 +40,7 @@ class TestStateStore<I, SE, A, S, E>(
     val lastEvent: E
         get() = capturedEvents.last
 
-    val scope: CoroutineScope = TestCoroutineScope(TestCoroutineDispatcher())
+    val scope: TestCoroutineScope = TestCoroutineScope(TestCoroutineDispatcher())
 
     fun testSubscribe(): Job {
         return scope.launch {
@@ -53,7 +54,7 @@ class TestStateStore<I, SE, A, S, E>(
                     capturedEvents.addLast(newEvent)
                 }
             }
-            start(emptyFlow(), scope)
+            start(emptyFlow(), this)
         }
     }
 
