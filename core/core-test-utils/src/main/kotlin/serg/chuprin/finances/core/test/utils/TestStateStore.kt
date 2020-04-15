@@ -1,7 +1,6 @@
-package serg.chuprin.finances.core.api.presentation.model.mvi.store
+package serg.chuprin.finances.core.test.utils
 
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.emptyFlow
@@ -12,12 +11,12 @@ import serg.chuprin.finances.core.api.presentation.model.mvi.bootstrapper.StoreB
 import serg.chuprin.finances.core.api.presentation.model.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.core.api.presentation.model.mvi.mapper.StoreIntentToActionMapper
 import serg.chuprin.finances.core.api.presentation.model.mvi.reducer.StoreStateReducer
+import serg.chuprin.finances.core.api.presentation.model.mvi.store.BaseStateStore
 import java.util.*
 
 /**
  * Created by Sergey Chuprin on 24.09.2019.
  */
-@FlowPreview
 class TestStateStore<I, SE, A, S, E>(
     initialState: S,
     reducer: StoreStateReducer<SE, S>,

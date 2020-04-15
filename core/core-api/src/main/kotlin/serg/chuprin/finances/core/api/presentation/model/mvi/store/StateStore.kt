@@ -1,6 +1,5 @@
 package serg.chuprin.finances.core.api.presentation.model.mvi.store
 
-import androidx.core.util.Consumer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 
@@ -17,7 +16,7 @@ import kotlinx.coroutines.flow.Flow
  * [S] - type of state.
  * [E] - type of single-time events.
  */
-interface StateStore<I, S, E> : Consumer<I> {
+interface StateStore<I, S, E> {
 
     val state: S
 

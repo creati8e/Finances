@@ -1,4 +1,4 @@
-package serg.chuprin.finances.core.api
+package serg.chuprin.finances.core.test.utils
 
 import timber.log.Timber
 

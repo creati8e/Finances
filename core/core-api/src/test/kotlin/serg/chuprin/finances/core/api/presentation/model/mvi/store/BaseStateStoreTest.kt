@@ -2,15 +2,12 @@ package serg.chuprin.finances.core.api.presentation.model.mvi.store
 
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.isActive
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
-import serg.chuprin.finances.core.api.TimberTestTree
 import serg.chuprin.finances.core.api.presentation.model.mvi.store.counter.CounterStoreBootstrapper
 import serg.chuprin.finances.core.api.presentation.model.mvi.store.counter.CounterTestIntent
 import serg.chuprin.finances.core.api.presentation.model.mvi.store.counter.CounterTestState
 import serg.chuprin.finances.core.api.presentation.model.mvi.store.counter.CounterTestStoreFactory
-import timber.log.Timber
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 
@@ -21,9 +18,6 @@ import kotlin.test.assertFalse
 object BaseStateStoreTest : Spek({
 
     Feature("Store test") {
-
-        Timber.plant(TimberTestTree())
-
 
         Scenario("Simple store without async operations") {
 

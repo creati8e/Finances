@@ -52,8 +52,6 @@ open class BaseStateStore<I, SE, A, S, E>(
 
     private var isStarted = false
 
-    override fun accept(t: I) = dispatch(t)
-
     override fun start(intentsFlow: Flow<I>, scope: CoroutineScope) {
         require(!isStarted) {
             "Store is started already"

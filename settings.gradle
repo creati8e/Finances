@@ -7,6 +7,7 @@ include ':injector'
 include ':core:core-api'
 include ':core:core-impl'
 include ':core:core-firebase'
+include ':core:core-test-utils'
 
 // endregion
 
