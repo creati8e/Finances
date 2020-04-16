@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.api.domain.model.MoneyAccountBalance
 import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
+import serg.chuprin.finances.core.api.presentation.model.AmountInputState
 import serg.chuprin.finances.core.api.presentation.model.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
@@ -92,7 +93,7 @@ class AccountsSetupOnboardingActionExecutor @Inject constructor(
             )
             AccountsSetupOnboardingEffect.AmountEntered(
                 acceptButtonIsVisible = true,
-                formattedAmount = formattedAmount
+                amountInputState = AmountInputState(false, formattedAmount)
             )
         }
     }
@@ -102,31 +103,54 @@ class AccountsSetupOnboardingActionExecutor @Inject constructor(
     ): Flow<AccountsSetupOnboardingEffect> {
         return when (val stepState = state.stepState) {
             is AccountsSetupOnboardingStepState.CashAmountEnter -> {
-                // TODO: Think about failed parsing.
-                val nextStepState = AccountsSetupOnboardingStepState.BankCardQuestion
-                flowOf(
-                    AccountsSetupOnboardingEffect.AccountBalanceEntered(
-                        // Bank card balance not entered on this step yet.
-                        bankCardBalance = null,
-                        cashBalance = MoneyAccountBalance(amountParser.parse(stepState.enteredAmount)!!)
-                    ),
-                    AccountsSetupOnboardingEffect.StepChanged(nextStepState)
-                )
-            }
-            is AccountsSetupOnboardingStepState.BankCardAmountEnter -> {
-                // TODO: Think about failed parsing.
-                flow {
-                    completeOnboarding(state)
-                    emit(
-                        AccountsSetupOnboardingEffect.AccountBalanceEntered(
-                            // Use cash balance from previous step.
-                            cashBalance = state.cashBalance,
-                            bankCardBalance = MoneyAccountBalance(
-                                amountParser.parse(stepState.enteredAmount)!!
+                val amount = stepState.amountInputState.formattedAmount
+                val parsedAmount = amountParser.parse(amount)
+                if (parsedAmount == null) {
+                    flowOf(
+                        AccountsSetupOnboardingEffect.EnteredAmountParsedWithError(
+                            stepState.copy(
+                                acceptAmountButtonIsEnabled = false,
+                                amountInputState = AmountInputState(true, amount)
                             )
                         )
                     )
-                    emit(AccountsSetupOnboardingEffect.StepChanged(buildFinalStepState(state)))
+                } else {
+                    flowOf(
+                        AccountsSetupOnboardingEffect.AccountBalanceEntered(
+                            // Bank card balance not entered on this step yet.
+                            bankCardBalance = null,
+                            cashBalance = MoneyAccountBalance(parsedAmount)
+                        ),
+                        AccountsSetupOnboardingEffect.StepChanged(
+                            AccountsSetupOnboardingStepState.BankCardQuestion
+                        )
+                    )
+                }
+            }
+            is AccountsSetupOnboardingStepState.BankCardAmountEnter -> {
+                val amount = stepState.amountInputState.formattedAmount
+                val parsedAmount = amountParser.parse(amount)
+                if (parsedAmount == null) {
+                    flowOf(
+                        AccountsSetupOnboardingEffect.EnteredAmountParsedWithError(
+                            stepState.copy(
+                                acceptAmountButtonIsEnabled = false,
+                                amountInputState = AmountInputState(true, amount)
+                            )
+                        )
+                    )
+                } else {
+                    flow {
+                        completeOnboarding(state)
+                        emit(
+                            AccountsSetupOnboardingEffect.AccountBalanceEntered(
+                                // Use cash balance from previous step.
+                                cashBalance = state.cashBalance,
+                                bankCardBalance = MoneyAccountBalance(parsedAmount)
+                            )
+                        )
+                        emit(AccountsSetupOnboardingEffect.StepChanged(buildFinalStepState(state)))
+                    }
                 }
             }
             AccountsSetupOnboardingStepState.CashQuestion,

@@ -92,7 +92,7 @@
             android:layout_marginTop="16dp"
             android:visibility="gone"
             app:icon="@drawable/ic_check"
-            app:iconTint="@color/colorOnboardingGreen"
+            app:iconTint="@color/color_accept_amount_btn"
             app:layout_constraintBottom_toTopOf="@+id/startUsingAppButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

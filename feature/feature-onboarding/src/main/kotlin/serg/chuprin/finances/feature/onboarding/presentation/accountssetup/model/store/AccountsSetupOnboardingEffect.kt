@@ -1,6 +1,7 @@
 package serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store
 
 import serg.chuprin.finances.core.api.domain.model.MoneyAccountBalance
+import serg.chuprin.finances.core.api.presentation.model.AmountInputState
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.AccountsSetupOnboardingStepState
 import java.util.*
 
@@ -14,6 +15,10 @@ sealed class AccountsSetupOnboardingEffect {
         val bankCardBalance: MoneyAccountBalance?
     ) : AccountsSetupOnboardingEffect()
 
+    class EnteredAmountParsedWithError(
+        val stepState: AccountsSetupOnboardingStepState
+    ) : AccountsSetupOnboardingEffect()
+
     class CurrencyIsSet(
         val currency: Currency
     ) : AccountsSetupOnboardingEffect()
@@ -23,8 +28,8 @@ sealed class AccountsSetupOnboardingEffect {
     ) : AccountsSetupOnboardingEffect()
 
     class AmountEntered(
-        val formattedAmount: String,
-        val acceptButtonIsVisible: Boolean
+        val acceptButtonIsVisible: Boolean,
+        val amountInputState: AmountInputState
     ) : AccountsSetupOnboardingEffect()
 
 }

@@ -15,6 +15,7 @@ import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.transition.MaterialSharedAxis
 import com.google.android.material.transition.Scale
 import kotlinx.android.synthetic.main.fragment_onboarding_accounts_setup.*
+import serg.chuprin.finances.core.api.presentation.model.AmountInputState
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.navigation.OnboardingNavigation
@@ -33,7 +34,7 @@ import javax.inject.Inject
 class AccountsSetupOnboardingFragment : BaseFragment(R.layout.fragment_onboarding_accounts_setup) {
 
     private companion object {
-        private const val TRANSITION_DURATION = 150L
+        private const val TRANSITION_DURATION = 200L
     }
 
     @Inject
@@ -65,11 +66,7 @@ class AccountsSetupOnboardingFragment : BaseFragment(R.layout.fragment_onboardin
         with(viewModel) {
             eventsLiveData(::handleEvent)
             stepStateLiveData(::handleStepState)
-            formattedAmountLiveData { amount ->
-                amountEditText.doIgnoringChanges {
-                    setText(amount)
-                }
-            }
+            amountInputStateLiveData(::showAmountInputState)
         }
 
         with(amountEditText) {
@@ -130,10 +127,10 @@ class AccountsSetupOnboardingFragment : BaseFragment(R.layout.fragment_onboardin
                 showQuestionStep(R.string.onboarding_accounts_setup_subtitle_bank_card_question)
             }
             is AccountsSetupOnboardingStepState.CashAmountEnter -> {
-                showAmountEnterStep(stepState.acceptButtonIsVisible)
+                showAmountEnterStep(stepState.acceptAmountButtonIsEnabled)
             }
             is AccountsSetupOnboardingStepState.BankCardAmountEnter -> {
-                showAmountEnterStep(stepState.acceptButtonIsVisible)
+                showAmountEnterStep(stepState.acceptAmountButtonIsEnabled)
             }
             is AccountsSetupOnboardingStepState.EverythingIsSetUp -> {
                 TransitionManager.beginDelayedTransition(constraintLayout)
@@ -148,33 +145,26 @@ class AccountsSetupOnboardingFragment : BaseFragment(R.layout.fragment_onboardin
         }
     }
 
-    private fun showAmountEnterStep(acceptButtonIsVisible: Boolean) {
+    private fun showAmountEnterStep(acceptAmountButtonIsEnabled: Boolean) {
         // Animate only if we move from previous state.
         if (buttonsGroup.isVisible) {
             val transitionSet = buildStepChangeTransition(isEntering = false).apply {
+                // Animate button itself.
+                addTransition(buildScaleTransition(isEntering = true).apply {
+                    addTarget(acceptAmountButton)
+                })
                 doOnEnd {
                     amountEditText.showKeyboard()
                 }
             }
             TransitionManager.beginDelayedTransition(constraintLayout, transitionSet)
 
-        } else if (!acceptAmountButton.isVisible && acceptButtonIsVisible) {
-            // Or if button changed its visibility during amount entering.
-            acceptAmountButton.scaleY = 0.1f
-            acceptAmountButton.scaleX = 0.1f
-            val transition = TransitionSet().apply {
-                // Animate subtitle.
-                addTransition(buildAutoTransitionForSubtitle())
-                // Animate button itself.
-                addTransition(buildScaleTransition(isEntering = true).apply {
-                    addTarget(acceptAmountButton)
-                })
-            }
-            TransitionManager.beginDelayedTransition(constraintLayout, transition)
         }
         buttonsGroup.makeGone()
         amountEditText.makeVisible()
-        acceptAmountButton.makeVisibleOrGone(acceptButtonIsVisible)
+        acceptAmountButton.makeVisible()
+
+        acceptAmountButton.isEnabled = acceptAmountButtonIsEnabled
         subtitleTextView.setText(R.string.onboarding_accounts_setup_subtitle_enter_current_balance)
     }
 
@@ -191,11 +181,25 @@ class AccountsSetupOnboardingFragment : BaseFragment(R.layout.fragment_onboardin
         viewModel.dispatchIntent(AccountsSetupOnboardingIntent.ClickOnAcceptBalanceButton)
     }
 
+    private fun showAmountInputState(amountInputState: AmountInputState) {
+        amountEditText.doIgnoringChanges {
+            setText(amountInputState.formattedAmount)
+        }
+        val textColor = if (amountInputState.hasError) {
+            requireContext().getColorInt(R.color.colorError)
+        } else {
+            requireContext().getAttributeColor(android.R.attr.textColorPrimary)
+        }
+        amountEditText.setTextColor(textColor)
+    }
+
+
     // region Transitions.
 
     private fun buildStepChangeTransition(isEntering: Boolean): TransitionSet {
         return TransitionSet().apply {
-            addTransition(buildAutoTransitionForSubtitle())
+            addTransition(buildAutoTransition(amountEditText))
+            addTransition(buildAutoTransition(subtitleTextView))
             addTransition(buildScaleTransition(isEntering).apply {
                 addTarget(positiveButton)
                 addTarget(negativeButton)
@@ -203,10 +207,10 @@ class AccountsSetupOnboardingFragment : BaseFragment(R.layout.fragment_onboardin
         }
     }
 
-    private fun buildAutoTransitionForSubtitle(): AutoTransition {
+    private fun buildAutoTransition(view: View): AutoTransition {
         return AutoTransition().apply {
             duration = TRANSITION_DURATION
-            addTarget(subtitleTextView)
+            addTarget(view)
         }
     }
 

@@ -3,6 +3,7 @@ package serg.chuprin.finances.feature.onboarding.presentation.accountssetup.mode
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.mapNotNull
+import serg.chuprin.finances.core.api.presentation.model.AmountInputState
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.BaseStoreViewModel
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.AccountsSetupOnboardingStepState
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.AccountsSetupOnboardingEvent
@@ -26,10 +27,10 @@ class AccountsSetupOnboardingViewModel @Inject constructor(
     /**
      * Do not do any diffing in order to properly display formatted amount and replace existing input.
      */
-    val formattedAmountLiveData: LiveData<String> =
+    val amountInputStateLiveData: LiveData<AmountInputState> =
         store
             .stateFlow()
-            .mapNotNull { it.stepState.enteredAmountOrNull }
+            .mapNotNull { it.stepState.amountInputStateOrNull }
             .asLiveData()
 
     init {

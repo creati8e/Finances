@@ -1,13 +1,11 @@
 package serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model
 
+import serg.chuprin.finances.core.api.presentation.model.AmountInputState
+
 /**
  * Created by Sergey Chuprin on 11.04.2020.
  */
 sealed class AccountsSetupOnboardingStepState {
-
-    private companion object {
-        private const val INITIAL_ENTERED_AMOUNT = "0"
-    }
 
     /**
      * 1 step.
@@ -18,8 +16,8 @@ sealed class AccountsSetupOnboardingStepState {
      * 2 step.
      */
     data class CashAmountEnter(
-        val enteredAmount: String = INITIAL_ENTERED_AMOUNT,
-        val acceptButtonIsVisible: Boolean = false
+        val amountInputState: AmountInputState = AmountInputState(),
+        val acceptAmountButtonIsEnabled: Boolean = false
     ) : AccountsSetupOnboardingStepState()
 
     /**
@@ -31,8 +29,8 @@ sealed class AccountsSetupOnboardingStepState {
      * 4 step.
      */
     data class BankCardAmountEnter(
-        val enteredAmount: String = INITIAL_ENTERED_AMOUNT,
-        val acceptButtonIsVisible: Boolean = false
+        val amountInputState: AmountInputState = AmountInputState(),
+        val acceptAmountButtonIsEnabled: Boolean = false
     ) : AccountsSetupOnboardingStepState()
 
     /**
@@ -42,10 +40,10 @@ sealed class AccountsSetupOnboardingStepState {
         val message: String
     ) : AccountsSetupOnboardingStepState()
 
-    val enteredAmountOrNull: String?
+    val amountInputStateOrNull: AmountInputState?
         get() {
-            return (this as? CashAmountEnter)?.enteredAmount
-                ?: (this as? BankCardAmountEnter)?.enteredAmount
+            return (this as? CashAmountEnter)?.amountInputState
+                ?: (this as? BankCardAmountEnter)?.amountInputState
         }
 
 }

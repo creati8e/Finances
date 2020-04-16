@@ -17,6 +17,9 @@ class AccountsSetupOnboardingStateReducer :
             is AccountsSetupOnboardingEffect.StepChanged -> {
                 state.copy(stepState = effect.stepState)
             }
+            is AccountsSetupOnboardingEffect.EnteredAmountParsedWithError -> {
+                state.copy(stepState = effect.stepState)
+            }
             is AccountsSetupOnboardingEffect.AccountBalanceEntered -> {
                 state.copy(
                     cashBalance = effect.cashBalance,
@@ -40,16 +43,16 @@ class AccountsSetupOnboardingStateReducer :
             is AccountsSetupOnboardingStepState.CashAmountEnter -> {
                 state.copy(
                     stepState = stepState.copy(
-                        enteredAmount = effect.formattedAmount,
-                        acceptButtonIsVisible = effect.acceptButtonIsVisible
+                        amountInputState = effect.amountInputState,
+                        acceptAmountButtonIsEnabled = effect.acceptButtonIsVisible
                     )
                 )
             }
             is AccountsSetupOnboardingStepState.BankCardAmountEnter -> {
                 state.copy(
                     stepState = stepState.copy(
-                        enteredAmount = effect.formattedAmount,
-                        acceptButtonIsVisible = effect.acceptButtonIsVisible
+                        amountInputState = effect.amountInputState,
+                        acceptAmountButtonIsEnabled = effect.acceptButtonIsVisible
                     )
                 )
             }
