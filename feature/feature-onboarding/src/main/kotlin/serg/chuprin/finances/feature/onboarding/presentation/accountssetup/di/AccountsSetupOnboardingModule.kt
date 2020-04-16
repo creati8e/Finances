@@ -5,6 +5,7 @@ import dagger.Provides
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.mvi.store.BaseStateStore
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.*
+import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.executor.AccountsSetupOnboardingActionExecutor
 
 /**
  * Created by Sergey Chuprin on 10.04.2020.
