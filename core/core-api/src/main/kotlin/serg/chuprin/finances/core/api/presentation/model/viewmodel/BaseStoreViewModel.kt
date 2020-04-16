@@ -7,7 +7,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import serg.chuprin.finances.core.api.presentation.model.SingleEventLiveData
-import serg.chuprin.finances.core.api.presentation.model.mvi.store.StateStore
+import serg.chuprin.finances.core.mvi.store.StateStore
 
 /**
  * Created by Sergey Chuprin on 07.04.2020.

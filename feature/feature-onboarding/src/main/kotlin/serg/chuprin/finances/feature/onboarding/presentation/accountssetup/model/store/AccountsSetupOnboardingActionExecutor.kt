@@ -1,7 +1,6 @@
 package serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store
 
 import androidx.annotation.StringRes
-import androidx.core.util.Consumer
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flow
@@ -10,9 +9,10 @@ import serg.chuprin.finances.core.api.domain.model.MoneyAccountBalance
 import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
 import serg.chuprin.finances.core.api.presentation.model.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
-import serg.chuprin.finances.core.api.presentation.model.mvi.executor.StoreActionExecutor
-import serg.chuprin.finances.core.api.presentation.model.mvi.invoke
 import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
+import serg.chuprin.finances.core.mvi.Consumer
+import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
+import serg.chuprin.finances.core.mvi.invoke
 import serg.chuprin.finances.feature.onboarding.R
 import serg.chuprin.finances.feature.onboarding.domain.OnboardingMoneyAccountCreationParams
 import serg.chuprin.finances.feature.onboarding.domain.usecase.CompleteAccountsSetupOnboardingUseCase

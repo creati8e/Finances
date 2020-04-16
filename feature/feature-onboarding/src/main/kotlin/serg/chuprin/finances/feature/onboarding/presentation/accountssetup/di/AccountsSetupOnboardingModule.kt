@@ -3,7 +3,7 @@ package serg.chuprin.finances.feature.onboarding.presentation.accountssetup.di
 import dagger.Module
 import dagger.Provides
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
-import serg.chuprin.finances.core.api.presentation.model.mvi.store.BaseStateStore
+import serg.chuprin.finances.core.mvi.store.BaseStateStore
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.*
 
 /**

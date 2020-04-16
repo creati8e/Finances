@@ -1,6 +1,6 @@
 package serg.chuprin.finances.feature.onboarding.presentation.currencychoice.model.store
 
-import serg.chuprin.finances.core.api.presentation.model.mvi.reducer.StoreStateReducer
+import serg.chuprin.finances.core.mvi.reducer.StoreStateReducer
 
 /**
  * Created by Sergey Chuprin on 06.04.2020.

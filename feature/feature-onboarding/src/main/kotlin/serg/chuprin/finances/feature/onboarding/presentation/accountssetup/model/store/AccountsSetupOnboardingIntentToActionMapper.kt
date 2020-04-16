@@ -1,6 +1,6 @@
 package serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store
 
-import serg.chuprin.finances.core.api.presentation.model.mvi.mapper.StoreIntentToActionMapper
+import serg.chuprin.finances.core.mvi.mapper.StoreIntentToActionMapper
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.AccountsSetupOnboardingAction
 
 /**

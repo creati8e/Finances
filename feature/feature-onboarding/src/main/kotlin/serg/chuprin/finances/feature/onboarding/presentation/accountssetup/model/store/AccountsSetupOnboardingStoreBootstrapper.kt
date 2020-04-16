@@ -3,7 +3,7 @@ package serg.chuprin.finances.feature.onboarding.presentation.accountssetup.mode
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
-import serg.chuprin.finances.core.api.presentation.model.mvi.bootstrapper.StoreBootstrapper
+import serg.chuprin.finances.core.mvi.bootstrapper.StoreBootstrapper
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.AccountsSetupOnboardingAction
 import javax.inject.Inject
 

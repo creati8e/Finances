@@ -1,15 +1,15 @@
 package serg.chuprin.finances.feature.onboarding.presentation.currencychoice.model.store
 
-import androidx.core.util.Consumer
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import serg.chuprin.finances.core.api.domain.usecase.SearchCurrenciesUseCase
 import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
 import serg.chuprin.finances.core.api.extensions.flow.takeUntil
 import serg.chuprin.finances.core.api.presentation.model.cells.ZeroDataCell
-import serg.chuprin.finances.core.api.presentation.model.mvi.executor.StoreActionExecutor
-import serg.chuprin.finances.core.api.presentation.model.mvi.executor.emptyFlowAction
-import serg.chuprin.finances.core.api.presentation.model.mvi.invoke
+import serg.chuprin.finances.core.mvi.Consumer
+import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
+import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
+import serg.chuprin.finances.core.mvi.invoke
 import serg.chuprin.finances.feature.onboarding.R
 import serg.chuprin.finances.feature.onboarding.domain.usecase.CompleteCurrencyChoiceOnboardingUseCase
 import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.model.cells.CurrencyCell

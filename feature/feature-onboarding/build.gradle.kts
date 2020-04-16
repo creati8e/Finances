@@ -52,6 +52,4 @@ dependencies {
     // Architecture components.
     implementationAll(Libraries.Android.Lifecycle.DEPENDENCIES)
 
-    testImplementation(project(":core:core-test-utils"))
-
 }

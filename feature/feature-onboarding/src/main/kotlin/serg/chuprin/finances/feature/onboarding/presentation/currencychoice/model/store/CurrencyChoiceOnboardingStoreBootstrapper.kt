@@ -4,7 +4,7 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import serg.chuprin.finances.core.api.domain.repository.CurrencyRepository
 import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
-import serg.chuprin.finances.core.api.presentation.model.mvi.bootstrapper.StoreBootstrapper
+import serg.chuprin.finances.core.mvi.bootstrapper.StoreBootstrapper
 import javax.inject.Inject
 
 /**
