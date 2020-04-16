@@ -42,7 +42,7 @@ class TestStateStore<I, SE, A, S, E>(
 
     val scope: TestCoroutineScope = TestCoroutineScope(TestCoroutineDispatcher())
 
-    fun testSubscribe(): Job {
+    fun testStart(): Job {
         return scope.launch {
             launch {
                 stateFlow().collect { newState ->

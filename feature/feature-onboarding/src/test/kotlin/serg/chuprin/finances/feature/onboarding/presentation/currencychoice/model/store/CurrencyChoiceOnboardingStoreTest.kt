@@ -34,7 +34,7 @@ object CurrencyChoiceOnboardingStoreTest : Spek({
             }
 
             When("Store is started") {
-                store.testSubscribe()
+                store.testStart()
             }
 
             Then("Initial state contains bootstrapped value as currently chosen by default") {
@@ -73,7 +73,7 @@ object CurrencyChoiceOnboardingStoreTest : Spek({
 
             Given("Store is started") {
                 params.currencyRepository.mockCurrencies(defaultCurrency)
-                store.testSubscribe()
+                store.testStart()
             }
 
             When("User opened currency picker") {
@@ -139,7 +139,7 @@ object CurrencyChoiceOnboardingStoreTest : Spek({
                     mockCurrenciesSearch(thirdSearchQuery)
                 }
                 with(store) {
-                    testSubscribe()
+                    testStart()
                     dispatch(CurrencyChoiceOnboardingIntent.ClickOnCurrencyPicker)
                 }
             }
@@ -198,7 +198,7 @@ object CurrencyChoiceOnboardingStoreTest : Spek({
             Given("Currency picker is opened") {
                 params.currencyRepository.mockCurrencies(availableCurrencies.first())
                 with(store) {
-                    testSubscribe()
+                    testStart()
                     dispatch(CurrencyChoiceOnboardingIntent.ClickOnCurrencyPicker)
                 }
             }
@@ -230,7 +230,7 @@ object CurrencyChoiceOnboardingStoreTest : Spek({
             Given("Currency is chosen") {
                 params.currencyRepository.mockCurrencies(availableCurrencies.first())
                 with(store) {
-                    testSubscribe()
+                    testStart()
                     dispatch(CurrencyChoiceOnboardingIntent.ClickOnCurrencyPicker)
                 }
             }
