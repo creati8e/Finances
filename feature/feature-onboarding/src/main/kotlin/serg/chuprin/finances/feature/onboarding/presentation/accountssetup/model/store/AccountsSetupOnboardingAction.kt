@@ -1,6 +1,5 @@
-package serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model
+package serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store
 
-import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.AccountsSetupOnboardingIntent
 import java.util.*
 
 /**

@@ -1,7 +1,8 @@
 package serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store
 
 import serg.chuprin.finances.core.mvi.reducer.StoreStateReducer
-import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.AccountsSetupOnboardingStepState
+import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.state.AccountsSetupOnboardingState
+import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.state.AccountsSetupOnboardingStepState
 
 /**
  * Created by Sergey Chuprin on 10.04.2020.

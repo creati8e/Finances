@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model
+package serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.state
 
 import serg.chuprin.finances.core.api.presentation.model.AmountInputState
 

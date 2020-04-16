@@ -1,7 +1,6 @@
-package serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store
+package serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.state
 
 import serg.chuprin.finances.core.api.domain.model.MoneyAccountBalance
-import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.AccountsSetupOnboardingStepState
 import java.util.*
 
 /**
