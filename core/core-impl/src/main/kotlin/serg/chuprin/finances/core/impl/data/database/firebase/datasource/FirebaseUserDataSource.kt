@@ -46,7 +46,9 @@ internal class FirebaseUserDataSource @Inject constructor(
                 val document = firestore
                     .collection(COLLECTION_NAME)
                     .document(firebaseUser.uid)
-                val userIsNew = !document.get().await().exists()
+                val documentSnapshot = document.get().await()
+                val userIsNew = !documentSnapshot.exists()
+                        || documentSnapshot.getString(FIELD_DEFAULT_CURRENCY_CODE).isNullOrEmpty()
                 document
                     .set(fieldsMap)
                     .await()

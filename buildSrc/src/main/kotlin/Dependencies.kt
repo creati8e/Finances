@@ -8,7 +8,7 @@ import Libraries.Coroutines.VER
 object BuildScript {
 
     object Versions {
-        const val KOTLIN_VER = "1.3.71"
+        const val KOTLIN_VER = "1.3.72"
         const val NAVIGATION_VER = "2.3.0-alpha04"
     }
 
@@ -51,9 +51,9 @@ object Libraries {
 
         const val CORE = "androidx.core:core-ktx:1.3.0-beta01"
 
-        const val VIEWPAGER = "androidx.viewpager2:viewpager2:1.0.0"
         const val APPCOMPAT = "androidx.appcompat:appcompat:1.2.0-beta01"
         const val FRAGMENT = "androidx.fragment:fragment-ktx:1.3.0-alpha03"
+        const val VIEWPAGER = "androidx.viewpager2:viewpager2:1.1.0-alpha01"
         const val DESIGN = "com.google.android.material:material:1.2.0-alpha05"
         const val CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:2.0.0-beta4"
 
@@ -112,7 +112,7 @@ object Libraries {
     object Infrastructure {
         const val AUTH = "com.google.firebase:firebase-auth:19.3.0"
         const val FIRESTORE = "com.google.firebase:firebase-firestore-ktx:21.4.2"
-        const val GMS_AUTH = "com.google.android.gms:play-services-auth:17.0.0"
+        const val GMS_AUTH = "com.google.android.gms:play-services-auth:18.0.0"
         const val PLAY_SERVICES_KTX = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.3.5"
     }
 
@@ -131,7 +131,7 @@ object Libraries {
 
     object Tests {
 
-        private const val JUNIT_VER = "5.6.0"
+        private const val JUNIT_VER = "5.6.1"
         private const val SPEK_VER = "2.0.10"
 
         const val MOCKK = "io.mockk:mockk:1.9.3"
