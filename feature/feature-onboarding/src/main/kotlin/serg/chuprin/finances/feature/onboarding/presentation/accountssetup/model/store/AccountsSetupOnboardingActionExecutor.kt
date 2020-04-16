@@ -12,6 +12,7 @@ import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
+import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
 import serg.chuprin.finances.core.mvi.invoke
 import serg.chuprin.finances.feature.onboarding.R
 import serg.chuprin.finances.feature.onboarding.domain.OnboardingMoneyAccountCreationParams
@@ -73,19 +74,7 @@ class AccountsSetupOnboardingActionExecutor @Inject constructor(
         eventConsumer: Consumer<AccountsSetupOnboardingEvent>
     ): Flow<AccountsSetupOnboardingEffect> {
         if (state.stepState is AccountsSetupOnboardingStepState.EverythingIsSetUp) {
-            return flow {
-                val bankCardAccountCreationParams = state.bankCardBalance?.let { balance ->
-                    val name = getString(R.string.bank_card_money_account_default_name)
-                    OnboardingMoneyAccountCreationParams(name, balance)
-                }
-                val cashAccountCreationParams = state.cashBalance?.let { balance ->
-                    val name = getString(R.string.cash_money_account_default_name)
-                    OnboardingMoneyAccountCreationParams(name, balance)
-                }
-                completeOnboardingUseCase.execute(
-                    cashAccountParams = cashAccountCreationParams,
-                    bankAccountCardParams = bankCardAccountCreationParams
-                )
+            return emptyFlowAction {
                 eventConsumer(AccountsSetupOnboardingEvent.NavigateToDashboard)
             }
         }
@@ -126,14 +115,19 @@ class AccountsSetupOnboardingActionExecutor @Inject constructor(
             }
             is AccountsSetupOnboardingStepState.BankCardAmountEnter -> {
                 // TODO: Think about failed parsing.
-                flowOf(
-                    AccountsSetupOnboardingEffect.AccountBalanceEntered(
-                        // Use cache balance from previous step.
-                        cashBalance = state.cashBalance,
-                        bankCardBalance = MoneyAccountBalance(amountParser.parse(stepState.enteredAmount)!!)
-                    ),
-                    AccountsSetupOnboardingEffect.StepChanged(buildFinalStepState(state))
-                )
+                flow {
+                    completeOnboarding(state)
+                    emit(
+                        AccountsSetupOnboardingEffect.AccountBalanceEntered(
+                            // Use cash balance from previous step.
+                            cashBalance = state.cashBalance,
+                            bankCardBalance = MoneyAccountBalance(
+                                amountParser.parse(stepState.enteredAmount)!!
+                            )
+                        )
+                    )
+                    emit(AccountsSetupOnboardingEffect.StepChanged(buildFinalStepState(state)))
+                }
             }
             AccountsSetupOnboardingStepState.CashQuestion,
             AccountsSetupOnboardingStepState.BankCardQuestion,
@@ -174,7 +168,10 @@ class AccountsSetupOnboardingActionExecutor @Inject constructor(
                 flowOf(AccountsSetupOnboardingEffect.StepChanged(stepState))
             }
             AccountsSetupOnboardingStepState.BankCardQuestion -> {
-                flowOf(AccountsSetupOnboardingEffect.StepChanged(buildFinalStepState(state)))
+                flow {
+                    completeOnboarding(state)
+                    emit(AccountsSetupOnboardingEffect.StepChanged(buildFinalStepState(state)))
+                }
             }
             is AccountsSetupOnboardingStepState.EverythingIsSetUp,
             is AccountsSetupOnboardingStepState.CashAmountEnter,
@@ -183,6 +180,21 @@ class AccountsSetupOnboardingActionExecutor @Inject constructor(
                 emptyFlow()
             }
         }
+    }
+
+    private suspend fun completeOnboarding(state: AccountsSetupOnboardingState) {
+        val bankCardAccountCreationParams = state.bankCardBalance?.let { balance ->
+            val name = getString(R.string.bank_card_money_account_default_name)
+            OnboardingMoneyAccountCreationParams(name, balance)
+        }
+        val cashAccountCreationParams = state.cashBalance?.let { balance ->
+            val name = getString(R.string.cash_money_account_default_name)
+            OnboardingMoneyAccountCreationParams(name, balance)
+        }
+        completeOnboardingUseCase.execute(
+            cashAccountParams = cashAccountCreationParams,
+            bankAccountCardParams = bankCardAccountCreationParams
+        )
     }
 
     private fun buildFinalStepState(
