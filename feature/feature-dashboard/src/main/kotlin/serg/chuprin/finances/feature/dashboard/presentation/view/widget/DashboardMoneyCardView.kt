@@ -23,6 +23,8 @@ class DashboardMoneyCardView @JvmOverloads constructor(
 
         radius = context.getDimenDpFloat(R.dimen.cornerRadiusBig)
         cardElevation = context.getDimenDpFloat(R.dimen.cardViewElevation)
+        isClickable = true
+        isFocusable = true
     }
 
     fun setAmountText(text: String) {
