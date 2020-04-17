@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dashboard_header_title_balance">Balance</string>
+    <string name="dashboard_header_incomes">Incomes</string>
+    <string name="dashboard_header_expenses">Expenses</string>
+    <string name="dashboard_header_title_current_period">Current period</string>
+</resources>

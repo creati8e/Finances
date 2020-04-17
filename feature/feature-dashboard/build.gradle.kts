@@ -38,6 +38,8 @@ dependencies {
     implementation(Libraries.Android.APPCOMPAT)
     implementation(Libraries.Android.CONSTRAINT_LAYOUT)
 
+    implementationAll(Libraries.Adapter.DEPENDENCIES)
+
     // endregion
 
     // region DI.

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="16dp"
+    android:paddingTop="24dp"
+    android:paddingEnd="16dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/balanceSubtitleTextView"
+        style="@style/TextAppearance.MaterialComponents.Headline6"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/dashboard_header_title_balance"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/balanceTextView"
+        style="@style/TextAppearance.MaterialComponents.Headline5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/balanceSubtitleTextView"
+        tools:text="51 890 $" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/currentPeriodSubtitleTextView"
+        style="@style/TextAppearance.MaterialComponents.Headline6"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/dashboard_header_title_current_period"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/balanceTextView" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/currentPeriodTextView"
+        style="@style/TextAppearance.MaterialComponents.Caption"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/currentPeriodSubtitleTextView"
+        tools:text="Month (16.05.2020-16.06.2020)" />
+
+    <serg.chuprin.finances.feature.dashboard.presentation.view.widget.DashboardMoneyCardView
+        android:id="@+id/expensesCardView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:cardForegroundColor="@color/colorRedRipple"
+        app:layout_constraintEnd_toStartOf="@id/incomesCardView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/currentPeriodTextView"
+        app:titleText="@string/dashboard_header_expenses" />
+
+    <serg.chuprin.finances.feature.dashboard.presentation.view.widget.DashboardMoneyCardView
+        android:id="@+id/incomesCardView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        app:cardForegroundColor="?colorControlHighlight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/expensesCardView"
+        app:layout_constraintTop_toBottomOf="@+id/currentPeriodTextView"
+        app:titleText="@string/dashboard_header_incomes" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

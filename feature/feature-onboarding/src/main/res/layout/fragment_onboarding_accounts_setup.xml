@@ -83,7 +83,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/positiveButton"
             app:layout_constraintTop_toBottomOf="@id/amountEditText"
-            app:rippleColor="@color/colorOnboardingRedRipple"
+            app:rippleColor="@color/colorRedRipple"
             tools:layout_marginStart="72dp" />
 
         <com.google.android.material.button.MaterialButton
