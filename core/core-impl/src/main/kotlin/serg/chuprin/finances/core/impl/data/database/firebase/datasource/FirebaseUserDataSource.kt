@@ -10,9 +10,11 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
+import serg.chuprin.finances.core.api.domain.model.DataPeriodType
 import serg.chuprin.finances.core.api.domain.model.User
 import serg.chuprin.finances.core.impl.data.database.firebase.awaitWithLogging
 import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract.COLLECTION_NAME
+import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract.FIELD_DATA_PERIOD_TYPE
 import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract.FIELD_DEFAULT_CURRENCY_CODE
 import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract.FIELD_DISPLAY_NAME
 import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract.FIELD_EMAIL
@@ -97,6 +99,7 @@ internal class FirebaseUserDataSource @Inject constructor(
             FIELD_EMAIL to email,
             FIELD_PHOTO_URL to photoUrl,
             FIELD_DISPLAY_NAME to displayName,
+            FIELD_DATA_PERIOD_TYPE to dataPeriodType.toValue(),
             FIELD_DEFAULT_CURRENCY_CODE to defaultCurrencyCode
         )
     }
@@ -108,8 +111,15 @@ internal class FirebaseUserDataSource @Inject constructor(
         return mapOf(
             FIELD_EMAIL to email.orEmpty(),
             FIELD_DISPLAY_NAME to displayName.orEmpty(),
-            FIELD_PHOTO_URL to photoUrl?.toString().orEmpty()
+            FIELD_PHOTO_URL to photoUrl?.toString().orEmpty(),
+            FIELD_DATA_PERIOD_TYPE to DataPeriodType.DEFAULT.toValue()
         )
+    }
+
+    private fun DataPeriodType.toValue(): String {
+        return when (this) {
+            DataPeriodType.MONTH -> "month"
+        }
     }
 
 }

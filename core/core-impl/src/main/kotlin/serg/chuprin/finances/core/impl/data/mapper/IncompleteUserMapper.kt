@@ -9,13 +9,15 @@ import javax.inject.Inject
 /**
  * Created by Sergey Chuprin on 13.04.2020.
  */
-internal class IncompleteUserMapper
-@Inject constructor() : ModelMapper<DocumentSnapshot, IncompleteUser> {
+internal class IncompleteUserMapper @Inject constructor(
+    private val dataPeriodTypeMapper: DataPeriodTypeMapper
+) : ModelMapper<DocumentSnapshot, IncompleteUser> {
 
     override fun invoke(documentSnapshot: DocumentSnapshot): IncompleteUser? {
         return try {
             IncompleteUser.create(
                 id = documentSnapshot.id,
+                dataPeriodType = dataPeriodTypeMapper(documentSnapshot),
                 email = documentSnapshot.getString(FirebaseUserFieldsContract.FIELD_EMAIL),
                 photoUrl = documentSnapshot.getString(FirebaseUserFieldsContract.FIELD_PHOTO_URL),
                 displayName = documentSnapshot.getString(FirebaseUserFieldsContract.FIELD_DISPLAY_NAME)

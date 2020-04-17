@@ -2,6 +2,7 @@ package serg.chuprin.finances.feature.dashboard.presentation.view
 
 import android.os.Bundle
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import coil.api.load
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import serg.chuprin.adapter.DiffMultiViewAdapter
@@ -27,8 +28,12 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        userPhotoImageView.clipToOutline = true
+
+        recyclerView.adapter = cellsAdapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
         with(viewModel) {
+            cellsLiveData(cellsAdapter::setItems)
             userPhotoLiveData { photoUrl ->
                 userPhotoImageView.load(photoUrl) {
                     error(CoreR.drawable.ic_user_photo_placeholder)

@@ -12,6 +12,9 @@ class DashboardStateReducer : StoreStateReducer<DashboardEffect, DashboardState>
             is DashboardEffect.UserUpdated -> {
                 state.copy(user = effect.user)
             }
+            is DashboardEffect.WidgetCellsUpdated -> {
+                state.copy(cells = effect.widgetCells)
+            }
         }
     }
 

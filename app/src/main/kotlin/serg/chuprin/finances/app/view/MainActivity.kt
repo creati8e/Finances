@@ -26,6 +26,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleAppLaunchState(appLaunchState: AppLaunchState) {
         val navController = findNavController(R.id.rootFragmentContainer)
+        if (navController.currentDestination != null) {
+            return
+        }
 
         // TODO: Create root graph and navigate between child graphs instead settings the whole graph.
         return when (appLaunchState) {

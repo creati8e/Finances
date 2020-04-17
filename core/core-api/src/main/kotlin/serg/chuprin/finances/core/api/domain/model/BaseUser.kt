@@ -10,7 +10,8 @@ sealed class BaseUser(
     open val id: Id,
     open val email: String,
     open val photoUrl: String,
-    open val displayName: String
+    open val displayName: String,
+    open val dataPeriodType: DataPeriodType
 )
 
 /**
@@ -20,25 +21,32 @@ data class IncompleteUser(
     override val id: Id,
     override val email: String,
     override val photoUrl: String,
-    override val displayName: String
-) : BaseUser(id, email, photoUrl, displayName) {
+    override val displayName: String,
+    override val dataPeriodType: DataPeriodType
+) : BaseUser(id, email, photoUrl, displayName, dataPeriodType) {
 
     companion object {
+
         fun create(
             id: String?,
             email: String?,
             photoUrl: String?,
-            displayName: String?
+            displayName: String?,
+            dataPeriodType: DataPeriodType?
         ): IncompleteUser? {
             if (id.isNullOrBlank()) return null
+            if (id.isNullOrBlank()) return null
+            if (dataPeriodType == null) return null
             if (email.isNullOrBlank()) return null
             return IncompleteUser(
                 email = email,
                 id = Id.existing(id),
                 photoUrl = photoUrl.orEmpty(),
+                dataPeriodType = dataPeriodType,
                 displayName = displayName.orEmpty()
             )
         }
+
     }
 
 }
@@ -51,9 +59,9 @@ data class User(
     override val email: String,
     override val photoUrl: String,
     override val displayName: String,
-    val defaultCurrencyCode: String,
-    val dataPeriodType: DataPeriodType
-) : BaseUser(id, email, photoUrl, displayName) {
+    override val dataPeriodType: DataPeriodType,
+    val defaultCurrencyCode: String
+) : BaseUser(id, email, photoUrl, displayName, dataPeriodType) {
 
     companion object {
 
@@ -62,8 +70,8 @@ data class User(
             EMPTY_STRING,
             EMPTY_STRING,
             EMPTY_STRING,
-            EMPTY_STRING,
-            DataPeriodType.MONTH
+            DataPeriodType.MONTH,
+            EMPTY_STRING
         )
 
         fun create(

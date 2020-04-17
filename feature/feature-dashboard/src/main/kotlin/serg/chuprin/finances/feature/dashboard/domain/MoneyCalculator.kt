@@ -54,7 +54,7 @@ class MoneyCalculator @Inject constructor(
                     transactions.fold(
                         BigDecimal.ZERO,
                         { balance, transaction ->
-                            if (transactionFilter?.invoke(transaction) == true) {
+                            if (transactionFilter == null || transactionFilter(transaction)) {
                                 balance.plus(transaction.amountBigDecimal)
                             } else {
                                 balance
