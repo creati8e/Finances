@@ -1,6 +1,7 @@
 package serg.chuprin.finances.core.api.domain.repository
 
 import kotlinx.coroutines.flow.Flow
+import serg.chuprin.finances.core.api.domain.model.DataPeriod
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.Transaction
 
@@ -12,5 +13,7 @@ interface TransactionRepository {
     fun createTransaction(transaction: Transaction)
 
     fun userTransactionsFlow(userId: Id): Flow<List<Transaction>>
+
+    fun userTransactionsFlow(userId: Id, dataPeriod: DataPeriod): Flow<List<Transaction>>
 
 }

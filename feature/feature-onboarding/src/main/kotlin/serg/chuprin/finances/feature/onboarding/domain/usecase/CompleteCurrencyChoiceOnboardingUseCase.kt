@@ -1,5 +1,6 @@
 package serg.chuprin.finances.feature.onboarding.domain.usecase
 
+import serg.chuprin.finances.core.api.domain.model.DataPeriodType
 import serg.chuprin.finances.core.api.domain.model.OnboardingStep
 import serg.chuprin.finances.core.api.domain.model.User
 import serg.chuprin.finances.core.api.domain.repository.OnboardingRepository
@@ -26,6 +27,7 @@ class CompleteCurrencyChoiceOnboardingUseCase @Inject constructor(
             id = incompleteUser.id,
             email = incompleteUser.email,
             photoUrl = incompleteUser.photoUrl,
+            dataPeriodType = DataPeriodType.DEFAULT,
             displayName = incompleteUser.displayName,
             defaultCurrencyCode = chosenCurrency.currencyCode
         )

@@ -2,7 +2,10 @@ package serg.chuprin.finances.core.impl.data.mapper
 
 import com.github.ajalt.timberkt.Timber
 import com.google.firebase.firestore.DocumentSnapshot
+import serg.chuprin.finances.core.api.domain.model.DataPeriodType
 import serg.chuprin.finances.core.api.domain.model.User
+import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract.DATA_PERIOD_TYPE_MONTH
+import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract.FIELD_DATA_PERIOD_TYPE
 import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract.FIELD_DEFAULT_CURRENCY_CODE
 import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract.FIELD_DISPLAY_NAME
 import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract.FIELD_EMAIL
@@ -16,8 +19,13 @@ internal class UserMapper @Inject constructor() : ModelMapper<DocumentSnapshot, 
 
     override fun invoke(documentSnapshot: DocumentSnapshot): User? {
         return try {
+            val dataPeriodType = when (documentSnapshot.getString(FIELD_DATA_PERIOD_TYPE)) {
+                DATA_PERIOD_TYPE_MONTH -> DataPeriodType.MONTH
+                else -> null
+            }
             User.create(
                 id = documentSnapshot.id,
+                dataPeriodType = dataPeriodType,
                 email = documentSnapshot.getString(FIELD_EMAIL),
                 photoUrl = documentSnapshot.getString(FIELD_PHOTO_URL),
                 displayName = documentSnapshot.getString(FIELD_DISPLAY_NAME),

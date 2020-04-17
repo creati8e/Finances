@@ -1,5 +1,6 @@
 package serg.chuprin.finances.core.api.domain.model
 
+import java.math.BigDecimal
 import java.util.*
 
 /**
@@ -46,5 +47,14 @@ data class Transaction(
         }
 
     }
+
+    val amountBigDecimal: BigDecimal
+        get() = BigDecimal(amount)
+
+    val isExpense: Boolean
+        get() = type == TransactionType.EXPENSE
+
+    val isIncome: Boolean
+        get() = type == TransactionType.INCOME
 
 }

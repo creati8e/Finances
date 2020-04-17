@@ -51,26 +51,37 @@ data class User(
     override val email: String,
     override val photoUrl: String,
     override val displayName: String,
-    val defaultCurrencyCode: String
+    val defaultCurrencyCode: String,
+    val dataPeriodType: DataPeriodType
 ) : BaseUser(id, email, photoUrl, displayName) {
 
     companion object {
 
-        val EMPTY = User(Id(EMPTY_STRING), EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING)
+        val EMPTY = User(
+            Id(EMPTY_STRING),
+            EMPTY_STRING,
+            EMPTY_STRING,
+            EMPTY_STRING,
+            EMPTY_STRING,
+            DataPeriodType.MONTH
+        )
 
         fun create(
             id: String?,
             email: String?,
             photoUrl: String?,
+            dataPeriodType: DataPeriodType?,
             displayName: String?,
             defaultCurrencyCode: String?
         ): User? {
+            if (dataPeriodType == null) return null
             if (id.isNullOrBlank()) return null
             if (email.isNullOrBlank()) return null
             if (defaultCurrencyCode.isNullOrEmpty()) return null
             return User(
                 email = email,
                 id = Id.existing(id),
+                dataPeriodType = dataPeriodType,
                 photoUrl = photoUrl.orEmpty(),
                 displayName = displayName.orEmpty(),
                 defaultCurrencyCode = defaultCurrencyCode

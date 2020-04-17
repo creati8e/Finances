@@ -12,7 +12,10 @@ import serg.chuprin.finances.injector.Injector
  */
 @ScreenScope
 @Component(
-    modules = [DashboardModule::class],
+    modules = [
+        DashboardModule::class,
+        DashboardModule2::class
+    ],
     dependencies = [DashboardDependencies::class]
 )
 interface DashboardComponent : ViewModelComponent<DashboardViewModel> {
