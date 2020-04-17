@@ -2,6 +2,7 @@ package serg.chuprin.finances.feature.dashboard.domain.model
 
 import serg.chuprin.finances.core.api.domain.model.DataPeriod
 import java.math.BigDecimal
+import java.util.*
 
 /**
  * Created by Sergey Chuprin on 17.04.2020.
@@ -18,6 +19,7 @@ sealed class DashboardWidget(val type: Type) {
     data class Header(
         val dataPeriod: DataPeriod,
         val balance: BigDecimal,
+        val currency: Currency,
         val currentPeriodIncomes: BigDecimal,
         val currentPeriodExpenses: BigDecimal
     ) : DashboardWidget(type = Type.HEADER)

@@ -3,6 +3,7 @@ package serg.chuprin.finances.core.impl.presentation.model.formatter
 import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
 import serg.chuprin.finances.core.api.presentation.model.formatter.AmountFormatter
 import java.math.BigDecimal
+import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.text.NumberFormat
 import java.util.*
@@ -68,6 +69,33 @@ internal class AmountFormatterImpl @Inject constructor() : AmountFormatter {
         } catch (e: NumberFormatException) {
             input
         }
+    }
+
+    override fun format(
+        amount: BigDecimal,
+        currency: Currency,
+        round: Boolean,
+        withCurrencySymbol: Boolean
+    ): String {
+        val locale = Locale.getDefault()
+        if (!withCurrencySymbol) {
+            val instance = (NumberFormat.getInstance(locale) as DecimalFormat).apply {
+                maximumFractionDigits = currency.defaultFractionDigits
+                minimumFractionDigits = currency.defaultFractionDigits
+            }
+
+            return instance.format(amount)
+        }
+        return (NumberFormat.getCurrencyInstance(locale) as DecimalFormat).apply {
+            decimalFormatSymbols = DecimalFormatSymbols().apply {
+                currencySymbol = currency.symbol
+                internationalCurrencySymbol = currency.symbol
+            }
+            maximumFractionDigits = when (round) {
+                true -> 0
+                else -> currency.defaultFractionDigits
+            }
+        }.format(amount)
     }
 
     private fun setupFormatter(currency: Currency) {

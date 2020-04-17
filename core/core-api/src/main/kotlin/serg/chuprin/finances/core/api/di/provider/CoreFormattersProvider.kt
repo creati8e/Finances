@@ -1,5 +1,6 @@
 package serg.chuprin.finances.core.api.di.provider
 
+import serg.chuprin.finances.core.api.presentation.formatter.DataPeriodFormatter
 import serg.chuprin.finances.core.api.presentation.model.formatter.AmountFormatter
 
 /**
@@ -8,5 +9,7 @@ import serg.chuprin.finances.core.api.presentation.model.formatter.AmountFormatt
 interface CoreFormattersProvider {
 
     val amountFormatter: AmountFormatter
+
+    val dataPeriodFormatter: DataPeriodFormatter
 
 }

@@ -1,5 +1,6 @@
 package serg.chuprin.finances.core.api.presentation.model.formatter
 
+import java.math.BigDecimal
 import java.util.*
 
 /**
@@ -12,5 +13,12 @@ interface AmountFormatter {
      * @return string formatted with [currency] respecting current locale's rules.
      */
     fun formatInput(input: String, currency: Currency): String
+
+    fun format(
+        amount: BigDecimal,
+        currency: Currency,
+        round: Boolean = true,
+        withCurrencySymbol: Boolean = true
+    ): String
 
 }

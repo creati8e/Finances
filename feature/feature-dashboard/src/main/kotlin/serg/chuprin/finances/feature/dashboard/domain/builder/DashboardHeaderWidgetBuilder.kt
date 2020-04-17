@@ -26,9 +26,9 @@ class DashboardHeaderWidgetBuilder @Inject constructor(
             moneyCalculator.calculateBalance(currentUser.id),
             moneyCalculator.calculateIncomes(currentUser.id, currentPeriod),
             moneyCalculator.calculateExpenses(currentUser.id, currentPeriod)
-        ) { _, period, balance, incomes, expenses ->
+        ) { user, period, balance, incomes, expenses ->
             val header = DashboardWidget.Header(
-                period, balance, incomes, expenses
+                period, balance, user.defaultCurrency, incomes, expenses
             )
             header
         }
