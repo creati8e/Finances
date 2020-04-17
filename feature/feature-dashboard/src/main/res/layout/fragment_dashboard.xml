@@ -34,15 +34,13 @@
                 app:fontFamily="@font/logo_font"
                 tools:ignore="HardcodedText" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/avatarImageView"
+            <serg.chuprin.finances.core.api.presentation.view.widget.RoundedImageView
+                android:id="@+id/userPhotoImageView"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:background="@drawable/shape_avatar_rounded"
-                android:outlineProvider="background"
-                android:src="@drawable/cut" />
+                tools:src="@tools:sample/avatars" />
 
         </RelativeLayout>
 

@@ -10,4 +10,7 @@
     <item name="cornerRadiusSmall"
         type="dimen">4dp
     </item>
+    <item name="cardViewElevation"
+        type="dimen">8dp
+    </item>
 </resources>

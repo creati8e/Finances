@@ -1,5 +1,6 @@
 package serg.chuprin.finances.core.api.domain.model
 
+import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
 import java.util.*
 
 /**
@@ -54,6 +55,9 @@ data class User(
 ) : BaseUser(id, email, photoUrl, displayName) {
 
     companion object {
+
+        val EMPTY = User(Id(EMPTY_STRING), EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING)
+
         fun create(
             id: String?,
             email: String?,
@@ -72,6 +76,7 @@ data class User(
                 defaultCurrencyCode = defaultCurrencyCode
             )
         }
+
     }
 
     val defaultCurrency: Currency
