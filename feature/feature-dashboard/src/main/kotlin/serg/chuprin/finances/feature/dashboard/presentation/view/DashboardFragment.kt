@@ -6,12 +6,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import coil.api.load
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import serg.chuprin.adapter.DiffMultiViewAdapter
-import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
-import serg.chuprin.finances.core.api.presentation.view.adapter.diff.DiffCallback
 import serg.chuprin.finances.feature.dashboard.R
 import serg.chuprin.finances.feature.dashboard.presentation.di.DashboardComponent
+import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.diff.DashboardAdapterDiffCallback
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.renderer.DashboardHeaderWidgetCellRenderer
 import serg.chuprin.finances.core.api.R as CoreR
 
@@ -22,7 +21,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 
     private val viewModel by viewModelFromComponent { DashboardComponent.get() }
 
-    private val cellsAdapter = DiffMultiViewAdapter(DiffCallback<BaseCell>()).apply {
+    private val cellsAdapter = DiffMultiViewAdapter(DashboardAdapterDiffCallback()).apply {
         registerRenderer(DashboardHeaderWidgetCellRenderer())
     }
 
