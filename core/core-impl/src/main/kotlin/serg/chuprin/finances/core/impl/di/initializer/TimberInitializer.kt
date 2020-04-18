@@ -7,7 +7,7 @@ import timber.log.Timber
 /**
  * Created by Sergey Chuprin on 14.04.2020.
  */
-class TimberInitializer : Initializer {
+internal class TimberInitializer : Initializer {
 
     override fun initialize() {
         if (BuildConfig.DEBUG) {

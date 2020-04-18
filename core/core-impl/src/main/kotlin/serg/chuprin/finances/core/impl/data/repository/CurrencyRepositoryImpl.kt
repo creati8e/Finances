@@ -7,7 +7,7 @@ import javax.inject.Inject
 /**
  * Created by Sergey Chuprin on 07.04.2020.
  */
-class CurrencyRepositoryImpl @Inject constructor() : CurrencyRepository {
+internal class CurrencyRepositoryImpl @Inject constructor() : CurrencyRepository {
 
     override suspend fun getDefaultCurrency(): Currency {
         return Currency.getInstance(Locale.getDefault())

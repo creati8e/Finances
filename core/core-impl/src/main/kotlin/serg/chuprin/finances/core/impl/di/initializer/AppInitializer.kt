@@ -6,7 +6,7 @@ import javax.inject.Inject
 /**
  * Created by Sergey Chuprin on 14.04.2020.
  */
-class AppInitializer @Inject constructor(
+internal class AppInitializer @Inject constructor(
     private val initializers: Set<@JvmSuppressWildcards Initializer>
 ) : Initializer {
 

@@ -1,5 +1,6 @@
 package serg.chuprin.finances.core.impl.data.mapper
 
+import android.annotation.SuppressLint
 import com.github.ajalt.timberkt.Timber
 import com.google.firebase.firestore.DocumentSnapshot
 import serg.chuprin.finances.core.api.domain.model.Transaction
@@ -21,7 +22,8 @@ internal class TransactionMapper @Inject constructor() :
 
     override fun invoke(snapshot: DocumentSnapshot): Transaction? {
         val transactionType = snapshot.getString(FIELD_TYPE)?.let { type ->
-            when (type) {
+            @SuppressLint("DefaultLocale")
+            when (type.toLowerCase()) {
                 FirebaseTransactionFieldsContract.Type.INCOME -> TransactionType.INCOME
                 FirebaseTransactionFieldsContract.Type.BALANCE -> TransactionType.BALANCE
                 FirebaseTransactionFieldsContract.Type.EXPENSE -> TransactionType.EXPENSE

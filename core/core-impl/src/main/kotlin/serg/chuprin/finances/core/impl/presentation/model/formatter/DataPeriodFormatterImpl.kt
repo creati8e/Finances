@@ -13,7 +13,7 @@ import javax.inject.Inject
 /**
  * Created by Sergey Chuprin on 17.04.2020.
  */
-class DataPeriodFormatterImpl @Inject constructor(
+internal class DataPeriodFormatterImpl @Inject constructor(
     private val resourceManger: ResourceManger
 ) : DataPeriodFormatter {
 

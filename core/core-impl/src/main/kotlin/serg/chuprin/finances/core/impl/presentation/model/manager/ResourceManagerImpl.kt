@@ -10,7 +10,7 @@ import javax.inject.Inject
 /**
  * Created by Sergey Chuprin on 12.04.2020.
  */
-class ResourceManagerImpl @Inject constructor(
+internal class ResourceManagerImpl @Inject constructor(
     private val context: Context
 ) : ResourceManger {
 
