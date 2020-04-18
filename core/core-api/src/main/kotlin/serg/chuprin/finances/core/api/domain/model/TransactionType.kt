@@ -4,8 +4,10 @@ package serg.chuprin.finances.core.api.domain.model
  * Created by Sergey Chuprin on 13.04.2020.
  */
 enum class TransactionType {
-    INCOME,
-    EXPENSE,
+    /**
+     * Plain transaction; Could be income or expense.
+     */
+    PLAIN,
 
     /**
      * This type of transaction is not like real transaction.

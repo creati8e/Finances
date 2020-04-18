@@ -16,6 +16,9 @@ data class Transaction(
     val type: TransactionType,
     val currencyCode: String,
     private val _date: Date,
+    /**
+     * String representation of [BigDecimal]; May start with "-" symbol.
+     */
     private val _amount: String
 ) {
 
@@ -54,10 +57,10 @@ data class Transaction(
         get() = BigDecimal(_amount)
 
     val isExpense: Boolean
-        get() = type == TransactionType.EXPENSE
+        get() = _amount.startsWith("-")
 
     val isIncome: Boolean
-        get() = type == TransactionType.INCOME
+        get() = !isExpense
 
     val dateTime: LocalDateTime
         get() = _date.toLocalDateTimeUTC()

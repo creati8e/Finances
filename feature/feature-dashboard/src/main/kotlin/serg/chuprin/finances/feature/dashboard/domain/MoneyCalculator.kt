@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.map
 import serg.chuprin.finances.core.api.domain.model.DataPeriod
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.Transaction
+import serg.chuprin.finances.core.api.domain.model.TransactionType
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import java.math.BigDecimal
 import javax.inject.Inject
@@ -26,16 +27,20 @@ class MoneyCalculator @Inject constructor(
         return performCalculation(
             currentUserId,
             dataPeriod = dataPeriod,
-            transactionFilter = Transaction::isExpense
-        )
+            transactionFilter = { transaction ->
+                transaction.isExpense && transaction.type == TransactionType.PLAIN
+            }
+        ).map { bigDecimal -> bigDecimal.abs() }
     }
 
     fun calculateIncomes(currentUserId: Id, dataPeriod: DataPeriod): Flow<BigDecimal> {
         return performCalculation(
             currentUserId,
             dataPeriod = dataPeriod,
-            transactionFilter = Transaction::isIncome
-        )
+            transactionFilter = { transaction ->
+                transaction.isIncome && transaction.type == TransactionType.PLAIN
+            }
+        ).map { bigDecimal -> bigDecimal.abs() }
     }
 
     private fun performCalculation(

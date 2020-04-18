@@ -24,9 +24,8 @@ internal class TransactionMapper @Inject constructor() :
         val transactionType = snapshot.getString(FIELD_TYPE)?.let { type ->
             @SuppressLint("DefaultLocale")
             when (type.toLowerCase()) {
-                FirebaseTransactionFieldsContract.Type.INCOME -> TransactionType.INCOME
+                FirebaseTransactionFieldsContract.Type.PLAIN -> TransactionType.PLAIN
                 FirebaseTransactionFieldsContract.Type.BALANCE -> TransactionType.BALANCE
-                FirebaseTransactionFieldsContract.Type.EXPENSE -> TransactionType.EXPENSE
                 else -> null
             }
         }
