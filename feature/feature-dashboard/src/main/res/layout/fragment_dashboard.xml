@@ -50,6 +50,8 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        tools:itemCount="1"
+        tools:listitem="@layout/cell_dashboard_header_widget" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
