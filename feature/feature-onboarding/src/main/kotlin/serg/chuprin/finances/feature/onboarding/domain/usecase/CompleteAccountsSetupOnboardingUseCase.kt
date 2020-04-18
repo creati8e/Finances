@@ -55,13 +55,13 @@ class CompleteAccountsSetupOnboardingUseCase @Inject constructor(
         balance: MoneyAccountBalance
     ) {
         val balanceTransaction = Transaction(
-            date = Date(),
+            _date = Date(),
             ownerId = user.id,
             id = Id.createNew(),
             moneyAccountId = account.id,
             type = TransactionType.BALANCE,
             currencyCode = account.currencyCode,
-            amount = balance.bigDecimal.toPlainString()
+            _amount = balance.bigDecimal.toString()
         )
         transactionRepository.createTransaction(balanceTransaction)
     }

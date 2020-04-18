@@ -37,7 +37,7 @@ internal class TransactionRepositoryImpl @Inject constructor(
                     .mapNotNull(mapper)
                     .filter { transaction ->
                         transaction.type in USER_TRANSACTION_TYPES
-                                && transaction.date in dataPeriod
+                                && transaction.dateTime in dataPeriod
                     }
             }
             .flowOn(Dispatchers.Default)

@@ -1,6 +1,8 @@
 package serg.chuprin.finances.core.api.domain.model
 
+import serg.chuprin.finances.core.api.extensions.toLocalDateTimeUTC
 import java.math.BigDecimal
+import java.time.LocalDateTime
 import java.util.*
 
 /**
@@ -9,12 +11,12 @@ import java.util.*
 @Suppress("DataClassPrivateConstructor")
 data class Transaction(
     val id: Id,
-    val date: Date,
     val ownerId: Id,
-    val amount: String,
     val moneyAccountId: Id,
     val type: TransactionType,
-    val currencyCode: String
+    val currencyCode: String,
+    private val _date: Date,
+    private val _amount: String
 ) {
 
     companion object {
@@ -37,8 +39,8 @@ data class Transaction(
             if (currencyCode.isNullOrEmpty()) return null
             return Transaction(
                 type = type,
-                date = date,
-                amount = amount,
+                _date = date,
+                _amount = amount,
                 id = Id.existing(id),
                 currencyCode = currencyCode,
                 ownerId = Id.existing(ownerId),
@@ -48,13 +50,16 @@ data class Transaction(
 
     }
 
-    val amountBigDecimal: BigDecimal
-        get() = BigDecimal(amount)
+    val amount: BigDecimal
+        get() = BigDecimal(_amount)
 
     val isExpense: Boolean
         get() = type == TransactionType.EXPENSE
 
     val isIncome: Boolean
         get() = type == TransactionType.INCOME
+
+    val dateTime: LocalDateTime
+        get() = _date.toLocalDateTimeUTC()
 
 }

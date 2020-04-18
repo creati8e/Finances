@@ -5,9 +5,9 @@ import serg.chuprin.finances.core.api.domain.model.DataPeriodType
 import serg.chuprin.finances.core.api.presentation.formatter.DataPeriodFormatter
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.impl.R
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.util.*
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 import javax.inject.Inject
 
 /**
@@ -21,15 +21,13 @@ class DataPeriodFormatterImpl @Inject constructor(
         return when (dataPeriod.periodType) {
             DataPeriodType.MONTH -> {
                 val month = resourceManger.getString(R.string.period_type_month)
-                getFormatter().run {
-                    "$month (${format(dataPeriod.startDate)} - ${format(dataPeriod.endDate)})"
-                }
+                "$month (${dataPeriod.startDate.format()} - ${dataPeriod.endDate.format()})"
             }
         }
     }
 
-    private fun getFormatter(): DateFormat {
-        return SimpleDateFormat.getDateInstance(SimpleDateFormat.DEFAULT, Locale.getDefault())
+    private fun LocalDateTime.format(): String {
+        return format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
     }
 
 }

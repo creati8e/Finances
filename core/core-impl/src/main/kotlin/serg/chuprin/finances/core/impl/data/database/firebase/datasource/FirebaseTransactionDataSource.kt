@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.Transaction
+import serg.chuprin.finances.core.api.extensions.toDateUTC
 import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseTransactionFieldsContract.COLLECTION_NAME
 import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_AMOUNT
 import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_DATE
@@ -45,9 +46,9 @@ internal class FirebaseTransactionDataSource @Inject constructor(
     private fun Transaction.toMap(): Map<String, Any> {
         return mapOf(
             FIELD_TYPE to type,
-            FIELD_DATE to date,
             FIELD_AMOUNT to amount,
             FIELD_OWNER_ID to ownerId.value,
+            FIELD_DATE to dateTime.toDateUTC(),
             FIELD_MONEY_ACCOUNT_ID to moneyAccountId.value
         )
     }

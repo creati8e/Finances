@@ -5,14 +5,10 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import serg.chuprin.finances.core.api.domain.model.DataPeriod
-import serg.chuprin.finances.core.api.domain.model.DataPeriodType
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.mvi.bootstrapper.StoreBootstrapper
 import serg.chuprin.finances.feature.dashboard.domain.repository.DashboardDataPeriodRepository
 import serg.chuprin.finances.feature.dashboard.domain.usecase.BuildDashboardUseCase
-import java.time.LocalDate
-import java.time.ZoneId
-import java.util.*
 import javax.inject.Inject
 
 /**
@@ -29,19 +25,8 @@ class DashboardStoreBootstrapper @Inject constructor(
             // TODO: Remove user;
             flow {
                 val currentUser = userRepository.getCurrentUser()
-                // TODO: Remove this.
                 dataPeriodRepository.setCurrentDataPeriod(
-                    DataPeriod(
-                        periodType = DataPeriodType.MONTH,
-                        endDate = Date.from(
-                            LocalDate.now().plusDays(10).atStartOfDay(ZoneId.systemDefault())
-                                .toInstant()
-                        ),
-                        startDate = Date.from(
-                            LocalDate.now().minusDays(10).atStartOfDay(ZoneId.systemDefault())
-                                .toInstant()
-                        )
-                    )
+                    DataPeriod.from(currentUser.dataPeriodType)
                 )
                 emit(DashboardAction.UpdateUser(currentUser))
             },
