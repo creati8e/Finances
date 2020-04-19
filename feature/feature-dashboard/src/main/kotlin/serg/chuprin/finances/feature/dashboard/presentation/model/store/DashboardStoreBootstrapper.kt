@@ -1,9 +1,8 @@
 package serg.chuprin.finances.feature.dashboard.presentation.model.store
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.onStart
 import serg.chuprin.finances.core.api.domain.model.DataPeriod
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.mvi.bootstrapper.StoreBootstrapper
@@ -21,19 +20,15 @@ class DashboardStoreBootstrapper @Inject constructor(
 ) : StoreBootstrapper<DashboardAction> {
 
     override fun invoke(): Flow<DashboardAction> {
-        return merge(
-            // TODO: Remove user;
-            flow {
+        return buildDashboardUseCase
+            .execute()
+            .map { dashboard -> DashboardAction.FormatDashboard(dashboard) }
+            .onStart {
                 val currentUser = userRepository.getCurrentUser()
                 dataPeriodRepository.setCurrentDataPeriod(
                     DataPeriod.from(currentUser.dataPeriodType)
                 )
-                emit(DashboardAction.UpdateUser(currentUser))
-            },
-            buildDashboardUseCase
-                .execute()
-                .map { dashboard -> DashboardAction.FormatDashboard(dashboard) }
-        )
+            }
     }
 
 }

@@ -9,11 +9,8 @@ class DashboardStateReducer : StoreStateReducer<DashboardEffect, DashboardState>
 
     override fun invoke(effect: DashboardEffect, state: DashboardState): DashboardState {
         return when (effect) {
-            is DashboardEffect.UserUpdated -> {
-                state.copy(user = effect.user)
-            }
-            is DashboardEffect.WidgetCellsUpdated -> {
-                state.copy(cells = effect.widgetCells)
+            is DashboardEffect.DashboardUpdated -> {
+                state.copy(cells = effect.widgetCells, dashboard = effect.dashboard)
             }
         }
     }

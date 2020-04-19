@@ -17,7 +17,7 @@ class DashboardViewModel @Inject constructor(
 ) : BaseStoreViewModel<DashboardIntent>() {
 
     val userPhotoLiveData: LiveData<String> =
-        store.observeParticularStateAsLiveData { state -> state.user.photoUrl }
+        store.observeParticularStateAsLiveData { state -> state.dashboard.user.photoUrl }
 
     val cellsLiveData: LiveData<List<BaseCell>> =
         store.observeParticularStateAsLiveData(DashboardState::cells)

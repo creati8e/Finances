@@ -1,6 +1,6 @@
 package serg.chuprin.finances.feature.dashboard.presentation.model.store
 
-import serg.chuprin.finances.core.api.domain.model.User
+import serg.chuprin.finances.feature.dashboard.domain.model.Dashboard
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
 
 /**
@@ -8,12 +8,9 @@ import serg.chuprin.finances.feature.dashboard.presentation.model.cells.Dashboar
  */
 sealed class DashboardEffect {
 
-    class WidgetCellsUpdated(
+    class DashboardUpdated(
+        val dashboard: Dashboard,
         val widgetCells: List<DashboardWidgetCell>
-    ) : DashboardEffect()
-
-    class UserUpdated(
-        val user: User
     ) : DashboardEffect()
 
 }

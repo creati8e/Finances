@@ -2,7 +2,6 @@ package serg.chuprin.finances.feature.dashboard.presentation.model.store
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.feature.dashboard.presentation.model.builder.DashboardWidgetCellBuilder
@@ -28,9 +27,6 @@ class DashboardActionExecutor @Inject constructor(
                     else -> TODO()
                 }
             }
-            is DashboardAction.UpdateUser -> {
-                flowOf(DashboardEffect.UserUpdated(action.user))
-            }
             is DashboardAction.FormatDashboard -> {
                 handleFormatDashboardAction(action)
             }
@@ -53,7 +49,7 @@ class DashboardActionExecutor @Inject constructor(
                 }
                 null
             }
-            emit(DashboardEffect.WidgetCellsUpdated(widgetCells))
+            emit(DashboardEffect.DashboardUpdated(action.dashboard, widgetCells))
         }
     }
 
