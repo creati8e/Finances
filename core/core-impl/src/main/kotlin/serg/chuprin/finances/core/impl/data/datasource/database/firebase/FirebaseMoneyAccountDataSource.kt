@@ -1,4 +1,4 @@
-package serg.chuprin.finances.core.impl.data.datasource.database.firebase.datasource
+package serg.chuprin.finances.core.impl.data.datasource.database.firebase
 
 import com.google.firebase.firestore.FirebaseFirestore
 import serg.chuprin.finances.core.api.domain.model.MoneyAccount

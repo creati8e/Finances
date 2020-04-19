@@ -1,4 +1,4 @@
-package serg.chuprin.finances.core.impl.data.datasource.database.firebase.datasource
+package serg.chuprin.finances.core.impl.data.datasource.database.firebase
 
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
@@ -14,7 +14,6 @@ import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contrac
 import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_MONEY_ACCOUNT_ID
 import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_OWNER_ID
 import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_TYPE
-import serg.chuprin.finances.core.impl.data.datasource.database.firebase.suspending
 import javax.inject.Inject
 
 /**

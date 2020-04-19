@@ -34,6 +34,8 @@ interface OnboardingFeatureDependencies {
 
     val moneyAccountRepository: MoneyAccountRepository
 
+    val transactionCategoryRepository: TransactionCategoryRepository
+
     // endregion
 
     // region Use cases.

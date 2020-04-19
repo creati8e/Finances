@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.mapNotNull
 import serg.chuprin.finances.core.api.domain.model.IncompleteUser
 import serg.chuprin.finances.core.api.domain.model.User
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
-import serg.chuprin.finances.core.impl.data.datasource.database.firebase.datasource.FirebaseUserDataSource
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.FirebaseUserDataSource
 import serg.chuprin.finances.core.impl.data.mapper.IncompleteUserMapper
 import serg.chuprin.finances.core.impl.data.mapper.UserMapper
 import javax.inject.Inject

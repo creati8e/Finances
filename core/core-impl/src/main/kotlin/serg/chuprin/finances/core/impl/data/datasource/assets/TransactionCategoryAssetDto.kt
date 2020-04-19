@@ -11,7 +11,9 @@ class TransactionCategoryAssetDto(
     @SerialName("name")
     val name: String,
     @SerialName("id")
-    val id: String,
+    var id: String,
+    @SerialName("is_income")
+    val isIncome: Boolean,
     @SerialName("parent_category_id")
-    val parentCategoryId: String?
+    var parentCategoryId: String?
 )

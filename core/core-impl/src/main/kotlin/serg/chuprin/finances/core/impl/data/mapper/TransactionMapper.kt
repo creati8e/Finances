@@ -1,6 +1,5 @@
 package serg.chuprin.finances.core.impl.data.mapper
 
-import android.annotation.SuppressLint
 import com.github.ajalt.timberkt.Timber
 import com.google.firebase.firestore.DocumentSnapshot
 import serg.chuprin.finances.core.api.domain.model.Transaction
@@ -13,6 +12,7 @@ import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contrac
 import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_MONEY_ACCOUNT_ID
 import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_OWNER_ID
 import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_TYPE
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -23,8 +23,7 @@ internal class TransactionMapper @Inject constructor() :
 
     override fun invoke(snapshot: DocumentSnapshot): Transaction? {
         val transactionType = snapshot.getString(FIELD_TYPE)?.let { type ->
-            @SuppressLint("DefaultLocale")
-            when (type.toLowerCase()) {
+            when (type.toLowerCase(Locale.ROOT)) {
                 FirebaseTransactionFieldsContract.Type.PLAIN -> TransactionType.PLAIN
                 FirebaseTransactionFieldsContract.Type.BALANCE -> TransactionType.BALANCE
                 else -> null

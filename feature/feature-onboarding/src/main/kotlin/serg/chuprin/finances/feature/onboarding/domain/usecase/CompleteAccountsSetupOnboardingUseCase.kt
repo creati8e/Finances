@@ -1,10 +1,7 @@
 package serg.chuprin.finances.feature.onboarding.domain.usecase
 
 import serg.chuprin.finances.core.api.domain.model.*
-import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
-import serg.chuprin.finances.core.api.domain.repository.OnboardingRepository
-import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
-import serg.chuprin.finances.core.api.domain.repository.UserRepository
+import serg.chuprin.finances.core.api.domain.repository.*
 import serg.chuprin.finances.feature.onboarding.domain.OnboardingMoneyAccountCreationParams
 import javax.inject.Inject
 
@@ -15,7 +12,8 @@ class CompleteAccountsSetupOnboardingUseCase @Inject constructor(
     private val userRepository: UserRepository,
     private val onboardingRepository: OnboardingRepository,
     private val transactionRepository: TransactionRepository,
-    private val moneyAccountRepository: MoneyAccountRepository
+    private val moneyAccountRepository: MoneyAccountRepository,
+    private val transactionCategoryRepository: TransactionCategoryRepository
 ) {
 
     suspend fun execute(
@@ -28,6 +26,7 @@ class CompleteAccountsSetupOnboardingUseCase @Inject constructor(
         if (bankAccountCardParams != null) {
             createMoneyAccount(bankAccountCardParams)
         }
+        transactionCategoryRepository.createPredefinedCategories()
         onboardingRepository.onboardingStep = OnboardingStep.COMPLETED
     }
 
