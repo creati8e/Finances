@@ -1,4 +1,4 @@
-package serg.chuprin.finances.core.impl.data.database.firebase.datasource
+package serg.chuprin.finances.core.impl.data.datasource.database.firebase.datasource
 
 import com.github.ajalt.timberkt.Timber
 import com.google.firebase.auth.FirebaseAuth
@@ -12,14 +12,14 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import serg.chuprin.finances.core.api.domain.model.DataPeriodType
 import serg.chuprin.finances.core.api.domain.model.User
-import serg.chuprin.finances.core.impl.data.database.firebase.awaitWithLogging
-import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract.COLLECTION_NAME
-import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract.FIELD_DATA_PERIOD_TYPE
-import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract.FIELD_DEFAULT_CURRENCY_CODE
-import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract.FIELD_DISPLAY_NAME
-import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract.FIELD_EMAIL
-import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract.FIELD_PHOTO_URL
-import serg.chuprin.finances.core.impl.data.database.firebase.suspending
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.awaitWithLogging
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseUserFieldsContract.COLLECTION_NAME
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseUserFieldsContract.FIELD_DATA_PERIOD_TYPE
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseUserFieldsContract.FIELD_DEFAULT_CURRENCY_CODE
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseUserFieldsContract.FIELD_DISPLAY_NAME
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseUserFieldsContract.FIELD_EMAIL
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseUserFieldsContract.FIELD_PHOTO_URL
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.suspending
 import javax.inject.Inject
 import kotlin.Result.Companion.failure
 import kotlin.Result.Companion.success

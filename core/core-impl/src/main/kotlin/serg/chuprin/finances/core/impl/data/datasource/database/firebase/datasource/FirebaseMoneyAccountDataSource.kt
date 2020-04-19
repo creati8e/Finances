@@ -1,11 +1,11 @@
-package serg.chuprin.finances.core.impl.data.database.firebase.datasource
+package serg.chuprin.finances.core.impl.data.datasource.database.firebase.datasource
 
 import com.google.firebase.firestore.FirebaseFirestore
 import serg.chuprin.finances.core.api.domain.model.MoneyAccount
-import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseMoneyAccountFieldsContract.COLLECTION_NAME
-import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseMoneyAccountFieldsContract.FIELD_CURRENCY_CODE
-import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseMoneyAccountFieldsContract.FIELD_NAME
-import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseMoneyAccountFieldsContract.FIELD_OWNER_ID
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseMoneyAccountFieldsContract.COLLECTION_NAME
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseMoneyAccountFieldsContract.FIELD_CURRENCY_CODE
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseMoneyAccountFieldsContract.FIELD_NAME
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseMoneyAccountFieldsContract.FIELD_OWNER_ID
 import javax.inject.Inject
 
 /**

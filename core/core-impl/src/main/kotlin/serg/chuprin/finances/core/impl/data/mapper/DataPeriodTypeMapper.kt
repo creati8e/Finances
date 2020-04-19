@@ -3,8 +3,8 @@ package serg.chuprin.finances.core.impl.data.mapper
 import android.annotation.SuppressLint
 import com.google.firebase.firestore.DocumentSnapshot
 import serg.chuprin.finances.core.api.domain.model.DataPeriodType
-import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract
-import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract.FIELD_DATA_PERIOD_TYPE
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseUserFieldsContract
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseUserFieldsContract.FIELD_DATA_PERIOD_TYPE
 import javax.inject.Inject
 
 /**

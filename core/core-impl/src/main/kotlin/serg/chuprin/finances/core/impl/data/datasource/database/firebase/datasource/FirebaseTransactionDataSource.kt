@@ -1,4 +1,4 @@
-package serg.chuprin.finances.core.impl.data.database.firebase.datasource
+package serg.chuprin.finances.core.impl.data.datasource.database.firebase.datasource
 
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
@@ -8,13 +8,13 @@ import kotlinx.coroutines.flow.callbackFlow
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.Transaction
 import serg.chuprin.finances.core.api.extensions.toDateUTC
-import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseTransactionFieldsContract.COLLECTION_NAME
-import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_AMOUNT
-import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_DATE
-import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_MONEY_ACCOUNT_ID
-import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_OWNER_ID
-import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_TYPE
-import serg.chuprin.finances.core.impl.data.database.firebase.suspending
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseTransactionFieldsContract.COLLECTION_NAME
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_AMOUNT
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_DATE
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_MONEY_ACCOUNT_ID
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_OWNER_ID
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_TYPE
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.suspending
 import javax.inject.Inject
 
 /**

@@ -1,0 +1,486 @@
+[
+  {
+    "color": "CBA1DC",
+    "title": "Аренда",
+    "uuid": "A744AFB0-399E-11E4-916C-0800200C9A66",
+    "parentCategory": "DFE233FD-3F24-41D2-8687-6D4ADFB66AA2"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Бытовые услуги",
+    "uuid": "A744AFB1-399E-11E4-916C-0800200C9A66",
+    "parentCategory": "DFE233FD-3F24-41D2-8687-6D4ADFB66AA2"
+  },
+  {
+    "color": "E87DAD",
+    "title": "Автомобиль",
+    "uuid": "501FBDA7-D6B6-4EBC-AE3B-C452DA5BDDEC"
+  },
+  {
+    "color": "FDB3CD",
+    "title": "Банк",
+    "uuid": "23F2ED31-6327-4B9E-8A7D-70BB307B263C"
+  },
+  {
+    "color": "C4F6C4",
+    "title": "Красота",
+    "uuid": "A5B5DAA8-7166-4A38-8A11-6C2553BD7BF7"
+  },
+  {
+    "color": "D0EB1D",
+    "title": "Здоровье",
+    "uuid": "4B10CE2D-128F-454E-AD6B-ECFC1E2AE151"
+  },
+  {
+    "color": "C7DBD1",
+    "title": "Одежда и обувь",
+    "uuid": "4F718BB7-969A-4BD7-9AC9-7CE1D8EA56BF"
+  },
+  {
+    "color": "EAF58E",
+    "title": "Еда вне дома",
+    "uuid": "C2E79877-705B-4355-B2A5-C978AA07D9F2"
+  },
+  {
+    "color": "75A8F5",
+    "title": "Подарки",
+    "uuid": "2103129B-7826-4FCD-868C-841998E488B3"
+  },
+  {
+    "color": "AF9EF6",
+    "title": "Продукты питания",
+    "uuid": "92807D19-6328-4192-8A9D-A863A9FFBC0B"
+  },
+  {
+    "color": "F9E07B",
+    "title": "Дом",
+    "uuid": "DFE233FD-3F24-41D2-8687-6D4ADFB66AA2"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Развлечения",
+    "uuid": "3E8DD3D5-D809-4FA0-89A1-B37A90A5B301"
+  },
+  {
+    "color": "C9C9C9",
+    "title": "Техника",
+    "uuid": "E8603904-2575-41BE-8A1B-3875AB7938E0"
+  },
+  {
+    "color": "D9D0FF",
+    "title": "Путешествия",
+    "uuid": "5BF32446-4138-4CBD-A9DC-73CB38C9E309"
+  },
+  {
+    "color": "A3E5B7",
+    "title": "Образование",
+    "uuid": "2A72135A-21B3-4906-AB5A-192DCA2F481E"
+  },
+  {
+    "color": "F39191",
+    "title": "Благотворительность",
+    "uuid": "571E9DF8-63B5-4670-842F-0A99AE69A319"
+  },
+  {
+    "color": "F5C9B3",
+    "title": "Государство",
+    "uuid": "21D7455E-9485-4979-8CAA-A5B98D9554B4"
+  },
+  {
+    "color": "F4E8B6",
+    "title": "Домашние животные",
+    "uuid": "7EF72B41-9442-4445-8AED-06062A9C8751"
+  },
+  {
+    "color": "F5DADA",
+    "title": "Бизнес-услуги",
+    "uuid": "E2810CB4-5C8F-4F85-BB7B-D23E3FE82487"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Сервис",
+    "uuid": "AFC6FECA-A5CE-4377-B5C0-102DDEDF0817",
+    "parentCategory": "501FBDA7-D6B6-4EBC-AE3B-C452DA5BDDEC"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Топливо",
+    "uuid": "609D00D3-3902-4C35-A021-390632845104",
+    "parentCategory": "501FBDA7-D6B6-4EBC-AE3B-C452DA5BDDEC"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Мойка",
+    "uuid": "D095F698-77BB-44C6-BA49-FAF1CDD3E344",
+    "parentCategory": "501FBDA7-D6B6-4EBC-AE3B-C452DA5BDDEC"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Платные дороги",
+    "uuid": "4ACF5C1F-62DD-4DA7-83CD-D4C4C82F261C",
+    "parentCategory": "501FBDA7-D6B6-4EBC-AE3B-C452DA5BDDEC"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Страховка",
+    "uuid": "5FA7696A-1D3B-4561-91CC-79FC9FC6B270",
+    "parentCategory": "501FBDA7-D6B6-4EBC-AE3B-C452DA5BDDEC"
+  },
+  {
+    "color": "",
+    "title": "Автохимия",
+    "uuid": "74B99FB6-E6F5-45B6-BBBC-F9209D5492BE",
+    "parentCategory": "501FBDA7-D6B6-4EBC-AE3B-C452DA5BDDEC"
+  },
+  {
+    "color": "B8D1F5",
+    "title": "Парковка",
+    "uuid": "39281479-255D-4F3A-AB19-E4AD2C96AF7F",
+    "parentCategory": "501FBDA7-D6B6-4EBC-AE3B-C452DA5BDDEC"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Салон красоты ",
+    "uuid": "6F70F336-5D1E-4412-AC8A-ECCC9BBD868B",
+    "parentCategory": "A5B5DAA8-7166-4A38-8A11-6C2553BD7BF7"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Косметика",
+    "uuid": "9553FE71-0E95-4C5E-8F48-240ED551184E",
+    "parentCategory": "A5B5DAA8-7166-4A38-8A11-6C2553BD7BF7"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Мед. услуги",
+    "uuid": "3D27BF3A-C93A-4C02-9AAC-BECD12511212",
+    "parentCategory": "4B10CE2D-128F-454E-AD6B-ECFC1E2AE151"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Аптека",
+    "uuid": "80D5903A-6130-4905-A447-FA3FD5C9BE68",
+    "parentCategory": "4B10CE2D-128F-454E-AD6B-ECFC1E2AE151"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Страхование",
+    "uuid": "476D2464-7D90-4536-B3BA-E18B6E18FAB6",
+    "parentCategory": "4B10CE2D-128F-454E-AD6B-ECFC1E2AE151"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Спорт",
+    "uuid": "BF0B4A3A-6867-4DAD-AAE5-DBBA3DDB9B8A",
+    "parentCategory": "4B10CE2D-128F-454E-AD6B-ECFC1E2AE151"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Инвентарь",
+    "uuid": "DE220220-A6A1-4612-A11C-8FB3B11051C9",
+    "parentCategory": "4B10CE2D-128F-454E-AD6B-ECFC1E2AE151"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Взрослая",
+    "uuid": "06D51D71-3DFC-4429-8F67-E57EB0A5AAF3",
+    "parentCategory": "4F718BB7-969A-4BD7-9AC9-7CE1D8EA56BF"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Детская",
+    "uuid": "EED01482-9C02-43CE-970A-FCA3D4D1F8B3",
+    "parentCategory": "4F718BB7-969A-4BD7-9AC9-7CE1D8EA56BF"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Аксессуары",
+    "uuid": "BD2DF0B2-0030-4C1B-917B-AB74EEB02F00",
+    "parentCategory": "4F718BB7-969A-4BD7-9AC9-7CE1D8EA56BF"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Ресторан",
+    "uuid": "72091FA5-4458-428A-ADC6-B7C6B290246C",
+    "parentCategory": "C2E79877-705B-4355-B2A5-C978AA07D9F2"
+  },
+  {
+    "color": "",
+    "title": "Фастфуд",
+    "uuid": "FD313525-A3F5-4521-8E7A-D428D3ACE066",
+    "parentCategory": "C2E79877-705B-4355-B2A5-C978AA07D9F2"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Кофейня",
+    "uuid": "0908103C-6AC5-4D7B-B7F1-74D696D4E587",
+    "parentCategory": "C2E79877-705B-4355-B2A5-C978AA07D9F2"
+  },
+  {
+    "color": "",
+    "title": "Ланч",
+    "uuid": "CDE7A147-78C6-42F1-8F2F-D7A712B13F3C",
+    "parentCategory": "C2E79877-705B-4355-B2A5-C978AA07D9F2"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Квартплата",
+    "uuid": "8B934E9A-7D32-4B0D-B789-BB9429B2733E",
+    "parentCategory": "DFE233FD-3F24-41D2-8687-6D4ADFB66AA2"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Электричество",
+    "uuid": "7DBF4863-3275-4B78-AACB-4595CD8DE0B8",
+    "parentCategory": "DFE233FD-3F24-41D2-8687-6D4ADFB66AA2"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Газ",
+    "uuid": "4954CA79-9F7B-453B-A7F6-63D81A0EA0DD",
+    "parentCategory": "DFE233FD-3F24-41D2-8687-6D4ADFB66AA2"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Ремонт",
+    "uuid": "C0EDBBCE-E323-4DD8-A92A-231C1B1D63E5",
+    "parentCategory": "DFE233FD-3F24-41D2-8687-6D4ADFB66AA2"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Страхование",
+    "uuid": "A3E5BC18-779F-48BB-AA51-B5A6A1A8E380",
+    "parentCategory": "DFE233FD-3F24-41D2-8687-6D4ADFB66AA2"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Бытовая химия",
+    "uuid": "CBEA799E-85EB-4909-8F2D-1563AAA4876F",
+    "parentCategory": "DFE233FD-3F24-41D2-8687-6D4ADFB66AA2"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Мебель",
+    "uuid": "6697DB7D-50AE-4702-B941-727F2B5E701A",
+    "parentCategory": "DFE233FD-3F24-41D2-8687-6D4ADFB66AA2"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Посуда",
+    "uuid": "D2171233-1A38-4BF9-AC94-E90D33D3057C",
+    "parentCategory": "DFE233FD-3F24-41D2-8687-6D4ADFB66AA2"
+  },
+  {
+    "color": "",
+    "title": "Бар, клуб",
+    "uuid": "FD456451-75F3-4345-B85B-CB765976B6F1",
+    "parentCategory": "3E8DD3D5-D809-4FA0-89A1-B37A90A5B301"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Игры, софт",
+    "uuid": "E8F11E2C-F648-4A9D-9974-D3713D37F745",
+    "parentCategory": "3E8DD3D5-D809-4FA0-89A1-B37A90A5B301"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Кино, театр, концерты",
+    "uuid": "2A889D47-3765-4B66-ACC4-2F9E7DF7CFC8",
+    "parentCategory": "3E8DD3D5-D809-4FA0-89A1-B37A90A5B301"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Музеи",
+    "uuid": "E103A430-2D62-4D14-B43A-D051AC10368D",
+    "parentCategory": "3E8DD3D5-D809-4FA0-89A1-B37A90A5B301"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Активный отдых",
+    "uuid": "5EA854A9-11D1-4DA6-9FF0-E7CD1B22251A",
+    "parentCategory": "3E8DD3D5-D809-4FA0-89A1-B37A90A5B301"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Книги",
+    "uuid": "19D02036-D813-4D06-A149-C90AE9471C91",
+    "parentCategory": "3E8DD3D5-D809-4FA0-89A1-B37A90A5B301"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Пресса",
+    "uuid": "BADE4BC6-792C-43A3-A07B-D6F3979BB131",
+    "parentCategory": "3E8DD3D5-D809-4FA0-89A1-B37A90A5B301"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Хобби",
+    "uuid": "CF8A4C94-D7CE-4F31-A5BE-A85EE2092534",
+    "parentCategory": "3E8DD3D5-D809-4FA0-89A1-B37A90A5B301"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Электроника",
+    "uuid": "244606A4-D6D8-4EE6-92B1-7E03E7592A67",
+    "parentCategory": "E8603904-2575-41BE-8A1B-3875AB7938E0"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Бытовая техника",
+    "uuid": "91026564-A83D-4FEA-A9DF-87C28EDF8CB7",
+    "parentCategory": "E8603904-2575-41BE-8A1B-3875AB7938E0"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Сувениры",
+    "uuid": "D4EE05C0-E299-11E4-B571-0800200C9A66",
+    "parentCategory": "5BF32446-4138-4CBD-A9DC-73CB38C9E309"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Билеты",
+    "uuid": "6709B67C-F34C-41E5-84B6-45B3BB5AC1B0",
+    "parentCategory": "5BF32446-4138-4CBD-A9DC-73CB38C9E309"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Визы",
+    "uuid": "C024DB85-F463-4BF9-BBB3-D2E2F126CABF",
+    "parentCategory": "5BF32446-4138-4CBD-A9DC-73CB38C9E309"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Аренда авто",
+    "uuid": "2ACCCB7D-E40C-4D63-818F-C70390C66E48",
+    "parentCategory": "5BF32446-4138-4CBD-A9DC-73CB38C9E309"
+  },
+  {
+    "color": "",
+    "title": "Отель",
+    "uuid": "A6C72377-3370-476A-ACD1-7CA73C7C4B94",
+    "parentCategory": "5BF32446-4138-4CBD-A9DC-73CB38C9E309"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Услуги",
+    "uuid": "B9E09F79-A6D8-420E-A1FB-F9DDA1CE5267",
+    "parentCategory": "5BF32446-4138-4CBD-A9DC-73CB38C9E309"
+  },
+  {
+    "color": "",
+    "title": "Страховка",
+    "uuid": "8495E8BF-E103-4B29-ACA7-C0A640EE6D0E",
+    "parentCategory": "5BF32446-4138-4CBD-A9DC-73CB38C9E309"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Услуги",
+    "uuid": "FBBA0F5A-402A-44D9-BDDE-AA622FD121AC",
+    "parentCategory": "2A72135A-21B3-4906-AB5A-192DCA2F481E"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Книги",
+    "uuid": "3B88CFC7-13DC-4F64-9773-BB25380834B9",
+    "parentCategory": "2A72135A-21B3-4906-AB5A-192DCA2F481E"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Налоги",
+    "uuid": "FBF36D91-E6B9-44FB-B6ED-D0DC4C64030B",
+    "parentCategory": "21D7455E-9485-4979-8CAA-A5B98D9554B4"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Штрафы",
+    "uuid": "577D28E0-1547-4136-8839-80A00D016207",
+    "parentCategory": "21D7455E-9485-4979-8CAA-A5B98D9554B4"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Пошлины",
+    "uuid": "4F224590-C355-473F-BC7E-088EE0CE7BEF",
+    "parentCategory": "21D7455E-9485-4979-8CAA-A5B98D9554B4"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Вет. услуги",
+    "uuid": "8C52A731-3BFF-4CAD-9C4A-163EF88FBADA",
+    "parentCategory": "7EF72B41-9442-4445-8AED-06062A9C8751"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Медикаменты",
+    "uuid": "54B4E3F6-001E-4F38-9F41-36EA1C06263C",
+    "parentCategory": "7EF72B41-9442-4445-8AED-06062A9C8751"
+  },
+  {
+    "color": "CBA1DC",
+    "title": "Корм",
+    "uuid": "008D1A86-5F8B-4077-8ACD-BCE8D7B5A113",
+    "parentCategory": "7EF72B41-9442-4445-8AED-06062A9C8751"
+  },
+  {
+    "color": "",
+    "title": "Аксессуары, игрушки",
+    "uuid": "12D7E580-0639-4DEE-B5D5-B7026BCFCE48",
+    "parentCategory": "7EF72B41-9442-4445-8AED-06062A9C8751"
+  },
+  {
+    "color": "ECD690",
+    "title": "Запчасти",
+    "uuid": "E9FEB322-1DE2-4E30-868C-138440148FDA",
+    "parentCategory": "501FBDA7-D6B6-4EBC-AE3B-C452DA5BDDEC"
+  },
+  {
+    "color": "ECD690",
+    "title": "Аксессуары",
+    "uuid": "A2ED9867-308C-402A-8587-27517FE88DF2",
+    "parentCategory": "501FBDA7-D6B6-4EBC-AE3B-C452DA5BDDEC"
+  },
+  {
+    "color": "EDDCA5",
+    "title": "Прочее",
+    "uuid": "3BC1B74C-EA29-4C35-AE9E-60CAEDCE2D72"
+  },
+  {
+    "color": "ECD690",
+    "title": "Интернет",
+    "uuid": "935403AC-AC06-48B1-AF26-B9CDD03A979E",
+    "parentCategory": "DFE233FD-3F24-41D2-8687-6D4ADFB66AA2"
+  },
+  {
+    "color": "ECD690",
+    "title": "Телефон",
+    "uuid": "E8422E2A-A21A-414A-8D31-9B46999384A2",
+    "parentCategory": "DFE233FD-3F24-41D2-8687-6D4ADFB66AA2"
+  },
+  {
+    "color": "DED3B1",
+    "title": "Мобильная связь",
+    "uuid": "D244D7A9-6A8D-44ED-9B44-EF370D749C0C"
+  },
+  {
+    "color": "ECD690",
+    "title": "Музыка, видео",
+    "uuid": "C0FECFA4-3010-4B34-9B00-D7BC42C51DB3",
+    "parentCategory": "3E8DD3D5-D809-4FA0-89A1-B37A90A5B301"
+  },
+  {
+    "color": "ECD690",
+    "title": "Транспорт",
+    "uuid": "D0D0010C-3BE8-481C-8888-BE1AB2CA27F4"
+  },
+  {
+    "color": "ECD690",
+    "title": "Общ. транспорт",
+    "uuid": "C8A5182C-AEEE-4FEC-8538-D4E7C44EB0E8",
+    "parentCategory": "D0D0010C-3BE8-481C-8888-BE1AB2CA27F4"
+  },
+  {
+    "color": "ECD690",
+    "title": "Такси",
+    "uuid": "6A0357F9-5DBC-420A-8EF1-5FE75C72C2BD",
+    "parentCategory": "D0D0010C-3BE8-481C-8888-BE1AB2CA27F4"
+  }
+]

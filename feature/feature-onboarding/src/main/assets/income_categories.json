@@ -1,0 +1,54 @@
+[
+  {
+    "color": "8EC8C5",
+    "title": "Заработная плата",
+    "uuid": "BB2C4A5F-86C7-42C4-9870-8DE720989FEA"
+  },
+  {
+    "color": "75A8F5",
+    "title": "Дивиденды",
+    "uuid": "6912162F-4A1F-4B3E-9A9E-F7E3294B0A8F"
+  },
+  {
+    "color": "F9E07B",
+    "title": "Подарки",
+    "uuid": "C90F2BBB-FCC7-42A4-9073-D0D856EF6A84"
+  },
+  {
+    "color": "DDDDDD",
+    "title": "Прочее",
+    "uuid": "B7F4FCB1-8720-4F9C-BE2D-AE1A950E9695"
+  },
+  {
+    "color": "D0EB1D",
+    "title": "Проценты по счетам",
+    "uuid": "F8BC8C71-C841-405B-BB10-ECB14DA95F3E"
+  },
+  {
+    "color": "95B6E7",
+    "title": "Подработка",
+    "uuid": "03A801F5-F239-4134-923E-222AFFAC60E0"
+  },
+  {
+    "color": "E87DAD",
+    "title": "Аренда",
+    "uuid": "A5E90A89-38D2-460C-B1A4-E7D1781A9535"
+  },
+  {
+    "color": "CDBB82",
+    "title": "Биржа",
+    "uuid": "A76EEB0D-9F5C-4CC8-A730-27E45C460699"
+  },
+  {
+    "color": "F39191",
+    "title": "Оклад",
+    "uuid": "56A4AF50-AE30-4F95-836A-87CB94E14D84",
+    "parentCategory": "BB2C4A5F-86C7-42C4-9870-8DE720989FEA"
+  },
+  {
+    "color": "F5DADA",
+    "title": "Бонус",
+    "uuid": "836CB2C0-D055-4E84-9586-44A4B571FD2E",
+    "parentCategory": "BB2C4A5F-86C7-42C4-9870-8DE720989FEA"
+  }
+]

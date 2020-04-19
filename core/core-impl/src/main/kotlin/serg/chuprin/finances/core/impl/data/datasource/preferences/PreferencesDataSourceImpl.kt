@@ -1,20 +1,18 @@
-package serg.chuprin.finances.core.impl.data.preferences.adapter
+package serg.chuprin.finances.core.impl.data.datasource.preferences
 
 import android.content.SharedPreferences
 import com.afollestad.rxkprefs.rxkPrefs
 import serg.chuprin.finances.core.api.data.datasource.preferences.Preference
-import serg.chuprin.finances.core.api.data.datasource.preferences.PreferencesAdapter
+import serg.chuprin.finances.core.api.data.datasource.preferences.PreferencesDataSource
 import serg.chuprin.finances.core.api.data.datasource.preferences.mapper.PreferenceMapper
-import serg.chuprin.finances.core.impl.data.preferences.CustomModelPreferenceImpl
-import serg.chuprin.finances.core.impl.data.preferences.PreferenceImpl
 import javax.inject.Inject
 
 /**
  * Created by Sergey Chuprin on 17.03.2019.
  */
-internal class PreferencesAdapterImpl @Inject constructor(
+internal class PreferencesDataSourceImpl @Inject constructor(
     sharedPreferences: SharedPreferences
-) : PreferencesAdapter {
+) : PreferencesDataSource {
 
     private val rxkPrefs = rxkPrefs(sharedPreferences)
 

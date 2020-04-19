@@ -1,4 +1,4 @@
-package serg.chuprin.finances.core.impl.data.database.firebase.contract
+package serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract
 
 /**
  * Created by Sergey Chuprin on 04.04.2020.

@@ -2,17 +2,17 @@ package serg.chuprin.finances.core.impl.data.repository
 
 import kotlinx.coroutines.flow.Flow
 import serg.chuprin.finances.core.api.data.datasource.preferences.Preference
-import serg.chuprin.finances.core.api.data.datasource.preferences.PreferencesAdapter
+import serg.chuprin.finances.core.api.data.datasource.preferences.PreferencesDataSource
 import serg.chuprin.finances.core.api.domain.model.OnboardingStep
 import serg.chuprin.finances.core.api.domain.repository.OnboardingRepository
-import serg.chuprin.finances.core.impl.data.preferences.EnumPreferenceMapper
+import serg.chuprin.finances.core.impl.data.datasource.preferences.EnumPreferenceMapper
 import javax.inject.Inject
 
 /**
  * Created by Sergey Chuprin on 05.04.2020.
  */
 internal class OnboardingRepositoryImpl @Inject constructor(
-    preferencesAdapter: PreferencesAdapter
+    preferencesDataSource: PreferencesDataSource
 ) : OnboardingRepository {
 
     private class OnboardingStepPreferenceMapper : EnumPreferenceMapper<OnboardingStep>() {
@@ -27,7 +27,7 @@ internal class OnboardingRepositoryImpl @Inject constructor(
 
     }
 
-    private val preference: Preference<OnboardingStep> = preferencesAdapter.getCustomModel(
+    private val preference: Preference<OnboardingStep> = preferencesDataSource.getCustomModel(
         key = "onboarding_step",
         mapper = OnboardingStepPreferenceMapper()
     )

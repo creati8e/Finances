@@ -2,7 +2,7 @@ package serg.chuprin.finances.core.impl.data.repository
 
 import serg.chuprin.finances.core.api.domain.model.MoneyAccount
 import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
-import serg.chuprin.finances.core.impl.data.database.firebase.datasource.FirebaseMoneyAccountDataSource
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.datasource.FirebaseMoneyAccountDataSource
 import javax.inject.Inject
 
 /**

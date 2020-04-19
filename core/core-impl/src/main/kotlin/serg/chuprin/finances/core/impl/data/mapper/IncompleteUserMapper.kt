@@ -3,7 +3,7 @@ package serg.chuprin.finances.core.impl.data.mapper
 import com.github.ajalt.timberkt.Timber
 import com.google.firebase.firestore.DocumentSnapshot
 import serg.chuprin.finances.core.api.domain.model.IncompleteUser
-import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseUserFieldsContract
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseUserFieldsContract
 import javax.inject.Inject
 
 /**

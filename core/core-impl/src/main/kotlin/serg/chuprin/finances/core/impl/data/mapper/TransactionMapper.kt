@@ -5,14 +5,14 @@ import com.github.ajalt.timberkt.Timber
 import com.google.firebase.firestore.DocumentSnapshot
 import serg.chuprin.finances.core.api.domain.model.Transaction
 import serg.chuprin.finances.core.api.domain.model.TransactionType
-import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseTransactionFieldsContract
-import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_AMOUNT
-import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_CATEGORY_ID
-import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_CURRENCY_CODE
-import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_DATE
-import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_MONEY_ACCOUNT_ID
-import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_OWNER_ID
-import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_TYPE
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseTransactionFieldsContract
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_AMOUNT
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_CATEGORY_ID
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_CURRENCY_CODE
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_DATE
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_MONEY_ACCOUNT_ID
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_OWNER_ID
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_TYPE
 import javax.inject.Inject
 
 /**

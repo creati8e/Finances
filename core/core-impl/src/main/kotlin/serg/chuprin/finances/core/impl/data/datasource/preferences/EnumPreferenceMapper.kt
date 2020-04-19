@@ -1,4 +1,4 @@
-package serg.chuprin.finances.core.impl.data.preferences
+package serg.chuprin.finances.core.impl.data.datasource.preferences
 
 import serg.chuprin.finances.core.api.data.datasource.preferences.mapper.PreferenceMapper
 

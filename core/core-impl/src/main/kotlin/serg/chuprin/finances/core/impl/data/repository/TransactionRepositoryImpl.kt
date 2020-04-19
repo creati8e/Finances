@@ -8,7 +8,7 @@ import serg.chuprin.finances.core.api.domain.model.DataPeriod
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.Transaction
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
-import serg.chuprin.finances.core.impl.data.database.firebase.datasource.FirebaseTransactionDataSource
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.datasource.FirebaseTransactionDataSource
 import serg.chuprin.finances.core.impl.data.mapper.TransactionMapper
 import javax.inject.Inject
 

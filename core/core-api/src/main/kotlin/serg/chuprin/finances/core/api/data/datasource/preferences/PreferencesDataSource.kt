@@ -6,7 +6,7 @@ import serg.chuprin.finances.core.api.data.datasource.preferences.mapper.Prefere
 /**
  * Created by Sergey Chuprin on 05.04.2020.
  */
-interface PreferencesAdapter {
+interface PreferencesDataSource {
 
     @CheckResult
     fun getBoolean(key: String, defaultValue: Boolean): Preference<Boolean>

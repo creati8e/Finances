@@ -5,7 +5,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.tasks.await
 import serg.chuprin.finances.core.api.domain.gateway.AuthorizationGateway
-import serg.chuprin.finances.core.impl.data.database.firebase.datasource.FirebaseUserDataSource
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.datasource.FirebaseUserDataSource
 import javax.inject.Inject
 import kotlin.Result.Companion.failure
 
