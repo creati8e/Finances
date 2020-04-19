@@ -1,484 +1,484 @@
 [
   {
-    "title": "Аренда",
+    "name": "Аренда",
     "id": "A744AFB0-399E-11E4-916C-0800200C9A66",
     "parent_category_id": "DFE233FD-3F24-41D2-8687-6D4ADFB66AA2",
     "is_income": false
   },
   {
-    "title": "Бытовые услуги",
+    "name": "Бытовые услуги",
     "id": "A744AFB1-399E-11E4-916C-0800200C9A66",
     "parent_category_id": "DFE233FD-3F24-41D2-8687-6D4ADFB66AA2",
     "is_income": false
   },
   {
-    "title": "Автомобиль",
+    "name": "Автомобиль",
     "id": "501FBDA7-D6B6-4EBC-AE3B-C452DA5BDDEC",
     "is_income": false
   },
   {
-    "title": "Банк",
+    "name": "Банк",
     "id": "23F2ED31-6327-4B9E-8A7D-70BB307B263C",
     "is_income": false
   },
   {
-    "title": "Красота",
+    "name": "Красота",
     "id": "A5B5DAA8-7166-4A38-8A11-6C2553BD7BF7",
     "is_income": false
   },
   {
-    "title": "Здоровье",
+    "name": "Здоровье",
     "id": "4B10CE2D-128F-454E-AD6B-ECFC1E2AE151",
     "is_income": false
   },
   {
-    "title": "Одежда и обувь",
+    "name": "Одежда и обувь",
     "id": "4F718BB7-969A-4BD7-9AC9-7CE1D8EA56BF",
     "is_income": false
   },
   {
-    "title": "Еда вне дома",
+    "name": "Еда вне дома",
     "id": "C2E79877-705B-4355-B2A5-C978AA07D9F2",
     "is_income": false
   },
   {
-    "title": "Подарки",
+    "name": "Подарки",
     "id": "2103129B-7826-4FCD-868C-841998E488B3",
     "is_income": false
   },
   {
-    "title": "Продукты питания",
+    "name": "Продукты питания",
     "id": "92807D19-6328-4192-8A9D-A863A9FFBC0B",
     "is_income": false
   },
   {
-    "title": "Дом",
+    "name": "Дом",
     "id": "DFE233FD-3F24-41D2-8687-6D4ADFB66AA2",
     "is_income": false
   },
   {
-    "title": "Развлечения",
+    "name": "Развлечения",
     "id": "3E8DD3D5-D809-4FA0-89A1-B37A90A5B301",
     "is_income": false
   },
   {
-    "title": "Техника",
+    "name": "Техника",
     "id": "E8603904-2575-41BE-8A1B-3875AB7938E0",
     "is_income": false
   },
   {
-    "title": "Путешествия",
+    "name": "Путешествия",
     "id": "5BF32446-4138-4CBD-A9DC-73CB38C9E309",
     "is_income": false
   },
   {
-    "title": "Образование",
+    "name": "Образование",
     "id": "2A72135A-21B3-4906-AB5A-192DCA2F481E",
     "is_income": false
   },
   {
-    "title": "Благотворительность",
+    "name": "Благотворительность",
     "id": "571E9DF8-63B5-4670-842F-0A99AE69A319",
     "is_income": false
   },
   {
-    "title": "Государство",
+    "name": "Государство",
     "id": "21D7455E-9485-4979-8CAA-A5B98D9554B4",
     "is_income": false
   },
   {
-    "title": "Домашние животные",
+    "name": "Домашние животные",
     "id": "7EF72B41-9442-4445-8AED-06062A9C8751",
     "is_income": false
   },
   {
-    "title": "Бизнес-услуги",
+    "name": "Бизнес-услуги",
     "id": "E2810CB4-5C8F-4F85-BB7B-D23E3FE82487",
     "is_income": false
   },
   {
-    "title": "Сервис",
+    "name": "Сервис",
     "id": "AFC6FECA-A5CE-4377-B5C0-102DDEDF0817",
     "parent_category_id": "501FBDA7-D6B6-4EBC-AE3B-C452DA5BDDEC",
     "is_income": false
   },
   {
-    "title": "Топливо",
+    "name": "Топливо",
     "id": "609D00D3-3902-4C35-A021-390632845104",
     "parent_category_id": "501FBDA7-D6B6-4EBC-AE3B-C452DA5BDDEC",
     "is_income": false
   },
   {
-    "title": "Мойка",
+    "name": "Мойка",
     "id": "D095F698-77BB-44C6-BA49-FAF1CDD3E344",
     "parent_category_id": "501FBDA7-D6B6-4EBC-AE3B-C452DA5BDDEC",
     "is_income": false
   },
   {
-    "title": "Платные дороги",
+    "name": "Платные дороги",
     "id": "4ACF5C1F-62DD-4DA7-83CD-D4C4C82F261C",
     "parent_category_id": "501FBDA7-D6B6-4EBC-AE3B-C452DA5BDDEC",
     "is_income": false
   },
   {
-    "title": "Страховка",
+    "name": "Страховка",
     "id": "5FA7696A-1D3B-4561-91CC-79FC9FC6B270",
     "parent_category_id": "501FBDA7-D6B6-4EBC-AE3B-C452DA5BDDEC",
     "is_income": false
   },
   {
-    "title": "Автохимия",
+    "name": "Автохимия",
     "id": "74B99FB6-E6F5-45B6-BBBC-F9209D5492BE",
     "parent_category_id": "501FBDA7-D6B6-4EBC-AE3B-C452DA5BDDEC",
     "is_income": false
   },
   {
-    "title": "Парковка",
+    "name": "Парковка",
     "id": "39281479-255D-4F3A-AB19-E4AD2C96AF7F",
     "parent_category_id": "501FBDA7-D6B6-4EBC-AE3B-C452DA5BDDEC",
     "is_income": false
   },
   {
-    "title": "Салон красоты ",
+    "name": "Салон красоты ",
     "id": "6F70F336-5D1E-4412-AC8A-ECCC9BBD868B",
     "parent_category_id": "A5B5DAA8-7166-4A38-8A11-6C2553BD7BF7",
     "is_income": false
   },
   {
-    "title": "Косметика",
+    "name": "Косметика",
     "id": "9553FE71-0E95-4C5E-8F48-240ED551184E",
     "parent_category_id": "A5B5DAA8-7166-4A38-8A11-6C2553BD7BF7",
     "is_income": false
   },
   {
-    "title": "Мед. услуги",
+    "name": "Мед. услуги",
     "id": "3D27BF3A-C93A-4C02-9AAC-BECD12511212",
     "parent_category_id": "4B10CE2D-128F-454E-AD6B-ECFC1E2AE151",
     "is_income": false
   },
   {
-    "title": "Аптека",
+    "name": "Аптека",
     "id": "80D5903A-6130-4905-A447-FA3FD5C9BE68",
     "parent_category_id": "4B10CE2D-128F-454E-AD6B-ECFC1E2AE151",
     "is_income": false
   },
   {
-    "title": "Страхование",
+    "name": "Страхование",
     "id": "476D2464-7D90-4536-B3BA-E18B6E18FAB6",
     "parent_category_id": "4B10CE2D-128F-454E-AD6B-ECFC1E2AE151",
     "is_income": false
   },
   {
-    "title": "Спорт",
+    "name": "Спорт",
     "id": "BF0B4A3A-6867-4DAD-AAE5-DBBA3DDB9B8A",
     "parent_category_id": "4B10CE2D-128F-454E-AD6B-ECFC1E2AE151",
     "is_income": false
   },
   {
-    "title": "Инвентарь",
+    "name": "Инвентарь",
     "id": "DE220220-A6A1-4612-A11C-8FB3B11051C9",
     "parent_category_id": "4B10CE2D-128F-454E-AD6B-ECFC1E2AE151",
     "is_income": false
   },
   {
-    "title": "Взрослая",
+    "name": "Взрослая",
     "id": "06D51D71-3DFC-4429-8F67-E57EB0A5AAF3",
     "parent_category_id": "4F718BB7-969A-4BD7-9AC9-7CE1D8EA56BF",
     "is_income": false
   },
   {
-    "title": "Детская",
+    "name": "Детская",
     "id": "EED01482-9C02-43CE-970A-FCA3D4D1F8B3",
     "parent_category_id": "4F718BB7-969A-4BD7-9AC9-7CE1D8EA56BF",
     "is_income": false
   },
   {
-    "title": "Аксессуары",
+    "name": "Аксессуары",
     "id": "BD2DF0B2-0030-4C1B-917B-AB74EEB02F00",
     "parent_category_id": "4F718BB7-969A-4BD7-9AC9-7CE1D8EA56BF",
     "is_income": false
   },
   {
-    "title": "Ресторан",
+    "name": "Ресторан",
     "id": "72091FA5-4458-428A-ADC6-B7C6B290246C",
     "parent_category_id": "C2E79877-705B-4355-B2A5-C978AA07D9F2",
     "is_income": false
   },
   {
-    "title": "Фастфуд",
+    "name": "Фастфуд",
     "id": "FD313525-A3F5-4521-8E7A-D428D3ACE066",
     "parent_category_id": "C2E79877-705B-4355-B2A5-C978AA07D9F2",
     "is_income": false
   },
   {
-    "title": "Кофейня",
+    "name": "Кофейня",
     "id": "0908103C-6AC5-4D7B-B7F1-74D696D4E587",
     "parent_category_id": "C2E79877-705B-4355-B2A5-C978AA07D9F2",
     "is_income": false
   },
   {
-    "title": "Ланч",
+    "name": "Ланч",
     "id": "CDE7A147-78C6-42F1-8F2F-D7A712B13F3C",
     "parent_category_id": "C2E79877-705B-4355-B2A5-C978AA07D9F2",
     "is_income": false
   },
   {
-    "title": "Квартплата",
+    "name": "Квартплата",
     "id": "8B934E9A-7D32-4B0D-B789-BB9429B2733E",
     "parent_category_id": "DFE233FD-3F24-41D2-8687-6D4ADFB66AA2",
     "is_income": false
   },
   {
-    "title": "Электричество",
+    "name": "Электричество",
     "id": "7DBF4863-3275-4B78-AACB-4595CD8DE0B8",
     "parent_category_id": "DFE233FD-3F24-41D2-8687-6D4ADFB66AA2",
     "is_income": false
   },
   {
-    "title": "Газ",
+    "name": "Газ",
     "id": "4954CA79-9F7B-453B-A7F6-63D81A0EA0DD",
     "parent_category_id": "DFE233FD-3F24-41D2-8687-6D4ADFB66AA2",
     "is_income": false
   },
   {
-    "title": "Ремонт",
+    "name": "Ремонт",
     "id": "C0EDBBCE-E323-4DD8-A92A-231C1B1D63E5",
     "parent_category_id": "DFE233FD-3F24-41D2-8687-6D4ADFB66AA2",
     "is_income": false
   },
   {
-    "title": "Страхование",
+    "name": "Страхование",
     "id": "A3E5BC18-779F-48BB-AA51-B5A6A1A8E380",
     "parent_category_id": "DFE233FD-3F24-41D2-8687-6D4ADFB66AA2",
     "is_income": false
   },
   {
-    "title": "Бытовая химия",
+    "name": "Бытовая химия",
     "id": "CBEA799E-85EB-4909-8F2D-1563AAA4876F",
     "parent_category_id": "DFE233FD-3F24-41D2-8687-6D4ADFB66AA2",
     "is_income": false
   },
   {
-    "title": "Мебель",
+    "name": "Мебель",
     "id": "6697DB7D-50AE-4702-B941-727F2B5E701A",
     "parent_category_id": "DFE233FD-3F24-41D2-8687-6D4ADFB66AA2",
     "is_income": false
   },
   {
-    "title": "Посуда",
+    "name": "Посуда",
     "id": "D2171233-1A38-4BF9-AC94-E90D33D3057C",
     "parent_category_id": "DFE233FD-3F24-41D2-8687-6D4ADFB66AA2",
     "is_income": false
   },
   {
-    "title": "Бар, клуб",
+    "name": "Бар, клуб",
     "id": "FD456451-75F3-4345-B85B-CB765976B6F1",
     "parent_category_id": "3E8DD3D5-D809-4FA0-89A1-B37A90A5B301",
     "is_income": false
   },
   {
-    "title": "Игры, софт",
+    "name": "Игры, софт",
     "id": "E8F11E2C-F648-4A9D-9974-D3713D37F745",
     "parent_category_id": "3E8DD3D5-D809-4FA0-89A1-B37A90A5B301",
     "is_income": false
   },
   {
-    "title": "Кино, театр, концерты",
+    "name": "Кино, театр, концерты",
     "id": "2A889D47-3765-4B66-ACC4-2F9E7DF7CFC8",
     "parent_category_id": "3E8DD3D5-D809-4FA0-89A1-B37A90A5B301",
     "is_income": false
   },
   {
-    "title": "Музеи",
+    "name": "Музеи",
     "id": "E103A430-2D62-4D14-B43A-D051AC10368D",
     "parent_category_id": "3E8DD3D5-D809-4FA0-89A1-B37A90A5B301",
     "is_income": false
   },
   {
-    "title": "Активный отдых",
+    "name": "Активный отдых",
     "id": "5EA854A9-11D1-4DA6-9FF0-E7CD1B22251A",
     "parent_category_id": "3E8DD3D5-D809-4FA0-89A1-B37A90A5B301",
     "is_income": false
   },
   {
-    "title": "Книги",
+    "name": "Книги",
     "id": "19D02036-D813-4D06-A149-C90AE9471C91",
     "parent_category_id": "3E8DD3D5-D809-4FA0-89A1-B37A90A5B301",
     "is_income": false
   },
   {
-    "title": "Пресса",
+    "name": "Пресса",
     "id": "BADE4BC6-792C-43A3-A07B-D6F3979BB131",
     "parent_category_id": "3E8DD3D5-D809-4FA0-89A1-B37A90A5B301",
     "is_income": false
   },
   {
-    "title": "Хобби",
+    "name": "Хобби",
     "id": "CF8A4C94-D7CE-4F31-A5BE-A85EE2092534",
     "parent_category_id": "3E8DD3D5-D809-4FA0-89A1-B37A90A5B301",
     "is_income": false
   },
   {
-    "title": "Электроника",
+    "name": "Электроника",
     "id": "244606A4-D6D8-4EE6-92B1-7E03E7592A67",
     "parent_category_id": "E8603904-2575-41BE-8A1B-3875AB7938E0",
     "is_income": false
   },
   {
-    "title": "Бытовая техника",
+    "name": "Бытовая техника",
     "id": "91026564-A83D-4FEA-A9DF-87C28EDF8CB7",
     "parent_category_id": "E8603904-2575-41BE-8A1B-3875AB7938E0",
     "is_income": false
   },
   {
-    "title": "Сувениры",
+    "name": "Сувениры",
     "id": "D4EE05C0-E299-11E4-B571-0800200C9A66",
     "parent_category_id": "5BF32446-4138-4CBD-A9DC-73CB38C9E309",
     "is_income": false
   },
   {
-    "title": "Билеты",
+    "name": "Билеты",
     "id": "6709B67C-F34C-41E5-84B6-45B3BB5AC1B0",
     "parent_category_id": "5BF32446-4138-4CBD-A9DC-73CB38C9E309",
     "is_income": false
   },
   {
-    "title": "Визы",
+    "name": "Визы",
     "id": "C024DB85-F463-4BF9-BBB3-D2E2F126CABF",
     "parent_category_id": "5BF32446-4138-4CBD-A9DC-73CB38C9E309",
     "is_income": false
   },
   {
-    "title": "Аренда авто",
+    "name": "Аренда авто",
     "id": "2ACCCB7D-E40C-4D63-818F-C70390C66E48",
     "parent_category_id": "5BF32446-4138-4CBD-A9DC-73CB38C9E309",
     "is_income": false
   },
   {
-    "title": "Отель",
+    "name": "Отель",
     "id": "A6C72377-3370-476A-ACD1-7CA73C7C4B94",
     "parent_category_id": "5BF32446-4138-4CBD-A9DC-73CB38C9E309",
     "is_income": false
   },
   {
-    "title": "Услуги",
+    "name": "Услуги",
     "id": "B9E09F79-A6D8-420E-A1FB-F9DDA1CE5267",
     "parent_category_id": "5BF32446-4138-4CBD-A9DC-73CB38C9E309",
     "is_income": false
   },
   {
-    "title": "Страховка",
+    "name": "Страховка",
     "id": "8495E8BF-E103-4B29-ACA7-C0A640EE6D0E",
     "parent_category_id": "5BF32446-4138-4CBD-A9DC-73CB38C9E309",
     "is_income": false
   },
   {
-    "title": "Услуги",
+    "name": "Услуги",
     "id": "FBBA0F5A-402A-44D9-BDDE-AA622FD121AC",
     "parent_category_id": "2A72135A-21B3-4906-AB5A-192DCA2F481E",
     "is_income": false
   },
   {
-    "title": "Книги",
+    "name": "Книги",
     "id": "3B88CFC7-13DC-4F64-9773-BB25380834B9",
     "parent_category_id": "2A72135A-21B3-4906-AB5A-192DCA2F481E",
     "is_income": false
   },
   {
-    "title": "Налоги",
+    "name": "Налоги",
     "id": "FBF36D91-E6B9-44FB-B6ED-D0DC4C64030B",
     "parent_category_id": "21D7455E-9485-4979-8CAA-A5B98D9554B4",
     "is_income": false
   },
   {
-    "title": "Штрафы",
+    "name": "Штрафы",
     "id": "577D28E0-1547-4136-8839-80A00D016207",
     "parent_category_id": "21D7455E-9485-4979-8CAA-A5B98D9554B4",
     "is_income": false
   },
   {
-    "title": "Пошлины",
+    "name": "Пошлины",
     "id": "4F224590-C355-473F-BC7E-088EE0CE7BEF",
     "parent_category_id": "21D7455E-9485-4979-8CAA-A5B98D9554B4",
     "is_income": false
   },
   {
-    "title": "Вет. услуги",
+    "name": "Вет. услуги",
     "id": "8C52A731-3BFF-4CAD-9C4A-163EF88FBADA",
     "parent_category_id": "7EF72B41-9442-4445-8AED-06062A9C8751",
     "is_income": false
   },
   {
-    "title": "Медикаменты",
+    "name": "Медикаменты",
     "id": "54B4E3F6-001E-4F38-9F41-36EA1C06263C",
     "parent_category_id": "7EF72B41-9442-4445-8AED-06062A9C8751",
     "is_income": false
   },
   {
-    "title": "Корм",
+    "name": "Корм",
     "id": "008D1A86-5F8B-4077-8ACD-BCE8D7B5A113",
     "parent_category_id": "7EF72B41-9442-4445-8AED-06062A9C8751",
     "is_income": false
   },
   {
-    "title": "Аксессуары, игрушки",
+    "name": "Аксессуары, игрушки",
     "id": "12D7E580-0639-4DEE-B5D5-B7026BCFCE48",
     "parent_category_id": "7EF72B41-9442-4445-8AED-06062A9C8751",
     "is_income": false
   },
   {
-    "title": "Запчасти",
+    "name": "Запчасти",
     "id": "E9FEB322-1DE2-4E30-868C-138440148FDA",
     "parent_category_id": "501FBDA7-D6B6-4EBC-AE3B-C452DA5BDDEC",
     "is_income": false
   },
   {
-    "title": "Аксессуары",
+    "name": "Аксессуары",
     "id": "A2ED9867-308C-402A-8587-27517FE88DF2",
     "parent_category_id": "501FBDA7-D6B6-4EBC-AE3B-C452DA5BDDEC",
     "is_income": false
   },
   {
-    "title": "Прочее",
+    "name": "Прочее",
     "id": "3BC1B74C-EA29-4C35-AE9E-60CAEDCE2D72",
     "is_income": false
   },
   {
-    "title": "Интернет",
+    "name": "Интернет",
     "id": "935403AC-AC06-48B1-AF26-B9CDD03A979E",
     "parent_category_id": "DFE233FD-3F24-41D2-8687-6D4ADFB66AA2",
     "is_income": false
   },
   {
-    "title": "Телефон",
+    "name": "Телефон",
     "id": "E8422E2A-A21A-414A-8D31-9B46999384A2",
     "parent_category_id": "DFE233FD-3F24-41D2-8687-6D4ADFB66AA2",
     "is_income": false
   },
   {
-    "title": "Мобильная связь",
+    "name": "Мобильная связь",
     "id": "D244D7A9-6A8D-44ED-9B44-EF370D749C0C",
     "is_income": false
   },
   {
-    "title": "Музыка, видео",
+    "name": "Музыка, видео",
     "id": "C0FECFA4-3010-4B34-9B00-D7BC42C51DB3",
     "parent_category_id": "3E8DD3D5-D809-4FA0-89A1-B37A90A5B301",
     "is_income": false
   },
   {
-    "title": "Транспорт",
+    "name": "Транспорт",
     "id": "D0D0010C-3BE8-481C-8888-BE1AB2CA27F4",
     "is_income": false
   },
   {
-    "title": "Общ. транспорт",
+    "name": "Общ. транспорт",
     "id": "C8A5182C-AEEE-4FEC-8538-D4E7C44EB0E8",
     "parent_category_id": "D0D0010C-3BE8-481C-8888-BE1AB2CA27F4",
     "is_income": false
   },
   {
-    "title": "Такси",
+    "name": "Такси",
     "id": "6A0357F9-5DBC-420A-8EF1-5FE75C72C2BD",
     "parent_category_id": "D0D0010C-3BE8-481C-8888-BE1AB2CA27F4",
     "is_income": false

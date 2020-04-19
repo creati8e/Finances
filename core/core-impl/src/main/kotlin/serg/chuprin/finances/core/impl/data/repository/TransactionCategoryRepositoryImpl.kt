@@ -1,8 +1,6 @@
 package serg.chuprin.finances.core.impl.data.repository
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.coroutineScope
 import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepository
 import serg.chuprin.finances.core.impl.data.datasource.assets.PredefinedTransactionCategoriesDataSource
 import serg.chuprin.finances.core.impl.data.datasource.database.firebase.FirebaseTransactionCategoryDataSource
@@ -19,19 +17,11 @@ class TransactionCategoryRepositoryImpl @Inject constructor(
 ) : TransactionCategoryRepository {
 
     override suspend fun createPredefinedCategories() {
-        withContext(Dispatchers.IO) {
-            val incomeCategories = async {
-                predefinedCategoriesDataSource
-                    .getIncomeCategories()
-                    .mapNotNull(predefinedCategoryMapper)
+        coroutineScope {
+            val allCategories = predefinedCategoriesDataSource.getCategories().run {
+                (expenseCategories + incomeCategories).mapNotNull(predefinedCategoryMapper)
             }
-            val expenseCategories = async {
-                predefinedCategoriesDataSource
-                    .getExpenseCategories()
-                    .mapNotNull(predefinedCategoryMapper)
-            }
-            val transactionCategories = incomeCategories.await() + expenseCategories.await()
-            firebaseDataSource.createTransactions(transactionCategories)
+            firebaseDataSource.createTransactions(allCategories)
         }
     }
 

@@ -22,7 +22,6 @@ class FirebaseTransactionCategoryDataSource @Inject constructor(
                     collection.document(transactionCategory.id.value),
                     transactionCategory.toMap()
                 )
-                writeBatch.commit()
             }
         }
     }
@@ -31,7 +30,7 @@ class FirebaseTransactionCategoryDataSource @Inject constructor(
         return mapOf(
             FIELD_NAME to name,
             FIELD_PARENT_ID to parentCategoryId?.value
-        )
+        ).filterValues { it != null }
     }
 
 }

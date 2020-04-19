@@ -45,9 +45,9 @@ internal class FirebaseTransactionDataSource @Inject constructor(
     private fun Transaction.toMap(): Map<String, Any> {
         return mapOf(
             FIELD_TYPE to type,
-            FIELD_AMOUNT to amount,
             FIELD_OWNER_ID to ownerId.value,
             FIELD_DATE to dateTime.toDateUTC(),
+            FIELD_AMOUNT to amount.toPlainString(),
             FIELD_MONEY_ACCOUNT_ID to moneyAccountId.value
         )
     }

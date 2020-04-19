@@ -1,13 +1,17 @@
 package serg.chuprin.finances.core.impl.data.datasource.assets
 
 import android.content.Context
+import android.content.res.AssetManager
+import com.github.ajalt.timberkt.Timber
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import serg.chuprin.finances.core.api.domain.model.Id
+import serg.chuprin.finances.core.impl.data.model.PredefinedTransactionCategories
+import java.io.BufferedReader
 import javax.inject.Inject
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 /**
  * Created by Sergey Chuprin on 19.04.2020.
@@ -22,27 +26,29 @@ class PredefinedTransactionCategoriesDataSource @Inject constructor(
         private const val FILE_EXPENSE_CATEGORIES = "expense_transaction_categories.json"
     }
 
-    suspend fun getIncomeCategories(): List<TransactionCategoryAssetDto> {
-        return getCategories(FILE_INCOME_CATEGORIES)
-    }
-
-    suspend fun getExpenseCategories(): List<TransactionCategoryAssetDto> {
-        return getCategories(FILE_EXPENSE_CATEGORIES)
-    }
-
-    private suspend fun getCategories(filename: String): List<TransactionCategoryAssetDto> {
-        return suspendCoroutine { continuation ->
+    suspend fun getCategories(): PredefinedTransactionCategories {
+        return withContext(Dispatchers.IO) {
             try {
-                val json = context.assets.use { assetManager ->
-                    val open = assetManager.open(filename)
-                    String(ByteArray(open.available()).also { bytes -> open.read(bytes) })
+                // Retrieve all categories without reopening AssetManager.
+                // It crashes for unknown reason otherwise.
+                context.assets.use { assetManager ->
+                    val predefinedTransactionCategories = PredefinedTransactionCategories(
+                        incomeCategories = assetManager.getCategories(FILE_INCOME_CATEGORIES),
+                        expenseCategories = assetManager.getCategories(FILE_EXPENSE_CATEGORIES)
+                    )
+                    predefinedTransactionCategories
                 }
-                val deserializer = ListSerializer(TransactionCategoryAssetDto.serializer())
-                continuation.resume(Json.parse(deserializer, json).generateIds())
             } catch (throwable: Throwable) {
-                continuation.resume(emptyList())
+                Timber.d(throwable) { "An error occurred when getting predefined categories" }
+                PredefinedTransactionCategories(emptyList(), emptyList())
             }
         }
+    }
+
+    private fun AssetManager.getCategories(filename: String): List<TransactionCategoryAssetDto> {
+        val json = open(filename).bufferedReader().use(BufferedReader::readText)
+        val deserializer = ListSerializer(TransactionCategoryAssetDto.serializer())
+        return Json.parse(deserializer, json).generateIds()
     }
 
     /**
