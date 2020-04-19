@@ -9,7 +9,7 @@ object BuildScript {
 
     object Versions {
         const val KOTLIN_VER = "1.3.72"
-        const val NAVIGATION_VER = "2.3.0-alpha04"
+        const val NAVIGATION_VER = "2.3.0-alpha05"
     }
 
     object Plugins {
@@ -49,7 +49,7 @@ object Libraries {
             )
         }
 
-        const val CORE = "androidx.core:core-ktx:1.3.0-beta01"
+        const val CORE = "androidx.core:core-ktx:1.3.0-rc01"
 
         const val APPCOMPAT = "androidx.appcompat:appcompat:1.2.0-beta01"
         const val FRAGMENT = "androidx.fragment:fragment-ktx:1.3.0-alpha03"
