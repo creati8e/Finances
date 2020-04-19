@@ -5,6 +5,7 @@ import serg.chuprin.finances.core.api.domain.model.TransactionCategory
 import serg.chuprin.finances.core.api.domain.model.TransactionCategory.Companion.create
 import serg.chuprin.finances.core.api.domain.model.TransactionCategoryType
 import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseTransactionCategoryFieldsContract.FIELD_NAME
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseTransactionCategoryFieldsContract.FIELD_OWNER_ID
 import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseTransactionCategoryFieldsContract.FIELD_PARENT_ID
 import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseTransactionCategoryFieldsContract.FIELD_TYPE
 import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseTransactionCategoryFieldsContract.TYPE_EXPENSE
@@ -26,6 +27,7 @@ class TransactionCategoryMapper : ModelMapper<DocumentSnapshot, TransactionCateg
             type = type,
             id = model.id,
             name = model.getString(FIELD_NAME),
+            ownerId = model.getString(FIELD_OWNER_ID),
             parentCategoryId = model.getString(FIELD_PARENT_ID)
         )
     }

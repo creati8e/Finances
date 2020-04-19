@@ -10,6 +10,8 @@ import serg.chuprin.finances.core.api.domain.model.Transaction
 import serg.chuprin.finances.core.api.extensions.toDateUTC
 import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseTransactionFieldsContract.COLLECTION_NAME
 import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_AMOUNT
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_CATEGORY_ID
+import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_CURRENCY_CODE
 import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_DATE
 import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_MONEY_ACCOUNT_ID
 import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_OWNER_ID
@@ -42,14 +44,16 @@ internal class FirebaseTransactionDataSource @Inject constructor(
             .set(transaction.toMap())
     }
 
-    private fun Transaction.toMap(): Map<String, Any> {
+    private fun Transaction.toMap(): Map<String, Any?> {
         return mapOf(
             FIELD_TYPE to type,
             FIELD_OWNER_ID to ownerId.value,
             FIELD_DATE to dateTime.toDateUTC(),
+            FIELD_CURRENCY_CODE to currencyCode,
             FIELD_AMOUNT to amount.toPlainString(),
+            FIELD_CATEGORY_ID to categoryId?.value,
             FIELD_MONEY_ACCOUNT_ID to moneyAccountId.value
-        )
+        ).filterValues { it != null }
     }
 
 }

@@ -20,19 +20,23 @@ class CompleteAccountsSetupOnboardingUseCase @Inject constructor(
         cashAccountParams: OnboardingMoneyAccountCreationParams?,
         bankAccountCardParams: OnboardingMoneyAccountCreationParams?
     ) {
+        val currentUser = userRepository.getCurrentUser()
+
         if (cashAccountParams != null) {
-            createMoneyAccount(cashAccountParams)
+            createMoneyAccount(cashAccountParams, currentUser)
         }
         if (bankAccountCardParams != null) {
-            createMoneyAccount(bankAccountCardParams)
+            createMoneyAccount(bankAccountCardParams, currentUser)
         }
-        transactionCategoryRepository.createPredefinedCategories()
+        transactionCategoryRepository.createPredefinedCategories(currentUser.id)
         onboardingRepository.onboardingStep = OnboardingStep.COMPLETED
     }
 
     // TODO: Add some kind of transactions.
-    private suspend fun createMoneyAccount(accountParams: OnboardingMoneyAccountCreationParams) {
-        val currentUser = userRepository.getCurrentUser()
+    private fun createMoneyAccount(
+        accountParams: OnboardingMoneyAccountCreationParams,
+        currentUser: User
+    ) {
         val moneyAccount = MoneyAccount(
             id = Id.createNew(),
             ownerId = currentUser.id,
