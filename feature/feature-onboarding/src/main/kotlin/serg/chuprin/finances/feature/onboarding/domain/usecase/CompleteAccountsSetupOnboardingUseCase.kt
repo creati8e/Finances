@@ -6,7 +6,6 @@ import serg.chuprin.finances.core.api.domain.repository.OnboardingRepository
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.feature.onboarding.domain.OnboardingMoneyAccountCreationParams
-import java.util.*
 import javax.inject.Inject
 
 /**
@@ -49,13 +48,12 @@ class CompleteAccountsSetupOnboardingUseCase @Inject constructor(
         )
     }
 
-    private suspend fun setInitialAccountBalance(
+    private fun setInitialAccountBalance(
         user: User,
         account: MoneyAccount,
         balance: MoneyAccountBalance
     ) {
         val balanceTransaction = Transaction(
-            _date = Date(),
             ownerId = user.id,
             id = Id.createNew(),
             moneyAccountId = account.id,

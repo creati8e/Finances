@@ -15,7 +15,8 @@ data class Transaction(
     val moneyAccountId: Id,
     val type: TransactionType,
     val currencyCode: String,
-    private val _date: Date,
+    val categoryId: Id? = null,
+    private val _date: Date = Date(),
     /**
      * String representation of [BigDecimal]; May start with "-" symbol.
      */
@@ -29,6 +30,7 @@ data class Transaction(
             date: Date?,
             ownerId: String?,
             amount: String?,
+            categoryId: String?,
             currencyCode: String?,
             type: TransactionType?,
             moneyAccountId: String?
@@ -47,6 +49,7 @@ data class Transaction(
                 id = Id.existing(id),
                 currencyCode = currencyCode,
                 ownerId = Id.existing(ownerId),
+                categoryId = categoryId?.let(::Id),
                 moneyAccountId = Id.existing(moneyAccountId)
             )
         }

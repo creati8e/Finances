@@ -7,6 +7,7 @@ import serg.chuprin.finances.core.api.domain.model.Transaction
 import serg.chuprin.finances.core.api.domain.model.TransactionType
 import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseTransactionFieldsContract
 import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_AMOUNT
+import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_CATEGORY_ID
 import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_CURRENCY_CODE
 import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_DATE
 import serg.chuprin.finances.core.impl.data.database.firebase.contract.FirebaseTransactionFieldsContract.FIELD_MONEY_ACCOUNT_ID
@@ -36,6 +37,7 @@ internal class TransactionMapper @Inject constructor() :
                 date = snapshot.getDate(FIELD_DATE),
                 amount = snapshot.getString(FIELD_AMOUNT),
                 ownerId = snapshot.getString(FIELD_OWNER_ID),
+                categoryId = snapshot.getString(FIELD_CATEGORY_ID),
                 currencyCode = snapshot.getString(FIELD_CURRENCY_CODE),
                 moneyAccountId = snapshot.getString(FIELD_MONEY_ACCOUNT_ID)
             )

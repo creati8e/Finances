@@ -17,4 +17,6 @@ interface CoreRepositoriesProvider {
 
     val moneyAccountRepository: MoneyAccountRepository
 
+    val transactionCategoryRepository: TransactionCategoryRepository
+
 }

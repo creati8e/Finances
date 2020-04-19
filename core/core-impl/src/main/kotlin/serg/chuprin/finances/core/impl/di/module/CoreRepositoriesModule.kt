@@ -27,4 +27,9 @@ internal abstract class CoreRepositoriesModule {
     @[Binds AppScope]
     abstract fun bindMoneyAccountRepository(impl: MoneyAccountRepositoryImpl): MoneyAccountRepository
 
+    @[Binds AppScope]
+    abstract fun bindTransactionCategoryRepository(
+        impl: TransactionCategoryRepositoryImpl
+    ): TransactionCategoryRepository
+
 }
