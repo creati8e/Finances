@@ -39,8 +39,7 @@ class DashboardActionExecutor @Inject constructor(
         return flow {
             val widgetCells = widgetCellsBuilder.build(
                 existingCells = state.cells,
-                dashboard = action.dashboard,
-                existingDashboard = state.dashboard
+                widgets = action.dashboard.widgets
             )
             emit(DashboardEffect.DashboardUpdated(action.dashboard, widgetCells))
         }

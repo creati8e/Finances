@@ -1,8 +1,8 @@
 package serg.chuprin.finances.feature.dashboard.presentation.model.builder
 
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
-import serg.chuprin.finances.feature.dashboard.domain.model.Dashboard
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
+import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidgets
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
 import javax.inject.Inject
 
@@ -17,29 +17,28 @@ class DashboardWidgetCellsBuilder @Inject constructor(
 ) {
 
     fun build(
-        dashboard: Dashboard,
-        existingDashboard: Dashboard,
+        widgets: DashboardWidgets,
         existingCells: List<BaseCell>
     ): List<DashboardWidgetCell> {
-        return dashboard.widgetsMap.mapNotNull { (_, widget) ->
+        return widgets.mapNotNull { (_, widget) ->
             // Do not rebuild cell if widget not changed.
-            findExistingWidgetCell(widget, existingDashboard, existingCells)
+            findExistingWidgetCell(widget, existingCells)
                 ?: buildWidgetCell(widget)
         }
     }
 
     private fun findExistingWidgetCell(
         widget: DashboardWidget,
-        previousDashboard: Dashboard,
-        previousCells: List<BaseCell>
+        existingCells: List<BaseCell>
     ): DashboardWidgetCell? {
-        val existingWidget = previousDashboard.widgetsMap[widget.type]
-        if (existingWidget == null || existingWidget != widget) {
+        val existingWidgetCell = existingCells.find { cell ->
+            cell is DashboardWidgetCell && cell.widget.type == widget.type
+        } as? DashboardWidgetCell
+
+        if (existingWidgetCell == null || existingWidgetCell.widget != widget) {
             return null
         }
-        return previousCells.find { cell ->
-            cell is DashboardWidgetCell && cell.widgetType == widget.type
-        } as? DashboardWidgetCell
+        return existingWidgetCell
     }
 
     private fun buildWidgetCell(widget: DashboardWidget): DashboardWidgetCell? {

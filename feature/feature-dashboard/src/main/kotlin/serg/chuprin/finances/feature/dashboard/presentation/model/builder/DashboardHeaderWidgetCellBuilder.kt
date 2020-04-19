@@ -23,6 +23,7 @@ class DashboardHeaderWidgetCellBuilder @Inject constructor(
             return null
         }
         return DashboardWidgetCell.DashboardHeaderCell(
+            widget = widget,
             balance = formatAmount(widget.balance, widget.currency),
             incomesAmount = formatAmount(widget.currentPeriodIncomes, widget.currency),
             expensesAmount = formatAmount(widget.currentPeriodExpenses, widget.currency),

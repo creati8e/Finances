@@ -7,5 +7,5 @@ import serg.chuprin.finances.core.api.domain.model.User
  */
 data class Dashboard(
     val user: User = User.EMPTY,
-    val widgetsMap: Map<DashboardWidget.Type, DashboardWidget> = emptyMap()
+    val widgets: DashboardWidgets = DashboardWidgets()
 )
