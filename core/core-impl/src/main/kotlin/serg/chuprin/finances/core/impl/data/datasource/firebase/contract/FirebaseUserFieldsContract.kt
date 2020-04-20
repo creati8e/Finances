@@ -1,4 +1,4 @@
-package serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract
+package serg.chuprin.finances.core.impl.data.datasource.firebase.contract
 
 /**
  * Created by Sergey Chuprin on 04.04.2020.
@@ -12,8 +12,5 @@ internal object FirebaseUserFieldsContract {
     const val FIELD_DISPLAY_NAME = "display_name"
     const val FIELD_DATA_PERIOD_TYPE = "data_period_type"
     const val FIELD_DEFAULT_CURRENCY_CODE = "default_currency_code"
-
-    // TODO: Add more period types.
-    const val DATA_PERIOD_TYPE_MONTH = "month"
 
 }

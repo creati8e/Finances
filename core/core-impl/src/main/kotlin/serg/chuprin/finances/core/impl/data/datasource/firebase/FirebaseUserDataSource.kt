@@ -1,4 +1,4 @@
-package serg.chuprin.finances.core.impl.data.datasource.database.firebase
+package serg.chuprin.finances.core.impl.data.datasource.firebase
 
 import com.github.ajalt.timberkt.Timber
 import com.google.firebase.auth.FirebaseAuth
@@ -12,12 +12,15 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import serg.chuprin.finances.core.api.domain.model.DataPeriodType
 import serg.chuprin.finances.core.api.domain.model.User
-import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseUserFieldsContract.COLLECTION_NAME
-import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseUserFieldsContract.FIELD_DATA_PERIOD_TYPE
-import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseUserFieldsContract.FIELD_DEFAULT_CURRENCY_CODE
-import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseUserFieldsContract.FIELD_DISPLAY_NAME
-import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseUserFieldsContract.FIELD_EMAIL
-import serg.chuprin.finances.core.impl.data.datasource.database.firebase.contract.FirebaseUserFieldsContract.FIELD_PHOTO_URL
+import serg.chuprin.finances.core.api.extensions.nonNullValuesMap
+import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseUserFieldsContract.COLLECTION_NAME
+import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseUserFieldsContract.FIELD_DATA_PERIOD_TYPE
+import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseUserFieldsContract.FIELD_DEFAULT_CURRENCY_CODE
+import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseUserFieldsContract.FIELD_DISPLAY_NAME
+import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseUserFieldsContract.FIELD_EMAIL
+import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseUserFieldsContract.FIELD_PHOTO_URL
+import serg.chuprin.finances.core.impl.data.mapper.FirebaseDataPeriodTypeMapper
+import serg.chuprin.finances.core.impl.data.mapper.user.FirebaseUserMapper
 import javax.inject.Inject
 import kotlin.Result.Companion.failure
 import kotlin.Result.Companion.success
@@ -26,8 +29,10 @@ import kotlin.Result.Companion.success
  * Created by Sergey Chuprin on 04.04.2020.
  */
 internal class FirebaseUserDataSource @Inject constructor(
+    private val userMapper: FirebaseUserMapper,
     private val firebaseAuth: FirebaseAuth,
-    private val firestore: FirebaseFirestore
+    private val firestore: FirebaseFirestore,
+    private val dataPeriodTypeMapper: FirebaseDataPeriodTypeMapper
 ) {
 
     private val currentFirebaseUser: FirebaseUser
@@ -66,7 +71,7 @@ internal class FirebaseUserDataSource @Inject constructor(
         firestore
             .collection(COLLECTION_NAME)
             .document(currentFirebaseUser.uid)
-            .set(user.toMap())
+            .set(userMapper.mapToFieldsMap(user))
     }
 
     suspend fun getCurrentUser(): DocumentSnapshot = internalGetCurrentUser()
@@ -92,32 +97,17 @@ internal class FirebaseUserDataSource @Inject constructor(
             }!!
     }
 
-    private fun User.toMap(): Map<String, Any> {
-        return mapOf(
-            FIELD_EMAIL to email,
-            FIELD_PHOTO_URL to photoUrl,
-            FIELD_DISPLAY_NAME to displayName,
-            FIELD_DATA_PERIOD_TYPE to dataPeriodType.toValue(),
-            FIELD_DEFAULT_CURRENCY_CODE to defaultCurrencyCode
-        )
-    }
-
     private fun FirebaseUser.toMap(): Map<String, Any>? {
         if (email.isNullOrEmpty()) {
             return null
         }
-        return mapOf(
+        return nonNullValuesMap(
             FIELD_EMAIL to email.orEmpty(),
             FIELD_DISPLAY_NAME to displayName.orEmpty(),
             FIELD_PHOTO_URL to photoUrl?.toString().orEmpty(),
-            FIELD_DATA_PERIOD_TYPE to DataPeriodType.DEFAULT.toValue()
+            FIELD_DATA_PERIOD_TYPE to dataPeriodTypeMapper.mapFrom(DataPeriodType.DEFAULT)
         )
     }
 
-    private fun DataPeriodType.toValue(): String {
-        return when (this) {
-            DataPeriodType.MONTH -> "month"
-        }
-    }
 
 }

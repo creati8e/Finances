@@ -8,15 +8,15 @@ import serg.chuprin.finances.core.api.domain.model.DataPeriod
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.Transaction
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
-import serg.chuprin.finances.core.impl.data.datasource.database.firebase.FirebaseTransactionDataSource
-import serg.chuprin.finances.core.impl.data.mapper.TransactionMapper
+import serg.chuprin.finances.core.impl.data.datasource.firebase.FirebaseTransactionDataSource
+import serg.chuprin.finances.core.impl.data.mapper.transaction.FirebaseTransactionMapper
 import javax.inject.Inject
 
 /**
  * Created by Sergey Chuprin on 04.04.2020.
  */
 internal class TransactionRepositoryImpl @Inject constructor(
-    private val mapper: TransactionMapper,
+    private val mapper: FirebaseTransactionMapper,
     private val firebaseDataSource: FirebaseTransactionDataSource
 ) : TransactionRepository {
 
@@ -29,7 +29,7 @@ internal class TransactionRepositoryImpl @Inject constructor(
             .userTransactionsFlow(userId)
             .map { transactions ->
                 transactions
-                    .mapNotNull(mapper)
+                    .mapNotNull(mapper::mapFromSnapshot)
                     .filter { transaction -> transaction.dateTime in dataPeriod }
             }
             .flowOn(Dispatchers.Default)
@@ -38,7 +38,7 @@ internal class TransactionRepositoryImpl @Inject constructor(
     override fun userTransactionsFlow(userId: Id): Flow<List<Transaction>> {
         return firebaseDataSource
             .userTransactionsFlow(userId)
-            .map { transactions -> transactions.mapNotNull(mapper) }
+            .map { transactions -> transactions.mapNotNull(mapper::mapFromSnapshot) }
             .flowOn(Dispatchers.Default)
     }
 

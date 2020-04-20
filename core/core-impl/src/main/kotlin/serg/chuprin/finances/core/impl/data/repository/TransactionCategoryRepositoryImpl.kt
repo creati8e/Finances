@@ -7,13 +7,13 @@ import serg.chuprin.finances.core.api.domain.model.TransactionCategoryType
 import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepository
 import serg.chuprin.finances.core.impl.data.datasource.assets.PredefinedTransactionCategoriesDataSource
 import serg.chuprin.finances.core.impl.data.datasource.assets.TransactionCategoryAssetDto
-import serg.chuprin.finances.core.impl.data.datasource.database.firebase.FirebaseTransactionCategoryDataSource
+import serg.chuprin.finances.core.impl.data.datasource.firebase.FirebaseTransactionCategoryDataSource
 import javax.inject.Inject
 
 /**
  * Created by Sergey Chuprin on 19.04.2020.
  */
-class TransactionCategoryRepositoryImpl @Inject constructor(
+internal class TransactionCategoryRepositoryImpl @Inject constructor(
     private val firebaseDataSource: FirebaseTransactionCategoryDataSource,
     private val predefinedCategoriesDataSource: PredefinedTransactionCategoriesDataSource
 ) : TransactionCategoryRepository {

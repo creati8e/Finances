@@ -1,4 +1,4 @@
-package serg.chuprin.finances.core.impl.data.datasource.database.firebase
+package serg.chuprin.finances.core.impl.data.datasource.firebase
 
 import com.github.ajalt.timberkt.Timber
 import com.google.android.gms.tasks.Task
