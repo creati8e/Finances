@@ -16,6 +16,7 @@ include ':core:core-firebase'
 
 include ':feature:feature-dashboard'
 include ':feature:feature-onboarding'
+include ':feature:feature-transaction'
 include ':feature:feature-authorization'
 
 // endregion
