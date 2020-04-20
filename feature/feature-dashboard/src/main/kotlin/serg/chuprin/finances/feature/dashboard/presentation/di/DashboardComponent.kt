@@ -13,8 +13,7 @@ import serg.chuprin.finances.injector.Injector
 @ScreenScope
 @Component(
     modules = [
-        DashboardModule::class,
-        DashboardModule2::class
+        DashboardModule::class
     ],
     dependencies = [DashboardDependencies::class]
 )

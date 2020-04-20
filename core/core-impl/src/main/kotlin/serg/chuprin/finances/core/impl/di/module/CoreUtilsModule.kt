@@ -9,9 +9,9 @@ import serg.chuprin.finances.core.impl.presentation.model.parser.AmountParserImp
  * Created by Sergey Chuprin on 12.04.2020.
  */
 @Module
-internal abstract class CoreUtilsModule {
+internal interface CoreUtilsModule {
 
     @Binds
-    abstract fun bindAmountParser(impl: AmountParserImpl): AmountParser
+    fun bindAmountParser(impl: AmountParserImpl): AmountParser
 
 }

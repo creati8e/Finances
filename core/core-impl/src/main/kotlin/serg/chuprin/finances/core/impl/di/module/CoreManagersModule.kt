@@ -10,9 +10,9 @@ import serg.chuprin.finances.core.impl.presentation.model.manager.ResourceManage
  * Created by Sergey Chuprin on 12.04.2020.
  */
 @Module
-internal abstract class CoreManagersModule {
+internal interface CoreManagersModule {
 
     @[Binds AppScope]
-    abstract fun bindResourceManager(impl: ResourceManagerImpl): ResourceManger
+    fun bindResourceManager(impl: ResourceManagerImpl): ResourceManger
 
 }

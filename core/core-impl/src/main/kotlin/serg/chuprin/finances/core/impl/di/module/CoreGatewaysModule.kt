@@ -10,9 +10,9 @@ import serg.chuprin.finances.core.impl.data.gateway.AuthorizationGatewayImpl
  * Created by Sergey Chuprin on 02.04.2020.
  */
 @Module
-internal abstract class CoreGatewaysModule {
+internal interface CoreGatewaysModule {
 
     @[Binds AppScope]
-    abstract fun bindsAuthGateway(impl: AuthorizationGatewayImpl): AuthorizationGateway
+    fun bindsAuthGateway(impl: AuthorizationGatewayImpl): AuthorizationGateway
 
 }

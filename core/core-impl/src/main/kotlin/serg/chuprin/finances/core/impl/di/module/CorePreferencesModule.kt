@@ -10,9 +10,9 @@ import serg.chuprin.finances.core.impl.data.datasource.preferences.PreferencesDa
  * Created by Sergey Chuprin on 05.04.2020.
  */
 @Module
-internal abstract class CorePreferencesModule {
+internal interface CorePreferencesModule {
 
     @[Binds AppScope]
-    abstract fun providePreferencesAdapter(impl: PreferencesDataSourceImpl): PreferencesDataSource
+    fun providePreferencesAdapter(impl: PreferencesDataSourceImpl): PreferencesDataSource
 
 }

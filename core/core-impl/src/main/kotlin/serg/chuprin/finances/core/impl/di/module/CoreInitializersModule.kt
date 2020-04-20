@@ -12,7 +12,7 @@ import serg.chuprin.finances.core.impl.di.initializer.TimberInitializer
  * Created by Sergey Chuprin on 14.04.2020.
  */
 @Module
-internal class CoreInitializersModule {
+internal object CoreInitializersModule {
 
     @Provides
     fun provideAppInitializer(initializers: Set<@JvmSuppressWildcards Initializer>): Initializer {

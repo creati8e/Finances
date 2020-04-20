@@ -13,7 +13,7 @@ import serg.chuprin.finances.feature.onboarding.R as OnboardingR
  * Created by Sergey Chuprin on 03.04.2020.
  */
 @Module
-class NavigationModule : CoreNavigationProvider {
+object NavigationModule : CoreNavigationProvider {
 
     @Provides
     override fun onboardingNavigation(): OnboardingNavigation {
