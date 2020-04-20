@@ -52,6 +52,6 @@
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         tools:itemCount="1"
-        tools:listitem="@layout/cell_dashboard_header_widget" />
+        tools:listitem="@layout/cell_dashboard_preview" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

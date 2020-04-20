@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/subtitleTextView"
         android:layout_marginTop="12dp"
-        tools:itemCount="4"
+        tools:itemCount="3"
         tools:listitem="@layout/cell_dashboard_transaction" />
 
     <com.google.android.material.button.MaterialButton

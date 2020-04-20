@@ -1,6 +1,6 @@
 package serg.chuprin.finances.feature.dashboard.presentation.view.adapter.renderer
 
-import kotlinx.android.synthetic.main.cell_dashboard_header_widget.*
+import kotlinx.android.synthetic.main.cell_widget_dashboard_header.*
 import serg.chuprin.adapter.ContainerHolder
 import serg.chuprin.adapter.ContainerRenderer
 import serg.chuprin.finances.feature.dashboard.R
@@ -13,7 +13,7 @@ import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.diff.pa
 class DashboardHeaderWidgetCellRenderer :
     ContainerRenderer<DashboardWidgetCell.Header>() {
 
-    override val type: Int = R.layout.cell_dashboard_header_widget
+    override val type: Int = R.layout.cell_widget_dashboard_header
 
     override fun bindView(holder: ContainerHolder, model: DashboardWidgetCell.Header) {
         bindViews(holder, model)
