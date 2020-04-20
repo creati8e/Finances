@@ -75,13 +75,27 @@ internal class AmountFormatterImpl @Inject constructor() : AmountFormatter {
         amount: BigDecimal,
         currency: Currency,
         round: Boolean,
-        withCurrencySymbol: Boolean
+        withCurrencySymbol: Boolean,
+        withSign: Boolean
     ): String {
+
+        fun DecimalFormat.addPrefixIfNeeded() {
+            if (!withSign) {
+                return
+            }
+            positivePrefix = when (amount.signum()) {
+                1 -> "+"
+                -1 -> "+"
+                else -> ""
+            }
+        }
+
         val locale = Locale.getDefault()
         if (!withCurrencySymbol) {
             val instance = (NumberFormat.getInstance(locale) as DecimalFormat).apply {
                 maximumFractionDigits = currency.defaultFractionDigits
                 minimumFractionDigits = currency.defaultFractionDigits
+                addPrefixIfNeeded()
             }
 
             return instance.format(amount)
@@ -91,6 +105,7 @@ internal class AmountFormatterImpl @Inject constructor() : AmountFormatter {
                 currencySymbol = currency.symbol
                 internationalCurrencySymbol = currency.symbol
             }
+            addPrefixIfNeeded()
             maximumFractionDigits = when (round) {
                 true -> 0
                 else -> currency.defaultFractionDigits

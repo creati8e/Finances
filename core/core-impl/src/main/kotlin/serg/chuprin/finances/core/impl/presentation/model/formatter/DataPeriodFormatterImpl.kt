@@ -17,6 +17,10 @@ internal class DataPeriodFormatterImpl @Inject constructor(
     private val resourceManger: ResourceManger
 ) : DataPeriodFormatter {
 
+    private companion object {
+        private val CURRENT_PERIOD_FORMATTER = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)
+    }
+
     override fun formatAsCurrentPeriod(dataPeriod: DataPeriod): String {
         return when (dataPeriod.periodType) {
             DataPeriodType.MONTH -> {
@@ -26,8 +30,6 @@ internal class DataPeriodFormatterImpl @Inject constructor(
         }
     }
 
-    private fun LocalDateTime.format(): String {
-        return format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
-    }
+    private fun LocalDateTime.format(): String = format(CURRENT_PERIOD_FORMATTER.localized())
 
 }

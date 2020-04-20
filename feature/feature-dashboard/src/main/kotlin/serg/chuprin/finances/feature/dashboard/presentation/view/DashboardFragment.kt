@@ -12,6 +12,7 @@ import serg.chuprin.finances.feature.dashboard.R
 import serg.chuprin.finances.feature.dashboard.presentation.di.DashboardComponent
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.diff.DashboardAdapterDiffCallback
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.renderer.DashboardHeaderWidgetCellRenderer
+import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.renderer.DashboardRecentTransactionsWidgetCellRenderer
 import serg.chuprin.finances.core.api.R as CoreR
 
 /**
@@ -23,6 +24,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 
     private val cellsAdapter = DiffMultiViewAdapter(DashboardAdapterDiffCallback()).apply {
         registerRenderer(DashboardHeaderWidgetCellRenderer())
+        registerRenderer(DashboardRecentTransactionsWidgetCellRenderer())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

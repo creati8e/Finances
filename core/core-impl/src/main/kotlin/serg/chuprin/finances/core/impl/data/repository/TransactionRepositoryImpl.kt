@@ -29,8 +29,30 @@ internal class TransactionRepositoryImpl @Inject constructor(
             .userTransactionsFlow(userId)
             .map { transactions ->
                 transactions
-                    .mapNotNull(mapper::mapFromSnapshot)
-                    .filter { transaction -> transaction.dateTime in dataPeriod }
+                    .mapNotNull { snapshot ->
+                        mapper
+                            .mapFromSnapshot(snapshot)
+                            ?.takeIf { transaction -> transaction.dateTime in dataPeriod }
+                    }
+            }
+            .flowOn(Dispatchers.Default)
+    }
+
+    override fun recentUserTransactionsFlow(
+        userId: Id,
+        count: Int,
+        dataPeriod: DataPeriod
+    ): Flow<List<Transaction>> {
+        return firebaseDataSource
+            .recentUserTransactionsFlow(userId, count)
+            .map { transactions ->
+                transactions.mapNotNull { snapshot ->
+                    mapper
+                        .mapFromSnapshot(snapshot)
+                        ?.takeUnless { transaction ->
+                            transaction.isBalance && transaction.dateTime in dataPeriod
+                        }
+                }
             }
             .flowOn(Dispatchers.Default)
     }

@@ -11,8 +11,8 @@ import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.diff.pa
 class DashboardAdapterDiffCallback : DiffCallback<BaseCell>() {
 
     override fun getChangePayload(oldItem: BaseCell, newItem: BaseCell): Any? {
-        if (oldItem is DashboardWidgetCell.DashboardHeaderCell
-            && newItem is DashboardWidgetCell.DashboardHeaderCell
+        if (oldItem is DashboardWidgetCell.Header
+            && newItem is DashboardWidgetCell.Header
         ) {
             return DashboardHeaderWidgetChangedPayload
         }

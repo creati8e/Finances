@@ -1,0 +1,53 @@
+{
+  "categories": [
+    {
+      "categories": [
+        {
+          "category": "Groceries"
+        },
+        {
+          "category": "Food"
+        },
+        {
+          "category": "Shopping"
+        }
+      ]
+    }
+  ],
+  "amounts": [
+    {
+      "amounts": [
+        {
+          "amount": "1000$"
+        },
+        {
+          "amount": "+750$"
+        },
+        {
+          "amount": "100$"
+        },
+        {
+          "amount": "+50$"
+        }
+      ]
+    }
+  ],
+  "dates": [
+    {
+      "dates": [
+        {
+          "date": "Yesterday"
+        },
+        {
+          "date": "Today"
+        },
+        {
+          "date": "3 hours ago"
+        },
+        {
+          "date": "11:05"
+        }
+      ]
+    }
+  ]
+}

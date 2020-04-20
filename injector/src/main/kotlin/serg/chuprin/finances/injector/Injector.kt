@@ -29,6 +29,8 @@ object Injector {
         val coreProvider = CoreDependenciesComponent.get()
         return DaggerDashboardDependenciesComponent
             .builder()
+            .coreManagerProvider(coreProvider)
+            .coreServicesProvider(coreProvider)
             .coreFormattersProvider(coreProvider)
             .coreRepositoriesProvider(coreProvider)
             .build()

@@ -10,25 +10,25 @@ import serg.chuprin.finances.core.impl.data.repository.*
  * Created by Sergey Chuprin on 04.04.2020.
  */
 @Module
-internal abstract class CoreRepositoriesModule {
+internal interface CoreRepositoriesModule {
 
     @[Binds AppScope]
-    abstract fun bindUserRepository(impl: UserRepositoryImpl): UserRepository
+    fun bindUserRepository(impl: UserRepositoryImpl): UserRepository
 
     @[Binds AppScope]
-    abstract fun bindCurrencyRepository(impl: CurrencyRepositoryImpl): CurrencyRepository
+    fun bindCurrencyRepository(impl: CurrencyRepositoryImpl): CurrencyRepository
 
     @[Binds AppScope]
-    abstract fun bindOnboardingRepository(impl: OnboardingRepositoryImpl): OnboardingRepository
+    fun bindOnboardingRepository(impl: OnboardingRepositoryImpl): OnboardingRepository
 
     @[Binds AppScope]
-    abstract fun bindTransactionRepository(impl: TransactionRepositoryImpl): TransactionRepository
+    fun bindTransactionRepository(impl: TransactionRepositoryImpl): TransactionRepository
 
     @[Binds AppScope]
-    abstract fun bindMoneyAccountRepository(impl: MoneyAccountRepositoryImpl): MoneyAccountRepository
+    fun bindMoneyAccountRepository(impl: MoneyAccountRepositoryImpl): MoneyAccountRepository
 
     @[Binds AppScope]
-    abstract fun bindTransactionCategoryRepository(
+    fun bindTransactionCategoryRepository(
         impl: TransactionCategoryRepositoryImpl
     ): TransactionCategoryRepository
 

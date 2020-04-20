@@ -1,5 +1,6 @@
 package serg.chuprin.finances.feature.dashboard.presentation.model.builder
 
+import com.github.ajalt.timberkt.Timber
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidgets
@@ -20,11 +21,13 @@ class DashboardWidgetCellsBuilder @Inject constructor(
         widgets: DashboardWidgets,
         existingCells: List<BaseCell>
     ): List<DashboardWidgetCell> {
-        return widgets.mapNotNull { (_, widget) ->
+        Timber.d { "DashboardWidgetCellsBuilder: build: ${widgets.map { it.key }}" }
+        val mapNotNull = widgets.mapNotNull { (_, widget) ->
             // Do not rebuild cell if widget not changed.
             findExistingWidgetCell(widget, existingCells)
                 ?: buildWidgetCell(widget)
         }
+        return mapNotNull
     }
 
     private fun findExistingWidgetCell(

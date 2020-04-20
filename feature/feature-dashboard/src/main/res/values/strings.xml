@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="dashboard_recent_transactions_subtitle">Recent transactions</string>
+    <string name="dashboard_recent_transactions_show_more">Show more</string>
+    <string name="dashboard_recent_transactions_no_transactions">No transactions</string>
+
     <string name="dashboard_header_title_balance">Balance</string>
     <string name="dashboard_header_incomes">Incomes</string>
     <string name="dashboard_header_expenses">Expenses</string>

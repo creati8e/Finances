@@ -18,7 +18,8 @@ interface AmountFormatter {
         amount: BigDecimal,
         currency: Currency,
         round: Boolean = true,
-        withCurrencySymbol: Boolean = true
+        withCurrencySymbol: Boolean = true,
+        withSign: Boolean = false
     ): String
 
 }

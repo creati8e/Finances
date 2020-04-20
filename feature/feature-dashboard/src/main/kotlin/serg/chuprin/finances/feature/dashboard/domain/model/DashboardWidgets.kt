@@ -19,7 +19,7 @@ class DashboardWidgets :
 
     fun add(newWidget: DashboardWidget): DashboardWidgets {
         return DashboardWidgets().apply {
-            putAll(this)
+            putAll(this@DashboardWidgets)
             put(newWidget.type, newWidget)
         }
     }

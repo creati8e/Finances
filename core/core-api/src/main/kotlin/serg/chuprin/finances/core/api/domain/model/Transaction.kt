@@ -65,6 +65,9 @@ data class Transaction(
     val isIncome: Boolean
         get() = !isExpense
 
+    val isBalance: Boolean
+        get() = type == TransactionType.BALANCE
+
     val dateTime: LocalDateTime
         get() = _date.toLocalDateTimeUTC()
 

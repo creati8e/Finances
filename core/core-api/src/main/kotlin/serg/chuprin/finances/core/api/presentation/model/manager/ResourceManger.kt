@@ -14,6 +14,9 @@ interface ResourceManger {
 
     fun getDimenInt(@DimenRes dimenRes: Int): Int
 
+    @ColorInt
+    fun getThemeColor(@AttrRes colorAttrRes: Int): Int
+
     fun getString(@StringRes stringRes: Int, vararg arrayOfAnys: Any): String
 
     fun getPlurals(@PluralsRes pluralsRes: Int, count: Int): String

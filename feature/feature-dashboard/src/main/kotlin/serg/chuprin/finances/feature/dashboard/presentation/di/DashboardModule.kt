@@ -9,6 +9,7 @@ import serg.chuprin.finances.feature.dashboard.presentation.model.store.*
 /**
  * Created by Sergey Chuprin on 16.04.2020.
  */
+// TODO: Make companion.
 @Module
 object DashboardModule {
 

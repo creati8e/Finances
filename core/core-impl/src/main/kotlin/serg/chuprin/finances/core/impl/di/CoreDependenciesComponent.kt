@@ -17,6 +17,7 @@ import serg.chuprin.finances.core.impl.di.module.*
     modules = [
         CoreUtilsModule::class,
         CoreGatewaysModule::class,
+        CoreServicesModule::class,
         CoreManagersModule::class,
         CoreDataSourceModule::class,
         CoreFormattersModule::class,

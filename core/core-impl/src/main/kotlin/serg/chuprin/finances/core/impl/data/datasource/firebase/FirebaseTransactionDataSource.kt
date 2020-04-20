@@ -1,12 +1,11 @@
 package serg.chuprin.finances.core.impl.data.datasource.firebase
 
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.Transaction
+import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionFieldsContract
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionFieldsContract.COLLECTION_NAME
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionFieldsContract.FIELD_OWNER_ID
 import serg.chuprin.finances.core.impl.data.mapper.transaction.FirebaseTransactionMapper
@@ -22,9 +21,19 @@ internal class FirebaseTransactionDataSource @Inject constructor(
 
     fun userTransactionsFlow(userId: Id): Flow<List<DocumentSnapshot>> {
         return callbackFlow {
-            firestore
-                .collection(COLLECTION_NAME)
-                .whereEqualTo(FIELD_OWNER_ID, userId.value)
+            getUserTransactionsCollection(userId)
+                .suspending(
+                    this@callbackFlow,
+                    mapper = QuerySnapshot::getDocuments
+                )
+        }
+    }
+
+    fun recentUserTransactionsFlow(userId: Id, count: Int): Flow<List<DocumentSnapshot>> {
+        return callbackFlow {
+            getUserTransactionsCollection(userId)
+                .orderBy(FirebaseTransactionFieldsContract.FIELD_DATE, Query.Direction.DESCENDING)
+                .limit(count.toLong())
                 .suspending(
                     this@callbackFlow,
                     mapper = QuerySnapshot::getDocuments
@@ -33,10 +42,15 @@ internal class FirebaseTransactionDataSource @Inject constructor(
     }
 
     fun createTransaction(transaction: Transaction) {
-        firestore
-            .collection(COLLECTION_NAME)
+        getCollection()
             .document(transaction.id.value)
             .set(transactionMapper.mapToFieldsMap(transaction))
     }
+
+    private fun getUserTransactionsCollection(userId: Id): Query {
+        return getCollection().whereEqualTo(FIELD_OWNER_ID, userId.value)
+    }
+
+    private fun getCollection(): CollectionReference = firestore.collection(COLLECTION_NAME)
 
 }

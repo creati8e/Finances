@@ -22,7 +22,7 @@ class DashboardHeaderWidgetCellBuilder @Inject constructor(
         if (widget !is DashboardWidget.Header) {
             return null
         }
-        return DashboardWidgetCell.DashboardHeaderCell(
+        return DashboardWidgetCell.Header(
             widget = widget,
             balance = formatAmount(widget.balance, widget.currency),
             incomesAmount = formatAmount(widget.currentPeriodIncomes, widget.currency),
@@ -35,6 +35,7 @@ class DashboardHeaderWidgetCellBuilder @Inject constructor(
         return amountFormatter.format(
             round = true,
             amount = amount,
+            withSign = false,
             currency = currency,
             withCurrencySymbol = true
         )
