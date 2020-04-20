@@ -54,4 +54,13 @@
         tools:itemCount="1"
         tools:listitem="@layout/cell_dashboard_preview" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/creationTransactionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="?colorAccent" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
