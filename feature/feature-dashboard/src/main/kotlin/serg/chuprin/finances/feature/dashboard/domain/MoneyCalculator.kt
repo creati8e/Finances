@@ -20,13 +20,16 @@ class MoneyCalculator @Inject constructor(
 ) {
 
     fun calculateBalance(currentUserId: Id): Flow<BigDecimal> {
-        return performCalculation(currentUserId, dataPeriod = null)
+        return performCalculation(transactionRepository.userTransactionsFlow(currentUserId))
+    }
+
+    fun calculateMoneyAccountBalance(moneyAccountId: Id): Flow<BigDecimal> {
+        return performCalculation(transactionRepository.moneyAccountTransactionsFlow(moneyAccountId))
     }
 
     fun calculateExpenses(currentUserId: Id, dataPeriod: DataPeriod): Flow<BigDecimal> {
         return performCalculation(
-            currentUserId,
-            dataPeriod = dataPeriod,
+            transactionRepository.userTransactionsFlow(currentUserId, dataPeriod),
             transactionFilter = { transaction ->
                 transaction.isExpense && transaction.type == TransactionType.PLAIN
             }
@@ -35,8 +38,7 @@ class MoneyCalculator @Inject constructor(
 
     fun calculateIncomes(currentUserId: Id, dataPeriod: DataPeriod): Flow<BigDecimal> {
         return performCalculation(
-            currentUserId,
-            dataPeriod = dataPeriod,
+            transactionRepository.userTransactionsFlow(currentUserId, dataPeriod),
             transactionFilter = { transaction ->
                 transaction.isIncome && transaction.type == TransactionType.PLAIN
             }
@@ -44,16 +46,10 @@ class MoneyCalculator @Inject constructor(
     }
 
     private fun performCalculation(
-        currentUserId: Id,
-        dataPeriod: DataPeriod?,
+        userTransactionsFlow: Flow<List<Transaction>>,
         transactionFilter: ((Transaction) -> Boolean)? = null
     ): Flow<BigDecimal> {
         return flow {
-            val userTransactionsFlow = if (dataPeriod == null) {
-                transactionRepository.userTransactionsFlow(currentUserId)
-            } else {
-                transactionRepository.userTransactionsFlow(currentUserId, dataPeriod)
-            }
             val flow = userTransactionsFlow
                 .map { transactions ->
                     transactions.fold(

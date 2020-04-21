@@ -7,6 +7,7 @@ import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.Transaction
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionFieldsContract
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionFieldsContract.COLLECTION_NAME
+import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionFieldsContract.FIELD_MONEY_ACCOUNT_ID
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionFieldsContract.FIELD_OWNER_ID
 import serg.chuprin.finances.core.impl.data.mapper.transaction.FirebaseTransactionMapper
 import javax.inject.Inject
@@ -22,6 +23,17 @@ internal class FirebaseTransactionDataSource @Inject constructor(
     fun userTransactionsFlow(userId: Id): Flow<List<DocumentSnapshot>> {
         return callbackFlow {
             getUserTransactionsCollection(userId)
+                .suspending(
+                    this@callbackFlow,
+                    mapper = QuerySnapshot::getDocuments
+                )
+        }
+    }
+
+    fun moneyAccountTransactionsFlow(moneyAccountId: Id): Flow<List<DocumentSnapshot>> {
+        return callbackFlow {
+            getCollection()
+                .whereEqualTo(FIELD_MONEY_ACCOUNT_ID, moneyAccountId.value)
                 .suspending(
                     this@callbackFlow,
                     mapper = QuerySnapshot::getDocuments

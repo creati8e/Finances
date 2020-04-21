@@ -25,6 +25,11 @@ sealed class DashboardWidgetCell(
         override val widget: DashboardWidget.RecentTransactions
     ) : DashboardWidgetCell(widget)
 
+    data class MoneyAccounts(
+        val cells: List<DashboardMoneyAccountCell>,
+        override val widget: DashboardWidget.MoneyAccounts
+    ) : DashboardWidgetCell(widget)
+
     override val diffCellId: DashboardWidget.Type
         get() = widget.type
 

@@ -8,4 +8,6 @@
     <string name="dashboard_header_incomes">Incomes</string>
     <string name="dashboard_header_expenses">Expenses</string>
     <string name="dashboard_header_title_current_period">Current period</string>
+
+    <string name="dashboard_money_accounts_subtitle">My accounts</string>
 </resources>

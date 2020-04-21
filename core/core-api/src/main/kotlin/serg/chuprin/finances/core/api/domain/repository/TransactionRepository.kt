@@ -14,6 +14,8 @@ interface TransactionRepository {
 
     fun userTransactionsFlow(userId: Id): Flow<List<Transaction>>
 
+    fun moneyAccountTransactionsFlow(moneyAccountId: Id): Flow<List<Transaction>>
+
     fun recentUserTransactionsFlow(
         userId: Id,
         count: Int,

@@ -8,10 +8,12 @@ import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.mvi.store.BaseStateStore
 import serg.chuprin.finances.feature.dashboard.data.repository.DashboardDataPeriodRepositoryImpl
 import serg.chuprin.finances.feature.dashboard.domain.builder.DashboardHeaderWidgetBuilder
+import serg.chuprin.finances.feature.dashboard.domain.builder.DashboardMoneyAccountsWidgetBuilder
 import serg.chuprin.finances.feature.dashboard.domain.builder.DashboardRecentTransactionsWidgetBuilder
 import serg.chuprin.finances.feature.dashboard.domain.builder.DashboardWidgetBuilder
 import serg.chuprin.finances.feature.dashboard.domain.repository.DashboardDataPeriodRepository
 import serg.chuprin.finances.feature.dashboard.presentation.model.builder.DashboardHeaderWidgetCellBuilder
+import serg.chuprin.finances.feature.dashboard.presentation.model.builder.DashboardMoneyAccountsWidgetCellBuilder
 import serg.chuprin.finances.feature.dashboard.presentation.model.builder.DashboardRecentTransactionsWidgetCellBuilder
 import serg.chuprin.finances.feature.dashboard.presentation.model.builder.DashboardWidgetCellBuilder
 import serg.chuprin.finances.feature.dashboard.presentation.model.store.*
@@ -57,6 +59,11 @@ interface DashboardModule {
         impl: DashboardRecentTransactionsWidgetBuilder
     ): DashboardWidgetBuilder<*>
 
+    @[Binds ScreenScope IntoSet]
+    fun bindDashboardMoneyAccountsWidgetBuilder(
+        impl: DashboardMoneyAccountsWidgetBuilder
+    ): DashboardWidgetBuilder<*>
+
     // endregion
 
 
@@ -70,6 +77,11 @@ interface DashboardModule {
     @[Binds ScreenScope IntoSet]
     fun bindDashboardRecentTransactionsWidgetCellBuilder(
         impl: DashboardRecentTransactionsWidgetCellBuilder
+    ): DashboardWidgetCellBuilder
+
+    @[Binds ScreenScope IntoSet]
+    fun bindDashboardMoneyAccountsWidgetCellBuilder(
+        impl: DashboardMoneyAccountsWidgetCellBuilder
     ): DashboardWidgetCellBuilder
 
     // endregion

@@ -1,6 +1,7 @@
 package serg.chuprin.finances.feature.dashboard.domain.model
 
 import serg.chuprin.finances.core.api.domain.model.DataPeriod
+import serg.chuprin.finances.core.api.domain.model.MoneyAccount
 import serg.chuprin.finances.core.api.domain.model.Transaction
 import serg.chuprin.finances.core.api.domain.model.TransactionCategoryWithParent
 import java.math.BigDecimal
@@ -12,9 +13,14 @@ import java.util.*
 sealed class DashboardWidget(val type: Type) {
 
     enum class Type(val order: Int) {
-        HEADER(1),
-        RECENT_TRANSACTIONS(2)
+        MONEY_ACCOUNTS(1),
+        HEADER(2),
+        RECENT_TRANSACTIONS(3)
     }
+
+    data class MoneyAccounts(
+        val accountBalancesMap: Map<MoneyAccount, BigDecimal>
+    ) : DashboardWidget(type = Type.MONEY_ACCOUNTS)
 
     /**
      * Contains current period, balance and money statistic.

@@ -1,5 +1,7 @@
 package serg.chuprin.finances.core.api.domain.repository
 
+import kotlinx.coroutines.flow.Flow
+import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.MoneyAccount
 
 /**
@@ -8,5 +10,7 @@ import serg.chuprin.finances.core.api.domain.model.MoneyAccount
 interface MoneyAccountRepository {
 
     fun createAccount(account: MoneyAccount)
+
+    fun userAccountsFlow(userId: Id): Flow<List<MoneyAccount>>
 
 }

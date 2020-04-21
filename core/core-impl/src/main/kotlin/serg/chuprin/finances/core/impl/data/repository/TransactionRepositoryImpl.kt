@@ -57,6 +57,13 @@ internal class TransactionRepositoryImpl @Inject constructor(
             .flowOn(Dispatchers.Default)
     }
 
+    override fun moneyAccountTransactionsFlow(moneyAccountId: Id): Flow<List<Transaction>> {
+        return firebaseDataSource
+            .moneyAccountTransactionsFlow(moneyAccountId)
+            .map { transactions -> transactions.mapNotNull(mapper::mapFromSnapshot) }
+            .flowOn(Dispatchers.Default)
+    }
+
     override fun userTransactionsFlow(userId: Id): Flow<List<Transaction>> {
         return firebaseDataSource
             .userTransactionsFlow(userId)
