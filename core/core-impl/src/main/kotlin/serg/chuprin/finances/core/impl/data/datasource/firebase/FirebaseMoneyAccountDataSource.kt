@@ -4,7 +4,7 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.map
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.MoneyAccount
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseMoneyAccountFieldsContract.COLLECTION_NAME
@@ -27,11 +27,10 @@ internal class FirebaseMoneyAccountDataSource @Inject constructor(
     }
 
     fun userAccountsFlow(userId: Id): Flow<List<DocumentSnapshot>> {
-        return callbackFlow {
-            getCollection()
-                .whereEqualTo(FIELD_OWNER_ID, userId.value)
-                .suspending(this) { querySnapshot -> querySnapshot.documents }
-        }
+        return getCollection()
+            .whereEqualTo(FIELD_OWNER_ID, userId.value)
+            .asFlow()
+            .map { querySnapshot -> querySnapshot.documents }
     }
 
     private fun getCollection(): CollectionReference {

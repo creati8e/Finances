@@ -1,8 +1,11 @@
 package serg.chuprin.finances.core.impl.data.datasource.firebase
 
-import com.google.firebase.firestore.*
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.map
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.Transaction
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionFieldsContract
@@ -21,36 +24,24 @@ internal class FirebaseTransactionDataSource @Inject constructor(
 ) {
 
     fun userTransactionsFlow(userId: Id): Flow<List<DocumentSnapshot>> {
-        return callbackFlow {
-            getUserTransactionsCollection(userId)
-                .suspending(
-                    this@callbackFlow,
-                    mapper = QuerySnapshot::getDocuments
-                )
-        }
+        return getUserTransactionsCollection(userId)
+            .asFlow()
+            .map { querySnapshot -> querySnapshot.documents }
     }
 
     fun moneyAccountTransactionsFlow(moneyAccountId: Id): Flow<List<DocumentSnapshot>> {
-        return callbackFlow {
-            getCollection()
-                .whereEqualTo(FIELD_MONEY_ACCOUNT_ID, moneyAccountId.value)
-                .suspending(
-                    this@callbackFlow,
-                    mapper = QuerySnapshot::getDocuments
-                )
-        }
+        return getCollection()
+            .whereEqualTo(FIELD_MONEY_ACCOUNT_ID, moneyAccountId.value)
+            .asFlow()
+            .map { querySnapshot -> querySnapshot.documents }
     }
 
     fun recentUserTransactionsFlow(userId: Id, count: Int): Flow<List<DocumentSnapshot>> {
-        return callbackFlow {
-            getUserTransactionsCollection(userId)
-                .orderBy(FirebaseTransactionFieldsContract.FIELD_DATE, Query.Direction.DESCENDING)
-                .limit(count.toLong())
-                .suspending(
-                    this@callbackFlow,
-                    mapper = QuerySnapshot::getDocuments
-                )
-        }
+        return getUserTransactionsCollection(userId)
+            .orderBy(FirebaseTransactionFieldsContract.FIELD_DATE, Query.Direction.DESCENDING)
+            .limit(count.toLong())
+            .asFlow()
+            .map { querySnapshot -> querySnapshot.documents }
     }
 
     fun createTransaction(transaction: Transaction) {

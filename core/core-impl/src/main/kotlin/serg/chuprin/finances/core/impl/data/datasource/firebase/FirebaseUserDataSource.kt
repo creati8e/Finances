@@ -3,12 +3,9 @@ package serg.chuprin.finances.core.impl.data.datasource.firebase
 import com.github.ajalt.timberkt.Timber
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Source
+import com.google.firebase.firestore.*
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import serg.chuprin.finances.core.api.domain.model.DataPeriodType
 import serg.chuprin.finances.core.api.domain.model.User
@@ -48,9 +45,7 @@ internal class FirebaseUserDataSource @Inject constructor(
                 val fieldsMap = requireNotNull(firebaseUser.toMap()) {
                     "Mapping firebase user to user failed"
                 }
-                val document = firestore
-                    .collection(COLLECTION_NAME)
-                    .document(firebaseUser.uid)
+                val document = getCollection().document(firebaseUser.uid)
                 val documentSnapshot = document.get().await()
                 val userIsNew = !documentSnapshot.exists()
                         || documentSnapshot.getString(FIELD_DEFAULT_CURRENCY_CODE).isNullOrEmpty()
@@ -68,10 +63,7 @@ internal class FirebaseUserDataSource @Inject constructor(
     }
 
     fun updateUser(user: User) {
-        firestore
-            .collection(COLLECTION_NAME)
-            .document(currentFirebaseUser.uid)
-            .set(userMapper.mapToFieldsMap(user))
+        getCurrentUserDocument().set(userMapper.mapToFieldsMap(user))
     }
 
     suspend fun getCurrentUser(): DocumentSnapshot = internalGetCurrentUser()
@@ -79,18 +71,11 @@ internal class FirebaseUserDataSource @Inject constructor(
     suspend fun getIncompleteUser(): DocumentSnapshot = internalGetCurrentUser()
 
     fun currentUserSingleFlow(): Flow<DocumentSnapshot> {
-        return callbackFlow {
-            firestore
-                .collection(COLLECTION_NAME)
-                .document(currentFirebaseUser.uid)
-                .suspending(this, mapper = { documentSnapshot -> documentSnapshot })
-        }
+        return getCurrentUserDocument().asFlow()
     }
 
     private suspend fun internalGetCurrentUser(): DocumentSnapshot {
-        return firestore
-            .collection(COLLECTION_NAME)
-            .document(currentFirebaseUser.uid)
+        return getCurrentUserDocument()
             .get(Source.CACHE)
             .awaitWithLogging {
                 "An error occurring when getting user"
@@ -109,5 +94,10 @@ internal class FirebaseUserDataSource @Inject constructor(
         )
     }
 
+    private fun getCurrentUserDocument(): DocumentReference {
+        return getCollection().document(currentFirebaseUser.uid)
+    }
+
+    private fun getCollection(): CollectionReference = firestore.collection(COLLECTION_NAME)
 
 }
