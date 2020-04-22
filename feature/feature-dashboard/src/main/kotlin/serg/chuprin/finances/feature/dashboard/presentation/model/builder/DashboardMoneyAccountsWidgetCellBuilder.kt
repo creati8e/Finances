@@ -32,12 +32,12 @@ class DashboardMoneyAccountsWidgetCellBuilder @Inject constructor(
     override fun merge(
         newCell: DashboardWidgetCell,
         existingCell: DashboardWidgetCell
-    ): DashboardWidgetCell {
+    ): DashboardWidgetCell? {
         if (newCell !is DashboardWidgetCell.MoneyAccounts) {
-            return newCell
+            return null
         }
         if (existingCell !is DashboardWidgetCell.MoneyAccounts) {
-            return newCell
+            return null
         }
         return newCell.copy(isExpanded = existingCell.isExpanded)
     }

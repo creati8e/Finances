@@ -16,13 +16,13 @@ interface DashboardWidgetCellBuilder {
     /**
      * @return new cell retrieved by merging [newCell] with [existingCell].
      * Not all types of widgets support merging.
-     * If particular widget does not has state for merging, just return [newCell]
+     * If particular widget does not has state for merging, just return null
      */
     fun merge(
         newCell: DashboardWidgetCell,
         existingCell: DashboardWidgetCell
-    ): DashboardWidgetCell {
-        return newCell
+    ): DashboardWidgetCell? {
+        return null
     }
 
 }
