@@ -9,6 +9,7 @@ internal object FirebaseMoneyAccountFieldsContract {
 
     const val FIELD_NAME = "name"
     const val FIELD_OWNER_ID = "owner_id"
+    const val FIELD_IS_FAVORITE = "is_favorite"
     const val FIELD_CURRENCY_CODE = "currency_code"
 
 }

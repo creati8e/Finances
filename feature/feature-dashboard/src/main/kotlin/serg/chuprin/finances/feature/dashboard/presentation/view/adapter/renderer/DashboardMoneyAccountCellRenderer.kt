@@ -3,6 +3,7 @@ package serg.chuprin.finances.feature.dashboard.presentation.view.adapter.render
 import kotlinx.android.synthetic.main.cell_dashboard_money_account.*
 import serg.chuprin.adapter.ContainerHolder
 import serg.chuprin.adapter.ContainerRenderer
+import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisibleOrGone
 import serg.chuprin.finances.feature.dashboard.R
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardMoneyAccountCell
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.diff.payload.DashboardMoneyAccountCellChangedPayload
@@ -35,6 +36,7 @@ class DashboardMoneyAccountCellRenderer : ContainerRenderer<DashboardMoneyAccoun
         with(holder) {
             nameTextView.text = model.name
             balanceTextView.text = model.balance
+            favoriteImageView.makeVisibleOrGone(model.favoriteIconIsVisible)
         }
     }
 

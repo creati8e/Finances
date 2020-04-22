@@ -1,7 +1,6 @@
 package serg.chuprin.finances.feature.dashboard.domain.model
 
 import serg.chuprin.finances.core.api.domain.model.DataPeriod
-import serg.chuprin.finances.core.api.domain.model.MoneyAccount
 import serg.chuprin.finances.core.api.domain.model.Transaction
 import serg.chuprin.finances.core.api.domain.model.TransactionCategoryWithParent
 import java.math.BigDecimal
@@ -19,7 +18,7 @@ sealed class DashboardWidget(val type: Type) {
     }
 
     data class MoneyAccounts(
-        val accountBalancesMap: Map<MoneyAccount, BigDecimal>
+        val moneyAccounts: DashboardMoneyAccounts
     ) : DashboardWidget(type = Type.MONEY_ACCOUNTS)
 
     /**

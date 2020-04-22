@@ -18,11 +18,12 @@ class DashboardMoneyAccountsWidgetCellBuilder @Inject constructor(
             return null
         }
         val cells = widget
-            .accountBalancesMap
+            .moneyAccounts
             .map { (moneyAccount, balance) ->
                 DashboardMoneyAccountCell(
                     name = moneyAccount.name,
                     moneyAccount = moneyAccount,
+                    favoriteIconIsVisible = moneyAccount.isFavorite,
                     balance = amountFormatter.format(balance, moneyAccount.currency)
                 )
             }

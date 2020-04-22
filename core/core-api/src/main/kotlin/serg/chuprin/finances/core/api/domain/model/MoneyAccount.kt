@@ -9,6 +9,7 @@ data class MoneyAccount(
     val id: Id,
     val name: String,
     val ownerId: Id,
+    val isFavorite: Boolean,
     val currencyCode: String
 ) {
 
@@ -18,6 +19,7 @@ data class MoneyAccount(
             id: String?,
             name: String?,
             ownerId: String?,
+            isFavorite: Boolean?,
             currencyCode: String?
         ): MoneyAccount? {
             if (id.isNullOrEmpty()) return null
@@ -28,7 +30,8 @@ data class MoneyAccount(
                 name = name,
                 id = Id.existing(id),
                 currencyCode = currencyCode,
-                ownerId = Id.existing(ownerId)
+                ownerId = Id.existing(ownerId),
+                isFavorite = isFavorite ?: false
             )
         }
 

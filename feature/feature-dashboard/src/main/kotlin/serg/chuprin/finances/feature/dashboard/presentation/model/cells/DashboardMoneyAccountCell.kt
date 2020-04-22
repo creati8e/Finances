@@ -10,7 +10,8 @@ import serg.chuprin.finances.core.api.presentation.model.cells.DiffCell
 data class DashboardMoneyAccountCell(
     val name: String,
     val balance: String,
-    val moneyAccount: MoneyAccount
+    val moneyAccount: MoneyAccount,
+    val favoriteIconIsVisible: Boolean
 ) : DiffCell<Id> {
 
     override val diffCellId: Id = moneyAccount.id

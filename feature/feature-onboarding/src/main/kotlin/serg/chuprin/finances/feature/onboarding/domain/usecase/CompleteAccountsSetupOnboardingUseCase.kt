@@ -38,6 +38,7 @@ class CompleteAccountsSetupOnboardingUseCase @Inject constructor(
         currentUser: User
     ) {
         val moneyAccount = MoneyAccount(
+            isFavorite = false,
             id = Id.createNew(),
             ownerId = currentUser.id,
             name = accountParams.accountName,

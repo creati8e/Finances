@@ -6,8 +6,8 @@ import serg.chuprin.finances.core.api.domain.model.MoneyAccount
 import serg.chuprin.finances.core.api.domain.model.User
 import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
 import serg.chuprin.finances.feature.dashboard.domain.MoneyCalculator
+import serg.chuprin.finances.feature.dashboard.domain.model.DashboardMoneyAccounts
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
-import java.math.BigDecimal
 import javax.inject.Inject
 
 /**
@@ -25,15 +25,15 @@ class DashboardMoneyAccountsWidgetBuilder @Inject constructor(
         return moneyAccountRepository
             .userAccountsFlow(currentUser.id)
             .flatMapLatest { moneyAccounts ->
-                flatMap(moneyAccounts)
+                calculateBalance(moneyAccounts)
             }
-            .map { moneyAccountBalanceMap ->
-                DashboardWidget.MoneyAccounts(moneyAccountBalanceMap)
+            .map { moneyAccounts ->
+                DashboardWidget.MoneyAccounts(moneyAccounts)
             }
     }
 
     @Suppress("MoveLambdaOutsideParentheses")
-    private fun flatMap(moneyAccounts: List<MoneyAccount>): Flow<Map<MoneyAccount, BigDecimal>> {
+    private fun calculateBalance(moneyAccounts: List<MoneyAccount>): Flow<DashboardMoneyAccounts> {
         return moneyAccounts
             .map { account ->
                 combine(
@@ -43,10 +43,8 @@ class DashboardMoneyAccountsWidgetBuilder @Inject constructor(
                 )
             }
             .merge()
-            .scan(emptyMap(), { map, (account, balance) ->
-                map.toMutableMap().apply {
-                    put(account, balance)
-                }
+            .scan(DashboardMoneyAccounts(), { accounts, (account, balance) ->
+                accounts.add(account, balance)
             })
     }
 
