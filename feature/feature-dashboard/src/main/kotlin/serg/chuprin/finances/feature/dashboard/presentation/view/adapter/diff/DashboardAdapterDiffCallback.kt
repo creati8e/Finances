@@ -4,6 +4,7 @@ import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.view.adapter.diff.DiffCallback
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.diff.payload.DashboardHeaderWidgetChangedPayload
+import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.diff.payload.DashboardMoneyAccountCellsChangedPayload
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.diff.payload.DashboardMoneyAccountsExpansionChangedPayload
 
 /**
@@ -22,6 +23,9 @@ class DashboardAdapterDiffCallback : DiffCallback<BaseCell>() {
         ) {
             if (oldItem.isExpanded != newItem.isExpanded) {
                 return DashboardMoneyAccountsExpansionChangedPayload
+            }
+            if (oldItem.cells != newItem.cells) {
+                return DashboardMoneyAccountCellsChangedPayload
             }
         }
         return super.getChangePayload(oldItem, newItem)

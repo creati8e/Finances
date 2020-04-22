@@ -8,16 +8,17 @@ import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.SimpleItemAnimator
 import kotlinx.android.synthetic.main.cell_widget_dashboard_money_accounts.*
 import serg.chuprin.adapter.*
-import serg.chuprin.finances.core.api.presentation.view.adapter.diff.DiffCallback
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeGone
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisible
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisibleOrGone
 import serg.chuprin.finances.core.api.presentation.view.extensions.onViewClick
 import serg.chuprin.finances.feature.dashboard.R
-import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardMoneyAccountCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
+import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.diff.DashboardMoneyAccountsDiffCallback
+import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.diff.payload.DashboardMoneyAccountCellsChangedPayload
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.diff.payload.DashboardMoneyAccountsExpansionChangedPayload
 
 
@@ -30,11 +31,10 @@ class DashboardMoneyAccountsWidgetCellRenderer :
     override val type: Int = R.layout.cell_widget_dashboard_money_accounts
 
     private val moneyAccountCellsAdapter =
-        DiffMultiViewAdapter(DiffCallback<DashboardMoneyAccountCell>()).apply {
+        DiffMultiViewAdapter(DashboardMoneyAccountsDiffCallback()).apply {
             registerRenderer(DashboardMoneyAccountCellRenderer())
         }
 
-    // TODO: Add payload.
     override fun bindView(holder: ContainerHolder, model: DashboardWidgetCell.MoneyAccounts) {
         moneyAccountCellsAdapter.setItems(model.cells)
         holder.expansionArrowImageView.setImageResource(getExpansionArrowDrawableRes(model.isExpanded))
@@ -56,6 +56,9 @@ class DashboardMoneyAccountsWidgetCellRenderer :
                 expand(expandableLayout)
             }
         }
+        if (DashboardMoneyAccountCellsChangedPayload in payloads) {
+            moneyAccountCellsAdapter.setItems(model.cells)
+        }
     }
 
     override fun onVhCreated(
@@ -70,6 +73,7 @@ class DashboardMoneyAccountsWidgetCellRenderer :
         }
         with(holder.recyclerView) {
             adapter = moneyAccountCellsAdapter
+            (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
     }
