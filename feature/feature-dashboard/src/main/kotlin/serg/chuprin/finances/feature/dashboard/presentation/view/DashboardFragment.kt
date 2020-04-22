@@ -38,7 +38,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         cellsAdapter.clickListener = { cell, clickedView, _ ->
-            if (cell is DashboardWidgetCell.MoneyAccounts && clickedView.id == R.id.subtitleTextView) {
+            if (cell is DashboardWidgetCell.MoneyAccounts && clickedView.id == R.id.subtitleLayout) {
                 viewModel.dispatchIntent(DashboardIntent.ToggleMoneyAccountsVisibility(cell))
             }
         }
