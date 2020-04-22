@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.Transformation
 import androidx.annotation.DrawableRes
-import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
@@ -33,6 +32,7 @@ class DashboardMoneyAccountsWidgetCellRenderer :
     private val moneyAccountCellsAdapter =
         DiffMultiViewAdapter(DashboardMoneyAccountsDiffCallback()).apply {
             registerRenderer(DashboardMoneyAccountCellRenderer())
+            registerRenderer(DashboardMoneyAccountsWidgetZeroDataCellRenderer())
         }
 
     override fun bindView(holder: ContainerHolder, model: DashboardWidgetCell.MoneyAccounts) {
@@ -90,7 +90,7 @@ class DashboardMoneyAccountsWidgetCellRenderer :
         }
     }
 
-    private fun expand(expandableLayout: LinearLayoutCompat) {
+    private fun expand(expandableLayout: ViewGroup) {
         animate(expandableLayout) { view, interpolatedTime, viewHeight ->
             if (interpolatedTime == 1f) {
                 view.makeGone()
@@ -104,7 +104,7 @@ class DashboardMoneyAccountsWidgetCellRenderer :
         }
     }
 
-    private fun collapse(expandableLayout: LinearLayoutCompat) {
+    private fun collapse(expandableLayout: ViewGroup) {
         with(expandableLayout) {
             // Measure first to get measured height.
             measure(

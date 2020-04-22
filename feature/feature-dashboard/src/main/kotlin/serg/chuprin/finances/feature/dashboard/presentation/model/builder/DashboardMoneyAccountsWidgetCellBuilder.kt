@@ -1,8 +1,10 @@
 package serg.chuprin.finances.feature.dashboard.presentation.model.builder
 
+import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.formatter.AmountFormatter
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardMoneyAccountCell
+import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardMoneyAccountWidgetZeroDataCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
 import javax.inject.Inject
 
@@ -17,17 +19,11 @@ class DashboardMoneyAccountsWidgetCellBuilder @Inject constructor(
         if (widget !is DashboardWidget.MoneyAccounts) {
             return null
         }
-        val cells = widget
-            .moneyAccounts
-            .map { (moneyAccount, balance) ->
-                DashboardMoneyAccountCell(
-                    name = moneyAccount.name,
-                    moneyAccount = moneyAccount,
-                    favoriteIconIsVisible = moneyAccount.isFavorite,
-                    balance = amountFormatter.format(balance, moneyAccount.currency)
-                )
-            }
-        return DashboardWidgetCell.MoneyAccounts(isExpanded = false, cells = cells, widget = widget)
+        return DashboardWidgetCell.MoneyAccounts(
+            widget = widget,
+            isExpanded = false,
+            cells = buildCells(widget)
+        )
     }
 
     override fun merge(
@@ -41,6 +37,22 @@ class DashboardMoneyAccountsWidgetCellBuilder @Inject constructor(
             return null
         }
         return newCell.copy(isExpanded = existingCell.isExpanded)
+    }
+
+    private fun buildCells(widget: DashboardWidget.MoneyAccounts): List<BaseCell> {
+        if (widget.moneyAccounts.isEmpty()) {
+            return listOf(DashboardMoneyAccountWidgetZeroDataCell())
+        }
+        return widget
+            .moneyAccounts
+            .map { (moneyAccount, balance) ->
+                DashboardMoneyAccountCell(
+                    name = moneyAccount.name,
+                    moneyAccount = moneyAccount,
+                    favoriteIconIsVisible = moneyAccount.isFavorite,
+                    balance = amountFormatter.format(balance, moneyAccount.currency)
+                )
+            }
     }
 
 }

@@ -13,7 +13,7 @@ sealed class DashboardWidgetCell(
 
     data class MoneyAccounts(
         val isExpanded: Boolean,
-        val cells: List<DashboardMoneyAccountCell>,
+        val cells: List<BaseCell>,
         override val widget: DashboardWidget.MoneyAccounts
     ) : DashboardWidgetCell(widget)
 

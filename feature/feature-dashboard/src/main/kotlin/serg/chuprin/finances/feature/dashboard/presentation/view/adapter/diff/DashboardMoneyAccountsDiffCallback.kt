@@ -1,5 +1,6 @@
 package serg.chuprin.finances.feature.dashboard.presentation.view.adapter.diff
 
+import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.view.adapter.diff.DiffCallback
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardMoneyAccountCell
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.diff.payload.DashboardMoneyAccountCellChangedPayload
@@ -7,13 +8,16 @@ import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.diff.pa
 /**
  * Created by Sergey Chuprin on 22.04.2020.
  */
-class DashboardMoneyAccountsDiffCallback : DiffCallback<DashboardMoneyAccountCell>() {
+class DashboardMoneyAccountsDiffCallback : DiffCallback<BaseCell>() {
 
     override fun getChangePayload(
-        oldItem: DashboardMoneyAccountCell,
-        newItem: DashboardMoneyAccountCell
+        oldItem: BaseCell,
+        newItem: BaseCell
     ): Any? {
-        return DashboardMoneyAccountCellChangedPayload
+        if (oldItem is DashboardMoneyAccountCell && newItem is DashboardMoneyAccountCell) {
+            return DashboardMoneyAccountCellChangedPayload
+        }
+        return super.getChangePayload(oldItem, newItem)
     }
 
 }
