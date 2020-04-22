@@ -54,7 +54,7 @@
         android:clipToPadding="false"
         android:orientation="vertical"
         android:paddingStart="16dp"
-        android:paddingTop="4dp"
+        android:paddingTop="8dp"
         android:paddingEnd="16dp"
         android:paddingBottom="12dp">
 
