@@ -34,18 +34,18 @@ class DashboardMoneyAccountsWidgetBuilder @Inject constructor(
 
     @Suppress("MoveLambdaOutsideParentheses")
     private fun calculateBalance(moneyAccounts: List<MoneyAccount>): Flow<DashboardMoneyAccounts> {
-        return moneyAccounts
-            .map { account ->
-                combine(
-                    flowOf(account),
-                    calculator.calculateMoneyAccountBalance(account.id),
-                    { acc, balance -> acc to balance }
-                )
-            }
-            .merge()
-            .scan(DashboardMoneyAccounts(), { accounts, (account, balance) ->
+        val flows = moneyAccounts.map { account ->
+            combine(
+                flowOf(account),
+                calculator.calculateMoneyAccountBalance(account.id),
+                { acc, balance -> acc to balance }
+            )
+        }
+        return combine(flows, { array ->
+            array.fold(DashboardMoneyAccounts(), { accounts, (account, balance) ->
                 accounts.add(account, balance)
             })
+        })
     }
 
 }
