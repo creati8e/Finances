@@ -8,6 +8,21 @@ import serg.chuprin.finances.feature.dashboard.presentation.model.cells.Dashboar
  */
 interface DashboardWidgetCellBuilder {
 
+    /**
+     * @return new cell for [widget] or null if builder does not support this type of widget.
+     */
     fun build(widget: DashboardWidget): DashboardWidgetCell?
+
+    /**
+     * @return new cell retrieved by merging [newCell] with [existingCell].
+     * Not all types of widgets support merging.
+     * If particular widget does not has state for merging, just return [newCell]
+     */
+    fun merge(
+        newCell: DashboardWidgetCell,
+        existingCell: DashboardWidgetCell
+    ): DashboardWidgetCell {
+        return newCell
+    }
 
 }

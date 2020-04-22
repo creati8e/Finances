@@ -11,6 +11,12 @@ sealed class DashboardWidgetCell(
     open val widget: DashboardWidget
 ) : DiffCell<DashboardWidget.Type> {
 
+    data class MoneyAccounts(
+        val isExpanded: Boolean,
+        val cells: List<DashboardMoneyAccountCell>,
+        override val widget: DashboardWidget.MoneyAccounts
+    ) : DashboardWidgetCell(widget)
+
     data class Header(
         val balance: String,
         val currentPeriod: String,
@@ -23,11 +29,6 @@ sealed class DashboardWidgetCell(
         val cells: List<BaseCell>,
         val showMoreTransactionsButtonIsVisible: Boolean,
         override val widget: DashboardWidget.RecentTransactions
-    ) : DashboardWidgetCell(widget)
-
-    data class MoneyAccounts(
-        val cells: List<DashboardMoneyAccountCell>,
-        override val widget: DashboardWidget.MoneyAccounts
     ) : DashboardWidgetCell(widget)
 
     override val diffCellId: DashboardWidget.Type

@@ -25,8 +25,11 @@ fun View.getString(@StringRes stringResId: Int): String = context.getString(stri
 
 inline fun View.onClick(crossinline action: () -> Unit) = setOnClickListener { action.invoke() }
 
-inline fun View.onViewClick(crossinline action: (View) -> Unit) {
-    setOnClickListener { action.invoke(it) }
+inline fun <V : View> V.onViewClick(crossinline action: (V) -> Unit) {
+    setOnClickListener {
+        @Suppress("UNCHECKED_CAST")
+        action.invoke(it as V)
+    }
 }
 
 inline fun <reified T : View> T.onViewLongClick(crossinline action: (T) -> Unit) {

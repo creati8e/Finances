@@ -1,6 +1,5 @@
 package serg.chuprin.finances.feature.dashboard.presentation.model.builder
 
-import com.github.ajalt.timberkt.Timber
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidgets
@@ -21,38 +20,56 @@ class DashboardWidgetCellsBuilder @Inject constructor(
         widgets: DashboardWidgets,
         existingCells: List<BaseCell>
     ): List<DashboardWidgetCell> {
-        Timber.d { "DashboardWidgetCellsBuilder: build: ${widgets.map { it.key }}" }
-        val mapNotNull = widgets.mapNotNull { (_, widget) ->
+        return widgets.mapNotNull { (_, widget) ->
             // Do not rebuild cell if widget not changed.
-            findExistingWidgetCell(widget, existingCells)
-                ?: buildWidgetCell(widget)
+            buildCell(widget, existingCells)
         }
-        return mapNotNull
     }
 
-    private fun findExistingWidgetCell(
+    private fun buildCell(
         widget: DashboardWidget,
         existingCells: List<BaseCell>
-    ): DashboardWidgetCell? {
-        val existingWidgetCell = existingCells.find { cell ->
-            cell is DashboardWidgetCell && cell.widget.type == widget.type
-        } as? DashboardWidgetCell
+    ): DashboardWidgetCell {
+        val existingWidgetCell = existingCells
+            .find { cell ->
+                cell is DashboardWidgetCell && cell.widget.type == widget.type
+            } as? DashboardWidgetCell
+            ?: return buildWidgetCell(widget)
 
-        if (existingWidgetCell == null || existingWidgetCell.widget != widget) {
-            return null
+        // Widgets are not changed, return existing.
+        if (existingWidgetCell.widget == widget) {
+            return existingWidgetCell
         }
-        return existingWidgetCell
+        // Widgets are changed. Build new widget and try to merge state with existing one.
+        return mergeWidgetCells(buildWidgetCell(widget), existingWidgetCell)
     }
 
-    private fun buildWidgetCell(widget: DashboardWidget): DashboardWidgetCell? {
+    private fun mergeWidgetCells(
+        newCell: DashboardWidgetCell,
+        existingCell: DashboardWidgetCell
+    ): DashboardWidgetCell {
+        var mergedCell: DashboardWidgetCell?
+        widgetCellBuilders.forEach { builder ->
+            mergedCell = builder.merge(
+                newCell = newCell,
+                existingCell = existingCell
+            )
+            if (mergedCell != null) {
+                return mergedCell!!
+            }
+        }
+        throw IllegalStateException("Widget cell builder not found for widget ${newCell.widget.type}")
+    }
+
+    private fun buildWidgetCell(widget: DashboardWidget): DashboardWidgetCell {
         var cell: DashboardWidgetCell?
         widgetCellBuilders.forEach { builder ->
             cell = builder.build(widget)
             if (cell != null) {
-                return cell
+                return cell!!
             }
         }
-        return null
+        throw IllegalStateException("Widget cell builder not found for widget ${widget.type}")
     }
 
 }

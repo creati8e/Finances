@@ -1,5 +1,6 @@
 package serg.chuprin.finances.feature.dashboard.presentation.model.store
 
+import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.feature.dashboard.domain.model.Dashboard
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
 
@@ -11,6 +12,10 @@ sealed class DashboardEffect {
     class DashboardUpdated(
         val dashboard: Dashboard,
         val widgetCells: List<DashboardWidgetCell>
+    ) : DashboardEffect()
+
+    class CellsUpdated(
+        val widgetCells: List<BaseCell>
     ) : DashboardEffect()
 
 }

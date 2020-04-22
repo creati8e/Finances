@@ -26,7 +26,20 @@ class DashboardMoneyAccountsWidgetCellBuilder @Inject constructor(
                     balance = amountFormatter.format(balance, moneyAccount.currency)
                 )
             }
-        return DashboardWidgetCell.MoneyAccounts(cells, widget)
+        return DashboardWidgetCell.MoneyAccounts(isExpanded = false, cells = cells, widget = widget)
+    }
+
+    override fun merge(
+        newCell: DashboardWidgetCell,
+        existingCell: DashboardWidgetCell
+    ): DashboardWidgetCell {
+        if (newCell !is DashboardWidgetCell.MoneyAccounts) {
+            return newCell
+        }
+        if (existingCell !is DashboardWidgetCell.MoneyAccounts) {
+            return newCell
+        }
+        return newCell.copy(isExpanded = existingCell.isExpanded)
     }
 
 }

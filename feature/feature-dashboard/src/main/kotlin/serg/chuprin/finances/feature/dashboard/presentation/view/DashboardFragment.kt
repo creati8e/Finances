@@ -10,6 +10,8 @@ import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.vi
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.feature.dashboard.R
 import serg.chuprin.finances.feature.dashboard.presentation.di.DashboardComponent
+import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
+import serg.chuprin.finances.feature.dashboard.presentation.model.store.DashboardIntent
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.diff.DashboardAdapterDiffCallback
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.renderer.DashboardHeaderWidgetCellRenderer
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.renderer.DashboardMoneyAccountsWidgetCellRenderer
@@ -34,6 +36,12 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 
         recyclerView.adapter = cellsAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        cellsAdapter.clickListener = { cell, clickedView, _ ->
+            if (cell is DashboardWidgetCell.MoneyAccounts && clickedView.id == R.id.subtitleTextView) {
+                viewModel.dispatchIntent(DashboardIntent.ToggleMoneyAccountsVisibility(cell))
+            }
+        }
 
         with(viewModel) {
             cellsLiveData(cellsAdapter::setItems)
