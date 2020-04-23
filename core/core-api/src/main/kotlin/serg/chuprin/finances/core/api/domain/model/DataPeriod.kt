@@ -1,9 +1,6 @@
 package serg.chuprin.finances.core.api.domain.model
 
-import serg.chuprin.finances.core.api.extensions.firstDayOfMonth
-import serg.chuprin.finances.core.api.extensions.firstDayOfNextMonth
-import serg.chuprin.finances.core.api.extensions.firstDayOfPreviousMonth
-import serg.chuprin.finances.core.api.extensions.lastDayOfMonth
+import serg.chuprin.finances.core.api.extensions.*
 import java.time.LocalDateTime
 
 /**
@@ -23,6 +20,18 @@ data class DataPeriod(
                     val startDateTime = LocalDateTime.now().firstDayOfMonth()
                     DataPeriod(startDateTime, startDateTime.lastDayOfMonth(), periodType)
                 }
+                DataPeriodType.DAY -> {
+                    val startDateTime = LocalDateTime.now().startOfDay()
+                    DataPeriod(startDateTime, startDateTime.endOfDay(), periodType)
+                }
+                DataPeriodType.WEEK -> {
+                    val startDateTime = LocalDateTime.now().startOfWeek()
+                    DataPeriod(startDateTime, startDateTime.endOfWeek(), periodType)
+                }
+                DataPeriodType.YEAR -> {
+                    val startDateTime = LocalDateTime.now().startOfYear()
+                    DataPeriod(startDateTime, startDateTime.endOfYear(), periodType)
+                }
             }
         }
 
@@ -38,14 +47,38 @@ data class DataPeriod(
                 val nextStartDate = startDate.firstDayOfNextMonth()
                 DataPeriod(nextStartDate, nextStartDate.lastDayOfMonth(), periodType)
             }
+            DataPeriodType.WEEK -> {
+                val nextStartDate = startDate.plusWeeks(1).startOfWeek()
+                DataPeriod(nextStartDate, nextStartDate.endOfWeek(), periodType)
+            }
+            DataPeriodType.YEAR -> {
+                val nextStartDate = startDate.startOfNextYear()
+                DataPeriod(nextStartDate, nextStartDate.endOfYear(), periodType)
+            }
+            DataPeriodType.DAY -> {
+                val nextStartDate = startDate.plusDays(1).startOfDay()
+                DataPeriod(nextStartDate, nextStartDate.endOfDay(), periodType)
+            }
         }
     }
 
     fun previous(): DataPeriod {
         return when (periodType) {
             DataPeriodType.MONTH -> {
-                val nextStartDate = startDate.firstDayOfPreviousMonth()
+                val nextStartDate = startDate.minusMonths(1).firstDayOfMonth()
                 DataPeriod(nextStartDate, nextStartDate.lastDayOfMonth(), periodType)
+            }
+            DataPeriodType.DAY -> {
+                val nextStartDate = startDate.minusDays(1).startOfDay()
+                DataPeriod(nextStartDate, nextStartDate.endOfDay(), periodType)
+            }
+            DataPeriodType.WEEK -> {
+                val nextStartDate = startDate.minusWeeks(1).startOfWeek()
+                DataPeriod(nextStartDate, nextStartDate.endOfWeek(), periodType)
+            }
+            DataPeriodType.YEAR -> {
+                val nextStartDate = startDate.minusYears(1).startOfYear()
+                DataPeriod(nextStartDate, nextStartDate.endOfYear(), periodType)
             }
         }
     }

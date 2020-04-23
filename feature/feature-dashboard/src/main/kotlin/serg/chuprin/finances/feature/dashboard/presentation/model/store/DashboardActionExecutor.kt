@@ -10,6 +10,7 @@ import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
 import serg.chuprin.finances.core.mvi.invoke
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardDataPeriodChangeDirection
 import serg.chuprin.finances.feature.dashboard.domain.usecase.ChangeDashboardDataPeriodUseCase
+import serg.chuprin.finances.feature.dashboard.domain.usecase.ChangeDataPeriodTypeForDashboardUseCase
 import serg.chuprin.finances.feature.dashboard.domain.usecase.RestoreDefaultDashboardDataPeriodUseCase
 import serg.chuprin.finances.feature.dashboard.presentation.model.builder.DashboardWidgetCellsBuilder
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
@@ -21,6 +22,7 @@ import javax.inject.Inject
 class DashboardActionExecutor @Inject constructor(
     private val widgetCellsBuilder: DashboardWidgetCellsBuilder,
     private val changeDataPeriodUseCase: ChangeDashboardDataPeriodUseCase,
+    private val changeDataPeriodTypeUseCase: ChangeDataPeriodTypeForDashboardUseCase,
     private val periodTypePopupMenuCellsBuilder: DataPeriodTypePopupMenuCellsBuilder,
     private val restoreDefaultDataPeriodUseCase: RestoreDefaultDashboardDataPeriodUseCase
 ) : StoreActionExecutor<DashboardAction, DashboardState, DashboardEffect, DashboardEvent> {
@@ -49,11 +51,22 @@ class DashboardActionExecutor @Inject constructor(
                     DashboardIntent.ClickOnCurrentPeriod -> {
                         handleClickOnCurrentPeriod(eventConsumer)
                     }
+                    is DashboardIntent.ClickOnPeriodTypeCell -> {
+                        handleClickOnPeriodTypeCell(intent)
+                    }
                 }
             }
             is DashboardAction.FormatDashboard -> {
                 handleFormatDashboardAction(action, state)
             }
+        }
+    }
+
+    private fun handleClickOnPeriodTypeCell(
+        intent: DashboardIntent.ClickOnPeriodTypeCell
+    ): Flow<DashboardEffect> {
+        return emptyFlowAction {
+            changeDataPeriodTypeUseCase.execute(intent.periodTypeCell.periodType)
         }
     }
 

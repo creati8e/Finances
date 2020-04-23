@@ -22,12 +22,14 @@ internal class DataPeriodFormatterImpl @Inject constructor(
     }
 
     override fun formatAsCurrentPeriod(dataPeriod: DataPeriod): String {
-        return when (dataPeriod.periodType) {
-            DataPeriodType.MONTH -> {
-                val month = resourceManger.getString(R.string.period_type_month)
-                "$month (${dataPeriod.startDate.format()} - ${dataPeriod.endDate.format()})"
-            }
+        val periodTypeStringRes = when (dataPeriod.periodType) {
+            DataPeriodType.DAY -> R.string.period_type_day
+            DataPeriodType.WEEK -> R.string.period_type_week
+            DataPeriodType.YEAR -> R.string.period_type_year
+            DataPeriodType.MONTH -> R.string.period_type_month
         }
+        val periodTypeStr = resourceManger.getString(periodTypeStringRes)
+        return "$periodTypeStr (${dataPeriod.startDate.format()} - ${dataPeriod.endDate.format()})"
     }
 
     private fun LocalDateTime.format(): String = format(CURRENT_PERIOD_FORMATTER.localized())

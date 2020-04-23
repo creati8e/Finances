@@ -8,6 +8,9 @@
     <string name="no_category">No category</string>
     <!--region Periods-->
     <string name="period_type_month">Month</string>
+    <string name="period_type_day">Day</string>
+    <string name="period_type_week">Week</string>
+    <string name="period_type_year">Year</string>
     <!--endregion-->
 
 </resources>

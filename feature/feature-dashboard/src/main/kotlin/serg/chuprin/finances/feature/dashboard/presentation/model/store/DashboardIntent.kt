@@ -1,5 +1,6 @@
 package serg.chuprin.finances.feature.dashboard.presentation.model.store
 
+import serg.chuprin.finances.core.api.presentation.model.cells.DataPeriodTypePopupMenuCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
 
 /**
@@ -14,6 +15,10 @@ sealed class DashboardIntent {
     object ClickOnPreviousPeriodButton : DashboardIntent()
 
     object ClickOnRestoreDefaultPeriodButton : DashboardIntent()
+
+    class ClickOnPeriodTypeCell(
+        val periodTypeCell: DataPeriodTypePopupMenuCell
+    ) : DashboardIntent()
 
     class ToggleMoneyAccountsVisibility(
         val widgetCell: DashboardWidgetCell.MoneyAccounts

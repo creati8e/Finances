@@ -7,5 +7,8 @@ internal object FirebaseDataPeriodTypeFieldsContract {
 
     // TODO: Add more period types.
     const val TYPE_MONTH = "month"
+    const val TYPE_DAY = "day"
+    const val TYPE_WEEK = "week"
+    const val TYPE_YEAR = "year"
 
 }

@@ -17,11 +17,15 @@ class DataPeriodTypePopupMenuCellsBuilderImpl @Inject constructor(
     override fun build(periodTypes: List<DataPeriodType>): List<DataPeriodTypePopupMenuCell> {
         return periodTypes.map { periodType ->
             val titleStringRes = when (periodType) {
+                DataPeriodType.DAY -> CoreR.string.period_type_day
+                DataPeriodType.WEEK -> CoreR.string.period_type_week
+                DataPeriodType.YEAR -> CoreR.string.period_type_year
                 DataPeriodType.MONTH -> CoreR.string.period_type_month
             }
             DataPeriodTypePopupMenuCell(
                 isChecked = false,
                 isCheckable = false,
+                periodType = periodType,
                 title = resourceManger.getString(titleStringRes)
             )
         }
