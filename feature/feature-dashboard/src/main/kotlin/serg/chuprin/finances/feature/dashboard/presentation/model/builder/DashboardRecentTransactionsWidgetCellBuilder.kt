@@ -8,9 +8,9 @@ import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
-import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardRecentTransactionsZeroDataCell
-import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardTransactionCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
+import serg.chuprin.finances.feature.dashboard.presentation.model.cells.transactions.DashboardRecentTransactionsZeroDataCell
+import serg.chuprin.finances.feature.dashboard.presentation.model.cells.transactions.DashboardTransactionCell
 import java.util.*
 import javax.inject.Inject
 import serg.chuprin.finances.core.api.R as CoreR

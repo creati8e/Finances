@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.dashboard.presentation.model.cells
+package serg.chuprin.finances.feature.dashboard.presentation.model.cells.transactions
 
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 

@@ -1,8 +1,8 @@
-package serg.chuprin.finances.feature.dashboard.presentation.view.adapter.renderer
+package serg.chuprin.finances.feature.dashboard.presentation.view.adapter.moneyaccounts.renderer
 
 import serg.chuprin.adapter.ContainerRenderer
 import serg.chuprin.finances.feature.dashboard.R
-import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardMoneyAccountWidgetZeroDataCell
+import serg.chuprin.finances.feature.dashboard.presentation.model.cells.moneyaccounts.DashboardMoneyAccountWidgetZeroDataCell
 
 /**
  * Created by Sergey Chuprin on 22.04.2020.

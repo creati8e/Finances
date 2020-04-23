@@ -3,9 +3,9 @@ package serg.chuprin.finances.feature.dashboard.presentation.model.builder
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.formatter.AmountFormatter
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
-import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardMoneyAccountCell
-import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardMoneyAccountWidgetZeroDataCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
+import serg.chuprin.finances.feature.dashboard.presentation.model.cells.moneyaccounts.DashboardMoneyAccountCell
+import serg.chuprin.finances.feature.dashboard.presentation.model.cells.moneyaccounts.DashboardMoneyAccountWidgetZeroDataCell
 import javax.inject.Inject
 
 /**

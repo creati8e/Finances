@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.dashboard.presentation.view.adapter.renderer
+package serg.chuprin.finances.feature.dashboard.presentation.view.adapter.renderer.transactions
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.cell_widget_dashboard_recent_transactions.*

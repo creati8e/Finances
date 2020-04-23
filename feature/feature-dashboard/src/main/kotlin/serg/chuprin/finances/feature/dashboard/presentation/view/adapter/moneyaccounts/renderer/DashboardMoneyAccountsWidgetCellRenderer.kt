@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.dashboard.presentation.view.adapter.renderer
+package serg.chuprin.finances.feature.dashboard.presentation.view.adapter.moneyaccounts.renderer
 
 import android.view.View
 import android.view.ViewGroup
@@ -16,9 +16,9 @@ import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisibleOr
 import serg.chuprin.finances.core.api.presentation.view.extensions.onViewClick
 import serg.chuprin.finances.feature.dashboard.R
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
-import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.diff.DashboardMoneyAccountsDiffCallback
-import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.diff.payload.DashboardMoneyAccountCellsChangedPayload
-import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.diff.payload.DashboardMoneyAccountsExpansionChangedPayload
+import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.moneyaccounts.diff.DashboardMoneyAccountsDiffCallback
+import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.moneyaccounts.diff.payload.DashboardMoneyAccountCellsChangedPayload
+import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.moneyaccounts.diff.payload.DashboardMoneyAccountsExpansionChangedPayload
 
 
 /**
@@ -143,7 +143,8 @@ class DashboardMoneyAccountsWidgetCellRenderer :
                         block(view, interpolatedTime, viewHeight)
                     }
                 }.apply<Animation> {
-                    interpolator = animationInterpolator
+                    interpolator =
+                        animationInterpolator
 
                     val density = context.resources.displayMetrics.density
                     duration = (viewHeight / density).toLong() + 150

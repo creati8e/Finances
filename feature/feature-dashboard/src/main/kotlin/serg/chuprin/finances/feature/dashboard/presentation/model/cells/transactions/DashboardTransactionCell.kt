@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.dashboard.presentation.model.cells
+package serg.chuprin.finances.feature.dashboard.presentation.model.cells.transactions
 
 import androidx.annotation.ColorInt
 import serg.chuprin.finances.core.api.domain.model.Id

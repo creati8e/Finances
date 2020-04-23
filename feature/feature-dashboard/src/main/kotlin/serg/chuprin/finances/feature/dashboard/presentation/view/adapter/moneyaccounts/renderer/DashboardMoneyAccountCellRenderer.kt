@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.dashboard.presentation.view.adapter.renderer
+package serg.chuprin.finances.feature.dashboard.presentation.view.adapter.moneyaccounts.renderer
 
 import android.content.res.ColorStateList
 import kotlinx.android.synthetic.main.cell_dashboard_money_account.*
@@ -8,8 +8,8 @@ import serg.chuprin.finances.core.api.presentation.view.extensions.getAttributeC
 import serg.chuprin.finances.core.api.presentation.view.extensions.getColorInt
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisibleOrGone
 import serg.chuprin.finances.feature.dashboard.R
-import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardMoneyAccountCell
-import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.diff.payload.DashboardMoneyAccountCellChangedPayload
+import serg.chuprin.finances.feature.dashboard.presentation.model.cells.moneyaccounts.DashboardMoneyAccountCell
+import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.moneyaccounts.diff.payload.DashboardMoneyAccountCellChangedPayload
 
 /**
  * Created by Sergey Chuprin on 21.04.2020.

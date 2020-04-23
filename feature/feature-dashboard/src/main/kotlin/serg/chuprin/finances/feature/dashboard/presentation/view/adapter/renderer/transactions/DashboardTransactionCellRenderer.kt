@@ -1,10 +1,10 @@
-package serg.chuprin.finances.feature.dashboard.presentation.view.adapter.renderer
+package serg.chuprin.finances.feature.dashboard.presentation.view.adapter.renderer.transactions
 
 import kotlinx.android.synthetic.main.cell_dashboard_transaction.*
 import serg.chuprin.adapter.ContainerHolder
 import serg.chuprin.adapter.ContainerRenderer
 import serg.chuprin.finances.feature.dashboard.R
-import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardTransactionCell
+import serg.chuprin.finances.feature.dashboard.presentation.model.cells.transactions.DashboardTransactionCell
 
 /**
  * Created by Sergey Chuprin on 20.04.2020.
