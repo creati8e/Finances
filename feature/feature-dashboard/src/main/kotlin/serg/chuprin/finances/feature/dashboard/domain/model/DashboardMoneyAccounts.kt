@@ -26,4 +26,11 @@ class DashboardMoneyAccounts :
             put(moneyAccount, balance)
         }
     }
+
+    override fun hashCode(): Int = entries.hashCode()
+
+    override fun equals(other: Any?): Boolean {
+        return (other as? DashboardMoneyAccounts)?.entries == entries
+    }
+
 }

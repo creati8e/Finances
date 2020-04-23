@@ -10,11 +10,11 @@ import java.util.*
  */
 class DashboardWidgets :
     SortedMap<DashboardWidget.Type, DashboardWidget> by TreeMap<DashboardWidget.Type, DashboardWidget>(
-        WIDGETS_COMPARATOR
+        widgetsComparator
     ) {
 
     companion object {
-        private val WIDGETS_COMPARATOR = compareBy(DashboardWidget.Type::order)
+        private val widgetsComparator = compareBy(DashboardWidget.Type::order)
     }
 
     fun add(newWidget: DashboardWidget): DashboardWidgets {
@@ -22,6 +22,12 @@ class DashboardWidgets :
             putAll(this@DashboardWidgets)
             put(newWidget.type, newWidget)
         }
+    }
+
+    override fun hashCode(): Int = entries.hashCode()
+
+    override fun equals(other: Any?): Boolean {
+        return (other as? DashboardMoneyAccounts)?.entries == entries
     }
 
 }
