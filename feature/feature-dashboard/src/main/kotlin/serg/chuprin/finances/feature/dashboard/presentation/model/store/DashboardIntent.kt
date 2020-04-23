@@ -7,6 +7,8 @@ import serg.chuprin.finances.feature.dashboard.presentation.model.cells.Dashboar
  */
 sealed class DashboardIntent {
 
+    object ClickOnCurrentPeriod : DashboardIntent()
+
     object ClickOnNextPeriodButton : DashboardIntent()
 
     object ClickOnPreviousPeriodButton : DashboardIntent()

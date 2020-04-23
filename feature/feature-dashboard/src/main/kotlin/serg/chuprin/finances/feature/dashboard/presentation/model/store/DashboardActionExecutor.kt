@@ -3,9 +3,11 @@ package serg.chuprin.finances.feature.dashboard.presentation.model.store
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
+import serg.chuprin.finances.core.api.presentation.model.builder.DataPeriodTypePopupMenuCellsBuilder
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
+import serg.chuprin.finances.core.mvi.invoke
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardDataPeriodChangeDirection
 import serg.chuprin.finances.feature.dashboard.domain.usecase.ChangeDashboardDataPeriodUseCase
 import serg.chuprin.finances.feature.dashboard.domain.usecase.RestoreDefaultDashboardDataPeriodUseCase
@@ -19,6 +21,7 @@ import javax.inject.Inject
 class DashboardActionExecutor @Inject constructor(
     private val widgetCellsBuilder: DashboardWidgetCellsBuilder,
     private val changeDataPeriodUseCase: ChangeDashboardDataPeriodUseCase,
+    private val periodTypePopupMenuCellsBuilder: DataPeriodTypePopupMenuCellsBuilder,
     private val restoreDefaultDataPeriodUseCase: RestoreDefaultDashboardDataPeriodUseCase
 ) : StoreActionExecutor<DashboardAction, DashboardState, DashboardEffect, DashboardEvent> {
 
@@ -43,11 +46,23 @@ class DashboardActionExecutor @Inject constructor(
                     DashboardIntent.ClickOnRestoreDefaultPeriodButton -> {
                         handleClickOnRestoreDefaultPeriodButton()
                     }
+                    DashboardIntent.ClickOnCurrentPeriod -> {
+                        handleClickOnCurrentPeriod(eventConsumer)
+                    }
                 }
             }
             is DashboardAction.FormatDashboard -> {
                 handleFormatDashboardAction(action, state)
             }
+        }
+    }
+
+    private fun handleClickOnCurrentPeriod(
+        eventConsumer: Consumer<DashboardEvent>
+    ): Flow<DashboardEffect> {
+        return emptyFlowAction {
+            val cells = periodTypePopupMenuCellsBuilder.build()
+            eventConsumer(DashboardEvent.ShowPeriodTypesPopupMenu(cells))
         }
     }
 

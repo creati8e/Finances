@@ -47,6 +47,9 @@ class DashboardHeaderWidgetCellRenderer :
             restoreDefaultPeriodButton.onViewClick { view ->
                 clickListener?.onClick(view, adapterPosition)
             }
+            currentPeriodLayout.onViewClick { view ->
+                clickListener?.onClick(view, adapterPosition)
+            }
         }
     }
 

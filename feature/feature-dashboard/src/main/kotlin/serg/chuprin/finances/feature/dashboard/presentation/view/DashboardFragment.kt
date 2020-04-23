@@ -2,15 +2,18 @@ package serg.chuprin.finances.feature.dashboard.presentation.view
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.api.load
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import serg.chuprin.adapter.DiffMultiViewAdapter
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
+import serg.chuprin.finances.core.api.presentation.view.popup.menu.PopupMenuWindow
 import serg.chuprin.finances.feature.dashboard.R
 import serg.chuprin.finances.feature.dashboard.presentation.di.DashboardComponent
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
+import serg.chuprin.finances.feature.dashboard.presentation.model.store.DashboardEvent
 import serg.chuprin.finances.feature.dashboard.presentation.model.store.DashboardIntent
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.diff.DashboardAdapterDiffCallback
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.moneyaccounts.renderer.DashboardMoneyAccountsWidgetCellRenderer
@@ -38,30 +41,49 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         cellsAdapter.clickListener = { cell, clickedView, _ ->
-            if (cell is DashboardWidgetCell.MoneyAccounts && clickedView.id == R.id.subtitleLayout) {
-                viewModel.dispatchIntent(DashboardIntent.ToggleMoneyAccountsVisibility(cell))
-            } else if (cell is DashboardWidgetCell.Header) {
-                when (clickedView.id) {
-                    R.id.nextPeriodButton -> {
-                        viewModel.dispatchIntent(DashboardIntent.ClickOnNextPeriodButton)
+            when (cell) {
+                is DashboardWidgetCell.MoneyAccounts -> {
+                    if (clickedView.id == R.id.subtitleLayout) {
+                        viewModel.dispatchIntent(DashboardIntent.ToggleMoneyAccountsVisibility(cell))
                     }
-                    R.id.previousPeriodButton -> {
-                        viewModel.dispatchIntent(DashboardIntent.ClickOnPreviousPeriodButton)
-                    }
-                    R.id.restoreDefaultPeriodButton -> {
-                        viewModel.dispatchIntent(DashboardIntent.ClickOnRestoreDefaultPeriodButton)
+                }
+                is DashboardWidgetCell.Header -> {
+                    when (clickedView.id) {
+                        R.id.currentPeriodLayout -> {
+                            viewModel.dispatchIntent(DashboardIntent.ClickOnCurrentPeriod)
+                        }
+                        R.id.nextPeriodButton -> {
+                            viewModel.dispatchIntent(DashboardIntent.ClickOnNextPeriodButton)
+                        }
+                        R.id.previousPeriodButton -> {
+                            viewModel.dispatchIntent(DashboardIntent.ClickOnPreviousPeriodButton)
+                        }
+                        R.id.restoreDefaultPeriodButton -> {
+                            viewModel.dispatchIntent(DashboardIntent.ClickOnRestoreDefaultPeriodButton)
+                        }
                     }
                 }
             }
         }
 
         with(viewModel) {
+            eventsLiveData(::handleEvent)
             cellsLiveData(cellsAdapter::setItems)
             userPhotoLiveData { photoUrl ->
                 userPhotoImageView.load(photoUrl) {
                     error(CoreR.drawable.ic_user_photo_placeholder)
                     placeholder(CoreR.drawable.ic_user_photo_placeholder)
                 }
+            }
+        }
+    }
+
+    private fun handleEvent(event: DashboardEvent) {
+        return when (event) {
+            is DashboardEvent.ShowPeriodTypesPopupMenu -> {
+                val anchorView = recyclerView.findViewById<ViewGroup>(R.id.currentPeriodLayout)
+                // TOTO: Optimize.
+                PopupMenuWindow(event.menuCells.toTypedArray(), {}, {}).show(anchorView)
             }
         }
     }

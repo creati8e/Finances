@@ -30,6 +30,7 @@ object Injector {
         return DaggerDashboardDependenciesComponent
             .builder()
             .coreManagerProvider(coreProvider)
+            .coreBuildersProvider(coreProvider)
             .coreServicesProvider(coreProvider)
             .coreFormattersProvider(coreProvider)
             .coreRepositoriesProvider(coreProvider)
