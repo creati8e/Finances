@@ -27,6 +27,11 @@ import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.diff.pa
 class DashboardMoneyAccountsWidgetCellRenderer :
     ContainerRenderer<DashboardWidgetCell.MoneyAccounts>() {
 
+    private companion object {
+        private const val EXPANSION_ARROW_ANIMATION_DURATION = 400L
+        private val animationInterpolator = FastOutSlowInInterpolator()
+    }
+
     override val type: Int = R.layout.cell_widget_dashboard_money_accounts
 
     private val moneyAccountCellsAdapter =
@@ -81,11 +86,10 @@ class DashboardMoneyAccountsWidgetCellRenderer :
     private fun animateExpansionArrow(holder: ContainerHolder, isExpanded: Boolean) {
         with(holder.expansionArrowImageView) {
             animation?.cancel()
-            rotation = 0f
             animate()
-                .rotationBy(if (isExpanded) 180f else -180f)
-                .setDuration(400L)
-                .setInterpolator(FastOutSlowInInterpolator())
+                .setInterpolator(animationInterpolator)
+                .rotationBy(if (isExpanded) -180f else 180f)
+                .setDuration(EXPANSION_ARROW_ANIMATION_DURATION)
                 .start()
         }
     }
@@ -130,7 +134,6 @@ class DashboardMoneyAccountsWidgetCellRenderer :
         with(view) {
             // Remember initial view height before changing it.
             val viewHeight = measuredHeight
-            val density = context.resources.displayMetrics.density
             startAnimation(
                 object : Animation() {
                     override fun applyTransformation(
@@ -140,7 +143,9 @@ class DashboardMoneyAccountsWidgetCellRenderer :
                         block(view, interpolatedTime, viewHeight)
                     }
                 }.apply<Animation> {
-                    interpolator = FastOutSlowInInterpolator()
+                    interpolator = animationInterpolator
+
+                    val density = context.resources.displayMetrics.density
                     duration = (viewHeight / density).toLong() + 150
                 }
             )
