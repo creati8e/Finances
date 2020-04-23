@@ -1,17 +1,9 @@
 package serg.chuprin.finances.feature.dashboard.presentation.view.adapter.moneyaccounts.renderer
 
-import android.view.View
-import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.Transformation
-import androidx.annotation.DrawableRes
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
 import kotlinx.android.synthetic.main.cell_widget_dashboard_money_accounts.*
 import serg.chuprin.adapter.*
-import serg.chuprin.finances.core.api.presentation.view.extensions.makeGone
-import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisible
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisibleOrGone
 import serg.chuprin.finances.core.api.presentation.view.extensions.onViewClick
 import serg.chuprin.finances.feature.dashboard.R
@@ -19,6 +11,7 @@ import serg.chuprin.finances.feature.dashboard.presentation.model.cells.Dashboar
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.moneyaccounts.diff.DashboardMoneyAccountsDiffCallback
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.moneyaccounts.diff.payload.DashboardMoneyAccountCellsChangedPayload
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.moneyaccounts.diff.payload.DashboardMoneyAccountsExpansionChangedPayload
+import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.moneyaccounts.renderer.animation.DashboardMoneyAccountsWidgetAnimationController
 
 
 /**
@@ -27,12 +20,9 @@ import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.moneyac
 class DashboardMoneyAccountsWidgetCellRenderer :
     ContainerRenderer<DashboardWidgetCell.MoneyAccounts>() {
 
-    private companion object {
-        private const val EXPANSION_ARROW_ANIMATION_DURATION = 400L
-        private val animationInterpolator = FastOutSlowInInterpolator()
-    }
-
     override val type: Int = R.layout.cell_widget_dashboard_money_accounts
+
+    private val animationController = DashboardMoneyAccountsWidgetAnimationController()
 
     private val moneyAccountCellsAdapter =
         DiffMultiViewAdapter(DashboardMoneyAccountsDiffCallback()).apply {
@@ -42,7 +32,9 @@ class DashboardMoneyAccountsWidgetCellRenderer :
 
     override fun bindView(holder: ContainerHolder, model: DashboardWidgetCell.MoneyAccounts) {
         moneyAccountCellsAdapter.setItems(model.cells)
-        holder.expansionArrowImageView.setImageResource(getExpansionArrowDrawableRes(model.isExpanded))
+        holder.expansionArrowImageView.setImageResource(
+            if (model.isExpanded) R.drawable.ic_collapse else R.drawable.ic_expand
+        )
         holder.expandableLayout.makeVisibleOrGone(model.isExpanded)
     }
 
@@ -52,14 +44,11 @@ class DashboardMoneyAccountsWidgetCellRenderer :
         payloads: MutableList<Any>
     ) {
         if (DashboardMoneyAccountsExpansionChangedPayload in payloads) {
-            animateExpansionArrow(holder, model.isExpanded)
-
-            val expandableLayout = holder.expandableLayout.also { it.animation?.cancel() }
-            if (model.isExpanded) {
-                collapse(expandableLayout)
-            } else {
-                expand(expandableLayout)
-            }
+            animationController.toggleExpansion(
+                model.isExpanded,
+                holder.expandableLayout,
+                holder.expansionArrowImageView
+            )
         }
         if (DashboardMoneyAccountCellsChangedPayload in payloads) {
             moneyAccountCellsAdapter.setItems(model.cells)
@@ -81,81 +70,6 @@ class DashboardMoneyAccountsWidgetCellRenderer :
             (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
-    }
-
-    private fun animateExpansionArrow(holder: ContainerHolder, isExpanded: Boolean) {
-        with(holder.expansionArrowImageView) {
-            animation?.cancel()
-            animate()
-                .setInterpolator(animationInterpolator)
-                .rotationBy(if (isExpanded) -180f else 180f)
-                .setDuration(EXPANSION_ARROW_ANIMATION_DURATION)
-                .start()
-        }
-    }
-
-    private fun expand(expandableLayout: ViewGroup) {
-        animate(expandableLayout) { view, interpolatedTime, viewHeight ->
-            if (interpolatedTime == 1f) {
-                view.makeGone()
-            } else {
-                with(view) {
-                    alpha = 1f - interpolatedTime
-                    layoutParams.height = viewHeight - (viewHeight * interpolatedTime).toInt()
-                    requestLayout()
-                }
-            }
-        }
-    }
-
-    private fun collapse(expandableLayout: ViewGroup) {
-        with(expandableLayout) {
-            // Measure first to get measured height.
-            measure(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-            layoutParams.height = 1
-            makeVisible()
-        }
-        animate(expandableLayout) { view, interpolatedTime, viewHeight ->
-            with(view) {
-                alpha = interpolatedTime
-                layoutParams.height = ((viewHeight * interpolatedTime).toInt())
-                requestLayout()
-            }
-        }
-    }
-
-    private inline fun animate(
-        view: View,
-        crossinline block: (view: View, interpolatedTime: Float, viewHeight: Int) -> Unit
-    ) {
-        with(view) {
-            // Remember initial view height before changing it.
-            val viewHeight = measuredHeight
-            startAnimation(
-                object : Animation() {
-                    override fun applyTransformation(
-                        interpolatedTime: Float,
-                        transformation: Transformation
-                    ) {
-                        block(view, interpolatedTime, viewHeight)
-                    }
-                }.apply<Animation> {
-                    interpolator =
-                        animationInterpolator
-
-                    val density = context.resources.displayMetrics.density
-                    duration = (viewHeight / density).toLong() + 150
-                }
-            )
-        }
-    }
-
-    @DrawableRes
-    private fun getExpansionArrowDrawableRes(isExpanded: Boolean): Int {
-        return if (isExpanded) R.drawable.ic_collapse else R.drawable.ic_expand
     }
 
 }
