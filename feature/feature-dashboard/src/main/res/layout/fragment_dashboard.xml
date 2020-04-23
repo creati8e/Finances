@@ -40,6 +40,8 @@
                 android:layout_height="32dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
+                android:clickable="true"
+                android:focusable="true"
                 tools:src="@tools:sample/avatars" />
 
         </RelativeLayout>

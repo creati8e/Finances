@@ -6,7 +6,7 @@
     style="@style/TextAppearance.AppCompat.Body1"
     android:layout_width="match_parent"
     android:layout_height="56dp"
-    android:background="@drawable/bg_selection_rounded"
+    android:background="@drawable/bg_selection_rounded_transparent"
     android:clickable="true"
     android:focusable="true"
     android:gravity="center_vertical"

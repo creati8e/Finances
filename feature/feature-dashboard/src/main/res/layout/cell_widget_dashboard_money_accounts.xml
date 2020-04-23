@@ -16,7 +16,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/bg_selection_rounded"
+        android:background="@drawable/bg_selection_rounded_transparent"
         android:clickable="true"
         android:focusable="true"
         android:orientation="horizontal"
