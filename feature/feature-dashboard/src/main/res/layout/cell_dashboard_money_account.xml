@@ -11,7 +11,7 @@
     android:focusable="true"
     app:cardCornerRadius="@dimen/cornerRadiusBig"
     app:cardElevation="@dimen/cardViewElevation"
-    tools:rippleColor="?colorControlHighlight">
+    app:rippleColor="@color/money_account_color_selector">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

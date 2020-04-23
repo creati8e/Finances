@@ -1,11 +1,8 @@
 package serg.chuprin.finances.feature.dashboard.presentation.view.adapter.moneyaccounts.renderer
 
-import android.content.res.ColorStateList
 import kotlinx.android.synthetic.main.cell_dashboard_money_account.*
 import serg.chuprin.adapter.ContainerHolder
 import serg.chuprin.adapter.ContainerRenderer
-import serg.chuprin.finances.core.api.presentation.view.extensions.getAttributeColor
-import serg.chuprin.finances.core.api.presentation.view.extensions.getColorInt
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisibleOrGone
 import serg.chuprin.finances.feature.dashboard.R
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.moneyaccounts.DashboardMoneyAccountCell
@@ -39,16 +36,8 @@ class DashboardMoneyAccountCellRenderer : ContainerRenderer<DashboardMoneyAccoun
         with(holder) {
             nameTextView.text = model.name
             balanceTextView.text = model.balance
+            cardView.isActivated = model.favoriteIconIsVisible
             favoriteImageView.makeVisibleOrGone(model.favoriteIconIsVisible)
-
-            val context = cardView.context
-            if (model.favoriteIconIsVisible) {
-                val color = context.getColorInt(R.color.colorFavoriteOrangeRipple)
-                cardView.rippleColor = ColorStateList.valueOf(color)
-            } else {
-                val color = context.getAttributeColor(android.R.attr.colorControlHighlight)
-                cardView.rippleColor = ColorStateList.valueOf(color)
-            }
         }
     }
 
