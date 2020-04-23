@@ -11,7 +11,7 @@ import serg.chuprin.finances.core.api.domain.model.TransactionCategoryWithParent
  */
 interface TransactionCategoryRetrieverService {
 
-    fun getLastTransactions(
+    fun recentUserTransactionsInPeriodFlow(
         userId: Id,
         count: Int,
         dataPeriod: DataPeriod

@@ -21,7 +21,7 @@ internal class TransactionCategoryRetrieverServiceImpl @Inject constructor(
     private val categoryRepository: TransactionCategoryRepository
 ) : TransactionCategoryRetrieverService {
 
-    override fun getLastTransactions(
+    override fun recentUserTransactionsInPeriodFlow(
         userId: Id,
         count: Int,
         dataPeriod: DataPeriod
