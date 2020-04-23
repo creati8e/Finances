@@ -40,6 +40,18 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         cellsAdapter.clickListener = { cell, clickedView, _ ->
             if (cell is DashboardWidgetCell.MoneyAccounts && clickedView.id == R.id.subtitleLayout) {
                 viewModel.dispatchIntent(DashboardIntent.ToggleMoneyAccountsVisibility(cell))
+            } else if (cell is DashboardWidgetCell.Header) {
+                when (clickedView.id) {
+                    R.id.nextPeriodButton -> {
+                        viewModel.dispatchIntent(DashboardIntent.ClickOnNextPeriodButton)
+                    }
+                    R.id.previousPeriodButton -> {
+                        viewModel.dispatchIntent(DashboardIntent.ClickOnPreviousPeriodButton)
+                    }
+                    R.id.restoreDefaultPeriodButton -> {
+                        viewModel.dispatchIntent(DashboardIntent.ClickOnRestoreDefaultPeriodButton)
+                    }
+                }
             }
         }
 

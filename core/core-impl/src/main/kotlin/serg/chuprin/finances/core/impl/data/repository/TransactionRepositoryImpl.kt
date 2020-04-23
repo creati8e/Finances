@@ -49,8 +49,8 @@ internal class TransactionRepositoryImpl @Inject constructor(
                 transactions.mapNotNull { snapshot ->
                     mapper
                         .mapFromSnapshot(snapshot)
-                        ?.takeUnless { transaction ->
-                            transaction.isBalance && transaction.dateTime in dataPeriod
+                        ?.takeIf { transaction ->
+                            !transaction.isBalance && transaction.dateTime in dataPeriod
                         }
                 }
             }

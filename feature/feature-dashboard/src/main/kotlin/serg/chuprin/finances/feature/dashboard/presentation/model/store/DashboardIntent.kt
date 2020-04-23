@@ -7,6 +7,12 @@ import serg.chuprin.finances.feature.dashboard.presentation.model.cells.Dashboar
  */
 sealed class DashboardIntent {
 
+    object ClickOnNextPeriodButton : DashboardIntent()
+
+    object ClickOnPreviousPeriodButton : DashboardIntent()
+
+    object ClickOnRestoreDefaultPeriodButton : DashboardIntent()
+
     class ToggleMoneyAccountsVisibility(
         val widgetCell: DashboardWidgetCell.MoneyAccounts
     ) : DashboardIntent()

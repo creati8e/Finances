@@ -6,12 +6,14 @@ import serg.chuprin.finances.core.api.domain.model.DataPeriod
 import serg.chuprin.finances.core.api.domain.model.User
 import serg.chuprin.finances.core.api.domain.service.TransactionCategoryRetrieverService
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
+import serg.chuprin.finances.feature.dashboard.domain.repository.DashboardDataPeriodRepository
 import javax.inject.Inject
 
 /**
  * Created by Sergey Chuprin on 20.04.2020.
  */
 class DashboardRecentTransactionsWidgetBuilder @Inject constructor(
+    private val dataPeriodRepository: DashboardDataPeriodRepository,
     private val transactionCategoryRetrieverService: TransactionCategoryRetrieverService
 ) : DashboardWidgetBuilder<DashboardWidget.RecentTransactions> {
 
@@ -22,7 +24,10 @@ class DashboardRecentTransactionsWidgetBuilder @Inject constructor(
     override fun build(
         currentUser: User,
         currentPeriod: DataPeriod
-    ): Flow<DashboardWidget.RecentTransactions> {
+    ): Flow<DashboardWidget.RecentTransactions>? {
+        if (dataPeriodRepository.defaultDataPeriod != currentPeriod) {
+            return null
+        }
         return transactionCategoryRetrieverService
             .recentUserTransactionsInPeriodFlow(
                 userId = currentUser.id,

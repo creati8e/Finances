@@ -10,6 +10,9 @@ import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
  */
 interface DashboardWidgetBuilder<W : DashboardWidget> {
 
-    fun build(currentUser: User, currentPeriod: DataPeriod): Flow<W>
+    /**
+     * Method can return null if building widget is not possible or not required.
+     */
+    fun build(currentUser: User, currentPeriod: DataPeriod): Flow<W>?
 
 }

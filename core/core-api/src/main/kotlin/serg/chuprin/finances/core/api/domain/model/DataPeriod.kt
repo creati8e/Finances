@@ -35,8 +35,8 @@ data class DataPeriod(
     fun next(): DataPeriod {
         return when (periodType) {
             DataPeriodType.MONTH -> {
-                val startDateTime = startDate.firstDayOfNextMonth()
-                DataPeriod(startDateTime, startDate.lastDayOfMonth(), periodType)
+                val nextStartDate = startDate.firstDayOfNextMonth()
+                DataPeriod(nextStartDate, nextStartDate.lastDayOfMonth(), periodType)
             }
         }
     }
@@ -44,8 +44,8 @@ data class DataPeriod(
     fun previous(): DataPeriod {
         return when (periodType) {
             DataPeriodType.MONTH -> {
-                val startDateTime = startDate.firstDayOfPreviousMonth()
-                DataPeriod(startDateTime, startDate.lastDayOfMonth(), periodType)
+                val nextStartDate = startDate.firstDayOfPreviousMonth()
+                DataPeriod(nextStartDate, nextStartDate.lastDayOfMonth(), periodType)
             }
         }
     }

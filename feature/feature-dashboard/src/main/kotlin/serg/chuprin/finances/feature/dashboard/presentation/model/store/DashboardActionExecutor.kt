@@ -5,6 +5,10 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
+import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
+import serg.chuprin.finances.feature.dashboard.domain.model.DashboardDataPeriodChangeDirection
+import serg.chuprin.finances.feature.dashboard.domain.usecase.ChangeDashboardDataPeriodUseCase
+import serg.chuprin.finances.feature.dashboard.domain.usecase.RestoreDefaultDashboardDataPeriodUseCase
 import serg.chuprin.finances.feature.dashboard.presentation.model.builder.DashboardWidgetCellsBuilder
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
 import javax.inject.Inject
@@ -13,7 +17,9 @@ import javax.inject.Inject
  * Created by Sergey Chuprin on 16.04.2020.
  */
 class DashboardActionExecutor @Inject constructor(
-    private val widgetCellsBuilder: DashboardWidgetCellsBuilder
+    private val widgetCellsBuilder: DashboardWidgetCellsBuilder,
+    private val changeDataPeriodUseCase: ChangeDashboardDataPeriodUseCase,
+    private val restoreDefaultDataPeriodUseCase: RestoreDefaultDashboardDataPeriodUseCase
 ) : StoreActionExecutor<DashboardAction, DashboardState, DashboardEffect, DashboardEvent> {
 
     override fun invoke(
@@ -28,11 +34,33 @@ class DashboardActionExecutor @Inject constructor(
                     is DashboardIntent.ToggleMoneyAccountsVisibility -> {
                         handleToggleMoneyAccountsVisibilityIntent(intent, state)
                     }
+                    DashboardIntent.ClickOnNextPeriodButton -> {
+                        handlePeriodChangeIntent(state, DashboardDataPeriodChangeDirection.NEXT)
+                    }
+                    DashboardIntent.ClickOnPreviousPeriodButton -> {
+                        handlePeriodChangeIntent(state, DashboardDataPeriodChangeDirection.PREVIOUS)
+                    }
+                    DashboardIntent.ClickOnRestoreDefaultPeriodButton -> {
+                        handleClickOnRestoreDefaultPeriodButton()
+                    }
                 }
             }
             is DashboardAction.FormatDashboard -> {
                 handleFormatDashboardAction(action, state)
             }
+        }
+    }
+
+    private fun handleClickOnRestoreDefaultPeriodButton(): Flow<DashboardEffect> {
+        return emptyFlowAction(restoreDefaultDataPeriodUseCase::execute)
+    }
+
+    private fun handlePeriodChangeIntent(
+        state: DashboardState,
+        changeDirection: DashboardDataPeriodChangeDirection
+    ): Flow<DashboardEffect> {
+        return emptyFlowAction {
+            changeDataPeriodUseCase.execute(state.dashboard.currentDataPeriod, changeDirection)
         }
     }
 

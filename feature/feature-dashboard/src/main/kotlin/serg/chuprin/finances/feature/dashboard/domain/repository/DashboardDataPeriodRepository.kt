@@ -8,6 +8,8 @@ import serg.chuprin.finances.core.api.domain.model.DataPeriod
  */
 interface DashboardDataPeriodRepository {
 
+    val defaultDataPeriod: DataPeriod
+
     val currentDataPeriodFlow: Flow<DataPeriod>
 
     fun setCurrentDataPeriod(dataPeriod: DataPeriod)

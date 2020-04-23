@@ -1,5 +1,7 @@
 package serg.chuprin.finances.feature.dashboard.domain.model
 
+import serg.chuprin.finances.core.api.domain.model.DataPeriod
+import serg.chuprin.finances.core.api.domain.model.DataPeriodType
 import serg.chuprin.finances.core.api.domain.model.User
 
 /**
@@ -7,5 +9,6 @@ import serg.chuprin.finances.core.api.domain.model.User
  */
 data class Dashboard(
     val user: User = User.EMPTY,
-    val widgets: DashboardWidgets = DashboardWidgets()
+    val widgets: DashboardWidgets = DashboardWidgets(),
+    val currentDataPeriod: DataPeriod = DataPeriod.from(DataPeriodType.DEFAULT)
 )
