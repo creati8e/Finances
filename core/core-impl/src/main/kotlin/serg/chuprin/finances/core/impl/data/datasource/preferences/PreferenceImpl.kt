@@ -7,7 +7,7 @@ import serg.chuprin.finances.core.api.data.datasource.preferences.Preference
 /**
  * Created by Sergey Chuprin on 17.03.2019.
  */
-class PreferenceImpl<T : Any>(
+internal class PreferenceImpl<T : Any>(
     private val pref: Pref<T>
 ) : Preference<T> {
 

@@ -17,7 +17,7 @@ import javax.inject.Inject
  * Created by Sergey Chuprin on 19.04.2020.
  */
 @OptIn(UnstableDefault::class)
-class PredefinedTransactionCategoriesDataSource @Inject constructor(
+internal class PredefinedTransactionCategoriesDataSource @Inject constructor(
     private val context: Context
 ) {
 

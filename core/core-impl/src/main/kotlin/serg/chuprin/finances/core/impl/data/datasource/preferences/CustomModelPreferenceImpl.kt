@@ -9,7 +9,7 @@ import serg.chuprin.finances.core.api.data.datasource.preferences.mapper.Prefere
 /**
  * Created by Sergey Chuprin on 03.06.2019.
  */
-class CustomModelPreferenceImpl<M>(
+internal class CustomModelPreferenceImpl<M>(
     private val pref: Pref<String>,
     private val mapper: PreferenceMapper<M>
 ) : Preference<M> {

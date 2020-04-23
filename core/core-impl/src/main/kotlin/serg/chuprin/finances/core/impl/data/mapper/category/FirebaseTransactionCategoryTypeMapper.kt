@@ -11,7 +11,7 @@ import javax.inject.Inject
 /**
  * Created by Sergey Chuprin on 20.04.2020.
  */
-class FirebaseTransactionCategoryTypeMapper @Inject constructor() :
+internal class FirebaseTransactionCategoryTypeMapper @Inject constructor() :
     ModelMapper<String, TransactionCategoryType>,
     ReverseModelMapper<String, TransactionCategoryType> {
 

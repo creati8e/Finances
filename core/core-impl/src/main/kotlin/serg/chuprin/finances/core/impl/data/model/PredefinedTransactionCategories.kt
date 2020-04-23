@@ -5,7 +5,7 @@ import serg.chuprin.finances.core.impl.data.datasource.assets.TransactionCategor
 /**
  * Created by Sergey Chuprin on 19.04.2020.
  */
-class PredefinedTransactionCategories(
+internal class PredefinedTransactionCategories(
     val incomeCategories: List<TransactionCategoryAssetDto>,
     val expenseCategories: List<TransactionCategoryAssetDto>
 )
