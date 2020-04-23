@@ -5,4 +5,5 @@
     <color name="colorAccent">#519657</color>
     <color name="colorAccentRipple">#42519657</color>
     <color name="colorTextPrimary">#FFF</color>
+    <color name="colorTextSecondary">#E6FFFFFF</color>
 </resources>
