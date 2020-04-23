@@ -1,7 +1,9 @@
 package serg.chuprin.finances.feature.dashboard.domain.usecase
 
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.feature.dashboard.domain.builder.DashboardWidgetBuilder
 import serg.chuprin.finances.feature.dashboard.domain.model.Dashboard
@@ -25,17 +27,17 @@ class BuildDashboardUseCase @Inject constructor(
                 currentUser to currentPeriod
             }
             .flatMapLatest { (currentUser, currentPeriod) ->
-                widgetBuilders
-                    .map { builder ->
-                        builder.build(currentUser, currentPeriod)
-                    }
-                    .merge()
-                    .scan(
+                val flows = widgetBuilders.map { builder ->
+                    builder.build(currentUser, currentPeriod)
+                }
+                combine(flows) { arr ->
+                    arr.fold(
                         Dashboard(currentUser),
                         { dashboard, widget ->
                             dashboard.copy(widgets = dashboard.widgets.add(widget))
                         }
                     )
+                }
             }
     }
 

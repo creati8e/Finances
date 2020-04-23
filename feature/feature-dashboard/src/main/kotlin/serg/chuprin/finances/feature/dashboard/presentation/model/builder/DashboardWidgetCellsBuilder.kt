@@ -58,7 +58,7 @@ class DashboardWidgetCellsBuilder @Inject constructor(
                 return mergedCell!!
             }
         }
-        throw IllegalStateException("Widget cell builder not found for widget ${newCell.widget.type}")
+        return newCell
     }
 
     private fun buildWidgetCell(widget: DashboardWidget): DashboardWidgetCell {
