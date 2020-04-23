@@ -18,7 +18,7 @@ class DashboardTransactionCellRenderer : ContainerRenderer<DashboardTransactionC
             amountTextView.text = model.amount
             dateTextView.text = model.formattedDate
             categoryTextView.text = model.categoryName
-            amountTextView.setTextColor(model.amountColor)
+            amountTextView.isActivated = model.isIncome
         }
     }
 

@@ -3,7 +3,6 @@ package serg.chuprin.finances.core.impl.presentation.model.manager
 import android.content.Context
 import androidx.annotation.*
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
-import serg.chuprin.finances.core.api.presentation.view.extensions.getAttributeColor
 import serg.chuprin.finances.core.api.presentation.view.extensions.getColorInt
 import serg.chuprin.finances.core.api.presentation.view.extensions.getDimenDpInt
 import javax.inject.Inject
@@ -20,17 +19,12 @@ internal class ResourceManagerImpl @Inject constructor(
 
     override fun getString(@StringRes stringRes: Int): String = context.getString(stringRes)
 
-    @ColorInt
-    override fun getThemeColor(@AttrRes colorAttrRes: Int): Int {
-        return context.getAttributeColor(colorAttrRes)
-    }
-
     override fun getDimenInt(@DimenRes dimenRes: Int): Int {
         return context.getDimenDpInt(dimenRes)
     }
 
-    override fun getString(@StringRes stringRes: Int, vararg arrayOfAnys: Any): String {
-        return context.getString(stringRes, *arrayOfAnys)
+    override fun getString(@StringRes stringRes: Int, vararg arrayOfAny: Any): String {
+        return context.getString(stringRes, *arrayOfAny)
     }
 
     override fun getPlurals(@PluralsRes pluralsRes: Int, count: Int): String {

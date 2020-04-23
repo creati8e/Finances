@@ -1,6 +1,5 @@
 package serg.chuprin.finances.feature.dashboard.presentation.model.cells.transactions
 
-import androidx.annotation.ColorInt
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.Transaction
 import serg.chuprin.finances.core.api.presentation.model.cells.DiffCell
@@ -12,7 +11,7 @@ data class DashboardTransactionCell(
     val amount: String,
     val categoryName: String,
     val formattedDate: String,
-    @ColorInt val amountColor: Int,
+    val isIncome: Boolean,
     val transaction: Transaction
 ) : DiffCell<Id> {
 

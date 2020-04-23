@@ -29,10 +29,10 @@
         style="@style/TextAppearance.MaterialComponents.Body2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textColor="@color/transaction_amount_color_selector"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="@sample/sample_data.json/amounts/amounts/amount"
-        tools:textColor="#4CAF50" />
+        tools:text="@sample/sample_data.json/amounts/amounts/amount" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/dateTextView"

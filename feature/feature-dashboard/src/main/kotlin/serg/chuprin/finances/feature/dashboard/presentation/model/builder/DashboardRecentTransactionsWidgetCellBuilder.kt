@@ -1,6 +1,5 @@
 package serg.chuprin.finances.feature.dashboard.presentation.model.builder
 
-import androidx.annotation.ColorInt
 import serg.chuprin.finances.core.api.domain.model.Transaction
 import serg.chuprin.finances.core.api.domain.model.TransactionCategoryWithParent
 import serg.chuprin.finances.core.api.presentation.formatter.DateFormatter
@@ -53,19 +52,11 @@ class DashboardRecentTransactionsWidgetCellBuilder @Inject constructor(
             DashboardTransactionCell(
                 amount = formattedAmount,
                 transaction = transaction,
-                amountColor = transaction.formatColor(),
+                isIncome = transaction.isIncome,
                 categoryName = categoryWithParent.format(),
                 formattedDate = dateFormatter.formatForTransaction(transaction.dateTime)
             )
         }
-    }
-
-    @ColorInt
-    private fun Transaction.formatColor(): Int {
-        if (isIncome) {
-            return resourceManger.getColor(CoreR.color.colorGreen)
-        }
-        return resourceManger.getThemeColor(android.R.attr.textColorPrimary)
     }
 
     private fun TransactionCategoryWithParent?.format(): String {

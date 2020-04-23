@@ -19,9 +19,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(CoreApiR.style.AppTheme)
-        // Set theme to application.
-        // It will allow us to retrieve theme related attributes from application context.
-        application.theme.applyStyle(CoreApiR.style.AppTheme, true)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         viewModel.userAuthorizedLiveData.observe(this, Observer(::handleAppLaunchState))
