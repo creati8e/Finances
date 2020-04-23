@@ -2,6 +2,7 @@ package serg.chuprin.finances.feature.dashboard.presentation.model.builder
 
 import serg.chuprin.finances.core.api.domain.model.Transaction
 import serg.chuprin.finances.core.api.domain.model.TransactionCategoryWithParent
+import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
 import serg.chuprin.finances.core.api.presentation.formatter.DateFormatter
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.formatter.AmountFormatter
@@ -49,24 +50,29 @@ class DashboardRecentTransactionsWidgetCellBuilder @Inject constructor(
                 withCurrencySymbol = true,
                 amount = transaction.amount
             )
+            val (parentCategoryName, subcategoryName) = categoryWithParent.format()
             DashboardTransactionCell(
                 amount = formattedAmount,
                 transaction = transaction,
                 isIncome = transaction.isIncome,
-                categoryName = categoryWithParent.format(),
+                subcategoryName = subcategoryName,
+                parentCategoryName = parentCategoryName,
                 formattedDate = dateFormatter.formatForTransaction(transaction.dateTime)
             )
         }
     }
 
-    private fun TransactionCategoryWithParent?.format(): String {
-        if (this == null) {
-            return resourceManger.getString(CoreR.string.no_category)
+    private fun TransactionCategoryWithParent?.format(): Pair<String, String> {
+        return when {
+            this == null -> {
+                val parentCategoryName = resourceManger.getString(CoreR.string.no_category)
+                parentCategoryName to EMPTY_STRING
+            }
+            parentCategory != null -> {
+                parentCategory!!.name to category.name
+            }
+            else -> category.name to EMPTY_STRING
         }
-        if (parentCategory != null) {
-            return "${parentCategory!!.name}\\${category.name}"
-        }
-        return category.name
     }
 
 }

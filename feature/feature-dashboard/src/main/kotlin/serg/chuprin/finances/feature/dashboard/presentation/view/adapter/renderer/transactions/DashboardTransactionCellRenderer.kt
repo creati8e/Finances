@@ -3,6 +3,7 @@ package serg.chuprin.finances.feature.dashboard.presentation.view.adapter.render
 import kotlinx.android.synthetic.main.cell_dashboard_transaction.*
 import serg.chuprin.adapter.ContainerHolder
 import serg.chuprin.adapter.ContainerRenderer
+import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisibleOrGone
 import serg.chuprin.finances.feature.dashboard.R
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.transactions.DashboardTransactionCell
 
@@ -17,8 +18,11 @@ class DashboardTransactionCellRenderer : ContainerRenderer<DashboardTransactionC
         with(holder) {
             amountTextView.text = model.amount
             dateTextView.text = model.formattedDate
-            categoryTextView.text = model.categoryName
             amountTextView.isActivated = model.isIncome
+            subcategoryTextView.text = model.subcategoryName
+            parentCategoryTextView.text = model.parentCategoryName
+
+            subcategoryTextView.makeVisibleOrGone(model.subcategoryName.isNotEmpty())
         }
     }
 

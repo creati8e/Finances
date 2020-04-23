@@ -4,7 +4,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
-import serg.chuprin.finances.core.api.domain.model.*
+import serg.chuprin.finances.core.api.domain.model.DataPeriod
+import serg.chuprin.finances.core.api.domain.model.Id
+import serg.chuprin.finances.core.api.domain.model.Transaction
+import serg.chuprin.finances.core.api.domain.model.TransactionCategoryWithParent
 import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepository
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.api.domain.service.TransactionCategoryRetrieverService
@@ -34,25 +37,16 @@ internal class TransactionCategoryRetrieverServiceImpl @Inject constructor(
                     categoryRepository.categoriesFlow(transactions.categoryIds)
                 ) { t1, t2 ->
                     suspendCoroutine<Map<Transaction, TransactionCategoryWithParent?>> {
-                        it.resume(assignCategories(t1, t2))
+                        it.resume(associateTransactionsWithCategories(t1, t2))
                     }
                 }
             }
     }
 
-    private fun assignCategories(
+    private fun associateTransactionsWithCategories(
         transactions: List<Transaction>,
-        categories: List<TransactionCategory>
+        categoryWithParentMap: Map<Id, TransactionCategoryWithParent>
     ): Map<Transaction, TransactionCategoryWithParent?> {
-        val categoryWithParentMap = categories.associateBy(
-            { category -> category.id },
-            { category ->
-                TransactionCategoryWithParent(
-                    category = category,
-                    parentCategory = categories.find { it.parentCategoryId == category.parentCategoryId }
-                )
-            }
-        )
         return transactions.associateBy(
             { transaction -> transaction },
             { transaction -> categoryWithParentMap[transaction.categoryId] }

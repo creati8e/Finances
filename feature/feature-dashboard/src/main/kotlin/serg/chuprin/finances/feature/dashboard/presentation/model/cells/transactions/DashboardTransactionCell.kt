@@ -9,9 +9,10 @@ import serg.chuprin.finances.core.api.presentation.model.cells.DiffCell
  */
 data class DashboardTransactionCell(
     val amount: String,
-    val categoryName: String,
-    val formattedDate: String,
     val isIncome: Boolean,
+    val formattedDate: String,
+    val subcategoryName: String,
+    val parentCategoryName: String,
     val transaction: Transaction
 ) : DiffCell<Id> {
 

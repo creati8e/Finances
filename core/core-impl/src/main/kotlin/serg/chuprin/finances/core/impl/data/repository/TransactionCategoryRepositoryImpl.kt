@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.map
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.TransactionCategory
 import serg.chuprin.finances.core.api.domain.model.TransactionCategoryType
+import serg.chuprin.finances.core.api.domain.model.TransactionCategoryWithParent
 import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepository
 import serg.chuprin.finances.core.impl.data.datasource.assets.PredefinedTransactionCategoriesDataSource
 import serg.chuprin.finances.core.impl.data.datasource.assets.TransactionCategoryAssetDto
@@ -27,14 +28,37 @@ internal class TransactionCategoryRepositoryImpl @Inject constructor(
             val allCategories = predefinedCategoriesDataSource.getCategories().run {
                 (expenseCategories + incomeCategories).mapNotNull { dto -> dto.map(userId) }
             }
-            firebaseDataSource.createTransactions(allCategories)
+            firebaseDataSource.createCategories(allCategories)
         }
     }
 
-    override fun categoriesFlow(categoryIds: List<Id>): Flow<List<TransactionCategory>> {
+    override fun categoriesFlow(categoryIds: List<Id>): Flow<Map<Id, TransactionCategoryWithParent>> {
         return firebaseDataSource
-            .categoriesFlow(categoryIds)
-            .map { categories -> categories.mapNotNull(mapper::mapFromSnapshot) }
+            .categoriesWithParentsFlow(categoryIds.map(Id::value))
+            .map { documentSnapshots ->
+                documentSnapshots
+                    .mapNotNull(mapper::mapFromSnapshot)
+                    .linkWithParents()
+            }
+    }
+
+    private fun List<TransactionCategory>.linkWithParents(): Map<Id, TransactionCategoryWithParent> {
+        return associateBy(
+            { category -> category.id },
+            { category ->
+                val parentCategory = if (category.parentCategoryId?.value.isNullOrEmpty()) {
+                    null
+                } else {
+                    find {
+                        category.parentCategoryId == it.parentCategoryId
+                    }
+                }
+                TransactionCategoryWithParent(
+                    category = category,
+                    parentCategory = parentCategory
+                )
+            }
+        )
     }
 
     private fun TransactionCategoryAssetDto.map(userId: Id): TransactionCategory? {
