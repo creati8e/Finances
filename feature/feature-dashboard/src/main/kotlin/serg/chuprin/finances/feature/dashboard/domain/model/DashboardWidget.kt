@@ -1,8 +1,6 @@
 package serg.chuprin.finances.feature.dashboard.domain.model
 
-import serg.chuprin.finances.core.api.domain.model.DataPeriod
-import serg.chuprin.finances.core.api.domain.model.Transaction
-import serg.chuprin.finances.core.api.domain.model.TransactionCategoryWithParent
+import serg.chuprin.finances.core.api.domain.model.*
 import java.math.BigDecimal
 import java.util.*
 
@@ -14,7 +12,8 @@ sealed class DashboardWidget(val type: Type) {
     enum class Type(val order: Int) {
         MONEY_ACCOUNTS(1),
         HEADER(2),
-        RECENT_TRANSACTIONS(3)
+        RECENT_TRANSACTIONS(3),
+        CATEGORIES(4)
     }
 
     data class MoneyAccounts(
@@ -36,5 +35,10 @@ sealed class DashboardWidget(val type: Type) {
         val currency: Currency,
         val transactionWithCategoryMap: Map<Transaction, TransactionCategoryWithParent?>
     ) : DashboardWidget(type = Type.RECENT_TRANSACTIONS)
+
+    data class Categories(
+        val transactionType: PlainTransactionType,
+        val categoryAmounts: Map<TransactionCategory?, BigDecimal>
+    ) : DashboardWidget(type = Type.CATEGORIES)
 
 }

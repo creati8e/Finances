@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import serg.chuprin.finances.core.api.domain.model.DataPeriod
 import serg.chuprin.finances.core.api.domain.model.Id
+import serg.chuprin.finances.core.api.domain.model.PlainTransactionType
 import serg.chuprin.finances.core.api.domain.model.Transaction
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.impl.data.datasource.firebase.FirebaseTransactionDataSource
@@ -24,16 +25,26 @@ internal class TransactionRepositoryImpl @Inject constructor(
         firebaseDataSource.createTransaction(transaction)
     }
 
-    override fun userTransactionsFlow(userId: Id, dataPeriod: DataPeriod): Flow<List<Transaction>> {
+    override fun userTransactionsFlow(
+        userId: Id,
+        dataPeriod: DataPeriod?,
+        transactionType: PlainTransactionType?
+    ): Flow<List<Transaction>> {
         return firebaseDataSource
-            .userTransactionsFlow(userId)
+            .userTransactionsFlow(userId, dataPeriod)
             .map { transactions ->
-                transactions
-                    .mapNotNull { snapshot ->
-                        mapper
-                            .mapFromSnapshot(snapshot)
-                            ?.takeIf { transaction -> transaction.dateTime in dataPeriod }
+                if (transactionType != null) {
+                    transactions.mapNotNull { snapshot ->
+                        mapper.mapFromSnapshot(snapshot)?.takeIf { transaction ->
+                            when (transactionType) {
+                                PlainTransactionType.INCOME -> transaction.isIncome
+                                PlainTransactionType.EXPENSE -> transaction.isExpense
+                            }
+                        }
                     }
+                } else {
+                    transactions.mapNotNull(mapper::mapFromSnapshot)
+                }
             }
             .flowOn(Dispatchers.Default)
     }
@@ -44,14 +55,12 @@ internal class TransactionRepositoryImpl @Inject constructor(
         dataPeriod: DataPeriod
     ): Flow<List<Transaction>> {
         return firebaseDataSource
-            .recentUserTransactionsFlow(userId, count)
+            .recentUserTransactionsFlow(userId, count, dataPeriod)
             .map { transactions ->
                 transactions.mapNotNull { snapshot ->
                     mapper
                         .mapFromSnapshot(snapshot)
-                        ?.takeIf { transaction ->
-                            !transaction.isBalance && transaction.dateTime in dataPeriod
-                        }
+                        ?.takeIf { transaction -> !transaction.isBalance }
                 }
             }
             .flowOn(Dispatchers.Default)
@@ -60,13 +69,6 @@ internal class TransactionRepositoryImpl @Inject constructor(
     override fun moneyAccountTransactionsFlow(moneyAccountId: Id): Flow<List<Transaction>> {
         return firebaseDataSource
             .moneyAccountTransactionsFlow(moneyAccountId)
-            .map { transactions -> transactions.mapNotNull(mapper::mapFromSnapshot) }
-            .flowOn(Dispatchers.Default)
-    }
-
-    override fun userTransactionsFlow(userId: Id): Flow<List<Transaction>> {
-        return firebaseDataSource
-            .userTransactionsFlow(userId)
             .map { transactions -> transactions.mapNotNull(mapper::mapFromSnapshot) }
             .flowOn(Dispatchers.Default)
     }

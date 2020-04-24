@@ -7,11 +7,13 @@ import dagger.multibindings.IntoSet
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.mvi.store.BaseStateStore
 import serg.chuprin.finances.feature.dashboard.data.repository.DashboardDataPeriodRepositoryImpl
+import serg.chuprin.finances.feature.dashboard.data.repository.DashboardTransactionCategoriesTypeRepositoryImpl
 import serg.chuprin.finances.feature.dashboard.domain.builder.DashboardHeaderWidgetBuilder
 import serg.chuprin.finances.feature.dashboard.domain.builder.DashboardMoneyAccountsWidgetBuilder
 import serg.chuprin.finances.feature.dashboard.domain.builder.DashboardRecentTransactionsWidgetBuilder
 import serg.chuprin.finances.feature.dashboard.domain.builder.DashboardWidgetBuilder
 import serg.chuprin.finances.feature.dashboard.domain.repository.DashboardDataPeriodRepository
+import serg.chuprin.finances.feature.dashboard.domain.repository.DashboardTransactionCategoriesTypeRepository
 import serg.chuprin.finances.feature.dashboard.presentation.model.builder.DashboardHeaderWidgetCellBuilder
 import serg.chuprin.finances.feature.dashboard.presentation.model.builder.DashboardMoneyAccountsWidgetCellBuilder
 import serg.chuprin.finances.feature.dashboard.presentation.model.builder.DashboardRecentTransactionsWidgetCellBuilder
@@ -47,6 +49,11 @@ interface DashboardModule {
         impl: DashboardDataPeriodRepositoryImpl
     ): DashboardDataPeriodRepository
 
+    @[Binds ScreenScope]
+    fun bindDashboardTransactionCategoriesTypeRepository(
+        impl: DashboardTransactionCategoriesTypeRepositoryImpl
+    ): DashboardTransactionCategoriesTypeRepository
+
     // region Widget builders.
 
     @[Binds ScreenScope IntoSet]
@@ -63,6 +70,11 @@ interface DashboardModule {
     fun bindDashboardMoneyAccountsWidgetBuilder(
         impl: DashboardMoneyAccountsWidgetBuilder
     ): DashboardWidgetBuilder<*>
+
+//    @[Binds ScreenScope IntoSet]
+//    fun bindDashboardCategoriesWidgetBuilder(
+//        impl: DashboardCategoriesWidgetBuilder
+//    ): DashboardWidgetBuilder<*>
 
     // endregion
 

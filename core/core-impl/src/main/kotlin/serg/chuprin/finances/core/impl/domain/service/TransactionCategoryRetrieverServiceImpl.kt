@@ -4,10 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
-import serg.chuprin.finances.core.api.domain.model.DataPeriod
-import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.Transaction
-import serg.chuprin.finances.core.api.domain.model.TransactionCategoryWithParent
+import serg.chuprin.finances.core.api.domain.model.*
 import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepository
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.api.domain.service.TransactionCategoryRetrieverService
@@ -41,6 +38,34 @@ internal class TransactionCategoryRetrieverServiceImpl @Inject constructor(
                     }
                 }
             }
+    }
+
+    override fun userCategoryTransactionsInPeriod(
+        userId: Id,
+        dataPeriod: DataPeriod,
+        transactionType: PlainTransactionType
+    ): Flow<Map<TransactionCategoryWithParent?, List<Transaction>>> {
+        return transactionRepository
+            .userTransactionsFlow(userId, dataPeriod, transactionType)
+            .flatMapLatest { transactions ->
+                combine(
+                    flowOf(transactions),
+                    categoryRepository.categoriesFlow(transactions.categoryIds)
+                ) { t1, t2 ->
+                    suspendCoroutine<Map<TransactionCategoryWithParent?, List<Transaction>>> {
+                        it.resume(associateCategoriesWithTransactions(t1, t2))
+                    }
+                }
+            }
+    }
+
+    private fun associateCategoriesWithTransactions(
+        transactions: List<Transaction>,
+        categoryWithParentMap: Map<Id, TransactionCategoryWithParent>
+    ): Map<TransactionCategoryWithParent?, List<Transaction>> {
+        return transactions.groupBy { transaction ->
+            categoryWithParentMap[transaction.categoryId]
+        }
     }
 
     private fun associateTransactionsWithCategories(
