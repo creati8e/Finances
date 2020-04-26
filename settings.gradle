@@ -8,6 +8,7 @@ include ':core:core-api'
 include ':core:core-mvi'
 include ':core:core-impl'
 include ':core:core-firebase'
+include ':core:core-pie-chart'
 
 // endregion
 

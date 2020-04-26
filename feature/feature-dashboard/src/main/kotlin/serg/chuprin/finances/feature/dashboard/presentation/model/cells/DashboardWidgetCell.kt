@@ -31,6 +31,12 @@ sealed class DashboardWidgetCell(
         override val widget: DashboardWidget.RecentTransactions
     ) : DashboardWidgetCell(widget)
 
+    data class Categories(
+        val totalAmount: String,
+        val transactionsType: String,
+        override val widget: DashboardWidget.Categories
+    ) : DashboardWidgetCell(widget)
+
     override val diffCellId: DashboardWidget.Type
         get() = widget.type
 

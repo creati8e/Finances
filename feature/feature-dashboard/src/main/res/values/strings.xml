@@ -11,4 +11,6 @@
 
     <string name="dashboard_money_accounts_subtitle">My accounts</string>
     <string name="dashboard_money_accounts_no_accounts">No accounts</string>
+
+    <string name="dashboard_categories_subtitle">Categories</string>
 </resources>

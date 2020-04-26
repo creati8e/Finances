@@ -38,8 +38,10 @@ class DashboardCategoriesWidgetBuilder @Inject constructor(
                     )
                     .map { categoryTransactionsMap ->
                         DashboardWidget.Categories(
-                            transactionType,
-                            calculateCategoryAmounts(categoryTransactionsMap)
+                            transactionType = transactionType,
+                            currency = currentUser.defaultCurrency,
+                            totalAmount = categoryTransactionsMap.values.flatten().amount.abs(),
+                            categoryAmounts = calculateCategoryAmounts(categoryTransactionsMap)
                         )
                     }
             }

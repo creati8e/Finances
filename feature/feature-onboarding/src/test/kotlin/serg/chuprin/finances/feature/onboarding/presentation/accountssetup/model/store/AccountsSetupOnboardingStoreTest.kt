@@ -6,6 +6,7 @@ import org.spekframework.spek2.style.gherkin.Feature
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.MoneyAccountBalance
 import serg.chuprin.finances.core.api.domain.model.User
+import serg.chuprin.finances.core.api.domain.model.period.DataPeriodType
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.test.utils.TimberTestTree
 import serg.chuprin.finances.feature.onboarding.R
@@ -233,5 +234,12 @@ private inline fun <reified S> AccountsSetupOnboardingState.assertCurrentStepIs(
 }
 
 private fun UserRepository.mockCurrentUser(currencyCode: String = "USD") {
-    coEvery { getCurrentUser() } returns User(Id("id"), "email", "url", "name", currencyCode)
+    coEvery { getCurrentUser() } returns User(
+        Id("id"),
+        "email",
+        "url",
+        "name",
+        DataPeriodType.MONTH,
+        currencyCode
+    )
 }

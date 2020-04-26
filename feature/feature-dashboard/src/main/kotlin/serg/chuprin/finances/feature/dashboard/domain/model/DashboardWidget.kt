@@ -41,6 +41,8 @@ sealed class DashboardWidget(val type: Type) {
     ) : DashboardWidget(type = Type.RECENT_TRANSACTIONS)
 
     data class Categories(
+        val currency: Currency,
+        val totalAmount: BigDecimal,
         val transactionType: PlainTransactionType,
         val categoryAmounts: Map<TransactionCategory?, BigDecimal>
     ) : DashboardWidget(type = Type.CATEGORIES)
