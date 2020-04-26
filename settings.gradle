@@ -18,5 +18,6 @@ include ':feature:feature-dashboard'
 include ':feature:feature-onboarding'
 include ':feature:feature-transaction'
 include ':feature:feature-authorization'
+include ':feature:feature-money-accounts'
 
 // endregion
