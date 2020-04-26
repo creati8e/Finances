@@ -12,11 +12,11 @@ import java.util.*
  */
 class DashboardMoneyAccounts :
     SortedMap<MoneyAccount, BigDecimal> by TreeMap<MoneyAccount, BigDecimal>(
-        ACCOUNTS_COMPARATOR
+        accountsComparator
     ) {
 
     companion object {
-        private val ACCOUNTS_COMPARATOR =
+        val accountsComparator: Comparator<MoneyAccount> =
             compareByDescending(MoneyAccount::isFavorite).thenComparing(MoneyAccount::name)
     }
 
