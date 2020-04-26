@@ -7,6 +7,8 @@ import serg.chuprin.finances.feature.dashboard.dependencies.DaggerDashboardDepen
 import serg.chuprin.finances.feature.dashboard.dependencies.DashboardDependencies
 import serg.chuprin.finances.feature.main.DaggerMainDependenciesComponent
 import serg.chuprin.finances.feature.main.MainDependencies
+import serg.chuprin.finances.feature.moneyaccounts.list.DaggerMoneyAccountsListDependenciesComponent
+import serg.chuprin.finances.feature.moneyaccounts.list.MoneyAccountsListDependencies
 import serg.chuprin.finances.feature.onboarding.DaggerOnboardingFeatureDependenciesComponent
 import serg.chuprin.finances.feature.onboarding.OnboardingFeatureDependencies
 
@@ -57,6 +59,13 @@ object Injector {
             .coreFormattersProvider(coreProvider)
             .coreRepositoriesProvider(coreProvider)
             .build()
+    }
+
+    fun getMoneyAccountsListDependencies(): MoneyAccountsListDependencies {
+        val coreProvider = CoreDependenciesComponent.get()
+        return DaggerMoneyAccountsListDependenciesComponent
+            .factory()
+            .repositoriesProvider(coreProvider)
     }
 
 }
