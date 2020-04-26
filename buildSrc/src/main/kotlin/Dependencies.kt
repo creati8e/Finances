@@ -30,6 +30,7 @@ object Libraries {
 
     const val COIL = "io.coil-kt:coil:0.9.5"
     const val TIMBER = "com.github.ajalt:timberkt:1.5.1"
+    const val FLEXBOX = "com.google.android:flexbox:2.0.1"
     const val JAVAX_ANNOTATIONS = "javax.inject:javax.inject:1"
     const val KOTLIN = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$KOTLIN_VER"
     const val KOTLIN_SERIALIZATION = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0"

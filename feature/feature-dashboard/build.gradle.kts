@@ -28,6 +28,7 @@ dependencies {
     // region UI.
 
     implementation(Libraries.COIL)
+    implementation(Libraries.FLEXBOX)
 
     // Navigation.
     implementationAll(Libraries.Android.Navigation.DEPENDENCIES)

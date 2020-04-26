@@ -59,19 +59,25 @@ class PieChartView @JvmOverloads constructor(
     }
 
     private val primaryTextPaint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = context.getAttributeColor(android.R.attr.textColorPrimary)
+        color = if (isInEditMode) {
+            Color.BLACK
+        } else {
+            context.getAttributeColor(android.R.attr.textColorPrimary)
+        }
         textSize = context.spToPx(PRIMARY_TEXT_SIZE_SP)
     }
 
     private val secondaryTextPaint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = context.getAttributeColor(android.R.attr.textColorSecondary)
+        if (isInEditMode) {
+            Color.DKGRAY
+        } else {
+            context.getAttributeColor(android.R.attr.textColorSecondary)
+        }
         textSize = context.spToPx(SECONDARY_TEXT_SIZE_SP)
     }
 
     init {
         if (isInEditMode) {
-            primaryTextPaint.color = Color.BLACK
-            secondaryTextPaint.color = Color.DKGRAY
             setData(
                 PieChartPreviewData.data,
                 animate = false,

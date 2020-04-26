@@ -2,6 +2,7 @@ package serg.chuprin.finances.feature.dashboard.presentation.model.cells
 
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.cells.DiffCell
+import serg.chuprin.finances.core.piechart.model.PieChartDataPart
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
 
 /**
@@ -34,6 +35,8 @@ sealed class DashboardWidgetCell(
     data class Categories(
         val totalAmount: String,
         val transactionsType: String,
+        val chartParts: List<PieChartDataPart>,
+        val categoryCells: List<DashboardCategoryChipCell>,
         override val widget: DashboardWidget.Categories
     ) : DashboardWidgetCell(widget)
 

@@ -11,6 +11,8 @@ inline class Id(
 
     companion object {
 
+        val UNKNOWN = Id("UNKNOWN")
+
         fun existing(value: String) = Id(value)
 
         fun createNew(): Id = Id(UUID.randomUUID().toString())

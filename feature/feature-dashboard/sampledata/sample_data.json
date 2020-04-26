@@ -49,5 +49,23 @@
         }
       ]
     }
+  ],
+  "category_amounts": [
+    {
+      "category_amounts": [
+        {
+          "amount": "Groceries 1000$"
+        },
+        {
+          "amount": "Shopping 750$"
+        },
+        {
+          "amount": "Food 100$"
+        },
+        {
+          "amount": "Medicine 50$"
+        }
+      ]
+    }
   ]
 }

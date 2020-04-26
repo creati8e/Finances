@@ -1,12 +1,13 @@
 package serg.chuprin.finances.feature.dashboard.presentation.view.adapter.renderer
 
-import android.graphics.Color
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import kotlinx.android.synthetic.main.cell_widget_dashboard_categories.*
-import serg.chuprin.adapter.ContainerHolder
-import serg.chuprin.adapter.ContainerRenderer
+import serg.chuprin.adapter.*
+import serg.chuprin.finances.core.api.presentation.view.adapter.diff.DiffCallback
 import serg.chuprin.finances.core.piechart.model.PieChartData
-import serg.chuprin.finances.core.piechart.model.PieChartDataPart
 import serg.chuprin.finances.feature.dashboard.R
+import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardCategoryChipCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
 
 /**
@@ -16,28 +17,33 @@ class DashboardCategoriesWidgetCellRenderer : ContainerRenderer<DashboardWidgetC
 
     override val type: Int = R.layout.cell_widget_dashboard_categories
 
-    private val colors = listOf(
-        Color.parseColor("#FFC107"),
-        Color.parseColor("#FF03A9F4"),
-        Color.parseColor("#FF8BC34A"),
-        Color.parseColor("#9ccc65")
-    )
+    private val categoryCellsAdapter =
+        DiffMultiViewAdapter<DashboardCategoryChipCell>(DiffCallback()).apply {
+            registerRenderer(DashboardCategoryChipCellRenderer())
+        }
 
     override fun bindView(holder: ContainerHolder, model: DashboardWidgetCell.Categories) {
-        val parts = model.widget.categoryAmounts.entries.mapIndexed { index, (_, amount) ->
-            PieChartDataPart(
-                amount.abs().toFloat(),
-                colors[index]
-            )
-        }
+        categoryCellsAdapter.setItems(model.categoryCells)
         holder.pieChart.setData(
             animate = true,
             // TODO
             secondaryText = "Expenses",
             primaryText = model.totalAmount,
-            pieChartData = PieChartData(parts)
+            pieChartData = PieChartData(model.chartParts)
         )
     }
 
+    override fun onVhCreated(
+        holder: ContainerHolder,
+        clickListener: Click?,
+        longClickListener: LongClick?
+    ) {
+        with(holder.recyclerView) {
+            adapter = categoryCellsAdapter
+            layoutManager = FlexboxLayoutManager(context).apply {
+                justifyContent = JustifyContent.FLEX_START
+            }
+        }
+    }
 
 }
