@@ -4,7 +4,7 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
-import serg.chuprin.finances.core.api.domain.model.PlainTransactionType
+import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.feature.dashboard.domain.repository.DashboardTransactionCategoriesTypeRepository
 import javax.inject.Inject
 

@@ -1,9 +1,9 @@
 package serg.chuprin.finances.feature.dashboard.domain.builder
 
 import kotlinx.coroutines.flow.*
-import serg.chuprin.finances.core.api.domain.model.DataPeriod
 import serg.chuprin.finances.core.api.domain.model.MoneyAccount
 import serg.chuprin.finances.core.api.domain.model.User
+import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.api.extensions.amount

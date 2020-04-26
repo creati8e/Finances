@@ -1,6 +1,6 @@
 package serg.chuprin.finances.feature.dashboard.domain.usecase
 
-import serg.chuprin.finances.core.api.domain.model.DataPeriod
+import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardDataPeriodChangeDirection
 import serg.chuprin.finances.feature.dashboard.domain.repository.DashboardDataPeriodRepository
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package serg.chuprin.finances.core.api.domain.model
+package serg.chuprin.finances.core.api.domain.model.category
 
 /**
  * Created by Sergey Chuprin on 20.04.2020.

@@ -2,7 +2,7 @@ package serg.chuprin.finances.core.api.domain.repository
 
 import kotlinx.coroutines.flow.Flow
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.TransactionCategoryWithParent
+import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
 
 /**
  * Created by Sergey Chuprin on 19.04.2020.

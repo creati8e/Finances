@@ -1,8 +1,8 @@
 package serg.chuprin.finances.core.impl.data.mapper.category
 
 import com.google.firebase.firestore.DocumentSnapshot
-import serg.chuprin.finances.core.api.domain.model.TransactionCategory
-import serg.chuprin.finances.core.api.domain.model.TransactionCategory.Companion.create
+import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
+import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory.Companion.create
 import serg.chuprin.finances.core.api.extensions.nonNullValuesMap
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionCategoryFieldsContract.FIELD_NAME
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionCategoryFieldsContract.FIELD_OWNER_ID

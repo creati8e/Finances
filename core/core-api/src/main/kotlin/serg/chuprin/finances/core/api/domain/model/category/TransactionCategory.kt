@@ -1,4 +1,6 @@
-package serg.chuprin.finances.core.api.domain.model
+package serg.chuprin.finances.core.api.domain.model.category
+
+import serg.chuprin.finances.core.api.domain.model.Id
 
 /**
  * Created by Sergey Chuprin on 19.04.2020.
@@ -27,8 +29,12 @@ data class TransactionCategory(
             return TransactionCategory(
                 name = name,
                 type = type,
-                id = Id.existing(id),
-                ownerId = Id.existing(ownerId),
+                id = Id.existing(
+                    id
+                ),
+                ownerId = Id.existing(
+                    ownerId
+                ),
                 parentCategoryId = parentCategoryId?.let(::Id)
             )
         }

@@ -1,5 +1,6 @@
 package serg.chuprin.finances.core.api.domain.model
 
+import serg.chuprin.finances.core.api.domain.model.period.DataPeriodType
 import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
 import java.util.*
 

@@ -1,4 +1,4 @@
-package serg.chuprin.finances.core.api.domain.model
+package serg.chuprin.finances.core.api.domain.model.period
 
 import serg.chuprin.finances.core.api.extensions.*
 import java.time.LocalDateTime
@@ -18,19 +18,35 @@ data class DataPeriod(
             return when (periodType) {
                 DataPeriodType.MONTH -> {
                     val startDateTime = LocalDateTime.now().firstDayOfMonth()
-                    DataPeriod(startDateTime, startDateTime.lastDayOfMonth(), periodType)
+                    DataPeriod(
+                        startDateTime,
+                        startDateTime.lastDayOfMonth(),
+                        periodType
+                    )
                 }
                 DataPeriodType.DAY -> {
                     val startDateTime = LocalDateTime.now().startOfDay()
-                    DataPeriod(startDateTime, startDateTime.endOfDay(), periodType)
+                    DataPeriod(
+                        startDateTime,
+                        startDateTime.endOfDay(),
+                        periodType
+                    )
                 }
                 DataPeriodType.WEEK -> {
                     val startDateTime = LocalDateTime.now().startOfWeek()
-                    DataPeriod(startDateTime, startDateTime.endOfWeek(), periodType)
+                    DataPeriod(
+                        startDateTime,
+                        startDateTime.endOfWeek(),
+                        periodType
+                    )
                 }
                 DataPeriodType.YEAR -> {
                     val startDateTime = LocalDateTime.now().startOfYear()
-                    DataPeriod(startDateTime, startDateTime.endOfYear(), periodType)
+                    DataPeriod(
+                        startDateTime,
+                        startDateTime.endOfYear(),
+                        periodType
+                    )
                 }
             }
         }
@@ -45,19 +61,35 @@ data class DataPeriod(
         return when (periodType) {
             DataPeriodType.MONTH -> {
                 val nextStartDate = startDate.firstDayOfNextMonth()
-                DataPeriod(nextStartDate, nextStartDate.lastDayOfMonth(), periodType)
+                DataPeriod(
+                    nextStartDate,
+                    nextStartDate.lastDayOfMonth(),
+                    periodType
+                )
             }
             DataPeriodType.WEEK -> {
                 val nextStartDate = startDate.plusWeeks(1).startOfWeek()
-                DataPeriod(nextStartDate, nextStartDate.endOfWeek(), periodType)
+                DataPeriod(
+                    nextStartDate,
+                    nextStartDate.endOfWeek(),
+                    periodType
+                )
             }
             DataPeriodType.YEAR -> {
                 val nextStartDate = startDate.startOfNextYear()
-                DataPeriod(nextStartDate, nextStartDate.endOfYear(), periodType)
+                DataPeriod(
+                    nextStartDate,
+                    nextStartDate.endOfYear(),
+                    periodType
+                )
             }
             DataPeriodType.DAY -> {
                 val nextStartDate = startDate.plusDays(1).startOfDay()
-                DataPeriod(nextStartDate, nextStartDate.endOfDay(), periodType)
+                DataPeriod(
+                    nextStartDate,
+                    nextStartDate.endOfDay(),
+                    periodType
+                )
             }
         }
     }
@@ -66,19 +98,35 @@ data class DataPeriod(
         return when (periodType) {
             DataPeriodType.MONTH -> {
                 val nextStartDate = startDate.minusMonths(1).firstDayOfMonth()
-                DataPeriod(nextStartDate, nextStartDate.lastDayOfMonth(), periodType)
+                DataPeriod(
+                    nextStartDate,
+                    nextStartDate.lastDayOfMonth(),
+                    periodType
+                )
             }
             DataPeriodType.DAY -> {
                 val nextStartDate = startDate.minusDays(1).startOfDay()
-                DataPeriod(nextStartDate, nextStartDate.endOfDay(), periodType)
+                DataPeriod(
+                    nextStartDate,
+                    nextStartDate.endOfDay(),
+                    periodType
+                )
             }
             DataPeriodType.WEEK -> {
                 val nextStartDate = startDate.minusWeeks(1).startOfWeek()
-                DataPeriod(nextStartDate, nextStartDate.endOfWeek(), periodType)
+                DataPeriod(
+                    nextStartDate,
+                    nextStartDate.endOfWeek(),
+                    periodType
+                )
             }
             DataPeriodType.YEAR -> {
                 val nextStartDate = startDate.minusYears(1).startOfYear()
-                DataPeriod(nextStartDate, nextStartDate.endOfYear(), periodType)
+                DataPeriod(
+                    nextStartDate,
+                    nextStartDate.endOfYear(),
+                    periodType
+                )
             }
         }
     }

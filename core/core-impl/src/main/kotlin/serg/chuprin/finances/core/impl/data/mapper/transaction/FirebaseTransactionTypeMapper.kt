@@ -1,6 +1,6 @@
 package serg.chuprin.finances.core.impl.data.mapper.transaction
 
-import serg.chuprin.finances.core.api.domain.model.TransactionType
+import serg.chuprin.finances.core.api.domain.model.transaction.TransactionType
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionFieldsContract.Type.BALANCE
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionFieldsContract.Type.PLAIN
 import serg.chuprin.finances.core.impl.data.mapper.base.ModelMapper

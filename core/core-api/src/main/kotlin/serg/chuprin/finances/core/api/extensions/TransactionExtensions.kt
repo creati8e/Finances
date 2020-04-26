@@ -1,7 +1,7 @@
 package serg.chuprin.finances.core.api.extensions
 
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.Transaction
+import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import java.math.BigDecimal
 
 /**

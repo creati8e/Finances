@@ -1,6 +1,6 @@
 package serg.chuprin.finances.core.impl.data.mapper.category
 
-import serg.chuprin.finances.core.api.domain.model.TransactionCategoryType
+import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryType
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionCategoryFieldsContract.TYPE_EXPENSE
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionCategoryFieldsContract.TYPE_INCOME
 import serg.chuprin.finances.core.impl.data.mapper.base.ModelMapper

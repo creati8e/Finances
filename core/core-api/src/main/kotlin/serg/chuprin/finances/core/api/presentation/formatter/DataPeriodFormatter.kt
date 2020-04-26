@@ -1,6 +1,6 @@
 package serg.chuprin.finances.core.api.presentation.formatter
 
-import serg.chuprin.finances.core.api.domain.model.DataPeriod
+import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 
 /**
  * Created by Sergey Chuprin on 17.04.2020.

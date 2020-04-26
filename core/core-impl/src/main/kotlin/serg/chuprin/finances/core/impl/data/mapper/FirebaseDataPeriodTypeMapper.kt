@@ -1,6 +1,6 @@
 package serg.chuprin.finances.core.impl.data.mapper
 
-import serg.chuprin.finances.core.api.domain.model.DataPeriodType
+import serg.chuprin.finances.core.api.domain.model.period.DataPeriodType
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseDataPeriodTypeFieldsContract.TYPE_DAY
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseDataPeriodTypeFieldsContract.TYPE_MONTH
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseDataPeriodTypeFieldsContract.TYPE_WEEK

@@ -1,8 +1,8 @@
 package serg.chuprin.finances.feature.onboarding.domain.usecase
 
-import serg.chuprin.finances.core.api.domain.model.DataPeriodType
 import serg.chuprin.finances.core.api.domain.model.OnboardingStep
 import serg.chuprin.finances.core.api.domain.model.User
+import serg.chuprin.finances.core.api.domain.model.period.DataPeriodType
 import serg.chuprin.finances.core.api.domain.repository.OnboardingRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import java.util.*

@@ -1,6 +1,10 @@
 package serg.chuprin.finances.feature.dashboard.domain.model
 
-import serg.chuprin.finances.core.api.domain.model.*
+import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
+import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
+import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
+import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
+import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import java.math.BigDecimal
 import java.util.*
 

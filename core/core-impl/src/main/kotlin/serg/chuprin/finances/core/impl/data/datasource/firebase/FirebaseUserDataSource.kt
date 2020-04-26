@@ -7,8 +7,8 @@ import com.google.firebase.firestore.*
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.tasks.await
-import serg.chuprin.finances.core.api.domain.model.DataPeriodType
 import serg.chuprin.finances.core.api.domain.model.User
+import serg.chuprin.finances.core.api.domain.model.period.DataPeriodType
 import serg.chuprin.finances.core.api.extensions.nonNullValuesMap
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseUserFieldsContract.COLLECTION_NAME
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseUserFieldsContract.FIELD_DATA_PERIOD_TYPE

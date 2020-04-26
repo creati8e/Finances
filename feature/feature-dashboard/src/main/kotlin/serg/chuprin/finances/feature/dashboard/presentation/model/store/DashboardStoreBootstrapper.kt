@@ -3,8 +3,8 @@ package serg.chuprin.finances.feature.dashboard.presentation.model.store
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
-import serg.chuprin.finances.core.api.domain.model.DataPeriod
-import serg.chuprin.finances.core.api.domain.model.PlainTransactionType
+import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
+import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.mvi.bootstrapper.StoreBootstrapper
 import serg.chuprin.finances.feature.dashboard.domain.repository.DashboardDataPeriodRepository

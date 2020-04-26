@@ -1,7 +1,7 @@
 package serg.chuprin.finances.core.impl.data.mapper.transaction
 
 import com.google.firebase.firestore.DocumentSnapshot
-import serg.chuprin.finances.core.api.domain.model.Transaction
+import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.extensions.nonNullValuesMap
 import serg.chuprin.finances.core.api.extensions.toDateUTC
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionFieldsContract.FIELD_AMOUNT

@@ -1,5 +1,6 @@
-package serg.chuprin.finances.core.api.domain.model
+package serg.chuprin.finances.core.api.domain.model.transaction
 
+import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.extensions.toLocalDateTimeUTC
 import java.math.BigDecimal
 import java.time.LocalDateTime
@@ -46,11 +47,17 @@ data class Transaction(
                 type = type,
                 _date = date,
                 _amount = amount,
-                id = Id.existing(id),
+                id = Id.existing(
+                    id
+                ),
                 currencyCode = currencyCode,
-                ownerId = Id.existing(ownerId),
+                ownerId = Id.existing(
+                    ownerId
+                ),
                 categoryId = categoryId?.let(::Id),
-                moneyAccountId = Id.existing(moneyAccountId)
+                moneyAccountId = Id.existing(
+                    moneyAccountId
+                )
             )
         }
 

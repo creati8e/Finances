@@ -1,6 +1,6 @@
 package serg.chuprin.finances.core.impl.presentation.model.builder
 
-import serg.chuprin.finances.core.api.domain.model.DataPeriodType
+import serg.chuprin.finances.core.api.domain.model.period.DataPeriodType
 import serg.chuprin.finances.core.api.presentation.model.builder.DataPeriodTypePopupMenuCellsBuilder
 import serg.chuprin.finances.core.api.presentation.model.cells.DataPeriodTypePopupMenuCell
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger

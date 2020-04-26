@@ -4,10 +4,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import serg.chuprin.finances.core.api.domain.model.DataPeriod
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.PlainTransactionType
-import serg.chuprin.finances.core.api.domain.model.Transaction
+import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
+import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
+import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.impl.data.datasource.firebase.FirebaseTransactionDataSource
 import serg.chuprin.finances.core.impl.data.mapper.transaction.FirebaseTransactionMapper

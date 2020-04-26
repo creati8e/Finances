@@ -1,6 +1,8 @@
 package serg.chuprin.finances.feature.onboarding.domain.usecase
 
 import serg.chuprin.finances.core.api.domain.model.*
+import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
+import serg.chuprin.finances.core.api.domain.model.transaction.TransactionType
 import serg.chuprin.finances.core.api.domain.repository.*
 import serg.chuprin.finances.feature.onboarding.domain.OnboardingMoneyAccountCreationParams
 import javax.inject.Inject
@@ -57,14 +59,15 @@ class CompleteAccountsSetupOnboardingUseCase @Inject constructor(
         account: MoneyAccount,
         balance: MoneyAccountBalance
     ) {
-        val balanceTransaction = Transaction(
-            ownerId = user.id,
-            id = Id.createNew(),
-            moneyAccountId = account.id,
-            type = TransactionType.BALANCE,
-            currencyCode = account.currencyCode,
-            _amount = balance.bigDecimal.toString()
-        )
+        val balanceTransaction =
+            Transaction(
+                ownerId = user.id,
+                id = Id.createNew(),
+                moneyAccountId = account.id,
+                type = TransactionType.BALANCE,
+                currencyCode = account.currencyCode,
+                _amount = balance.bigDecimal.toString()
+            )
         transactionRepository.createTransaction(balanceTransaction)
     }
 

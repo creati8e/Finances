@@ -4,9 +4,9 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.TransactionCategory
-import serg.chuprin.finances.core.api.domain.model.TransactionCategoryType
-import serg.chuprin.finances.core.api.domain.model.TransactionCategoryWithParent
+import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
+import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryType
+import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
 import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepository
 import serg.chuprin.finances.core.impl.data.datasource.assets.PredefinedTransactionCategoriesDataSource
 import serg.chuprin.finances.core.impl.data.datasource.assets.TransactionCategoryAssetDto

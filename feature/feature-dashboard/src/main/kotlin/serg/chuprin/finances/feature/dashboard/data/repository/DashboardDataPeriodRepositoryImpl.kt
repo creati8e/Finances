@@ -5,7 +5,7 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
-import serg.chuprin.finances.core.api.domain.model.DataPeriod
+import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import serg.chuprin.finances.feature.dashboard.domain.repository.DashboardDataPeriodRepository
 import javax.inject.Inject
 
