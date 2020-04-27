@@ -56,9 +56,7 @@ internal class TransactionCategoryRetrieverServiceImpl @Inject constructor(
                     flowOf(transactions),
                     categoryRepository.categoriesFlow(transactions.categoryIds)
                 ) { t1, t2 ->
-                    suspendCoroutine<Map<TransactionCategoryWithParent?, List<Transaction>>> {
-                        it.resume(associateCategoriesWithTransactions(t1, t2))
-                    }
+                    associateCategoriesWithTransactions(t1, t2)
                 }
             }
     }

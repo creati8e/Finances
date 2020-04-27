@@ -9,6 +9,7 @@ data class TransactionCategory(
     val id: Id,
     val ownerId: Id,
     val name: String,
+    val colorHex: String,
     val parentCategoryId: Id? = null,
     val type: TransactionCategoryType
 ) {
@@ -19,6 +20,7 @@ data class TransactionCategory(
             id: String?,
             name: String?,
             ownerId: String?,
+            colorHex: String?,
             parentCategoryId: String?,
             type: TransactionCategoryType?
         ): TransactionCategory? {
@@ -26,15 +28,13 @@ data class TransactionCategory(
             if (id.isNullOrEmpty()) return null
             if (name.isNullOrEmpty()) return null
             if (ownerId.isNullOrEmpty()) return null
+            if (colorHex.isNullOrEmpty()) return null
             return TransactionCategory(
                 name = name,
                 type = type,
-                id = Id.existing(
-                    id
-                ),
-                ownerId = Id.existing(
-                    ownerId
-                ),
+                colorHex = colorHex,
+                id = Id.existing(id),
+                ownerId = Id.existing(ownerId),
                 parentCategoryId = parentCategoryId?.let(::Id)
             )
         }

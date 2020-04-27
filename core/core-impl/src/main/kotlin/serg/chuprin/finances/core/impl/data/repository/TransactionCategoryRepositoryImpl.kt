@@ -71,6 +71,7 @@ internal class TransactionCategoryRepositoryImpl @Inject constructor(
             id = id,
             type = type,
             name = name,
+            colorHex = colorHex,
             ownerId = userId.value,
             parentCategoryId = parentCategoryId
         )

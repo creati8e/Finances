@@ -25,6 +25,7 @@ internal class TransactionRepositoryImpl @Inject constructor(
         firebaseDataSource.createTransaction(transaction)
     }
 
+    // TODO: Filter not balance.
     override fun userTransactionsFlow(
         userId: Id,
         dataPeriod: DataPeriod?,

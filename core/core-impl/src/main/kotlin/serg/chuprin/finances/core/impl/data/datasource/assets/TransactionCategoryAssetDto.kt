@@ -10,10 +10,16 @@ import kotlinx.serialization.Serializable
 internal class TransactionCategoryAssetDto(
     @SerialName("name")
     val name: String,
+
+    @SerialName("color")
+    val colorHex: String,
+
     @SerialName("id")
     var id: String,
+
     @SerialName("is_income")
     val isIncome: Boolean,
+
     @SerialName("parent_category_id")
     var parentCategoryId: String? = null
 )

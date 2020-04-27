@@ -9,4 +9,6 @@
     <color name="colorError">#F44336</color>
     <color name="colorRedRipple">#33F44336</color>
     <color name="colorGreen">#4CAF50</color>
+
+    <color name="colorNoCategory">#959595</color>
 </resources>

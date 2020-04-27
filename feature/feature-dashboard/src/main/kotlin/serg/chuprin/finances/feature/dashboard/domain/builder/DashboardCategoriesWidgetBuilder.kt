@@ -52,7 +52,7 @@ class DashboardCategoriesWidgetBuilder @Inject constructor(
     ): Map<TransactionCategory?, BigDecimal> {
         return categoryTransactionsMap
             .map { (categoryWithParent, transactions) ->
-                categoryWithParent?.category to transactions.amount
+                categoryWithParent?.category to transactions.amount.abs()
             }
             .toMap()
     }
