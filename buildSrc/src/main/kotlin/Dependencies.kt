@@ -117,16 +117,11 @@ object Libraries {
         const val PLAY_SERVICES_KTX = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.3.5"
     }
 
-    object Network {
+    object Debug {
+        private const val VER = "1.10.2"
 
-        private const val RETROFIT_VER = "2.8.1"
-
-        private const val RETROFIT = "com.squareup.retrofit2:retrofit:$RETROFIT_VER"
-        private const val OKHTTP_LOGGER = "com.github.ihsanbal:LoggingInterceptor:3.0.0"
-        private const val KOTLIN_SERIALIZATION_CONVERTER =
-            "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.5.0"
-
-        val DEPENDENCIES = listOf(RETROFIT, OKHTTP_LOGGER, KOTLIN_SERIALIZATION_CONVERTER)
+        const val DEBUG = "com.github.pandulapeter.beagle:beagle:$VER"
+        const val RELEASE = "com.github.pandulapeter.beagle:beagle-noop:$VER"
 
     }
 

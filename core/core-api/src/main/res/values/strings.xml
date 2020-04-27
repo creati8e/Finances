@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Finances</string>
 
     <string name="error_no_network">Please check your network connection</string>
     <string name="error_entered_amount_is_not_valid">Entered amount is not valid</string>

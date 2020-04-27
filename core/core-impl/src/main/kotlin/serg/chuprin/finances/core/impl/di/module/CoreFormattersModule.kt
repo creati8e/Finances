@@ -16,14 +16,13 @@ import serg.chuprin.finances.core.impl.presentation.model.formatter.DateFormatte
 @Module
 internal interface CoreFormattersModule {
 
-    @Binds
+    @[Binds Reusable]
     fun bindDateFormatter(impl: DateFormatterImpl): DateFormatter
 
-    @Binds
-    @Reusable
+    @[Binds Reusable]
     fun bindAmountFormatter(impl: AmountFormatterImpl): AmountFormatter
 
-    @Binds
+    @[Binds Reusable]
     fun bindDataPeriodFormatter(impl: DataPeriodFormatterImpl): DataPeriodFormatter
 
 }

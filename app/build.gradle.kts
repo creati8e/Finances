@@ -116,7 +116,4 @@ dependencies {
     implementation(Libraries.Infrastructure.FIRESTORE)
     implementation(Libraries.Infrastructure.AUTH)
 
-    // Networking.
-    implementationAll(Libraries.Network.DEPENDENCIES)
-
 }

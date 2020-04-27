@@ -1,5 +1,6 @@
 package serg.chuprin.finances.core.firebase
 
+import android.app.Application
 import com.github.ajalt.timberkt.Timber
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.firestore.ktx.firestore
@@ -11,7 +12,7 @@ import serg.chuprin.finances.core.api.di.Initializer
  */
 class FirebaseInitializer : Initializer {
 
-    override fun initialize() {
+    override fun initialize(application: Application) {
         val settings = FirebaseFirestoreSettings
             .Builder()
             .setPersistenceEnabled(true)

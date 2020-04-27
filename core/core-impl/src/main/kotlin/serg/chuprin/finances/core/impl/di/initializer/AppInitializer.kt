@@ -1,5 +1,6 @@
 package serg.chuprin.finances.core.impl.di.initializer
 
+import android.app.Application
 import serg.chuprin.finances.core.api.di.Initializer
 import javax.inject.Inject
 
@@ -10,6 +11,8 @@ internal class AppInitializer @Inject constructor(
     private val initializers: Set<@JvmSuppressWildcards Initializer>
 ) : Initializer {
 
-    override fun initialize() = initializers.forEach(Initializer::initialize)
+    override fun initialize(application: Application) {
+        initializers.forEach { initializer -> initializer.initialize(application) }
+    }
 
 }

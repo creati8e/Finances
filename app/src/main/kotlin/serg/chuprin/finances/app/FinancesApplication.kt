@@ -21,7 +21,7 @@ class FinancesApplication : Application() {
 
     private fun initializeComponents() {
         CoreDependenciesComponent.init(this, NavigationComponent.instance)
-        CoreDependenciesComponent.get().appInitializer.initialize()
+        CoreDependenciesComponent.get().appInitializer.initialize(this)
     }
 
 }

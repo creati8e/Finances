@@ -1,9 +1,23 @@
+import serg.chuprin.finances.config.AppConfig
+
 plugins {
     id("com.android.library")
     id("kotlin-android")
     id("kotlin-kapt")
     id("kotlin-android-extensions")
     kotlin("plugin.serialization") version BuildScript.Versions.KOTLIN_VER
+}
+
+android {
+    buildTypes {
+        maybeCreate(AppConfig.BuildTypes.DEV.name)
+        maybeCreate(AppConfig.BuildTypes.DEBUG.name)
+    }
+    // Common debug menu implementation for 'dev' and 'debug' build types.
+    sourceSets {
+        getByName(AppConfig.BuildTypes.DEV.name).java.srcDir("src/common/kotlin")
+        getByName(AppConfig.BuildTypes.DEBUG.name).java.srcDir("src/common/kotlin")
+    }
 }
 
 fun DependencyHandler.implementationAll(
@@ -53,7 +67,8 @@ dependencies {
 
     implementationAll(Libraries.Preferences.DEPENDENCIES)
 
-    // Networking.
-    implementationAll(Libraries.Network.DEPENDENCIES)
+    add("devImplementation", Libraries.Debug.DEBUG)
+    add("debugImplementation", Libraries.Debug.DEBUG)
+    releaseImplementation(Libraries.Debug.RELEASE)
 
 }
