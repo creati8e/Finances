@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="DebugMenuTheme"
+        parent="AppTheme">
+        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorSwitchThumbNormal">@color/colorAccent</item>
+        <item name="materialButtonStyle">@style/DebugButton</item>
+    </style>
+
+    <style name="DebugButton"
+        parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeWidth">1dp</item>
+        <item name="strokeColor">@color/selector_button_stroke</item>
+
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+
+        <item name="cornerRadius">@dimen/cornerRadius</item>
+        <item name="rippleColor">@android:color/white</item>
+        <item name="backgroundTint">?colorAccent</item>
+    </style>
+
+</resources>

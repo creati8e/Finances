@@ -23,6 +23,20 @@ internal class TransactionCategoryRepositoryImpl @Inject constructor(
     private val predefinedCategoriesDataSource: PredefinedTransactionCategoriesDataSource
 ) : TransactionCategoryRepository {
 
+    override suspend fun getUserCategories(
+        userId: Id,
+        type: TransactionCategoryType
+    ): Map<Id, TransactionCategoryWithParent> {
+        return firebaseDataSource
+            .getAllUserCategories(userId)
+            .mapNotNull { snapshot ->
+                mapper
+                    .mapFromSnapshot(snapshot)
+                    ?.takeIf { category -> category.type == type }
+            }
+            .linkWithParents()
+    }
+
     override suspend fun createPredefinedCategories(userId: Id) {
         coroutineScope {
             val allCategories = predefinedCategoriesDataSource.getCategories().run {

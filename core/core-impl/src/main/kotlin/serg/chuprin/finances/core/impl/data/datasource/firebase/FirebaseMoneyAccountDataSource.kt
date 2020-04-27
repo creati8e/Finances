@@ -3,8 +3,10 @@ package serg.chuprin.finances.core.impl.data.datasource.firebase
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.tasks.await
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.MoneyAccount
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseMoneyAccountFieldsContract.COLLECTION_NAME
@@ -20,6 +22,10 @@ internal class FirebaseMoneyAccountDataSource @Inject constructor(
     private val mapper: FirebaseMoneyAccountMapper
 ) {
 
+    suspend fun getUserAccounts(userId: Id): List<DocumentSnapshot> {
+        return getUserAccountsCollection(userId).get().await()?.documents.orEmpty()
+    }
+
     fun createAccount(account: MoneyAccount) {
         getCollection()
             .document(account.id.value)
@@ -27,10 +33,13 @@ internal class FirebaseMoneyAccountDataSource @Inject constructor(
     }
 
     fun userAccountsFlow(userId: Id): Flow<List<DocumentSnapshot>> {
-        return getCollection()
-            .whereEqualTo(FIELD_OWNER_ID, userId.value)
+        return getUserAccountsCollection(userId)
             .asFlow()
             .map { querySnapshot -> querySnapshot.documents }
+    }
+
+    private fun getUserAccountsCollection(userId: Id): Query {
+        return getCollection().whereEqualTo(FIELD_OWNER_ID, userId.value)
     }
 
     private fun getCollection(): CollectionReference {

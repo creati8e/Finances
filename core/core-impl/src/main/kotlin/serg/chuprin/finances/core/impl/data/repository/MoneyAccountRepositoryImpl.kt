@@ -19,6 +19,10 @@ internal class MoneyAccountRepositoryImpl @Inject constructor(
 
     override fun createAccount(account: MoneyAccount) = dataSource.createAccount(account)
 
+    override suspend fun getUserAccounts(userId: Id): List<MoneyAccount> {
+        return dataSource.getUserAccounts(userId).mapNotNull(mapper::mapFromSnapshot)
+    }
+
     override fun userAccountsFlow(userId: Id): Flow<List<MoneyAccount>> {
         return dataSource
             .userAccountsFlow(userId)
