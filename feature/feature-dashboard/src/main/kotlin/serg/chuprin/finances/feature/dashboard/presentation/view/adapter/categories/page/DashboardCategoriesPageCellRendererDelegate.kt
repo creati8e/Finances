@@ -43,7 +43,7 @@ abstract class DashboardCategoriesPageCellRendererDelegate<T : DashboardCategori
         with(holder.recyclerView) {
             adapter = categoryCellsAdapter
             layoutManager = FlexboxLayoutManager(context).apply {
-                justifyContent = JustifyContent.FLEX_START
+                justifyContent = JustifyContent.CENTER
             }
         }
     }
