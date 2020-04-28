@@ -29,6 +29,7 @@ dependencies {
 
     implementation(Libraries.COIL)
     implementation(Libraries.FLEXBOX)
+    implementation(Libraries.PAGE_INDICATOR)
 
     // Navigation.
     implementationAll(Libraries.Android.Navigation.DEPENDENCIES)

@@ -46,8 +46,10 @@ class DashboardCategoriesWidgetCellRenderer : ContainerRenderer<DashboardWidgetC
         with(holder.recyclerView) {
             adapter = pageCellAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
             LinearSnapHelper().attachToRecyclerView(this)
         }
+        holder.pageIndicator.attachToRecyclerView(holder.recyclerView)
     }
 
 }
