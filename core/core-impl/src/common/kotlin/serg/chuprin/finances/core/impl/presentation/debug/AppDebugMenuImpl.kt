@@ -78,9 +78,15 @@ internal class AppDebugMenuImpl @Inject constructor(
                 Trick.Padding(),
                 Trick.Text(text = "Data generation"),
                 Trick.Button(
-                    text = "Create transaction",
+                    text = "Create income transaction",
                     onButtonPressed = {
-                        launch { createTransaction() }
+                        launch { createTransaction(TransactionCategoryType.INCOME) }
+                    }
+                ),
+                Trick.Button(
+                    text = "Create expense transaction",
+                    onButtonPressed = {
+                        launch { createTransaction(TransactionCategoryType.EXPENSE) }
                     }
                 ),
                 Trick.Button(
@@ -93,10 +99,9 @@ internal class AppDebugMenuImpl @Inject constructor(
         }
     }
 
-    private suspend fun createTransaction() {
+    private suspend fun createTransaction(categoryType: TransactionCategoryType) {
         val currentUser = userRepository.getCurrentUser()
 
-        val categoryType = getRandomCategoryType()
         val categoryWithParent = getRandomCategory(currentUser, categoryType)
         val moneyAccount = getRandomMoneyAccount(currentUser)
 
@@ -138,14 +143,6 @@ internal class AppDebugMenuImpl @Inject constructor(
             withContext(Dispatchers.Default) {
                 block()
             }
-        }
-    }
-
-    private fun getRandomCategoryType(): TransactionCategoryType {
-        return if (ThreadLocalRandom.current().nextBoolean()) {
-            TransactionCategoryType.EXPENSE
-        } else {
-            TransactionCategoryType.INCOME
         }
     }
 
