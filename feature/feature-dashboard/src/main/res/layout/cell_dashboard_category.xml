@@ -8,6 +8,7 @@
     android:layout_height="wrap_content"
     android:layout_marginStart="2dp"
     android:layout_marginEnd="2dp"
+    android:textColor="@color/colorBlackText"
     app:chipMinTouchTargetSize="40dp"
     tools:chipSurfaceColor="?colorAccent"
     tools:text="@sample/sample_data.json/category_amounts/category_amounts/amount" />

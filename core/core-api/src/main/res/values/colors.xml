@@ -11,4 +11,5 @@
     <color name="colorGreen">#4CAF50</color>
 
     <color name="colorNoCategory">#959595</color>
+    <color name="colorBlackText">#000</color>
 </resources>
