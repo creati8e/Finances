@@ -1,7 +1,6 @@
 package serg.chuprin.finances.core.impl.data.datasource.firebase
 
 import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.tasks.await
@@ -71,9 +70,12 @@ internal class FirebaseTransactionCategoryDataSource @Inject constructor(
             return flowOf(emptyList())
         }
         return getCollection()
-            .whereIn(FieldPath.documentId(), categoryIds)
             .asFlow()
-            .map { querySnapshot -> querySnapshot.documents }
+            .map { querySnapshot ->
+                querySnapshot.documents.filter { document ->
+                    document.id in categoryIds
+                }
+            }
     }
 
     private fun getCollection() = firestore.collection(COLLECTION_NAME)
