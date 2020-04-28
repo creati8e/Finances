@@ -4,10 +4,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import kotlinx.android.synthetic.main.cell_widget_dashboard_categories.*
 import serg.chuprin.adapter.*
-import serg.chuprin.finances.core.api.presentation.view.adapter.diff.DiffCallback
 import serg.chuprin.finances.feature.dashboard.R
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
-import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.page.DashboardCategoriesPageCell
+import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.categories.diff.DashboardCategoriesWidgetDiffCallback
+import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.categories.diff.payload.DashboardCategoriesWidgetChangedPayload
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.categories.page.DashboardExpenseCategoriesPageCellRenderer
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.categories.page.DashboardIncomeCategoriesPageCellRenderer
 
@@ -19,13 +19,23 @@ class DashboardCategoriesWidgetCellRenderer : ContainerRenderer<DashboardWidgetC
     override val type: Int = R.layout.cell_widget_dashboard_categories
 
     private val pageCellAdapter =
-        DiffMultiViewAdapter<DashboardCategoriesPageCell>(DiffCallback()).apply {
+        DiffMultiViewAdapter(DashboardCategoriesWidgetDiffCallback()).apply {
             registerRenderer(DashboardIncomeCategoriesPageCellRenderer())
             registerRenderer(DashboardExpenseCategoriesPageCellRenderer())
         }
 
     override fun bindView(holder: ContainerHolder, model: DashboardWidgetCell.Categories) {
         pageCellAdapter.setItems(model.pageCells)
+    }
+
+    override fun bindView(
+        holder: ContainerHolder,
+        model: DashboardWidgetCell.Categories,
+        payloads: MutableList<Any>
+    ) {
+        if (DashboardCategoriesWidgetChangedPayload in payloads) {
+            pageCellAdapter.setItems(model.pageCells)
+        }
     }
 
     override fun onVhCreated(

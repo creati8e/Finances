@@ -3,6 +3,7 @@ package serg.chuprin.finances.feature.dashboard.presentation.view.adapter.diff
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.view.adapter.diff.DiffCallback
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
+import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.categories.diff.payload.DashboardCategoriesWidgetChangedPayload
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.diff.payload.DashboardHeaderWidgetChangedPayload
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.moneyaccounts.diff.payload.DashboardMoneyAccountCellsChangedPayload
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.moneyaccounts.diff.payload.DashboardMoneyAccountsExpansionChangedPayload
@@ -17,6 +18,11 @@ class DashboardAdapterDiffCallback : DiffCallback<BaseCell>() {
             && newItem is DashboardWidgetCell.Header
         ) {
             return DashboardHeaderWidgetChangedPayload
+        }
+        if (oldItem is DashboardWidgetCell.Categories
+            && newItem is DashboardWidgetCell.Categories
+        ) {
+            return DashboardCategoriesWidgetChangedPayload
         }
         if (oldItem is DashboardWidgetCell.MoneyAccounts
             && newItem is DashboardWidgetCell.MoneyAccounts
