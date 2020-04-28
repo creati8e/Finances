@@ -111,8 +111,8 @@ object Libraries {
     }
 
     object Infrastructure {
-        const val AUTH = "com.google.firebase:firebase-auth:19.3.0"
-        const val FIRESTORE = "com.google.firebase:firebase-firestore-ktx:21.4.2"
+        const val AUTH = "com.google.firebase:firebase-auth:19.3.1"
+        const val FIRESTORE = "com.google.firebase:firebase-firestore-ktx:21.4.3"
         const val GMS_AUTH = "com.google.android.gms:play-services-auth:18.0.0"
         const val PLAY_SERVICES_KTX = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.3.5"
     }
