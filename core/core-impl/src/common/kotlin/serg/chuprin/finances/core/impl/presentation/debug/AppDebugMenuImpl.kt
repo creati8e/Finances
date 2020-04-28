@@ -117,14 +117,7 @@ internal class AppDebugMenuImpl @Inject constructor(
             categoryId = categoryWithParent?.category?.id
         )
         transactionRepository.createTransaction(transaction)
-    }
-
-    private fun getRandomCategoryType(): TransactionCategoryType {
-        return if (ThreadLocalRandom.current().nextBoolean()) {
-            TransactionCategoryType.EXPENSE
-        } else {
-            TransactionCategoryType.INCOME
-        }
+        Timber.d { "New test transaction created: $transaction" }
     }
 
     private suspend fun createMoneyAccount() {
@@ -137,6 +130,7 @@ internal class AppDebugMenuImpl @Inject constructor(
             isFavorite = ThreadLocalRandom.current().nextBoolean()
         )
         moneyAccountRepository.createAccount(moneyAccount)
+        Timber.d { "New test money account created: $moneyAccount" }
     }
 
     private fun launch(block: suspend () -> Unit) {
@@ -144,6 +138,14 @@ internal class AppDebugMenuImpl @Inject constructor(
             withContext(Dispatchers.Default) {
                 block()
             }
+        }
+    }
+
+    private fun getRandomCategoryType(): TransactionCategoryType {
+        return if (ThreadLocalRandom.current().nextBoolean()) {
+            TransactionCategoryType.EXPENSE
+        } else {
+            TransactionCategoryType.INCOME
         }
     }
 
