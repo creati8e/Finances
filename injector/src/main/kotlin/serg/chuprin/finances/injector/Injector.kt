@@ -5,12 +5,12 @@ import serg.chuprin.finances.feature.authorization.dependencies.AuthorizationDep
 import serg.chuprin.finances.feature.authorization.dependencies.DaggerAuthorizationDependenciesComponent
 import serg.chuprin.finances.feature.dashboard.dependencies.DaggerDashboardDependenciesComponent
 import serg.chuprin.finances.feature.dashboard.dependencies.DashboardDependencies
-import serg.chuprin.finances.feature.main.DaggerMainDependenciesComponent
-import serg.chuprin.finances.feature.main.MainDependencies
-import serg.chuprin.finances.feature.moneyaccounts.list.DaggerMoneyAccountsListDependenciesComponent
-import serg.chuprin.finances.feature.moneyaccounts.list.MoneyAccountsListDependencies
-import serg.chuprin.finances.feature.onboarding.DaggerOnboardingFeatureDependenciesComponent
-import serg.chuprin.finances.feature.onboarding.OnboardingFeatureDependencies
+import serg.chuprin.finances.feature.main.dependencies.DaggerMainDependenciesComponent
+import serg.chuprin.finances.feature.main.dependencies.MainDependencies
+import serg.chuprin.finances.feature.moneyaccounts.list.dependencies.DaggerMoneyAccountsListDependenciesComponent
+import serg.chuprin.finances.feature.moneyaccounts.list.dependencies.MoneyAccountsListDependencies
+import serg.chuprin.finances.feature.onboarding.dependencies.DaggerOnboardingFeatureDependenciesComponent
+import serg.chuprin.finances.feature.onboarding.dependencies.OnboardingFeatureDependencies
 
 /**
  * Created by Sergey Chuprin on 03.04.2020.
@@ -18,54 +18,38 @@ import serg.chuprin.finances.feature.onboarding.OnboardingFeatureDependencies
 object Injector {
 
     fun getAuthorizationDependencies(): AuthorizationDependencies {
-        val coreProvider = CoreDependenciesComponent.get()
         return DaggerAuthorizationDependenciesComponent
             .builder()
-            .coreGatewaysProvider(coreProvider)
-            .coreNavigationProvider(coreProvider)
-            .coreRepositoriesProvider(coreProvider)
+            .coreDependenciesProvider(CoreDependenciesComponent.get())
             .build()
     }
 
     fun getDashboardDependencies(): DashboardDependencies {
-        val coreProvider = CoreDependenciesComponent.get()
         return DaggerDashboardDependenciesComponent
             .builder()
-            .coreManagerProvider(coreProvider)
-            .coreBuildersProvider(coreProvider)
-            .coreServicesProvider(coreProvider)
-            .coreFormattersProvider(coreProvider)
-            .coreRepositoriesProvider(coreProvider)
+            .coreDependenciesProvider(CoreDependenciesComponent.get())
             .build()
     }
 
     fun getMainDependencies(): MainDependencies {
-        val coreProvider = CoreDependenciesComponent.get()
         return DaggerMainDependenciesComponent
             .builder()
-            .coreGatewaysProvider(coreProvider)
-            .coreRepositoriesProvider(coreProvider)
+            .coreDependenciesProvider(CoreDependenciesComponent.get())
             .build()
     }
 
     fun getOnboardingFeatureDependencies(): OnboardingFeatureDependencies {
-        val coreProvider = CoreDependenciesComponent.get()
         return DaggerOnboardingFeatureDependenciesComponent
             .builder()
-            .coreUtilsProvider(coreProvider)
-            .coreManagerProvider(coreProvider)
-            .coreUseCasesProvider(coreProvider)
-            .coreNavigationProvider(coreProvider)
-            .coreFormattersProvider(coreProvider)
-            .coreRepositoriesProvider(coreProvider)
+            .coreDependenciesProvider(CoreDependenciesComponent.get())
             .build()
     }
 
     fun getMoneyAccountsListDependencies(): MoneyAccountsListDependencies {
-        val coreProvider = CoreDependenciesComponent.get()
         return DaggerMoneyAccountsListDependenciesComponent
-            .factory()
-            .repositoriesProvider(coreProvider)
+            .builder()
+            .coreDependenciesProvider(CoreDependenciesComponent.get())
+            .build()
     }
 
 }

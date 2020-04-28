@@ -1,7 +1,7 @@
 package serg.chuprin.finances.feature.dashboard.dependencies
 
 import dagger.Component
-import serg.chuprin.finances.core.api.di.provider.*
+import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
 import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
@@ -30,13 +30,5 @@ interface DashboardDependencies {
     val transactionCategoryRetrieverService: TransactionCategoryRetrieverService
 }
 
-@Component(
-    dependencies = [
-        CoreManagerProvider::class,
-        CoreServicesProvider::class,
-        CoreBuildersProvider::class,
-        CoreFormattersProvider::class,
-        CoreRepositoriesProvider::class
-    ]
-)
+@Component(dependencies = [CoreDependenciesProvider::class])
 internal interface DashboardDependenciesComponent : DashboardDependencies

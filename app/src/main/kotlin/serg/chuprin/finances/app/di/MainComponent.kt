@@ -4,7 +4,7 @@ import dagger.Component
 import serg.chuprin.finances.app.model.viewmodel.MainViewModel
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.ViewModelComponent
-import serg.chuprin.finances.feature.main.MainDependencies
+import serg.chuprin.finances.feature.main.dependencies.MainDependencies
 import serg.chuprin.finances.injector.Injector
 
 /**

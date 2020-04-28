@@ -1,8 +1,7 @@
-package serg.chuprin.finances.feature.main
+package serg.chuprin.finances.feature.main.dependencies
 
 import dagger.Component
-import serg.chuprin.finances.core.api.di.provider.CoreGatewaysProvider
-import serg.chuprin.finances.core.api.di.provider.CoreRepositoriesProvider
+import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
 import serg.chuprin.finances.core.api.domain.gateway.AuthorizationGateway
 import serg.chuprin.finances.core.api.domain.repository.OnboardingRepository
 
@@ -14,10 +13,5 @@ interface MainDependencies {
     val authorizationGateway: AuthorizationGateway
 }
 
-@Component(
-    dependencies = [
-        CoreGatewaysProvider::class,
-        CoreRepositoriesProvider::class
-    ]
-)
+@Component(dependencies = [CoreDependenciesProvider::class])
 internal interface MainDependenciesComponent : MainDependencies

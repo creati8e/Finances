@@ -3,7 +3,7 @@ package serg.chuprin.finances.feature.onboarding.presentation.launch.di
 import dagger.Component
 import serg.chuprin.finances.core.api.di.scopes.FeatureScope
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.ViewModelComponent
-import serg.chuprin.finances.feature.onboarding.OnboardingFeatureDependencies
+import serg.chuprin.finances.feature.onboarding.dependencies.OnboardingFeatureDependencies
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.di.AccountsSetupOnboardingComponent
 import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.di.CurrencyChoiceOnboardingComponent
 import serg.chuprin.finances.feature.onboarding.presentation.launch.model.viewmodel.OnboardingLaunchViewModel

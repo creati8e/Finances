@@ -2,7 +2,7 @@ package serg.chuprin.finances.feature.moneyaccounts.di
 
 import dagger.Component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.ViewModelComponent
-import serg.chuprin.finances.feature.moneyaccounts.list.MoneyAccountsListDependencies
+import serg.chuprin.finances.feature.moneyaccounts.list.dependencies.MoneyAccountsListDependencies
 import serg.chuprin.finances.feature.moneyaccounts.presentation.model.viewmodel.MoneyAccountsListViewModel
 import serg.chuprin.finances.injector.Injector
 

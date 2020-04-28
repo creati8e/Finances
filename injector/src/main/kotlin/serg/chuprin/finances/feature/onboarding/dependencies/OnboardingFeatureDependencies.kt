@@ -1,7 +1,7 @@
-package serg.chuprin.finances.feature.onboarding
+package serg.chuprin.finances.feature.onboarding.dependencies
 
 import dagger.Component
-import serg.chuprin.finances.core.api.di.provider.*
+import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
 import serg.chuprin.finances.core.api.domain.repository.*
 import serg.chuprin.finances.core.api.domain.usecase.SearchCurrenciesUseCase
 import serg.chuprin.finances.core.api.presentation.model.formatter.AmountFormatter
@@ -45,14 +45,5 @@ interface OnboardingFeatureDependencies {
     // endregion
 }
 
-@Component(
-    dependencies = [
-        CoreUtilsProvider::class,
-        CoreManagerProvider::class,
-        CoreUseCasesProvider::class,
-        CoreNavigationProvider::class,
-        CoreFormattersProvider::class,
-        CoreRepositoriesProvider::class
-    ]
-)
+@Component(dependencies = [CoreDependenciesProvider::class])
 internal interface OnboardingFeatureDependenciesComponent : OnboardingFeatureDependencies
