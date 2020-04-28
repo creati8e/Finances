@@ -68,15 +68,15 @@ class DashboardCategoriesWidgetBuilder @Inject constructor(
             transactionType = transactionType,
             categoryAmounts = topCategories,
             totalAmount = topCategories.calculateAmount(),
-            otherAmount = otherCategories.calculateAmount()
+            otherAmount = otherCategories?.calculateAmount() ?: BigDecimal.ZERO
         )
     }
 
-    private fun CategoryAmounts.splitToPopularAndOther(): Pair<CategoryAmounts, CategoryAmounts> {
+    private fun CategoryAmounts.splitToPopularAndOther(): Pair<CategoryAmounts, CategoryAmounts?> {
         return if (size > TOP_CATEGORIES_COUNT) {
             take(TOP_CATEGORIES_COUNT) to takeLast(size - TOP_CATEGORIES_COUNT)
         } else {
-            this to this
+            this to null
         }
     }
 
