@@ -8,9 +8,9 @@
     android:background="@drawable/bg_selection_rounded_transparent"
     android:clickable="true"
     android:focusable="true"
-    android:paddingStart="16dp"
+    android:paddingStart="8dp"
     android:paddingTop="12dp"
-    android:paddingEnd="16dp"
+    android:paddingEnd="8dp"
     android:paddingBottom="12dp">
 
     <androidx.appcompat.widget.AppCompatTextView

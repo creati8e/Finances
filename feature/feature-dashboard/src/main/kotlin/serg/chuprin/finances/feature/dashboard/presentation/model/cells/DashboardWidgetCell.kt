@@ -2,8 +2,8 @@ package serg.chuprin.finances.feature.dashboard.presentation.model.cells
 
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.cells.DiffCell
-import serg.chuprin.finances.core.piechart.model.PieChartDataPart
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
+import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.page.DashboardCategoriesPageCell
 
 /**
  * Created by Sergey Chuprin on 17.04.2020.
@@ -33,10 +33,7 @@ sealed class DashboardWidgetCell(
     ) : DashboardWidgetCell(widget)
 
     data class Categories(
-        val totalAmount: String,
-        val transactionsType: String,
-        val chartParts: List<PieChartDataPart>,
-        val categoryCells: List<DashboardCategoryChipCell>,
+        val pageCells: List<DashboardCategoriesPageCell>,
         override val widget: DashboardWidget.Categories
     ) : DashboardWidgetCell(widget)
 

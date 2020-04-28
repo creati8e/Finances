@@ -163,25 +163,36 @@ class PieChartView @JvmOverloads constructor(
     ): List<PieChartRenderData> {
         return buildList {
             val distanceBetweenParts = DISTANCE_BETWEEN_PARTS
-            list.sortedByDescending(PieChartDataPart::value).forEach { piePortion ->
-
-                val startAngle = if (isEmpty()) {
-                    -90f + distanceBetweenParts
-                } else {
-                    val last = last()
-                    last.startAngle + last.sweepAngle + distanceBetweenParts
-                }
-                // Ensure that displayed portions is not very small.
-                val sweepAngle =
-                    (piePortion.value * 360 / maxValue - distanceBetweenParts).coerceAtLeast(2f)
-
+            if (list.size == 1) {
+                val piePortion = list.first()
                 add(
                     PieChartRenderData(
-                        startAngle = startAngle,
-                        sweepAngle = sweepAngle,
-                        color = piePortion.colorInt
+                        startAngle = -90f,
+                        color = piePortion.colorInt,
+                        sweepAngle = (piePortion.value * 360 / maxValue).coerceAtLeast(2f)
                     )
                 )
+            } else {
+                list.sortedByDescending(PieChartDataPart::value).forEach { piePortion ->
+
+                    val startAngle = if (isEmpty()) {
+                        -90f
+                    } else {
+                        val last = last()
+                        last.startAngle + last.sweepAngle + distanceBetweenParts
+                    }
+                    // Ensure that displayed portions is not very small.
+                    val sweepAngle =
+                        (piePortion.value * 360 / maxValue - distanceBetweenParts).coerceAtLeast(2f)
+
+                    add(
+                        PieChartRenderData(
+                            startAngle = startAngle,
+                            sweepAngle = sweepAngle,
+                            color = piePortion.colorInt
+                        )
+                    )
+                }
             }
         }
     }

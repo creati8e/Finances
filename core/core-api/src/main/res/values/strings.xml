@@ -13,5 +13,7 @@
     <string name="period_type_week">Week</string>
     <string name="period_type_year">Year</string>
     <!--endregion-->
+    <string name="incomes">Incomes</string>
+    <string name="expenses">Expenses</string>
 
 </resources>

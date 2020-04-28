@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.dashboard.presentation.model.cells
+package serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories
 
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory

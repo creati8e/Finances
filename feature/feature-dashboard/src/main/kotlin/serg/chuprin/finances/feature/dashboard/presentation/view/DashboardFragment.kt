@@ -15,9 +15,9 @@ import serg.chuprin.finances.feature.dashboard.presentation.di.DashboardComponen
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.store.DashboardEvent
 import serg.chuprin.finances.feature.dashboard.presentation.model.store.DashboardIntent
+import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.categories.DashboardCategoriesWidgetCellRenderer
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.diff.DashboardAdapterDiffCallback
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.moneyaccounts.renderer.DashboardMoneyAccountsWidgetCellRenderer
-import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.renderer.DashboardCategoriesWidgetCellRenderer
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.renderer.DashboardHeaderWidgetCellRenderer
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.renderer.transactions.DashboardRecentTransactionsWidgetCellRenderer
 import serg.chuprin.finances.core.api.R as CoreR

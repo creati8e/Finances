@@ -36,7 +36,14 @@ class DashboardRecentTransactionsWidgetCellRenderer :
             adapter = transactionCellsAdapter
             isNestedScrollingEnabled = false
             layoutManager = LinearLayoutManager(context)
-            addItemDecoration(CellDividerDecoration(context, transactionCellsAdapter))
+            addItemDecoration(
+                CellDividerDecoration(
+                    context,
+                    transactionCellsAdapter,
+                    marginEndDp = 8,
+                    marginStartDp = 8
+                )
+            )
         }
     }
 

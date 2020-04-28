@@ -25,7 +25,6 @@ internal class TransactionRepositoryImpl @Inject constructor(
         firebaseDataSource.createTransaction(transaction)
     }
 
-    // TODO: Filter not balance.
     override fun userTransactionsFlow(
         userId: Id,
         dataPeriod: DataPeriod?,
@@ -37,9 +36,13 @@ internal class TransactionRepositoryImpl @Inject constructor(
                 if (transactionType != null) {
                     transactions.mapNotNull { snapshot ->
                         mapper.mapFromSnapshot(snapshot)?.takeIf { transaction ->
-                            when (transactionType) {
-                                PlainTransactionType.INCOME -> transaction.isIncome
-                                PlainTransactionType.EXPENSE -> transaction.isExpense
+                            if (transaction.isBalance) {
+                                false
+                            } else {
+                                when (transactionType) {
+                                    PlainTransactionType.INCOME -> transaction.isIncome
+                                    PlainTransactionType.EXPENSE -> transaction.isExpense
+                                }
                             }
                         }
                     }

@@ -5,30 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
-    android:layout_margin="8dp"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_marginTop="16dp"
+    android:layout_marginBottom="16dp"
+    android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatTextView
         style="@style/TextAppearance.MaterialComponents.Subtitle2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:text="@string/dashboard_categories_subtitle" />
-
-    <serg.chuprin.finances.core.piechart.PieChartView
-        android:id="@+id/pieChart"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="24dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        tools:itemCount="4"
-        tools:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
-        tools:listitem="@layout/cell_dashboard_category" />
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        tools:itemCount="1"
+        tools:listitem="@layout/cell_dashboard_expense_categories_page" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

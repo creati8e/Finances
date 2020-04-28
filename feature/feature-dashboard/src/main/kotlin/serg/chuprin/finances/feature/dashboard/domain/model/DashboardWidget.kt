@@ -1,9 +1,7 @@
 package serg.chuprin.finances.feature.dashboard.domain.model
 
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
-import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import java.math.BigDecimal
 import java.util.*
@@ -42,9 +40,7 @@ sealed class DashboardWidget(val type: Type) {
 
     data class Categories(
         val currency: Currency,
-        val totalAmount: BigDecimal,
-        val transactionType: PlainTransactionType,
-        val categoryAmounts: Map<TransactionCategory?, BigDecimal>
+        val pages: List<DashboardCategoriesWidgetPage>
     ) : DashboardWidget(type = Type.CATEGORIES)
 
 }
