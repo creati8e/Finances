@@ -1,0 +1,114 @@
+package serg.chuprin.finances.feature.dashboard.domain.builder
+
+import io.mockk.every
+import io.mockk.mockk
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.count
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.runBlocking
+import org.spekframework.spek2.Spek
+import org.spekframework.spek2.style.gherkin.Feature
+import serg.chuprin.finances.core.api.domain.model.Id
+import serg.chuprin.finances.core.api.domain.model.User
+import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
+import serg.chuprin.finances.core.api.domain.model.period.DataPeriodType
+import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
+import serg.chuprin.finances.core.api.domain.model.transaction.TransactionType
+import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
+import serg.chuprin.finances.core.api.extensions.toDateUTC
+import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
+import strikt.api.expectThat
+import strikt.assertions.isEqualTo
+import java.math.BigDecimal
+import java.time.LocalDateTime
+import java.util.*
+
+/**
+ * Created by Sergey Chuprin on 17.04.2020.
+ */
+object DashboardHeaderWidgetBuilderTest : Spek({
+
+    Feature("Dashboard header widget builder") {
+
+        Scenario("Building widget") {
+
+            val transactionRepository = mockk<TransactionRepository>()
+            val widgetBuilder = DashboardHeaderWidgetBuilder(transactionRepository)
+
+            val currentUser = createTestUser()
+            val currentPeriod = DataPeriod.from(currentUser.dataPeriodType)
+
+            lateinit var widget: DashboardWidget.Header
+            lateinit var flow: Flow<DashboardWidget.Header>
+
+            every {
+                transactionRepository.userTransactionsFlow(currentUser.id)
+            } returns flowOf(createTransactionsForScenario1(currentUser))
+
+            When("Build method is called") {
+                flow = widgetBuilder.build(
+                    currentUser = currentUser,
+                    currentPeriod = currentPeriod
+                )
+            }
+
+            Then("Builder returns flow of single widget") {
+                val emissionsCount = runBlocking { flow.count() }
+                expectThat(emissionsCount).isEqualTo(1)
+
+                widget = runBlocking { flow.toList().last() }
+            }
+
+            And("Balance is valid") {
+                expectThat(widget.balance).isEqualTo(BigDecimal(120))
+            }
+
+            And("Expenses amount is valid") {
+                expectThat(widget.currentPeriodExpenses).isEqualTo(BigDecimal(50))
+            }
+
+            And("Incomes amount is valid") {
+                expectThat(widget.currentPeriodIncomes).isEqualTo(BigDecimal(70))
+            }
+
+            And("Current period is valid") {
+                expectThat(widget.dataPeriod).isEqualTo(currentPeriod)
+            }
+
+            And("Currency is the same as user's default") {
+                expectThat(widget.currency).isEqualTo(currentUser.defaultCurrency)
+            }
+
+        }
+
+    }
+
+})
+
+private fun createTransactionsForScenario1(user: User): List<Transaction> {
+    val futureTransactionDate = LocalDateTime.now().plusMonths(2).toDateUTC()
+    return listOf(
+        createTransaction(user, TransactionType.BALANCE, amount = "100"),
+        createTransaction(user, TransactionType.PLAIN, amount = "-50"),
+        createTransaction(user, TransactionType.PLAIN, amount = "70"),
+        createTransaction(user, TransactionType.PLAIN, amount = "30", date = futureTransactionDate),
+        createTransaction(user, TransactionType.BALANCE, amount = "1", date = futureTransactionDate)
+    )
+}
+
+private fun createTransaction(
+    user: User,
+    type: TransactionType,
+    date: Date = Date(),
+    amount: String
+): Transaction {
+    return Transaction(Id.createNew(), user.id, Id.createNew(), type, "USD", null, date, amount)
+}
+
+private fun createTestUser(
+    dataPeriodType: DataPeriodType = DataPeriodType.MONTH,
+    currencyCode: String = "USD"
+): User {
+    return User(Id.createNew(), "email", "", "", dataPeriodType, currencyCode)
+}

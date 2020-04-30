@@ -27,18 +27,19 @@ class DashboardHeaderWidgetBuilder @Inject constructor(
             flowOf(currentPeriod),
             allUserTransactionsFlow(currentUser)
         ) { user, period, allTransactions ->
-            val balanceAmount = allTransactions.amount
-            val transactionsInPeriod = allTransactions.filter { transaction ->
-                !transaction.isBalance && transaction.dateTime in period
+
+            val allTransactionsInPeriod = allTransactions.filter { transaction ->
+                transaction.dateTime in period
             }
-            val incomeAmount = transactionsInPeriod.filter(Transaction::isIncome).amount.abs()
-            val expenseAmount = transactionsInPeriod.filter(Transaction::isExpense).amount.abs()
+            val plainTransactions = allTransactionsInPeriod.filter(Transaction::isPlain)
+            val incomeAmount = plainTransactions.filter(Transaction::isIncome).amount.abs()
+            val expenseAmount = plainTransactions.filter(Transaction::isExpense).amount.abs()
             DashboardWidget.Header(
                 dataPeriod = period,
-                balance = balanceAmount,
                 currency = user.defaultCurrency,
                 currentPeriodIncomes = incomeAmount,
-                currentPeriodExpenses = expenseAmount
+                currentPeriodExpenses = expenseAmount,
+                balance = allTransactionsInPeriod.amount
             )
         }
     }

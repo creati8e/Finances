@@ -75,6 +75,9 @@ data class Transaction(
     val isBalance: Boolean
         get() = type == TransactionType.BALANCE
 
+    val isPlain: Boolean
+        get() = type == TransactionType.PLAIN
+
     val dateTime: LocalDateTime
         get() = _date.toLocalDateTimeUTC()
 
