@@ -7,10 +7,8 @@ import dagger.multibindings.IntoSet
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.mvi.store.BaseStateStore
 import serg.chuprin.finances.feature.dashboard.data.repository.DashboardDataPeriodRepositoryImpl
-import serg.chuprin.finances.feature.dashboard.data.repository.DashboardTransactionCategoriesTypeRepositoryImpl
 import serg.chuprin.finances.feature.dashboard.domain.builder.*
 import serg.chuprin.finances.feature.dashboard.domain.repository.DashboardDataPeriodRepository
-import serg.chuprin.finances.feature.dashboard.domain.repository.DashboardTransactionCategoriesTypeRepository
 import serg.chuprin.finances.feature.dashboard.presentation.model.builder.*
 import serg.chuprin.finances.feature.dashboard.presentation.model.store.*
 
@@ -42,11 +40,6 @@ interface DashboardModule {
     fun bindDashboardPeriodRepository(
         impl: DashboardDataPeriodRepositoryImpl
     ): DashboardDataPeriodRepository
-
-    @[Binds ScreenScope]
-    fun bindDashboardTransactionCategoriesTypeRepository(
-        impl: DashboardTransactionCategoriesTypeRepositoryImpl
-    ): DashboardTransactionCategoriesTypeRepository
 
     // region Widget builders.
 

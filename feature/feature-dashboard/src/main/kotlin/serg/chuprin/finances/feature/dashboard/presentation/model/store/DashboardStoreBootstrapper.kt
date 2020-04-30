@@ -4,11 +4,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
-import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.mvi.bootstrapper.StoreBootstrapper
 import serg.chuprin.finances.feature.dashboard.domain.repository.DashboardDataPeriodRepository
-import serg.chuprin.finances.feature.dashboard.domain.repository.DashboardTransactionCategoriesTypeRepository
 import serg.chuprin.finances.feature.dashboard.domain.usecase.BuildDashboardUseCase
 import javax.inject.Inject
 
@@ -18,8 +16,7 @@ import javax.inject.Inject
 class DashboardStoreBootstrapper @Inject constructor(
     private val userRepository: UserRepository,
     private val buildDashboardUseCase: BuildDashboardUseCase,
-    private val dataPeriodRepository: DashboardDataPeriodRepository,
-    private val transactionCategoriesTypeRepository: DashboardTransactionCategoriesTypeRepository
+    private val dataPeriodRepository: DashboardDataPeriodRepository
 ) : StoreBootstrapper<DashboardAction> {
 
     override fun invoke(): Flow<DashboardAction> {
@@ -27,7 +24,6 @@ class DashboardStoreBootstrapper @Inject constructor(
             .execute()
             .map { dashboard -> DashboardAction.FormatDashboard(dashboard) }
             .onStart {
-                transactionCategoriesTypeRepository.setType(PlainTransactionType.EXPENSE)
                 val currentUser = userRepository.getCurrentUser()
                 dataPeriodRepository.setCurrentDataPeriod(
                     DataPeriod.from(currentUser.dataPeriodType)
