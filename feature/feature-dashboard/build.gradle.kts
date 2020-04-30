@@ -13,15 +13,11 @@ fun DependencyHandler.implementationAll(
 }
 
 dependencies {
-
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf(".*jar"))))
-
     implementation(project(":core:core-api"))
     implementation(project(":core:core-pie-chart"))
     implementation(project(":injector"))
 
     implementation(Libraries.KOTLIN)
-    implementation(Libraries.KOTLIN_SERIALIZATION)
     implementation(Libraries.Coroutines.CORE)
     implementation(Libraries.Coroutines.ANDROID)
 

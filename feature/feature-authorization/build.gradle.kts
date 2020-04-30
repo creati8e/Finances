@@ -21,7 +21,6 @@ dependencies {
     implementation(project(":core:core-firebase"))
 
     implementation(Libraries.KOTLIN)
-    implementation(Libraries.KOTLIN_SERIALIZATION)
     implementation(Libraries.Coroutines.CORE)
     implementation(Libraries.Coroutines.ANDROID)
 

@@ -2,7 +2,6 @@ plugins {
     id("com.android.library")
     id("kotlin-android")
     id("kotlin-android-extensions")
-    kotlin("plugin.serialization") version BuildScript.Versions.KOTLIN_VER
 }
 
 fun DependencyHandler.implementationAll(
@@ -13,13 +12,9 @@ fun DependencyHandler.implementationAll(
 }
 
 dependencies {
-
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf(".*jar"))))
-
     api(project(":core:core-mvi"))
 
     implementation(Libraries.KOTLIN)
-    implementation(Libraries.KOTLIN_SERIALIZATION)
     implementation(Libraries.Coroutines.CORE)
     implementation(Libraries.Coroutines.ANDROID)
     implementation(Libraries.JAVAX_ANNOTATIONS)

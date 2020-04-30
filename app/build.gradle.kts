@@ -5,7 +5,6 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("kotlin-android-extensions")
-    kotlin("plugin.serialization") version BuildScript.Versions.KOTLIN_VER
     id("ru.cleverpumpkin.badge")
     id("ru.cleverpumpkin.proguard-dictionaries-generator")
 }
@@ -82,7 +81,6 @@ dependencies {
     // endregion
 
     implementation(Libraries.KOTLIN)
-    implementation(Libraries.KOTLIN_SERIALIZATION)
     implementation(Libraries.Coroutines.CORE)
     implementation(Libraries.Coroutines.ANDROID)
 
