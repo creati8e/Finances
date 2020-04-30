@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.api.load
 import kotlinx.android.synthetic.main.fragment_dashboard.*
-import serg.chuprin.adapter.DiffMultiViewAdapter
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.popup.menu.PopupMenuWindow
@@ -15,11 +14,7 @@ import serg.chuprin.finances.feature.dashboard.presentation.di.DashboardComponen
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.store.DashboardEvent
 import serg.chuprin.finances.feature.dashboard.presentation.model.store.DashboardIntent
-import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.categories.DashboardCategoriesWidgetCellRenderer
-import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.diff.DashboardAdapterDiffCallback
-import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.moneyaccounts.renderer.DashboardMoneyAccountsWidgetCellRenderer
-import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.renderer.DashboardHeaderWidgetCellRenderer
-import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.renderer.transactions.DashboardRecentTransactionsWidgetCellRenderer
+import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.dsl.dashboard
 import serg.chuprin.finances.core.api.R as CoreR
 
 /**
@@ -29,12 +24,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 
     private val viewModel by viewModelFromComponent { DashboardComponent.get() }
 
-    private val cellsAdapter = DiffMultiViewAdapter(DashboardAdapterDiffCallback()).apply {
-        registerRenderer(DashboardHeaderWidgetCellRenderer())
-        registerRenderer(DashboardCategoriesWidgetCellRenderer())
-        registerRenderer(DashboardMoneyAccountsWidgetCellRenderer())
-        registerRenderer(DashboardRecentTransactionsWidgetCellRenderer())
-    }
+    private val cellsAdapter by lazy { recyclerView.dashboard(viewModel) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
