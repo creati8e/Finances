@@ -146,7 +146,7 @@ object AccountsSetupOnboardingStoreTest : Spek({
                     dispatch(AccountsSetupOnboardingIntent.ClickOnAcceptBalanceButton)
 
                     state.assertCurrentStepIs<AccountsSetupOnboardingStepState.BankCardQuestion>()
-                    expectThat(state.cashBalance?.bigDecimal).isEqualTo(cashEnteredAmountBigDecimal)
+                    expectThat(state.cashBalance).isEqualTo(cashEnteredAmountBigDecimal)
                 }
             }
 
@@ -208,8 +208,8 @@ object AccountsSetupOnboardingStoreTest : Spek({
 
             Then("State contains this balance in property") {
                 expectThat(store.state) {
-                    get { cashBalance?.bigDecimal }.isEqualTo(cashEnteredAmountBigDecimal)
-                    get { bankCardBalance?.bigDecimal }.isEqualTo(bankCardAmountBigDecimal)
+                    get { cashBalance }.isEqualTo(cashEnteredAmountBigDecimal)
+                    get { bankCardBalance }.isEqualTo(bankCardAmountBigDecimal)
                 }
             }
 
