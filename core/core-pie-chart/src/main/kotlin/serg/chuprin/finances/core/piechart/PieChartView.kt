@@ -161,38 +161,38 @@ class PieChartView @JvmOverloads constructor(
         list: List<PieChartDataPart>,
         maxValue: Float
     ): List<PieChartRenderData> {
+        // If only single portion is displayed, remove the gap.
+        if (list.size == 1) {
+            val piePortion = list.first()
+            return listOf(
+                PieChartRenderData(
+                    startAngle = -90f,
+                    color = piePortion.colorInt,
+                    sweepAngle = (piePortion.value * 360 / maxValue).coerceAtLeast(2f)
+                )
+            )
+        }
         return buildList {
             val distanceBetweenParts = DISTANCE_BETWEEN_PARTS
-            if (list.size == 1) {
-                val piePortion = list.first()
+            list.sortedByDescending(PieChartDataPart::value).forEach { piePortion ->
+
+                val startAngle = if (isEmpty()) {
+                    -90f
+                } else {
+                    val last = last()
+                    last.startAngle + last.sweepAngle + distanceBetweenParts
+                }
+                // Ensure that displayed portions is not very small.
+                val sweepAngle =
+                    (piePortion.value * 360 / maxValue - distanceBetweenParts).coerceAtLeast(2f)
+
                 add(
                     PieChartRenderData(
-                        startAngle = -90f,
-                        color = piePortion.colorInt,
-                        sweepAngle = (piePortion.value * 360 / maxValue).coerceAtLeast(2f)
+                        startAngle = startAngle,
+                        sweepAngle = sweepAngle,
+                        color = piePortion.colorInt
                     )
                 )
-            } else {
-                list.sortedByDescending(PieChartDataPart::value).forEach { piePortion ->
-
-                    val startAngle = if (isEmpty()) {
-                        -90f
-                    } else {
-                        val last = last()
-                        last.startAngle + last.sweepAngle + distanceBetweenParts
-                    }
-                    // Ensure that displayed portions is not very small.
-                    val sweepAngle =
-                        (piePortion.value * 360 / maxValue - distanceBetweenParts).coerceAtLeast(2f)
-
-                    add(
-                        PieChartRenderData(
-                            startAngle = startAngle,
-                            sweepAngle = sweepAngle,
-                            color = piePortion.colorInt
-                        )
-                    )
-                }
             }
         }
     }
