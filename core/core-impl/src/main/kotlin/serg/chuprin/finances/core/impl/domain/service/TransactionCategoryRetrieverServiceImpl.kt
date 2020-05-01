@@ -14,6 +14,7 @@ import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepos
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.api.domain.service.TransactionCategoryRetrieverService
 import serg.chuprin.finances.core.api.extensions.categoryIds
+import serg.chuprin.finances.core.impl.data.TransactionWithCategoriesLinker
 import javax.inject.Inject
 
 /**
@@ -21,7 +22,8 @@ import javax.inject.Inject
  */
 internal class TransactionCategoryRetrieverServiceImpl @Inject constructor(
     private val transactionRepository: TransactionRepository,
-    private val categoryRepository: TransactionCategoryRepository
+    private val categoryRepository: TransactionCategoryRepository,
+    private val transactionWithCategoriesLinker: TransactionWithCategoriesLinker
 ) : TransactionCategoryRetrieverService {
 
     override fun recentUserTransactionsInPeriodFlow(
@@ -36,7 +38,7 @@ internal class TransactionCategoryRetrieverServiceImpl @Inject constructor(
                     flowOf(transactions),
                     categoryRepository.categoriesFlow(transactions.categoryIds)
                 ) { t1, t2 ->
-                    associateTransactionsWithCategories(t1, t2)
+                    transactionWithCategoriesLinker.linkTransactionsWithCategories(t1, t2)
                 }
             }
     }
@@ -53,30 +55,9 @@ internal class TransactionCategoryRetrieverServiceImpl @Inject constructor(
                     flowOf(transactions),
                     categoryRepository.categoriesFlow(transactions.categoryIds)
                 ) { t1, t2 ->
-                    associateCategoriesWithTransactions(t1, t2)
+                    transactionWithCategoriesLinker.linkCategoryParentsWithTransactions(t1, t2)
                 }
             }
-    }
-
-    private fun associateCategoriesWithTransactions(
-        transactions: List<Transaction>,
-        categoryWithParentMap: Map<Id, TransactionCategoryWithParent>
-    ): Map<TransactionCategory?, List<Transaction>> {
-        return transactions.groupBy { transaction ->
-            categoryWithParentMap[transaction.categoryId]?.run {
-                parentCategory ?: category
-            }
-        }
-    }
-
-    private fun associateTransactionsWithCategories(
-        transactions: List<Transaction>,
-        categoryWithParentMap: Map<Id, TransactionCategoryWithParent>
-    ): Map<Transaction, TransactionCategoryWithParent?> {
-        return transactions.associateBy(
-            { transaction -> transaction },
-            { transaction -> categoryWithParentMap[transaction.categoryId] }
-        )
     }
 
 }
