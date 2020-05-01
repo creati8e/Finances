@@ -10,6 +10,9 @@ import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 
 /**
  * Created by Sergey Chuprin on 20.04.2020.
+ *
+ * This class retrieves transactions and categories.
+ * It combines them in different ways depending of required operation.
  */
 interface TransactionCategoryRetrieverService {
 

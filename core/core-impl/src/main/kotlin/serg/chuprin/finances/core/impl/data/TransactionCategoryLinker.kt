@@ -7,6 +7,9 @@ import javax.inject.Inject
 
 /**
  * Created by Sergey Chuprin on 01.05.2020.
+ *
+ * This class creates map of category's [Id] associated with
+ * [TransactionCategoryWithParent] which contains this category and its parent if any.
  */
 internal class TransactionCategoryLinker @Inject constructor() {
 
