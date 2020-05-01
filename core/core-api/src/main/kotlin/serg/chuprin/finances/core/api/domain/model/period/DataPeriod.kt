@@ -19,33 +19,33 @@ data class DataPeriod(
                 DataPeriodType.MONTH -> {
                     val startDateTime = LocalDateTime.now().firstDayOfMonth()
                     DataPeriod(
-                        startDateTime,
-                        startDateTime.lastDayOfMonth(),
-                        periodType
+                        periodType = periodType,
+                        startDate = startDateTime,
+                        endDate = startDateTime.lastDayOfMonth()
                     )
                 }
                 DataPeriodType.DAY -> {
                     val startDateTime = LocalDateTime.now().startOfDay()
                     DataPeriod(
-                        startDateTime,
-                        startDateTime.endOfDay(),
-                        periodType
+                        periodType = periodType,
+                        startDate = startDateTime,
+                        endDate = startDateTime.endOfDay()
                     )
                 }
                 DataPeriodType.WEEK -> {
                     val startDateTime = LocalDateTime.now().startOfWeek()
                     DataPeriod(
-                        startDateTime,
-                        startDateTime.endOfWeek(),
-                        periodType
+                        periodType = periodType,
+                        startDate = startDateTime,
+                        endDate = startDateTime.endOfWeek()
                     )
                 }
                 DataPeriodType.YEAR -> {
                     val startDateTime = LocalDateTime.now().startOfYear()
                     DataPeriod(
-                        startDateTime,
-                        startDateTime.endOfYear(),
-                        periodType
+                        periodType = periodType,
+                        startDate = startDateTime,
+                        endDate = startDateTime.endOfYear()
                     )
                 }
             }
@@ -54,7 +54,8 @@ data class DataPeriod(
     }
 
     operator fun contains(dateTime: LocalDateTime): Boolean {
-        return dateTime.isAfter(startDate) && dateTime.isBefore(endDate)
+        return (dateTime.isEqual(startDate) || dateTime.isAfter(startDate))
+                && (dateTime.isEqual(endDate) || dateTime.isBefore(endDate))
     }
 
     fun next(): DataPeriod {
@@ -62,33 +63,33 @@ data class DataPeriod(
             DataPeriodType.MONTH -> {
                 val nextStartDate = startDate.firstDayOfNextMonth()
                 DataPeriod(
-                    nextStartDate,
-                    nextStartDate.lastDayOfMonth(),
-                    periodType
+                    periodType = periodType,
+                    startDate = nextStartDate,
+                    endDate = nextStartDate.lastDayOfMonth()
                 )
             }
             DataPeriodType.WEEK -> {
                 val nextStartDate = startDate.plusWeeks(1).startOfWeek()
                 DataPeriod(
-                    nextStartDate,
-                    nextStartDate.endOfWeek(),
-                    periodType
+                    periodType = periodType,
+                    startDate = nextStartDate,
+                    endDate = nextStartDate.endOfWeek()
                 )
             }
             DataPeriodType.YEAR -> {
                 val nextStartDate = startDate.startOfNextYear()
                 DataPeriod(
-                    nextStartDate,
-                    nextStartDate.endOfYear(),
-                    periodType
+                    periodType = periodType,
+                    startDate = nextStartDate,
+                    endDate = nextStartDate.endOfYear()
                 )
             }
             DataPeriodType.DAY -> {
                 val nextStartDate = startDate.plusDays(1).startOfDay()
                 DataPeriod(
-                    nextStartDate,
-                    nextStartDate.endOfDay(),
-                    periodType
+                    periodType = periodType,
+                    startDate = nextStartDate,
+                    endDate = nextStartDate.endOfDay()
                 )
             }
         }
@@ -99,33 +100,33 @@ data class DataPeriod(
             DataPeriodType.MONTH -> {
                 val nextStartDate = startDate.minusMonths(1).firstDayOfMonth()
                 DataPeriod(
-                    nextStartDate,
-                    nextStartDate.lastDayOfMonth(),
-                    periodType
+                    periodType = periodType,
+                    startDate = nextStartDate,
+                    endDate = nextStartDate.lastDayOfMonth()
                 )
             }
             DataPeriodType.DAY -> {
                 val nextStartDate = startDate.minusDays(1).startOfDay()
                 DataPeriod(
-                    nextStartDate,
-                    nextStartDate.endOfDay(),
-                    periodType
+                    periodType = periodType,
+                    startDate = nextStartDate,
+                    endDate = nextStartDate.endOfDay()
                 )
             }
             DataPeriodType.WEEK -> {
                 val nextStartDate = startDate.minusWeeks(1).startOfWeek()
                 DataPeriod(
-                    nextStartDate,
-                    nextStartDate.endOfWeek(),
-                    periodType
+                    periodType = periodType,
+                    startDate = nextStartDate,
+                    endDate = nextStartDate.endOfWeek()
                 )
             }
             DataPeriodType.YEAR -> {
                 val nextStartDate = startDate.minusYears(1).startOfYear()
                 DataPeriod(
-                    nextStartDate,
-                    nextStartDate.endOfYear(),
-                    periodType
+                    periodType = periodType,
+                    startDate = nextStartDate,
+                    endDate = nextStartDate.endOfYear()
                 )
             }
         }

@@ -26,15 +26,15 @@ fun LocalDateTime.toDateUTC(): Date {
 // region Month adjustment.
 
 fun LocalDateTime.lastDayOfMonth(): LocalDateTime {
-    return with(TemporalAdjusters.lastDayOfMonth())
+    return with(TemporalAdjusters.lastDayOfMonth()).endOfDay()
 }
 
 fun LocalDateTime.firstDayOfNextMonth(): LocalDateTime {
-    return with(TemporalAdjusters.firstDayOfNextMonth())
+    return with(TemporalAdjusters.firstDayOfNextMonth()).startOfDay()
 }
 
 fun LocalDateTime.firstDayOfMonth(): LocalDateTime {
-    return with(TemporalAdjusters.firstDayOfMonth())
+    return with(TemporalAdjusters.firstDayOfMonth()).startOfDay()
 }
 
 // endregion
@@ -56,10 +56,10 @@ fun LocalDateTime.endOfDay(): LocalDateTime {
 // region Week adjustment.
 
 fun LocalDateTime.startOfWeek(): LocalDateTime {
-    return with(WeekFields.of(Locale.getDefault()).firstDayOfWeek)
+    return with(WeekFields.of(Locale.getDefault()).firstDayOfWeek).startOfDay()
 }
 
-fun LocalDateTime.endOfWeek(): LocalDateTime = plusDays(6)
+fun LocalDateTime.endOfWeek(): LocalDateTime = plusDays(6).endOfDay()
 
 // endregion
 
@@ -67,15 +67,15 @@ fun LocalDateTime.endOfWeek(): LocalDateTime = plusDays(6)
 // region Year adjustment.
 
 fun LocalDateTime.startOfYear(): LocalDateTime {
-    return with(TemporalAdjusters.firstDayOfYear())
+    return with(TemporalAdjusters.firstDayOfYear()).startOfDay()
 }
 
 fun LocalDateTime.endOfYear(): LocalDateTime {
-    return with(TemporalAdjusters.lastDayOfYear())
+    return with(TemporalAdjusters.lastDayOfYear()).endOfDay()
 }
 
 fun LocalDateTime.startOfNextYear(): LocalDateTime {
-    return with(TemporalAdjusters.firstDayOfNextYear())
+    return with(TemporalAdjusters.firstDayOfNextYear()).startOfDay()
 }
 
 // endregion

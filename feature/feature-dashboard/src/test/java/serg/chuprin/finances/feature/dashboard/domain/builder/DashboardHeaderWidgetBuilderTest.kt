@@ -3,7 +3,6 @@ package serg.chuprin.finances.feature.dashboard.domain.builder
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.count
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
@@ -54,14 +53,13 @@ object DashboardHeaderWidgetBuilderTest : Spek({
             }
 
             Then("Builder returns flow of single widget") {
-                val emissionsCount = runBlocking { flow.count() }
-                expectThat(emissionsCount).isEqualTo(1)
-
-                widget = runBlocking { flow.toList().last() }
+                val widgetsList = runBlocking { flow.toList() }
+                expectThat(widgetsList.size).isEqualTo(1)
+                widget = widgetsList.last()
             }
 
             And("Balance is valid") {
-                expectThat(widget.balance).isEqualTo(BigDecimal(120))
+                expectThat(widget.balance).isEqualTo(BigDecimal(128))
             }
 
             And("Expenses amount is valid") {
@@ -88,10 +86,13 @@ object DashboardHeaderWidgetBuilderTest : Spek({
 
 private fun createTransactionsForScenario1(user: User): List<Transaction> {
     val futureTransactionDate = LocalDateTime.now().plusMonths(2).toDateUTC()
+    val pastTransactionDate = LocalDateTime.now().minusMonths(2).toDateUTC()
     return listOf(
         createTransaction(user, TransactionType.BALANCE, amount = "100"),
         createTransaction(user, TransactionType.PLAIN, amount = "-50"),
         createTransaction(user, TransactionType.PLAIN, amount = "70"),
+        createTransaction(user, TransactionType.PLAIN, amount = "3", date = pastTransactionDate),
+        createTransaction(user, TransactionType.BALANCE, amount = "5", date = pastTransactionDate),
         createTransaction(user, TransactionType.PLAIN, amount = "30", date = futureTransactionDate),
         createTransaction(user, TransactionType.BALANCE, amount = "1", date = futureTransactionDate)
     )

@@ -67,10 +67,10 @@ data class Transaction(
         get() = BigDecimal(_amount)
 
     val isExpense: Boolean
-        get() = _amount.startsWith("-")
+        get() = isPlain && _amount.startsWith("-")
 
     val isIncome: Boolean
-        get() = !isExpense
+        get() = isPlain && _amount.startsWith("-").not()
 
     val isBalance: Boolean
         get() = type == TransactionType.BALANCE

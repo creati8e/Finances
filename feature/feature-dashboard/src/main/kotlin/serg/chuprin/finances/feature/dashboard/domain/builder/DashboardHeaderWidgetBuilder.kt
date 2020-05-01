@@ -7,8 +7,8 @@ import serg.chuprin.finances.core.api.domain.model.User
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
-import serg.chuprin.finances.core.api.extensions.amount
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
+import java.math.BigDecimal
 import javax.inject.Inject
 
 /**
@@ -27,21 +27,43 @@ class DashboardHeaderWidgetBuilder @Inject constructor(
             flowOf(currentPeriod),
             allUserTransactionsFlow(currentUser)
         ) { user, period, allTransactions ->
-
-            val allTransactionsInPeriod = allTransactions.filter { transaction ->
-                transaction.dateTime in period
-            }
-            val plainTransactions = allTransactionsInPeriod.filter(Transaction::isPlain)
-            val incomeAmount = plainTransactions.filter(Transaction::isIncome).amount.abs()
-            val expenseAmount = plainTransactions.filter(Transaction::isExpense).amount.abs()
+            val (incomeAmount, expenseAmount, balanceAmount) = calculateAmounts(
+                period = period,
+                transactions = allTransactions
+            )
             DashboardWidget.Header(
                 dataPeriod = period,
+                balance = balanceAmount,
                 currency = user.defaultCurrency,
                 currentPeriodIncomes = incomeAmount,
-                currentPeriodExpenses = expenseAmount,
-                balance = allTransactionsInPeriod.amount
+                currentPeriodExpenses = expenseAmount
             )
         }
+    }
+
+    private fun calculateAmounts(
+        transactions: List<Transaction>,
+        period: DataPeriod
+    ): Triple<BigDecimal, BigDecimal, BigDecimal> {
+        // Looks not very good but it's more better to iterate the collection only once
+        // and calculate both amounts simultaneously without creating intermediate collections.
+        var incomeAmount = BigDecimal.ZERO
+        var expenseAmount = BigDecimal.ZERO
+        var balanceAmount = BigDecimal.ZERO
+
+        transactions.forEach { transaction ->
+            if (transaction.dateTime <= period.endDate) {
+                balanceAmount += transaction.amount
+            }
+            if (transaction.dateTime in period) {
+                if (transaction.isExpense) {
+                    expenseAmount += transaction.amount
+                } else if (transaction.isIncome) {
+                    incomeAmount += transaction.amount
+                }
+            }
+        }
+        return Triple(incomeAmount.abs(), expenseAmount.abs(), balanceAmount.abs())
     }
 
     private fun allUserTransactionsFlow(currentUser: User): Flow<List<Transaction>> {

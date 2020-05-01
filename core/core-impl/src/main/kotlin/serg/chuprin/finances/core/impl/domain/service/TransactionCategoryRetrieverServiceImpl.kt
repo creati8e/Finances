@@ -14,8 +14,6 @@ import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.api.domain.service.TransactionCategoryRetrieverService
 import serg.chuprin.finances.core.api.extensions.categoryIds
 import javax.inject.Inject
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 /**
  * Created by Sergey Chuprin on 20.04.2020.
@@ -37,9 +35,7 @@ internal class TransactionCategoryRetrieverServiceImpl @Inject constructor(
                     flowOf(transactions),
                     categoryRepository.categoriesFlow(transactions.categoryIds)
                 ) { t1, t2 ->
-                    suspendCoroutine<Map<Transaction, TransactionCategoryWithParent?>> {
-                        it.resume(associateTransactionsWithCategories(t1, t2))
-                    }
+                    associateTransactionsWithCategories(t1, t2)
                 }
             }
     }
