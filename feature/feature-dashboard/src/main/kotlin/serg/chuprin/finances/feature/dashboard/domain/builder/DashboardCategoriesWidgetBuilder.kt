@@ -24,6 +24,10 @@ class DashboardCategoriesWidgetBuilder @Inject constructor(
     private val transactionCategoryRetrieverService: TransactionCategoryRetrieverService
 ) : DashboardWidgetBuilder<DashboardWidget.Categories> {
 
+    private companion object {
+        private const val TOP_CATEGORIES_COUNT = 6
+    }
+
     override fun build(
         currentUser: User,
         currentPeriod: DataPeriod
@@ -50,7 +54,8 @@ class DashboardCategoriesWidgetBuilder @Inject constructor(
             .map { categoryTransactionsMap ->
                 pageBuilder.build(
                     transactionType,
-                    categoryTransactionsMap
+                    categoryTransactionsMap,
+                    TOP_CATEGORIES_COUNT
                 )
             }
     }
