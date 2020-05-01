@@ -4,7 +4,6 @@ import io.mockk.*
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.MoneyAccountBalance
 import serg.chuprin.finances.core.api.domain.model.User
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriodType
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
@@ -114,7 +113,7 @@ object AccountsSetupOnboardingStoreTest : Spek({
             val bankCardAmountBigDecimal = bankCardEnteredAmount.toBigDecimal()
             val bankAccountCardParams = OnboardingMoneyAccountCreationParams(
                 accountName = bankCardAccountName,
-                balance = MoneyAccountBalance(bankCardAmountBigDecimal)
+                balance = bankCardAmountBigDecimal
             )
 
             val cashEnteredAmount = "5"
@@ -122,7 +121,7 @@ object AccountsSetupOnboardingStoreTest : Spek({
             val cashEnteredAmountBigDecimal = cashEnteredAmount.toBigDecimal()
             val cashAccountCardParams = OnboardingMoneyAccountCreationParams(
                 accountName = cashAccountName,
-                balance = MoneyAccountBalance(cashEnteredAmountBigDecimal)
+                balance = cashEnteredAmountBigDecimal
             )
 
             val finalStepMessage = "final_step_message"

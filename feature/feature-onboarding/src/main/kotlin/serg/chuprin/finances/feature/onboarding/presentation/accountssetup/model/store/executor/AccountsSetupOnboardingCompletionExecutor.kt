@@ -1,11 +1,11 @@
 package serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.executor
 
 import androidx.annotation.StringRes
-import serg.chuprin.finances.core.api.domain.model.MoneyAccountBalance
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.feature.onboarding.R
 import serg.chuprin.finances.feature.onboarding.domain.OnboardingMoneyAccountCreationParams
 import serg.chuprin.finances.feature.onboarding.domain.usecase.CompleteAccountsSetupOnboardingUseCase
+import java.math.BigDecimal
 import javax.inject.Inject
 
 /**
@@ -17,8 +17,8 @@ class AccountsSetupOnboardingCompletionExecutor @Inject constructor(
 ) {
 
     suspend fun completeOnboarding(
-        cashBalance: MoneyAccountBalance?,
-        bankCardBalance: MoneyAccountBalance?
+        cashBalance: BigDecimal?,
+        bankCardBalance: BigDecimal?
     ) {
         val bankCardAccountCreationParams = bankCardBalance?.let { balance ->
             val name = getString(R.string.bank_card_money_account_default_name)

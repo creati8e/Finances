@@ -5,7 +5,6 @@ package serg.chuprin.finances.core.impl.data.datasource.firebase.contract
  */
 internal object FirebaseDataPeriodTypeFieldsContract {
 
-    // TODO: Add more period types.
     const val TYPE_MONTH = "month"
     const val TYPE_DAY = "day"
     const val TYPE_WEEK = "week"

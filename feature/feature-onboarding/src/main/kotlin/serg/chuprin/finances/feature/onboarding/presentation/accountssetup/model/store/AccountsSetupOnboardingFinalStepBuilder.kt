@@ -1,9 +1,9 @@
 package serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store
 
-import serg.chuprin.finances.core.api.domain.model.MoneyAccountBalance
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.feature.onboarding.R
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.state.AccountsSetupOnboardingStepState
+import java.math.BigDecimal
 import javax.inject.Inject
 
 /**
@@ -14,8 +14,8 @@ class AccountsSetupOnboardingFinalStepBuilder @Inject constructor(
 ) {
 
     fun build(
-        cashBalance: MoneyAccountBalance?,
-        bankCardBalance: MoneyAccountBalance?
+        cashBalance: BigDecimal?,
+        bankCardBalance: BigDecimal?
     ): AccountsSetupOnboardingStepState {
         val message = if (bankCardBalance == null && cashBalance == null) {
             // User didn't setup any account.

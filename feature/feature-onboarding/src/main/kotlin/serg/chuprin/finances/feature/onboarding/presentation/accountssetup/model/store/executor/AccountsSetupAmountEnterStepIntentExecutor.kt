@@ -4,7 +4,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import serg.chuprin.finances.core.api.domain.model.MoneyAccountBalance
 import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
 import serg.chuprin.finances.core.api.presentation.model.AmountInputState
 import serg.chuprin.finances.core.api.presentation.model.formatter.AmountFormatter
@@ -79,7 +78,7 @@ class AccountsSetupAmountEnterStepIntentExecutor @Inject constructor(
                 )
             )
         return flow {
-            val bankCardBalance = MoneyAccountBalance(parsedAmount)
+            val bankCardBalance = parsedAmount
 
             onboardingCompletionExecutor.completeOnboarding(
                 cashBalance = state.cashBalance,
@@ -123,7 +122,7 @@ class AccountsSetupAmountEnterStepIntentExecutor @Inject constructor(
             AccountsSetupOnboardingEffect.AccountBalanceEntered(
                 // Bank card balance not entered on this step yet.
                 bankCardBalance = null,
-                cashBalance = MoneyAccountBalance(parsedAmount)
+                cashBalance = parsedAmount
             ),
             AccountsSetupOnboardingEffect.StepChanged(
                 AccountsSetupOnboardingStepState.BankCardQuestion

@@ -1,8 +1,8 @@
 package serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store
 
-import serg.chuprin.finances.core.api.domain.model.MoneyAccountBalance
 import serg.chuprin.finances.core.api.presentation.model.AmountInputState
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.state.AccountsSetupOnboardingStepState
+import java.math.BigDecimal
 import java.util.*
 
 /**
@@ -11,8 +11,8 @@ import java.util.*
 sealed class AccountsSetupOnboardingEffect {
 
     class AccountBalanceEntered(
-        val cashBalance: MoneyAccountBalance?,
-        val bankCardBalance: MoneyAccountBalance?
+        val cashBalance: BigDecimal?,
+        val bankCardBalance: BigDecimal?
     ) : AccountsSetupOnboardingEffect()
 
     class EnteredAmountParsedWithError(
