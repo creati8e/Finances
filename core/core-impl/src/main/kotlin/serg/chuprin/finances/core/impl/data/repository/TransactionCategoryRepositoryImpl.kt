@@ -8,6 +8,7 @@ import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryType
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
 import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepository
+import serg.chuprin.finances.core.impl.data.TransactionCategoryLinker
 import serg.chuprin.finances.core.impl.data.datasource.assets.PredefinedTransactionCategoriesDataSource
 import serg.chuprin.finances.core.impl.data.datasource.assets.TransactionCategoryAssetDto
 import serg.chuprin.finances.core.impl.data.datasource.firebase.FirebaseTransactionCategoryDataSource
@@ -19,6 +20,7 @@ import javax.inject.Inject
  */
 internal class TransactionCategoryRepositoryImpl @Inject constructor(
     private val mapper: FirebaseTransactionCategoryMapper,
+    private val categoryLinker: TransactionCategoryLinker,
     private val firebaseDataSource: FirebaseTransactionCategoryDataSource,
     private val predefinedCategoriesDataSource: PredefinedTransactionCategoriesDataSource
 ) : TransactionCategoryRepository {
@@ -56,25 +58,6 @@ internal class TransactionCategoryRepositoryImpl @Inject constructor(
             }
     }
 
-    private fun List<TransactionCategory>.linkWithParents(): Map<Id, TransactionCategoryWithParent> {
-        return associateBy(
-            { category -> category.id },
-            { category ->
-                val parentCategory = if (category.parentCategoryId?.value.isNullOrEmpty()) {
-                    null
-                } else {
-                    find {
-                        category.parentCategoryId == it.parentCategoryId
-                    }
-                }
-                TransactionCategoryWithParent(
-                    category = category,
-                    parentCategory = parentCategory
-                )
-            }
-        )
-    }
-
     private fun TransactionCategoryAssetDto.map(userId: Id): TransactionCategory? {
         val type = if (isIncome) {
             TransactionCategoryType.INCOME
@@ -89,6 +72,10 @@ internal class TransactionCategoryRepositoryImpl @Inject constructor(
             ownerId = userId.value,
             parentCategoryId = parentCategoryId
         )
+    }
+
+    private fun List<TransactionCategory>.linkWithParents(): Map<Id, TransactionCategoryWithParent> {
+        return categoryLinker.linkWithParents(this)
     }
 
 }
