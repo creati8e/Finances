@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.api.domain.model.Id
+import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
@@ -44,7 +45,7 @@ internal class TransactionCategoryRetrieverServiceImpl @Inject constructor(
         userId: Id,
         dataPeriod: DataPeriod,
         transactionType: PlainTransactionType
-    ): Flow<Map<TransactionCategoryWithParent?, List<Transaction>>> {
+    ): Flow<Map<TransactionCategory?, List<Transaction>>> {
         return transactionRepository
             .userTransactionsFlow(userId, dataPeriod, transactionType)
             .flatMapLatest { transactions ->
@@ -60,9 +61,11 @@ internal class TransactionCategoryRetrieverServiceImpl @Inject constructor(
     private fun associateCategoriesWithTransactions(
         transactions: List<Transaction>,
         categoryWithParentMap: Map<Id, TransactionCategoryWithParent>
-    ): Map<TransactionCategoryWithParent?, List<Transaction>> {
+    ): Map<TransactionCategory?, List<Transaction>> {
         return transactions.groupBy { transaction ->
-            categoryWithParentMap[transaction.categoryId]
+            categoryWithParentMap[transaction.categoryId]?.run {
+                parentCategory ?: category
+            }
         }
     }
 

@@ -5,7 +5,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import serg.chuprin.finances.core.api.domain.model.User
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
@@ -57,7 +56,7 @@ class DashboardCategoriesWidgetBuilder @Inject constructor(
 
     private fun buildPage(
         transactionType: PlainTransactionType,
-        categoryTransactionsMap: Map<TransactionCategoryWithParent?, List<Transaction>>
+        categoryTransactionsMap: Map<TransactionCategory?, List<Transaction>>
     ): DashboardCategoriesWidgetPage {
 
         val (topCategories, otherCategories) = categoryTransactionsMap
@@ -80,9 +79,9 @@ class DashboardCategoriesWidgetBuilder @Inject constructor(
         }
     }
 
-    private fun Map<TransactionCategoryWithParent?, List<Transaction>>.calculateCategoryAmounts(): CategoryAmounts {
+    private fun Map<TransactionCategory?, List<Transaction>>.calculateCategoryAmounts(): CategoryAmounts {
         return map { (categoryWithParent, transactions) ->
-            categoryWithParent?.category to transactions.amount.abs()
+            categoryWithParent to transactions.amount.abs()
         }.sortedByDescending { (_, amount) -> amount }
     }
 
