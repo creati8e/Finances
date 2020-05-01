@@ -20,7 +20,7 @@ internal class TransactionCategoryLinker @Inject constructor() {
                     null
                 } else {
                     categories.find {
-                        category.parentCategoryId == it.parentCategoryId
+                        category.parentCategoryId == it.id
                     }
                 }
                 TransactionCategoryWithParent(
