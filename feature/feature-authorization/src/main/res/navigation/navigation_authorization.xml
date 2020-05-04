@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/navigation_authorization"
+    android:id="@+id/authorizationGraph"
     android:label="Authorization graph"
     app:startDestination="@id/authorizationFragment"
     tools:ignore="UnusedNavigation">

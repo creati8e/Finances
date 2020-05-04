@@ -57,12 +57,8 @@ class AuthorizationFragment : BaseFragment(R.layout.fragment_authorization) {
     private fun handleSignInState(signInState: SignInState) {
         return when (signInState) {
             is SignInState.Success -> {
-                if (signInState.userIsNew) {
-                    navigation.navigateToOnboarding(navController)
-                } else {
-                    shortToast(R.string.authorization_successful_sign_in)
-                    navigation.navigateToDashboard(navController)
-                }
+                shortToast(R.string.authorization_successful_sign_in)
+                navigation.navigateToAuthorizedGraph(navController)
             }
             SignInState.Error -> {
                 progressBar.makeGone()

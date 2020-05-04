@@ -50,7 +50,7 @@ internal class FirebaseUserDataSource @Inject constructor(
                 val userIsNew = !documentSnapshot.exists()
                         || documentSnapshot.getString(FIELD_DEFAULT_CURRENCY_CODE).isNullOrEmpty()
                 document
-                    .set(fieldsMap)
+                    .set(fieldsMap, SetOptions.merge())
                     .await()
                     .also {
                         Timber.d { "User created" }

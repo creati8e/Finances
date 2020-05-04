@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootAppGraph"
+    app:startDestination="@id/appLauncherFragment">
+
+    <navigation
+        android:id="@+id/notAuthorizedGraph"
+        android:label="Not authorized graph"
+        app:startDestination="@+id/authorizationGraph"
+        tools:ignore="InvalidNavigation">
+
+        <include app:graph="@navigation/navigation_authorization" />
+
+        <action
+            android:id="@+id/navigateFromAuthorizationToAuthorizedGraph"
+            app:destination="@+id/authorizedGraph" />
+
+    </navigation>
+
+    <navigation
+        android:id="@+id/authorizedGraph"
+        app:startDestination="@id/authorizedGraphLauncherFragment">
+
+        <include app:graph="@navigation/navigation_onboarding" />
+
+        <include app:graph="@navigation/navigation_dashboard" />
+
+        <fragment
+            android:id="@+id/authorizedGraphLauncherFragment"
+            android:name="serg.chuprin.finances.app.launcher.authorized.AuthorizedGraphLauncherFragment"
+            android:label="AuthorizedGraphLauncherFragment">
+
+            <action
+                android:id="@+id/navigateFromAuthorizedGraphToDashboard"
+                app:destination="@id/navigation_dashboard"
+                app:popUpTo="@id/authorizedGraphLauncherFragment"
+                app:popUpToInclusive="true" />
+
+            <action
+                android:id="@+id/navigateFromAuthorizedGraphToOnboarding"
+                app:destination="@id/onboardingGraph"
+                app:popUpTo="@id/authorizedGraphLauncherFragment"
+                app:popUpToInclusive="true" />
+
+        </fragment>
+
+        <action
+            android:id="@+id/navigateFromOnboardingToDashboard"
+            app:destination="@+id/navigation_dashboard" />
+
+    </navigation>
+
+    <fragment
+        android:id="@+id/appLauncherFragment"
+        android:name="serg.chuprin.finances.app.launcher.app.AppLauncherFragment"
+        android:label="LauncherFragment">
+
+        <action
+            android:id="@+id/navigateFromAppLauncherToNotAuthorizedGraph"
+            app:destination="@id/notAuthorizedGraph"
+            app:popUpTo="@id/appLauncherFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/navigateFromAppLauncherToAuthorizedGraph"
+            app:destination="@id/authorizedGraph"
+            app:popUpTo="@id/appLauncherFragment"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+
+</navigation>

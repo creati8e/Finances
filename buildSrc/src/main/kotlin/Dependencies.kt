@@ -18,6 +18,8 @@ object BuildScript {
         const val ANDROID = "com.android.tools.build:gradle:4.0.0-beta05"
         const val JUNIT5 = "de.mannodermaus.gradle.plugins:android-junit5:1.6.0.0"
         const val KOTLIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:$KOTLIN_VER"
+        const val NAVIGATION =
+            "androidx.navigation:navigation-safe-args-gradle-plugin:$NAVIGATION_VER"
         const val GRAPH_VISUALIZER =
             "com.vanniktech:gradle-dependency-graph-generator-plugin:0.5.0"
         const val PROGUARD_GENERATOR =

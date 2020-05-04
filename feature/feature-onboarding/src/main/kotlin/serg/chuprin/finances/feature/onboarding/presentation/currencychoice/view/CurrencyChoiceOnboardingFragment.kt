@@ -20,6 +20,7 @@ import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
 import serg.chuprin.finances.feature.onboarding.R
 import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.model.store.CurrencyChoiceOnboardingEvent
 import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.model.store.CurrencyChoiceOnboardingIntent
+import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.view.CurrencyChoiceOnboardingFragmentDirections.navigateFromCurrencyChoiceOnboardingToAccountsSetupOnboarding
 import serg.chuprin.finances.feature.onboarding.presentation.launch.di.OnboardingFeatureComponent
 
 /**
@@ -81,7 +82,9 @@ class CurrencyChoiceOnboardingFragment :
                 requireActivity().finishAndRemoveTask()
             }
             CurrencyChoiceOnboardingEvent.NavigateToAccountsSetup -> {
-                navController.navigate(R.id.action_currency_choice_to_accounts_setup)
+                navigateFromCurrencyChoiceOnboardingToAccountsSetupOnboarding().run {
+                    navController.navigate(this)
+                }
             }
         }
     }

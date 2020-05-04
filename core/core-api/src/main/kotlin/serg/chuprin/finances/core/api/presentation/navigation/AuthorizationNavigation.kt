@@ -9,8 +9,6 @@ import androidx.navigation.NavController
  */
 interface AuthorizationNavigation {
 
-    fun navigateToDashboard(navController: NavController)
-
-    fun navigateToOnboarding(navController: NavController)
+    fun navigateToAuthorizedGraph(navController: NavController)
 
 }

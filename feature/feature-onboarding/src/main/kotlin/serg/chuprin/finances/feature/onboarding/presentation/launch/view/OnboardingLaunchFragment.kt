@@ -24,10 +24,14 @@ class OnboardingLaunchFragment : BaseFragment(R.layout.fragment_onboarding_launc
         return when (currentStep) {
             OnboardingStep.COMPLETED -> Unit
             OnboardingStep.ACCOUNT_SETUP -> {
-                navController.navigate(R.id.action_onboarding_to_accounts_setup)
+                OnboardingLaunchFragmentDirections.navigateToAccountsSetupOnboarding().run {
+                    navController.navigate(this)
+                }
             }
             OnboardingStep.CURRENCY_CHOICE -> {
-                navController.navigate(R.id.action_onboarding_to_currency_choice)
+                OnboardingLaunchFragmentDirections.navigateToCurrencyChoiceOnboarding().run {
+                    navController.navigate(this)
+                }
             }
         }
     }

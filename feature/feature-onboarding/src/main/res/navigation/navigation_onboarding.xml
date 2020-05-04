@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/navigation_onboarding"
+    android:id="@+id/onboardingGraph"
     android:label="Onboarding Container Graph"
     app:startDestination="@id/onboardingLaunchFragment"
     tools:ignore="UnusedNavigation">
@@ -14,13 +14,13 @@
         tools:layout="@layout/fragment_onboarding_launch">
 
         <action
-            android:id="@+id/action_onboarding_to_currency_choice"
+            android:id="@+id/navigateToCurrencyChoiceOnboarding"
             app:destination="@id/currencyChoiceOnboardingFragment"
             app:popUpTo="@layout/fragment_onboarding_launch"
             app:popUpToInclusive="true" />
 
         <action
-            android:id="@+id/action_onboarding_to_accounts_setup"
+            android:id="@+id/navigateToAccountsSetupOnboarding"
             app:destination="@id/accountsSetupOnboardingFragment"
             app:popUpTo="@layout/fragment_onboarding_launch"
             app:popUpToInclusive="true" />
@@ -34,7 +34,7 @@
         tools:layout="@layout/fragment_onboarding_currency_choice">
 
         <action
-            android:id="@+id/action_currency_choice_to_accounts_setup"
+            android:id="@+id/navigateFromCurrencyChoiceOnboardingToAccountsSetupOnboarding"
             app:destination="@id/accountsSetupOnboardingFragment"
             app:popUpTo="@layout/fragment_onboarding_launch"
             app:popUpToInclusive="true" />

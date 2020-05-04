@@ -3,11 +3,11 @@ package serg.chuprin.finances.app.di.navigation
 import androidx.navigation.NavController
 import dagger.Module
 import dagger.Provides
+import serg.chuprin.finances.app.AuthorizedGraphDirections
+import serg.chuprin.finances.app.NotAuthorizedGraphDirections
 import serg.chuprin.finances.core.api.di.provider.CoreNavigationProvider
 import serg.chuprin.finances.core.api.presentation.navigation.AuthorizationNavigation
 import serg.chuprin.finances.core.api.presentation.navigation.OnboardingNavigation
-import serg.chuprin.finances.feature.dashboard.R as DashboardR
-import serg.chuprin.finances.feature.onboarding.R as OnboardingR
 
 /**
  * Created by Sergey Chuprin on 03.04.2020.
@@ -20,7 +20,9 @@ object NavigationModule : CoreNavigationProvider {
         return object : OnboardingNavigation {
 
             override fun navigateToDashboard(navController: NavController) {
-                navController.setGraph(DashboardR.navigation.navigation_dashboard)
+                AuthorizedGraphDirections.navigateFromOnboardingToDashboard().run {
+                    navController.navigate(this)
+                }
             }
 
         }
@@ -30,13 +32,12 @@ object NavigationModule : CoreNavigationProvider {
     override fun authorizationNavigation(): AuthorizationNavigation {
         return object : AuthorizationNavigation {
 
-            override fun navigateToDashboard(navController: NavController) {
-                navController.setGraph(DashboardR.navigation.navigation_dashboard)
+            override fun navigateToAuthorizedGraph(navController: NavController) {
+                NotAuthorizedGraphDirections.navigateFromAuthorizationToAuthorizedGraph().run {
+                    navController.navigate(this)
+                }
             }
 
-            override fun navigateToOnboarding(navController: NavController) {
-                navController.setGraph(OnboardingR.navigation.navigation_onboarding)
-            }
         }
     }
 
