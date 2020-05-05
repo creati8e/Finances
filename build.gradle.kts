@@ -72,7 +72,6 @@ subprojects {
                 }
                 configureSpek(this)
                 enableDesugaring(this)
-                plugins.apply("androidx.navigation.safeargs")
             }
     }
 }
