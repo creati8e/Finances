@@ -4,13 +4,6 @@ plugins {
     id("kotlin-android-extensions")
 }
 
-fun DependencyHandler.implementationAll(
-    dependencies: List<String>,
-    configuration: (dependencyNotation: Any) -> Unit = { implementation(it) }
-) {
-    dependencies.forEach(configuration)
-}
-
 dependencies {
     api(project(":core:core-mvi"))
 

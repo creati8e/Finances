@@ -20,13 +20,6 @@ android {
     }
 }
 
-fun DependencyHandler.implementationAll(
-    dependencies: List<String>,
-    configuration: (dependencyNotation: Any) -> Unit = { implementation(it) }
-) {
-    dependencies.forEach(configuration)
-}
-
 dependencies {
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf(".*jar"))))

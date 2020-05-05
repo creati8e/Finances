@@ -6,13 +6,6 @@ plugins {
     id("androidx.navigation.safeargs")
 }
 
-fun DependencyHandler.implementationAll(
-    dependencies: List<String>,
-    configuration: (dependencyNotation: Any) -> Unit = { implementation(it) }
-) {
-    dependencies.forEach(configuration)
-}
-
 dependencies {
     implementation(project(":core:core-api"))
     implementation(project(":core:core-pie-chart"))
