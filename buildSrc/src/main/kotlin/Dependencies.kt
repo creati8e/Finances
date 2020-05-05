@@ -16,7 +16,7 @@ object BuildScript {
         const val GMS = "com.google.gms:google-services:4.3.3"
         const val APP_BADGE = "gradle.plugin.app-badge:plugin:1.0.2"
         const val ANDROID = "com.android.tools.build:gradle:4.0.0-beta05"
-        const val JUNIT5 = "de.mannodermaus.gradle.plugins:android-junit5:1.6.0.0"
+        const val JUNIT5 = "de.mannodermaus.gradle.plugins:android-junit5:1.6.2.0"
         const val KOTLIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:$KOTLIN_VER"
         const val NAVIGATION =
             "androidx.navigation:navigation-safe-args-gradle-plugin:$NAVIGATION_VER"
@@ -133,8 +133,8 @@ object Libraries {
         private const val JUNIT_VER = "5.6.1"
         private const val SPEK_VER = "2.0.10"
 
-        const val MOCKK = "io.mockk:mockk:1.9.3"
-        const val STRIKT = "io.strikt:strikt-core:0.25.0"
+        const val MOCKK = "io.mockk:mockk:1.10.0"
+        const val STRIKT = "io.strikt:strikt-core:0.26.0"
         const val ASSERTIONS = "org.jetbrains.kotlin:kotlin-test:$KOTLIN_VER"
         const val SPEK_JVM = "org.spekframework.spek2:spek-dsl-jvm:$SPEK_VER"
         const val COROUTINES = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.5"
