@@ -1,12 +1,15 @@
 package serg.chuprin.finances.feature.dashboard.presentation.view
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.api.load
 import kotlinx.android.synthetic.main.fragment_dashboard.*
+import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
+import serg.chuprin.finances.core.api.presentation.navigation.DashboardNavigation
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.popup.menu.PopupMenuWindow
 import serg.chuprin.finances.feature.dashboard.R
@@ -15,6 +18,7 @@ import serg.chuprin.finances.feature.dashboard.presentation.model.cells.Dashboar
 import serg.chuprin.finances.feature.dashboard.presentation.model.store.DashboardEvent
 import serg.chuprin.finances.feature.dashboard.presentation.model.store.DashboardIntent
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.dsl.dashboard
+import javax.inject.Inject
 import serg.chuprin.finances.core.api.R as CoreR
 
 /**
@@ -22,9 +26,19 @@ import serg.chuprin.finances.core.api.R as CoreR
  */
 class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 
-    private val viewModel by viewModelFromComponent { DashboardComponent.get() }
+    @Inject
+    lateinit var navigation: DashboardNavigation
+
+    private val viewModel by viewModelFromComponent { component }
+
+    private val component by component { DashboardComponent.get() }
 
     private val cellsAdapter by lazy { recyclerView.dashboard(viewModel) }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        component.inject(this)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -79,6 +93,9 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
                     event.menuCells.toTypedArray(),
                     { cell -> viewModel.dispatchIntent(DashboardIntent.ClickOnPeriodTypeCell(cell)) }
                 ).show(anchorView)
+            }
+            DashboardEvent.NavigateToMoneyAccountsListScreen -> {
+                navigation.navigateToMoneyAccountsList(navController)
             }
         }
     }

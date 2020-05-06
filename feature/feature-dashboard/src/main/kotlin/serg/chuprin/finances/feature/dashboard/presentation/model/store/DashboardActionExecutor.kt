@@ -54,11 +54,22 @@ class DashboardActionExecutor @Inject constructor(
                     is DashboardIntent.ClickOnPeriodTypeCell -> {
                         handleClickOnPeriodTypeCell(intent)
                     }
+                    DashboardIntent.ClickOnMoneyAccountsListButton -> {
+                        handleClickOnMoneyAccountsListButtonIntent(eventConsumer)
+                    }
                 }
             }
             is DashboardAction.FormatDashboard -> {
                 handleFormatDashboardAction(action, state)
             }
+        }
+    }
+
+    private fun handleClickOnMoneyAccountsListButtonIntent(
+        eventConsumer: Consumer<DashboardEvent>
+    ): Flow<DashboardEffect> {
+        return emptyFlowAction {
+            eventConsumer(DashboardEvent.NavigateToMoneyAccountsListScreen)
         }
     }
 

@@ -2,9 +2,11 @@ package serg.chuprin.finances.feature.dashboard.presentation.di
 
 import dagger.Component
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
+import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.InjectableComponent
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.ViewModelComponent
 import serg.chuprin.finances.feature.dashboard.dependencies.DashboardDependencies
 import serg.chuprin.finances.feature.dashboard.presentation.model.viewmodel.DashboardViewModel
+import serg.chuprin.finances.feature.dashboard.presentation.view.DashboardFragment
 import serg.chuprin.finances.injector.Injector
 
 /**
@@ -17,7 +19,9 @@ import serg.chuprin.finances.injector.Injector
     ],
     dependencies = [DashboardDependencies::class]
 )
-interface DashboardComponent : ViewModelComponent<DashboardViewModel> {
+interface DashboardComponent :
+    ViewModelComponent<DashboardViewModel>,
+    InjectableComponent<DashboardFragment> {
 
     companion object {
 

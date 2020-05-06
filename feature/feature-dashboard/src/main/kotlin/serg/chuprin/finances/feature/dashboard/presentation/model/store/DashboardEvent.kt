@@ -11,4 +11,6 @@ sealed class DashboardEvent {
         val menuCells: List<DataPeriodTypePopupMenuCell>
     ) : DashboardEvent()
 
+    object NavigateToMoneyAccountsListScreen : DashboardEvent()
+
 }

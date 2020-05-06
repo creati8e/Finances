@@ -12,11 +12,15 @@ import serg.chuprin.finances.core.api.presentation.formatter.DateFormatter
 import serg.chuprin.finances.core.api.presentation.model.builder.DataPeriodTypePopupMenuCellsBuilder
 import serg.chuprin.finances.core.api.presentation.model.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
+import serg.chuprin.finances.core.api.presentation.navigation.DashboardNavigation
 
 /**
  * Created by Sergey Chuprin on 03.04.2020.
  */
 interface DashboardDependencies {
+
+    val dashboardNavigation: DashboardNavigation
+
     val userRepository: UserRepository
     val transactionRepository: TransactionRepository
     val moneyAccountRepository: MoneyAccountRepository

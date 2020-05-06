@@ -14,6 +14,8 @@ sealed class DashboardIntent {
 
     object ClickOnPreviousPeriodButton : DashboardIntent()
 
+    object ClickOnMoneyAccountsListButton : DashboardIntent()
+
     object ClickOnRestoreDefaultPeriodButton : DashboardIntent()
 
     class ClickOnPeriodTypeCell(

@@ -7,6 +7,7 @@ plugins {
     id("kotlin-android-extensions")
     id("ru.cleverpumpkin.badge")
     id("ru.cleverpumpkin.proguard-dictionaries-generator")
+    id("androidx.navigation.safeargs")
 }
 
 android {
@@ -70,6 +71,7 @@ dependencies {
     implementation(project(":feature:feature-dashboard"))
     implementation(project(":feature:feature-onboarding"))
     implementation(project(":feature:feature-authorization"))
+    implementation(project(":feature:feature-money-accounts"))
 
     // endregion
 

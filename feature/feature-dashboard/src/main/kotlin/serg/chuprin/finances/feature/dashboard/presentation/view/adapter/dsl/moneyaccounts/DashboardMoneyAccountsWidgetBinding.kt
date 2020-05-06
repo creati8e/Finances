@@ -63,6 +63,10 @@ fun RecyclerViewAdapterContext.setupMoneyAccountsWidgetBinding(
         }
         setupViews {
             setClickListener(
+                showAllAccountsButton,
+                { viewModel.dispatchIntent(DashboardIntent.ClickOnMoneyAccountsListButton) }
+            )
+            setClickListener(
                 subtitleLayout,
                 { cell ->
                     viewModel.dispatchIntent(DashboardIntent.ToggleMoneyAccountsVisibility(cell))

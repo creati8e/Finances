@@ -25,7 +25,23 @@
 
         <include app:graph="@navigation/navigation_onboarding" />
 
-        <include app:graph="@navigation/navigation_dashboard" />
+        <fragment
+            android:id="@+id/dashboardFragment"
+            android:name="serg.chuprin.finances.feature.dashboard.presentation.view.DashboardFragment"
+            android:label="DashboardFragment"
+            tools:layout="@layout/fragment_dashboard">
+
+            <action
+                android:id="@+id/navigateFromOnboardingToDashboard"
+                app:destination="@+id/moneyAccountsListFragment" />
+
+        </fragment>
+
+        <fragment
+            android:id="@+id/moneyAccountsListFragment"
+            android:name="serg.chuprin.finances.feature.moneyaccounts.presentation.view.MoneyAccountsListFragment"
+            android:label="MoneyAccountsListFragment"
+            tools:layout="@layout/fragment_money_accounts_list" />
 
         <fragment
             android:id="@+id/authorizedGraphLauncherFragment"
@@ -34,7 +50,7 @@
 
             <action
                 android:id="@+id/navigateFromAuthorizedGraphToDashboard"
-                app:destination="@id/navigation_dashboard"
+                app:destination="@id/dashboardFragment"
                 app:popUpTo="@id/authorizedGraphLauncherFragment"
                 app:popUpToInclusive="true" />
 
@@ -47,8 +63,12 @@
         </fragment>
 
         <action
+            android:id="@+id/navigateFromDashboardToMoneyAccountsList"
+            app:destination="@+id/moneyAccountsListFragment" />
+
+        <action
             android:id="@+id/navigateFromOnboardingToDashboard"
-            app:destination="@+id/navigation_dashboard" />
+            app:destination="@+id/dashboardFragment" />
 
     </navigation>
 

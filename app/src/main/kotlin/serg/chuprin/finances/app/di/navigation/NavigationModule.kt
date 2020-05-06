@@ -7,6 +7,7 @@ import serg.chuprin.finances.app.AuthorizedGraphDirections
 import serg.chuprin.finances.app.NotAuthorizedGraphDirections
 import serg.chuprin.finances.core.api.di.provider.CoreNavigationProvider
 import serg.chuprin.finances.core.api.presentation.navigation.AuthorizationNavigation
+import serg.chuprin.finances.core.api.presentation.navigation.DashboardNavigation
 import serg.chuprin.finances.core.api.presentation.navigation.OnboardingNavigation
 
 /**
@@ -15,30 +16,46 @@ import serg.chuprin.finances.core.api.presentation.navigation.OnboardingNavigati
 @Module
 object NavigationModule : CoreNavigationProvider {
 
-    @Provides
-    override fun onboardingNavigation(): OnboardingNavigation {
-        return object : OnboardingNavigation {
+    @get:Provides
+    override val dashboardNavigation: DashboardNavigation
+        get() {
+            return object : DashboardNavigation {
 
-            override fun navigateToDashboard(navController: NavController) {
-                AuthorizedGraphDirections.navigateFromOnboardingToDashboard().run {
-                    navController.navigate(this)
+                override fun navigateToMoneyAccountsList(navController: NavController) {
+                    AuthorizedGraphDirections.navigateFromDashboardToMoneyAccountsList().run {
+                        navController.navigate(this)
+                    }
                 }
+
             }
-
         }
-    }
 
-    @Provides
-    override fun authorizationNavigation(): AuthorizationNavigation {
-        return object : AuthorizationNavigation {
+    @get:Provides
+    override val onboardingNavigation: OnboardingNavigation
+        get() {
+            return object : OnboardingNavigation {
 
-            override fun navigateToAuthorizedGraph(navController: NavController) {
-                NotAuthorizedGraphDirections.navigateFromAuthorizationToAuthorizedGraph().run {
-                    navController.navigate(this)
+                override fun navigateToDashboard(navController: NavController) {
+                    AuthorizedGraphDirections.navigateFromOnboardingToDashboard().run {
+                        navController.navigate(this)
+                    }
                 }
-            }
 
+            }
         }
-    }
+
+    @get:Provides
+    override val authorizationNavigation: AuthorizationNavigation
+        get() {
+            return object : AuthorizationNavigation {
+
+                override fun navigateToAuthorizedGraph(navController: NavController) {
+                    NotAuthorizedGraphDirections.navigateFromAuthorizationToAuthorizedGraph().run {
+                        navController.navigate(this)
+                    }
+                }
+
+            }
+        }
 
 }
