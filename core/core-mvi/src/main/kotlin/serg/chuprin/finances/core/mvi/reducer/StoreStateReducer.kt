@@ -9,4 +9,4 @@ package serg.chuprin.finances.core.mvi.reducer
  * Implementors have to not produce any side effects in this function.
  * Function must be pure by contract.
  */
-typealias StoreStateReducer<T, S> = (T, S) -> S
+typealias StoreStateReducer<T, S> = (what: T, state: S) -> S
