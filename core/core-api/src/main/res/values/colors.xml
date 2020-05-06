@@ -12,4 +12,7 @@
 
     <color name="colorNoCategory">#959595</color>
     <color name="colorBlackText">#000</color>
+
+    <color name="colorFavoriteOrange">#FFC107</color>
+    <color name="colorFavoriteOrangeRipple">#33FFC107</color>
 </resources>

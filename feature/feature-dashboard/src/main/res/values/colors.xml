@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorFavoriteOrange">#FFC107</color>
-    <color name="colorFavoriteOrangeRipple">#33FFC107</color>
     <color name="colorEmptyChartPart">#8F8F8F</color>
 </resources>
