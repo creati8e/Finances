@@ -1,5 +1,6 @@
 package serg.chuprin.finances.core.api.presentation.navigation
 
+import android.view.View
 import androidx.navigation.NavController
 
 /**
@@ -7,6 +8,6 @@ import androidx.navigation.NavController
  */
 interface DashboardNavigation {
 
-    fun navigateToMoneyAccountsList(navController: NavController)
+    fun navigateToMoneyAccountsList(navController: NavController, vararg sharedElementView: View)
 
 }

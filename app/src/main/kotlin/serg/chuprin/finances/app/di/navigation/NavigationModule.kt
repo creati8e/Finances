@@ -1,6 +1,8 @@
 package serg.chuprin.finances.app.di.navigation
 
+import android.view.View
 import androidx.navigation.NavController
+import androidx.navigation.fragment.FragmentNavigator
 import dagger.Module
 import dagger.Provides
 import serg.chuprin.finances.app.AuthorizedGraphDirections
@@ -21,9 +23,18 @@ object NavigationModule : CoreNavigationProvider {
         get() {
             return object : DashboardNavigation {
 
-                override fun navigateToMoneyAccountsList(navController: NavController) {
+                override fun navigateToMoneyAccountsList(
+                    navController: NavController,
+                    vararg sharedElementView: View
+                ) {
                     AuthorizedGraphDirections.navigateFromDashboardToMoneyAccountsList().run {
-                        navController.navigate(this)
+                        val extras = FragmentNavigator.Extras.Builder().run {
+                            sharedElementView.forEach { view ->
+                                addSharedElement(view, view.transitionName)
+                            }
+                            build()
+                        }
+                        navController.navigate(this, extras)
                     }
                 }
 

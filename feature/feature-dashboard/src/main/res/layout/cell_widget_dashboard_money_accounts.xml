@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/moneyAccountsWidgetLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clipChildren="false"
@@ -10,7 +11,7 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/subtitleLayout"
+        android:id="@+id/moneyAccountsSubtitleLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -20,9 +21,11 @@
         android:clickable="true"
         android:focusable="true"
         android:orientation="horizontal"
+        android:transitionName="@string/transition_money_accounts_list_content"
         android:weightSum="5">
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/moneyAccountsSubtitleTextView"
             style="@style/TextAppearance.MaterialComponents.Headline6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

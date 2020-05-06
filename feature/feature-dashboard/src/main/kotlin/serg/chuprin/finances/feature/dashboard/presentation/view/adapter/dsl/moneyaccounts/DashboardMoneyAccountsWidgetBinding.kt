@@ -26,6 +26,9 @@ fun RecyclerViewAdapterContext.setupMoneyAccountsWidgetBinding(
             { moneyAccountsRecyclerView },
             DashboardMoneyAccountsDiffCallback()
         ) {
+            setupRecyclerView {
+                moneyAccountsRecyclerView.setHasFixedSize(true)
+            }
             add<DashboardMoneyAccountWidgetZeroDataCell>(
                 R.layout.cell_dashboard_money_accounts_widget_zero_data
             )
@@ -67,7 +70,7 @@ fun RecyclerViewAdapterContext.setupMoneyAccountsWidgetBinding(
                 { viewModel.dispatchIntent(DashboardIntent.ClickOnMoneyAccountsListButton) }
             )
             setClickListener(
-                subtitleLayout,
+                moneyAccountsSubtitleLayout,
                 { cell ->
                     viewModel.dispatchIntent(DashboardIntent.ToggleMoneyAccountsVisibility(cell))
                 }

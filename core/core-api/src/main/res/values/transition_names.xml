@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="transition_money_accounts_list_content"
+        translatable="false">
+        transition_money_accounts_list_content
+    </string>
+
+</resources>

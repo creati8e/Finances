@@ -4,17 +4,20 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.doOnPreDraw
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.api.load
+import com.google.android.material.transition.Hold
+import kotlinx.android.synthetic.main.cell_widget_dashboard_money_accounts.view.*
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.navigation.DashboardNavigation
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
+import serg.chuprin.finances.core.api.presentation.view.SHARED_ELEMENT_TRANSITION_DURATION
 import serg.chuprin.finances.core.api.presentation.view.popup.menu.PopupMenuWindow
 import serg.chuprin.finances.feature.dashboard.R
 import serg.chuprin.finances.feature.dashboard.presentation.di.DashboardComponent
-import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.store.DashboardEvent
 import serg.chuprin.finances.feature.dashboard.presentation.model.store.DashboardIntent
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.dsl.dashboard
@@ -35,6 +38,13 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 
     private val cellsAdapter by lazy { recyclerView.dashboard(viewModel) }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        exitTransition = Hold().apply {
+            duration = SHARED_ELEMENT_TRANSITION_DURATION
+        }
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         component.inject(this)
@@ -43,34 +53,11 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        postponeEnterTransition()
+        view.doOnPreDraw { startPostponedEnterTransition() }
+
         recyclerView.adapter = cellsAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-
-        cellsAdapter.clickListener = { cell, clickedView, _ ->
-            when (cell) {
-                is DashboardWidgetCell.MoneyAccounts -> {
-                    if (clickedView.id == R.id.subtitleLayout) {
-                        viewModel.dispatchIntent(DashboardIntent.ToggleMoneyAccountsVisibility(cell))
-                    }
-                }
-                is DashboardWidgetCell.Header -> {
-                    when (clickedView.id) {
-                        R.id.currentPeriodLayout -> {
-                            viewModel.dispatchIntent(DashboardIntent.ClickOnCurrentPeriod)
-                        }
-                        R.id.nextPeriodButton -> {
-                            viewModel.dispatchIntent(DashboardIntent.ClickOnNextPeriodButton)
-                        }
-                        R.id.previousPeriodButton -> {
-                            viewModel.dispatchIntent(DashboardIntent.ClickOnPreviousPeriodButton)
-                        }
-                        R.id.restoreDefaultPeriodButton -> {
-                            viewModel.dispatchIntent(DashboardIntent.ClickOnRestoreDefaultPeriodButton)
-                        }
-                    }
-                }
-            }
-        }
 
         with(viewModel) {
             eventsLiveData(::handleEvent)
@@ -88,14 +75,17 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         return when (event) {
             is DashboardEvent.ShowPeriodTypesPopupMenu -> {
                 val anchorView = recyclerView.findViewById<ViewGroup>(R.id.currentPeriodLayout)
-                // TOTO: Optimize.
+                // TODO: Optimize.
                 PopupMenuWindow(
                     event.menuCells.toTypedArray(),
                     { cell -> viewModel.dispatchIntent(DashboardIntent.ClickOnPeriodTypeCell(cell)) }
                 ).show(anchorView)
             }
             DashboardEvent.NavigateToMoneyAccountsListScreen -> {
-                navigation.navigateToMoneyAccountsList(navController)
+                navigation.navigateToMoneyAccountsList(
+                    navController,
+                    recyclerView.moneyAccountsSubtitleLayout
+                )
             }
         }
     }
