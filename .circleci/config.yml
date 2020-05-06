@@ -10,4 +10,6 @@ jobs:
     steps:
       - checkout
       - run:
-          command: ./gradlew build
+        command: |
+              sudo chmod +x ./gradlew
+              ./gradlew build
