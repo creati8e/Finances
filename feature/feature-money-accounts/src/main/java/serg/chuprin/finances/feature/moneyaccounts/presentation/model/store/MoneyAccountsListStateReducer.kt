@@ -12,7 +12,11 @@ class MoneyAccountsListStateReducer :
         what: MoneyAccountsListEffect,
         state: MoneyAccountsListState
     ): MoneyAccountsListState {
-        TODO("Not yet implemented")
+        return when (what) {
+            is MoneyAccountsListEffect.CellsBuilt -> {
+                state.copy(cells = what.cells)
+            }
+        }
     }
 
 }

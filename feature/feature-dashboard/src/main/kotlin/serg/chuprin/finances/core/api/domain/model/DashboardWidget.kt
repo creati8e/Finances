@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.dashboard.domain.model
+package serg.chuprin.finances.core.api.domain.model
 
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
@@ -19,7 +19,7 @@ sealed class DashboardWidget(val type: Type) {
     }
 
     data class MoneyAccounts(
-        val moneyAccounts: DashboardMoneyAccounts
+        val moneyAccountBalances: MoneyAccountBalances
     ) : DashboardWidget(type = Type.MONEY_ACCOUNTS)
 
     /**

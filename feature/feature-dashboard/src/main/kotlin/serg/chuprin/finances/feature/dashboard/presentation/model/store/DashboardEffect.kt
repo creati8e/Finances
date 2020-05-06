@@ -1,7 +1,7 @@
 package serg.chuprin.finances.feature.dashboard.presentation.model.store
 
+import serg.chuprin.finances.core.api.domain.model.Dashboard
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
-import serg.chuprin.finances.feature.dashboard.domain.model.Dashboard
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
 
 /**

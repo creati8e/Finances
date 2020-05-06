@@ -1,6 +1,5 @@
-package serg.chuprin.finances.feature.dashboard.domain.model
+package serg.chuprin.finances.core.api.domain.model
 
-import serg.chuprin.finances.core.api.domain.model.MoneyAccount
 import java.math.BigDecimal
 import java.util.*
 
@@ -10,7 +9,7 @@ import java.util.*
  * Immutable wrapper for SortedMap<MoneyAccount, BigDecimal> with predefined comparator.
  * It keeps [MoneyAccount] sorted by name ascending.
  */
-class DashboardMoneyAccounts :
+class MoneyAccountBalances :
     SortedMap<MoneyAccount, BigDecimal> by TreeMap<MoneyAccount, BigDecimal>(
         accountsComparator
     ) {
@@ -20,17 +19,18 @@ class DashboardMoneyAccounts :
             compareByDescending(MoneyAccount::isFavorite).thenComparing(MoneyAccount::name)
     }
 
-    fun add(moneyAccount: MoneyAccount, balance: BigDecimal): DashboardMoneyAccounts {
-        return DashboardMoneyAccounts().apply {
-            putAll(this@DashboardMoneyAccounts)
-            put(moneyAccount, balance)
-        }
+    fun add(moneyAccount: MoneyAccount, balance: BigDecimal): MoneyAccountBalances {
+        return MoneyAccountBalances()
+            .apply {
+                putAll(this@MoneyAccountBalances)
+                put(moneyAccount, balance)
+            }
     }
 
     override fun hashCode(): Int = entries.hashCode()
 
     override fun equals(other: Any?): Boolean {
-        return (other as? DashboardMoneyAccounts)?.entries == entries
+        return (other as? MoneyAccountBalances)?.entries == entries
     }
 
 }

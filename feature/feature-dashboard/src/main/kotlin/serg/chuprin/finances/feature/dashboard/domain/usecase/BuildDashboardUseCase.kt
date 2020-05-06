@@ -5,9 +5,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
+import serg.chuprin.finances.core.api.domain.model.Dashboard
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.feature.dashboard.domain.builder.DashboardWidgetBuilder
-import serg.chuprin.finances.feature.dashboard.domain.model.Dashboard
 import serg.chuprin.finances.feature.dashboard.domain.repository.DashboardDataPeriodRepository
 import javax.inject.Inject
 

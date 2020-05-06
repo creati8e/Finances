@@ -1,15 +1,22 @@
 package serg.chuprin.finances.feature.moneyaccounts.presentation.model.store
 
 import kotlinx.coroutines.flow.Flow
+import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
+import serg.chuprin.finances.core.api.presentation.model.cells.ZeroDataCell
+import serg.chuprin.finances.core.api.presentation.model.formatter.AmountFormatter
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
+import serg.chuprin.finances.feature.moneyaccounts.R
+import serg.chuprin.finances.feature.moneyaccounts.presentation.model.cells.MoneyAccountCell
 import javax.inject.Inject
+import serg.chuprin.finances.core.api.R as CoreR
 
 /**
  * Created by Sergey Chuprin on 06.05.2020.
  */
-class MoneyAccountsListActionExecutor @Inject constructor() :
-    StoreActionExecutor<MoneyAccountsListAction, MoneyAccountsListState, MoneyAccountsListEffect, MoneyAccountsListEvent> {
+class MoneyAccountsListActionExecutor @Inject constructor(
+    private val amountFormatter: AmountFormatter
+) : StoreActionExecutor<MoneyAccountsListAction, MoneyAccountsListState, MoneyAccountsListEffect, MoneyAccountsListEvent> {
 
     override fun invoke(
         action: MoneyAccountsListAction,
@@ -17,7 +24,38 @@ class MoneyAccountsListActionExecutor @Inject constructor() :
         eventConsumer: Consumer<MoneyAccountsListEvent>,
         actionsFlow: Flow<MoneyAccountsListAction>
     ): Flow<MoneyAccountsListEffect> {
-        TODO("Not yet implemented")
+        return when (action) {
+            is MoneyAccountsListAction.BuildMoneyAccountCells -> {
+                handleBuildMoneyAccountCellsAction(action)
+            }
+            is MoneyAccountsListAction.ExecuteIntent -> TODO()
+        }
+    }
+
+    private fun handleBuildMoneyAccountCellsAction(
+        action: MoneyAccountsListAction.BuildMoneyAccountCells
+    ): Flow<MoneyAccountsListEffect> {
+        return flowOfSingleValue {
+            val cells = if (action.moneyAccountBalances.isEmpty()) {
+                listOf(
+                    ZeroDataCell(
+                        contentMessageRes = null,
+                        iconRes = CoreR.drawable.ic_money_account,
+                        titleRes = R.string.money_accounts_zero_data_title
+                    )
+                )
+            } else {
+                action.moneyAccountBalances.map { (moneyAccount, amount) ->
+                    MoneyAccountCell(
+                        name = moneyAccount.name,
+                        moneyAccount = moneyAccount,
+                        favoriteIconIsVisible = moneyAccount.isFavorite,
+                        balance = amountFormatter.format(amount, moneyAccount.currency)
+                    )
+                }
+            }
+            MoneyAccountsListEffect.CellsBuilt(cells)
+        }
     }
 
 }

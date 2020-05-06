@@ -3,6 +3,8 @@ package serg.chuprin.finances.feature.dashboard.presentation.model.builder
 import android.graphics.Color
 import androidx.annotation.ColorInt
 import androidx.annotation.StringRes
+import serg.chuprin.finances.core.api.domain.model.DashboardCategoriesWidgetPage
+import serg.chuprin.finances.core.api.domain.model.DashboardWidget
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
@@ -10,8 +12,6 @@ import serg.chuprin.finances.core.api.presentation.model.formatter.AmountFormatt
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.piechart.model.PieChartDataPart
 import serg.chuprin.finances.feature.dashboard.R
-import serg.chuprin.finances.feature.dashboard.domain.model.DashboardCategoriesWidgetPage
-import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.DashboardCategoryChipCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.page.DashboardCategoriesPageCell

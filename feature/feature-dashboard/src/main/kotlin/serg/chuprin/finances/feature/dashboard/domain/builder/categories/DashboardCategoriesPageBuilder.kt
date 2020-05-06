@@ -1,11 +1,11 @@
 package serg.chuprin.finances.feature.dashboard.domain.builder.categories
 
+import serg.chuprin.finances.core.api.domain.model.DashboardCategoriesWidgetPage
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.extensions.amount
 import serg.chuprin.finances.feature.dashboard.domain.builder.CategoryAmounts
-import serg.chuprin.finances.feature.dashboard.domain.model.DashboardCategoriesWidgetPage
 import java.math.BigDecimal
 import javax.inject.Inject
 

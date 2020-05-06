@@ -1,8 +1,8 @@
 package serg.chuprin.finances.feature.dashboard.presentation.model.builder
 
+import serg.chuprin.finances.core.api.domain.model.DashboardWidget
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.formatter.AmountFormatter
-import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.moneyaccounts.DashboardMoneyAccountCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.moneyaccounts.DashboardMoneyAccountWidgetZeroDataCell
@@ -40,11 +40,11 @@ class DashboardMoneyAccountsWidgetCellBuilder @Inject constructor(
     }
 
     private fun buildCells(widget: DashboardWidget.MoneyAccounts): List<BaseCell> {
-        if (widget.moneyAccounts.isEmpty()) {
+        if (widget.moneyAccountBalances.isEmpty()) {
             return listOf(DashboardMoneyAccountWidgetZeroDataCell())
         }
         return widget
-            .moneyAccounts
+            .moneyAccountBalances
             .map { (moneyAccount, balance) ->
                 DashboardMoneyAccountCell(
                     name = moneyAccount.name,

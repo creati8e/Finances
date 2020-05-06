@@ -2,5 +2,7 @@
 <resources>
 
     <string name="money_accounts_toolbar_title">Money accounts</string>
+    <string name="money_accounts_zero_data_title">No accounts</string>
+    <string name="money_accounts_zero_data_button">Create</string>
 
 </resources>

@@ -5,6 +5,7 @@ import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
 import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
+import serg.chuprin.finances.core.api.domain.service.MoneyAccountService
 import serg.chuprin.finances.core.api.domain.service.TransactionCategoryRetrieverService
 import serg.chuprin.finances.core.api.presentation.formatter.DataPeriodFormatter
 import serg.chuprin.finances.core.api.presentation.formatter.DateFormatter
@@ -27,6 +28,7 @@ interface DashboardDependencies {
 
     val dataPeriodTypePopupMenuCellsBuilder: DataPeriodTypePopupMenuCellsBuilder
 
+    val moneyAccountService: MoneyAccountService
     val transactionCategoryRetrieverService: TransactionCategoryRetrieverService
 }
 

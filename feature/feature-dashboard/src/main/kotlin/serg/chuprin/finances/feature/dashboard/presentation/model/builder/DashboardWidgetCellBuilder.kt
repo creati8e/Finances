@@ -1,6 +1,6 @@
 package serg.chuprin.finances.feature.dashboard.presentation.model.builder
 
-import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
+import serg.chuprin.finances.core.api.domain.model.DashboardWidget
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
 
 /**

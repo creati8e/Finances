@@ -3,7 +3,9 @@ package serg.chuprin.finances.core.impl.di.module
 import dagger.Binds
 import dagger.Module
 import serg.chuprin.finances.core.api.di.scopes.AppScope
+import serg.chuprin.finances.core.api.domain.service.MoneyAccountService
 import serg.chuprin.finances.core.api.domain.service.TransactionCategoryRetrieverService
+import serg.chuprin.finances.core.impl.domain.service.MoneyAccountServiceImpl
 import serg.chuprin.finances.core.impl.domain.service.TransactionCategoryRetrieverServiceImpl
 
 /**
@@ -16,5 +18,10 @@ internal interface CoreServicesModule {
     fun bindTransactionCategoryRetrieverService(
         impl: TransactionCategoryRetrieverServiceImpl
     ): TransactionCategoryRetrieverService
+
+    @[Binds AppScope]
+    fun bindMoneyAccountService(
+        impl: MoneyAccountServiceImpl
+    ): MoneyAccountService
 
 }

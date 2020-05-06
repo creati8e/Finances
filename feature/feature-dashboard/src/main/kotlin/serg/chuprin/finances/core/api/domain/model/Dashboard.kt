@@ -1,6 +1,5 @@
-package serg.chuprin.finances.feature.dashboard.domain.model
+package serg.chuprin.finances.core.api.domain.model
 
-import serg.chuprin.finances.core.api.domain.model.User
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriodType
 
