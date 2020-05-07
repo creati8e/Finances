@@ -11,6 +11,8 @@ interface MoneyAccountRepository {
 
     fun createAccount(account: MoneyAccount)
 
+    fun accountFlow(accountId: Id): Flow<MoneyAccount?>
+
     fun userAccountsFlow(userId: Id): Flow<List<MoneyAccount>>
 
     suspend fun getUserAccounts(userId: Id): List<MoneyAccount>

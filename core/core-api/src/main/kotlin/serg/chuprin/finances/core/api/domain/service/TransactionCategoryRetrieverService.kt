@@ -2,6 +2,7 @@ package serg.chuprin.finances.core.api.domain.service
 
 import kotlinx.coroutines.flow.Flow
 import serg.chuprin.finances.core.api.domain.model.Id
+import serg.chuprin.finances.core.api.domain.model.TransactionCategoriesMap
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
@@ -15,6 +16,8 @@ import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
  * It combines them in different ways depending of required operation.
  */
 interface TransactionCategoryRetrieverService {
+
+    fun moneyAccountTransactionsFlow(moneyAccountId: Id): Flow<TransactionCategoriesMap>
 
     fun recentUserTransactionsInPeriodFlow(
         userId: Id,

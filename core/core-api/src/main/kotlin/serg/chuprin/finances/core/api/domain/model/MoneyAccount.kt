@@ -1,5 +1,6 @@
 package serg.chuprin.finances.core.api.domain.model
 
+import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
 import java.util.*
 
 /**
@@ -14,6 +15,14 @@ data class MoneyAccount(
 ) {
 
     companion object {
+
+        val EMPTY = MoneyAccount(
+            Id.UNKNOWN,
+            EMPTY_STRING,
+            Id.UNKNOWN,
+            false,
+            EMPTY_STRING
+        )
 
         fun create(
             id: String?,

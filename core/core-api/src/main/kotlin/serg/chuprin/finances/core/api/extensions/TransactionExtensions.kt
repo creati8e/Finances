@@ -19,3 +19,10 @@ val Collection<Transaction>.amount: BigDecimal
             }
         )
     }
+
+val Map<Transaction, *>.amount: BigDecimal
+    get() {
+        return entries.fold(BigDecimal.ZERO, { balance, (transaction) ->
+            balance + transaction.amount
+        })
+    }

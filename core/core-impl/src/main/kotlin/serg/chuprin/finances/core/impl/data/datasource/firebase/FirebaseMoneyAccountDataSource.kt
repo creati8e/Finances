@@ -32,6 +32,10 @@ internal class FirebaseMoneyAccountDataSource @Inject constructor(
             .set(mapper.mapToFieldsMap(account))
     }
 
+    fun accountFlow(accountId: Id): Flow<DocumentSnapshot?> {
+        return getCollection().document(accountId.value).asFlow()
+    }
+
     fun userAccountsFlow(userId: Id): Flow<List<DocumentSnapshot>> {
         return getUserAccountsCollection(userId)
             .asFlow()

@@ -23,6 +23,14 @@ internal class MoneyAccountRepositoryImpl @Inject constructor(
         return dataSource.getUserAccounts(userId).mapNotNull(mapper::mapFromSnapshot)
     }
 
+    override fun accountFlow(accountId: Id): Flow<MoneyAccount?> {
+        return dataSource
+            .accountFlow(accountId)
+            .map { snapshot ->
+                snapshot?.let(mapper::mapFromSnapshot)
+            }
+    }
+
     override fun userAccountsFlow(userId: Id): Flow<List<MoneyAccount>> {
         return dataSource
             .userAccountsFlow(userId)

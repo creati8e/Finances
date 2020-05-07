@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.api.domain.model.Id
+import serg.chuprin.finances.core.api.domain.model.TransactionCategoriesMap
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
@@ -25,6 +26,19 @@ internal class TransactionCategoryRetrieverServiceImpl @Inject constructor(
     private val categoryRepository: TransactionCategoryRepository,
     private val transactionWithCategoriesLinker: TransactionWithCategoriesLinker
 ) : TransactionCategoryRetrieverService {
+
+    override fun moneyAccountTransactionsFlow(moneyAccountId: Id): Flow<TransactionCategoriesMap> {
+        return transactionRepository
+            .moneyAccountTransactionsFlow(moneyAccountId)
+            .flatMapLatest { transactions ->
+                combine(
+                    flowOf(transactions),
+                    categoryRepository.categoriesFlow(transactions.categoryIds)
+                ) { t1, t2 ->
+                    transactionWithCategoriesLinker.linkTransactionsWithCategories(t1, t2)
+                }
+            }
+    }
 
     override fun recentUserTransactionsInPeriodFlow(
         userId: Id,
