@@ -59,7 +59,7 @@ object Libraries {
         const val FRAGMENT = "androidx.fragment:fragment-ktx:1.3.0-alpha04"
         const val VIEWPAGER = "androidx.viewpager2:viewpager2:1.1.0-alpha01"
         const val DESIGN = "com.google.android.material:material:1.2.0-alpha05"
-        const val CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:2.0.0-beta4"
+        const val CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:2.0.0-beta5"
 
         object Navigation {
 
