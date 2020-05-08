@@ -3,7 +3,9 @@ package serg.chuprin.finances.core.impl.presentation.model.formatter
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeFormatterBuilder
 import java.time.format.FormatStyle
+import java.time.temporal.ChronoField
 import javax.inject.Inject
 
 /**
@@ -13,9 +15,14 @@ internal class DateTimeFormatterImpl @Inject constructor() :
     serg.chuprin.finances.core.api.presentation.formatter.DateTimeFormatter {
 
     private companion object {
-        private val TIME_FORMATTER = DateTimeFormatter.ISO_LOCAL_TIME
+        private val TIME_FORMATTER = DateTimeFormatterBuilder()
+            .appendValue(ChronoField.HOUR_OF_DAY, 2)
+            .appendLiteral(':')
+            .appendValue(ChronoField.MINUTE_OF_HOUR, 2)
+            .toFormatter()
+
+        private val TODAY_FORMATTER = TIME_FORMATTER
         private val SAME_MONTH_FORMATTER = DateTimeFormatter.ofPattern("dd MMMM")
-        private val TODAY_FORMATTER = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)
         private val DEFAULT_FORMATTER = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)
     }
 
