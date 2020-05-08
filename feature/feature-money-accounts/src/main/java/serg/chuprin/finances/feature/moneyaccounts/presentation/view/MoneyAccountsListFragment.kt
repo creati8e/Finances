@@ -1,25 +1,21 @@
 package serg.chuprin.finances.feature.moneyaccounts.presentation.view
 
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import androidx.core.transition.addListener
+import androidx.core.transition.doOnEnd
 import androidx.core.view.doOnPreDraw
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.shape.ShapeAppearanceModel
-import com.google.android.material.transition.MaterialContainerTransform
 import kotlinx.android.synthetic.main.fragment_money_accounts_list.*
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.navigation.MoneyAccountsListNavigation
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
-import serg.chuprin.finances.core.api.presentation.view.SHARED_ELEMENT_TRANSITION_DURATION
 import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter
 import serg.chuprin.finances.core.api.presentation.view.adapter.diff.DiffCallback
 import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ZeroDataCellRenderer
-import serg.chuprin.finances.core.api.presentation.view.extensions.dpToPx
+import serg.chuprin.finances.core.api.presentation.view.setEnterSharedElementTransition
 import serg.chuprin.finances.feature.moneyaccounts.R
 import serg.chuprin.finances.feature.moneyaccounts.di.MoneyAccountsListComponent
 import serg.chuprin.finances.feature.moneyaccounts.presentation.model.cells.MoneyAccountCell
@@ -57,14 +53,10 @@ class MoneyAccountsListFragment : BaseFragment(R.layout.fragment_money_accounts_
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedElementEnterTransition = MaterialContainerTransform(requireContext()).apply {
-            containerColor = Color.WHITE
-            duration = SHARED_ELEMENT_TRANSITION_DURATION
-            fadeMode = MaterialContainerTransform.FADE_MODE_CROSS
-            startShapeAppearanceModel = ShapeAppearanceModel().withCornerSize(
-                requireContext().dpToPx(16).toFloat()
-            )
-            addListener(onEnd = { accountCreationFab?.show() })
+        setEnterSharedElementTransition {
+            doOnEnd {
+                accountCreationFab?.show()
+            }
         }
     }
 
