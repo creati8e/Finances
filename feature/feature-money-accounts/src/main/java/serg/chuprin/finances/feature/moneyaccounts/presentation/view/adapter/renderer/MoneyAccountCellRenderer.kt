@@ -5,7 +5,6 @@ import serg.chuprin.adapter.Click
 import serg.chuprin.adapter.ContainerHolder
 import serg.chuprin.adapter.ContainerRenderer
 import serg.chuprin.adapter.LongClick
-import serg.chuprin.finances.core.api.presentation.view.extensions.getString
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisibleOrGone
 import serg.chuprin.finances.core.api.presentation.view.extensions.onViewClick
 import serg.chuprin.finances.feature.moneyaccounts.R
@@ -25,10 +24,8 @@ class MoneyAccountCellRenderer : ContainerRenderer<MoneyAccountCell>() {
             cardView.isActivated = model.favoriteIconIsVisible
             favoriteImageView.makeVisibleOrGone(model.favoriteIconIsVisible)
 
-            val transitionName =
-                "${itemView.getString(R.string.transition_money_account)}${model.moneyAccount.id.value}"
-            cardView.tag = transitionName
-            cardView.transitionName = transitionName
+            cardView.tag = model.transitionName
+            cardView.transitionName = model.transitionName
         }
     }
 

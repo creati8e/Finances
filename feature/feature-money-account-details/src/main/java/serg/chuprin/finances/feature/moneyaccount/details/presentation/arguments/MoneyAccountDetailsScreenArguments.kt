@@ -9,5 +9,6 @@ import serg.chuprin.finances.core.api.domain.model.Id
  */
 @Parcelize
 class MoneyAccountDetailsScreenArguments(
-    val moneyAccountId: Id
+    val moneyAccountId: Id,
+    val transitionName: String
 ) : Parcelable

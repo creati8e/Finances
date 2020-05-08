@@ -44,11 +44,12 @@ object NavigationModule : CoreNavigationProvider {
                 override fun navigateToMoneyAccountDetails(
                     navController: NavController,
                     moneyAccountId: Id,
+                    transitionName: String,
                     vararg sharedElementView: View
                 ) {
                     navController.navigate(
                         R.id.navigateFromDashboardToMoneyAccountDetails,
-                        MoneyAccountDetailsScreenArguments(moneyAccountId)
+                        MoneyAccountDetailsScreenArguments(moneyAccountId, transitionName)
                             .toBundle<MoneyAccountDetailsFragment>(),
                         null,
                         buildExtrasForSharedElements(sharedElementView)
@@ -105,11 +106,12 @@ object NavigationModule : CoreNavigationProvider {
                 override fun navigateToMoneyAccountDetails(
                     navController: NavController,
                     moneyAccountId: Id,
+                    transitionName: String,
                     vararg sharedElementViews: View
                 ) {
                     navController.navigate(
                         R.id.navigateFromMoneyAccountsListToMoneyAccountDetails,
-                        MoneyAccountDetailsScreenArguments(moneyAccountId)
+                        MoneyAccountDetailsScreenArguments(moneyAccountId, transitionName)
                             .toBundle<MoneyAccountDetailsFragment>(),
                         null,
                         buildExtrasForSharedElements(sharedElementViews)

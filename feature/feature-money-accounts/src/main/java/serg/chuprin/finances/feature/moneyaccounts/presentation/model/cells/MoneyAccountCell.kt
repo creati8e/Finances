@@ -10,6 +10,7 @@ import serg.chuprin.finances.core.api.presentation.model.cells.DiffCell
 data class MoneyAccountCell(
     val name: String,
     val balance: String,
+    val transitionName: String,
     val moneyAccount: MoneyAccount,
     val favoriteIconIsVisible: Boolean
 ) : DiffCell<Id> {

@@ -10,7 +10,7 @@ import serg.chuprin.finances.core.api.R as CoreR
 /**
  * Created by Sergey Chuprin on 23.04.2020.
  */
-class DataPeriodTypePopupMenuCellsBuilderImpl @Inject constructor(
+internal class DataPeriodTypePopupMenuCellsBuilderImpl @Inject constructor(
     private val resourceManger: ResourceManger
 ) : DataPeriodTypePopupMenuCellsBuilder {
 

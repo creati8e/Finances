@@ -2,6 +2,7 @@ package serg.chuprin.finances.feature.moneyaccounts.presentation.model.store
 
 import kotlinx.coroutines.flow.Flow
 import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
+import serg.chuprin.finances.core.api.presentation.builder.TransitionNameBuilder
 import serg.chuprin.finances.core.api.presentation.model.cells.ZeroDataCell
 import serg.chuprin.finances.core.api.presentation.model.formatter.AmountFormatter
 import serg.chuprin.finances.core.mvi.Consumer
@@ -17,7 +18,8 @@ import serg.chuprin.finances.core.api.R as CoreR
  * Created by Sergey Chuprin on 06.05.2020.
  */
 class MoneyAccountsListActionExecutor @Inject constructor(
-    private val amountFormatter: AmountFormatter
+    private val amountFormatter: AmountFormatter,
+    private val transitionNameBuilder: TransitionNameBuilder
 ) : StoreActionExecutor<MoneyAccountsListAction, MoneyAccountsListState, MoneyAccountsListEffect, MoneyAccountsListEvent> {
 
     override fun invoke(
@@ -45,8 +47,12 @@ class MoneyAccountsListActionExecutor @Inject constructor(
         eventConsumer: Consumer<MoneyAccountsListEvent>
     ): Flow<MoneyAccountsListEffect> {
         return emptyFlowAction {
-            val moneyAccountId = intent.cell.moneyAccount.id
-            eventConsumer(MoneyAccountsListEvent.NavigateToMoneyAccountDetailsScreen(moneyAccountId))
+            eventConsumer(
+                MoneyAccountsListEvent.NavigateToMoneyAccountDetailsScreen(
+                    transitionName = intent.cell.transitionName,
+                    moneyAccountId = intent.cell.moneyAccount.id
+                )
+            )
         }
     }
 
@@ -68,7 +74,9 @@ class MoneyAccountsListActionExecutor @Inject constructor(
                         name = moneyAccount.name,
                         moneyAccount = moneyAccount,
                         favoriteIconIsVisible = moneyAccount.isFavorite,
-                        balance = amountFormatter.format(amount, moneyAccount.currency)
+                        balance = amountFormatter.format(amount, moneyAccount.currency),
+                        transitionName = transitionNameBuilder
+                            .buildForForMoneyAccountDetails(moneyAccount.id)
                     )
                 }
             }

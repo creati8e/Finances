@@ -12,6 +12,7 @@ interface MoneyAccountsListNavigation {
     fun navigateToMoneyAccountDetails(
         navController: NavController,
         moneyAccountId: Id,
+        transitionName: String,
         vararg sharedElementViews: View
     )
 

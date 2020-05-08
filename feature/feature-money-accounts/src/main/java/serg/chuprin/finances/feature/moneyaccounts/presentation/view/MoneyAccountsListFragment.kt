@@ -80,13 +80,12 @@ class MoneyAccountsListFragment : BaseFragment(R.layout.fragment_money_accounts_
     private fun handleEvent(event: MoneyAccountsListEvent) {
         return when (event) {
             is MoneyAccountsListEvent.NavigateToMoneyAccountDetailsScreen -> {
-                val transitionName =
-                    "${getString(R.string.transition_money_account)}${event.moneyAccountId.value}"
                 val sharedElementView =
-                    moneyAccountsRecyclerView.findViewWithTag<View>(transitionName)
+                    moneyAccountsRecyclerView.findViewWithTag<View>(event.transitionName)
                 navigation.navigateToMoneyAccountDetails(
                     navController,
                     event.moneyAccountId,
+                    event.transitionName,
                     sharedElementView
                 )
             }

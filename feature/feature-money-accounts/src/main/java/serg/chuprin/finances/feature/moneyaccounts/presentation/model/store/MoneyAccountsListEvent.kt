@@ -9,7 +9,8 @@ sealed class MoneyAccountsListEvent {
 
     // TODO: Create navigator.
     class NavigateToMoneyAccountDetailsScreen(
-        val moneyAccountId: Id
+        val moneyAccountId: Id,
+        val transitionName: String
     ) : MoneyAccountsListEvent()
 
 }

@@ -13,7 +13,8 @@ sealed class DashboardEvent {
     ) : DashboardEvent()
 
     class NavigateToMoneyAccountDetailsScreen(
-        val moneyAccountId: Id
+        val moneyAccountId: Id,
+        val transitionName: String
     ) : DashboardEvent()
 
     object NavigateToMoneyAccountsListScreen : DashboardEvent()

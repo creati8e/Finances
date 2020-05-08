@@ -49,8 +49,7 @@ class MoneyAccountDetailsFragment : BaseFragment(R.layout.fragment_money_account
         savedInstanceState: Bundle?
     ): View? {
         return super.onCreateView(inflater, container, savedInstanceState)!!.apply {
-            transitionName =
-                "${getString(R.string.transition_money_account)}${screenArguments.moneyAccountId.value}"
+            transitionName = screenArguments.transitionName
         }
     }
 

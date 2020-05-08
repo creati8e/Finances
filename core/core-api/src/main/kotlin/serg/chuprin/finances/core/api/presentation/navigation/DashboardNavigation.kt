@@ -14,6 +14,7 @@ interface DashboardNavigation {
     fun navigateToMoneyAccountDetails(
         navController: NavController,
         moneyAccountId: Id,
+        transitionName: String,
         vararg sharedElementView: View
     )
 

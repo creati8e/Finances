@@ -73,8 +73,12 @@ class DashboardActionExecutor @Inject constructor(
         eventConsumer: Consumer<DashboardEvent>
     ): Flow<DashboardEffect> {
         return emptyFlowAction {
-            val moneyAccountId = intent.cell.moneyAccount.id
-            eventConsumer(DashboardEvent.NavigateToMoneyAccountDetailsScreen(moneyAccountId))
+            eventConsumer(
+                DashboardEvent.NavigateToMoneyAccountDetailsScreen(
+                    transitionName = intent.cell.transitionName,
+                    moneyAccountId = intent.cell.moneyAccount.id
+                )
+            )
         }
     }
 
