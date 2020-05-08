@@ -35,13 +35,23 @@
                 android:id="@+id/navigateFromOnboardingToDashboard"
                 app:destination="@+id/moneyAccountsListFragment" />
 
+            <action
+                android:id="@+id/navigateFromDashboardToMoneyAccountDetails"
+                app:destination="@id/moneyAccountDetailsFragment" />
+
         </fragment>
 
         <fragment
             android:id="@+id/moneyAccountsListFragment"
             android:name="serg.chuprin.finances.feature.moneyaccounts.presentation.view.MoneyAccountsListFragment"
             android:label="MoneyAccountsListFragment"
-            tools:layout="@layout/fragment_money_accounts_list" />
+            tools:layout="@layout/fragment_money_accounts_list">
+
+            <action
+                android:id="@+id/navigateFromMoneyAccountsListToMoneyAccountDetails"
+                app:destination="@id/moneyAccountDetailsFragment" />
+
+        </fragment>
 
         <fragment
             android:id="@+id/authorizedGraphLauncherFragment"
@@ -61,6 +71,12 @@
                 app:popUpToInclusive="true" />
 
         </fragment>
+
+        <fragment
+            android:id="@+id/moneyAccountDetailsFragment"
+            android:name="serg.chuprin.finances.feature.moneyaccount.details.presentation.view.MoneyAccountDetailsFragment"
+            android:label="MoneyAccountDetailsFragment"
+            tools:layout="@layout/fragment_money_account_details" />
 
         <action
             android:id="@+id/navigateFromDashboardToMoneyAccountsList"

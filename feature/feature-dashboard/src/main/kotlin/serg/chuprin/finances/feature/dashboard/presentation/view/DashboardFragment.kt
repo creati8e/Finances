@@ -78,13 +78,25 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
                 // TODO: Optimize.
                 PopupMenuWindow(
                     event.menuCells.toTypedArray(),
-                    { cell -> viewModel.dispatchIntent(DashboardIntent.ClickOnPeriodTypeCell(cell)) }
+                    { cell ->
+                        viewModel.dispatchIntent(DashboardIntent.ClickOnPeriodTypeCell(cell))
+                    }
                 ).show(anchorView)
             }
             DashboardEvent.NavigateToMoneyAccountsListScreen -> {
                 navigation.navigateToMoneyAccountsList(
                     navController,
                     recyclerView.moneyAccountsSubtitleLayout
+                )
+            }
+            is DashboardEvent.NavigateToMoneyAccountDetailsScreen -> {
+                val transitionName =
+                    "${getString(R.string.transition_money_account)}${event.moneyAccountId.value}"
+                val sharedElementView = recyclerView.findViewWithTag<View>(transitionName)
+                navigation.navigateToMoneyAccountDetails(
+                    navController,
+                    event.moneyAccountId,
+                    sharedElementView
                 )
             }
         }

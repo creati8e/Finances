@@ -2,6 +2,7 @@ package serg.chuprin.finances.core.api.di.provider
 
 import serg.chuprin.finances.core.api.presentation.navigation.AuthorizationNavigation
 import serg.chuprin.finances.core.api.presentation.navigation.DashboardNavigation
+import serg.chuprin.finances.core.api.presentation.navigation.MoneyAccountsListNavigation
 import serg.chuprin.finances.core.api.presentation.navigation.OnboardingNavigation
 
 /**
@@ -14,5 +15,7 @@ interface CoreNavigationProvider {
     val onboardingNavigation: OnboardingNavigation
 
     val authorizationNavigation: AuthorizationNavigation
+
+    val moneyAccountsListNavigation: MoneyAccountsListNavigation
 
 }

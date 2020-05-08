@@ -54,6 +54,9 @@ class DashboardActionExecutor @Inject constructor(
                     is DashboardIntent.ClickOnPeriodTypeCell -> {
                         handleClickOnPeriodTypeCell(intent)
                     }
+                    is DashboardIntent.ClickOnMoneyAccount -> {
+                        handleClickOnMoneyAccountIntent(intent, eventConsumer)
+                    }
                     DashboardIntent.ClickOnMoneyAccountsListButton -> {
                         handleClickOnMoneyAccountsListButtonIntent(eventConsumer)
                     }
@@ -62,6 +65,16 @@ class DashboardActionExecutor @Inject constructor(
             is DashboardAction.FormatDashboard -> {
                 handleFormatDashboardAction(action, state)
             }
+        }
+    }
+
+    private fun handleClickOnMoneyAccountIntent(
+        intent: DashboardIntent.ClickOnMoneyAccount,
+        eventConsumer: Consumer<DashboardEvent>
+    ): Flow<DashboardEffect> {
+        return emptyFlowAction {
+            val moneyAccountId = intent.cell.moneyAccount.id
+            eventConsumer(DashboardEvent.NavigateToMoneyAccountDetailsScreen(moneyAccountId))
         }
     }
 

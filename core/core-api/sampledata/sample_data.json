@@ -1,0 +1,71 @@
+{
+  "categories": [
+    {
+      "categories": [
+        {
+          "category": "Groceries"
+        },
+        {
+          "category": "Food"
+        },
+        {
+          "category": "Shopping"
+        }
+      ]
+    }
+  ],
+  "amounts": [
+    {
+      "amounts": [
+        {
+          "amount": "1000$"
+        },
+        {
+          "amount": "+750$"
+        },
+        {
+          "amount": "100$"
+        },
+        {
+          "amount": "+50$"
+        }
+      ]
+    }
+  ],
+  "dates": [
+    {
+      "dates": [
+        {
+          "date": "Yesterday"
+        },
+        {
+          "date": "Today"
+        },
+        {
+          "date": "3 hours ago"
+        },
+        {
+          "date": "11:05"
+        }
+      ]
+    }
+  ],
+  "category_amounts": [
+    {
+      "category_amounts": [
+        {
+          "amount": "Groceries 1000$"
+        },
+        {
+          "amount": "Shopping 750$"
+        },
+        {
+          "amount": "Food 100$"
+        },
+        {
+          "amount": "Medicine 50$"
+        }
+      ]
+    }
+  ]
+}

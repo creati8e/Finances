@@ -6,6 +6,8 @@ import serg.chuprin.finances.core.api.presentation.model.cells.ZeroDataCell
 import serg.chuprin.finances.core.api.presentation.model.formatter.AmountFormatter
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
+import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
+import serg.chuprin.finances.core.mvi.invoke
 import serg.chuprin.finances.feature.moneyaccounts.R
 import serg.chuprin.finances.feature.moneyaccounts.presentation.model.cells.MoneyAccountCell
 import javax.inject.Inject
@@ -28,7 +30,23 @@ class MoneyAccountsListActionExecutor @Inject constructor(
             is MoneyAccountsListAction.BuildMoneyAccountCells -> {
                 handleBuildMoneyAccountCellsAction(action)
             }
-            is MoneyAccountsListAction.ExecuteIntent -> TODO()
+            is MoneyAccountsListAction.ExecuteIntent -> {
+                when (val intent = action.intent) {
+                    is MoneyAccountsListIntent.ClickOnMoneyAccount -> {
+                        handleClickOnMoneyAccountIntent(intent, eventConsumer)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun handleClickOnMoneyAccountIntent(
+        intent: MoneyAccountsListIntent.ClickOnMoneyAccount,
+        eventConsumer: Consumer<MoneyAccountsListEvent>
+    ): Flow<MoneyAccountsListEffect> {
+        return emptyFlowAction {
+            val moneyAccountId = intent.cell.moneyAccount.id
+            eventConsumer(MoneyAccountsListEvent.NavigateToMoneyAccountDetailsScreen(moneyAccountId))
         }
     }
 

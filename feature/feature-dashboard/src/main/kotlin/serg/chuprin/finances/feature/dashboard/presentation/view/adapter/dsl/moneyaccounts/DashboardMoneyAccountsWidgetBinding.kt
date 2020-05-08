@@ -3,6 +3,7 @@ package serg.chuprin.finances.feature.dashboard.presentation.view.adapter.dsl.mo
 import kotlinx.android.synthetic.main.cell_dashboard_money_account.*
 import kotlinx.android.synthetic.main.cell_widget_dashboard_money_accounts.*
 import serg.chuprin.finances.core.api.presentation.view.adapter.dsl.context.RecyclerViewAdapterContext
+import serg.chuprin.finances.core.api.presentation.view.extensions.getString
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisibleOrGone
 import serg.chuprin.finances.feature.dashboard.R
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
@@ -12,6 +13,7 @@ import serg.chuprin.finances.feature.dashboard.presentation.model.store.Dashboar
 import serg.chuprin.finances.feature.dashboard.presentation.model.viewmodel.DashboardViewModel
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.dsl.moneyaccounts.animation.DashboardMoneyAccountsWidgetAnimationController
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.dsl.moneyaccounts.diff.DashboardMoneyAccountsDiffCallback
+import serg.chuprin.finances.core.api.R as CoreR
 
 /**
  * Created by Sergey Chuprin on 29.04.2020.
@@ -40,6 +42,19 @@ fun RecyclerViewAdapterContext.setupMoneyAccountsWidgetBinding(
                         cardView.isActivated = cell.favoriteIconIsVisible
                         favoriteImageView.makeVisibleOrGone(cell.favoriteIconIsVisible)
                     }
+                    // TODO: Maybe move to cell.
+                    val transitionName =
+                        "${itemView.getString(CoreR.string.transition_money_account)}${cell.moneyAccount.id.value}"
+                    cardView.tag = transitionName
+                    cardView.transitionName = transitionName
+                }
+                setupViews {
+                    setClickListener(
+                        cardView,
+                        { cell ->
+                            viewModel.dispatchIntent(DashboardIntent.ClickOnMoneyAccount(cell))
+                        }
+                    )
                 }
             }
         }

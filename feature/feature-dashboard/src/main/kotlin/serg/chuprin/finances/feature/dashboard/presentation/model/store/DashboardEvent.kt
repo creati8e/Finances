@@ -1,5 +1,6 @@
 package serg.chuprin.finances.feature.dashboard.presentation.model.store
 
+import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.presentation.model.cells.DataPeriodTypePopupMenuCell
 
 /**
@@ -9,6 +10,10 @@ sealed class DashboardEvent {
 
     class ShowPeriodTypesPopupMenu(
         val menuCells: List<DataPeriodTypePopupMenuCell>
+    ) : DashboardEvent()
+
+    class NavigateToMoneyAccountDetailsScreen(
+        val moneyAccountId: Id
     ) : DashboardEvent()
 
     object NavigateToMoneyAccountsListScreen : DashboardEvent()

@@ -3,4 +3,8 @@ package serg.chuprin.finances.feature.moneyaccount.details.presentation.model.st
 /**
  * Created by Sergey Chuprin on 07.05.2020.
  */
-sealed class MoneyAccountDetailsEvent
+sealed class MoneyAccountDetailsEvent {
+
+    object CloseScreen : MoneyAccountDetailsEvent()
+
+}

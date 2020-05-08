@@ -7,6 +7,7 @@ import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
  * Created by Sergey Chuprin on 07.05.2020.
  */
 data class MoneyAccountDetailsState(
+    val isFavorite: Boolean = false,
     val cells: List<BaseCell> = emptyList(),
     val moneyAccountName: String = EMPTY_STRING,
     val moneyAccountBalance: String = EMPTY_STRING

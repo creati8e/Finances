@@ -6,4 +6,9 @@
         transition_money_accounts_list_content
     </string>
 
+    <string name="transition_money_account"
+        translatable="false">
+        money_account
+    </string>
+
 </resources>

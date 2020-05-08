@@ -12,7 +12,16 @@ class MoneyAccountDetailsStateReducer :
         what: MoneyAccountDetailsEffect,
         state: MoneyAccountDetailsState
     ): MoneyAccountDetailsState {
-        TODO("Not yet implemented")
+        return when (what) {
+            is MoneyAccountDetailsEffect.DetailsFormatted -> {
+                state.copy(
+                    cells = what.cells,
+                    isFavorite = what.isFavorite,
+                    moneyAccountName = what.moneyAccountName,
+                    moneyAccountBalance = what.formattedBalance
+                )
+            }
+        }
     }
 
 }

@@ -40,6 +40,7 @@ fun RecyclerViewAdapterContext.setupRecentTransactionsBinding() {
                 R.layout.cell_dashboard_recent_transactions_zero_data
             )
             add<DashboardTransactionCell>(R.layout.cell_dashboard_transaction) {
+                // TODO: Maybe reuse.
                 bind { cell, _ ->
                     amountTextView.text = cell.amount
                     dateTextView.text = cell.formattedDate

@@ -6,6 +6,7 @@ import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.api.domain.service.MoneyAccountService
 import serg.chuprin.finances.core.api.presentation.model.formatter.AmountFormatter
+import serg.chuprin.finances.core.api.presentation.navigation.MoneyAccountsListNavigation
 
 /**
  * Created by Sergey Chuprin on 26.04.2020.
@@ -17,6 +18,8 @@ interface MoneyAccountsListDependencies {
     val amountFormatter: AmountFormatter
 
     val moneyAccountService: MoneyAccountService
+
+    val moneyAccountsListNavigation: MoneyAccountsListNavigation
 }
 
 @Component(dependencies = [CoreDependenciesProvider::class])

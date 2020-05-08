@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.BaseStoreViewModel
+import serg.chuprin.finances.feature.moneyaccounts.presentation.model.store.MoneyAccountsListEvent
 import serg.chuprin.finances.feature.moneyaccounts.presentation.model.store.MoneyAccountsListIntent
 import serg.chuprin.finances.feature.moneyaccounts.presentation.model.store.MoneyAccountsListState
 import serg.chuprin.finances.feature.moneyaccounts.presentation.model.store.MoneyAccountsListStore
@@ -18,6 +19,8 @@ class MoneyAccountsListViewModel @Inject constructor(
 
     val cellsLiveData: LiveData<List<BaseCell>> =
         store.observeParticularStateAsLiveData(MoneyAccountsListState::cells)
+
+    val eventsLiveData: LiveData<MoneyAccountsListEvent> = store.observeEventsAsLiveData()
 
     init {
         store.start(intentsFlow(), viewModelScope)
