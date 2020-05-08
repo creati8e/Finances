@@ -65,7 +65,7 @@ class MoneyAccountDetailsFragment : BaseFragment(R.layout.fragment_money_account
             eventsLiveData(::handleEvent)
             cellsLiveData(cellsAdapter::setItems)
             balanceLiveData(balanceTextView::setText)
-            accountNameLiveData(collapsingToolbarLayout::setText)
+            accountNameLiveData(accountNameTextView::setText)
         }
     }
 

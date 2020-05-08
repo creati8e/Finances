@@ -1,46 +1,86 @@
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:expanded="true"
-        app:liftOnScroll="true">
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/collapsingToolbarLayout"
-                style="@style/TextAppearance.MaterialComponents.Headline6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="Money account" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/balanceTextView"
-                style="@style/TextAppearance.MaterialComponents.Headline6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                tools:text="1000$" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-    </com.google.android.material.appbar.AppBarLayout>
+    android:layout_height="match_parent"
+    app:layoutDescription="@xml/collapsing_toolbar">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/transactionsRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-        tools:listitem="@layout/cell_transaction" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fakeAppBarLayout"
+        app:layout_constraintVertical_bias="0"
+        tools:itemCount="5" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <FrameLayout
+        android:id="@+id/fakeAppBarLayout"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:adjustViewBounds="true"
+        android:background="#fff"
+        android:contentDescription="@null"
+        android:fitsSystemWindows="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@android:id/home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_selection_rounded_transparent"
+        android:clickable="true"
+        android:contentDescription="@null"
+        android:focusable="true"
+        android:padding="16dp"
+        android:src="@drawable/abc_ic_ab_back_material"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="?android:attr/textColorPrimary"
+        tools:ignore="PrivateResource" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/favoriteImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_selection_rounded_transparent"
+        android:clickable="true"
+        android:contentDescription="@null"
+        android:focusable="true"
+        android:padding="16dp"
+        android:src="@drawable/ic_favorite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/colorFavoriteOrange"
+        tools:ignore="PrivateResource" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/accountNameTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        android:lineSpacingExtra="0dp"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:transformPivotY="12sp"
+        tools:text="Title" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/balanceTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        android:lineSpacingExtra="0dp"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="18sp"
+        android:transformPivotY="9sp"
+        tools:text="Subtitle" />
+
+</androidx.constraintlayout.motion.widget.MotionLayout>
