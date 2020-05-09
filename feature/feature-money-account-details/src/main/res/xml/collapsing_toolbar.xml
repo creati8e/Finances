@@ -32,6 +32,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Constraint
+            android:id="@+id/settingImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="0dp"
+            app:layout_constraintEnd_toStartOf="@id/favoriteImageView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Constraint
             android:id="@id/fakeAppBarLayout"
             android:layout_height="134dp"
             android:elevation="0dp"
@@ -88,6 +96,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Constraint
+            android:id="@+id/settingImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="@dimen/elevation"
+            app:layout_constraintEnd_toStartOf="@id/favoriteImageView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Constraint
             android:id="@id/fakeAppBarLayout"
             android:layout_height="?attr/actionBarSize"
             android:elevation="@dimen/elevation"
@@ -105,7 +121,7 @@
             android:scaleX="0.8"
             android:scaleY="0.8"
             app:layout_constraintBottom_toTopOf="@id/balanceTextView"
-            app:layout_constraintEnd_toStartOf="@id/favoriteImageView"
+            app:layout_constraintEnd_toStartOf="@id/settingImageView"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/backButton"
             app:layout_constraintTop_toTopOf="parent"
@@ -121,7 +137,7 @@
             android:scaleX="0.7"
             android:scaleY="0.7"
             app:layout_constraintBottom_toBottomOf="@id/fakeAppBarLayout"
-            app:layout_constraintEnd_toStartOf="@id/favoriteImageView"
+            app:layout_constraintEnd_toStartOf="@id/settingImageView"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/backButton"
             app:layout_constraintTop_toBottomOf="@id/accountNameTextView" />

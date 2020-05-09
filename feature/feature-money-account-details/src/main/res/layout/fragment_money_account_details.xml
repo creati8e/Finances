@@ -28,12 +28,7 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_selection_borderless"
-        android:clickable="true"
-        android:focusable="true"
-        android:padding="16dp"
+        style="@style/ToolbarIcon"
         android:src="@drawable/abc_ic_ab_back_material"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -42,17 +37,19 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/favoriteImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_selection_borderless"
-        android:clickable="true"
-        android:focusable="true"
-        android:padding="16dp"
+        style="@style/ToolbarIcon"
         android:src="@drawable/ic_favorite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:tint="@color/colorFavoriteOrange"
-        tools:ignore="PrivateResource" />
+        tools:tint="@color/colorFavoriteOrange" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/settingImageView"
+        style="@style/ToolbarIcon"
+        android:src="@drawable/ic_settings"
+        app:layout_constraintEnd_toStartOf="@id/favoriteImageView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="?android:attr/textColorPrimary" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/accountNameTextView"
