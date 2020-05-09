@@ -34,7 +34,7 @@
                 app:fontFamily="@font/logo_font"
                 tools:ignore="HardcodedText" />
 
-            <serg.chuprin.finances.core.api.presentation.view.widget.RoundedImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/userPhotoImageView"
                 android:layout_width="32dp"
                 android:layout_height="32dp"

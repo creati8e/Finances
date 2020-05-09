@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.doOnPreDraw
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.api.load
+import coil.transform.RoundedCornersTransformation
 import com.google.android.material.transition.Hold
 import kotlinx.android.synthetic.main.cell_widget_dashboard_money_accounts.view.*
 import kotlinx.android.synthetic.main.fragment_dashboard.*
@@ -15,6 +16,7 @@ import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.vi
 import serg.chuprin.finances.core.api.presentation.navigation.DashboardNavigation
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.SHARED_ELEMENT_TRANSITION_DURATION
+import serg.chuprin.finances.core.api.presentation.view.extensions.getDimenDpFloat
 import serg.chuprin.finances.core.api.presentation.view.popup.menu.PopupMenuWindow
 import serg.chuprin.finances.feature.dashboard.R
 import serg.chuprin.finances.feature.dashboard.presentation.di.DashboardComponent
@@ -64,6 +66,8 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
             cellsLiveData(cellsAdapter::setItems)
             userPhotoLiveData { photoUrl ->
                 userPhotoImageView.load(photoUrl) {
+                    val radius = requireContext().getDimenDpFloat(R.dimen.cornerRadius)
+                    transformations(RoundedCornersTransformation(radius))
                     error(CoreR.drawable.ic_user_photo_placeholder)
                     placeholder(CoreR.drawable.ic_user_photo_placeholder)
                 }
