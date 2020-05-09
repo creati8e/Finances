@@ -1,5 +1,6 @@
 package serg.chuprin.finances.feature.moneyaccount.details.presentation.view
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import serg.chuprin.finances.core.api.presentation.extensions.arguments
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.adapter.decoration.CellDividerDecoration
+import serg.chuprin.finances.core.api.presentation.view.extensions.getColorInt
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
 import serg.chuprin.finances.core.api.presentation.view.setEnterSharedElementTransition
 import serg.chuprin.finances.feature.moneyaccount.details.R
@@ -68,6 +70,7 @@ class MoneyAccountDetailsFragment : BaseFragment(R.layout.fragment_money_account
 
         with(viewModel) {
             eventsLiveData(::handleEvent)
+            isFavoriteLiveData(::showIsFavorite)
             cellsLiveData(cellsAdapter::setItems)
             balanceLiveData(balanceTextView::setText)
             accountNameLiveData(accountNameTextView::setText)
@@ -80,6 +83,18 @@ class MoneyAccountDetailsFragment : BaseFragment(R.layout.fragment_money_account
                 navController.navigateUp()
                 Unit
             }
+        }
+    }
+
+    private fun showIsFavorite(isFavorite: Boolean) {
+        if (isFavorite) {
+            if (favoriteImageView.imageTintList != null) {
+                return
+            }
+            val tintColor = requireContext().getColorInt(R.color.colorFavoriteOrange)
+            favoriteImageView.imageTintList = ColorStateList.valueOf(tintColor)
+        } else {
+            favoriteImageView.imageTintList = null
         }
     }
 
