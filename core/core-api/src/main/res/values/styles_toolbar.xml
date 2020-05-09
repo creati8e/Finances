@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ToolbarTheme"
+        parent="@style/Widget.MaterialComponents.Toolbar.Surface">
+        <!-- Customize color of navigation drawer icon and back arrow -->
+        <item name="colorControlNormal">?android:textColorPrimary</item>
+    </style>
+
+</resources>

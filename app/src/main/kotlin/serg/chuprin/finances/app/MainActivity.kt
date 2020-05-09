@@ -2,6 +2,8 @@ package serg.chuprin.finances.app
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import serg.chuprin.finances.core.api.R as CoreApiR
 
 /**
@@ -9,10 +11,15 @@ import serg.chuprin.finances.core.api.R as CoreApiR
  */
 class MainActivity : AppCompatActivity() {
 
+    private val navController: NavController
+        get() = findNavController(R.id.rootFragmentContainer)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(CoreApiR.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
     }
+
+    override fun onSupportNavigateUp(): Boolean = navController.navigateUp()
 
 }

@@ -3,6 +3,7 @@ package serg.chuprin.finances.feature.moneyaccounts.presentation.view
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.transition.doOnEnd
 import androidx.core.view.doOnPreDraw
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -63,6 +64,11 @@ class MoneyAccountsListFragment : BaseFragment(R.layout.fragment_money_accounts_
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        (requireActivity() as AppCompatActivity).apply {
+            setSupportActionBar(toolbar)
+            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        }
+
         postponeEnterTransition()
         view.doOnPreDraw { startPostponedEnterTransition() }
 
@@ -74,6 +80,13 @@ class MoneyAccountsListFragment : BaseFragment(R.layout.fragment_money_accounts_
         with(viewModel) {
             eventsLiveData(::handleEvent)
             cellsLiveData(cellsAdapter::setItems)
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        (requireActivity() as AppCompatActivity).apply {
+            setSupportActionBar(null)
         }
     }
 
