@@ -18,14 +18,10 @@
         app:layout_constraintVertical_bias="0"
         tools:itemCount="5" />
 
-    <FrameLayout
+    <serg.chuprin.finances.feature.moneyaccount.details.presentation.view.widget.MoneyAccountDetailsToolbarLayout
         android:id="@+id/fakeAppBarLayout"
         android:layout_width="0dp"
         android:layout_height="200dp"
-        android:adjustViewBounds="true"
-        android:background="#fff"
-        android:contentDescription="@null"
-        android:fitsSystemWindows="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -36,7 +32,6 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_selection_borderless"
         android:clickable="true"
-        android:contentDescription="@null"
         android:focusable="true"
         android:padding="16dp"
         android:src="@drawable/abc_ic_ab_back_material"
@@ -51,7 +46,6 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_selection_borderless"
         android:clickable="true"
-        android:contentDescription="@null"
         android:focusable="true"
         android:padding="16dp"
         android:src="@drawable/ic_favorite"
