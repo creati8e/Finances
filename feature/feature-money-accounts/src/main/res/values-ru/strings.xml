@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="money_accounts_toolbar_title">Денежные счета</string>
+    <string name="money_accounts_zero_data_title">Нет счетов</string>
+    <string name="money_accounts_zero_data_button">Создать</string>
+
+</resources>

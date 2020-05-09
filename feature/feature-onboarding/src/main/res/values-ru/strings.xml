@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onboarding_currency_choice_hint">Искать</string>
+    <string name="onboarding_currency_choice_button">Готово!</string>
+    <string name="onboarding_currency_choice_title">Давайте все настроим</string>
+    <string name="onboarding_currency_choice_subtitle">Выберите основную валюту</string>
+    <string name="onboarding_currency_choice_currencies_not_found">Валюты не найдены</string>
+
+    <string name="onboarding_accounts_setup_start_using_app">Начать пользоваться приложением</string>
+    <string name="onboarding_accounts_setup_subtitle_cash_question">Вы пользуетесь наличными?</string>
+    <string name="onboarding_accounts_setup_subtitle_bank_card_question">У вас есть банковская карта?</string>
+    <string name="onboarding_accounts_setup_subtitle_enter_current_balance">Введите текущий баланс</string>
+    <string name="onboarding_accounts_setup_subtitle_no_accounts">
+        Готово! Вы не создали ни один аккаунт, но можете сделать это позже.
+    </string>
+    <string name="onboarding_accounts_setup_subtitle_setup_finished">
+        Готово! Вы можете создать дополнительные аккаунты позже.
+    </string>
+</resources>

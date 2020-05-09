@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="money_account_details_zero_data_title">Нет транзакций</string>
+
+</resources>

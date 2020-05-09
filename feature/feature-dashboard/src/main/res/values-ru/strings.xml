@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dashboard_recent_transactions_subtitle">Последние транзакции</string>
+    <string name="dashboard_recent_transactions_show_more">Смотреть все</string>
+    <string name="dashboard_recent_transactions_no_transactions">Нет транзакций</string>
+
+    <string name="dashboard_header_title_balance">Баланс</string>
+    <string name="dashboard_header_incomes">Доходы</string>
+    <string name="dashboard_header_expenses">Расходы</string>
+    <string name="dashboard_header_title_current_period">Текущий период</string>
+
+    <string name="dashboard_money_accounts_subtitle">Мои счета</string>
+    <string name="dashboard_money_accounts_no_accounts">Нет счетов</string>
+
+    <string name="dashboard_categories_subtitle">Категории</string>
+    <string name="dashboard_categories_other">Другие</string>
+    <string name="dashboard_categories_zero_data_title">Нет операций в текущем периоде</string>
+</resources>

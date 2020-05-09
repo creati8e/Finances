@@ -1,0 +1,10 @@
+<resources>
+    <string name="authorization_password_hint">Пароль</string>
+    <string name="authorization_login">Войти</string>
+    <string name="authorization_sign_in_with_google">Войти с Google</string>
+    <string name="authorization_already_have_account">Уже есть аккаунт?</string>
+    <string name="authorization_successful_sign_in">Вы вошли в свой аккаунт</string>
+    <string name="authorization_sign_in_with_google_unknown_error">
+        Вход не удался из-за неизвестной ошибки
+    </string>
+</resources>
