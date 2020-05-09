@@ -7,19 +7,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_money_account_details.*
 import serg.chuprin.finances.core.api.presentation.extensions.arguments
-import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
-import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter
-import serg.chuprin.finances.core.api.presentation.view.adapter.diff.DiffCallback
-import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.DateDividerCellRenderer
-import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.TransactionCellRenderer
-import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ZeroDataCellRenderer
+import serg.chuprin.finances.core.api.presentation.view.adapter.decoration.CellDividerDecoration
 import serg.chuprin.finances.core.api.presentation.view.setEnterSharedElementTransition
 import serg.chuprin.finances.feature.moneyaccount.details.R
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.arguments.MoneyAccountDetailsScreenArguments
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.di.MoneyAccountDetailsComponent
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.model.store.MoneyAccountDetailsEvent
+import serg.chuprin.finances.feature.moneyaccount.details.presentation.view.adapter.MoneyAccountDetailsTransactionsAdapter
 
 /**
  * Created by Sergey Chuprin on 07.05.2020.
@@ -32,11 +28,7 @@ class MoneyAccountDetailsFragment : BaseFragment(R.layout.fragment_money_account
         MoneyAccountDetailsComponent.get(screenArguments)
     }
 
-    private val cellsAdapter = DiffMultiViewAdapter(DiffCallback<BaseCell>()).apply {
-        registerRenderer(ZeroDataCellRenderer())
-        registerRenderer(TransactionCellRenderer())
-        registerRenderer(DateDividerCellRenderer())
-    }
+    private val cellsAdapter = MoneyAccountDetailsTransactionsAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +51,14 @@ class MoneyAccountDetailsFragment : BaseFragment(R.layout.fragment_money_account
         with(transactionsRecyclerView) {
             adapter = cellsAdapter
             layoutManager = LinearLayoutManager(requireContext())
+            addItemDecoration(
+                CellDividerDecoration(
+                    requireContext(),
+                    cellsAdapter,
+                    marginEndDp = -8,
+                    marginStartDp = 8
+                )
+            )
         }
 
         with(viewModel) {
