@@ -11,6 +11,7 @@ import serg.chuprin.finances.core.api.presentation.extensions.arguments
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.adapter.decoration.CellDividerDecoration
+import serg.chuprin.finances.core.api.presentation.view.extensions.getAttributeColor
 import serg.chuprin.finances.core.api.presentation.view.extensions.getColorInt
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
 import serg.chuprin.finances.core.api.presentation.view.setEnterSharedElementTransition
@@ -87,15 +88,12 @@ class MoneyAccountDetailsFragment : BaseFragment(R.layout.fragment_money_account
     }
 
     private fun showIsFavorite(isFavorite: Boolean) {
-        if (isFavorite) {
-            if (favoriteImageView.imageTintList != null) {
-                return
-            }
-            val tintColor = requireContext().getColorInt(R.color.colorFavoriteOrange)
-            favoriteImageView.imageTintList = ColorStateList.valueOf(tintColor)
+        val tintColor = if (isFavorite) {
+            requireContext().getColorInt(R.color.colorFavoriteOrange)
         } else {
-            favoriteImageView.imageTintList = null
+            requireContext().getAttributeColor(android.R.attr.textColorPrimary)
         }
+        favoriteImageView.imageTintList = ColorStateList.valueOf(tintColor)
     }
 
 }
