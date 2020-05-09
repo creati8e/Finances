@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
+import serg.chuprin.finances.core.api.domain.usecase.MarkMoneyAccountAsFavoriteUseCase
 import serg.chuprin.finances.core.api.presentation.formatter.DateTimeFormatter
 import serg.chuprin.finances.core.api.presentation.formatter.TransactionCategoryWithParentFormatter
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
@@ -26,6 +27,7 @@ import javax.inject.Inject
 class MoneyAccountDetailsActionExecutor @Inject constructor(
     private val amountFormatter: AmountFormatter,
     private val dateTimeFormatter: DateTimeFormatter,
+    private val markMoneyAccountAsFavoriteUseCase: MarkMoneyAccountAsFavoriteUseCase,
     private val transactionCategoryWithParentFormatter: TransactionCategoryWithParentFormatter
 ) : StoreActionExecutor<MoneyAccountDetailsAction, MoneyAccountDetailsState, MoneyAccountDetailsEffect, MoneyAccountDetailsEvent> {
 
@@ -39,7 +41,22 @@ class MoneyAccountDetailsActionExecutor @Inject constructor(
             is MoneyAccountDetailsAction.FormatDetails -> {
                 handleFormatDetailsAction(action, eventConsumer)
             }
-            is MoneyAccountDetailsAction.ExecuteIntent -> TODO()
+            is MoneyAccountDetailsAction.ExecuteIntent -> {
+                when (action.intent) {
+                    MoneyAccountDetailsIntent.ClickOnFavoriteIcon -> {
+                        handleClickOnFavoriteIconIntent(state)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun handleClickOnFavoriteIconIntent(
+        state: MoneyAccountDetailsState
+    ): Flow<MoneyAccountDetailsEffect> {
+        return emptyFlowAction {
+            val markAsFavorite = state.isFavorite.not()
+            markMoneyAccountAsFavoriteUseCase.execute(state.moneyAccount, markAsFavorite)
         }
     }
 
@@ -59,9 +76,10 @@ class MoneyAccountDetailsActionExecutor @Inject constructor(
         )
         val effect = MoneyAccountDetailsEffect.DetailsFormatted(
             cells = cells,
+            moneyAccount = moneyAccount,
+            formattedBalance = formattedBalance,
             moneyAccountName = moneyAccount.name,
-            isFavorite = moneyAccount.isFavorite,
-            formattedBalance = formattedBalance
+            isFavorite = moneyAccount.isFavorite
         )
         return flowOf(effect)
     }

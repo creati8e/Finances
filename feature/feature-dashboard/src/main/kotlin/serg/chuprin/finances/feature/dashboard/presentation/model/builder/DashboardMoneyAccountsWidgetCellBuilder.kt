@@ -23,7 +23,7 @@ class DashboardMoneyAccountsWidgetCellBuilder @Inject constructor(
         }
         return DashboardWidgetCell.MoneyAccounts(
             widget = widget,
-            isExpanded = true,
+            isExpanded = false,
             cells = buildCells(widget)
         )
     }

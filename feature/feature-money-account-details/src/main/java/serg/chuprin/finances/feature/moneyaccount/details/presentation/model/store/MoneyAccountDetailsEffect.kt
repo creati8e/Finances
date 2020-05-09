@@ -1,5 +1,6 @@
 package serg.chuprin.finances.feature.moneyaccount.details.presentation.model.store
 
+import serg.chuprin.finances.core.api.domain.model.MoneyAccount
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 
 /**
@@ -11,7 +12,8 @@ sealed class MoneyAccountDetailsEffect {
         val isFavorite: Boolean,
         val cells: List<BaseCell>,
         val moneyAccountName: String,
-        val formattedBalance: String
+        val formattedBalance: String,
+        val moneyAccount: MoneyAccount
     ) : MoneyAccountDetailsEffect()
 
 }

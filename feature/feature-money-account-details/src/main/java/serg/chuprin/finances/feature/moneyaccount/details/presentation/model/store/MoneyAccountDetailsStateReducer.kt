@@ -17,6 +17,7 @@ class MoneyAccountDetailsStateReducer :
                 state.copy(
                     cells = what.cells,
                     isFavorite = what.isFavorite,
+                    moneyAccount = what.moneyAccount,
                     moneyAccountName = what.moneyAccountName,
                     moneyAccountBalance = what.formattedBalance
                 )

@@ -19,6 +19,7 @@ import serg.chuprin.finances.feature.moneyaccount.details.R
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.arguments.MoneyAccountDetailsScreenArguments
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.di.MoneyAccountDetailsComponent
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.model.store.MoneyAccountDetailsEvent
+import serg.chuprin.finances.feature.moneyaccount.details.presentation.model.store.MoneyAccountDetailsIntent
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.view.adapter.MoneyAccountDetailsTransactionsAdapter
 
 /**
@@ -54,6 +55,10 @@ class MoneyAccountDetailsFragment : BaseFragment(R.layout.fragment_money_account
 
         backButton.onClick {
             navController.navigateUp()
+        }
+
+        favoriteImageView.onClick {
+            viewModel.dispatchIntent(MoneyAccountDetailsIntent.ClickOnFavoriteIcon)
         }
 
         with(transactionsRecyclerView) {

@@ -1,9 +1,6 @@
 package serg.chuprin.finances.core.impl.data.datasource.firebase
 
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.tasks.await
@@ -27,13 +24,15 @@ internal class FirebaseMoneyAccountDataSource @Inject constructor(
     }
 
     fun createAccount(account: MoneyAccount) {
-        getCollection()
-            .document(account.id.value)
-            .set(mapper.mapToFieldsMap(account))
+        getAccountDocumentById(account.id).set(mapper.mapToFieldsMap(account))
+    }
+
+    fun updateAccount(account: MoneyAccount) {
+        getAccountDocumentById(account.id).set(mapper.mapToFieldsMap(account))
     }
 
     fun accountFlow(accountId: Id): Flow<DocumentSnapshot?> {
-        return getCollection().document(accountId.value).asFlow()
+        return getAccountDocumentById(accountId).asFlow()
     }
 
     fun userAccountsFlow(userId: Id): Flow<List<DocumentSnapshot>> {
@@ -44,6 +43,10 @@ internal class FirebaseMoneyAccountDataSource @Inject constructor(
 
     private fun getUserAccountsCollection(userId: Id): Query {
         return getCollection().whereEqualTo(FIELD_OWNER_ID, userId.value)
+    }
+
+    private fun getAccountDocumentById(accountId: Id): DocumentReference {
+        return getCollection().document(accountId.value)
     }
 
     private fun getCollection(): CollectionReference {
