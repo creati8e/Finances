@@ -31,10 +31,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@android:id/home"
+        android:id="@+id/backButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_selection_rounded_transparent"
+        android:background="@drawable/bg_selection_borderless"
         android:clickable="true"
         android:contentDescription="@null"
         android:focusable="true"
@@ -49,7 +49,7 @@
         android:id="@+id/favoriteImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_selection_rounded_transparent"
+        android:background="@drawable/bg_selection_borderless"
         android:clickable="true"
         android:contentDescription="@null"
         android:focusable="true"

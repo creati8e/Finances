@@ -16,7 +16,7 @@
     <ConstraintSet android:id="@+id/expanded">
 
         <Constraint
-            android:id="@android:id/home"
+            android:id="@+id/backButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:elevation="0dp"
@@ -72,7 +72,7 @@
     <ConstraintSet android:id="@+id/collapsed">
 
         <Constraint
-            android:id="@android:id/home"
+            android:id="@+id/backButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:elevation="@dimen/elevation"
@@ -107,7 +107,7 @@
             app:layout_constraintBottom_toTopOf="@id/balanceTextView"
             app:layout_constraintEnd_toStartOf="@id/favoriteImageView"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@android:id/home"
+            app:layout_constraintStart_toEndOf="@+id/backButton"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed" />
 
@@ -123,7 +123,7 @@
             app:layout_constraintBottom_toBottomOf="@id/fakeAppBarLayout"
             app:layout_constraintEnd_toStartOf="@id/favoriteImageView"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@android:id/home"
+            app:layout_constraintStart_toEndOf="@+id/backButton"
             app:layout_constraintTop_toBottomOf="@id/accountNameTextView" />
 
     </ConstraintSet>
