@@ -23,7 +23,9 @@ jobs:
           with:
             java-version: 1.8
         - name: Unit tests
-          run: ./gradlew testDevUnitTest --stacktrace
+          run: |
+              sudo chmod +x ./gradlew
+              ./gradlew testDevUnitTest --stacktrace
 
    apk:
        name: Generate APK
@@ -36,7 +38,9 @@ jobs:
            with:
              java-version: 1.8
          - name: Build dev APK
-           run: ./gradlew assembleDev --stacktrace
+           run: |
+              sudo chmod +x ./gradlew
+              ./gradlew assembleDev --stacktrace
          - name: Upload APK
            uses: actions/upload-artifact@v2
            with:
