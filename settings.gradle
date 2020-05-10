@@ -21,5 +21,6 @@ include ':feature:feature-transaction'
 include ':feature:feature-authorization'
 include ':feature:feature-money-accounts'
 include ':feature:feature-money-account-details'
+include ':feature:feature-money-account-creation'
 
 // endregion
