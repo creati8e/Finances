@@ -30,8 +30,8 @@ fun RecyclerViewAdapterContext.setupRecentTransactionsBinding() {
                 addItemDecoration(
                     CellDividerDecoration(
                         context = context,
-                        marginEndDp = 8,
-                        marginStartDp = 8,
+                        marginEndDp = -8,
+                        marginStartDp = 36,
                         dividerAdapter = recentTransactionsAdapter
                     )
                 )

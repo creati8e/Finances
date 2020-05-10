@@ -69,7 +69,7 @@ class MoneyAccountDetailsFragment : BaseFragment(R.layout.fragment_money_account
                     requireContext(),
                     cellsAdapter,
                     marginEndDp = -8,
-                    marginStartDp = 8
+                    marginStartDp = 36
                 )
             )
         }
