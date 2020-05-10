@@ -3,11 +3,11 @@ package serg.chuprin.finances.feature.moneyaccounts.presentation.view
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.transition.doOnEnd
 import androidx.core.view.doOnPreDraw
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_money_accounts_list.*
+import serg.chuprin.finances.core.api.presentation.extensions.setupToolbar
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
@@ -65,9 +65,8 @@ class MoneyAccountsListFragment : BaseFragment(R.layout.fragment_money_accounts_
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (requireActivity() as AppCompatActivity).apply {
-            setSupportActionBar(toolbar)
-            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        setupToolbar(toolbar) {
+            setDisplayHomeAsUpEnabled(true)
         }
 
         accountCreationFab.onClick {
@@ -88,11 +87,9 @@ class MoneyAccountsListFragment : BaseFragment(R.layout.fragment_money_accounts_
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        (requireActivity() as AppCompatActivity).apply {
-            setSupportActionBar(null)
-        }
+    override fun onDestroy() {
+        super.onDestroy()
+        setupToolbar(null)
     }
 
     private fun handleEvent(event: MoneyAccountsListEvent) {
