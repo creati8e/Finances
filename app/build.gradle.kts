@@ -27,12 +27,7 @@ android {
             applicationIdSuffix = ".debug"
             signingConfig = signingConfigs.getByName(AppConfig.BuildTypes.DEBUG.name)
         }
-        maybeCreate(AppConfig.BuildTypes.RELEASE.name).apply {
-            setProperty(
-                "archivesBaseName",
-                "${AppConfig.APPLICATION_ID}_${AppConfig.VERSION_NAME}_${AppConfig.VERSION_CODE}"
-            )
-        }
+        maybeCreate(AppConfig.BuildTypes.RELEASE.name)
     }
 }
 
