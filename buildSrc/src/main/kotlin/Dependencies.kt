@@ -95,7 +95,7 @@ object Libraries {
 
     object Coroutines {
 
-        const val VER = "1.3.5"
+        const val VER = "1.3.6"
 
         const val CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$VER"
         const val ANDROID = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$VER"
@@ -108,7 +108,7 @@ object Libraries {
 
         const val COMPILER = "$ARTIFACT:dagger-compiler:$VER"
 
-        val LIBRARY = "$ARTIFACT:dagger:$VER"
+        const val LIBRARY = "$ARTIFACT:dagger:$VER"
         val DEPENDENCIES = listOf("$ARTIFACT:dagger:$VER")
 
     }
@@ -133,7 +133,7 @@ object Libraries {
         private const val JUNIT_VER = "5.6.1"
         private const val SPEK_VER = "2.0.10"
 
-        const val MOCKK = "io.mockk:mockk:1.10.0"
+        const val MOCKK = "io.mockk:mockk:1.9.3"
         const val STRIKT = "io.strikt:strikt-core:0.26.0"
         const val ASSERTIONS = "org.jetbrains.kotlin:kotlin-test:$KOTLIN_VER"
         const val SPEK_JVM = "org.spekframework.spek2:spek-dsl-jvm:$SPEK_VER"
