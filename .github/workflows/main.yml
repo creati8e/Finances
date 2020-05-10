@@ -26,7 +26,9 @@ jobs:
       with:
           java-version: 1.8
     - name: Build with Gradle
-      run: ./gradlew assembleDev
+      run: |
+           sudo chmod +x ./gradlew
+            ./gradlew assembleDev
       
     - name: Run unit tests
       run: ./gradlew testDevUnitTest
