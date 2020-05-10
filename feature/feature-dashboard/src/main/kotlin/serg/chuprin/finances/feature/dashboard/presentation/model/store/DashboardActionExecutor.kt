@@ -60,11 +60,22 @@ class DashboardActionExecutor @Inject constructor(
                     DashboardIntent.ClickOnMoneyAccountsListButton -> {
                         handleClickOnMoneyAccountsListButtonIntent(eventConsumer)
                     }
+                    DashboardIntent.ClickOnCreateMoneyAccountButton -> {
+                        handleClickOnCreateMoneyAccountButtonIntent(eventConsumer)
+                    }
                 }
             }
             is DashboardAction.FormatDashboard -> {
                 handleFormatDashboardAction(action, state)
             }
+        }
+    }
+
+    private fun handleClickOnCreateMoneyAccountButtonIntent(
+        eventConsumer: Consumer<DashboardEvent>
+    ): Flow<DashboardEffect> {
+        return emptyFlowAction {
+            eventConsumer(DashboardEvent.NavigateToMoneyAccountCreationScreen)
         }
     }
 

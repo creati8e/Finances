@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="money_account_creation_toolbar_title">Create account</string>
+    <string name="money_account_creation_menu_create">Create</string>
+    <string name="money_account_creation_hint_name">Name</string>
+    <string name="money_account_creation_hint_initial_balance">Initial balance</string>
+
+</resources>

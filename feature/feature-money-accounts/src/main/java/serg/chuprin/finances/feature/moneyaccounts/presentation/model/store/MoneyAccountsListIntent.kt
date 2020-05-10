@@ -11,4 +11,6 @@ sealed class MoneyAccountsListIntent {
         val cell: MoneyAccountCell
     ) : MoneyAccountsListIntent()
 
+    object ClickOnMoneyAccountCreationButton : MoneyAccountsListIntent()
+
 }

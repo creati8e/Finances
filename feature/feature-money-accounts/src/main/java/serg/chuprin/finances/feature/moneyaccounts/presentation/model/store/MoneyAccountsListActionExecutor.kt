@@ -37,8 +37,19 @@ class MoneyAccountsListActionExecutor @Inject constructor(
                     is MoneyAccountsListIntent.ClickOnMoneyAccount -> {
                         handleClickOnMoneyAccountIntent(intent, eventConsumer)
                     }
+                    MoneyAccountsListIntent.ClickOnMoneyAccountCreationButton -> {
+                        handleClickOnMoneyAccountCreationButtonIntent(eventConsumer)
+                    }
                 }
             }
+        }
+    }
+
+    private fun handleClickOnMoneyAccountCreationButtonIntent(
+        eventConsumer: Consumer<MoneyAccountsListEvent>
+    ): Flow<MoneyAccountsListEffect> {
+        return emptyFlowAction {
+            eventConsumer(MoneyAccountsListEvent.NavigateToMoneyAccountCreationScreen)
         }
     }
 

@@ -3,6 +3,7 @@ package serg.chuprin.finances.app.di.navigation
 import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.fragment.FragmentNavigator
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.Module
 import dagger.Provides
 import serg.chuprin.finances.app.AuthorizedGraphDirections
@@ -15,8 +16,10 @@ import serg.chuprin.finances.core.api.presentation.navigation.AuthorizationNavig
 import serg.chuprin.finances.core.api.presentation.navigation.DashboardNavigation
 import serg.chuprin.finances.core.api.presentation.navigation.MoneyAccountsListNavigation
 import serg.chuprin.finances.core.api.presentation.navigation.OnboardingNavigation
+import serg.chuprin.finances.feature.dashboard.presentation.view.DashboardFragmentDirections
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.arguments.MoneyAccountDetailsScreenArguments
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.view.MoneyAccountDetailsFragment
+import serg.chuprin.finances.feature.moneyaccounts.presentation.view.MoneyAccountsListFragmentDirections
 
 /**
  * Created by Sergey Chuprin on 03.04.2020.
@@ -28,6 +31,18 @@ object NavigationModule : CoreNavigationProvider {
     override val dashboardNavigation: DashboardNavigation
         get() {
             return object : DashboardNavigation {
+
+                override fun navigateToMoneyAccountCreation(
+                    navController: NavController,
+                    vararg sharedElementView: View
+                ) {
+                    DashboardFragmentDirections.navigateFromDashboardToMoneyAccountCreation().run {
+                        navController.navigate(
+                            this,
+                            buildExtrasForSharedElements(sharedElementView)
+                        )
+                    }
+                }
 
                 override fun navigateToMoneyAccountsList(
                     navController: NavController,
@@ -102,6 +117,19 @@ object NavigationModule : CoreNavigationProvider {
     override val moneyAccountsListNavigation: MoneyAccountsListNavigation
         get() {
             return object : MoneyAccountsListNavigation {
+
+                override fun navigateToMoneyAccountCreation(
+                    navController: NavController,
+                    vararg sharedElementView: FloatingActionButton
+                ) {
+                    MoneyAccountsListFragmentDirections
+                        .navigateFromMoneyAccountsListToMoneyAccountCreation().run {
+                            navController.navigate(
+                                this,
+                                buildExtrasForSharedElements(sharedElementView)
+                            )
+                        }
+                }
 
                 override fun navigateToMoneyAccountDetails(
                     navController: NavController,

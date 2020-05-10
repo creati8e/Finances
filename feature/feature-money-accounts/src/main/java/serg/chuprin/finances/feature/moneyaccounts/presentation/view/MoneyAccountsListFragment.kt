@@ -16,6 +16,7 @@ import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter
 import serg.chuprin.finances.core.api.presentation.view.adapter.diff.DiffCallback
 import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ZeroDataCellRenderer
+import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
 import serg.chuprin.finances.core.api.presentation.view.setEnterSharedElementTransition
 import serg.chuprin.finances.feature.moneyaccounts.R
 import serg.chuprin.finances.feature.moneyaccounts.di.MoneyAccountsListComponent
@@ -56,7 +57,7 @@ class MoneyAccountsListFragment : BaseFragment(R.layout.fragment_money_accounts_
         super.onCreate(savedInstanceState)
         setEnterSharedElementTransition {
             doOnEnd {
-                accountCreationFab?.show()
+//                accountCreationFab?.show()
             }
         }
     }
@@ -67,6 +68,10 @@ class MoneyAccountsListFragment : BaseFragment(R.layout.fragment_money_accounts_
         (requireActivity() as AppCompatActivity).apply {
             setSupportActionBar(toolbar)
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        }
+
+        accountCreationFab.onClick {
+            viewModel.dispatchIntent(MoneyAccountsListIntent.ClickOnMoneyAccountCreationButton)
         }
 
         postponeEnterTransition()
@@ -101,6 +106,10 @@ class MoneyAccountsListFragment : BaseFragment(R.layout.fragment_money_accounts_
                     event.transitionName,
                     sharedElementView
                 )
+            }
+            MoneyAccountsListEvent.NavigateToMoneyAccountCreationScreen -> {
+                val sharedElementView = accountCreationFab
+                navigation.navigateToMoneyAccountCreation(navController, sharedElementView)
             }
         }
     }

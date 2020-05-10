@@ -9,6 +9,8 @@ import serg.chuprin.finances.core.api.domain.model.Id
  */
 interface DashboardNavigation {
 
+    fun navigateToMoneyAccountCreation(navController: NavController, vararg sharedElementView: View)
+
     fun navigateToMoneyAccountsList(navController: NavController, vararg sharedElementView: View)
 
     fun navigateToMoneyAccountDetails(

@@ -13,4 +13,6 @@ sealed class MoneyAccountsListEvent {
         val transitionName: String
     ) : MoneyAccountsListEvent()
 
+    object NavigateToMoneyAccountCreationScreen : MoneyAccountsListEvent()
+
 }

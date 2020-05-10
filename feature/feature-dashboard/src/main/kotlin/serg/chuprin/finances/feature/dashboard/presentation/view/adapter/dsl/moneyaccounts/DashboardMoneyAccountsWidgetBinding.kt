@@ -76,6 +76,10 @@ fun RecyclerViewAdapterContext.setupMoneyAccountsWidgetBinding(
         }
         setupViews {
             setClickListener(
+                addAccountButton,
+                { viewModel.dispatchIntent(DashboardIntent.ClickOnCreateMoneyAccountButton) }
+            )
+            setClickListener(
                 showAllAccountsButton,
                 { viewModel.dispatchIntent(DashboardIntent.ClickOnMoneyAccountsListButton) }
             )

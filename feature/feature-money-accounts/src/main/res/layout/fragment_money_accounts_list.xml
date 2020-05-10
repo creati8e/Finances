@@ -37,8 +37,7 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
         android:src="@drawable/ic_add"
-        android:visibility="invisible"
-        app:backgroundTint="?colorAccent"
-        tools:visibility="visible" />
+        android:transitionName="@string/transition_money_account_creation"
+        app:backgroundTint="?colorAccent" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

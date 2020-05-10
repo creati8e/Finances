@@ -19,4 +19,6 @@ sealed class DashboardEvent {
 
     object NavigateToMoneyAccountsListScreen : DashboardEvent()
 
+    object NavigateToMoneyAccountCreationScreen : DashboardEvent()
+
 }
