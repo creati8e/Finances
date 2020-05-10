@@ -2,6 +2,7 @@ package serg.chuprin.finances.core.api.presentation.view
 
 import androidx.fragment.app.Fragment
 import com.google.android.material.shape.ShapeAppearanceModel
+import com.google.android.material.transition.Hold
 import com.google.android.material.transition.MaterialContainerTransform
 import serg.chuprin.finances.core.api.presentation.view.extensions.dpToPx
 import serg.chuprin.finances.core.api.presentation.view.extensions.getAttributeColor
@@ -20,5 +21,11 @@ fun Fragment.setEnterSharedElementTransition(setup: (MaterialContainerTransform.
         fadeMode = MaterialContainerTransform.FADE_MODE_CROSS
         containerColor = context.getAttributeColor(android.R.attr.colorBackground)
         setup?.invoke(this)
+    }
+}
+
+fun Fragment.setExitSharedElementTransition() {
+    exitTransition = Hold().apply {
+        duration = SHARED_ELEMENT_TRANSITION_DURATION
     }
 }

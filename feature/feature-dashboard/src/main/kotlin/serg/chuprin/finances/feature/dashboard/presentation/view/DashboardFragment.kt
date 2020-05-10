@@ -8,7 +8,6 @@ import androidx.core.view.doOnPreDraw
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.api.load
 import coil.transform.RoundedCornersTransformation
-import com.google.android.material.transition.Hold
 import kotlinx.android.synthetic.main.cell_widget_dashboard_money_accounts.view.*
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
@@ -16,10 +15,10 @@ import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.co
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.navigation.DashboardNavigation
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
-import serg.chuprin.finances.core.api.presentation.view.SHARED_ELEMENT_TRANSITION_DURATION
 import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter
 import serg.chuprin.finances.core.api.presentation.view.extensions.getDimenDpFloat
 import serg.chuprin.finances.core.api.presentation.view.popup.menu.PopupMenuWindow
+import serg.chuprin.finances.core.api.presentation.view.setExitSharedElementTransition
 import serg.chuprin.finances.feature.dashboard.R
 import serg.chuprin.finances.feature.dashboard.presentation.di.DashboardComponent
 import serg.chuprin.finances.feature.dashboard.presentation.model.store.DashboardEvent
@@ -44,9 +43,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        exitTransition = Hold().apply {
-            duration = SHARED_ELEMENT_TRANSITION_DURATION
-        }
+        setExitSharedElementTransition()
     }
 
     override fun onAttach(context: Context) {

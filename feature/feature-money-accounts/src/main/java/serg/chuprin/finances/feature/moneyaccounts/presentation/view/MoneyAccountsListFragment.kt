@@ -3,7 +3,6 @@ package serg.chuprin.finances.feature.moneyaccounts.presentation.view
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import androidx.core.transition.doOnEnd
 import androidx.core.view.doOnPreDraw
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_money_accounts_list.*
@@ -18,6 +17,7 @@ import serg.chuprin.finances.core.api.presentation.view.adapter.diff.DiffCallbac
 import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ZeroDataCellRenderer
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
 import serg.chuprin.finances.core.api.presentation.view.setEnterSharedElementTransition
+import serg.chuprin.finances.core.api.presentation.view.setExitSharedElementTransition
 import serg.chuprin.finances.feature.moneyaccounts.R
 import serg.chuprin.finances.feature.moneyaccounts.di.MoneyAccountsListComponent
 import serg.chuprin.finances.feature.moneyaccounts.presentation.model.cells.MoneyAccountCell
@@ -55,11 +55,8 @@ class MoneyAccountsListFragment : BaseFragment(R.layout.fragment_money_accounts_
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setEnterSharedElementTransition {
-            doOnEnd {
-//                accountCreationFab?.show()
-            }
-        }
+        setExitSharedElementTransition()
+        setEnterSharedElementTransition()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

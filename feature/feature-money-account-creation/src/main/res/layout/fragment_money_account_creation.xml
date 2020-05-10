@@ -23,25 +23,6 @@
             tools:menu="@menu/menu_money_account_creation"
             tools:navigationIcon="@drawable/ic_close" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="72dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="36dp"
-            android:layout_marginBottom="16dp"
-            android:hint="@string/money_account_creation_hint_name"
-            app:boxBackgroundMode="none"
-            app:hintTextColor="?colorAccent">
-
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/accountNameTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="New account" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -59,6 +40,22 @@
                 style="@style/OutlineClearableTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/money_account_creation_hint_name"
+                app:hintTextColor="?colorAccent">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/accountNameTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="New account" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/OutlineClearableTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:hint="@string/money_account_creation_hint_initial_balance"
                 app:hintTextColor="?colorAccent">
 
