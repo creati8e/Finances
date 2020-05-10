@@ -1,5 +1,6 @@
 package serg.chuprin.finances.core.api.presentation.view.adapter.renderer
 
+import android.content.res.ColorStateList
 import kotlinx.android.synthetic.main.cell_transaction.*
 import serg.chuprin.adapter.ContainerHolder
 import serg.chuprin.adapter.ContainerRenderer
@@ -21,6 +22,7 @@ class TransactionCellRenderer : ContainerRenderer<TransactionCell>() {
             amountTextView.isActivated = model.isIncome
             subcategoryTextView.text = model.subcategoryName
             parentCategoryTextView.text = model.parentCategoryName
+            transactionColorDot.imageTintList = ColorStateList.valueOf(model.color)
             subcategoryTextView.makeVisibleOrGone(model.subcategoryName.isNotEmpty())
         }
     }

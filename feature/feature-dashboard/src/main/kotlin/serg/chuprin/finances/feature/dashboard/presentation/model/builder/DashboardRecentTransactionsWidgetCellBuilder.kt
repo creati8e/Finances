@@ -4,9 +4,10 @@ import serg.chuprin.finances.core.api.domain.model.DashboardWidget
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
+import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
+import serg.chuprin.finances.core.api.presentation.formatter.CategoryColorFormatter
 import serg.chuprin.finances.core.api.presentation.formatter.DateTimeFormatter
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
-import serg.chuprin.finances.core.api.presentation.model.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.transactions.DashboardRecentTransactionsZeroDataCell
@@ -19,9 +20,10 @@ import serg.chuprin.finances.core.api.R as CoreR
  * Created by Sergey Chuprin on 20.04.2020.
  */
 class DashboardRecentTransactionsWidgetCellBuilder @Inject constructor(
-    private val dateTimeFormatter: DateTimeFormatter,
     private val resourceManger: ResourceManger,
-    private val amountFormatter: AmountFormatter
+    private val amountFormatter: AmountFormatter,
+    private val dateTimeFormatter: DateTimeFormatter,
+    private val categoryColorFormatter: CategoryColorFormatter
 ) : DashboardWidgetCellBuilder {
 
     override fun build(widget: DashboardWidget): DashboardWidgetCell? {
@@ -57,6 +59,7 @@ class DashboardRecentTransactionsWidgetCellBuilder @Inject constructor(
                 isIncome = transaction.isIncome,
                 subcategoryName = subcategoryName,
                 parentCategoryName = parentCategoryName,
+                color = categoryColorFormatter.format(categoryWithParent?.category),
                 formattedDate = dateTimeFormatter.formatForTransaction(transaction.dateTime)
             )
         }

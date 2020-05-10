@@ -6,7 +6,7 @@ import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.api.domain.service.MoneyAccountService
 import serg.chuprin.finances.core.api.presentation.builder.TransitionNameBuilder
-import serg.chuprin.finances.core.api.presentation.model.formatter.AmountFormatter
+import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.navigation.MoneyAccountsListNavigation
 
 /**

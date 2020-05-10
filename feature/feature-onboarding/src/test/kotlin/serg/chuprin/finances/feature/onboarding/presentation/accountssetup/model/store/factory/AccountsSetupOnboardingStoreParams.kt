@@ -1,7 +1,7 @@
 package serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.factory
 
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
-import serg.chuprin.finances.core.api.presentation.model.formatter.AmountFormatter
+import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
 import serg.chuprin.finances.core.test.utils.TestStateStore

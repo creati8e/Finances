@@ -1,7 +1,7 @@
 package serg.chuprin.finances.core.impl.presentation.model.formatter
 
 import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
-import serg.chuprin.finances.core.api.presentation.model.formatter.AmountFormatter
+import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import java.math.BigDecimal
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols

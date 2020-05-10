@@ -1,4 +1,4 @@
-package serg.chuprin.finances.core.api.presentation.model.formatter
+package serg.chuprin.finances.core.api.presentation.formatter
 
 import java.math.BigDecimal
 import java.util.*

@@ -6,9 +6,10 @@ import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
 import serg.chuprin.finances.core.api.domain.service.MoneyAccountService
 import serg.chuprin.finances.core.api.domain.service.TransactionCategoryRetrieverService
 import serg.chuprin.finances.core.api.domain.usecase.MarkMoneyAccountAsFavoriteUseCase
+import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
+import serg.chuprin.finances.core.api.presentation.formatter.CategoryColorFormatter
 import serg.chuprin.finances.core.api.presentation.formatter.DateTimeFormatter
 import serg.chuprin.finances.core.api.presentation.formatter.TransactionCategoryWithParentFormatter
-import serg.chuprin.finances.core.api.presentation.model.formatter.AmountFormatter
 
 /**
  * Created by Sergey Chuprin on 07.05.2020.
@@ -24,6 +25,7 @@ interface MoneyAccountDetailsDependencies {
 
     val amountFormatter: AmountFormatter
     val dateTimeFormatter: DateTimeFormatter
+    val categoryColorFormatter: CategoryColorFormatter
     val transactionCategoryWithParentFormatter: TransactionCategoryWithParentFormatter
 }
 

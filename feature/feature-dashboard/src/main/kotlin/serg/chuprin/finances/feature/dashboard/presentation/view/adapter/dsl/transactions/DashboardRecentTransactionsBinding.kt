@@ -1,5 +1,6 @@
 package serg.chuprin.finances.feature.dashboard.presentation.view.adapter.dsl.transactions
 
+import android.content.res.ColorStateList
 import kotlinx.android.synthetic.main.cell_dashboard_transaction.*
 import kotlinx.android.synthetic.main.cell_widget_dashboard_recent_transactions.*
 import serg.chuprin.finances.core.api.presentation.view.adapter.decoration.CellDividerDecoration
@@ -47,6 +48,7 @@ fun RecyclerViewAdapterContext.setupRecentTransactionsBinding() {
                     amountTextView.isActivated = cell.isIncome
                     subcategoryTextView.text = cell.subcategoryName
                     parentCategoryTextView.text = cell.parentCategoryName
+                    transactionColorDot.imageTintList = ColorStateList.valueOf(cell.color)
                     subcategoryTextView.makeVisibleOrGone(cell.subcategoryName.isNotEmpty())
                 }
             }

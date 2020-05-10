@@ -1,14 +1,12 @@
 package serg.chuprin.finances.feature.dashboard.presentation.model.builder
 
-import android.graphics.Color
-import androidx.annotation.ColorInt
 import androidx.annotation.StringRes
 import serg.chuprin.finances.core.api.domain.model.DashboardCategoriesWidgetPage
 import serg.chuprin.finances.core.api.domain.model.DashboardWidget
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
+import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
+import serg.chuprin.finances.core.api.presentation.formatter.CategoryColorFormatter
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
-import serg.chuprin.finances.core.api.presentation.model.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.piechart.model.PieChartDataPart
 import serg.chuprin.finances.feature.dashboard.R
@@ -28,7 +26,8 @@ import serg.chuprin.finances.core.api.R as CoreR
  */
 class DashboardCategoriesWidgetCellBuilder @Inject constructor(
     private val resourceManger: ResourceManger,
-    private val amountFormatter: AmountFormatter
+    private val amountFormatter: AmountFormatter,
+    private val categoryColorFormatter: CategoryColorFormatter
 ) : DashboardWidgetCellBuilder {
 
     override fun build(widget: DashboardWidget): DashboardWidgetCell? {
@@ -81,7 +80,7 @@ class DashboardCategoriesWidgetCellBuilder @Inject constructor(
                 DashboardCategoryChipCell(
                     chipText = chipText,
                     category = category,
-                    colorInt = getCategoryColor(category)
+                    colorInt = categoryColorFormatter.format(category)
                 )
             }.apply {
                 if (page.otherAmount != BigDecimal.ZERO) {
@@ -115,7 +114,7 @@ class DashboardCategoriesWidgetCellBuilder @Inject constructor(
         return page.categoryAmounts.mapTo(mutableListOf()) { (category, amount) ->
             PieChartDataPart(
                 value = amount.toFloat(),
-                colorInt = getCategoryColor(category)
+                colorInt = categoryColorFormatter.format(category)
             )
         }.apply {
             if (page.otherAmount != BigDecimal.ZERO) {
@@ -127,12 +126,6 @@ class DashboardCategoriesWidgetCellBuilder @Inject constructor(
                 )
             }
         }
-    }
-
-    @ColorInt
-    private fun getCategoryColor(category: TransactionCategory?): Int {
-        return runCatching { category?.colorHex?.let(Color::parseColor) }.getOrNull()
-            ?: resourceManger.getColor(CoreR.color.colorNoCategory)
     }
 
     private fun getString(@StringRes stringRes: Int): String {

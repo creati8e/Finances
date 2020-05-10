@@ -1,5 +1,6 @@
 package serg.chuprin.finances.core.api.presentation.model.cells
 
+import androidx.annotation.ColorInt
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 
@@ -8,6 +9,8 @@ import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
  */
 data class TransactionCell(
     val amount: String,
+    @ColorInt
+    val color: Int,
     val time: String,
     val isIncome: Boolean,
     val subcategoryName: String,
