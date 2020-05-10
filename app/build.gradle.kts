@@ -5,9 +5,7 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("kotlin-android-extensions")
-    if (System.getenv("CI") == null) {
-        id("ru.cleverpumpkin.badge")
-    }
+    id("ru.cleverpumpkin.badge")
     id("ru.cleverpumpkin.proguard-dictionaries-generator")
     id("androidx.navigation.safeargs")
 }
