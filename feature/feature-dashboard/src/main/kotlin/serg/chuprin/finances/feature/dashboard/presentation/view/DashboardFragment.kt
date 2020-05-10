@@ -11,11 +11,13 @@ import coil.transform.RoundedCornersTransformation
 import com.google.android.material.transition.Hold
 import kotlinx.android.synthetic.main.cell_widget_dashboard_money_accounts.view.*
 import kotlinx.android.synthetic.main.fragment_dashboard.*
+import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.navigation.DashboardNavigation
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.SHARED_ELEMENT_TRANSITION_DURATION
+import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter
 import serg.chuprin.finances.core.api.presentation.view.extensions.getDimenDpFloat
 import serg.chuprin.finances.core.api.presentation.view.popup.menu.PopupMenuWindow
 import serg.chuprin.finances.feature.dashboard.R
@@ -38,7 +40,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 
     private val component by component { DashboardComponent.get() }
 
-    private val cellsAdapter by lazy { recyclerView.dashboard(viewModel) }
+    private lateinit var cellsAdapter: DiffMultiViewAdapter<BaseCell>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +56,8 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        cellsAdapter = recyclerView.dashboard(viewModel)
 
         postponeEnterTransition()
         view.doOnPreDraw { startPostponedEnterTransition() }
