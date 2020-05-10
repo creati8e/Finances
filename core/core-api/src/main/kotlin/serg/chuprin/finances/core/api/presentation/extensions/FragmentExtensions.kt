@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 /**
  * Created by Sergey Chuprin on 10.05.2020.
  */
-fun Fragment.setupToolbar(toolbar: Toolbar?, block: (ActionBar.() -> Unit)? = null) {
+fun Fragment.setupToolbar(toolbar: Toolbar, block: (ActionBar.() -> Unit)? = null) {
     (requireActivity() as AppCompatActivity).run {
         setSupportActionBar(toolbar)
         supportActionBar?.run { block?.invoke(this) }

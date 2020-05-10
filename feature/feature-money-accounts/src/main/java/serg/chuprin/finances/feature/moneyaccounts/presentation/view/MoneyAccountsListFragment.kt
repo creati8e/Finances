@@ -84,11 +84,6 @@ class MoneyAccountsListFragment : BaseFragment(R.layout.fragment_money_accounts_
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        setupToolbar(null)
-    }
-
     private fun handleEvent(event: MoneyAccountsListEvent) {
         return when (event) {
             is MoneyAccountsListEvent.NavigateToMoneyAccountDetailsScreen -> {

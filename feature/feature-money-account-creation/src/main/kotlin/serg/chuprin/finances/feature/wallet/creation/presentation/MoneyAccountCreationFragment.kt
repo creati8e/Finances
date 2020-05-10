@@ -25,9 +25,4 @@ class MoneyAccountCreationFragment : BaseFragment(R.layout.fragment_money_accoun
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        setupToolbar(null)
-    }
-
 }
