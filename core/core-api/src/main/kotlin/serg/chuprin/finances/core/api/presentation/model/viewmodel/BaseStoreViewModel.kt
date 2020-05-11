@@ -27,7 +27,7 @@ abstract class BaseStoreViewModel<INTENT> : ViewModel() {
     protected fun <E, STORE : StateStore<*, *, E>> STORE.observeEventsAsLiveData(): LiveData<E> {
         return SingleEventLiveData<E>().apply {
             viewModelScope.launch {
-                eventsFlow().collect { event ->
+                eventsFlow.collect { event ->
                     value = event
                 }
             }
@@ -37,7 +37,7 @@ abstract class BaseStoreViewModel<INTENT> : ViewModel() {
     protected inline fun <E, STORE : StateStore<*, *, E>, reified T> STORE.observeTypedEventsAsLiveData(): LiveData<T> {
         return SingleEventLiveData<T>().apply {
             viewModelScope.launch {
-                eventsFlow()
+                eventsFlow
                     .filter { it is T }
                     .collect { event ->
                         value = event as T
@@ -50,7 +50,7 @@ abstract class BaseStoreViewModel<INTENT> : ViewModel() {
         picker: (STATE) -> PROPERTY
     ): LiveData<PROPERTY> {
         return liveData {
-            stateFlow()
+            stateFlow
                 .map { state -> picker(state) }
                 .distinctUntilChanged()
                 .collect { property ->
@@ -61,7 +61,7 @@ abstract class BaseStoreViewModel<INTENT> : ViewModel() {
 
     protected fun <STATE, STORE : StateStore<*, STATE, *>> STORE.observeStateAsLiveData(): LiveData<STATE> {
         return liveData {
-            stateFlow()
+            stateFlow
                 .distinctUntilChanged()
                 .collect { state ->
                     emit(state)

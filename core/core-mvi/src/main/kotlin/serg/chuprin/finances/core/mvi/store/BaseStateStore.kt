@@ -1,7 +1,10 @@
 package serg.chuprin.finances.core.mvi.store
 
 import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.*
+import kotlinx.coroutines.channels.BroadcastChannel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.SendChannel
+import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.flow.*
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.bootstrapper.StoreBootstrapper
@@ -46,7 +49,7 @@ open class BaseStateStore<I, SE, A, S, E>(
      * Serialization is required to guarantee thread-safe actions publishing.
      */
     protected val actionsChannel = BroadcastChannel<A>(Channel.BUFFERED)
-    protected val statesChannel = ConflatedBroadcastChannel(initialState)
+    protected val statesChannel = MutableStateFlow(initialState)
 
     private val eventsChannel = BroadcastChannel<E>(Channel.BUFFERED)
 
@@ -64,9 +67,11 @@ open class BaseStateStore<I, SE, A, S, E>(
         }
     }
 
-    override fun stateFlow(): Flow<S> = statesChannel.asFlow()
+    override val stateFlow: Flow<S>
+        get() = statesChannel
 
-    override fun eventsFlow(): Flow<E> = eventsChannel.asFlow()
+    override val eventsFlow: Flow<E>
+        get() = eventsChannel.asFlow()
 
     override fun dispatch(intent: I) = actionsChannel.sendBlocking(intentToActionMapper(intent))
 
@@ -114,7 +119,7 @@ open class BaseStateStore<I, SE, A, S, E>(
                 .flowOn(reducerDispatcher)
                 .collect { newState ->
                     ensureActive()
-                    statesChannel.send(newState)
+                    statesChannel.value = newState
                 }
         }
     }

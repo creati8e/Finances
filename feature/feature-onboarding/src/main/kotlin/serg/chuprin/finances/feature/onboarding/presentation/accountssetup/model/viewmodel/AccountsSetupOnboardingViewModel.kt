@@ -29,7 +29,7 @@ class AccountsSetupOnboardingViewModel @Inject constructor(
      */
     val amountInputStateLiveData: LiveData<AmountInputState> =
         store
-            .stateFlow()
+            .stateFlow
             .mapNotNull { it.stepState.amountInputStateOrNull }
             .asLiveData()
 

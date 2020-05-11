@@ -20,11 +20,11 @@ interface StateStore<I, S, E> {
 
     val state: S
 
+    val stateFlow: Flow<S>
+
+    val eventsFlow: Flow<E>
+
     fun dispatch(intent: I)
-
-    fun stateFlow(): Flow<S>
-
-    fun eventsFlow(): Flow<E>
 
     /**
      * Start a store's loop.
