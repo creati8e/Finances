@@ -10,8 +10,7 @@ enum class DataPeriodType {
     YEAR;
 
     companion object {
-        val DEFAULT =
-            MONTH
+        val DEFAULT = MONTH
         val cachedValues = values().toList()
     }
 

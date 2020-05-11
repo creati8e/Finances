@@ -67,6 +67,7 @@ dependencies {
     implementation(project(":feature:feature-onboarding"))
     implementation(project(":feature:feature-authorization"))
     implementation(project(":feature:feature-money-accounts"))
+    implementation(project(":feature:feature-transactions"))
     implementation(project(":feature:feature-money-account-details"))
     implementation(project(":feature:feature-money-account-creation"))
 

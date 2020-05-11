@@ -43,6 +43,10 @@
                 android:id="@+id/navigateFromDashboardToMoneyAccountCreation"
                 app:destination="@id/moneyAccountCreationFragment" />
 
+            <action
+                android:id="@+id/navigateFromDashboardToTransactionsReport"
+                app:destination="@id/transactionsReportFragment" />
+
         </fragment>
 
         <fragment
@@ -81,10 +85,22 @@
         </fragment>
 
         <fragment
+            android:id="@+id/transactionsReportFragment"
+            android:name="serg.chuprin.finances.feature.transactions.presentation.view.TransactionsReportFragment"
+            android:label="TransactionsReportFragment"
+            tools:layout="@layout/fragment_transactions_report" />
+
+        <fragment
             android:id="@+id/moneyAccountDetailsFragment"
             android:name="serg.chuprin.finances.feature.moneyaccount.details.presentation.view.MoneyAccountDetailsFragment"
             android:label="MoneyAccountDetailsFragment"
-            tools:layout="@layout/fragment_money_account_details" />
+            tools:layout="@layout/fragment_money_account_details">
+
+            <action
+                android:id="@+id/navigateFromMoneyAccountDetailsToTransactionsReport"
+                app:destination="@id/transactionsReportFragment" />
+
+        </fragment>
 
         <fragment
             android:id="@+id/moneyAccountCreationFragment"

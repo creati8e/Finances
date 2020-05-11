@@ -16,4 +16,9 @@
         money_account_creation
     </string>
 
+    <string name="transition_transactions_report"
+        translatable="false">
+        transactions_report
+    </string>
+
 </resources>
