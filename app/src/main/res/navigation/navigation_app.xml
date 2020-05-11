@@ -88,7 +88,7 @@
 
         <fragment
             android:id="@+id/moneyAccountCreationFragment"
-            android:name="serg.chuprin.finances.feature.wallet.creation.presentation.MoneyAccountCreationFragment"
+            android:name="serg.chuprin.finances.feature.moneyaccount.creation.presentation.view.MoneyAccountCreationFragment"
             android:label="MoneyAccountCreationFragment"
             tools:layout="@layout/fragment_money_account_creation" />
 
