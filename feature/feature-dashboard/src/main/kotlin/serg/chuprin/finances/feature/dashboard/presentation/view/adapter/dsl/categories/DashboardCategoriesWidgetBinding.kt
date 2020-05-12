@@ -18,13 +18,15 @@ import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categori
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.page.DashboardCategoriesPageZeroDataCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.page.DashboardExpenseCategoriesPageCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.page.DashboardIncomeCategoriesPageCell
+import serg.chuprin.finances.feature.dashboard.presentation.model.store.DashboardIntent
+import serg.chuprin.finances.feature.dashboard.presentation.model.viewmodel.DashboardViewModel
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.dsl.categories.diff.DashboardCategoryChipCellsDiffCallback
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.dsl.categories.diff.DashboardCategoryPagesDiffCallback
 
 /**
  * Created by Sergey Chuprin on 29.04.2020.
  */
-fun RecyclerViewAdapterContext.setupCategoriesWidgetBinding() {
+fun RecyclerViewAdapterContext.setupCategoriesWidgetBinding(viewModel: DashboardViewModel) {
     add<DashboardWidgetCell.Categories>(R.layout.cell_widget_dashboard_categories) {
 
         bind { cell, payloads ->
@@ -43,17 +45,20 @@ fun RecyclerViewAdapterContext.setupCategoriesWidgetBinding() {
                 pageIndicator.attachToRecyclerView(categoryPagesRecyclerView)
             }
             bindPage<DashboardIncomeCategoriesPageCell>(
-                R.layout.cell_dashboard_income_categories_page
+                R.layout.cell_dashboard_income_categories_page,
+                viewModel
             )
             bindPage<DashboardExpenseCategoriesPageCell>(
-                R.layout.cell_dashboard_expense_categories_page
+                R.layout.cell_dashboard_expense_categories_page,
+                viewModel
             )
         }
     }
 }
 
 private inline fun <reified T : DashboardCategoriesPageCell> RecyclerViewNestedAdapterContext.bindPage(
-    @LayoutRes pageLayoutRes: Int
+    @LayoutRes pageLayoutRes: Int,
+    viewModel: DashboardViewModel
 ) {
     add<T>(pageLayoutRes) {
 
@@ -83,9 +88,22 @@ private inline fun <reified T : DashboardCategoriesPageCell> RecyclerViewNestedA
             add<DashboardCategoryChipCell>(R.layout.cell_dashboard_category) {
                 bind { cell, payloads ->
                     if (payloads.isEmpty() || DashboardCategoryChipCellChangedPayload in payloads) {
-                        categoryChip.text = cell.chipText
-                        categoryChip.chipBackgroundColor = ColorStateList.valueOf(cell.colorInt)
+                        with(categoryChip) {
+                            text = cell.chipText
+                            tag = cell.transitionName
+                            transitionName = cell.transitionName
+                            chipBackgroundColor = ColorStateList.valueOf(cell.colorInt)
+                        }
                     }
+                }
+
+                setupViews {
+                    setClickListener(
+                        categoryChip,
+                        { cell ->
+                            viewModel.dispatchIntent(DashboardIntent.ClickOnCategory(cell))
+                        }
+                    )
                 }
             }
         }

@@ -2,6 +2,7 @@ package serg.chuprin.finances.feature.dashboard.presentation.model.store
 
 import serg.chuprin.finances.core.api.presentation.model.cells.DataPeriodTypePopupMenuCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
+import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.DashboardCategoryChipCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.moneyaccounts.DashboardMoneyAccountCell
 
 /**
@@ -21,6 +22,12 @@ sealed class DashboardIntent {
 
     object ClickOnRestoreDefaultPeriodButton : DashboardIntent()
 
+    object ClickOnCurrentPeriodIncomesButton : DashboardIntent()
+
+    object ClickOnShowMoreTransactionsButton : DashboardIntent()
+
+    object ClickOnCurrentPeriodExpensesButton : DashboardIntent()
+
     class ClickOnPeriodTypeCell(
         val periodTypeCell: DataPeriodTypePopupMenuCell
     ) : DashboardIntent()
@@ -31,6 +38,10 @@ sealed class DashboardIntent {
 
     class ClickOnMoneyAccount(
         val cell: DashboardMoneyAccountCell
+    ) : DashboardIntent()
+
+    class ClickOnCategory(
+        val cell: DashboardCategoryChipCell
     ) : DashboardIntent()
 
 }

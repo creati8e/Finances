@@ -13,6 +13,10 @@ internal class TransitionNameBuilderImpl @Inject constructor(
     private val resourceManger: ResourceManger
 ) : TransitionNameBuilder {
 
+    override fun buildForTransactionsReport(categoryId: Id?): String {
+        return "${resourceManger.getString(R.string.transition_dashboard_categories_to_transactions_report)}${categoryId?.value}"
+    }
+
     override fun buildForForMoneyAccountDetails(moneyAccountId: Id): String {
         return "${resourceManger.getString(R.string.transition_money_account)}${moneyAccountId.value}"
     }

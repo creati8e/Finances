@@ -37,6 +37,14 @@ fun RecyclerViewAdapterContext.setupHeaderWidgetBinding(viewModel: DashboardView
                 restoreDefaultPeriodButton,
                 { viewModel.dispatchIntent(DashboardIntent.ClickOnRestoreDefaultPeriodButton) }
             )
+            setClickListener(
+                expensesCardView,
+                { viewModel.dispatchIntent(DashboardIntent.ClickOnCurrentPeriodExpensesButton) }
+            )
+            setClickListener(
+                incomesCardView,
+                { viewModel.dispatchIntent(DashboardIntent.ClickOnCurrentPeriodIncomesButton) }
+            )
         }
     }
 }

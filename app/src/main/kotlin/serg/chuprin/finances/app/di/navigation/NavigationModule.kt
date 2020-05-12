@@ -3,6 +3,7 @@ package serg.chuprin.finances.app.di.navigation
 import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.fragment.FragmentNavigator
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.Module
 import dagger.Provides
@@ -16,10 +17,12 @@ import serg.chuprin.finances.core.api.presentation.navigation.AuthorizationNavig
 import serg.chuprin.finances.core.api.presentation.navigation.DashboardNavigation
 import serg.chuprin.finances.core.api.presentation.navigation.MoneyAccountsListNavigation
 import serg.chuprin.finances.core.api.presentation.navigation.OnboardingNavigation
+import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionsReportScreenArguments
 import serg.chuprin.finances.feature.dashboard.presentation.view.DashboardFragmentDirections
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.arguments.MoneyAccountDetailsScreenArguments
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.view.MoneyAccountDetailsFragment
 import serg.chuprin.finances.feature.moneyaccounts.presentation.view.MoneyAccountsListFragmentDirections
+import serg.chuprin.finances.feature.transactions.presentation.view.TransactionsReportFragment
 
 /**
  * Created by Sergey Chuprin on 03.04.2020.
@@ -31,6 +34,22 @@ object NavigationModule : CoreNavigationProvider {
     override val dashboardNavigation: DashboardNavigation
         get() {
             return object : DashboardNavigation {
+
+                override fun navigateToTransactionsReport(
+                    navController: NavController,
+                    screenArguments: TransactionsReportScreenArguments,
+                    sharedElementView: View
+                ) {
+                    val actionId = DashboardFragmentDirections
+                        .navigateFromDashboardToTransactionsReport()
+                        .actionId
+                    navController.navigate(
+                        actionId,
+                        screenArguments.toBundle<TransactionsReportFragment>(),
+                        null,
+                        sharedElementView.toNavigatorExtras()
+                    )
+                }
 
                 override fun navigateToMoneyAccountCreation(
                     navController: NavController,
@@ -148,5 +167,9 @@ object NavigationModule : CoreNavigationProvider {
 
             }
         }
+
+    private fun View.toNavigatorExtras(): FragmentNavigator.Extras {
+        return FragmentNavigatorExtras(this to this.transitionName)
+    }
 
 }

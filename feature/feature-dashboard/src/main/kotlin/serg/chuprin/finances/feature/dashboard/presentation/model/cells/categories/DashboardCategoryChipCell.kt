@@ -10,6 +10,7 @@ import serg.chuprin.finances.core.api.presentation.model.cells.DiffCell
 data class DashboardCategoryChipCell(
     val colorInt: Int,
     val chipText: String,
+    val transitionName: String,
     val category: TransactionCategory?
 ) : DiffCell<Id> {
 

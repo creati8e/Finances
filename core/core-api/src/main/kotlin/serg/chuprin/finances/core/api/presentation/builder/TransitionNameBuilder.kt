@@ -7,6 +7,8 @@ import serg.chuprin.finances.core.api.domain.model.Id
  */
 interface TransitionNameBuilder {
 
+    fun buildForTransactionsReport(categoryId: Id?): String
+
     fun buildForForMoneyAccountDetails(moneyAccountId: Id): String
 
 }

@@ -10,16 +10,27 @@ import serg.chuprin.finances.feature.dashboard.R
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.transactions.DashboardRecentTransactionsZeroDataCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.transactions.DashboardTransactionCell
+import serg.chuprin.finances.feature.dashboard.presentation.model.store.DashboardIntent
+import serg.chuprin.finances.feature.dashboard.presentation.model.viewmodel.DashboardViewModel
 
 /**
  * Created by Sergey Chuprin on 29.04.2020.
  */
-fun RecyclerViewAdapterContext.setupRecentTransactionsBinding() {
+fun RecyclerViewAdapterContext.setupRecentTransactionsBinding(
+    viewModel: DashboardViewModel
+) {
     add<DashboardWidgetCell.RecentTransactions>(R.layout.cell_widget_dashboard_recent_transactions) {
 
         bind { cell, _ ->
             setNestedCells(cell.cells)
             showMoreButton.makeVisibleOrGone(cell.showMoreTransactionsButtonIsVisible)
+        }
+
+        setupViews {
+            setClickListener(
+                showMoreButton,
+                { viewModel.dispatchIntent(DashboardIntent.ClickOnShowMoreTransactionsButton) }
+            )
         }
 
         val recentTransactionsAdapter = DashboardRecentTransactionsAdapter()

@@ -16,9 +16,9 @@ import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.dsl.tra
  */
 fun RecyclerView.dashboard(viewModel: DashboardViewModel): DiffMultiViewAdapter<BaseCell> {
     return setup(DashboardAdapterDiffCallback()) {
-        setupCategoriesWidgetBinding()
-        setupRecentTransactionsBinding()
         setupHeaderWidgetBinding(viewModel)
+        setupCategoriesWidgetBinding(viewModel)
+        setupRecentTransactionsBinding(viewModel)
         setupMoneyAccountsWidgetBinding(viewModel)
     }
 }

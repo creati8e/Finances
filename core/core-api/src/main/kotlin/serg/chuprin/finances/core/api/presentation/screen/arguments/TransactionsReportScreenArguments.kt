@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.transactions.presentation.arguments
+package serg.chuprin.finances.core.api.presentation.screen.arguments
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
@@ -10,8 +10,9 @@ import serg.chuprin.finances.core.api.presentation.model.DataPeriodUi
  * Created by Sergey Chuprin on 11.05.2020.
  */
 @Parcelize
-class TransactionsReportScreenArguments(
+data class TransactionsReportScreenArguments(
     val categoryId: Id? = null,
+    val transitionName: String,
     val dataPeriod: DataPeriodUi? = null,
     val plainTransactionType: PlainTransactionType? = null
 ) : Parcelable

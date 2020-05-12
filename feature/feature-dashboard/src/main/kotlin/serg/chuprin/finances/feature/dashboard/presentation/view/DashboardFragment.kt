@@ -108,6 +108,15 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
                 val sharedElementView = recyclerView.findViewWithTag<View>(tag)
                 navigation.navigateToMoneyAccountCreation(navController, sharedElementView)
             }
+            is DashboardEvent.NavigateToTransactionsReportScreen -> {
+                val transitionName = event.arguments.transitionName
+                val sharedElementView = recyclerView.findViewWithTag<View>(transitionName)
+                navigation.navigateToTransactionsReport(
+                    navController,
+                    event.arguments,
+                    sharedElementView
+                )
+            }
         }
     }
 
