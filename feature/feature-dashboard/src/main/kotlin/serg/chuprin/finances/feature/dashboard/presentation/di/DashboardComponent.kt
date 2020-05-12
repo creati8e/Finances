@@ -14,9 +14,7 @@ import serg.chuprin.finances.injector.Injector
  */
 @ScreenScope
 @Component(
-    modules = [
-        DashboardModule::class
-    ],
+    modules = [DashboardModule::class],
     dependencies = [DashboardDependencies::class]
 )
 interface DashboardComponent :

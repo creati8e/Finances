@@ -9,8 +9,7 @@ import serg.chuprin.finances.injector.Injector
 /**
  * Created by Sergey Chuprin on 04.05.2020.
  */
-@ScreenScope
-@Component(dependencies = [AuthorizedGraphLauncherDependencies::class])
+@[ScreenScope Component(dependencies = [AuthorizedGraphLauncherDependencies::class])]
 interface AuthorizedGraphComponent : ViewModelComponent<AuthorizationGraphLauncherViewModel> {
 
     companion object {

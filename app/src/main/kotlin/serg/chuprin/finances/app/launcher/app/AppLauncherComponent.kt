@@ -9,8 +9,7 @@ import serg.chuprin.finances.injector.Injector
 /**
  * Created by Sergey Chuprin on 02.04.2020.
  */
-@ScreenScope
-@Component(dependencies = [AppLauncherDependencies::class])
+@[ScreenScope Component(dependencies = [AppLauncherDependencies::class])]
 interface AppLauncherComponent : ViewModelComponent<AppLauncherViewModel> {
 
     companion object {

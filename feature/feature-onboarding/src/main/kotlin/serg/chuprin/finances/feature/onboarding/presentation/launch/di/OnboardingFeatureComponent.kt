@@ -14,8 +14,7 @@ import serg.chuprin.finances.injector.Injector
 /**
  * Created by Sergey Chuprin on 09.04.2020.
  */
-@FeatureScope
-@Component(dependencies = [OnboardingFeatureDependencies::class])
+@[FeatureScope Component(dependencies = [OnboardingFeatureDependencies::class])]
 interface OnboardingFeatureComponent :
     ViewModelComponent<OnboardingLaunchViewModel>,
     InjectableComponent<OnboardingLaunchFragment> {

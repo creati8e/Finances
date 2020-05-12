@@ -12,8 +12,7 @@ import serg.chuprin.finances.injector.Injector
 /**
  * Created by Sergey Chuprin on 03.04.2020.
  */
-@ScreenScope
-@Component(dependencies = [AuthorizationDependencies::class])
+@[ScreenScope Component(dependencies = [AuthorizationDependencies::class])]
 interface AuthorizationComponent :
     ViewModelComponent<AuthorizationViewModel>,
     InjectableComponent<AuthorizationFragment> {
