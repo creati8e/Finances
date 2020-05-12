@@ -15,6 +15,8 @@ import serg.chuprin.finances.feature.moneyaccounts.list.dependencies.DaggerMoney
 import serg.chuprin.finances.feature.moneyaccounts.list.dependencies.MoneyAccountsListDependencies
 import serg.chuprin.finances.feature.onboarding.dependencies.DaggerOnboardingFeatureDependenciesComponent
 import serg.chuprin.finances.feature.onboarding.dependencies.OnboardingFeatureDependencies
+import serg.chuprin.finances.feature.transactions.report.dependencies.DaggerTransactionsReportDependenciesComponent
+import serg.chuprin.finances.feature.transactions.report.dependencies.TransactionsReportDependencies
 
 /**
  * Created by Sergey Chuprin on 03.04.2020.
@@ -65,6 +67,13 @@ object Injector {
 
     fun getMoneyAccountDetailsDependencies(): MoneyAccountDetailsDependencies {
         return DaggerMoneyAccountDetailsDependenciesComponent
+            .builder()
+            .coreDependenciesProvider(CoreDependenciesComponent.get())
+            .build()
+    }
+
+    fun getTransactionsReportDependencies(): TransactionsReportDependencies {
+        return DaggerTransactionsReportDependenciesComponent
             .builder()
             .coreDependenciesProvider(CoreDependenciesComponent.get())
             .build()
