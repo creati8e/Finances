@@ -22,6 +22,7 @@ jobs:
           uses: actions/setup-java@v1
           with:
             java-version: 1.8
+
         - name: Unit tests
           run: |
               sudo chmod +x ./gradlew
@@ -37,12 +38,22 @@ jobs:
            uses: actions/setup-java@v1
            with:
              java-version: 1.8
+
          - name: Build dev APK
            run: |
               sudo chmod +x ./gradlew
               ./gradlew assembleDev --stacktrace
+
+         - uses: r0adkll/sign-android-release@v1
+           with:
+             releaseDirectory: app/build/outputs/apk/dev
+             signingKeyBase64: ${{ secrets.DEBUG_KEYSTORE }}
+             alias: ${{ secrets.DEBUG_KEYSTORE_ALIAS }}
+             keyStorePassword: ${{ secrets.DEBUG_KEYSTORE_PASSWORD }}
+             keyPassword: ${{ secrets.DEBUG_KEYSTORE_PASSWORD }}
+
          - name: Upload APK
            uses: actions/upload-artifact@v2
            with:
              name: app
-             path: app/build/outputs/apk/dev/app-dev.apk
+             path: ${{ steps.sign-app.outputs.signedReleaseFile }}
