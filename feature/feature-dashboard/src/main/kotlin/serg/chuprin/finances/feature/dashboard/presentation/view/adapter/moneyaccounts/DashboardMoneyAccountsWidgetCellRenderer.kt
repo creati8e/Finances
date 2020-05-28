@@ -1,6 +1,8 @@
 package serg.chuprin.finances.feature.dashboard.presentation.view.adapter.moneyaccounts
 
+import android.os.Parcelable
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.cell_widget_dashboard_money_accounts.*
 import serg.chuprin.adapter.Click
 import serg.chuprin.adapter.ContainerHolder
@@ -26,10 +28,11 @@ class DashboardMoneyAccountsWidgetCellRenderer(
     private val clickOnShowMoneyAccountsListButton: () -> Unit,
     private val clickOnWidgetSubtitle: (adapterPosition: Int) -> Unit,
     private val clickOnMoneyAccountCell: (cell: DashboardMoneyAccountCell) -> Unit
-) :
-    ContainerRenderer<DashboardWidgetCell.MoneyAccounts>() {
+) : ContainerRenderer<DashboardWidgetCell.MoneyAccounts>() {
 
     override val type: Int = R.layout.cell_widget_dashboard_money_accounts
+
+    private var adapterState: Parcelable? = null
 
     private val animationController = DashboardMoneyAccountsWidgetAnimationController()
     private val moneyAccountCellsAdapter =
@@ -41,7 +44,7 @@ class DashboardMoneyAccountsWidgetCellRenderer(
         }
 
     override fun bindView(holder: ContainerHolder, model: DashboardWidgetCell.MoneyAccounts) {
-        moneyAccountCellsAdapter.setItems(model.cells)
+        bindMoneyAccountCells(holder, model)
         with(holder) {
             expansionArrowImageView.setImageResource(
                 if (model.isExpanded) {
@@ -69,7 +72,7 @@ class DashboardMoneyAccountsWidgetCellRenderer(
             }
         }
         if (DashboardMoneyAccountCellsChangedPayload in payloads) {
-            moneyAccountCellsAdapter.setItems(model.cells)
+            bindMoneyAccountCells(holder, model)
         }
     }
 
@@ -82,11 +85,35 @@ class DashboardMoneyAccountsWidgetCellRenderer(
             with(moneyAccountsRecyclerView) {
                 adapter = moneyAccountCellsAdapter
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+                    override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                        if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                            adapterState = recyclerView.layoutManager!!.onSaveInstanceState()
+                        }
+                    }
+
+                })
             }
             addAccountButton.onClick(clickOnCreateMoneyAccountButton)
             showAllAccountsButton.onClick(clickOnShowMoneyAccountsListButton)
             moneyAccountsSubtitleLayout.onClick { clickOnWidgetSubtitle(adapterPosition) }
         }
+    }
+
+    private fun bindMoneyAccountCells(
+        holder: ContainerHolder,
+        model: DashboardWidgetCell.MoneyAccounts
+    ) {
+        moneyAccountCellsAdapter.setItems(model.cells) {
+            if (adapterState != null) {
+                holder.moneyAccountsRecyclerView.layoutManager?.onRestoreInstanceState(adapterState)
+            }
+        }
+    }
+
+    private fun getLayoutManager(holder: ContainerHolder): LinearLayoutManager {
+        return holder.moneyAccountsRecyclerView.layoutManager as LinearLayoutManager
     }
 
     private fun handleOnMoneyAccountCellClick(adapterPosition: Int) {

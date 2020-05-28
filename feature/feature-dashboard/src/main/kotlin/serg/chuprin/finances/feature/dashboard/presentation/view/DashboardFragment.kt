@@ -54,7 +54,9 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        cellsAdapter = dashboard(viewModel)
+        if (::cellsAdapter.isInitialized.not()) {
+            cellsAdapter = dashboard(viewModel)
+        }
 
         postponeEnterTransition()
         view.doOnPreDraw { startPostponedEnterTransition() }

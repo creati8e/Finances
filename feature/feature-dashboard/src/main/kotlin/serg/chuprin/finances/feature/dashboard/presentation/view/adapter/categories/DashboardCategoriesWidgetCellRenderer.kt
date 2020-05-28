@@ -1,7 +1,9 @@
 package serg.chuprin.finances.feature.dashboard.presentation.view.adapter.categories
 
+import android.os.Parcelable
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.cell_widget_dashboard_categories.*
 import serg.chuprin.adapter.Click
 import serg.chuprin.adapter.ContainerHolder
@@ -25,6 +27,8 @@ class DashboardCategoriesWidgetCellRenderer(
 
     override val type: Int = R.layout.cell_widget_dashboard_categories
 
+    private var adapterState: Parcelable? = null
+
     private val pageCellsAdapter =
         DiffMultiViewAdapter(DashboardCategoryPagesDiffCallback()).apply {
             registerRenderer(
@@ -43,7 +47,7 @@ class DashboardCategoriesWidgetCellRenderer(
         }
 
     override fun bindView(holder: ContainerHolder, model: DashboardWidgetCell.Categories) {
-        pageCellsAdapter.setItems(model.pageCells)
+        setCells(holder, model)
     }
 
     override fun bindView(
@@ -52,7 +56,18 @@ class DashboardCategoriesWidgetCellRenderer(
         payloads: MutableList<Any>
     ) {
         if (DashboardCategoriesWidgetChangedPayload in payloads) {
-            pageCellsAdapter.setItems(model.pageCells)
+            setCells(holder, model)
+        }
+    }
+
+    private fun setCells(
+        holder: ContainerHolder,
+        model: DashboardWidgetCell.Categories
+    ) {
+        pageCellsAdapter.setItems(model.pageCells) {
+            if (adapterState != null) {
+                holder.categoryPagesRecyclerView.layoutManager?.onRestoreInstanceState(adapterState)
+            }
         }
     }
 
@@ -66,6 +81,16 @@ class DashboardCategoriesWidgetCellRenderer(
                 adapter = pageCellsAdapter
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 LinearSnapHelper().attachToRecyclerView(this)
+                addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+                    override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                        if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                            val lm = recyclerView.layoutManager!!
+                            adapterState = lm.onSaveInstanceState()
+                        }
+                    }
+
+                })
             }
             pageIndicator.attachToRecyclerView(categoryPagesRecyclerView)
         }

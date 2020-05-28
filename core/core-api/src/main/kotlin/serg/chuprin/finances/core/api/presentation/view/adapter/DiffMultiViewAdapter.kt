@@ -33,6 +33,10 @@ open class DiffMultiViewAdapter<T : Any> : AbsMultiViewAdapter<T> {
 
     fun setItems(items: List<T>) = differ.submitList(items)
 
+    fun setItems(items: List<T>, onCommit: () -> Unit) {
+        differ.submitList(items, onCommit)
+    }
+
     inline fun <reified C : Any> registerRenderer(layoutRes: Int) {
         rendererDelegate.registerRenderer(object : ContainerRenderer<C>() {
             override val type: Int = layoutRes
