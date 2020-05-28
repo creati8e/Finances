@@ -27,7 +27,7 @@ sealed class CurrencyChoiceOnboardingEffect {
         /**
          * Contains filtered [CurrencyCell] or [ZeroDataCell] if currencies not found.
          */
-        val cells: List<BaseCell>
+        val currentCells: List<BaseCell>
     ) : CurrencyChoiceOnboardingEffect()
 
     class CurrencyPickerVisibilityChanged(
@@ -35,7 +35,7 @@ sealed class CurrencyChoiceOnboardingEffect {
         /**
          * List of all currencies to replace current filtered cells list.
          */
-        val allCurrencyCells: List<CurrencyCell>
+        val currentCells: List<CurrencyCell>
     ) : CurrencyChoiceOnboardingEffect()
 
     /**
@@ -44,8 +44,8 @@ sealed class CurrencyChoiceOnboardingEffect {
     class SetCurrencyParams(
         val currentCurrency: Currency,
         val chosenCurrencyDisplayName: String,
-        val currencyCells: List<CurrencyCell>,
-        val availableCurrencies: List<Currency>
+        val availableCurrencies: List<Currency>,
+        val allCurrencyCellsWithChosen: List<CurrencyCell>
     ) : CurrencyChoiceOnboardingEffect()
 
 }

@@ -109,7 +109,7 @@ class CurrencyChoiceOnboardingActionExecutor @Inject constructor(
             return flowOf(
                 CurrencyChoiceOnboardingEffect.CurrencyPickerVisibilityChanged(
                     visible = false,
-                    allCurrencyCells = state.defaultCurrencyCells
+                    currentCells = state.defaultCurrencyCells
                 )
             )
         }
@@ -128,7 +128,7 @@ class CurrencyChoiceOnboardingActionExecutor @Inject constructor(
         return flowOf(
             CurrencyChoiceOnboardingEffect.CurrencyPickerVisibilityChanged(
                 visible = visible,
-                allCurrencyCells = state.defaultCurrencyCells
+                currentCells = state.defaultCurrencyCells
             )
         )
     }
@@ -155,8 +155,8 @@ class CurrencyChoiceOnboardingActionExecutor @Inject constructor(
                 currencies = action.availableCurrencies
             )
             CurrencyChoiceOnboardingEffect.SetCurrencyParams(
-                currencyCells = currencyCells,
                 currentCurrency = action.currentCurrency,
+                allCurrencyCellsWithChosen = currencyCells,
                 availableCurrencies = action.availableCurrencies,
                 chosenCurrencyDisplayName = action.currentCurrency.buildDisplayName()
             )
