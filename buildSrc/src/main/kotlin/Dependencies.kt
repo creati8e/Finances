@@ -9,13 +9,13 @@ object BuildScript {
 
     object Versions {
         const val KOTLIN_VER = "1.3.72"
-        const val NAVIGATION_VER = "2.3.0-alpha06"
+        const val NAVIGATION_VER = "2.3.0-beta01"
     }
 
     object Plugins {
         const val GMS = "com.google.gms:google-services:4.3.3"
         const val APP_BADGE = "gradle.plugin.app-badge:plugin:1.0.2"
-        const val ANDROID = "com.android.tools.build:gradle:4.0.0-beta05"
+        const val ANDROID = "com.android.tools.build:gradle:4.0.0-rc01"
         const val JUNIT5 = "de.mannodermaus.gradle.plugins:android-junit5:1.6.2.0"
         const val KOTLIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:$KOTLIN_VER"
         const val NAVIGATION =
@@ -30,7 +30,7 @@ object BuildScript {
 
 object Libraries {
 
-    const val COIL = "io.coil-kt:coil:0.10.1"
+    const val COIL = "io.coil-kt:coil:0.11.0"
     const val TIMBER = "com.github.ajalt:timberkt:1.5.1"
     const val FLEXBOX = "com.google.android:flexbox:2.0.1"
     const val JAVAX_ANNOTATIONS = "javax.inject:javax.inject:1"
@@ -42,7 +42,7 @@ object Libraries {
 
         object Lifecycle {
 
-            private const val VER = "2.3.0-alpha02"
+            private const val VER = "2.3.0-alpha03"
             private const val ARTIFACT = "androidx.lifecycle"
 
             val DEPENDENCIES = listOf(
@@ -53,13 +53,13 @@ object Libraries {
             )
         }
 
-        const val CORE = "androidx.core:core-ktx:1.3.0-rc01"
+        const val CORE = "androidx.core:core-ktx:1.4.0-alpha01"
 
         const val APPCOMPAT = "androidx.appcompat:appcompat:1.2.0-beta01"
-        const val FRAGMENT = "androidx.fragment:fragment-ktx:1.3.0-alpha04"
+        const val FRAGMENT = "androidx.fragment:fragment-ktx:1.3.0-alpha05"
         const val VIEWPAGER = "androidx.viewpager2:viewpager2:1.1.0-alpha01"
         const val DESIGN = "com.google.android.material:material:1.2.0-alpha05"
-        const val CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:2.0.0-beta5"
+        const val CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:2.0.0-beta6"
 
         object Navigation {
 
@@ -103,7 +103,7 @@ object Libraries {
 
     object Dagger {
 
-        private const val VER = "2.27"
+        private const val VER = "2.28"
         private const val ARTIFACT = "com.google.dagger"
 
         const val COMPILER = "$ARTIFACT:dagger-compiler:$VER"
@@ -133,8 +133,8 @@ object Libraries {
         private const val JUNIT_VER = "5.6.1"
         private const val SPEK_VER = "2.0.10"
 
-        const val MOCKK = "io.mockk:mockk:1.9.3"
-        const val STRIKT = "io.strikt:strikt-core:0.26.0"
+        const val MOCKK = "io.mockk:mockk:1.10.0"
+        const val STRIKT = "io.strikt:strikt-core:0.26.1"
         const val ASSERTIONS = "org.jetbrains.kotlin:kotlin-test:$KOTLIN_VER"
         const val SPEK_JVM = "org.spekframework.spek2:spek-dsl-jvm:$SPEK_VER"
         const val COROUTINES = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.5"
