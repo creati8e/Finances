@@ -105,7 +105,7 @@ class MoneyAccountDetailsActionExecutor @Inject constructor(
                     add(
                         DateDividerCell(
                             localDate = localDate,
-                            dateFormatted = dateTimeFormatter.formatForTransaction(localDate)
+                            dateFormatted = dateTimeFormatter.formatAsDay(localDate)
                         )
                     )
                     transactionsWithCategories.forEach { (transaction, category) ->

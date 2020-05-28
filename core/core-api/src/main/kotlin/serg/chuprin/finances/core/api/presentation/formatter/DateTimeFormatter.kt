@@ -10,7 +10,7 @@ interface DateTimeFormatter {
 
     fun formatTime(dateTime: LocalDateTime): String
 
-    fun formatForTransaction(localDate: LocalDate): String
+    fun formatAsDay(localDate: LocalDate): String
 
     fun formatForTransaction(dateTime: LocalDateTime): String
 

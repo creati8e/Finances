@@ -21,7 +21,7 @@ internal class DateTimeFormatterImpl @Inject constructor() :
             .appendValue(ChronoField.MINUTE_OF_HOUR, 2)
             .toFormatter()
 
-        private val TODAY_FORMATTER = TIME_FORMATTER
+        private val TODAY_TIME_FORMATTER = TIME_FORMATTER
         private val SAME_MONTH_FORMATTER = DateTimeFormatter.ofPattern("dd MMMM")
         private val DEFAULT_FORMATTER = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)
     }
@@ -30,14 +30,11 @@ internal class DateTimeFormatterImpl @Inject constructor() :
         return dateTime.format(TIME_FORMATTER.localized())
     }
 
-    override fun formatForTransaction(localDate: LocalDate): String {
+    override fun formatAsDay(localDate: LocalDate): String {
         // Check if today.
         val today = LocalDate.now()
-        val formatter = when {
-            today == localDate -> {
-                TODAY_FORMATTER
-            }
-            today.year == localDate.year -> {
+        val formatter = when (today.year) {
+            localDate.year -> {
                 if (today.month == localDate.month) {
                     SAME_MONTH_FORMATTER
                 } else {
@@ -56,7 +53,7 @@ internal class DateTimeFormatterImpl @Inject constructor() :
         val today = LocalDate.now()
         val formatter = when {
             today == dateTime.toLocalDate() -> {
-                TODAY_FORMATTER
+                TODAY_TIME_FORMATTER
             }
             today.year == dateTime.year -> {
                 if (today.month == dateTime.month) {
