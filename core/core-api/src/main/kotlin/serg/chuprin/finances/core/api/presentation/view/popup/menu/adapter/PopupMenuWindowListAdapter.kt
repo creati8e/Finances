@@ -15,7 +15,7 @@ import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisibleOr
  */
 class PopupMenuWindowListAdapter(
     context: Context,
-    menuCells: Array<PopupMenuCell>
+    menuCells: List<PopupMenuCell>
 ) : ArrayAdapter<PopupMenuCell>(
     context,
     LAYOUT_RES,

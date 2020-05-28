@@ -18,7 +18,7 @@ import serg.chuprin.finances.core.api.presentation.view.extensions.getDimenDpFlo
  * Created by Sergey Chuprin on 22.12.2019.
  */
 abstract class CustomPopupWindow<T>(
-    protected val cells: Array<T>,
+    protected val cells: List<T>,
     protected val callback: ((cell: T) -> Unit)?,
     protected val positionCallback: ((position: Int) -> Unit)? = null
 ) {
@@ -38,7 +38,7 @@ abstract class CustomPopupWindow<T>(
         isDisplayed = true
     }
 
-    protected abstract fun createAdapter(context: Context, cells: Array<T>): ArrayAdapter<*>
+    protected abstract fun createAdapter(context: Context, cells: List<T>): ArrayAdapter<*>
 
     private fun PopupWindow.calculateOffsets(
         anchor: View,

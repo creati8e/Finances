@@ -10,14 +10,13 @@ import serg.chuprin.finances.core.api.presentation.view.popup.menu.adapter.Popup
  * Created by Sergey Chuprin on 17.03.2020.
  */
 class PopupMenuWindow<T : PopupMenuCell>(
-    cells: Array<T>,
+    cells: List<T>,
     callback: ((cell: T) -> Unit)?,
     positionCallback: ((position: Int) -> Unit)? = null
 ) : CustomPopupWindow<T>(cells, callback, positionCallback) {
 
-    override fun createAdapter(context: Context, cells: Array<T>): ArrayAdapter<*> {
-        @Suppress("UNCHECKED_CAST")
-        return PopupMenuWindowListAdapter(context, cells as Array<PopupMenuCell>)
+    override fun createAdapter(context: Context, cells: List<T>): ArrayAdapter<*> {
+        return PopupMenuWindowListAdapter(context, cells)
     }
 
 }
