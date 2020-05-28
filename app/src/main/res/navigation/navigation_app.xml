@@ -8,14 +8,14 @@
     <navigation
         android:id="@+id/notAuthorizedGraph"
         android:label="Not authorized graph"
-        app:startDestination="@+id/authorizationGraph"
+        app:startDestination="@+id/authorizationFragment"
         tools:ignore="InvalidNavigation">
 
-        <include app:graph="@navigation/navigation_authorization" />
-
-        <action
-            android:id="@+id/navigateFromAuthorizationToAuthorizedGraph"
-            app:destination="@+id/authorizedGraph" />
+        <fragment
+            android:id="@+id/authorizationFragment"
+            android:name="serg.chuprin.finances.feature.authorization.presentation.view.AuthorizationFragment"
+            android:label="AuthorizationFragment"
+            tools:layout="@layout/fragment_authorization" />
 
     </navigation>
 
@@ -136,5 +136,11 @@
             app:popUpToInclusive="true" />
 
     </fragment>
+
+    <action
+        android:id="@+id/navigateToAuthorizedGraph"
+        app:destination="@+id/authorizedGraph"
+        app:popUpTo="@id/appLauncherFragment"
+        app:popUpToInclusive="true" />
 
 </navigation>

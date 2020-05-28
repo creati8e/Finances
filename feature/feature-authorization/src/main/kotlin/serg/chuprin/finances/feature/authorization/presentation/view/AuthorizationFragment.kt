@@ -3,6 +3,7 @@ package serg.chuprin.finances.feature.authorization.presentation.view
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.CommonStatusCodes
 import kotlinx.android.synthetic.main.fragment_authorization.*
@@ -58,7 +59,7 @@ class AuthorizationFragment : BaseFragment(R.layout.fragment_authorization) {
         return when (signInState) {
             is SignInState.Success -> {
                 shortToast(R.string.authorization_successful_sign_in)
-                navigation.navigateToAuthorizedGraph(navController)
+                navigation.navigateToAuthorizedGraph(requireParentFragment().findNavController())
             }
             SignInState.Error -> {
                 progressBar.makeGone()

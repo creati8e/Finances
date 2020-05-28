@@ -8,7 +8,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.Module
 import dagger.Provides
 import serg.chuprin.finances.app.AuthorizedGraphDirections
-import serg.chuprin.finances.app.NotAuthorizedGraphDirections
 import serg.chuprin.finances.app.R
 import serg.chuprin.finances.core.api.di.provider.CoreNavigationProvider
 import serg.chuprin.finances.core.api.domain.model.Id
@@ -124,9 +123,7 @@ object NavigationModule : CoreNavigationProvider {
             return object : AuthorizationNavigation {
 
                 override fun navigateToAuthorizedGraph(navController: NavController) {
-                    NotAuthorizedGraphDirections.navigateFromAuthorizationToAuthorizedGraph().run {
-                        navController.navigate(this)
-                    }
+                    navController.navigate(R.id.navigateToAuthorizedGraph)
                 }
 
             }
