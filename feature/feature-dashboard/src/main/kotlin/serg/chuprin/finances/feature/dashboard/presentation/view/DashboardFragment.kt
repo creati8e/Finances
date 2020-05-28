@@ -23,7 +23,7 @@ import serg.chuprin.finances.feature.dashboard.R
 import serg.chuprin.finances.feature.dashboard.presentation.di.DashboardComponent
 import serg.chuprin.finances.feature.dashboard.presentation.model.store.DashboardEvent
 import serg.chuprin.finances.feature.dashboard.presentation.model.store.DashboardIntent
-import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.dsl.dashboard
+import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.dashboard
 import javax.inject.Inject
 import serg.chuprin.finances.core.api.R as CoreR
 
@@ -54,7 +54,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        cellsAdapter = recyclerView.dashboard(viewModel)
+        cellsAdapter = dashboard(viewModel)
 
         postponeEnterTransition()
         view.doOnPreDraw { startPostponedEnterTransition() }

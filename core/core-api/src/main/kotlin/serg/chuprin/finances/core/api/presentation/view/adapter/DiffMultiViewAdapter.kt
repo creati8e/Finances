@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.AdapterListUpdateCallback
 import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
+import serg.chuprin.adapter.ContainerRenderer
 import serg.chuprin.adapter.base.AbsMultiViewAdapter
 
 /**
@@ -31,4 +32,11 @@ open class DiffMultiViewAdapter<T : Any> : AbsMultiViewAdapter<T> {
     override fun getItemCount(): Int = differ.currentList.size
 
     fun setItems(items: List<T>) = differ.submitList(items)
+
+    inline fun <reified C : Any> registerRenderer(layoutRes: Int) {
+        rendererDelegate.registerRenderer(object : ContainerRenderer<C>() {
+            override val type: Int = layoutRes
+        })
+    }
+
 }

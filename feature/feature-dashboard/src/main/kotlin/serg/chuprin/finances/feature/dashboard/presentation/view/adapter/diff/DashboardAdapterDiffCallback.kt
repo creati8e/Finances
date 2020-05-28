@@ -3,10 +3,10 @@ package serg.chuprin.finances.feature.dashboard.presentation.view.adapter.diff
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.view.adapter.diff.DiffCallback
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
-import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.dsl.categories.DashboardCategoriesWidgetChangedPayload
-import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.dsl.header.DashboardHeaderWidgetChangedPayload
-import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.dsl.moneyaccounts.DashboardMoneyAccountCellsChangedPayload
-import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.dsl.moneyaccounts.DashboardMoneyAccountsExpansionChangedPayload
+import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.categories.diff.DashboardCategoriesWidgetChangedPayload
+import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.header.diff.DashboardHeaderWidgetChangedPayload
+import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.moneyaccounts.diff.DashboardMoneyAccountCellsChangedPayload
+import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.moneyaccounts.diff.DashboardMoneyAccountsExpansionChangedPayload
 
 /**
  * Created by Sergey Chuprin on 18.04.2020.

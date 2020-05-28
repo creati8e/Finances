@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.dashboard.presentation.view.adapter.dsl.transactions
+package serg.chuprin.finances.feature.dashboard.presentation.view.adapter.transactions
 
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter

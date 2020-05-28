@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.dashboard.presentation.view.adapter.dsl.moneyaccounts.animation
+package serg.chuprin.finances.feature.dashboard.presentation.view.adapter.moneyaccounts.animation
 
 import android.view.View
 import android.view.ViewGroup
