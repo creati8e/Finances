@@ -5,7 +5,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.api.domain.model.DashboardDataPeriodChangeDirection
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
-import serg.chuprin.finances.core.api.presentation.builder.TransitionNameBuilder
 import serg.chuprin.finances.core.api.presentation.model.DataPeriodUi
 import serg.chuprin.finances.core.api.presentation.model.builder.DataPeriodTypePopupMenuCellsBuilder
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
@@ -27,7 +26,6 @@ import javax.inject.Inject
  */
 class DashboardActionExecutor @Inject constructor(
     private val resourceManger: ResourceManger,
-    private val transitionNameBuilder: TransitionNameBuilder,
     private val widgetCellsBuilder: DashboardWidgetCellsBuilder,
     private val changeDataPeriodUseCase: ChangeDashboardDataPeriodUseCase,
     private val changeDataPeriodTypeUseCase: ChangeDataPeriodTypeForDashboardUseCase,

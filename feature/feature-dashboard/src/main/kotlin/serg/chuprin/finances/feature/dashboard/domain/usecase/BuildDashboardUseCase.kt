@@ -1,10 +1,7 @@
 package serg.chuprin.finances.feature.dashboard.domain.usecase
 
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.*
 import serg.chuprin.finances.core.api.domain.model.Dashboard
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.feature.dashboard.domain.builder.DashboardWidgetBuilder
@@ -42,7 +39,7 @@ class BuildDashboardUseCase @Inject constructor(
                             dashboard.copy(widgets = dashboard.widgets.add(widget))
                         }
                     )
-                }
+                }.debounce(100)
             }
     }
 

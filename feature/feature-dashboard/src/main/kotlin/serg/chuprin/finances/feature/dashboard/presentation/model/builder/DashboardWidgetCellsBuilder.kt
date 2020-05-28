@@ -30,6 +30,7 @@ class DashboardWidgetCellsBuilder @Inject constructor(
         widget: DashboardWidget,
         existingCells: List<BaseCell>
     ): DashboardWidgetCell {
+        // Do not rebuild cell if widget not changed.
         val existingWidgetCell = existingCells
             .find { cell ->
                 cell is DashboardWidgetCell && cell.widget.type == widget.type

@@ -26,14 +26,14 @@ class DashboardHeaderWidgetBuilder @Inject constructor(
             flowOf(currentUser),
             flowOf(currentPeriod),
             allUserTransactionsFlow(currentUser)
-        ) { user, period, allTransactions ->
+        ) { user, dataPeriod, allTransactions ->
             val (incomeAmount, expenseAmount, balanceAmount) = calculateAmounts(
-                period = period,
+                dataPeriod = dataPeriod,
                 transactions = allTransactions
             )
             DashboardWidget.Header(
-                dataPeriod = period,
                 balance = balanceAmount,
+                dataPeriod = dataPeriod,
                 currency = user.defaultCurrency,
                 currentPeriodIncomes = incomeAmount,
                 currentPeriodExpenses = expenseAmount
@@ -43,7 +43,7 @@ class DashboardHeaderWidgetBuilder @Inject constructor(
 
     private fun calculateAmounts(
         transactions: List<Transaction>,
-        period: DataPeriod
+        dataPeriod: DataPeriod
     ): Triple<BigDecimal, BigDecimal, BigDecimal> {
         // Looks not very good but it's more better to iterate the collection only once
         // and calculate both amounts simultaneously without creating intermediate collections.
@@ -52,10 +52,10 @@ class DashboardHeaderWidgetBuilder @Inject constructor(
         var balanceAmount = BigDecimal.ZERO
 
         transactions.forEach { transaction ->
-            if (transaction.dateTime <= period.endDate) {
+            if (transaction.dateTime <= dataPeriod.endDate) {
                 balanceAmount += transaction.amount
             }
-            if (transaction.dateTime in period) {
+            if (transaction.dateTime in dataPeriod) {
                 if (transaction.isExpense) {
                     expenseAmount += transaction.amount
                 } else if (transaction.isIncome) {
@@ -63,7 +63,7 @@ class DashboardHeaderWidgetBuilder @Inject constructor(
                 }
             }
         }
-        return Triple(incomeAmount.abs(), expenseAmount.abs(), balanceAmount.abs())
+        return Triple(incomeAmount.abs(), expenseAmount.abs(), balanceAmount)
     }
 
     private fun allUserTransactionsFlow(currentUser: User): Flow<List<Transaction>> {

@@ -8,6 +8,7 @@ import serg.chuprin.adapter.LongClick
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
 import serg.chuprin.finances.feature.dashboard.R
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
+import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.header.diff.DashboardHeaderWidgetChangedPayload
 
 /**
  * Created by Sergey Chuprin on 28.05.2020.
@@ -24,11 +25,16 @@ class DashboardHeaderWidgetCellRenderer(
     override val type: Int = R.layout.cell_widget_dashboard_header
 
     override fun bindView(holder: ContainerHolder, model: DashboardWidgetCell.Header) {
-        with(holder) {
-            balanceTextView.text = model.balance
-            currentPeriodTextView.text = model.currentPeriod
-            incomesCardView.setAmountText(model.incomesAmount)
-            expensesCardView.setAmountText(model.expensesAmount)
+        bindData(holder, model)
+    }
+
+    override fun bindView(
+        holder: ContainerHolder,
+        model: DashboardWidgetCell.Header,
+        payloads: MutableList<Any>
+    ) {
+        if (DashboardHeaderWidgetChangedPayload in payloads) {
+            bindData(holder, model)
         }
     }
 
@@ -44,6 +50,18 @@ class DashboardHeaderWidgetCellRenderer(
             incomesCardView.onClick(clickOnCurrentPeriodIncomes)
             expensesCardView.onClick(clickOnCurrentPeriodExpenses)
             restoreDefaultPeriodButton.onClick(clickOnRestoreDefaultPeriod)
+        }
+    }
+
+    private fun bindData(
+        holder: ContainerHolder,
+        model: DashboardWidgetCell.Header
+    ) {
+        with(holder) {
+            balanceTextView.text = model.balance
+            currentPeriodTextView.text = model.currentPeriod
+            incomesCardView.setAmountText(model.incomesAmount)
+            expensesCardView.setAmountText(model.expensesAmount)
         }
     }
 

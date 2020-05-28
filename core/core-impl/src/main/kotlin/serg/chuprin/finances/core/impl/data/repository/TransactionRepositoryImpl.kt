@@ -33,21 +33,14 @@ internal class TransactionRepositoryImpl @Inject constructor(
         return firebaseDataSource
             .userTransactionsFlow(userId, dataPeriod)
             .map { transactions ->
-                if (transactionType != null) {
-                    transactions.mapNotNull { snapshot ->
-                        mapper.mapFromSnapshot(snapshot)?.takeIf { transaction ->
-                            if (transaction.isBalance) {
-                                false
-                            } else {
-                                when (transactionType) {
-                                    PlainTransactionType.INCOME -> transaction.isIncome
-                                    PlainTransactionType.EXPENSE -> transaction.isExpense
-                                }
-                            }
+                transactions.mapNotNull { snapshot ->
+                    mapper.mapFromSnapshot(snapshot)?.takeIf { transaction ->
+                        return@takeIf when (transactionType) {
+                            PlainTransactionType.INCOME -> transaction.isIncome
+                            PlainTransactionType.EXPENSE -> transaction.isExpense
+                            null -> true
                         }
                     }
-                } else {
-                    transactions.mapNotNull(mapper::mapFromSnapshot)
                 }
             }
             .flowOn(Dispatchers.Default)

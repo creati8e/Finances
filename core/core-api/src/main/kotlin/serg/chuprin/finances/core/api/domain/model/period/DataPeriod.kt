@@ -53,10 +53,7 @@ data class DataPeriod(
 
     }
 
-    operator fun contains(dateTime: LocalDateTime): Boolean {
-        return (dateTime.isEqual(startDate) || dateTime.isAfter(startDate))
-                && (dateTime.isEqual(endDate) || dateTime.isBefore(endDate))
-    }
+    operator fun contains(dateTime: LocalDateTime): Boolean = dateTime in startDate..endDate
 
     fun next(): DataPeriod {
         return when (periodType) {
