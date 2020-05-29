@@ -133,7 +133,7 @@ object Libraries {
         private const val JUNIT_VER = "5.6.1"
         private const val SPEK_VER = "2.0.10"
 
-        const val MOCKK = "io.mockk:mockk:1.10.0"
+        const val MOCKK = "io.mockk:mockk:1.9.3"
         const val STRIKT = "io.strikt:strikt-core:0.26.1"
         const val ASSERTIONS = "org.jetbrains.kotlin:kotlin-test:$KOTLIN_VER"
         const val SPEK_JVM = "org.spekframework.spek2:spek-dsl-jvm:$SPEK_VER"
