@@ -16,6 +16,14 @@ android {
         versionName = AppConfig.VERSION_NAME
         applicationId = AppConfig.APPLICATION_ID
     }
+    signingConfigs {
+        getByName(AppConfig.BuildTypes.DEBUG.name) {
+            keyPassword = "android"
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            storeFile = File(projectDir, "debug.keystore")
+        }
+    }
     buildTypes {
         maybeCreate(AppConfig.BuildTypes.DEBUG.name).apply {
             applicationIdSuffix = ".debug"
