@@ -21,11 +21,13 @@ class MoneyAccountCellRenderer : ContainerRenderer<MoneyAccountCell>() {
         with(holder) {
             nameTextView.text = model.name
             balanceTextView.text = model.balance
-            cardView.isActivated = model.favoriteIconIsVisible
             favoriteImageView.makeVisibleOrGone(model.favoriteIconIsVisible)
 
-            cardView.tag = model.transitionName
-            cardView.transitionName = model.transitionName
+            with(itemView) {
+                tag = model.transitionName
+                transitionName = model.transitionName
+                isActivated = model.favoriteIconIsVisible
+            }
         }
     }
 
@@ -35,7 +37,7 @@ class MoneyAccountCellRenderer : ContainerRenderer<MoneyAccountCell>() {
         longClickListener: LongClick?
     ) {
         with(holder) {
-            cardView.onViewClick { view ->
+            itemView.onViewClick { view ->
                 clickListener?.onClick(view, adapterPosition)
             }
         }
