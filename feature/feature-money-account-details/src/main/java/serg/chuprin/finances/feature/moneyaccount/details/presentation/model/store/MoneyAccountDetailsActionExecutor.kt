@@ -110,7 +110,7 @@ class MoneyAccountDetailsActionExecutor @Inject constructor(
                     )
                     transactionsWithCategories.forEach { (transaction, category) ->
                         val (parentCategoryName, subcategoryName) =
-                            transactionCategoryWithParentFormatter.format(category)
+                            transactionCategoryWithParentFormatter.format(category, transaction)
                         add(
                             TransactionCell(
                                 transaction = transaction,

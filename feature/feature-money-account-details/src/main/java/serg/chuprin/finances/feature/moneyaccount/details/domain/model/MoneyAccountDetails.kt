@@ -10,7 +10,7 @@ import java.util.*
 /**
  * Created by Sergey Chuprin on 07.05.2020.
  */
-class MoneyAccountDetails(
+data class MoneyAccountDetails(
     val balance: BigDecimal = BigDecimal.ZERO,
     val moneyAccount: MoneyAccount = MoneyAccount.EMPTY,
     val transactionsGroupedByDay: SortedMap<LocalDate, List<Map.Entry<Transaction, TransactionCategoryWithParent?>>> = TreeMap()
