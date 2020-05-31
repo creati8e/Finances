@@ -24,9 +24,7 @@ jobs:
             java-version: 1.8
 
         - name: Unit tests
-          run: |
-              sudo chmod +x ./gradlew
-              ./gradlew testDevUnitTest --stacktrace --debug
+          run: ./gradlew testDevUnitTest --stacktrace --debug
 
    apk:
        name: Generate APK
