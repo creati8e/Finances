@@ -14,7 +14,7 @@ on:
 jobs:
    test:
       name: Run Unit Tests
-      runs-on: ubuntu-latest
+      runs-on: windows-latest
 
       steps:
         - uses: actions/checkout@v2
@@ -48,4 +48,4 @@ jobs:
            uses: actions/upload-artifact@v2
            with:
              name: app
-             path: app/build/outputs/apk/debug/app-debub.apk
+             path: app/build/outputs/apk/debug/app-debug.apk
