@@ -56,8 +56,7 @@ badge {
 proguardDictionaries {
     dictionaryNames = listOf(
         "build/class-dictionary",
-        "build/method-dictionary",
-        "build/package-dictionary"
+        "build/method-dictionary"
     )
     minLineLength = 10
     maxLineLength = 20
