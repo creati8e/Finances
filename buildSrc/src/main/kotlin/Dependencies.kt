@@ -55,7 +55,7 @@ object Libraries {
 
         const val CORE = "androidx.core:core-ktx:1.4.0-alpha01"
 
-        const val APPCOMPAT = "androidx.appcompat:appcompat:1.2.0-beta01"
+        const val APPCOMPAT = "androidx.appcompat:appcompat:1.3.0-alpha01"
         const val FRAGMENT = "androidx.fragment:fragment-ktx:1.3.0-alpha05"
         const val VIEWPAGER = "androidx.viewpager2:viewpager2:1.1.0-alpha01"
         const val DESIGN = "com.google.android.material:material:1.2.0-alpha05"
@@ -95,7 +95,7 @@ object Libraries {
 
     object Coroutines {
 
-        const val VER = "1.3.6"
+        const val VER = "1.3.7"
 
         const val CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$VER"
         const val ANDROID = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$VER"
@@ -131,7 +131,7 @@ object Libraries {
     object Tests {
 
         private const val JUNIT_VER = "5.6.1"
-        private const val SPEK_VER = "2.0.10"
+        private const val SPEK_VER = "2.0.11"
 
         const val MOCKK = "io.mockk:mockk:1.9.3"
         const val STRIKT = "io.strikt:strikt-core:0.26.1"
