@@ -12,4 +12,5 @@ interface CoreDependenciesProvider :
     CoreBuildersProvider,
     CoreFormattersProvider,
     CoreNavigationProvider,
+    CoreFeatureStoreProvider,
     CoreRepositoriesProvider

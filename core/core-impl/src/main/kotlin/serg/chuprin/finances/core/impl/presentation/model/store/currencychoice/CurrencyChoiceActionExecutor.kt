@@ -1,4 +1,4 @@
-package serg.chuprin.finances.core.api.presentation.currencychoice.model.store
+package serg.chuprin.finances.core.impl.presentation.model.store.currencychoice
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -10,6 +10,8 @@ import serg.chuprin.finances.core.api.domain.usecase.SearchCurrenciesUseCase
 import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
 import serg.chuprin.finances.core.api.extensions.flow.takeUntil
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.cells.CurrencyCell
+import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceIntent
+import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceState
 import serg.chuprin.finances.core.api.presentation.model.cells.ZeroDataCell
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor

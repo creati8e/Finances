@@ -1,4 +1,4 @@
-package serg.chuprin.finances.core.api.presentation.currencychoice.model.store
+package serg.chuprin.finances.core.impl.presentation.model.store.currencychoice
 
 import kotlinx.coroutines.flow.Flow
 import serg.chuprin.finances.core.api.domain.repository.CurrencyRepository

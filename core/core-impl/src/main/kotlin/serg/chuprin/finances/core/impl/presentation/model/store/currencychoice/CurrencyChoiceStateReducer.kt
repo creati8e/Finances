@@ -1,5 +1,6 @@
-package serg.chuprin.finances.core.api.presentation.currencychoice.model.store
+package serg.chuprin.finances.core.impl.presentation.model.store.currencychoice
 
+import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceState
 import serg.chuprin.finances.core.mvi.reducer.StoreStateReducer
 
 /**
