@@ -7,6 +7,7 @@
     <string name="bank_card_money_account_default_name">Банковская карта</string>
     <string name="no_category">Без категории</string>
     <string name="balance_correction_transaction">Корректировка баланса</string>
+    <string name="currencies_search_zero_data_title">Валюты не найдены</string>
     <!--region Periods-->
     <string name="period_type_month">Месяц</string>
     <string name="period_type_day">День</string>

@@ -7,6 +7,7 @@
     <string name="bank_card_money_account_default_name">Bank card</string>
     <string name="no_category">No category</string>
     <string name="balance_correction_transaction">Balance correction</string>
+    <string name="currencies_search_zero_data_title">Currencies not found</string>
     <!--region Periods-->
     <string name="period_type_month">Month</string>
     <string name="period_type_day">Day</string>
