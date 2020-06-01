@@ -3,11 +3,12 @@ package serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.s
 import kotlinx.coroutines.flow.Flow
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
+import javax.inject.Inject
 
 /**
  * Created by Sergey Chuprin on 01.06.2020.
  */
-class MoneyAccountCreationActionExecutor :
+class MoneyAccountCreationActionExecutor @Inject constructor() :
     StoreActionExecutor<MoneyAccountCreationAction, MoneyAccountCreationState, MoneyAccountCreationEffect, MoneyAccountCreationEvent> {
 
     override fun invoke(

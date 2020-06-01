@@ -47,6 +47,7 @@
                     android:id="@+id/accountNameTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textCursorDrawable="@drawable/text_cursor"
                     tools:text="New account" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -63,6 +64,7 @@
                     android:id="@+id/balanceTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textCursorDrawable="@drawable/text_cursor"
                     tools:text="New account" />
 
             </com.google.android.material.textfield.TextInputLayout>

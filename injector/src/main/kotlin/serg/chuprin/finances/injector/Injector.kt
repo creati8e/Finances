@@ -9,6 +9,8 @@ import serg.chuprin.finances.feature.main.dependencies.AppLauncherDependencies
 import serg.chuprin.finances.feature.main.dependencies.AuthorizedGraphLauncherDependencies
 import serg.chuprin.finances.feature.main.dependencies.DaggerAppLauncherDependenciesComponent
 import serg.chuprin.finances.feature.main.dependencies.DaggerAuthorizedGraphLauncherDependenciesComponent
+import serg.chuprin.finances.feature.moneyaccounts.creation.DaggerMoneyAccountCreationDependenciesComponent
+import serg.chuprin.finances.feature.moneyaccounts.creation.MoneyAccountCreationDependencies
 import serg.chuprin.finances.feature.moneyaccounts.details.dependencies.DaggerMoneyAccountDetailsDependenciesComponent
 import serg.chuprin.finances.feature.moneyaccounts.details.dependencies.MoneyAccountDetailsDependencies
 import serg.chuprin.finances.feature.moneyaccounts.list.dependencies.DaggerMoneyAccountsListDependenciesComponent
@@ -74,6 +76,13 @@ object Injector {
 
     fun getTransactionsReportDependencies(): TransactionsReportDependencies {
         return DaggerTransactionsReportDependenciesComponent
+            .builder()
+            .coreDependenciesProvider(CoreDependenciesComponent.get())
+            .build()
+    }
+
+    fun getMoneyAccountCreationDependencies(): MoneyAccountCreationDependencies {
+        return DaggerMoneyAccountCreationDependenciesComponent
             .builder()
             .coreDependenciesProvider(CoreDependenciesComponent.get())
             .build()
