@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.dashboard.domain.builder
+package serg.chuprin.finances.feature.dashboard.domain.builder.categories
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -10,7 +10,7 @@ import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.domain.service.TransactionCategoryRetrieverService
-import serg.chuprin.finances.feature.dashboard.domain.builder.categories.DashboardCategoriesPageBuilder
+import serg.chuprin.finances.feature.dashboard.domain.builder.DashboardWidgetBuilder
 import java.math.BigDecimal
 import javax.inject.Inject
 

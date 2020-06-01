@@ -5,7 +5,11 @@ import dagger.Module
 import dagger.multibindings.IntoSet
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.feature.dashboard.data.repository.DashboardDataPeriodRepositoryImpl
-import serg.chuprin.finances.feature.dashboard.domain.builder.*
+import serg.chuprin.finances.feature.dashboard.domain.builder.DashboardHeaderWidgetBuilder
+import serg.chuprin.finances.feature.dashboard.domain.builder.DashboardMoneyAccountsWidgetBuilder
+import serg.chuprin.finances.feature.dashboard.domain.builder.DashboardRecentTransactionsWidgetBuilder
+import serg.chuprin.finances.feature.dashboard.domain.builder.DashboardWidgetBuilder
+import serg.chuprin.finances.feature.dashboard.domain.builder.categories.DashboardCategoriesWidgetBuilder
 import serg.chuprin.finances.feature.dashboard.domain.repository.DashboardDataPeriodRepository
 import serg.chuprin.finances.feature.dashboard.presentation.model.builder.*
 
