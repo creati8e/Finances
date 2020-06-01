@@ -1,5 +1,6 @@
-package serg.chuprin.finances.core.api.domain.model
+package serg.chuprin.finances.feature.dashboard.domain.model
 
+import serg.chuprin.finances.core.api.domain.model.MoneyAccountBalances
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction

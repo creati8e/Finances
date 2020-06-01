@@ -1,8 +1,8 @@
 package serg.chuprin.finances.feature.dashboard.presentation.model.cells
 
-import serg.chuprin.finances.core.api.domain.model.DashboardWidget
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.cells.DiffCell
+import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.page.DashboardCategoriesPageCell
 
 /**

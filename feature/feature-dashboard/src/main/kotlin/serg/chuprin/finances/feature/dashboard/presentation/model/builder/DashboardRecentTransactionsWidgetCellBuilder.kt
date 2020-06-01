@@ -1,6 +1,5 @@
 package serg.chuprin.finances.feature.dashboard.presentation.model.builder
 
-import serg.chuprin.finances.core.api.domain.model.DashboardWidget
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
@@ -9,6 +8,7 @@ import serg.chuprin.finances.core.api.presentation.formatter.CategoryColorFormat
 import serg.chuprin.finances.core.api.presentation.formatter.DateTimeFormatter
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
+import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.transactions.DashboardRecentTransactionsZeroDataCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.transactions.DashboardTransactionCell

@@ -1,4 +1,4 @@
-package serg.chuprin.finances.core.api.domain.model
+package serg.chuprin.finances.feature.dashboard.domain.model
 
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.feature.dashboard.domain.builder.categories.CategoryAmounts

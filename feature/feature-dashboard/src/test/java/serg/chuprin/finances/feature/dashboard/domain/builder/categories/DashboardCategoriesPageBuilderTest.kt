@@ -2,13 +2,13 @@ package serg.chuprin.finances.feature.dashboard.domain.builder.categories
 
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
-import serg.chuprin.finances.core.api.domain.model.DashboardCategoriesWidgetPage
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryType
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.model.transaction.TransactionType
+import serg.chuprin.finances.feature.dashboard.domain.model.DashboardCategoriesWidgetPage
 import strikt.api.expectThat
 import strikt.assertions.containsExactlyInAnyOrder
 import strikt.assertions.isEqualTo

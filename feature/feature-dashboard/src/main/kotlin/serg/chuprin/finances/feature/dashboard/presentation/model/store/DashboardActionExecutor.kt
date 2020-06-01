@@ -3,7 +3,6 @@ package serg.chuprin.finances.feature.dashboard.presentation.model.store
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import serg.chuprin.finances.core.api.domain.model.DashboardDataPeriodChangeDirection
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.presentation.model.DataPeriodUi
 import serg.chuprin.finances.core.api.presentation.model.builder.DataPeriodTypePopupMenuCellsBuilder
@@ -14,6 +13,7 @@ import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
 import serg.chuprin.finances.core.mvi.invoke
 import serg.chuprin.finances.feature.dashboard.R
+import serg.chuprin.finances.feature.dashboard.domain.model.DashboardDataPeriodChangeDirection
 import serg.chuprin.finances.feature.dashboard.domain.usecase.ChangeDashboardDataPeriodUseCase
 import serg.chuprin.finances.feature.dashboard.domain.usecase.ChangeDataPeriodTypeForDashboardUseCase
 import serg.chuprin.finances.feature.dashboard.domain.usecase.RestoreDefaultDashboardDataPeriodUseCase

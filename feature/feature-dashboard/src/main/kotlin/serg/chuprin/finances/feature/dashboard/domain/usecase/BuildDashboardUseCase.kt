@@ -2,9 +2,9 @@ package serg.chuprin.finances.feature.dashboard.domain.usecase
 
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
-import serg.chuprin.finances.core.api.domain.model.Dashboard
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.feature.dashboard.domain.builder.DashboardWidgetBuilder
+import serg.chuprin.finances.feature.dashboard.domain.model.Dashboard
 import serg.chuprin.finances.feature.dashboard.domain.repository.DashboardDataPeriodRepository
 import javax.inject.Inject
 
@@ -34,7 +34,10 @@ class BuildDashboardUseCase @Inject constructor(
                 }
                 combine(flows) { arr ->
                     arr.fold(
-                        Dashboard(currentUser, currentDataPeriod = currentPeriod),
+                        Dashboard(
+                            currentUser,
+                            currentDataPeriod = currentPeriod
+                        ),
                         { dashboard, widget ->
                             dashboard.copy(widgets = dashboard.widgets.add(widget))
                         }

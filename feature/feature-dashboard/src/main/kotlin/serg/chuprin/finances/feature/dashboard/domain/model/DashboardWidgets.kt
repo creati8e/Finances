@@ -1,5 +1,6 @@
-package serg.chuprin.finances.core.api.domain.model
+package serg.chuprin.finances.feature.dashboard.domain.model
 
+import serg.chuprin.finances.core.api.domain.model.MoneyAccountBalances
 import java.util.*
 
 /**
@@ -18,10 +19,11 @@ class DashboardWidgets :
     }
 
     fun add(newWidget: DashboardWidget): DashboardWidgets {
-        return DashboardWidgets().apply {
-            putAll(this@DashboardWidgets)
-            put(newWidget.type, newWidget)
-        }
+        return DashboardWidgets()
+            .apply {
+                putAll(this@DashboardWidgets)
+                put(newWidget.type, newWidget)
+            }
     }
 
     override fun hashCode(): Int = entries.hashCode()

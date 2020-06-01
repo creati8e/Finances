@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
-import serg.chuprin.finances.core.api.domain.model.DashboardWidget
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.User
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
@@ -17,6 +16,7 @@ import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.model.transaction.TransactionType
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.api.extensions.toDateUTC
+import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
 import strikt.api.expectThat
 import strikt.assertions.isEqualTo
 import java.math.BigDecimal
