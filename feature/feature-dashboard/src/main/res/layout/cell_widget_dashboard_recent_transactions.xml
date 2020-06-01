@@ -21,7 +21,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/dashboard_recent_transactions_subtitle" />
+        android:text="@string/dashboard_recent_transactions_widget_subtitle" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recentTransactionsRecyclerView"
@@ -46,7 +46,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:tag="@string/transition_dashboard_recent_transactions_to_transactions_report"
-        android:text="@string/dashboard_recent_transactions_show_more"
+        android:text="@string/dashboard_recent_transactions_widget_show_more"
         android:textColor="?android:textColorPrimary"
         android:textSize="12sp"
         android:transitionName="@string/transition_dashboard_recent_transactions_to_transactions_report"

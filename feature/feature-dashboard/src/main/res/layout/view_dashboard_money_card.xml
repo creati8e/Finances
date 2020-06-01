@@ -27,7 +27,7 @@
             style="@style/TextAppearance.MaterialComponents.Subtitle2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="@string/dashboard_header_expenses" />
+            tools:text="@string/dashboard_balance_widget_expenses" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/amountTextView"

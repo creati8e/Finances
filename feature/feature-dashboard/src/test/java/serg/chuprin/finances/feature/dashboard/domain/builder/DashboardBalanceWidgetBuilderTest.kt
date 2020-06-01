@@ -26,20 +26,20 @@ import java.util.*
 /**
  * Created by Sergey Chuprin on 17.04.2020.
  */
-object DashboardHeaderWidgetBuilderTest : Spek({
+object DashboardBalanceWidgetBuilderTest : Spek({
 
-    Feature("Dashboard header widget builder") {
+    Feature("Dashboard balance widget builder") {
 
         Scenario("Building widget") {
 
             val transactionRepository = mockk<TransactionRepository>()
-            val widgetBuilder = DashboardHeaderWidgetBuilder(transactionRepository)
+            val widgetBuilder = DashboardBalanceWidgetBuilder(transactionRepository)
 
             val currentUser = createTestUser()
             val currentPeriod = DataPeriod.from(currentUser.dataPeriodType)
 
-            lateinit var widget: DashboardWidget.Header
-            lateinit var flow: Flow<DashboardWidget.Header>
+            lateinit var widget: DashboardWidget.Balance
+            lateinit var flow: Flow<DashboardWidget.Balance>
 
             every {
                 transactionRepository.userTransactionsFlow(currentUser.id)

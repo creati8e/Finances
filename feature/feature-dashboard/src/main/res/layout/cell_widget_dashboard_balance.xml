@@ -18,7 +18,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="@string/dashboard_header_title_balance"
+        android:text="@string/dashboard_balance_widget_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -58,7 +58,7 @@
             style="@style/TextAppearance.MaterialComponents.Headline6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/dashboard_header_title_current_period"
+            android:text="@string/dashboard_balance_widget_title_current_period"
             android:textSize="18sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -122,7 +122,7 @@
         app:layout_constraintEnd_toStartOf="@id/incomesCardView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/currentPeriodLayout"
-        app:titleText="@string/dashboard_header_expenses" />
+        app:titleText="@string/dashboard_balance_widget_expenses" />
 
     <serg.chuprin.finances.feature.dashboard.presentation.view.widget.DashboardMoneyCardView
         android:id="@+id/incomesCardView"
@@ -136,6 +136,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/expensesCardView"
         app:layout_constraintTop_toBottomOf="@+id/currentPeriodLayout"
-        app:titleText="@string/dashboard_header_incomes" />
+        app:titleText="@string/dashboard_balance_widget_incomes" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

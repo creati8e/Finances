@@ -5,7 +5,7 @@ import dagger.Module
 import dagger.multibindings.IntoSet
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.feature.dashboard.data.repository.DashboardDataPeriodRepositoryImpl
-import serg.chuprin.finances.feature.dashboard.domain.builder.DashboardHeaderWidgetBuilder
+import serg.chuprin.finances.feature.dashboard.domain.builder.DashboardBalanceWidgetBuilder
 import serg.chuprin.finances.feature.dashboard.domain.builder.DashboardMoneyAccountsWidgetBuilder
 import serg.chuprin.finances.feature.dashboard.domain.builder.DashboardRecentTransactionsWidgetBuilder
 import serg.chuprin.finances.feature.dashboard.domain.builder.DashboardWidgetBuilder
@@ -27,8 +27,8 @@ interface DashboardModule {
     // region Widget builders.
 
     @[Binds ScreenScope IntoSet]
-    fun bindDashboardHeaderWidgetBuilder(
-        impl: DashboardHeaderWidgetBuilder
+    fun bindDashboardBalanceWidgetBuilder(
+        impl: DashboardBalanceWidgetBuilder
     ): DashboardWidgetBuilder<*>
 
     @[Binds ScreenScope IntoSet]
@@ -52,8 +52,8 @@ interface DashboardModule {
     // region Widget cell builders.
 
     @[Binds ScreenScope IntoSet]
-    fun bindDashboardHeaderWidgetCellBuilder(
-        impl: DashboardHeaderWidgetCellBuilder
+    fun bindDashboardBalanceWidgetCellBuilder(
+        impl: DashboardBalanceWidgetCellBuilder
     ): DashboardWidgetCellBuilder
 
     @[Binds ScreenScope IntoSet]

@@ -6,7 +6,7 @@
 
     android:orientation="vertical">
 
-    <include layout="@layout/cell_widget_dashboard_header" />
+    <include layout="@layout/cell_widget_dashboard_balance" />
 
     <include layout="@layout/cell_widget_dashboard_recent_transactions" />
 

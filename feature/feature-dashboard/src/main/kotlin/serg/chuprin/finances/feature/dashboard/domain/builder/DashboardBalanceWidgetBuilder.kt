@@ -14,14 +14,14 @@ import javax.inject.Inject
 /**
  * Created by Sergey Chuprin on 17.04.2020.
  */
-class DashboardHeaderWidgetBuilder @Inject constructor(
+class DashboardBalanceWidgetBuilder @Inject constructor(
     private val transactionRepository: TransactionRepository
-) : DashboardWidgetBuilder<DashboardWidget.Header> {
+) : DashboardWidgetBuilder<DashboardWidget.Balance> {
 
     override fun build(
         currentUser: User,
         currentPeriod: DataPeriod
-    ): Flow<DashboardWidget.Header> {
+    ): Flow<DashboardWidget.Balance> {
         return combine(
             flowOf(currentUser),
             flowOf(currentPeriod),
@@ -31,7 +31,7 @@ class DashboardHeaderWidgetBuilder @Inject constructor(
                 dataPeriod = dataPeriod,
                 transactions = allTransactions
             )
-            DashboardWidget.Header(
+            DashboardWidget.Balance(
                 balance = balanceAmount,
                 dataPeriod = dataPeriod,
                 currency = user.defaultCurrency,

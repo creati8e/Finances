@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/dashboard_categories_subtitle" />
+        android:text="@string/dashboard_categories_widget_subtitle" />
 
     <ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
         android:id="@+id/pageIndicator"

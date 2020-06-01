@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="dashboard_recent_transactions_subtitle">Recent transactions</string>
-    <string name="dashboard_recent_transactions_show_more">Show more</string>
-    <string name="dashboard_recent_transactions_no_transactions">No transactions</string>
+    <string name="dashboard_recent_transactions_widget_subtitle">Recent transactions</string>
+    <string name="dashboard_recent_transactions_widget_show_more">Show more</string>
+    <string name="dashboard_recent_transactions_widget_no_transactions">No transactions</string>
 
-    <string name="dashboard_header_title_balance">Balance</string>
-    <string name="dashboard_header_incomes">Incomes</string>
-    <string name="dashboard_header_expenses">Expenses</string>
-    <string name="dashboard_header_title_current_period">Current period</string>
+    <string name="dashboard_balance_widget_title">Balance</string>
+    <string name="dashboard_balance_widget_incomes">Incomes</string>
+    <string name="dashboard_balance_widget_expenses">Expenses</string>
+    <string name="dashboard_balance_widget_title_current_period">Current period</string>
 
-    <string name="dashboard_money_accounts_subtitle">My accounts</string>
-    <string name="dashboard_money_accounts_no_accounts">No accounts</string>
+    <string name="dashboard_money_accounts_widget_subtitle">My accounts</string>
+    <string name="dashboard_money_accounts_widget_no_accounts">No accounts</string>
 
-    <string name="dashboard_categories_subtitle">Categories</string>
-    <string name="dashboard_categories_other">Other</string>
-    <string name="dashboard_categories_zero_data_title">No categories in current period</string>
+    <string name="dashboard_categories_widget_subtitle">Categories</string>
+    <string name="dashboard_categories_widget_other_categories">Other</string>
+    <string name="dashboard_categories_widget_zero_data_title">No categories in current period</string>
 </resources>

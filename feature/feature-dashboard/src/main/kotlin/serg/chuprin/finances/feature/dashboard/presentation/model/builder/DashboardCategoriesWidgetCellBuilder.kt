@@ -96,7 +96,7 @@ class DashboardCategoriesWidgetCellBuilder @Inject constructor(
         page: DashboardCategoriesWidgetPage,
         currency: Currency
     ): DashboardCategoryChipCell {
-        val name = getString(R.string.dashboard_categories_other)
+        val name = getString(R.string.dashboard_categories_widget_other_categories)
         val formattedAmount = amountFormatter.format(page.otherAmount, currency)
         return DashboardCategoryChipCell(
             category = null,

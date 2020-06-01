@@ -18,12 +18,12 @@ sealed class DashboardWidgetCell(
         override val widget: DashboardWidget.MoneyAccounts
     ) : DashboardWidgetCell(widget)
 
-    data class Header(
+    data class Balance(
         val balance: String,
         val currentPeriod: String,
         val expensesAmount: String,
         val incomesAmount: String,
-        override val widget: DashboardWidget.Header
+        override val widget: DashboardWidget.Balance
     ) : DashboardWidgetCell(widget)
 
     data class RecentTransactions(

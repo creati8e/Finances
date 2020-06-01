@@ -7,7 +7,7 @@ import serg.chuprin.finances.feature.dashboard.presentation.model.store.Dashboar
 import serg.chuprin.finances.feature.dashboard.presentation.model.viewmodel.DashboardViewModel
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.categories.DashboardCategoriesWidgetCellRenderer
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.diff.DashboardAdapterDiffCallback
-import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.header.DashboardHeaderWidgetCellRenderer
+import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.balance.DashboardBalanceWidgetCellRenderer
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.moneyaccounts.DashboardMoneyAccountsWidgetCellRenderer
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.transactions.DashboardRecentTransactionsWidgetCellRenderer
 
@@ -17,7 +17,7 @@ import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.transac
 fun dashboard(viewModel: DashboardViewModel): DiffMultiViewAdapter<BaseCell> {
     return DiffMultiViewAdapter(DashboardAdapterDiffCallback()).apply {
         registerRenderer(
-            DashboardHeaderWidgetCellRenderer(
+            DashboardBalanceWidgetCellRenderer(
                 clickOnCurrentPeriod = {
                     viewModel.dispatchIntent(DashboardIntent.ClickOnCurrentPeriod)
                 },

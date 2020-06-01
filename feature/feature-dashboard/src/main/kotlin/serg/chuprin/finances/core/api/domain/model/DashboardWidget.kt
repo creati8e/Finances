@@ -13,7 +13,7 @@ sealed class DashboardWidget(val type: Type) {
 
     enum class Type(val order: Int) {
         MONEY_ACCOUNTS(1),
-        HEADER(2),
+        BALANCE(2),
         RECENT_TRANSACTIONS(3),
         CATEGORIES(4)
     }
@@ -25,13 +25,13 @@ sealed class DashboardWidget(val type: Type) {
     /**
      * Contains current period, balance and money statistic.
      */
-    data class Header(
+    data class Balance(
         val dataPeriod: DataPeriod,
         val balance: BigDecimal,
         val currency: Currency,
         val currentPeriodIncomes: BigDecimal,
         val currentPeriodExpenses: BigDecimal
-    ) : DashboardWidget(type = Type.HEADER)
+    ) : DashboardWidget(type = Type.BALANCE)
 
     data class RecentTransactions(
         val currency: Currency,

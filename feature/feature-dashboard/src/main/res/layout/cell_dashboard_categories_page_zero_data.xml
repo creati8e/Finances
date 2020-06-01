@@ -10,6 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="@string/dashboard_categories_zero_data_title" />
+        android:text="@string/dashboard_categories_widget_zero_data_title" />
 
 </FrameLayout>

@@ -11,7 +11,7 @@ import javax.inject.Inject
 /**
  * Created by Sergey Chuprin on 17.04.2020.
  */
-class DashboardHeaderWidgetCellBuilder @Inject constructor(
+class DashboardBalanceWidgetCellBuilder @Inject constructor(
     private val amountFormatter: AmountFormatter,
     private val dataPeriodFormatter: DataPeriodFormatter
 ) : DashboardWidgetCellBuilder {
@@ -19,10 +19,10 @@ class DashboardHeaderWidgetCellBuilder @Inject constructor(
     override fun build(
         widget: DashboardWidget
     ): DashboardWidgetCell? {
-        if (widget !is DashboardWidget.Header) {
+        if (widget !is DashboardWidget.Balance) {
             return null
         }
-        return DashboardWidgetCell.Header(
+        return DashboardWidgetCell.Balance(
             widget = widget,
             balance = formatAmount(widget.balance, widget.currency),
             incomesAmount = formatAmount(widget.currentPeriodIncomes, widget.currency),
