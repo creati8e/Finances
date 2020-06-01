@@ -15,6 +15,7 @@ import serg.chuprin.finances.feature.dashboard.R
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.DashboardCategoryChipCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.page.DashboardCategoriesPageCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.page.DashboardCategoriesPageZeroDataCell
+import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.categories.diff.DashboardCategoriesPageChangedPayload
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.categories.diff.DashboardCategoryChipCellChangedPayload
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.categories.diff.DashboardCategoryChipCellsDiffCallback
 
@@ -79,13 +80,17 @@ class DashboardCategoryPageCellRenderer(
     }
 
     override fun bindView(holder: ContainerHolder, model: DashboardCategoriesPageCell) {
-        categoryCellsAdapter.setItems(model.categoryCells)
-        holder.pieChart.setData(
-            animate = false,
-            secondaryText = model.label,
-            primaryText = model.totalAmount,
-            pieChartData = PieChartData(model.chartParts)
-        )
+        bindData(holder, model)
+    }
+
+    override fun bindView(
+        holder: ContainerHolder,
+        model: DashboardCategoriesPageCell,
+        payloads: MutableList<Any>
+    ) {
+        if (DashboardCategoriesPageChangedPayload in payloads) {
+            bindData(holder, model)
+        }
     }
 
     override fun onVhCreated(
@@ -99,6 +104,19 @@ class DashboardCategoryPageCellRenderer(
                 justifyContent = com.google.android.flexbox.JustifyContent.CENTER
             }
         }
+    }
+
+    private fun bindData(
+        holder: ContainerHolder,
+        model: DashboardCategoriesPageCell
+    ) {
+        categoryCellsAdapter.setItems(model.categoryCells)
+        holder.pieChart.setData(
+            animate = false,
+            secondaryText = model.label,
+            primaryText = model.totalAmount,
+            pieChartData = PieChartData(model.chartParts)
+        )
     }
 
     private fun handleOnCategoryChipClick(adapterPosition: Int) {
