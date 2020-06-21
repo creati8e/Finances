@@ -24,15 +24,11 @@ jobs:
           java-version: 1.8
 
       - name: Unit tests
-        run: |
-          sudo chmod +x ./gradlew
-          ./gradlew testDevUnitTest --stacktrace --debug
+        run: ./gradlew testDevUnitTest --stacktrace --debug
         continue-on-error: true
 
       - name: Build debug APK
-        run: |
-          sudo chmod +x ./gradlew
-          ./gradlew assembleDebug --stacktrace
+        run:  ./gradlew assembleDebug --stacktrace
 
       - name: Upload APK to artifacts
         uses: actions/upload-artifact@v2
