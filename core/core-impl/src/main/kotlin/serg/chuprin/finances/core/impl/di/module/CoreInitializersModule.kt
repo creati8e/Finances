@@ -5,6 +5,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoSet
 import serg.chuprin.finances.core.api.di.Initializer
+import serg.chuprin.finances.core.api.di.scopes.AppScope
+import serg.chuprin.finances.core.api.presentation.model.AppDebugMenu
 import serg.chuprin.finances.core.firebase.FirebaseInitializer
 import serg.chuprin.finances.core.impl.BuildConfig
 import serg.chuprin.finances.core.impl.di.initializer.AppDebugMenuInitializer
@@ -36,12 +38,16 @@ internal interface CoreInitializersModule {
         }
     }
 
-    @[Binds IntoSet]
-    fun bindTimberInitializer(initializer: TimberInitializer): Initializer
-
     @Binds
     fun bindAppInitializer(initializer: AppInitializer): Initializer
 
-    @Binds
+    @[Binds IntoSet]
+    fun bindTimberInitializer(initializer: TimberInitializer): Initializer
+
+    @[Binds AppScope]
+    fun bindAppDebugMenu(initializer: AppDebugMenuInitializer): AppDebugMenu
+
+    @[Binds AppScope]
     fun bindAppDebugMenuInitializer(initializer: AppDebugMenuImpl): AppDebugMenuInitializer
+
 }

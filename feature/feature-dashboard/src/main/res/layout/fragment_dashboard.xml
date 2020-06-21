@@ -18,6 +18,18 @@
             android:paddingStart="16dp"
             android:paddingEnd="16dp">
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/debugImageView"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bg_selection_rounded_transparent"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="6dp"
+                android:src="@drawable/ic_debug" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/logoTextView"
                 style="@style/TextAppearance.MaterialComponents.Headline6"
@@ -27,6 +39,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentBottom="true"
                 android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/debugImageView"
                 android:gravity="center"
                 android:text="FINANCES"
                 android:textAlignment="center"

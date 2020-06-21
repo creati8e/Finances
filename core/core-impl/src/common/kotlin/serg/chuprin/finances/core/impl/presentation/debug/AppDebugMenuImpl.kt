@@ -99,6 +99,8 @@ internal class AppDebugMenuImpl @Inject constructor(
         }
     }
 
+    override fun open() = Beagle.fetch()
+
     private suspend fun createTransaction(categoryType: TransactionCategoryType) {
         val currentUser = userRepository.getCurrentUser()
 
