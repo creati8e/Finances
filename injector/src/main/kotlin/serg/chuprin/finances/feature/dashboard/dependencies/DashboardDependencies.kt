@@ -12,6 +12,7 @@ import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.formatter.CategoryColorFormatter
 import serg.chuprin.finances.core.api.presentation.formatter.DataPeriodFormatter
 import serg.chuprin.finances.core.api.presentation.formatter.DateTimeFormatter
+import serg.chuprin.finances.core.api.presentation.model.AppDebugMenu
 import serg.chuprin.finances.core.api.presentation.model.builder.DataPeriodTypePopupMenuCellsBuilder
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.api.presentation.navigation.DashboardNavigation
@@ -21,6 +22,7 @@ import serg.chuprin.finances.core.api.presentation.navigation.DashboardNavigatio
  */
 interface DashboardDependencies {
 
+    val appDebugMenu: AppDebugMenu
     val dashboardNavigation: DashboardNavigation
 
     val userRepository: UserRepository
