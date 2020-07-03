@@ -9,7 +9,7 @@ object BuildScript {
 
     object Versions {
         const val KOTLIN_VER = "1.3.72"
-        const val NAVIGATION_VER = "2.3.0-beta01"
+        const val NAVIGATION_VER = "2.3.0"
     }
 
     object Plugins {
@@ -42,7 +42,7 @@ object Libraries {
 
         object Lifecycle {
 
-            private const val VER = "2.3.0-alpha03"
+            private const val VER = "2.3.0-alpha05"
             private const val ARTIFACT = "androidx.lifecycle"
 
             val DEPENDENCIES = listOf(
@@ -53,13 +53,13 @@ object Libraries {
             )
         }
 
-        const val CORE = "androidx.core:core-ktx:1.4.0-alpha01"
+        const val CORE = "androidx.core:core-ktx:1.5.0-alpha01"
 
         const val APPCOMPAT = "androidx.appcompat:appcompat:1.3.0-alpha01"
-        const val FRAGMENT = "androidx.fragment:fragment-ktx:1.3.0-alpha05"
+        const val FRAGMENT = "androidx.fragment:fragment-ktx:1.3.0-alpha06"
         const val VIEWPAGER = "androidx.viewpager2:viewpager2:1.1.0-alpha01"
         const val DESIGN = "com.google.android.material:material:1.2.0-alpha05"
-        const val CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:2.0.0-beta6"
+        const val CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:2.0.0-beta7"
 
         object Navigation {
 
@@ -103,7 +103,7 @@ object Libraries {
 
     object Dagger {
 
-        private const val VER = "2.28"
+        private const val VER = "2.28.1"
         private const val ARTIFACT = "com.google.dagger"
 
         const val COMPILER = "$ARTIFACT:dagger-compiler:$VER"
