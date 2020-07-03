@@ -67,7 +67,7 @@ jobs:
           path: app/build/outputs/apk/debug/app-debug.apk
 
       - name: Upload artifact to App Center
-        uses: wzieba/AppCenter-Github-Action@v1.0.0
+        uses: wzieba/AppCenter-Github-Action@v1.1.1
         with:
           appName: creati8e/Finances
           token: ${{secrets.APP_CENTER_TOKEN}}
