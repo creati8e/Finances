@@ -10,7 +10,10 @@ import serg.chuprin.finances.injector.Injector
 /**
  * Created by Sergey Chuprin on 01.06.2020.
  */
-@[ScreenScope Component(dependencies = [MoneyAccountCreationDependencies::class])]
+@[ScreenScope Component(
+    modules = [MoneyAccountCreationModule::class],
+    dependencies = [MoneyAccountCreationDependencies::class]
+)]
 interface MoneyAccountCreationComponent : ViewModelComponent<MoneyAccountCreationViewModel> {
 
     companion object {

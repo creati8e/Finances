@@ -16,6 +16,7 @@ import serg.chuprin.finances.core.impl.di.module.*
 @Component(
     modules = [
         CoreUtilsModule::class,
+        CoreStoreModule::class,
         CoreGatewaysModule::class,
         CoreServicesModule::class,
         CoreManagersModule::class,
@@ -24,8 +25,7 @@ import serg.chuprin.finances.core.impl.di.module.*
         CoreFormattersModule::class,
         CorePreferencesModule::class,
         CoreRepositoriesModule::class,
-        CoreInitializersModule::class,
-        CoreFeatureStoreModule::class
+        CoreInitializersModule::class
     ],
     // Navigation is implemented in :app module.
     dependencies = [CoreNavigationProvider::class]

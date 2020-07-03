@@ -9,8 +9,8 @@ interface CoreDependenciesProvider :
     CoreManagerProvider,
     CoreServicesProvider,
     CoreUseCasesProvider,
+    CoreStoreProvider,
     CoreBuildersProvider,
     CoreFormattersProvider,
     CoreNavigationProvider,
-    CoreFeatureStoreProvider,
     CoreRepositoriesProvider
