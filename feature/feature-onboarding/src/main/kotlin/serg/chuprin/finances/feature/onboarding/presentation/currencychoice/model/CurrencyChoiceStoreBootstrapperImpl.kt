@@ -1,25 +1,24 @@
-package serg.chuprin.finances.feature.onboarding.presentation.currencychoice.model.store
+package serg.chuprin.finances.feature.onboarding.presentation.currencychoice.model
 
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import serg.chuprin.finances.core.api.domain.repository.CurrencyRepository
 import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
-import serg.chuprin.finances.core.mvi.bootstrapper.StoreBootstrapper
+import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStoreBootstrapper
+import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStoreInitialParams
 import javax.inject.Inject
 
 /**
- * Created by Sergey Chuprin on 06.04.2020.
+ * Created by Sergey Chuprin on 03.07.2020.
  */
-class CurrencyChoiceOnboardingStoreBootstrapper @Inject constructor(
+class CurrencyChoiceStoreBootstrapperImpl @Inject constructor(
     private val currencyRepository: CurrencyRepository
-) : StoreBootstrapper<CurrencyChoiceOnboardingAction> {
+) : CurrencyChoiceStoreBootstrapper {
 
-    @OptIn(FlowPreview::class)
-    override fun invoke(): Flow<CurrencyChoiceOnboardingAction> {
+    override fun bootstrap(): Flow<CurrencyChoiceStoreInitialParams> {
         return flowOfSingleValue {
             val defaultCurrency = currencyRepository.getDefaultCurrency()
             val availableCurrencies = currencyRepository.getAvailableCurrencies()
-            CurrencyChoiceOnboardingAction.SetCurrenciesParams(
+            CurrencyChoiceStoreInitialParams(
                 currentCurrency = defaultCurrency,
                 availableCurrencies = availableCurrencies
             )

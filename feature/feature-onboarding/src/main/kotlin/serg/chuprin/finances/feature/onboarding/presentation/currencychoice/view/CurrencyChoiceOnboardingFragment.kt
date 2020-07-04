@@ -12,6 +12,7 @@ import com.google.android.material.transition.MaterialArcMotion
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialSharedAxis
 import kotlinx.android.synthetic.main.fragment_onboarding_currency_choice.*
+import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceIntent
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeGone
@@ -52,16 +53,16 @@ class CurrencyChoiceOnboardingFragment :
         animateFab(savedInstanceState, view)
 
         currencyChoiceView.onCurrencyCellChosen = { cell ->
-            viewModel.dispatchIntent(CurrencyChoiceOnboardingIntent.ChooseCurrency(cell))
+            viewModel.dispatch(CurrencyChoiceIntent.ChooseCurrency(cell))
         }
         currencyChoiceView.onCloseClicked = {
-            viewModel.dispatchIntent(CurrencyChoiceOnboardingIntent.CloseCurrencyPicker)
+            viewModel.dispatch(CurrencyChoiceIntent.CloseCurrencyPicker)
         }
         currencyChoiceView.onSearchQueryChanged = { searchQuery ->
-            viewModel.dispatchIntent(CurrencyChoiceOnboardingIntent.SearchCurrencies(searchQuery))
+            viewModel.dispatch(CurrencyChoiceIntent.SearchCurrencies(searchQuery))
         }
         chosenCurrencyTextView.onClick {
-            viewModel.dispatchIntent(CurrencyChoiceOnboardingIntent.ClickOnCurrencyPicker)
+            viewModel.dispatch(CurrencyChoiceIntent.ClickOnCurrencyPicker)
         }
         doneButton.onClick {
             viewModel.dispatchIntent(CurrencyChoiceOnboardingIntent.ClickOnDoneButton)

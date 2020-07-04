@@ -8,5 +8,5 @@ import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.mode
 /**
  * Created by Sergey Chuprin on 06.04.2020.
  */
-@[ScreenScope Subcomponent]
+@[ScreenScope Subcomponent(modules = [CurrencyChoiceOnboardingModule::class])]
 interface CurrencyChoiceOnboardingComponent : ViewModelComponent<CurrencyChoiceOnboardingViewModel>

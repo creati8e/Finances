@@ -9,17 +9,17 @@ import java.util.*
  * Created by Sergey Chuprin on 06.04.2020.
  */
 data class CurrencyChoiceState(
-    val chosenCurrency: Currency? = null,
-    val currencyPickerIsVisible: Boolean = false,
-    val availableCurrencies: List<Currency> = emptyList(),
-    val chosenCurrencyDisplayName: String = EMPTY_STRING,
+    override val chosenCurrency: Currency? = null,
+    override val currencyPickerIsVisible: Boolean = false,
+    override val availableCurrencies: List<Currency> = emptyList(),
+    override val chosenCurrencyDisplayName: String = EMPTY_STRING,
     /**
      * Current cells list could be filtered.
      */
-    val currentCells: List<BaseCell> = emptyList(),
+    override val currentCells: List<BaseCell> = emptyList(),
     /**
      * Default list contains all cells unfiltered.
      * It is needed to replace current cells list after currency picker closing.
      */
-    val defaultCurrencyCells: List<CurrencyCell> = emptyList()
-)
+    override val defaultCurrencyCells: List<CurrencyCell> = emptyList()
+) : CurrencyChoiceStateDelegate

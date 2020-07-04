@@ -1,8 +1,19 @@
 package serg.chuprin.finances.feature.onboarding.presentation.currencychoice.model.store
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.launch
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
+import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStore
+import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStoreIntentDispatcher
+import serg.chuprin.finances.core.mvi.bootstrapper.BypassStoreBootstrapper
 import serg.chuprin.finances.core.mvi.store.BaseStateStore
 import javax.inject.Inject
+
 
 /**
  * Created by Sergey Chuprin on 06.04.2020.
@@ -10,11 +21,27 @@ import javax.inject.Inject
 @ScreenScope
 class CurrencyChoiceOnboardingStore @Inject constructor(
     executor: CurrencyChoiceOnboardingActionExecutor,
-    bootstrapper: CurrencyChoiceOnboardingStoreBootstrapper
+    private val currencyChoiceStore: CurrencyChoiceStore
 ) : BaseStateStore<CurrencyChoiceOnboardingIntent, CurrencyChoiceOnboardingEffect, CurrencyChoiceOnboardingAction, CurrencyChoiceOnboardingState, CurrencyChoiceOnboardingEvent>(
     CurrencyChoiceOnboardingState(),
     CurrencyChoiceOnboardingStateReducer(),
-    bootstrapper,
+    BypassStoreBootstrapper(),
     executor,
     CurrencyChoiceOnboardingIntentToActionMapper()
-)
+), CurrencyChoiceStoreIntentDispatcher by currencyChoiceStore {
+
+    @OptIn(InternalCoroutinesApi::class)
+    override fun start(intentsFlow: Flow<CurrencyChoiceOnboardingIntent>, scope: CoroutineScope) {
+        currencyChoiceStore.start(emptyFlow(), scope)
+        super.start(intentsFlow, scope)
+        scope.launch {
+            currencyChoiceStore
+                .stateFlow
+                .collect {
+                    ensureActive()
+                    dispatchAction(CurrencyChoiceOnboardingAction.UpdateCurrencyChoiceState(it))
+                }
+        }
+    }
+
+}

@@ -4,6 +4,7 @@ import dagger.Component
 import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
 import serg.chuprin.finances.core.api.domain.repository.*
 import serg.chuprin.finances.core.api.domain.usecase.SearchCurrenciesUseCase
+import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStoreFactory
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
@@ -21,6 +22,8 @@ interface OnboardingFeatureDependencies {
     val amountFormatter: AmountFormatter
 
     val onboardingNavigation: OnboardingNavigation
+
+    val currencyChoiceStoreFactory: CurrencyChoiceStoreFactory
 
     // region Repositories.
 

@@ -5,9 +5,9 @@ import serg.chuprin.adapter.Click
 import serg.chuprin.adapter.ContainerHolder
 import serg.chuprin.adapter.ContainerRenderer
 import serg.chuprin.adapter.LongClick
+import serg.chuprin.finances.core.api.presentation.currencychoice.model.cells.CurrencyCell
 import serg.chuprin.finances.core.api.presentation.view.extensions.onViewClick
 import serg.chuprin.finances.feature.onboarding.R
-import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.model.cells.CurrencyCell
 
 /**
  * Created by Sergey Chuprin on 05.04.2020.
