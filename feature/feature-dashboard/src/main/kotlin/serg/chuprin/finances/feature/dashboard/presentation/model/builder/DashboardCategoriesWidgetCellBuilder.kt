@@ -102,7 +102,7 @@ class DashboardCategoriesWidgetCellBuilder @Inject constructor(
             category = null,
             chipText = "$name $formattedAmount",
             colorInt = getOtherCategoriesColor(),
-            transitionName = transitionNameBuilder.buildForTransactionsReport(null)
+            transitionName = transitionNameBuilder.buildForTransactionsReportOtherCategory(page.transactionType)
         )
     }
 

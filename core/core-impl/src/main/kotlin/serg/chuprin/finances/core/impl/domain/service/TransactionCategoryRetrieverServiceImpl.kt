@@ -41,9 +41,25 @@ internal class TransactionCategoryRetrieverServiceImpl @Inject constructor(
             }
     }
 
-    override fun userTransactionsFlow(
+    override fun recentUserTransactionsInPeriodFlow(
         userId: Id,
         count: Int,
+        dataPeriod: DataPeriod
+    ): Flow<TransactionCategoriesMap> {
+        return transactionRepository
+            .recentUserTransactionsFlow(userId, count, dataPeriod)
+            .flatMapLatest { transactions ->
+                combine(
+                    flowOf(transactions),
+                    categoryRepository.categoriesFlow(transactions.categoryIds)
+                ) { t1, t2 ->
+                    transactionWithCategoriesLinker.linkTransactionsWithCategories(t1, t2)
+                }
+            }
+    }
+
+    override fun userTransactionsFlow(
+        userId: Id,
         startDate: LocalDateTime?,
         endDate: LocalDateTime?,
         includedCategoryIds: Set<Id>,
@@ -51,12 +67,11 @@ internal class TransactionCategoryRetrieverServiceImpl @Inject constructor(
     ): Flow<Map<Transaction, TransactionCategoryWithParent?>> {
         return transactionRepository
             .userTransactionsFlow(
-                count = count,
                 userId = userId,
-                endDate = endDate,
                 startDate = startDate,
-                transactionType = transactionType,
-                includedCategoryIds = includedCategoryIds
+                endDate = endDate,
+                includedCategoryIds = includedCategoryIds,
+                transactionType = transactionType
             )
             .flatMapLatest { transactions ->
                 combine(
@@ -76,8 +91,8 @@ internal class TransactionCategoryRetrieverServiceImpl @Inject constructor(
         return transactionRepository
             .userTransactionsFlow(
                 userId = userId,
-                endDate = dataPeriod.endDate,
                 startDate = dataPeriod.startDate,
+                endDate = dataPeriod.endDate,
                 transactionType = transactionType
             )
             .flatMapLatest { transactions ->

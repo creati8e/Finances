@@ -7,6 +7,7 @@ import com.google.firebase.firestore.Query
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import serg.chuprin.finances.core.api.domain.model.Id
+import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.extensions.toDateUTC
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionFieldsContract.COLLECTION_NAME
@@ -32,20 +33,30 @@ internal class FirebaseTransactionDataSource @Inject constructor(
             .map { querySnapshot -> querySnapshot.documents }
     }
 
-    fun userTransactionsFlow(
+    fun recentUserTransactionsFlow(
         userId: Id,
         count: Int,
+        dataPeriod: DataPeriod
+    ): Flow<List<DocumentSnapshot>> {
+        return getUserTransactionsCollection(userId)
+            .filterByDate(
+                startDate = dataPeriod.startDate,
+                endDate = dataPeriod.endDate
+            )
+            .orderBy(FIELD_DATE, Query.Direction.DESCENDING)
+            .limit(count.toLong())
+            .asFlow()
+            .map { querySnapshot -> querySnapshot.documents }
+    }
+
+    fun userTransactionsFlow(
+        userId: Id,
         startDate: LocalDateTime?,
         endDate: LocalDateTime?
     ): Flow<List<DocumentSnapshot>> {
         return getUserTransactionsCollection(userId)
             .filterByDate(startDate, endDate)
             .orderBy(FIELD_DATE, Query.Direction.DESCENDING)
-            .apply {
-                if (count <= 10000) {
-                    limit(count.toLong())
-                }
-            }
             .asFlow()
             .map { querySnapshot -> querySnapshot.documents }
     }

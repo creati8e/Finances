@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import serg.chuprin.finances.core.api.domain.model.Id
+import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
@@ -25,16 +26,28 @@ internal class TransactionRepositoryImpl @Inject constructor(
         firebaseDataSource.createTransaction(transaction)
     }
 
-    override fun userTransactionsFlow(
+    override fun recentUserTransactionsFlow(
         userId: Id,
         count: Int,
+        dataPeriod: DataPeriod
+    ): Flow<List<Transaction>> {
+        return firebaseDataSource
+            .recentUserTransactionsFlow(userId, count, dataPeriod)
+            .map { transactions ->
+                transactions.mapNotNull(mapper::mapFromSnapshot)
+            }
+            .flowOn(Dispatchers.Default)
+    }
+
+    override fun userTransactionsFlow(
+        userId: Id,
         startDate: LocalDateTime?,
         endDate: LocalDateTime?,
         includedCategoryIds: Set<Id>,
         transactionType: PlainTransactionType?
     ): Flow<List<Transaction>> {
         return firebaseDataSource
-            .userTransactionsFlow(userId, count, startDate, endDate)
+            .userTransactionsFlow(userId, startDate, endDate)
             .map { transactions ->
                 transactions.mapNotNull { snapshot ->
                     mapper.mapFromSnapshot(snapshot)

@@ -29,10 +29,9 @@ class DashboardRecentTransactionsWidgetBuilder @Inject constructor(
             return null
         }
         return transactionCategoryRetrieverService
-            .userTransactionsFlow(
+            .recentUserTransactionsInPeriodFlow(
                 userId = currentUser.id,
-                endDate = currentPeriod.endDate,
-                startDate = currentPeriod.startDate,
+                dataPeriod = currentPeriod,
                 count = RECENT_TRANSACTIONS_COUNT
             )
             .map { map -> DashboardWidget.RecentTransactions(currentUser.defaultCurrency, map) }

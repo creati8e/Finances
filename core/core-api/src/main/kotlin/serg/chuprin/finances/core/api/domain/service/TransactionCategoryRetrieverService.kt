@@ -19,9 +19,14 @@ interface TransactionCategoryRetrieverService {
 
     fun moneyAccountTransactionsFlow(moneyAccountId: Id): Flow<TransactionCategoriesMap>
 
+    fun recentUserTransactionsInPeriodFlow(
+        userId: Id,
+        count: Int,
+        dataPeriod: DataPeriod
+    ): Flow<TransactionCategoriesMap>
+
     fun userTransactionsFlow(
         userId: Id,
-        count: Int = Int.MAX_VALUE,
         startDate: LocalDateTime? = null,
         endDate: LocalDateTime? = null,
         includedCategoryIds: Set<Id> = emptySet(),
