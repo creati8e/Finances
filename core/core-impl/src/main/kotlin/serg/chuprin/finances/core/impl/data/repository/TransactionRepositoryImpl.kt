@@ -5,12 +5,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.impl.data.datasource.firebase.FirebaseTransactionDataSource
 import serg.chuprin.finances.core.impl.data.mapper.transaction.FirebaseTransactionMapper
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 /**
@@ -28,12 +28,13 @@ internal class TransactionRepositoryImpl @Inject constructor(
     override fun userTransactionsFlow(
         userId: Id,
         count: Int,
-        dataPeriod: DataPeriod?,
+        startDate: LocalDateTime?,
+        endDate: LocalDateTime?,
         includedCategoryIds: Set<Id>,
         transactionType: PlainTransactionType?
     ): Flow<List<Transaction>> {
         return firebaseDataSource
-            .userTransactionsFlow(userId, count, dataPeriod)
+            .userTransactionsFlow(userId, count, startDate, endDate)
             .map { transactions ->
                 transactions.mapNotNull { snapshot ->
                     mapper.mapFromSnapshot(snapshot)

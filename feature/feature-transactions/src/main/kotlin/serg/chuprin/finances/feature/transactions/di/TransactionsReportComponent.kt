@@ -11,7 +11,10 @@ import serg.chuprin.finances.injector.Injector
 /**
  * Created by Sergey Chuprin on 12.05.2020.
  */
-@[ScreenScope Component(dependencies = [TransactionsReportDependencies::class])]
+@[ScreenScope Component(
+    modules = [TransactionsReportModule::class],
+    dependencies = [TransactionsReportDependencies::class]
+)]
 interface TransactionsReportComponent : ViewModelComponent<TransactionsReportViewModel> {
 
     companion object {

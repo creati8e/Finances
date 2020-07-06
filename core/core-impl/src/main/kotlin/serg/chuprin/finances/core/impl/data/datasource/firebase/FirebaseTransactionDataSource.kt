@@ -7,7 +7,6 @@ import com.google.firebase.firestore.Query
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.extensions.toDateUTC
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionFieldsContract.COLLECTION_NAME
@@ -15,6 +14,7 @@ import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.Firebas
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionFieldsContract.FIELD_MONEY_ACCOUNT_ID
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionFieldsContract.FIELD_OWNER_ID
 import serg.chuprin.finances.core.impl.data.mapper.transaction.FirebaseTransactionMapper
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 /**
@@ -35,12 +35,17 @@ internal class FirebaseTransactionDataSource @Inject constructor(
     fun userTransactionsFlow(
         userId: Id,
         count: Int,
-        dataPeriod: DataPeriod?
+        startDate: LocalDateTime?,
+        endDate: LocalDateTime?
     ): Flow<List<DocumentSnapshot>> {
         return getUserTransactionsCollection(userId)
-            .filterByDataPeriod(dataPeriod)
+            .filterByDate(startDate, endDate)
             .orderBy(FIELD_DATE, Query.Direction.DESCENDING)
-            .limit(count.toLong())
+            .apply {
+                if (count <= 10000) {
+                    limit(count.toLong())
+                }
+            }
             .asFlow()
             .map { querySnapshot -> querySnapshot.documents }
     }
@@ -51,12 +56,15 @@ internal class FirebaseTransactionDataSource @Inject constructor(
             .set(transactionMapper.mapToFieldsMap(transaction))
     }
 
-    private fun Query.filterByDataPeriod(dataPeriod: DataPeriod?): Query {
-        if (dataPeriod == null) {
+    private fun Query.filterByDate(
+        startDate: LocalDateTime?,
+        endDate: LocalDateTime?
+    ): Query {
+        if (startDate == null && endDate == null) {
             return this
         }
-        return whereGreaterThanOrEqualTo(FIELD_DATE, dataPeriod.startDate.toDateUTC())
-            .whereLessThanOrEqualTo(FIELD_DATE, dataPeriod.endDate.toDateUTC())
+        return whereGreaterThanOrEqualTo(FIELD_DATE, startDate!!.toDateUTC())
+            .whereLessThanOrEqualTo(FIELD_DATE, endDate!!.toDateUTC())
     }
 
     private fun getUserTransactionsCollection(userId: Id): Query {

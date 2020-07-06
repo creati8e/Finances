@@ -16,6 +16,7 @@ import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.api.domain.service.TransactionCategoryRetrieverService
 import serg.chuprin.finances.core.api.extensions.categoryIds
 import serg.chuprin.finances.core.impl.data.TransactionWithCategoriesLinker
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 /**
@@ -43,7 +44,8 @@ internal class TransactionCategoryRetrieverServiceImpl @Inject constructor(
     override fun userTransactionsFlow(
         userId: Id,
         count: Int,
-        dataPeriod: DataPeriod?,
+        startDate: LocalDateTime?,
+        endDate: LocalDateTime?,
         includedCategoryIds: Set<Id>,
         transactionType: PlainTransactionType?
     ): Flow<Map<Transaction, TransactionCategoryWithParent?>> {
@@ -51,7 +53,8 @@ internal class TransactionCategoryRetrieverServiceImpl @Inject constructor(
             .userTransactionsFlow(
                 count = count,
                 userId = userId,
-                dataPeriod = dataPeriod,
+                endDate = endDate,
+                startDate = startDate,
                 transactionType = transactionType,
                 includedCategoryIds = includedCategoryIds
             )
@@ -73,7 +76,9 @@ internal class TransactionCategoryRetrieverServiceImpl @Inject constructor(
         return transactionRepository
             .userTransactionsFlow(
                 userId = userId,
-                dataPeriod = dataPeriod
+                endDate = dataPeriod.endDate,
+                startDate = dataPeriod.startDate,
+                transactionType = transactionType
             )
             .flatMapLatest { transactions ->
                 combine(
