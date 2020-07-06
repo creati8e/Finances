@@ -13,6 +13,6 @@ import serg.chuprin.finances.core.api.presentation.model.DataPeriodUi
 data class TransactionsReportScreenArguments(
     val categoryId: Id? = null,
     val transitionName: String,
-    val dataPeriod: DataPeriodUi? = null,
+    val dataPeriodUi: DataPeriodUi? = null,
     val plainTransactionType: PlainTransactionType? = null
 ) : Parcelable

@@ -12,7 +12,11 @@ class TransactionsReportStateReducer :
         what: TransactionsReportEffect,
         state: TransactionsReportState
     ): TransactionsReportState {
-        TODO("Not yet implemented")
+        return when (what) {
+            is TransactionsReportEffect.ReportBuilt -> {
+                state.copy(cells = what.cells, filter = what.filter)
+            }
+        }
     }
 
 }

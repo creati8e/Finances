@@ -2,24 +2,19 @@ package serg.chuprin.finances.feature.moneyaccount.details.presentation.model.st
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
-import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
+import serg.chuprin.finances.core.api.domain.model.TransactionsGroupedByDay
 import serg.chuprin.finances.core.api.domain.usecase.MarkMoneyAccountAsFavoriteUseCase
+import serg.chuprin.finances.core.api.presentation.builder.TransactionCellBuilder
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
-import serg.chuprin.finances.core.api.presentation.formatter.CategoryColorFormatter
 import serg.chuprin.finances.core.api.presentation.formatter.DateTimeFormatter
-import serg.chuprin.finances.core.api.presentation.formatter.TransactionCategoryWithParentFormatter
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.cells.DateDividerCell
-import serg.chuprin.finances.core.api.presentation.model.cells.TransactionCell
 import serg.chuprin.finances.core.api.presentation.model.cells.ZeroDataCell
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
 import serg.chuprin.finances.core.mvi.invoke
 import serg.chuprin.finances.feature.moneyaccount.details.R
-import java.time.LocalDate
-import java.util.*
 import javax.inject.Inject
 
 /**
@@ -28,9 +23,8 @@ import javax.inject.Inject
 class MoneyAccountDetailsActionExecutor @Inject constructor(
     private val amountFormatter: AmountFormatter,
     private val dateTimeFormatter: DateTimeFormatter,
-    private val categoryColorFormatter: CategoryColorFormatter,
-    private val markMoneyAccountAsFavoriteUseCase: MarkMoneyAccountAsFavoriteUseCase,
-    private val transactionCategoryWithParentFormatter: TransactionCategoryWithParentFormatter
+    private val transactionCellBuilder: TransactionCellBuilder,
+    private val markMoneyAccountAsFavoriteUseCase: MarkMoneyAccountAsFavoriteUseCase
 ) : StoreActionExecutor<MoneyAccountDetailsAction, MoneyAccountDetailsState, MoneyAccountDetailsEffect, MoneyAccountDetailsEvent> {
 
     override fun invoke(
@@ -70,25 +64,25 @@ class MoneyAccountDetailsActionExecutor @Inject constructor(
             eventConsumer(MoneyAccountDetailsEvent.CloseScreen)
         }
         val moneyAccount = details.moneyAccount
-        val cells = buildCells(moneyAccount.currency, details.transactionsGroupedByDay)
+        val cells = buildCells(details.transactionsGroupedByDay)
         val formattedBalance = amountFormatter.format(
             round = false,
             amount = details.balance,
             currency = moneyAccount.currency
         )
-        val effect = MoneyAccountDetailsEffect.DetailsFormatted(
-            cells = cells,
-            moneyAccount = moneyAccount,
-            formattedBalance = formattedBalance,
-            moneyAccountName = moneyAccount.name,
-            isFavorite = moneyAccount.isFavorite
+        return flowOf(
+            MoneyAccountDetailsEffect.DetailsFormatted(
+                cells = cells,
+                moneyAccount = moneyAccount,
+                formattedBalance = formattedBalance,
+                moneyAccountName = moneyAccount.name,
+                isFavorite = moneyAccount.isFavorite
+            )
         )
-        return flowOf(effect)
     }
 
     private fun buildCells(
-        currency: Currency,
-        transactionsGroupedByDay: SortedMap<LocalDate, List<Map.Entry<Transaction, TransactionCategoryWithParent?>>>
+        transactionsGroupedByDay: TransactionsGroupedByDay
     ): List<BaseCell> {
         if (transactionsGroupedByDay.isEmpty()) {
             return listOf(
@@ -109,23 +103,7 @@ class MoneyAccountDetailsActionExecutor @Inject constructor(
                         )
                     )
                     transactionsWithCategories.forEach { (transaction, category) ->
-                        val (parentCategoryName, subcategoryName) =
-                            transactionCategoryWithParentFormatter.format(category, transaction)
-                        add(
-                            TransactionCell(
-                                transaction = transaction,
-                                isIncome = transaction.isIncome,
-                                subcategoryName = subcategoryName,
-                                parentCategoryName = parentCategoryName,
-                                color = categoryColorFormatter.format(category?.category),
-                                time = dateTimeFormatter.formatTime(transaction.dateTime),
-                                amount = amountFormatter.format(
-                                    round = false,
-                                    currency = currency,
-                                    amount = transaction.amount
-                                )
-                            )
-                        )
+                        add(transactionCellBuilder.build(transaction, category))
                     }
                 }
             }

@@ -97,7 +97,7 @@ class DashboardActionExecutor @Inject constructor(
         return emptyFlowAction {
             val dataPeriod = DataPeriodUi.create(state.dashboard.currentDataPeriod)
             val arguments = TransactionsReportScreenArguments(
-                dataPeriod = dataPeriod,
+                dataPeriodUi = dataPeriod,
                 categoryId = intent.cell.category?.id,
                 transitionName = intent.cell.transitionName
             )
@@ -112,7 +112,7 @@ class DashboardActionExecutor @Inject constructor(
         return emptyFlowAction {
             val dataPeriod = DataPeriodUi.create(state.dashboard.currentDataPeriod)
             val arguments = TransactionsReportScreenArguments(
-                dataPeriod = dataPeriod,
+                dataPeriodUi = dataPeriod,
                 transitionName = getString(
                     R.string.transition_dashboard_recent_transactions_to_transactions_report
                 )
@@ -128,7 +128,7 @@ class DashboardActionExecutor @Inject constructor(
         return emptyFlowAction {
             val dataPeriod = DataPeriodUi.create(state.dashboard.currentDataPeriod)
             val arguments = TransactionsReportScreenArguments(
-                dataPeriod = dataPeriod,
+                dataPeriodUi = dataPeriod,
                 plainTransactionType = PlainTransactionType.EXPENSE,
                 transitionName = getString(
                     R.string.transition_dashboard_to_transactions_report_expenses
@@ -145,7 +145,7 @@ class DashboardActionExecutor @Inject constructor(
         return emptyFlowAction {
             val dataPeriod = DataPeriodUi.create(state.dashboard.currentDataPeriod)
             val arguments = TransactionsReportScreenArguments(
-                dataPeriod = dataPeriod,
+                dataPeriodUi = dataPeriod,
                 plainTransactionType = PlainTransactionType.INCOME,
                 transitionName = getString(
                     R.string.transition_dashboard_to_transactions_report_incomes

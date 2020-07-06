@@ -3,8 +3,10 @@ package serg.chuprin.finances.core.impl.di.module
 import dagger.Binds
 import dagger.Module
 import dagger.Reusable
+import serg.chuprin.finances.core.api.presentation.builder.TransactionCellBuilder
 import serg.chuprin.finances.core.api.presentation.builder.TransitionNameBuilder
 import serg.chuprin.finances.core.api.presentation.model.builder.DataPeriodTypePopupMenuCellsBuilder
+import serg.chuprin.finances.core.impl.presentation.builder.TransactionCellBuilderImpl
 import serg.chuprin.finances.core.impl.presentation.builder.TransitionNameBuilderImpl
 import serg.chuprin.finances.core.impl.presentation.model.builder.DataPeriodTypePopupMenuCellsBuilderImpl
 
@@ -23,5 +25,8 @@ internal interface CoreBuildersModule {
     fun bindTransitionNameBuilder(
         impl: TransitionNameBuilderImpl
     ): TransitionNameBuilder
+
+    @[Binds Reusable]
+    fun bindTransactionCellBuilder(impl: TransactionCellBuilderImpl): TransactionCellBuilder
 
 }
