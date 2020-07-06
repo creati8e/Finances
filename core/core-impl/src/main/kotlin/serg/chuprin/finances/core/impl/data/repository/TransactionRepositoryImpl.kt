@@ -27,37 +27,35 @@ internal class TransactionRepositoryImpl @Inject constructor(
 
     override fun userTransactionsFlow(
         userId: Id,
+        count: Int,
         dataPeriod: DataPeriod?,
+        includedCategoryIds: Set<Id>,
         transactionType: PlainTransactionType?
     ): Flow<List<Transaction>> {
         return firebaseDataSource
-            .userTransactionsFlow(userId, dataPeriod)
+            .userTransactionsFlow(userId, count, dataPeriod)
             .map { transactions ->
                 transactions.mapNotNull { snapshot ->
-                    mapper.mapFromSnapshot(snapshot)?.takeIf { transaction ->
-                        return@takeIf when (transactionType) {
-                            PlainTransactionType.INCOME -> transaction.isIncome
-                            PlainTransactionType.EXPENSE -> transaction.isExpense
-                            null -> true
+                    mapper.mapFromSnapshot(snapshot)
+                        ?.takeIf { transaction ->
+                            return@takeIf when (transactionType) {
+                                PlainTransactionType.INCOME -> transaction.isIncome
+                                PlainTransactionType.EXPENSE -> transaction.isExpense
+                                null -> true
+                            }
                         }
-                    }
-                }
-            }
-            .flowOn(Dispatchers.Default)
-    }
-
-    override fun recentUserTransactionsFlow(
-        userId: Id,
-        count: Int,
-        dataPeriod: DataPeriod
-    ): Flow<List<Transaction>> {
-        return firebaseDataSource
-            .recentUserTransactionsFlow(userId, count, dataPeriod)
-            .map { transactions ->
-                transactions.mapNotNull { snapshot ->
-                    mapper
-                        .mapFromSnapshot(snapshot)
-                        ?.takeIf { transaction -> !transaction.isBalance }
+                        ?.takeIf { transaction ->
+                            if (includedCategoryIds.isEmpty()) {
+                                true
+                            } else {
+                                val categoryId = transaction.categoryId
+                                if (categoryId != null) {
+                                    categoryId in includedCategoryIds
+                                } else {
+                                    false
+                                }
+                            }
+                        }
                 }
             }
             .flowOn(Dispatchers.Default)

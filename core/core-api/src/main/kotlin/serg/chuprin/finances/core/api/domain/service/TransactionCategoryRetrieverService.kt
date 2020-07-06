@@ -19,10 +19,12 @@ interface TransactionCategoryRetrieverService {
 
     fun moneyAccountTransactionsFlow(moneyAccountId: Id): Flow<TransactionCategoriesMap>
 
-    fun recentUserTransactionsInPeriodFlow(
+    fun userTransactionsFlow(
         userId: Id,
-        count: Int,
-        dataPeriod: DataPeriod
+        count: Int = Int.MAX_VALUE,
+        dataPeriod: DataPeriod? = null,
+        includedCategoryIds: Set<Id> = emptySet(),
+        transactionType: PlainTransactionType? = null
     ): Flow<Map<Transaction, TransactionCategoryWithParent?>>
 
     /**

@@ -40,13 +40,21 @@ internal class TransactionCategoryRetrieverServiceImpl @Inject constructor(
             }
     }
 
-    override fun recentUserTransactionsInPeriodFlow(
+    override fun userTransactionsFlow(
         userId: Id,
         count: Int,
-        dataPeriod: DataPeriod
+        dataPeriod: DataPeriod?,
+        includedCategoryIds: Set<Id>,
+        transactionType: PlainTransactionType?
     ): Flow<Map<Transaction, TransactionCategoryWithParent?>> {
         return transactionRepository
-            .recentUserTransactionsFlow(userId, count, dataPeriod)
+            .userTransactionsFlow(
+                count = count,
+                userId = userId,
+                dataPeriod = dataPeriod,
+                transactionType = transactionType,
+                includedCategoryIds = includedCategoryIds
+            )
             .flatMapLatest { transactions ->
                 combine(
                     flowOf(transactions),
@@ -63,7 +71,10 @@ internal class TransactionCategoryRetrieverServiceImpl @Inject constructor(
         transactionType: PlainTransactionType
     ): Flow<Map<TransactionCategory?, List<Transaction>>> {
         return transactionRepository
-            .userTransactionsFlow(userId, dataPeriod, transactionType)
+            .userTransactionsFlow(
+                userId = userId,
+                dataPeriod = dataPeriod
+            )
             .flatMapLatest { transactions ->
                 combine(
                     flowOf(transactions),

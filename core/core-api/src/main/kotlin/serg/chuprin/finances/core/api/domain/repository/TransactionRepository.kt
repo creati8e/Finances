@@ -18,15 +18,11 @@ interface TransactionRepository {
     /**
      * @return last [count] transactions in [dataPeriod].
      */
-    fun recentUserTransactionsFlow(
-        userId: Id,
-        count: Int,
-        dataPeriod: DataPeriod
-    ): Flow<List<Transaction>>
-
     fun userTransactionsFlow(
         userId: Id,
+        count: Int = Int.MAX_VALUE,
         dataPeriod: DataPeriod? = null,
+        includedCategoryIds: Set<Id> = emptySet(),
         transactionType: PlainTransactionType? = null
     ): Flow<List<Transaction>>
 

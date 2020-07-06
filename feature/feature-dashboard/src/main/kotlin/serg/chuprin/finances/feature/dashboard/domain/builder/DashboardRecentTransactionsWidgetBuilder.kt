@@ -29,7 +29,7 @@ class DashboardRecentTransactionsWidgetBuilder @Inject constructor(
             return null
         }
         return transactionCategoryRetrieverService
-            .recentUserTransactionsInPeriodFlow(
+            .userTransactionsFlow(
                 userId = currentUser.id,
                 dataPeriod = currentPeriod,
                 count = RECENT_TRANSACTIONS_COUNT

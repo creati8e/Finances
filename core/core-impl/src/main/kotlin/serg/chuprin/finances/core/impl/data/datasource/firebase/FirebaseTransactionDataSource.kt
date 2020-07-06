@@ -25,16 +25,6 @@ internal class FirebaseTransactionDataSource @Inject constructor(
     private val transactionMapper: FirebaseTransactionMapper
 ) {
 
-    fun userTransactionsFlow(
-        userId: Id,
-        dataPeriod: DataPeriod?
-    ): Flow<List<DocumentSnapshot>> {
-        return getUserTransactionsCollection(userId)
-            .filterByDataPeriod(dataPeriod)
-            .asFlow()
-            .map { querySnapshot -> querySnapshot.documents }
-    }
-
     fun moneyAccountTransactionsFlow(moneyAccountId: Id): Flow<List<DocumentSnapshot>> {
         return getCollection()
             .whereEqualTo(FIELD_MONEY_ACCOUNT_ID, moneyAccountId.value)
@@ -42,10 +32,10 @@ internal class FirebaseTransactionDataSource @Inject constructor(
             .map { querySnapshot -> querySnapshot.documents }
     }
 
-    fun recentUserTransactionsFlow(
+    fun userTransactionsFlow(
         userId: Id,
         count: Int,
-        dataPeriod: DataPeriod
+        dataPeriod: DataPeriod?
     ): Flow<List<DocumentSnapshot>> {
         return getUserTransactionsCollection(userId)
             .filterByDataPeriod(dataPeriod)
