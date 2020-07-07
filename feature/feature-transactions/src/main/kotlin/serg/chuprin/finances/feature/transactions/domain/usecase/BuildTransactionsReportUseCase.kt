@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.api.domain.TransactionsByDayGrouper
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
+import serg.chuprin.finances.core.api.domain.model.transaction.TransactionsQuery
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.api.domain.service.TransactionCategoryRetrieverService
 import serg.chuprin.finances.feature.transactions.domain.model.TransactionsReport
@@ -30,12 +31,14 @@ class BuildTransactionsReportUseCase @Inject constructor(
             .flatMapLatest { filter ->
                 combine(
                     flowOf(filter),
-                    transactionCategoryRetrieverService.userTransactionsFlow(
-                        userRepository.getCurrentUser().id,
-                        endDate = filter.dataPeriod.endDate,
-                        startDate = filter.dataPeriod.startDate,
-                        transactionType = filter.transactionType,
-                        includedCategoryIds = filter.includedCategoryIds
+                    transactionCategoryRetrieverService.transactionsFlow(
+                        TransactionsQuery(
+                            endDate = filter.dataPeriod.endDate,
+                            startDate = filter.dataPeriod.startDate,
+                            transactionType = filter.transactionType,
+                            categoryIds = filter.includedCategoryIds,
+                            userId = userRepository.getCurrentUser().id
+                        )
                     ),
                     ::buildTransactionsReport
                 )

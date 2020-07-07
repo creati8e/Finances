@@ -4,14 +4,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
+import serg.chuprin.finances.core.api.domain.model.transaction.TransactionsQuery
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.impl.data.datasource.firebase.FirebaseTransactionDataSource
 import serg.chuprin.finances.core.impl.data.mapper.transaction.FirebaseTransactionMapper
-import java.time.LocalDateTime
 import javax.inject.Inject
 
 /**
@@ -26,59 +24,35 @@ internal class TransactionRepositoryImpl @Inject constructor(
         firebaseDataSource.createTransaction(transaction)
     }
 
-    override fun recentUserTransactionsFlow(
-        userId: Id,
-        count: Int,
-        dataPeriod: DataPeriod
-    ): Flow<List<Transaction>> {
+    override fun transactionsFlow(query: TransactionsQuery): Flow<List<Transaction>> {
         return firebaseDataSource
-            .recentUserTransactionsFlow(userId, count, dataPeriod)
+            .transactionsFlow(query)
             .map { transactions ->
-                transactions.mapNotNull(mapper::mapFromSnapshot)
-            }
-            .flowOn(Dispatchers.Default)
-    }
-
-    override fun userTransactionsFlow(
-        userId: Id,
-        startDate: LocalDateTime?,
-        endDate: LocalDateTime?,
-        includedCategoryIds: Set<Id>,
-        transactionType: PlainTransactionType?
-    ): Flow<List<Transaction>> {
-        return firebaseDataSource
-            .userTransactionsFlow(userId, startDate, endDate)
-            .map { transactions ->
-                transactions.mapNotNull { snapshot ->
-                    mapper.mapFromSnapshot(snapshot)
+                transactions.mapNotNull { documentSnapshot ->
+                    mapper.mapFromSnapshot(documentSnapshot)
                         ?.takeIf { transaction ->
-                            return@takeIf when (transactionType) {
+                            return@takeIf when (query.transactionType) {
                                 PlainTransactionType.INCOME -> transaction.isIncome
                                 PlainTransactionType.EXPENSE -> transaction.isExpense
                                 null -> true
                             }
                         }
                         ?.takeIf { transaction ->
-                            if (includedCategoryIds.isEmpty()) {
+                            if (query.moneyAccountIds.isEmpty()) {
                                 true
                             } else {
-                                val categoryId = transaction.categoryId
-                                if (categoryId != null) {
-                                    categoryId in includedCategoryIds
-                                } else {
-                                    false
-                                }
+                                transaction.moneyAccountId in query.moneyAccountIds
+                            }
+                        }
+                        ?.takeIf { transaction ->
+                            if (query.categoryIds.isEmpty()) {
+                                true
+                            } else {
+                                transaction.categoryId in query.categoryIds
                             }
                         }
                 }
             }
-            .flowOn(Dispatchers.Default)
-    }
-
-    override fun moneyAccountTransactionsFlow(moneyAccountId: Id): Flow<List<Transaction>> {
-        return firebaseDataSource
-            .moneyAccountTransactionsFlow(moneyAccountId)
-            .map { transactions -> transactions.mapNotNull(mapper::mapFromSnapshot) }
             .flowOn(Dispatchers.Default)
     }
 

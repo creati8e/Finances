@@ -7,12 +7,11 @@ import com.google.firebase.firestore.Query
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
+import serg.chuprin.finances.core.api.domain.model.transaction.TransactionsQuery
 import serg.chuprin.finances.core.api.extensions.toDateUTC
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionFieldsContract.COLLECTION_NAME
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionFieldsContract.FIELD_DATE
-import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionFieldsContract.FIELD_MONEY_ACCOUNT_ID
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionFieldsContract.FIELD_OWNER_ID
 import serg.chuprin.finances.core.impl.data.mapper.transaction.FirebaseTransactionMapper
 import java.time.LocalDateTime
@@ -26,45 +25,37 @@ internal class FirebaseTransactionDataSource @Inject constructor(
     private val transactionMapper: FirebaseTransactionMapper
 ) {
 
-    fun moneyAccountTransactionsFlow(moneyAccountId: Id): Flow<List<DocumentSnapshot>> {
-        return getCollection()
-            .whereEqualTo(FIELD_MONEY_ACCOUNT_ID, moneyAccountId.value)
-            .asFlow()
-            .map { querySnapshot -> querySnapshot.documents }
-    }
-
-    fun recentUserTransactionsFlow(
-        userId: Id,
-        count: Int,
-        dataPeriod: DataPeriod
-    ): Flow<List<DocumentSnapshot>> {
-        return getUserTransactionsCollection(userId)
-            .filterByDate(
-                startDate = dataPeriod.startDate,
-                endDate = dataPeriod.endDate
-            )
-            .orderBy(FIELD_DATE, Query.Direction.DESCENDING)
-            .limit(count.toLong())
-            .asFlow()
-            .map { querySnapshot -> querySnapshot.documents }
-    }
-
-    fun userTransactionsFlow(
-        userId: Id,
-        startDate: LocalDateTime?,
-        endDate: LocalDateTime?
-    ): Flow<List<DocumentSnapshot>> {
-        return getUserTransactionsCollection(userId)
-            .filterByDate(startDate, endDate)
-            .orderBy(FIELD_DATE, Query.Direction.DESCENDING)
-            .asFlow()
-            .map { querySnapshot -> querySnapshot.documents }
-    }
-
     fun createTransaction(transaction: Transaction) {
         getCollection()
             .document(transaction.id.value)
             .set(transactionMapper.mapToFieldsMap(transaction))
+    }
+
+    fun transactionsFlow(query: TransactionsQuery): Flow<List<DocumentSnapshot>> {
+        return getCollection()
+            .limit(query.limit)
+            .sortBy(query.sortOrder)
+            .filterByUser(query.userId)
+            .filterByDate(query.startDate, query.endDate)
+            .asFlow()
+            .map { querySnapshot -> querySnapshot.documents }
+    }
+
+    private fun Query.filterByUser(userId: Id? = null): Query {
+        return if (userId != null) whereEqualTo(FIELD_OWNER_ID, userId.value) else this
+    }
+
+    private fun Query.limit(limit: Int?): Query {
+        return if (limit != null) limit(limit.toLong()) else this
+    }
+
+    private fun Query.sortBy(sortOrder: TransactionsQuery.SortOrder?): Query {
+        return when (sortOrder) {
+            TransactionsQuery.SortOrder.DATE_DESC -> {
+                orderBy(FIELD_DATE, Query.Direction.DESCENDING)
+            }
+            null -> this
+        }
     }
 
     private fun Query.filterByDate(
@@ -76,10 +67,6 @@ internal class FirebaseTransactionDataSource @Inject constructor(
         }
         return whereGreaterThanOrEqualTo(FIELD_DATE, startDate!!.toDateUTC())
             .whereLessThanOrEqualTo(FIELD_DATE, endDate!!.toDateUTC())
-    }
-
-    private fun getUserTransactionsCollection(userId: Id): Query {
-        return getCollection().whereEqualTo(FIELD_OWNER_ID, userId.value)
     }
 
     private fun getCollection(): CollectionReference = firestore.collection(COLLECTION_NAME)

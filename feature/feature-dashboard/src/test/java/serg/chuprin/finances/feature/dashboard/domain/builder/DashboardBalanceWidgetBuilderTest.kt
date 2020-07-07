@@ -42,7 +42,7 @@ object DashboardBalanceWidgetBuilderTest : Spek({
             lateinit var flow: Flow<DashboardWidget.Balance>
 
             every {
-                transactionRepository.userTransactionsFlow(currentUser.id)
+                transactionRepository.transactionsFlow(any())
             } returns flowOf(createTransactionsForScenario1(currentUser))
 
             When("Build method is called") {

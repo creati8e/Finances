@@ -8,6 +8,7 @@ import serg.chuprin.finances.core.api.domain.TransactionsByDayGrouper
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.MoneyAccount
 import serg.chuprin.finances.core.api.domain.model.TransactionCategoriesMap
+import serg.chuprin.finances.core.api.domain.model.transaction.TransactionsQuery
 import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
 import serg.chuprin.finances.core.api.domain.service.TransactionCategoryRetrieverService
 import serg.chuprin.finances.core.api.extensions.amount
@@ -34,8 +35,9 @@ class GetMoneyAccountDetailsUseCase @Inject constructor(
                     @Suppress("MoveLambdaOutsideParentheses")
                     combine(
                         flowOf(moneyAccount),
-                        transactionCategoryRetrieverService
-                            .moneyAccountTransactionsFlow(moneyAccount.id),
+                        transactionCategoryRetrieverService.transactionsFlow(
+                            TransactionsQuery(moneyAccountIds = setOf(moneyAccount.id))
+                        ),
                         { t1, t2 -> buildModel(t1, t2) }
                     )
                 } else {
