@@ -9,19 +9,15 @@ import kotlinx.android.synthetic.main.fragment_transactions_report.*
 import kotlinx.android.synthetic.main.fragment_transactions_report.view.*
 import serg.chuprin.finances.core.api.presentation.extensions.arguments
 import serg.chuprin.finances.core.api.presentation.extensions.setupToolbar
-import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionsReportScreenArguments
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
-import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter
-import serg.chuprin.finances.core.api.presentation.view.adapter.diff.DiffCallback
-import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.DateDividerCellRenderer
-import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.TransactionCellRenderer
-import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ZeroDataCellRenderer
+import serg.chuprin.finances.core.api.presentation.view.adapter.decoration.CellDividerDecoration
 import serg.chuprin.finances.core.api.presentation.view.setEnterSharedElementTransition
 import serg.chuprin.finances.core.api.presentation.view.setExitSharedElementTransition
 import serg.chuprin.finances.feature.transactions.R
 import serg.chuprin.finances.feature.transactions.di.TransactionsReportComponent
+import serg.chuprin.finances.feature.transactions.presentation.view.adapter.TransactionReportCellsAdapter
 
 /**
  * Created by Sergey Chuprin on 11.05.2020.
@@ -30,11 +26,7 @@ class TransactionsReportFragment : BaseFragment(R.layout.fragment_transactions_r
 
     private val screenArguments by arguments<TransactionsReportScreenArguments>()
 
-    private val cellsAdapter = DiffMultiViewAdapter(DiffCallback<BaseCell>()).apply {
-        registerRenderer(ZeroDataCellRenderer())
-        registerRenderer(TransactionCellRenderer())
-        registerRenderer(DateDividerCellRenderer())
-    }
+    private val cellsAdapter = TransactionReportCellsAdapter()
 
     private val viewModel by viewModelFromComponent {
         TransactionsReportComponent.get(screenArguments)
@@ -64,6 +56,14 @@ class TransactionsReportFragment : BaseFragment(R.layout.fragment_transactions_r
         with(transactionsRecyclerView) {
             adapter = cellsAdapter
             layoutManager = LinearLayoutManager(context)
+            addItemDecoration(
+                CellDividerDecoration(
+                    requireContext(),
+                    cellsAdapter,
+                    marginEndDp = -8,
+                    marginStartDp = 36
+                )
+            )
         }
         with(viewModel) {
             cellsLiveData(cellsAdapter::setItems)
