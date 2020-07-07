@@ -12,7 +12,7 @@ class TransactionsQuery(
     val sortOrder: SortOrder? = null,
     val endDate: LocalDateTime? = null,
     val startDate: LocalDateTime? = null,
-    val categoryIds: Set<Id> = emptySet(),
+    val categoryIds: Set<Id?> = emptySet(),
     val moneyAccountIds: Set<Id> = emptySet(),
     val transactionType: PlainTransactionType? = null
 ) {

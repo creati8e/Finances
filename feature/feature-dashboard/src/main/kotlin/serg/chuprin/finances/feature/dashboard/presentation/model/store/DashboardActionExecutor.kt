@@ -96,9 +96,14 @@ class DashboardActionExecutor @Inject constructor(
     ): Flow<DashboardEffect> {
         return emptyFlowAction {
             val dataPeriod = DataPeriodUi.create(state.dashboard.currentDataPeriod)
+            val categoryIds = if (intent.cell.isOtherCategory) {
+                emptySet()
+            } else {
+                setOf(intent.cell.category?.id?.value)
+            }
             val arguments = TransactionsReportScreenArguments(
                 dataPeriodUi = dataPeriod,
-                categoryId = intent.cell.category?.id,
+                categoryIds = categoryIds,
                 transitionName = intent.cell.transitionName
             )
             eventConsumer(DashboardEvent.NavigateToTransactionsReportScreen(arguments))

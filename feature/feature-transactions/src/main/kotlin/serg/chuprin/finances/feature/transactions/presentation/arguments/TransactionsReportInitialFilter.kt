@@ -8,7 +8,7 @@ import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionT
  * Created by Sergey Chuprin on 06.07.2020.
  */
 class TransactionsReportInitialFilter(
-    val categoryId: Id?,
+    val categoryIds: Set<Id?>,
     val dataPeriod: DataPeriod?,
     val plainTransactionType: PlainTransactionType?
 )

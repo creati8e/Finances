@@ -21,10 +21,8 @@ class TransactionsReportStoreBootstrapper @Inject constructor(
 
     override fun invoke(): Flow<TransactionsReportAction> {
         val actualFilter = TransactionsReportFilter(
+            includedCategoryIds = initialFilter.categoryIds,
             transactionType = initialFilter.plainTransactionType,
-            includedCategoryIds = initialFilter.categoryId
-                ?.let(::setOf)
-                .orEmpty(),
             dataPeriod = initialFilter.dataPeriod
                 ?.let(ReportDataPeriod::Predefined)
                 ?: ReportDataPeriod.AllTime

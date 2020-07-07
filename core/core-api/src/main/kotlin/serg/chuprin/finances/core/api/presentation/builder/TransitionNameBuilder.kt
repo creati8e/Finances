@@ -12,6 +12,8 @@ interface TransitionNameBuilder {
 
     fun buildForTransactionsReportOtherCategory(transactionType: PlainTransactionType): String
 
+    fun buildForTransactionsReportUnknownCategory(transactionType: PlainTransactionType): String
+
     fun buildForForMoneyAccountDetails(moneyAccountId: Id): String
 
 }

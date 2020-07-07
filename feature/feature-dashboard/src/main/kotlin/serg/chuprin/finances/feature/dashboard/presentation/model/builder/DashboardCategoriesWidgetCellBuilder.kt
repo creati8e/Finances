@@ -82,8 +82,13 @@ class DashboardCategoriesWidgetCellBuilder @Inject constructor(
                 DashboardCategoryChipCell(
                     chipText = chipText,
                     category = category,
+                    isOtherCategory = false,
                     colorInt = categoryColorFormatter.format(category),
-                    transitionName = transitionNameBuilder.buildForTransactionsReport(category?.id)
+                    transitionName = if (category?.id == null) {
+                        transitionNameBuilder.buildForTransactionsReportUnknownCategory(page.transactionType)
+                    } else {
+                        transitionNameBuilder.buildForTransactionsReport(category.id)
+                    }
                 )
             }.apply {
                 if (page.otherAmount != BigDecimal.ZERO) {
@@ -100,6 +105,7 @@ class DashboardCategoriesWidgetCellBuilder @Inject constructor(
         val formattedAmount = amountFormatter.format(page.otherAmount, currency)
         return DashboardCategoryChipCell(
             category = null,
+            isOtherCategory = true,
             chipText = "$name $formattedAmount",
             colorInt = getOtherCategoriesColor(),
             transitionName = transitionNameBuilder.buildForTransactionsReportOtherCategory(page.transactionType)

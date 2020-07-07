@@ -3,6 +3,7 @@ package serg.chuprin.finances.feature.transactions.di
 import dagger.BindsInstance
 import dagger.Component
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
+import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.ViewModelComponent
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionsReportScreenArguments
 import serg.chuprin.finances.feature.transactions.presentation.arguments.TransactionsReportInitialFilter
@@ -33,9 +34,9 @@ interface TransactionsReportComponent : ViewModelComponent<TransactionsReportVie
 
         private fun TransactionsReportScreenArguments.toInitialFilter(): TransactionsReportInitialFilter {
             return TransactionsReportInitialFilter(
-                categoryId = categoryId,
                 dataPeriod = dataPeriodUi?.toDataPeriod(),
-                plainTransactionType = plainTransactionType
+                plainTransactionType = plainTransactionType,
+                categoryIds = categoryIds.map { it?.let { Id.existing(it) } }.toSet()
             )
         }
 

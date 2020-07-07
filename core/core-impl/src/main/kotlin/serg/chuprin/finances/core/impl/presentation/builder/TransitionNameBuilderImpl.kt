@@ -24,6 +24,12 @@ internal class TransitionNameBuilderImpl @Inject constructor(
         return "${transactionsReportBaseTransitionName}${categoryId?.value}"
     }
 
+    override fun buildForTransactionsReportUnknownCategory(
+        transactionType: PlainTransactionType
+    ): String {
+        return "${transactionsReportBaseTransitionName}_unknown_category_$transactionType"
+    }
+
     override fun buildForTransactionsReportOtherCategory(
         transactionType: PlainTransactionType
     ): String {
