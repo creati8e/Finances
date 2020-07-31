@@ -27,4 +27,9 @@ interface DashboardNavigation {
         vararg sharedElementView: View
     )
 
+    fun navigateToUserProfile(
+        navController: NavController,
+        vararg sharedElementView: View
+    )
+
 }

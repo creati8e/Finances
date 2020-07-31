@@ -89,6 +89,18 @@ object NavigationModule : CoreNavigationProvider {
                     )
                 }
 
+                override fun navigateToUserProfile(
+                    navController: NavController,
+                    vararg sharedElementView: View
+                ) {
+                    navController.navigate(
+                        R.id.navigateFromDashboardToUserProfile,
+                        null,
+                        null,
+                        buildExtrasForSharedElements(sharedElementView)
+                    )
+                }
+
             }
         }
 

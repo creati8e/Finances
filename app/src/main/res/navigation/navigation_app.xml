@@ -47,6 +47,10 @@
                 android:id="@+id/navigateFromDashboardToTransactionsReport"
                 app:destination="@id/transactionsReportFragment" />
 
+            <action
+                android:id="@+id/navigateFromDashboardToUserProfile"
+                app:destination="@id/userProfileFragment" />
+
         </fragment>
 
         <fragment
@@ -108,10 +112,15 @@
             android:label="MoneyAccountCreationFragment"
             tools:layout="@layout/fragment_money_account_creation" />
 
+        <fragment
+            android:id="@+id/userProfileFragment"
+            android:name="serg.chuprin.finances.feature.userprofile.presentation.view.UserProfileFragment"
+            android:label="UserProfileFragment"
+            tools:layout="@layout/fragment_user_profile" />
+
         <action
             android:id="@+id/navigateFromDashboardToMoneyAccountsList"
             app:destination="@+id/moneyAccountsListFragment" />
-
         <action
             android:id="@+id/navigateFromOnboardingToDashboard"
             app:destination="@+id/dashboardFragment" />

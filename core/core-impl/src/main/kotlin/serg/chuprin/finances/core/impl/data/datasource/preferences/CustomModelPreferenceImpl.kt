@@ -25,9 +25,7 @@ internal class CustomModelPreferenceImpl<M>(
         get() = mapper.defaultModel
 
     override val isSet: Boolean
-        get() {
-            return pref.isSet()
-        }
+        get() = pref.isSet()
 
     override val asFlow: Flow<M>
         get() = pref.asFlow().map { s -> mapper.toModel(s) }

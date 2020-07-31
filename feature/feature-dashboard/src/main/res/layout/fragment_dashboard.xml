@@ -55,6 +55,7 @@
                 android:layout_centerVertical="true"
                 android:clickable="true"
                 android:focusable="true"
+                android:transitionName="@string/transition_user_profile"
                 tools:src="@tools:sample/avatars" />
 
         </RelativeLayout>
