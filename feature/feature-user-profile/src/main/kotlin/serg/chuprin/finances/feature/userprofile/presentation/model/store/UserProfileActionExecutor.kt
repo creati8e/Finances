@@ -1,13 +1,16 @@
 package serg.chuprin.finances.feature.userprofile.presentation.model.store
 
 import kotlinx.coroutines.flow.Flow
+import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
+import serg.chuprin.finances.feature.userprofile.presentation.model.cells.UserProfileImageCell
+import javax.inject.Inject
 
 /**
  * Created by Sergey Chuprin on 31.07.2020.
  */
-class UserProfileActionExecutor :
+class UserProfileActionExecutor @Inject constructor() :
     StoreActionExecutor<UserProfileAction, UserProfileState, UserProfileEffect, UserProfileEvent> {
 
     override fun invoke(
@@ -16,7 +19,22 @@ class UserProfileActionExecutor :
         eventConsumer: Consumer<UserProfileEvent>,
         actionsFlow: Flow<UserProfileAction>
     ): Flow<UserProfileEffect> {
-        TODO("Not yet implemented")
+        return when (action) {
+            is UserProfileAction.UpdateUser -> {
+                handleUpdateUserAction(action)
+            }
+            is UserProfileAction.ExecuteIntent -> TODO()
+        }
+    }
+
+    private fun handleUpdateUserAction(
+        action: UserProfileAction.UpdateUser
+    ): Flow<UserProfileEffect> {
+        return flowOfSingleValue {
+            val user = action.user
+            val userCell = UserProfileImageCell(user.photoUrl, user.displayName, user.email)
+            UserProfileEffect.CellsUpdated(listOf(userCell))
+        }
     }
 
 }

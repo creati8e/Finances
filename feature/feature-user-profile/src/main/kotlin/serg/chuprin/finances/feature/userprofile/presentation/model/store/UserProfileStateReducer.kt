@@ -8,7 +8,11 @@ import serg.chuprin.finances.core.mvi.reducer.StoreStateReducer
 class UserProfileStateReducer : StoreStateReducer<UserProfileEffect, UserProfileState> {
 
     override fun invoke(what: UserProfileEffect, state: UserProfileState): UserProfileState {
-        TODO("Not yet implemented")
+        return when (what) {
+            is UserProfileEffect.CellsUpdated -> {
+                state.copy(cells = what.cells)
+            }
+        }
     }
 
 }
