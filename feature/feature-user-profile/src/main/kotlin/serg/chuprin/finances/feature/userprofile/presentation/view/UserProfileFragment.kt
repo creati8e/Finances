@@ -13,6 +13,7 @@ import serg.chuprin.finances.core.api.presentation.view.adapter.diff.DiffCallbac
 import serg.chuprin.finances.core.api.presentation.view.setEnterSharedElementTransition
 import serg.chuprin.finances.feature.userprofile.R
 import serg.chuprin.finances.feature.userprofile.presentation.di.UserProfileComponent
+import serg.chuprin.finances.feature.userprofile.presentation.view.adapter.renderer.UserProfileDataPeriodTypeCellRenderer
 import serg.chuprin.finances.feature.userprofile.presentation.view.adapter.renderer.UserProfileImageCellRenderer
 
 /**
@@ -24,6 +25,7 @@ class UserProfileFragment : BaseFragment(R.layout.fragment_user_profile) {
 
     private val cellsAdapter = DiffMultiViewAdapter(DiffCallback<BaseCell>()).apply {
         registerRenderer(UserProfileImageCellRenderer())
+        registerRenderer(UserProfileDataPeriodTypeCellRenderer())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

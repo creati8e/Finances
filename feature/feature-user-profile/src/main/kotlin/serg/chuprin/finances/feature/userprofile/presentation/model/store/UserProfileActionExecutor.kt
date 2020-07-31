@@ -4,14 +4,15 @@ import kotlinx.coroutines.flow.Flow
 import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
-import serg.chuprin.finances.feature.userprofile.presentation.model.cells.UserProfileImageCell
+import serg.chuprin.finances.feature.userprofile.presentation.model.builder.UserProfileCellsBuilder
 import javax.inject.Inject
 
 /**
  * Created by Sergey Chuprin on 31.07.2020.
  */
-class UserProfileActionExecutor @Inject constructor() :
-    StoreActionExecutor<UserProfileAction, UserProfileState, UserProfileEffect, UserProfileEvent> {
+class UserProfileActionExecutor @Inject constructor(
+    private val cellsBuilder: UserProfileCellsBuilder
+) : StoreActionExecutor<UserProfileAction, UserProfileState, UserProfileEffect, UserProfileEvent> {
 
     override fun invoke(
         action: UserProfileAction,
@@ -31,9 +32,7 @@ class UserProfileActionExecutor @Inject constructor() :
         action: UserProfileAction.UpdateUser
     ): Flow<UserProfileEffect> {
         return flowOfSingleValue {
-            val user = action.user
-            val userCell = UserProfileImageCell(user.photoUrl, user.displayName, user.email)
-            UserProfileEffect.CellsUpdated(listOf(userCell))
+            UserProfileEffect.CellsUpdated(cellsBuilder.build(action.user))
         }
     }
 
