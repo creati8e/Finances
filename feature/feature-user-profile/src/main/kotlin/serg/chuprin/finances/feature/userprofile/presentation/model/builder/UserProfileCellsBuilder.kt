@@ -5,6 +5,7 @@ import serg.chuprin.finances.core.api.presentation.formatter.DataPeriodFormatter
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.feature.userprofile.presentation.model.cells.UserProfileDataPeriodTypeCell
 import serg.chuprin.finances.feature.userprofile.presentation.model.cells.UserProfileImageCell
+import serg.chuprin.finances.feature.userprofile.presentation.model.cells.UserProfileLogoutCell
 import javax.inject.Inject
 
 /**
@@ -26,7 +27,8 @@ class UserProfileCellsBuilder @Inject constructor(
         )
         return mutableListOf(
             profileCell,
-            dataPeriodTypeCell
+            dataPeriodTypeCell,
+            UserProfileLogoutCell()
         )
     }
 

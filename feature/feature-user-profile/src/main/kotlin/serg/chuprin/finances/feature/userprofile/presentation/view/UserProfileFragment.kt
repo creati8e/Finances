@@ -15,6 +15,7 @@ import serg.chuprin.finances.feature.userprofile.R
 import serg.chuprin.finances.feature.userprofile.presentation.di.UserProfileComponent
 import serg.chuprin.finances.feature.userprofile.presentation.view.adapter.renderer.UserProfileDataPeriodTypeCellRenderer
 import serg.chuprin.finances.feature.userprofile.presentation.view.adapter.renderer.UserProfileImageCellRenderer
+import serg.chuprin.finances.feature.userprofile.presentation.view.adapter.renderer.UserProfileLogoutCellRenderer
 
 /**
  * Created by Sergey Chuprin on 25.07.2020.
@@ -25,6 +26,7 @@ class UserProfileFragment : BaseFragment(R.layout.fragment_user_profile) {
 
     private val cellsAdapter = DiffMultiViewAdapter(DiffCallback<BaseCell>()).apply {
         registerRenderer(UserProfileImageCellRenderer())
+        registerRenderer(UserProfileLogoutCellRenderer())
         registerRenderer(UserProfileDataPeriodTypeCellRenderer())
     }
 

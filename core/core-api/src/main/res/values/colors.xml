@@ -6,7 +6,7 @@
     <color name="colorAccentRipple">#8081C784</color>
     <color name="colorTextPrimary">#DE000000</color>
     <color name="colorTextSecondary">#99000000</color>
-    <color name="colorError">#F44336</color>
+    <color name="colorRed">#F44336</color>
     <color name="colorRedRipple">#33F44336</color>
     <color name="colorGreen">#4CAF50</color>
 

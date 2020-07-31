@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="LogoutButton" parent="@style/Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/colorRed</item>
+        <item name="android:textStyle">bold</item>
+        <item name="rippleColor">@color/colorRedRipple</item>
+        <item name="cornerRadius">@dimen/cornerRadius</item>
+    </style>
+
+</resources>
