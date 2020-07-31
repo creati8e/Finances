@@ -12,4 +12,6 @@ interface AuthorizationGateway {
      */
     suspend fun signIn(idToken: String): Result<Boolean>
 
+    suspend fun logOut()
+
 }

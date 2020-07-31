@@ -4,6 +4,9 @@ import kotlinx.coroutines.flow.Flow
 import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
+import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
+import serg.chuprin.finances.core.mvi.invoke
+import serg.chuprin.finances.feature.userprofile.domain.usecase.LogOutUseCase
 import serg.chuprin.finances.feature.userprofile.presentation.model.builder.UserProfileCellsBuilder
 import javax.inject.Inject
 
@@ -11,6 +14,7 @@ import javax.inject.Inject
  * Created by Sergey Chuprin on 31.07.2020.
  */
 class UserProfileActionExecutor @Inject constructor(
+    private val logOutUseCase: LogOutUseCase,
     private val cellsBuilder: UserProfileCellsBuilder
 ) : StoreActionExecutor<UserProfileAction, UserProfileState, UserProfileEffect, UserProfileEvent> {
 
@@ -24,7 +28,34 @@ class UserProfileActionExecutor @Inject constructor(
             is UserProfileAction.UpdateUser -> {
                 handleUpdateUserAction(action)
             }
-            is UserProfileAction.ExecuteIntent -> TODO()
+            is UserProfileAction.ExecuteIntent -> {
+                when (action.intent) {
+                    UserProfileIntent.ClickOnLogOutButton -> {
+                        handleClickOnLogOutButton(eventConsumer)
+                    }
+                    UserProfileIntent.ClickOnOnLogoutConfirmationButton -> {
+                        handleClickOnOnLogoutConfirmationButton(eventConsumer)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun handleClickOnOnLogoutConfirmationButton(
+        eventConsumer: Consumer<UserProfileEvent>
+    ): Flow<UserProfileEffect> {
+        return flowOfSingleValue {
+            logOutUseCase.execute()
+            eventConsumer(UserProfileEvent.NavigateToLoginScreen)
+            UserProfileEffect.LoggedOut
+        }
+    }
+
+    private fun handleClickOnLogOutButton(
+        eventConsumer: Consumer<UserProfileEvent>
+    ): Flow<UserProfileEffect> {
+        return emptyFlowAction {
+            eventConsumer(UserProfileEvent.ShowLogoutConfirmDialog)
         }
     }
 

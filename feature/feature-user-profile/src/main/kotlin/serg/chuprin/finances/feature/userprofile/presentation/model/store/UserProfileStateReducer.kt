@@ -12,6 +12,7 @@ class UserProfileStateReducer : StoreStateReducer<UserProfileEffect, UserProfile
             is UserProfileEffect.CellsUpdated -> {
                 state.copy(cells = what.cells)
             }
+            UserProfileEffect.LoggedOut -> state
         }
     }
 

@@ -11,4 +11,6 @@ sealed class UserProfileEffect {
         val cells: List<BaseCell>
     ) : UserProfileEffect()
 
+    object LoggedOut : UserProfileEffect()
+
 }

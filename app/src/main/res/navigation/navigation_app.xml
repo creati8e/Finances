@@ -121,6 +121,7 @@
         <action
             android:id="@+id/navigateFromDashboardToMoneyAccountsList"
             app:destination="@+id/moneyAccountsListFragment" />
+
         <action
             android:id="@+id/navigateFromOnboardingToDashboard"
             app:destination="@+id/dashboardFragment" />
@@ -150,6 +151,12 @@
         android:id="@+id/navigateToAuthorizedGraph"
         app:destination="@+id/authorizedGraph"
         app:popUpTo="@id/appLauncherFragment"
+        app:popUpToInclusive="true" />
+
+    <action
+        android:id="@+id/navigateToUnauthorizedGraph"
+        app:destination="@+id/notAuthorizedGraph"
+        app:popUpTo="@id/authorizedGraph"
         app:popUpToInclusive="true" />
 
 </navigation>

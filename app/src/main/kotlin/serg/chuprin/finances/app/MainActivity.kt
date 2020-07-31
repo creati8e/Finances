@@ -4,14 +4,15 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import serg.chuprin.finances.core.api.presentation.navigation.RootNavigator
 import serg.chuprin.finances.core.api.R as CoreApiR
 
 /**
  * Created by Sergey Chuprin on 01.04.2020.
  */
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), RootNavigator {
 
-    private val navController: NavController
+    override val navController: NavController
         get() = findNavController(R.id.rootFragmentContainer)
 
     override fun onCreate(savedInstanceState: Bundle?) {
