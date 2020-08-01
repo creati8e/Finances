@@ -6,6 +6,7 @@ import android.view.View
 import androidx.core.view.doOnPreDraw
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_user_profile.*
+import serg.chuprin.finances.core.api.presentation.extensions.setupToolbar
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
@@ -63,6 +64,9 @@ class UserProfileFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupToolbar(toolbar) {
+            setDisplayHomeAsUpEnabled(true)
+        }
         with(recyclerView) {
             adapter = cellsAdapter.apply {
                 clickListener = { cell, _, _ ->

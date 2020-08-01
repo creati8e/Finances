@@ -13,27 +13,34 @@
         android:layout_height="?actionBarSize"
         app:liftOnScroll="true">
 
-        <RelativeLayout
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp">
+            android:layout_height="?actionBarSize">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/logoTextView"
-                style="@style/TextAppearance.MaterialComponents.Headline6"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentBottom="true"
-                android:layout_centerVertical="true"
-                android:gravity="center"
-                android:text="@string/user_profile_toolbar_title"
-                android:textAlignment="center"
-                android:textColor="?android:textColorPrimary" />
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp">
 
-        </RelativeLayout>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/logoTextView"
+                    style="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="@string/user_profile_toolbar_title"
+                    android:textAlignment="center"
+                    android:textColor="?android:textColorPrimary" />
+
+            </RelativeLayout>
+
+        </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 

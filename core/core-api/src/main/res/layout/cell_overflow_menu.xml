@@ -2,9 +2,9 @@
 <androidx.appcompat.widget.LinearLayoutCompat
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ClickableLayout"
     android:layout_width="match_parent"
     android:layout_height="56dp"
-    android:background="@drawable/bg_selection_rounded_transparent"
     android:gravity="center"
     android:orientation="horizontal"
     android:paddingStart="16dp"
