@@ -1,6 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="DialogTitle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:layout_marginStart">24dp</item>
+        <item name="android:layout_marginEnd">24dp</item>
+        <item name="android:layout_marginTop">24dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+    </style>
+
+    <style name="DialogMessage">
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:letterSpacing">0.03</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+    </style>
+
+    <style name="DialogButtonBase" parent="PrimaryUnelevatedButton.Transparent">
+        <item name="android:minWidth">64dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:letterSpacing">-0.03</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?colorAccent</item>
+        <item name="strokeColor">@android:color/transparent</item>
+    </style>
+
+    <style name="DialogButtonPositive" parent="DialogButtonBase" />
+
+    <style name="DialogButtonNegative" parent="DialogButtonBase" />
+
+    <style name="MaterialAlertDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+
+        <!--For unknown reason dialog uses colorPrimary for button text color-->
+        <item name="colorPrimary">?colorAccent</item>
+
+        <item name="buttonBarNegativeButtonStyle">@style/DialogButtonBase</item>
+        <item name="buttonBarPositiveButtonStyle">@style/DialogButtonBase</item>
+        <item name="buttonBarNeutralButtonStyle">@style/DialogButtonBase</item>
+
+        <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlertDialogBodyStyle</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialogTitleStyle</item>
+
+        <item name="shapeAppearanceOverlay">
+            @style/MaterialAlertDialogShapeAppearanceOverlayRounded
+        </item>
+    </style>
+
+    <style name="MaterialAlertDialogShapeAppearanceOverlayRounded" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/cornerRadiusBig</item>
+    </style>
+
+    <style name="MaterialAlertDialogTitleStyle" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="MaterialAlertDialogBodyStyle" parent="MaterialAlertDialog.MaterialComponents.Body.Text">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">?android:textColorSecondary</item>
+    </style>
+
     <style name="PopupWindow">
         <item name="android:windowExitAnimation">@anim/popup_window_exit</item>
         <item name="android:windowEnterAnimation">@anim/popup_window_enter</item>

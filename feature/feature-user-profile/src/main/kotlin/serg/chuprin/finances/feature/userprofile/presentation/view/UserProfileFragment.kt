@@ -13,6 +13,8 @@ import serg.chuprin.finances.core.api.presentation.navigation.UserProfileNavigat
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter
 import serg.chuprin.finances.core.api.presentation.view.adapter.diff.DiffCallback
+import serg.chuprin.finances.core.api.presentation.view.dialog.info.InfoDialogFragment
+import serg.chuprin.finances.core.api.presentation.view.dialog.info.showInfoDialog
 import serg.chuprin.finances.core.api.presentation.view.setEnterSharedElementTransition
 import serg.chuprin.finances.feature.userprofile.R
 import serg.chuprin.finances.feature.userprofile.presentation.di.UserProfileComponent
@@ -23,11 +25,18 @@ import serg.chuprin.finances.feature.userprofile.presentation.view.adapter.rende
 import serg.chuprin.finances.feature.userprofile.presentation.view.adapter.renderer.UserProfileImageCellRenderer
 import serg.chuprin.finances.feature.userprofile.presentation.view.adapter.renderer.UserProfileLogoutCellRenderer
 import javax.inject.Inject
+import serg.chuprin.finances.core.api.R as CoreR
 
 /**
  * Created by Sergey Chuprin on 25.07.2020.
  */
-class UserProfileFragment : BaseFragment(R.layout.fragment_user_profile) {
+class UserProfileFragment :
+    BaseFragment(R.layout.fragment_user_profile),
+    InfoDialogFragment.Callback {
+
+    private companion object {
+        private const val RC_DIALOG_LOGOUT = 10001
+    }
 
     @Inject
     lateinit var navigation: UserProfileNavigation
@@ -74,15 +83,31 @@ class UserProfileFragment : BaseFragment(R.layout.fragment_user_profile) {
         }
     }
 
+    override fun onInfoDialogPositiveButtonClick(requestCode: Int) {
+        if (requestCode == RC_DIALOG_LOGOUT) {
+            viewModel.dispatchIntent(UserProfileIntent.ClickOnOnLogoutConfirmationButton)
+        }
+    }
+
     private fun handleEvent(event: UserProfileEvent) {
         return when (event) {
             UserProfileEvent.NavigateToLoginScreen -> {
                 navigation.navigateToUnauthorizedGraph(rootNavigationController)
             }
             UserProfileEvent.ShowLogoutConfirmDialog -> {
-                TODO()
+                showLogoutDialog()
             }
         }
+    }
+
+    private fun showLogoutDialog() {
+        showInfoDialog(
+            negativeText = CoreR.string.no,
+            positiveText = CoreR.string.yes,
+            callbackRequestCode = RC_DIALOG_LOGOUT,
+            title = R.string.user_profile_dialog_logout_title,
+            message = R.string.user_profile_dialog_logout_message
+        )
     }
 
 }
