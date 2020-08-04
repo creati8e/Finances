@@ -27,6 +27,9 @@
 
         <item name="toolbarStyle">@style/ToolbarTheme</item>
         <item name="materialAlertDialogTheme">@style/MaterialAlertDialogTheme</item>
+
+        <item name="colorIconTint">@color/colorIcon</item>
+
     </style>
 
 </resources>

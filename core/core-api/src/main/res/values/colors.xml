@@ -15,4 +15,7 @@
 
     <color name="colorFavoriteOrange">#FFC107</color>
     <color name="colorFavoriteOrangeRipple">#33FFC107</color>
+
+    <color name="colorIcon">#FF1D2F3C</color>
+
 </resources>
