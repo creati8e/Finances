@@ -20,6 +20,7 @@ import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAda
 import serg.chuprin.finances.core.api.presentation.view.extensions.getDimenDpFloat
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisibleOrGone
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
+import serg.chuprin.finances.core.api.presentation.view.extensions.onViewClick
 import serg.chuprin.finances.core.api.presentation.view.popup.menu.PopupMenuWindow
 import serg.chuprin.finances.core.api.presentation.view.setExitSharedElementTransition
 import serg.chuprin.finances.feature.dashboard.BuildConfig
@@ -72,6 +73,10 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 
         debugImageView.makeVisibleOrGone(BuildConfig.DEBUG)
         debugImageView.onClick(appDebugMenu::open)
+
+        userPhotoImageView.onViewClick {
+            navigation.navigateToUserProfile(navController, it)
+        }
 
         postponeEnterTransition()
         view.doOnPreDraw { startPostponedEnterTransition() }

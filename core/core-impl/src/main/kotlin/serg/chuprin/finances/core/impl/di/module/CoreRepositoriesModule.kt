@@ -32,4 +32,7 @@ internal interface CoreRepositoriesModule {
         impl: TransactionCategoryRepositoryImpl
     ): TransactionCategoryRepository
 
+    @[Binds]
+    fun bindDataRepository(impl: DataRepositoryImpl): DataRepository
+
 }

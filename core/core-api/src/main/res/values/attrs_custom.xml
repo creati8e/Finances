@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Represents a color for all icons inside app
+       (icon background, action bar icons, icons in bottom sheets)
+       -->
+    <attr name="colorIconTint" format="reference" />
+
+</resources>

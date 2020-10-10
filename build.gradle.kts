@@ -85,7 +85,7 @@ fun Project.enableDesugaring(testedExtension: TestedExtension) {
     testedExtension.compileOptions.coreLibraryDesugaringEnabled = true
     dependencies.add(
         "coreLibraryDesugaring",
-        "com.android.tools:desugar_jdk_libs:1.0.5"
+        "com.android.tools:desugar_jdk_libs:1.0.9"
     )
 }
 

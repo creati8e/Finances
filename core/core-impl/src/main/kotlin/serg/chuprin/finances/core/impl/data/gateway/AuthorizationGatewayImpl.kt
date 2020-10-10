@@ -3,6 +3,7 @@ package serg.chuprin.finances.core.impl.data.gateway
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.tasks.await
 import serg.chuprin.finances.core.api.domain.gateway.AuthorizationGateway
 import serg.chuprin.finances.core.impl.data.datasource.firebase.FirebaseUserDataSource
@@ -37,6 +38,12 @@ internal class AuthorizationGatewayImpl @Inject constructor(
                 },
                 { exception -> failure(exception) }
             )
+    }
+
+    override suspend fun logOut() {
+        coroutineScope {
+            firebaseAuth.signOut()
+        }
     }
 
 }

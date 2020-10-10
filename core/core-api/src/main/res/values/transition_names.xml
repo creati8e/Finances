@@ -26,14 +26,16 @@
         dashboard_to_transactions_report_expenses
     </string>
 
-    <string name="transition_dashboard_recent_transactions_to_transactions_report"
-        translatable="false">
+    <string name="transition_dashboard_recent_transactions_to_transactions_report" translatable="false">
         dashboard_recent_transactions_to_transactions_report
     </string>
 
-    <string name="transition_dashboard_categories_to_transactions_report"
-        translatable="false">
+    <string name="transition_dashboard_categories_to_transactions_report" translatable="false">
         transition_dashboard_categories_to_transactions_report
+    </string>
+
+    <string name="transition_user_profile" translatable="false">
+        transition_user_profile
     </string>
 
 </resources>

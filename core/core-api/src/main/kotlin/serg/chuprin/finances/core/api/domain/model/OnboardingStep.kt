@@ -6,5 +6,10 @@ package serg.chuprin.finances.core.api.domain.model
 enum class OnboardingStep(val order: Int) {
     CURRENCY_CHOICE(1),
     ACCOUNT_SETUP(2),
-    COMPLETED(3)
+    COMPLETED(3);
+
+    companion object {
+        val INITIAL = CURRENCY_CHOICE
+    }
+
 }
