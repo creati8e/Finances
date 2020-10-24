@@ -4,10 +4,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
+import serg.chuprin.finances.core.api.domain.model.transaction.TransactionsQuery
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.impl.data.datasource.firebase.FirebaseTransactionDataSource
 import serg.chuprin.finances.core.impl.data.mapper.transaction.FirebaseTransactionMapper
@@ -25,48 +24,35 @@ internal class TransactionRepositoryImpl @Inject constructor(
         firebaseDataSource.createTransaction(transaction)
     }
 
-    override fun userTransactionsFlow(
-        userId: Id,
-        dataPeriod: DataPeriod?,
-        transactionType: PlainTransactionType?
-    ): Flow<List<Transaction>> {
+    override fun transactionsFlow(query: TransactionsQuery): Flow<List<Transaction>> {
         return firebaseDataSource
-            .userTransactionsFlow(userId, dataPeriod)
+            .transactionsFlow(query)
             .map { transactions ->
-                transactions.mapNotNull { snapshot ->
-                    mapper.mapFromSnapshot(snapshot)?.takeIf { transaction ->
-                        return@takeIf when (transactionType) {
-                            PlainTransactionType.INCOME -> transaction.isIncome
-                            PlainTransactionType.EXPENSE -> transaction.isExpense
-                            null -> true
+                transactions.mapNotNull { documentSnapshot ->
+                    mapper.mapFromSnapshot(documentSnapshot)
+                        ?.takeIf { transaction ->
+                            return@takeIf when (query.transactionType) {
+                                PlainTransactionType.INCOME -> transaction.isIncome
+                                PlainTransactionType.EXPENSE -> transaction.isExpense
+                                null -> true
+                            }
                         }
-                    }
+                        ?.takeIf { transaction ->
+                            if (query.moneyAccountIds.isEmpty()) {
+                                true
+                            } else {
+                                transaction.moneyAccountId in query.moneyAccountIds
+                            }
+                        }
+                        ?.takeIf { transaction ->
+                            if (query.categoryIds.isEmpty()) {
+                                true
+                            } else {
+                                transaction.categoryId in query.categoryIds
+                            }
+                        }
                 }
             }
-            .flowOn(Dispatchers.Default)
-    }
-
-    override fun recentUserTransactionsFlow(
-        userId: Id,
-        count: Int,
-        dataPeriod: DataPeriod
-    ): Flow<List<Transaction>> {
-        return firebaseDataSource
-            .recentUserTransactionsFlow(userId, count, dataPeriod)
-            .map { transactions ->
-                transactions.mapNotNull { snapshot ->
-                    mapper
-                        .mapFromSnapshot(snapshot)
-                        ?.takeIf { transaction -> !transaction.isBalance }
-                }
-            }
-            .flowOn(Dispatchers.Default)
-    }
-
-    override fun moneyAccountTransactionsFlow(moneyAccountId: Id): Flow<List<Transaction>> {
-        return firebaseDataSource
-            .moneyAccountTransactionsFlow(moneyAccountId)
-            .map { transactions -> transactions.mapNotNull(mapper::mapFromSnapshot) }
             .flowOn(Dispatchers.Default)
     }
 

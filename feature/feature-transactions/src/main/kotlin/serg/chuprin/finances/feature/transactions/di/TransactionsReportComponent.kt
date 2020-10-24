@@ -1,9 +1,12 @@
 package serg.chuprin.finances.feature.transactions.di
 
+import dagger.BindsInstance
 import dagger.Component
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
+import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.ViewModelComponent
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionsReportScreenArguments
+import serg.chuprin.finances.feature.transactions.presentation.arguments.TransactionsReportInitialFilter
 import serg.chuprin.finances.feature.transactions.presentation.model.viewmodel.TransactionsReportViewModel
 import serg.chuprin.finances.feature.transactions.report.dependencies.TransactionsReportDependencies
 import serg.chuprin.finances.injector.Injector
@@ -11,17 +14,41 @@ import serg.chuprin.finances.injector.Injector
 /**
  * Created by Sergey Chuprin on 12.05.2020.
  */
-@[ScreenScope Component(dependencies = [TransactionsReportDependencies::class])]
+@[ScreenScope Component(
+    modules = [TransactionsReportModule::class],
+    dependencies = [TransactionsReportDependencies::class]
+)]
 interface TransactionsReportComponent : ViewModelComponent<TransactionsReportViewModel> {
 
     companion object {
 
         fun get(arguments: TransactionsReportScreenArguments): TransactionsReportComponent {
             return DaggerTransactionsReportComponent
-                .builder()
-                .transactionsReportDependencies(Injector.getTransactionsReportDependencies())
-                .build()
+                .factory()
+                .newComponent(
+                    Injector.getTransactionsReportDependencies(),
+                    arguments.toInitialFilter()
+                )
         }
+
+
+        private fun TransactionsReportScreenArguments.toInitialFilter(): TransactionsReportInitialFilter {
+            return TransactionsReportInitialFilter(
+                dataPeriod = dataPeriodUi?.toDataPeriod(),
+                plainTransactionType = plainTransactionType,
+                categoryIds = categoryIds.map { it?.let { Id.existing(it) } }.toSet()
+            )
+        }
+
+    }
+
+    @Component.Factory
+    interface Factory {
+
+        fun newComponent(
+            dependencies: TransactionsReportDependencies,
+            @BindsInstance initialFilter: TransactionsReportInitialFilter
+        ): TransactionsReportComponent
 
     }
 

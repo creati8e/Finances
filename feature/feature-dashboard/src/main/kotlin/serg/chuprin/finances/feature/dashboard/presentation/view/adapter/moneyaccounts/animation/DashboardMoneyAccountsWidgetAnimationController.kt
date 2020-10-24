@@ -30,21 +30,7 @@ class DashboardMoneyAccountsWidgetAnimationController {
         if (isExpanded) {
             collapse(expandableLayout)
         } else {
-            expand(expandableLayout)
-        }
-    }
-
-    private fun expand(expandableLayout: ViewGroup) {
-        animate(expandableLayout) { view, interpolatedTime, viewHeight ->
-            if (interpolatedTime == 1f) {
-                view.makeGone()
-            } else {
-                with(view) {
-                    alpha = 1f - interpolatedTime
-                    layoutParams.height = viewHeight - (viewHeight * interpolatedTime).toInt()
-                    requestLayout()
-                }
-            }
+            expandableLayout.animateHeight(expanded = true)
         }
     }
 
@@ -57,13 +43,7 @@ class DashboardMoneyAccountsWidgetAnimationController {
             )
             layoutParams.height = 1
             makeVisible()
-        }
-        animate(expandableLayout) { view, interpolatedTime, viewHeight ->
-            with(view) {
-                alpha = interpolatedTime
-                layoutParams.height = ((viewHeight * interpolatedTime).toInt())
-                requestLayout()
-            }
+            animateHeight(expanded = false)
         }
     }
 
@@ -72,35 +52,43 @@ class DashboardMoneyAccountsWidgetAnimationController {
             animation?.cancel()
             animate()
                 .setInterpolator(animationInterpolator)
-                .rotationBy(if (isExpanded) -180f else 180f)
+                .rotation(if (isExpanded) -180f else 0f)
                 .setDuration(EXPANSION_ARROW_ANIMATION_DURATION)
                 .start()
         }
     }
 
-    private inline fun animate(
-        view: View,
-        crossinline block: (view: View, interpolatedTime: Float, viewHeight: Int) -> Unit
-    ) {
-        with(view) {
-            // Remember initial view height before changing it.
-            val viewHeight = measuredHeight
-            startAnimation(
-                object : Animation() {
-                    override fun applyTransformation(
-                        interpolatedTime: Float,
-                        transformation: Transformation
-                    ) {
-                        block(view, interpolatedTime, viewHeight)
-                    }
-                }.apply<Animation> {
-                    interpolator = animationInterpolator
+    private fun View.animateHeight(expanded: Boolean) {
+        // Remember initial view height before changing it.
+        val viewHeight = measuredHeight
+        startAnimation(object : Animation() {
 
-                    val density = context.resources.displayMetrics.density
-                    duration = (viewHeight / density).toLong() + 150
+            override fun applyTransformation(
+                interpolatedTime: Float,
+                transformation: Transformation
+            ) {
+                if (expanded) {
+                    if (interpolatedTime == 1f) {
+                        makeGone()
+                    } else {
+                        alpha = 1f - interpolatedTime
+                    }
+                    layoutParams.height = viewHeight - (viewHeight * interpolatedTime).toInt()
+                    requestLayout()
+                } else {
+                    alpha = interpolatedTime
+                    layoutParams.height = ((viewHeight * interpolatedTime).toInt())
+                    requestLayout()
                 }
-            )
+            }
+
+        }.apply<Animation> {
+            interpolator = animationInterpolator
+
+            val density = context.resources.displayMetrics.density
+            duration = (viewHeight / density).toLong() + 150
         }
+        )
     }
 
 }

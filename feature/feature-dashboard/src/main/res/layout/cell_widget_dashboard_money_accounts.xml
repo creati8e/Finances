@@ -12,14 +12,12 @@
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/moneyAccountsSubtitleLayout"
+        style="@style/ClickableLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/bg_selection_rounded_transparent"
-        android:clickable="true"
-        android:focusable="true"
         android:orientation="horizontal"
         android:transitionName="@string/transition_money_accounts_list_content"
         android:weightSum="5">

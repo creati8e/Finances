@@ -1,5 +1,6 @@
 package serg.chuprin.finances.core.api.di.provider
 
+import serg.chuprin.finances.core.api.domain.TransactionsByDayGrouper
 import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
 
 /**
@@ -8,5 +9,7 @@ import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
 interface CoreUtilsProvider {
 
     val amountParser: AmountParser
+
+    val transactionsByDayGrouper: TransactionsByDayGrouper
 
 }

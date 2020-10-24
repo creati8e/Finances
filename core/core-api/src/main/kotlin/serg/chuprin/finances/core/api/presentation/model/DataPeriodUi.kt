@@ -24,4 +24,8 @@ class DataPeriodUi(
 
     }
 
+    fun toDataPeriod(): DataPeriod {
+        return DataPeriod(startDate = startDate, endDate = endDate, periodType = periodType)
+    }
+
 }

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="no">Нет</string>
+    <string name="yes">Да</string>
+
     <string name="error_no_network">Пожалуйста, проверьте интернет-соединение</string>
     <string name="error_entered_amount_is_not_valid">Введеная сумма некорректна</string>
     <string name="cash_money_account_default_name">Наличные</string>

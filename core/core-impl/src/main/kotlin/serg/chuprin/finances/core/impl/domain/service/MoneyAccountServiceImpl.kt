@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.api.domain.model.MoneyAccount
 import serg.chuprin.finances.core.api.domain.model.MoneyAccountBalances
 import serg.chuprin.finances.core.api.domain.model.User
+import serg.chuprin.finances.core.api.domain.model.transaction.TransactionsQuery
 import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.api.domain.service.MoneyAccountService
@@ -29,20 +30,20 @@ internal class MoneyAccountServiceImpl @Inject constructor(
             }
     }
 
-    @Suppress("MoveLambdaOutsideParentheses")
     private fun calculateBalance(moneyAccounts: List<MoneyAccount>): Flow<MoneyAccountBalances> {
         val flows = moneyAccounts.map { account ->
             combine(
                 flowOf(account),
-                transactionRepository.moneyAccountTransactionsFlow(account.id),
-                { acc, transactions -> acc to transactions.amount }
-            )
+                transactionRepository.transactionsFlow(
+                    TransactionsQuery(moneyAccountIds = setOf(account.id))
+                )
+            ) { acc, transactions -> acc to transactions.amount }
         }
-        return combine(flows, { array ->
+        return combine(flows) { array ->
             array.fold(MoneyAccountBalances(), { accounts, (account, balance) ->
                 accounts.add(account, balance)
             })
-        })
+        }
     }
 
 }

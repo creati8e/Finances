@@ -1,23 +1,18 @@
 <resources>
 
-    <style name="AppTheme"
-        parent="BaseAppTheme.Clear" />
+    <style name="AppTheme" parent="BaseAppTheme.Clear" />
 
-    <style name="AppTheme.Splash"
-        parent="BaseAppTheme.Splash" />
+    <style name="AppTheme.Splash" parent="BaseAppTheme.Splash" />
 
-    <style name="BaseAppTheme.Clear"
-        parent="BaseAppTheme">
+    <style name="BaseAppTheme.Clear" parent="BaseAppTheme">
         <item name="android:background">@null</item>
     </style>
 
-    <style name="BaseAppTheme.Splash"
-        parent="BaseAppTheme">
+    <style name="BaseAppTheme.Splash" parent="BaseAppTheme">
         <item name="android:background">@color/colorPrimary</item>
     </style>
 
-    <style name="BaseAppTheme"
-        parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="BaseAppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -31,6 +26,10 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
 
         <item name="toolbarStyle">@style/ToolbarTheme</item>
+        <item name="materialAlertDialogTheme">@style/MaterialAlertDialogTheme</item>
+
+        <item name="colorIconTint">@color/colorIcon</item>
+
     </style>
 
 </resources>

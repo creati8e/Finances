@@ -47,17 +47,11 @@ data class Transaction(
                 type = type,
                 _date = date,
                 _amount = amount,
-                id = Id.existing(
-                    id
-                ),
+                id = Id.existing(id),
                 currencyCode = currencyCode,
-                ownerId = Id.existing(
-                    ownerId
-                ),
+                ownerId = Id.existing(ownerId),
                 categoryId = categoryId?.let(::Id),
-                moneyAccountId = Id.existing(
-                    moneyAccountId
-                )
+                moneyAccountId = Id.existing(moneyAccountId)
             )
         }
 
@@ -80,5 +74,8 @@ data class Transaction(
 
     val dateTime: LocalDateTime
         get() = _date.toLocalDateTimeUTC()
+
+    val currency: Currency
+        get() = Currency.getInstance(currencyCode)
 
 }

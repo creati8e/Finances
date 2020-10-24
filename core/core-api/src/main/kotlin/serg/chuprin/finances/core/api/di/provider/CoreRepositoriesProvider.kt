@@ -7,6 +7,8 @@ import serg.chuprin.finances.core.api.domain.repository.*
  */
 interface CoreRepositoriesProvider {
 
+    val dataRepository: DataRepository
+
     val userRepository: UserRepository
 
     val currencyRepository: CurrencyRepository

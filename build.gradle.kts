@@ -1,7 +1,6 @@
 import com.android.build.gradle.LibraryExtension
 import com.android.build.gradle.TestedExtension
 import com.android.build.gradle.internal.dsl.BuildType
-import com.android.build.gradle.internal.dsl.TestOptions
 import com.vanniktech.dependency.graph.generator.DependencyGraphGeneratorExtension
 import com.vanniktech.dependency.graph.generator.DependencyGraphGeneratorPlugin
 import de.mannodermaus.gradle.plugins.junit5.junitPlatform
@@ -13,7 +12,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import serg.chuprin.finances.config.AppConfig
 
 plugins {
-    id("com.github.ben-manes.versions") version ("0.28.0")
+    id("com.github.ben-manes.versions") version ("0.33.0")
 }
 
 buildscript {
@@ -39,6 +38,7 @@ allprojects {
     repositories {
         google()
         jcenter()
+        mavenCentral()
         maven("http://jitpack.io/")
     }
 }
@@ -82,10 +82,10 @@ subprojects {
 }
 
 fun Project.enableDesugaring(testedExtension: TestedExtension) {
-    testedExtension.compileOptions.coreLibraryDesugaringEnabled = true
+    testedExtension.compileOptions.isCoreLibraryDesugaringEnabled = true
     dependencies.add(
         "coreLibraryDesugaring",
-        "com.android.tools:desugar_jdk_libs:1.0.5"
+        "com.android.tools:desugar_jdk_libs:1.0.10"
     )
 }
 
@@ -97,20 +97,14 @@ fun Project.configureSpek(testedExtension: TestedExtension) {
     with(testedExtension) {
         testOptions {
             junitPlatform.filters.includeEngines("spek2")
-            unitTests(delegateClosureOf<TestOptions.UnitTestOptions> {
-
-                all(
-                    KotlinClosure1<Any, Test>(
-                        {
-                            (this as Test).apply {
-                                systemProperty("kotlinx.coroutines.debug", "on")
-                                testLogging.setEvents(setOf("passed", "skipped", "failed"))
-                            }
-                        },
-                        this
-                    )
-                )
-            })
+            unitTests {
+                all { test ->
+                    test.apply {
+                        systemProperty("kotlinx.coroutines.debug", "on")
+                        testLogging.setEvents(setOf("passed", "skipped", "failed"))
+                    }
+                }
+            }
         }
     }
     dependencies {

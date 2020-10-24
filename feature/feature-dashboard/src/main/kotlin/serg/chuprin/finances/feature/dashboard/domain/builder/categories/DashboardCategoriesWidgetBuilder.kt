@@ -7,6 +7,7 @@ import serg.chuprin.finances.core.api.domain.model.User
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
+import serg.chuprin.finances.core.api.domain.model.transaction.TransactionsQuery
 import serg.chuprin.finances.core.api.domain.service.TransactionCategoryRetrieverService
 import serg.chuprin.finances.feature.dashboard.domain.builder.DashboardWidgetBuilder
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardCategoriesWidgetPage
@@ -46,16 +47,19 @@ class DashboardCategoriesWidgetBuilder @Inject constructor(
         transactionType: PlainTransactionType
     ): Flow<DashboardCategoriesWidgetPage> {
         return transactionCategoryRetrieverService
-            .userCategoryTransactionsInPeriod(
-                userId = currentUser.id,
-                dataPeriod = currentPeriod,
-                transactionType = transactionType
+            .categoryTransactionsFlow(
+                TransactionsQuery(
+                    userId = currentUser.id,
+                    endDate = currentPeriod.endDate,
+                    transactionType = transactionType,
+                    startDate = currentPeriod.startDate
+                )
             )
             .map { categoryTransactionsMap ->
                 pageBuilder.build(
-                    transactionType,
-                    categoryTransactionsMap,
-                    TOP_CATEGORIES_COUNT
+                    transactionType = transactionType,
+                    topCategoriesCount = TOP_CATEGORIES_COUNT,
+                    categoryTransactionsMap = categoryTransactionsMap
                 )
             }
     }

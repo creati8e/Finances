@@ -186,7 +186,7 @@ class AccountsSetupOnboardingFragment : BaseFragment(R.layout.fragment_onboardin
             setText(amountInputState.formattedAmount)
         }
         val textColor = if (amountInputState.hasError) {
-            requireContext().getColorInt(R.color.colorError)
+            requireContext().getColorInt(R.color.colorRed)
         } else {
             requireContext().getAttributeColor(android.R.attr.textColorPrimary)
         }

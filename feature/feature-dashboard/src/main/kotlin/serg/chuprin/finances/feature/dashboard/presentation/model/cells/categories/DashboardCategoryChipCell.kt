@@ -11,6 +11,7 @@ data class DashboardCategoryChipCell(
     val colorInt: Int,
     val chipText: String,
     val transitionName: String,
+    val isOtherCategory: Boolean,
     val category: TransactionCategory?
 ) : DiffCell<Id> {
 

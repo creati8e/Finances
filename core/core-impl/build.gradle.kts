@@ -9,6 +9,10 @@ plugins {
 }
 
 android {
+    defaultConfig {
+        buildConfigField("int", "VERSION_CODE", "${AppConfig.VERSION_CODE}")
+        buildConfigField("String", "VERSION_NAME", "\"${AppConfig.VERSION_NAME}\"")
+    }
     buildTypes {
         maybeCreate(AppConfig.BuildTypes.DEV.name)
         maybeCreate(AppConfig.BuildTypes.DEBUG.name)

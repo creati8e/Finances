@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.doOnPreDraw
 import androidx.recyclerview.widget.LinearLayoutManager
-import coil.api.load
+import coil.load
 import coil.transform.RoundedCornersTransformation
 import kotlinx.android.synthetic.main.cell_widget_dashboard_money_accounts.view.*
 import kotlinx.android.synthetic.main.fragment_dashboard.*
@@ -20,6 +20,7 @@ import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAda
 import serg.chuprin.finances.core.api.presentation.view.extensions.getDimenDpFloat
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisibleOrGone
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
+import serg.chuprin.finances.core.api.presentation.view.extensions.onViewClick
 import serg.chuprin.finances.core.api.presentation.view.popup.menu.PopupMenuWindow
 import serg.chuprin.finances.core.api.presentation.view.setExitSharedElementTransition
 import serg.chuprin.finances.feature.dashboard.BuildConfig
@@ -72,6 +73,10 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 
         debugImageView.makeVisibleOrGone(BuildConfig.DEBUG)
         debugImageView.onClick(appDebugMenu::open)
+
+        userPhotoImageView.onViewClick {
+            navigation.navigateToUserProfile(navController, it)
+        }
 
         postponeEnterTransition()
         view.doOnPreDraw { startPostponedEnterTransition() }

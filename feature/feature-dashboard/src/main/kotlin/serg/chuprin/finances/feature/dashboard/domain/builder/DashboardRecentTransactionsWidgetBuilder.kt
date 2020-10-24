@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import serg.chuprin.finances.core.api.domain.model.User
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
+import serg.chuprin.finances.core.api.domain.model.transaction.TransactionsQuery
 import serg.chuprin.finances.core.api.domain.service.TransactionCategoryRetrieverService
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
 import serg.chuprin.finances.feature.dashboard.domain.repository.DashboardDataPeriodRepository
@@ -29,10 +30,13 @@ class DashboardRecentTransactionsWidgetBuilder @Inject constructor(
             return null
         }
         return transactionCategoryRetrieverService
-            .recentUserTransactionsInPeriodFlow(
-                userId = currentUser.id,
-                dataPeriod = currentPeriod,
-                count = RECENT_TRANSACTIONS_COUNT
+            .transactionsFlow(
+                TransactionsQuery(
+                    userId = currentUser.id,
+                    endDate = currentPeriod.endDate,
+                    limit = RECENT_TRANSACTIONS_COUNT,
+                    startDate = currentPeriod.startDate
+                )
             )
             .map { map -> DashboardWidget.RecentTransactions(currentUser.defaultCurrency, map) }
     }

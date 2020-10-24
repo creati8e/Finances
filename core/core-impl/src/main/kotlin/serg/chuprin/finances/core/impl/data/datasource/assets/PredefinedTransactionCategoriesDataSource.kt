@@ -5,7 +5,6 @@ import android.content.res.AssetManager
 import com.github.ajalt.timberkt.Timber
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import serg.chuprin.finances.core.api.domain.model.Id
@@ -16,7 +15,6 @@ import javax.inject.Inject
 /**
  * Created by Sergey Chuprin on 19.04.2020.
  */
-@OptIn(UnstableDefault::class)
 internal class PredefinedTransactionCategoriesDataSource @Inject constructor(
     private val context: Context
 ) {
@@ -48,7 +46,7 @@ internal class PredefinedTransactionCategoriesDataSource @Inject constructor(
     private fun AssetManager.getCategories(filename: String): List<TransactionCategoryAssetDto> {
         val json = open(filename).bufferedReader().use(BufferedReader::readText)
         val deserializer = ListSerializer(TransactionCategoryAssetDto.serializer())
-        return Json.parse(deserializer, json).generateIds()
+        return Json.decodeFromString(deserializer, json).generateIds()
     }
 
     /**

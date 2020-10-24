@@ -96,9 +96,14 @@ class DashboardActionExecutor @Inject constructor(
     ): Flow<DashboardEffect> {
         return emptyFlowAction {
             val dataPeriod = DataPeriodUi.create(state.dashboard.currentDataPeriod)
+            val categoryIds = if (intent.cell.isOtherCategory) {
+                emptySet()
+            } else {
+                setOf(intent.cell.category?.id?.value)
+            }
             val arguments = TransactionsReportScreenArguments(
-                dataPeriod = dataPeriod,
-                categoryId = intent.cell.category?.id,
+                dataPeriodUi = dataPeriod,
+                categoryIds = categoryIds,
                 transitionName = intent.cell.transitionName
             )
             eventConsumer(DashboardEvent.NavigateToTransactionsReportScreen(arguments))
@@ -112,7 +117,7 @@ class DashboardActionExecutor @Inject constructor(
         return emptyFlowAction {
             val dataPeriod = DataPeriodUi.create(state.dashboard.currentDataPeriod)
             val arguments = TransactionsReportScreenArguments(
-                dataPeriod = dataPeriod,
+                dataPeriodUi = dataPeriod,
                 transitionName = getString(
                     R.string.transition_dashboard_recent_transactions_to_transactions_report
                 )
@@ -128,7 +133,7 @@ class DashboardActionExecutor @Inject constructor(
         return emptyFlowAction {
             val dataPeriod = DataPeriodUi.create(state.dashboard.currentDataPeriod)
             val arguments = TransactionsReportScreenArguments(
-                dataPeriod = dataPeriod,
+                dataPeriodUi = dataPeriod,
                 plainTransactionType = PlainTransactionType.EXPENSE,
                 transitionName = getString(
                     R.string.transition_dashboard_to_transactions_report_expenses
@@ -145,7 +150,7 @@ class DashboardActionExecutor @Inject constructor(
         return emptyFlowAction {
             val dataPeriod = DataPeriodUi.create(state.dashboard.currentDataPeriod)
             val arguments = TransactionsReportScreenArguments(
-                dataPeriod = dataPeriod,
+                dataPeriodUi = dataPeriod,
                 plainTransactionType = PlainTransactionType.INCOME,
                 transitionName = getString(
                     R.string.transition_dashboard_to_transactions_report_incomes

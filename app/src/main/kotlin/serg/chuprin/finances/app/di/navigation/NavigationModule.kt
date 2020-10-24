@@ -12,10 +12,7 @@ import serg.chuprin.finances.app.R
 import serg.chuprin.finances.core.api.di.provider.CoreNavigationProvider
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.presentation.extensions.toBundle
-import serg.chuprin.finances.core.api.presentation.navigation.AuthorizationNavigation
-import serg.chuprin.finances.core.api.presentation.navigation.DashboardNavigation
-import serg.chuprin.finances.core.api.presentation.navigation.MoneyAccountsListNavigation
-import serg.chuprin.finances.core.api.presentation.navigation.OnboardingNavigation
+import serg.chuprin.finances.core.api.presentation.navigation.*
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionsReportScreenArguments
 import serg.chuprin.finances.feature.dashboard.presentation.view.DashboardFragmentDirections
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.arguments.MoneyAccountDetailsScreenArguments
@@ -89,6 +86,18 @@ object NavigationModule : CoreNavigationProvider {
                     )
                 }
 
+                override fun navigateToUserProfile(
+                    navController: NavController,
+                    vararg sharedElementView: View
+                ) {
+                    navController.navigate(
+                        R.id.navigateFromDashboardToUserProfile,
+                        null,
+                        null,
+                        buildExtrasForSharedElements(sharedElementView)
+                    )
+                }
+
             }
         }
 
@@ -112,6 +121,18 @@ object NavigationModule : CoreNavigationProvider {
                     AuthorizedGraphDirections.navigateFromOnboardingToDashboard().run {
                         navController.navigate(this)
                     }
+                }
+
+            }
+        }
+
+    @get:Provides
+    override val userProfileNavigation: UserProfileNavigation
+        get() {
+            return object : UserProfileNavigation {
+
+                override fun navigateToUnauthorizedGraph(rootNavigationController: NavController) {
+                    rootNavigationController.navigate(R.id.navigateToUnauthorizedGraph)
                 }
 
             }
