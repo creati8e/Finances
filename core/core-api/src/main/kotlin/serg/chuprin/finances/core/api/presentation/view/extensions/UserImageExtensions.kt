@@ -1,7 +1,7 @@
 package serg.chuprin.finances.core.api.presentation.view.extensions
 
 import android.widget.ImageView
-import coil.api.load
+import coil.load
 import coil.transform.RoundedCornersTransformation
 import serg.chuprin.finances.core.api.R
 

@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.doOnPreDraw
 import androidx.recyclerview.widget.LinearLayoutManager
-import coil.api.load
+import coil.load
 import coil.transform.RoundedCornersTransformation
 import kotlinx.android.synthetic.main.cell_widget_dashboard_money_accounts.view.*
 import kotlinx.android.synthetic.main.fragment_dashboard.*

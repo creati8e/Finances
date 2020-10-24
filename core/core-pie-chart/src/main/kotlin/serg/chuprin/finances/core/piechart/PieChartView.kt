@@ -172,7 +172,8 @@ class PieChartView @JvmOverloads constructor(
                 )
             )
         }
-        return buildList {
+        @Suppress("RemoveExplicitTypeArguments")
+        return buildList<PieChartRenderData> {
             val distanceBetweenParts = DISTANCE_BETWEEN_PARTS
             list.sortedByDescending(PieChartDataPart::value).forEach { piePortion ->
 
