@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.onboarding.presentation.currencychoice.view.widget
+package serg.chuprin.finances.core.api.presentation.currencychoice.view.widget
 
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
@@ -10,14 +10,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_currency_choice.view.*
 import serg.chuprin.adapter.DiffMultiViewAdapter
+import serg.chuprin.finances.core.api.R
 import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.cells.CurrencyCell
+import serg.chuprin.finances.core.api.presentation.currencychoice.view.adapter.renderer.CurrencyCellRenderer
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.view.adapter.diff.DiffCallback
 import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ZeroDataCellRenderer
 import serg.chuprin.finances.core.api.presentation.view.extensions.*
-import serg.chuprin.finances.feature.onboarding.R
-import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.view.adapter.renderer.CurrencyCellRenderer
 
 /**
  * Created by Sergey Chuprin on 05.04.2020.
@@ -32,7 +32,7 @@ class CurrencyChoiceListView @JvmOverloads constructor(
     lateinit var onSearchQueryChanged: (String) -> Unit
     lateinit var onCurrencyCellChosen: (cell: CurrencyCell) -> Unit
 
-    private val cellsAdapter = DiffMultiViewAdapter(DiffCallback<BaseCell>()).apply {
+    private val cellsAdapter = DiffMultiViewAdapter(DiffCallback()).apply {
         registerRenderer(CurrencyCellRenderer())
         registerRenderer(ZeroDataCellRenderer())
         clickListener = { cell, _, _ ->
