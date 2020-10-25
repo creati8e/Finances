@@ -23,7 +23,7 @@ class CurrencyChoiceListController(
     private val currencyChoiceView: CurrencyChoiceListView
 ) {
 
-    fun showOrHideCurrencyChoice(show: Boolean) {
+    fun showOrHide(show: Boolean) {
         val transition = MaterialContainerTransform(context).apply {
             startView = if (show) chosenCurrencyTextView else currencyChoiceView
             endView = if (show) currencyChoiceView else chosenCurrencyTextView

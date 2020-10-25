@@ -12,7 +12,11 @@ class MoneyAccountCreationStateReducer :
         what: MoneyAccountCreationEffect,
         state: MoneyAccountCreationState
     ): MoneyAccountCreationState {
-        TODO("Not yet implemented")
+        return when (what) {
+            is MoneyAccountCreationEffect.CurrencyChoiceStateUpdated -> {
+                state.copy(currencyChoiceState = what.state)
+            }
+        }
     }
 
 }

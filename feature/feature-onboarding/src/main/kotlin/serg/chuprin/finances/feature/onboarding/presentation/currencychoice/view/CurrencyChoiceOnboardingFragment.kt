@@ -35,12 +35,6 @@ class CurrencyChoiceOnboardingFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _currencyChoiceListController = CurrencyChoiceListController(
-            context = requireContext(),
-            animationContainer = constraintLayout,
-            chosenCurrencyTextView = chosenCurrencyTextView,
-            currencyChoiceView = currencyChoiceView
-        )
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             viewModel.dispatchIntent(CurrencyChoiceOnboardingIntent.BackPress)
         }
@@ -54,7 +48,12 @@ class CurrencyChoiceOnboardingFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        _currencyChoiceListController = CurrencyChoiceListController(
+            context = requireContext(),
+            animationContainer = constraintLayout,
+            currencyChoiceView = currencyChoiceView,
+            chosenCurrencyTextView = chosenCurrencyTextView
+        )
         animateFab(savedInstanceState, view)
 
         currencyChoiceView.onCurrencyCellChosen = { cell ->
@@ -75,10 +74,10 @@ class CurrencyChoiceOnboardingFragment :
 
         with(viewModel) {
             eventsLiveData(::handleEvent)
-            doneButtonEnabledLiveData(doneButton::setEnabled)
             cellsLiveData(currencyChoiceView::setCells)
+            doneButtonEnabledLiveData(doneButton::setEnabled)
             chosenCurrencyDisplayNameLiveData(chosenCurrencyTextView::setText)
-            currencyPickerVisibilityLiveData(currencyChoiceListController::showOrHideCurrencyChoice)
+            currencyPickerVisibilityLiveData(currencyChoiceListController::showOrHide)
         }
     }
 
