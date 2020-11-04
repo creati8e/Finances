@@ -31,6 +31,7 @@ class MoneyAccountCreationActionExecutor @Inject constructor(
                     MoneyAccountCreationIntent.BackPress -> {
                         handleBackPressIntent(state, eventConsumer)
                     }
+                    MoneyAccountCreationIntent.ClickOnSaveButton -> TODO()
                 }
             }
             is MoneyAccountCreationAction.UpdateCurrencyChoiceState -> {

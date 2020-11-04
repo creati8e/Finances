@@ -7,4 +7,6 @@ sealed class MoneyAccountCreationIntent {
 
     object BackPress : MoneyAccountCreationIntent()
 
+    object ClickOnSaveButton : MoneyAccountCreationIntent()
+
 }

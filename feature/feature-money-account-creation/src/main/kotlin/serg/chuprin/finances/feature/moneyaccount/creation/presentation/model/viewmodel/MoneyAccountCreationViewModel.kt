@@ -7,6 +7,7 @@ import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.Cu
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.BaseStoreViewModel
 import serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.store.MoneyAccountCreationIntent
+import serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.store.MoneyAccountCreationState
 import serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.store.MoneyAccountCreationStore
 import javax.inject.Inject
 
@@ -15,21 +16,24 @@ import javax.inject.Inject
  */
 @ScreenScope
 class MoneyAccountCreationViewModel @Inject constructor(
-    store: MoneyAccountCreationStore
+    private val store: MoneyAccountCreationStore
 ) : BaseStoreViewModel<MoneyAccountCreationIntent>(),
     CurrencyChoiceStoreIntentDispatcher by store {
 
     val currencyCellsLiveData: LiveData<List<BaseCell>> =
-        store.observeParticularStateAsLiveData { state -> state.currentCells }
+        store.observeParticularStateAsLiveData(MoneyAccountCreationState::currentCells)
 
-    val creationButtonIsEnabledLiveData: LiveData<Boolean> =
-        store.observeParticularStateAsLiveData { state -> state.creationButtonIsEnabled }
+    val savingButtonIsEnabledLiveData: LiveData<Boolean> =
+        store.observeParticularStateAsLiveData(MoneyAccountCreationState::savingButtonIsEnabled)
 
     val chosenCurrencyDisplayNameLiveData: LiveData<String> =
-        store.observeParticularStateAsLiveData { state -> state.chosenCurrencyDisplayName }
+        store.observeParticularStateAsLiveData(MoneyAccountCreationState::chosenCurrencyDisplayName)
 
     val currencyPickerVisibilityLiveData =
-        store.observeParticularStateAsLiveData { state -> state.currencyPickerIsVisible }
+        store.observeParticularStateAsLiveData(MoneyAccountCreationState::currencyPickerIsVisible)
+
+    val savingButtonIsEnabled: Boolean
+        get() = store.state.savingButtonIsEnabled
 
     init {
         store.start(intentsFlow(), viewModelScope)

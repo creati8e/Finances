@@ -7,6 +7,6 @@ import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.Cu
  * Created by Sergey Chuprin on 01.06.2020.
  */
 data class MoneyAccountCreationState(
-    val creationButtonIsEnabled: Boolean = false,
+    val savingButtonIsEnabled: Boolean = false,
     val currencyChoiceState: CurrencyChoiceState = CurrencyChoiceState()
 ) : CurrencyChoiceStateDelegate by currencyChoiceState

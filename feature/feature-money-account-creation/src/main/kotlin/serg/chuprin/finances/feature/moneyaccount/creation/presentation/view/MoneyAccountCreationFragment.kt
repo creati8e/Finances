@@ -1,6 +1,7 @@
 package serg.chuprin.finances.feature.moneyaccount.creation.presentation.view
 
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
 import androidx.activity.addCallback
 import kotlinx.android.synthetic.main.fragment_money_account_creation.*
@@ -9,7 +10,9 @@ import serg.chuprin.finances.core.api.presentation.currencychoice.view.CurrencyC
 import serg.chuprin.finances.core.api.presentation.extensions.setupToolbar
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
+import serg.chuprin.finances.core.api.presentation.view.MenuConfig
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
+import serg.chuprin.finances.core.api.presentation.view.menuConfig
 import serg.chuprin.finances.core.api.presentation.view.setEnterSharedElementTransition
 import serg.chuprin.finances.feature.moneyaccount.creation.R
 import serg.chuprin.finances.feature.moneyaccount.creation.presentation.di.MoneyAccountCreationComponent
@@ -39,6 +42,7 @@ class MoneyAccountCreationFragment : BaseFragment(R.layout.fragment_money_accoun
         super.onViewCreated(view, savedInstanceState)
         setupToolbar(toolbar) {
             setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(R.drawable.ic_close)
         }
 
         _currencyChoiceListController = CurrencyChoiceListController(
@@ -64,12 +68,36 @@ class MoneyAccountCreationFragment : BaseFragment(R.layout.fragment_money_accoun
             currencyCellsLiveData(currencyChoiceView::setCells)
             chosenCurrencyDisplayNameLiveData(chosenCurrencyTextView::setText)
             currencyPickerVisibilityLiveData(currencyChoiceListController::showOrHide)
+            savingButtonIsEnabledLiveData { isEnabled ->
+                menu?.setSavingMenuItemEnabled(isEnabled)
+            }
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _currencyChoiceListController = null
+    }
+
+    override fun createMenu(): MenuConfig? {
+        return menuConfig {
+            addMenu(R.menu.menu_money_account_creation)
+            addMenuItemListener { menuItem ->
+                if (menuItem.itemId == R.id.menu_action_save) {
+                    viewModel.dispatchIntent(MoneyAccountCreationIntent.ClickOnSaveButton)
+                }
+            }
+            addPrepareMenuListener { menu ->
+                menu.setSavingMenuItemEnabled(viewModel.savingButtonIsEnabled)
+            }
+        }
+    }
+
+    private fun Menu.setSavingMenuItemEnabled(isEnabled: Boolean) {
+        with(findItem(R.id.menu_action_save)) {
+            this.isEnabled = isEnabled
+            icon.mutate().alpha = if (isEnabled) 255 else 135
+        }
     }
 
 }
