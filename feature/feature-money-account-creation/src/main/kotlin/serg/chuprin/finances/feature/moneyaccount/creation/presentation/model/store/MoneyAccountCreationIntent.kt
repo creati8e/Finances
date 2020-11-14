@@ -9,4 +9,12 @@ sealed class MoneyAccountCreationIntent {
 
     object ClickOnSaveButton : MoneyAccountCreationIntent()
 
+    class EnterAccountName(
+        val accountName: String
+    ) : MoneyAccountCreationIntent()
+
+    class EnterBalance(
+        val balance: String
+    ) : MoneyAccountCreationIntent()
+
 }

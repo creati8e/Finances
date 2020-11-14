@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rootAppGraph"
-    app:startDestination="@id/authorizedGraph">
+    app:startDestination="@id/appLauncherFragment">
 
     <navigation
         android:id="@+id/notAuthorizedGraph"
@@ -21,7 +21,7 @@
 
     <navigation
         android:id="@+id/authorizedGraph"
-        app:startDestination="@id/moneyAccountCreationFragment">
+        app:startDestination="@id/authorizedGraphLauncherFragment">
 
         <include app:graph="@navigation/navigation_onboarding" />
 

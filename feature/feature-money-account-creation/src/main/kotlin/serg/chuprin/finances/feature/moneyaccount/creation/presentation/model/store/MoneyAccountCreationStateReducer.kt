@@ -16,6 +16,19 @@ class MoneyAccountCreationStateReducer :
             is MoneyAccountCreationEffect.CurrencyChoiceStateUpdated -> {
                 state.copy(currencyChoiceState = what.state)
             }
+            is MoneyAccountCreationEffect.AccountNameEntered -> {
+                state.copy(
+                    moneyAccountName = what.accountName,
+                    savingButtonIsEnabled = what.accountName.isNotBlank() && state.balance != null
+                )
+            }
+            is MoneyAccountCreationEffect.BalanceEntered -> {
+                state.copy(
+                    balance = what.balance,
+                    balanceInputState = what.balanceInputState,
+                    savingButtonIsEnabled = state.moneyAccountName.isNotBlank() && what.balance != null
+                )
+            }
         }
     }
 

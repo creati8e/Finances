@@ -28,6 +28,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
         android:fillViewport="true"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
@@ -49,7 +50,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/accountNameTextView"
+                    android:id="@+id/accountNameEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textCursorDrawable="@drawable/text_cursor"
@@ -69,8 +70,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/moneyAccountNameTil">
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/balanceTextView"
+                <serg.chuprin.finances.core.api.presentation.view.widget.AmountEditText
+                    android:id="@+id/balanceEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textCursorDrawable="@drawable/text_cursor"
