@@ -109,6 +109,7 @@ class MoneyAccountCreationFragment : BaseFragment(R.layout.fragment_money_accoun
 
     override fun onStop() {
         super.onStop()
+        view?.clearFocus()
 
         balanceEditText.removeTextChangedListener(balanceEditTextTextWatcher)
         balanceEditTextTextWatcher = null
@@ -139,7 +140,6 @@ class MoneyAccountCreationFragment : BaseFragment(R.layout.fragment_money_accoun
     private fun handleEvent(event: MoneyAccountCreationEvent) {
         return when (event) {
             MoneyAccountCreationEvent.CloseScreen -> {
-                view?.clearFocus()
                 navController.navigateUp()
                 Unit
             }
