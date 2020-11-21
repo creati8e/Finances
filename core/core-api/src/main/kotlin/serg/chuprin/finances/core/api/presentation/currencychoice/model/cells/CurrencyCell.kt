@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.onboarding.presentation.currencychoice.model.cells
+package serg.chuprin.finances.core.api.presentation.currencychoice.model.cells
 
 import serg.chuprin.finances.core.api.presentation.model.cells.DiffCell
 import java.util.*

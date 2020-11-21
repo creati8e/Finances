@@ -1,15 +1,14 @@
 package serg.chuprin.finances.feature.onboarding.presentation.currencychoice.model.store
 
-import java.util.*
+import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceState
 
 /**
  * Created by Sergey Chuprin on 06.04.2020.
  */
 sealed class CurrencyChoiceOnboardingAction {
 
-    class SetCurrenciesParams(
-        val currentCurrency: Currency,
-        val availableCurrencies: List<Currency>
+    class UpdateCurrencyChoiceState(
+        val state: CurrencyChoiceState
     ) : CurrencyChoiceOnboardingAction()
 
     class ExecuteIntent(

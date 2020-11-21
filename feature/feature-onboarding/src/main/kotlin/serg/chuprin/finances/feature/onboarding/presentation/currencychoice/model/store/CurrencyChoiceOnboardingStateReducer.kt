@@ -13,35 +13,11 @@ class CurrencyChoiceOnboardingStateReducer :
         state: CurrencyChoiceOnboardingState
     ): CurrencyChoiceOnboardingState {
         return when (effect) {
-            is CurrencyChoiceOnboardingEffect.CurrencyChosen -> {
+            is CurrencyChoiceOnboardingEffect.CurrencyChoiceStateUpdated -> {
                 state.copy(
-                    doneButtonIsEnabled = true,
-                    currencyPickerIsVisible = false,
-                    chosenCurrency = effect.currency,
-                    currentCells = effect.allCurrencyCellsWithChosen,
-                    defaultCurrencyCells = effect.allCurrencyCellsWithChosen,
-                    chosenCurrencyDisplayName = effect.chosenCurrencyDisplayName
+                    currencyChoiceState = effect.state,
+                    doneButtonIsEnabled = effect.state.chosenCurrency != null
                 )
-            }
-            is CurrencyChoiceOnboardingEffect.SetCurrencyParams -> {
-                state.copy(
-                    doneButtonIsEnabled = true,
-                    currencyPickerIsVisible = false,
-                    chosenCurrency = effect.currentCurrency,
-                    currentCells = effect.allCurrencyCellsWithChosen,
-                    availableCurrencies = effect.availableCurrencies,
-                    defaultCurrencyCells = effect.allCurrencyCellsWithChosen,
-                    chosenCurrencyDisplayName = effect.chosenCurrencyDisplayName
-                )
-            }
-            is CurrencyChoiceOnboardingEffect.CurrencyPickerVisibilityChanged -> {
-                state.copy(
-                    currentCells = effect.currentCells,
-                    currencyPickerIsVisible = effect.visible
-                )
-            }
-            is CurrencyChoiceOnboardingEffect.CurrenciesFilteredByQuery -> {
-                state.copy(currentCells = effect.currentCells)
             }
         }
     }

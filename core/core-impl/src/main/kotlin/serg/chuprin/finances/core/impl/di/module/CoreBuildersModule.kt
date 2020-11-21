@@ -7,8 +7,8 @@ import serg.chuprin.finances.core.api.presentation.builder.TransactionCellBuilde
 import serg.chuprin.finances.core.api.presentation.builder.TransitionNameBuilder
 import serg.chuprin.finances.core.api.presentation.model.builder.DataPeriodTypePopupMenuCellsBuilder
 import serg.chuprin.finances.core.impl.presentation.builder.TransactionCellBuilderImpl
-import serg.chuprin.finances.core.impl.presentation.builder.TransitionNameBuilderImpl
 import serg.chuprin.finances.core.impl.presentation.model.builder.DataPeriodTypePopupMenuCellsBuilderImpl
+import serg.chuprin.finances.core.impl.presentation.model.builder.TransitionNameBuilderImpl
 
 /**
  * Created by Sergey Chuprin on 23.04.2020.

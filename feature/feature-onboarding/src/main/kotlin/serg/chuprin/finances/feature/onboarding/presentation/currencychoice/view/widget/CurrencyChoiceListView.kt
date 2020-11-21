@@ -11,12 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_currency_choice.view.*
 import serg.chuprin.adapter.DiffMultiViewAdapter
 import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
+import serg.chuprin.finances.core.api.presentation.currencychoice.model.cells.CurrencyCell
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.view.adapter.diff.DiffCallback
 import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ZeroDataCellRenderer
 import serg.chuprin.finances.core.api.presentation.view.extensions.*
 import serg.chuprin.finances.feature.onboarding.R
-import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.model.cells.CurrencyCell
 import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.view.adapter.renderer.CurrencyCellRenderer
 
 /**

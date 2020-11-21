@@ -3,7 +3,7 @@
 
     <string name="money_account_creation_toolbar_title">Создание счета</string>
     <string name="money_account_creation_menu_create">Создать</string>
-    <string name="money_account_creation_hint_name">Имя</string>
+    <string name="money_account_creation_hint_name">Название</string>
     <string name="money_account_creation_hint_initial_balance">Начальный баланс</string>
 
 </resources>
