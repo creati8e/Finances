@@ -1,21 +1,15 @@
 package serg.chuprin.finances.feature.onboarding.presentation.currencychoice.view
 
-import android.graphics.Color
 import android.os.Bundle
-import android.transition.TransitionManager
 import android.view.View
 import androidx.activity.addCallback
-import androidx.core.transition.doOnEnd
-import androidx.core.transition.doOnStart
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-import com.google.android.material.transition.MaterialArcMotion
-import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialSharedAxis
 import kotlinx.android.synthetic.main.fragment_onboarding_currency_choice.*
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceIntent
+import serg.chuprin.finances.core.api.presentation.currencychoice.view.CurrencyChoiceListController
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
-import serg.chuprin.finances.core.api.presentation.view.extensions.makeGone
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisible
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
 import serg.chuprin.finances.feature.onboarding.R
@@ -34,6 +28,11 @@ class CurrencyChoiceOnboardingFragment :
         OnboardingFeatureComponent.get().currencyChoiceComponent()
     }
 
+    private val currencyChoiceListController
+        get() = _currencyChoiceListController!!
+
+    private var _currencyChoiceListController: CurrencyChoiceListController? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requireActivity().onBackPressedDispatcher.addCallback(this) {
@@ -49,7 +48,12 @@ class CurrencyChoiceOnboardingFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        _currencyChoiceListController = CurrencyChoiceListController(
+            context = requireContext(),
+            animationContainer = constraintLayout,
+            currencyChoiceView = currencyChoiceView,
+            chosenCurrencyTextView = chosenCurrencyTextView
+        )
         animateFab(savedInstanceState, view)
 
         currencyChoiceView.onCurrencyCellChosen = { cell ->
@@ -70,11 +74,16 @@ class CurrencyChoiceOnboardingFragment :
 
         with(viewModel) {
             eventsLiveData(::handleEvent)
-            doneButtonEnabledLiveData(doneButton::setEnabled)
             cellsLiveData(currencyChoiceView::setCells)
-            currencyPickerVisibilityLiveData(::showOrHideCurrencyChoice)
+            doneButtonEnabledLiveData(doneButton::setEnabled)
             chosenCurrencyDisplayNameLiveData(chosenCurrencyTextView::setText)
+            currencyPickerVisibilityLiveData(currencyChoiceListController::showOrHide)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _currencyChoiceListController = null
     }
 
     private fun handleEvent(event: CurrencyChoiceOnboardingEvent) {
@@ -87,32 +96,6 @@ class CurrencyChoiceOnboardingFragment :
                     navController.navigate(this)
                 }
             }
-        }
-    }
-
-    private fun showOrHideCurrencyChoice(show: Boolean) {
-        val transition = MaterialContainerTransform(requireContext()).apply {
-            startView = if (show) chosenCurrencyTextView else currencyChoiceView
-            endView = if (show) currencyChoiceView else chosenCurrencyTextView
-
-            scrimColor = Color.TRANSPARENT
-            pathMotion = MaterialArcMotion()
-            fadeMode = MaterialContainerTransform.FADE_MODE_THROUGH
-        }
-        if (show) {
-            transition.doOnStart {
-                currencyChoiceView.resetScroll()
-                currencyChoiceView.clearSearchQuery()
-            }
-            transition.doOnEnd {
-                currencyChoiceView.showKeyboard()
-            }
-        }
-        TransitionManager.beginDelayedTransition(constraintLayout, transition)
-        if (show) {
-            currencyChoiceView.makeVisible()
-        } else {
-            currencyChoiceView.makeGone()
         }
     }
 

@@ -61,7 +61,7 @@
             tools:focusedByDefault="true"
             tools:text="RUB - Российский рубль" />
 
-        <serg.chuprin.finances.feature.onboarding.presentation.currencychoice.view.widget.CurrencyChoiceListView
+        <serg.chuprin.finances.core.api.presentation.currencychoice.view.widget.CurrencyChoiceListView
             android:id="@+id/currencyChoiceView"
             android:layout_width="0dp"
             android:layout_height="0dp"

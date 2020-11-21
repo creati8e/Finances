@@ -19,5 +19,6 @@
     <!--endregion-->
     <string name="incomes">Incomes</string>
     <string name="expenses">Expenses</string>
+    <string name="currency_choice_hint">Search</string>
 
 </resources>

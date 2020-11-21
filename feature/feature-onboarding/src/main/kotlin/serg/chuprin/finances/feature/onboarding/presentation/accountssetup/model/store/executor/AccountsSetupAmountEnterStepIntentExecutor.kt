@@ -36,7 +36,10 @@ class AccountsSetupAmountEnterStepIntentExecutor @Inject constructor(
             )
             AccountsSetupOnboardingEffect.AmountEntered(
                 acceptButtonIsVisible = true,
-                amountInputState = AmountInputState(false, formattedAmount)
+                amountInputState = AmountInputState(
+                    hasError = false,
+                    formattedAmount = formattedAmount
+                )
             )
         }
     }
@@ -85,7 +88,7 @@ class AccountsSetupAmountEnterStepIntentExecutor @Inject constructor(
                 bankCardBalance = bankCardBalance
             )
             emit(
-                AccountsSetupOnboardingEffect.AccountBalanceEntered(
+                AccountsSetupOnboardingEffect.AccountBalanceAccepted(
                     // Use cash balance from previous step.
                     cashBalance = state.cashBalance,
                     bankCardBalance = bankCardBalance
@@ -119,7 +122,7 @@ class AccountsSetupAmountEnterStepIntentExecutor @Inject constructor(
                 )
             )
         return flowOf(
-            AccountsSetupOnboardingEffect.AccountBalanceEntered(
+            AccountsSetupOnboardingEffect.AccountBalanceAccepted(
                 // Bank card balance not entered on this step yet.
                 bankCardBalance = null,
                 cashBalance = parsedAmount

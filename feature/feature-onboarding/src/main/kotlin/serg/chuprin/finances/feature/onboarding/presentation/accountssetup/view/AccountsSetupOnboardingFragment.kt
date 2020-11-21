@@ -91,7 +91,7 @@ class AccountsSetupOnboardingFragment : BaseFragment(R.layout.fragment_onboardin
 
     override fun onStart() {
         super.onStart()
-        amountEditText.doAfterTextChanged { editable ->
+        textWatcher = amountEditText.doAfterTextChanged { editable ->
             // Check if this event is not self-change.
             if (!amountEditText.shouldIgnoreChanges) {
                 val enteredAmount = editable?.toString().orEmpty()

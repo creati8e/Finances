@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.onboarding.presentation.currencychoice.view.widget
+package serg.chuprin.finances.core.api.presentation.currencychoice.view.widget
 
 import android.content.Context
 import android.util.AttributeSet

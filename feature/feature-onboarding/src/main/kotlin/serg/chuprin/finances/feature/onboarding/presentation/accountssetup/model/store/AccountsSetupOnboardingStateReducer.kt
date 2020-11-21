@@ -21,7 +21,7 @@ class AccountsSetupOnboardingStateReducer :
             is AccountsSetupOnboardingEffect.EnteredAmountParsedWithError -> {
                 state.copy(stepState = effect.stepState)
             }
-            is AccountsSetupOnboardingEffect.AccountBalanceEntered -> {
+            is AccountsSetupOnboardingEffect.AccountBalanceAccepted -> {
                 state.copy(
                     cashBalance = effect.cashBalance,
                     bankCardBalance = effect.bankCardBalance

@@ -16,7 +16,7 @@
         android:layout_alignParentTop="true"
         android:layout_margin="8dp"
         android:layout_toStartOf="@id/closeImageView"
-        android:hint="@string/onboarding_currency_choice_hint"
+        android:hint="@string/currency_choice_hint"
         app:endIconMode="none"
         app:startIconDrawable="@drawable/ic_search">
 
@@ -45,7 +45,7 @@
         android:padding="10dp"
         android:src="@drawable/ic_close" />
 
-    <serg.chuprin.finances.feature.onboarding.presentation.currencychoice.view.widget.FadingEdgeRecyclerView
+    <serg.chuprin.finances.core.api.presentation.currencychoice.view.widget.FadingEdgeRecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

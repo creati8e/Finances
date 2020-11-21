@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="onboarding_currency_choice_hint">Искать</string>
     <string name="onboarding_currency_choice_button">Готово!</string>
     <string name="onboarding_currency_choice_title">Давайте все настроим</string>
     <string name="onboarding_currency_choice_subtitle">Выберите основную валюту</string>

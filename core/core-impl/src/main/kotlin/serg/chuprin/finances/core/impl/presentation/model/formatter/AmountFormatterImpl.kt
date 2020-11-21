@@ -61,7 +61,12 @@ internal class AmountFormatterImpl @Inject constructor() : AmountFormatter {
         }
         return try {
             val bigDecimal = if (normalizedStr.contains(decimalSeparator, true)) {
-                BigDecimal(normalizedStr.replace(",", "."))
+                val replaced = normalizedStr.replace(",", ".")
+                if (getFractionDigitsCount(replaced) > numberFormat.maximumFractionDigits) {
+                    BigDecimal(replaced.dropLast(1))
+                } else {
+                    BigDecimal(replaced)
+                }
             } else {
                 BigDecimal(normalizedStr)
             }
@@ -111,6 +116,19 @@ internal class AmountFormatterImpl @Inject constructor() : AmountFormatter {
                 else -> currency.defaultFractionDigits
             }
         }.format(amount)
+    }
+
+    private fun getFractionDigitsCount(numberStr: String): Int {
+        var count = 0
+        var reachedDot = false
+        for (c in numberStr) {
+            if (reachedDot) {
+                ++count
+            } else if (c == '.') {
+                reachedDot = true
+            }
+        }
+        return count
     }
 
     private fun setupFormatter(currency: Currency) {

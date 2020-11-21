@@ -10,7 +10,7 @@ import java.util.*
  */
 sealed class AccountsSetupOnboardingEffect {
 
-    class AccountBalanceEntered(
+    class AccountBalanceAccepted(
         val cashBalance: BigDecimal?,
         val bankCardBalance: BigDecimal?
     ) : AccountsSetupOnboardingEffect()

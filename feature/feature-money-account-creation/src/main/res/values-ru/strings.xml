@@ -5,5 +5,6 @@
     <string name="money_account_creation_menu_create">Создать</string>
     <string name="money_account_creation_hint_name">Название</string>
     <string name="money_account_creation_hint_initial_balance">Начальный баланс</string>
+    <string name="money_account_creation_account_created_message">Счет создан</string>
 
 </resources>
