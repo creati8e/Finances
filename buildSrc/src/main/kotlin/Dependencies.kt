@@ -36,7 +36,7 @@ object Libraries {
     const val JAVAX_ANNOTATIONS = "javax.inject:javax.inject:1"
     const val KOTLIN = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$KOTLIN_VER"
     const val PAGE_INDICATOR = "ru.tinkoff.scrollingpagerindicator:scrollingpagerindicator:1.2.1"
-    const val KOTLIN_SERIALIZATION = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.0"
+    const val KOTLIN_SERIALIZATION = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1"
 
     object Android {
 
@@ -53,7 +53,7 @@ object Libraries {
             )
         }
 
-        const val CORE = "androidx.core:core-ktx:1.5.0-alpha04"
+        const val CORE = "androidx.core:core-ktx:1.5.0-alpha05"
 
         const val APPCOMPAT = "androidx.appcompat:appcompat:1.3.0-alpha02"
         const val FRAGMENT = "androidx.fragment:fragment-ktx:1.3.0-beta01"
@@ -96,7 +96,7 @@ object Libraries {
 
     object Coroutines {
 
-        const val VER = "1.3.9"
+        const val VER = "1.4.1"
 
         const val CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$VER"
         const val ANDROID = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$VER"
@@ -115,10 +115,10 @@ object Libraries {
     }
 
     object Infrastructure {
-        const val AUTH = "com.google.firebase:firebase-auth:19.4.0"
-        const val FIRESTORE = "com.google.firebase:firebase-firestore-ktx:21.7.1"
-        const val GMS_AUTH = "com.google.android.gms:play-services-auth:18.1.0"
-        const val PLAY_SERVICES_KTX = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.3.5"
+        const val AUTH = "com.google.firebase:firebase-auth:20.0.1"
+        const val FIRESTORE = "com.google.firebase:firebase-firestore-ktx:22.0.0"
+        const val GMS_AUTH = "com.google.android.gms:play-services-auth:19.0.0"
+        const val PLAY_SERVICES_KTX = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.4.1"
     }
 
     object Debug {
@@ -132,7 +132,7 @@ object Libraries {
     object Tests {
 
         private const val JUNIT_VER = "5.7.0"
-        private const val SPEK_VER = "2.0.13"
+        private const val SPEK_VER = "2.0.14"
 
         const val MOCKK = "io.mockk:mockk:1.9.3"
         const val STRIKT = "io.strikt:strikt-core:0.28.0"
