@@ -4,13 +4,14 @@ import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.cells.DiffCell
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.page.DashboardCategoriesPageCell
+import serg.chuprin.finances.feature.dashboard.setup.presentation.domain.model.DashboardWidgetType
 
 /**
  * Created by Sergey Chuprin on 17.04.2020.
  */
 sealed class DashboardWidgetCell(
     open val widget: DashboardWidget
-) : DiffCell<DashboardWidget.Type> {
+) : DiffCell<DashboardWidgetType> {
 
     data class MoneyAccounts(
         val isExpanded: Boolean,
@@ -37,7 +38,7 @@ sealed class DashboardWidgetCell(
         override val widget: DashboardWidget.Categories
     ) : DashboardWidgetCell(widget)
 
-    override val diffCellId: DashboardWidget.Type
+    override val diffCellId: DashboardWidgetType
         get() = widget.type
 
 }

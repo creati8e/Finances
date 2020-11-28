@@ -48,7 +48,7 @@ object DashboardBalanceWidgetBuilderTest : Spek({
             When("Build method is called") {
                 flow = widgetBuilder.build(
                     currentUser = currentUser,
-                    currentPeriod = currentPeriod
+                    currentPeriod = currentPeriod,
                 )
             }
 

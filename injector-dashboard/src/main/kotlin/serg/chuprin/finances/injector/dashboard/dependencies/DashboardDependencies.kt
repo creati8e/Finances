@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.dashboard.dependencies
+package serg.chuprin.finances.injector.dashboard.dependencies
 
 import dagger.Component
 import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
@@ -16,6 +16,8 @@ import serg.chuprin.finances.core.api.presentation.model.AppDebugMenu
 import serg.chuprin.finances.core.api.presentation.model.builder.DataPeriodTypePopupMenuCellsBuilder
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.api.presentation.navigation.DashboardNavigation
+import serg.chuprin.finances.feature.dashboard.setup.DashboardWidgetsSetupApi
+import serg.chuprin.finances.feature.dashboard.setup.presentation.domain.repository.DashboardWidgetsRepository
 
 /**
  * Created by Sergey Chuprin on 03.04.2020.
@@ -28,6 +30,7 @@ interface DashboardDependencies {
     val userRepository: UserRepository
     val transactionRepository: TransactionRepository
     val moneyAccountRepository: MoneyAccountRepository
+    val dashboardWidgetsRepository: DashboardWidgetsRepository
 
     val resourceManger: ResourceManger
     val amountFormatter: AmountFormatter
@@ -42,5 +45,10 @@ interface DashboardDependencies {
     val transactionCategoryRetrieverService: TransactionCategoryRetrieverService
 }
 
-@Component(dependencies = [CoreDependenciesProvider::class])
+@Component(
+    dependencies = [
+        CoreDependenciesProvider::class,
+        DashboardWidgetsSetupApi::class
+    ]
+)
 internal interface DashboardDependenciesComponent : DashboardDependencies

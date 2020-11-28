@@ -21,6 +21,9 @@ class DashboardWidgetsPreferenceMapper
     }
 
     override fun toModel(stringValue: String): Set<DashboardWidgetType> {
+        if (stringValue.isEmpty()) {
+            return defaultModel
+        }
         return stringValue
             .split("|")
             .mapTo(LinkedHashSet()) { part ->

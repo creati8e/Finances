@@ -1,6 +1,13 @@
 rootProject.name = "Finances"
 include ':app'
+
+// region Injectors
+
 include ':injector'
+include ':injector-dashboard'
+
+// endregion
+
 
 // region Core
 

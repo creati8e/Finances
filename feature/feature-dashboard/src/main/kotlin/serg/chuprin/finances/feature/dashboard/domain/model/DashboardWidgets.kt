@@ -1,25 +1,26 @@
 package serg.chuprin.finances.feature.dashboard.domain.model
 
 import serg.chuprin.finances.core.api.domain.model.MoneyAccountBalances
+import serg.chuprin.finances.feature.dashboard.setup.presentation.domain.model.DashboardWidgetType
 import java.util.*
 
 /**
  * Created by Sergey Chuprin on 19.04.2020.
  *
  * Immutable wrapper for SortedMap<DashboardWidget.Type, DashboardWidget> with predefined comparator.
- * It keeps [DashboardWidget] sorted by order ascending.
+ * It keeps [DashboardWidget] sorted by order specified in [orderedWidgets].
  */
-class DashboardWidgets :
-    SortedMap<DashboardWidget.Type, DashboardWidget> by TreeMap<DashboardWidget.Type, DashboardWidget>(
-        widgetsComparator
-    ) {
+class DashboardWidgets(
+    private val orderedWidgets: Map<DashboardWidgetType, Int> = emptyMap()
+) : SortedMap<DashboardWidgetType, DashboardWidget> by TreeMap(
+    compareBy<DashboardWidgetType>(orderedWidgets::getValue)
+) {
 
-    companion object {
-        private val widgetsComparator = compareBy(DashboardWidget.Type::order)
-    }
-
-    fun add(newWidget: DashboardWidget): DashboardWidgets {
-        return DashboardWidgets()
+    /**
+     * Add or update widget in map with existing order preserving.
+     */
+    fun put(newWidget: DashboardWidget): DashboardWidgets {
+        return DashboardWidgets(orderedWidgets)
             .apply {
                 putAll(this@DashboardWidgets)
                 put(newWidget.type, newWidget)

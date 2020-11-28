@@ -7,10 +7,10 @@ plugins {
 dependencies {
     implementation(project(":core:core-impl"))
     implementation(project(":feature:feature-dashboard-setup-api"))
+    implementation(project(":feature:feature-dashboard-setup-impl"))
 
     implementation(Libraries.KOTLIN)
-    // region DI.
-    kapt(Libraries.Dagger.COMPILER)
+
     implementation(Libraries.Dagger.LIBRARY)
-    // endregion
+    kapt(Libraries.Dagger.COMPILER)
 }
