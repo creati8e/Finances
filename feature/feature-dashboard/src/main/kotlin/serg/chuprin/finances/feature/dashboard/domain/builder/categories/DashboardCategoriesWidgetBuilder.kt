@@ -12,6 +12,7 @@ import serg.chuprin.finances.core.api.domain.service.TransactionCategoryRetrieve
 import serg.chuprin.finances.feature.dashboard.domain.builder.DashboardWidgetBuilder
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardCategoriesWidgetPage
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
+import serg.chuprin.finances.feature.dashboard.setup.presentation.domain.model.DashboardWidgetType
 import java.math.BigDecimal
 import javax.inject.Inject
 
@@ -27,6 +28,10 @@ class DashboardCategoriesWidgetBuilder @Inject constructor(
 
     private companion object {
         private const val TOP_CATEGORIES_COUNT = 6
+    }
+
+    override fun isForType(widgetType: DashboardWidgetType): Boolean {
+        return widgetType == DashboardWidgetType.CATEGORIES
     }
 
     override fun build(

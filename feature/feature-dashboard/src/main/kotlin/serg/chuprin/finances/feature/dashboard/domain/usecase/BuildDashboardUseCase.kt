@@ -46,9 +46,12 @@ class BuildDashboardUseCase @Inject constructor(
         currentPeriod: DataPeriod,
         orderedWidgets: Map<DashboardWidgetType, Int>
     ): Flow<Dashboard> {
-        val flows = widgetBuilders.mapNotNull { builder ->
-            builder.build(currentUser, currentPeriod)
+        val flows = orderedWidgets.mapNotNull { (widgetType) ->
+            widgetBuilders
+                .firstOrNull { builder -> builder.isForType(widgetType) }
+                ?.build(currentUser, currentPeriod)
         }
+
         return combine(flows) { arr ->
             arr.fold(
                 initial = Dashboard(

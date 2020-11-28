@@ -9,6 +9,7 @@ import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.model.transaction.TransactionsQuery
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
+import serg.chuprin.finances.feature.dashboard.setup.presentation.domain.model.DashboardWidgetType
 import java.math.BigDecimal
 import javax.inject.Inject
 
@@ -18,6 +19,10 @@ import javax.inject.Inject
 class DashboardBalanceWidgetBuilder @Inject constructor(
     private val transactionRepository: TransactionRepository
 ) : DashboardWidgetBuilder<DashboardWidget.Balance> {
+
+    override fun isForType(widgetType: DashboardWidgetType): Boolean {
+        return widgetType == DashboardWidgetType.BALANCE
+    }
 
     override fun build(
         currentUser: User,

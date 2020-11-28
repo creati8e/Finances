@@ -8,6 +8,7 @@ import serg.chuprin.finances.core.api.domain.model.transaction.TransactionsQuery
 import serg.chuprin.finances.core.api.domain.service.TransactionCategoryRetrieverService
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
 import serg.chuprin.finances.feature.dashboard.domain.repository.DashboardDataPeriodRepository
+import serg.chuprin.finances.feature.dashboard.setup.presentation.domain.model.DashboardWidgetType
 import javax.inject.Inject
 
 /**
@@ -20,6 +21,10 @@ class DashboardRecentTransactionsWidgetBuilder @Inject constructor(
 
     private companion object {
         private const val RECENT_TRANSACTIONS_COUNT = 4
+    }
+
+    override fun isForType(widgetType: DashboardWidgetType): Boolean {
+        return widgetType == DashboardWidgetType.RECENT_TRANSACTIONS
     }
 
     override fun build(

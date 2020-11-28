@@ -6,6 +6,7 @@ import serg.chuprin.finances.core.api.domain.model.User
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import serg.chuprin.finances.core.api.domain.service.MoneyAccountService
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
+import serg.chuprin.finances.feature.dashboard.setup.presentation.domain.model.DashboardWidgetType
 import javax.inject.Inject
 
 /**
@@ -14,6 +15,10 @@ import javax.inject.Inject
 class DashboardMoneyAccountsWidgetBuilder @Inject constructor(
     private val moneyAccountService: MoneyAccountService
 ) : DashboardWidgetBuilder<DashboardWidget.MoneyAccounts> {
+
+    override fun isForType(widgetType: DashboardWidgetType): Boolean {
+        return widgetType == DashboardWidgetType.MONEY_ACCOUNTS
+    }
 
     override fun build(
         currentUser: User,
