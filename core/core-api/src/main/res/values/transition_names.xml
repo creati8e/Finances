@@ -1,28 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="transition_money_accounts_list_content"
-        translatable="false">
+    <string name="transition_money_accounts_list_content" translatable="false">
         transition_money_accounts_list_content
     </string>
 
-    <string name="transition_money_account"
-        translatable="false">
+    <string name="transition_money_account" translatable="false">
         money_account
     </string>
 
-    <string name="transition_money_account_creation"
-        translatable="false">
+    <string name="transition_money_account_creation" translatable="false">
         money_account_creation
     </string>
 
-    <string name="transition_dashboard_to_transactions_report_incomes"
-        translatable="false">
+    <string name="transition_dashboard_to_transactions_report_incomes" translatable="false">
         dashboard_to_transactions_report_incomes
     </string>
 
-    <string name="transition_dashboard_to_transactions_report_expenses"
-        translatable="false">
+    <string name="transition_dashboard_to_transactions_report_expenses" translatable="false">
         dashboard_to_transactions_report_expenses
     </string>
 
@@ -36,6 +31,10 @@
 
     <string name="transition_user_profile" translatable="false">
         transition_user_profile
+    </string>
+
+    <string name="transition_name_dashboard_widgets_setup" translatable="false">
+        transition_dashboard_widgets_setup
     </string>
 
 </resources>

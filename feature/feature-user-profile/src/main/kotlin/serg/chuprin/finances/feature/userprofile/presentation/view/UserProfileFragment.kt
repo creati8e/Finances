@@ -18,6 +18,7 @@ import serg.chuprin.finances.core.api.presentation.view.setEnterSharedElementTra
 import serg.chuprin.finances.feature.userprofile.R
 import serg.chuprin.finances.feature.userprofile.presentation.di.UserProfileComponent
 import serg.chuprin.finances.feature.userprofile.presentation.model.cells.UserProfileLogoutCell
+import serg.chuprin.finances.feature.userprofile.presentation.model.cells.UserProfileSetupDashboardWidgetsCell
 import serg.chuprin.finances.feature.userprofile.presentation.model.store.UserProfileEvent
 import serg.chuprin.finances.feature.userprofile.presentation.model.store.UserProfileIntent
 import serg.chuprin.finances.feature.userprofile.presentation.view.adapter.UserProfileCellsListAdapter
@@ -61,9 +62,13 @@ class UserProfileFragment :
         }
         with(recyclerView) {
             adapter = cellsAdapter.apply {
-                clickListener = { cell, _, _ ->
+                clickListener = { cell, cellView, _ ->
                     if (cell is UserProfileLogoutCell) {
                         viewModel.dispatchIntent(UserProfileIntent.ClickOnLogOutButton)
+                    } else if (cell is UserProfileSetupDashboardWidgetsCell) {
+                        val transitionName = cellView.transitionName
+                        val intent = UserProfileIntent.ClickOnDashboardWidgetsSetup(transitionName)
+                        viewModel.dispatchIntent(intent)
                     }
                 }
             }
@@ -97,6 +102,11 @@ class UserProfileFragment :
         return when (event) {
             UserProfileEvent.NavigateToLoginScreen -> {
                 navigation.navigateToUnauthorizedGraph(rootNavigationController)
+            }
+            is UserProfileEvent.NavigateToDashboardWidgetsSetupScreen -> {
+                val transitionName = event.transitionName
+                val sharedElementView = recyclerView.findViewWithTag<View>(transitionName)
+                navigation.navigateToDashboardWidgetsSetup(navController, sharedElementView)
             }
             UserProfileEvent.ShowLogoutConfirmDialog -> {
                 showLogoutDialog()

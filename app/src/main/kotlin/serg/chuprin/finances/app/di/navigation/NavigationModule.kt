@@ -19,6 +19,7 @@ import serg.chuprin.finances.feature.moneyaccount.details.presentation.arguments
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.view.MoneyAccountDetailsFragment
 import serg.chuprin.finances.feature.moneyaccounts.presentation.view.MoneyAccountsListFragmentDirections
 import serg.chuprin.finances.feature.transactions.presentation.view.TransactionsReportFragment
+import serg.chuprin.finances.feature.userprofile.presentation.view.UserProfileFragmentDirections
 
 /**
  * Created by Sergey Chuprin on 03.04.2020.
@@ -130,6 +131,19 @@ object NavigationModule : CoreNavigationProvider {
     override val userProfileNavigation: UserProfileNavigation
         get() {
             return object : UserProfileNavigation {
+
+                override fun navigateToDashboardWidgetsSetup(
+                    navController: NavController,
+                    vararg sharedElementView: View
+                ) {
+                    UserProfileFragmentDirections.navigateFromUserProfileToDashboardWidgetsSetup()
+                        .run {
+                            navController.navigate(
+                                this,
+                                buildExtrasForSharedElements(sharedElementView)
+                            )
+                        }
+                }
 
                 override fun navigateToUnauthorizedGraph(rootNavigationController: NavController) {
                     rootNavigationController.navigate(R.id.navigateToUnauthorizedGraph)

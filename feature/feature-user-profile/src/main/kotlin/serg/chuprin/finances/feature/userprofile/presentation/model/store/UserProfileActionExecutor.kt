@@ -29,15 +29,29 @@ class UserProfileActionExecutor @Inject constructor(
                 handleUpdateUserAction(action)
             }
             is UserProfileAction.ExecuteIntent -> {
-                when (action.intent) {
+                when (val intent = action.intent) {
                     UserProfileIntent.ClickOnLogOutButton -> {
                         handleClickOnLogOutButton(eventConsumer)
                     }
                     UserProfileIntent.ClickOnOnLogoutConfirmationButton -> {
                         handleClickOnOnLogoutConfirmationButton(eventConsumer)
                     }
+                    is UserProfileIntent.ClickOnDashboardWidgetsSetup -> {
+                        handleClickOnDashboardWidgetsSetupIntent(intent, eventConsumer)
+                    }
                 }
             }
+        }
+    }
+
+    private fun handleClickOnDashboardWidgetsSetupIntent(
+        intent: UserProfileIntent.ClickOnDashboardWidgetsSetup,
+        eventConsumer: Consumer<UserProfileEvent>
+    ): Flow<UserProfileEffect> {
+        return emptyFlowAction {
+            eventConsumer(
+                UserProfileEvent.NavigateToDashboardWidgetsSetupScreen(intent.transitionName)
+            )
         }
     }
 

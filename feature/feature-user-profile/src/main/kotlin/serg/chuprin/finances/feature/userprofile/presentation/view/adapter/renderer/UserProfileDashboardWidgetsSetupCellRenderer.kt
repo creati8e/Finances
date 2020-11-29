@@ -23,8 +23,15 @@ class UserProfileDashboardWidgetsSetupCellRenderer :
         longClickListener: LongClick?
     ) {
         with(holder) {
-            dashboardWidgetsSetupLayout.onViewClick { view ->
-                clickListener?.onClick(view, adapterPosition)
+            with(dashboardWidgetsSetupLayout) {
+                // TODO: Pass transition name through cell's constructor.
+                val transitionName =
+                    context.getString(R.string.transition_name_dashboard_widgets_setup)
+                tag = transitionName
+                this.transitionName = transitionName
+                onViewClick { view ->
+                    clickListener?.onClick(view, adapterPosition)
+                }
             }
         }
     }

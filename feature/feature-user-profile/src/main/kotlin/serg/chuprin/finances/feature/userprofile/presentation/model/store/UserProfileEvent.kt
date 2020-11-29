@@ -9,4 +9,8 @@ sealed class UserProfileEvent {
 
     object ShowLogoutConfirmDialog : UserProfileEvent()
 
+    class NavigateToDashboardWidgetsSetupScreen(
+        val transitionName: String
+    ) : UserProfileEvent()
+
 }

@@ -5,6 +5,10 @@ package serg.chuprin.finances.feature.userprofile.presentation.model.store
  */
 sealed class UserProfileIntent {
 
+    class ClickOnDashboardWidgetsSetup(
+        val transitionName: String
+    ) : UserProfileIntent()
+
     object ClickOnLogOutButton : UserProfileIntent()
 
     object ClickOnOnLogoutConfirmationButton : UserProfileIntent()

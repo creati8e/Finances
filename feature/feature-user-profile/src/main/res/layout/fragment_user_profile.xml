@@ -24,6 +24,7 @@
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp">
 
+                <!--TODO: Title is not centered properly-->
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/logoTextView"
                     style="@style/TextAppearance.MaterialComponents.Headline6"
