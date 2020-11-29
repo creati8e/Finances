@@ -2,6 +2,7 @@
 <resources>
     <string name="user_profile_toolbar_title">Профиль</string>
     <string name="user_profile_button_logout">Выйти из аккаунта</string>
+    <string name="user_profile_setup_dashboard_widgets_subheader">Настроить виджеты главного экрана</string>
     <string name="user_profile_data_period_type_subheader">Период данных по умолчанию</string>
 
     <string name="user_profile_dialog_logout_title">Выход из аккаунта</string>

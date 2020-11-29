@@ -3,6 +3,7 @@
 
     <string name="user_profile_toolbar_title">Profile</string>
     <string name="user_profile_button_logout">Log out</string>
+    <string name="user_profile_setup_dashboard_widgets_subheader">Setup dashboard widgets</string>
     <string name="user_profile_data_period_type_subheader">Default data period type</string>
 
     <string name="user_profile_dialog_logout_title">Logout</string>

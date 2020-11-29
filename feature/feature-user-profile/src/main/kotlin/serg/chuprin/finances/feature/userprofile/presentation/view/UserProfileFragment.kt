@@ -7,13 +7,11 @@ import androidx.core.view.doOnPreDraw
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_user_profile.*
 import serg.chuprin.finances.core.api.presentation.extensions.setupToolbar
-import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.navigation.UserProfileNavigation
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
-import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter
-import serg.chuprin.finances.core.api.presentation.view.adapter.diff.DiffCallback
+import serg.chuprin.finances.core.api.presentation.view.adapter.decoration.CellDividerDecoration
 import serg.chuprin.finances.core.api.presentation.view.dialog.info.InfoDialogFragment
 import serg.chuprin.finances.core.api.presentation.view.dialog.info.showInfoDialog
 import serg.chuprin.finances.core.api.presentation.view.setEnterSharedElementTransition
@@ -22,9 +20,7 @@ import serg.chuprin.finances.feature.userprofile.presentation.di.UserProfileComp
 import serg.chuprin.finances.feature.userprofile.presentation.model.cells.UserProfileLogoutCell
 import serg.chuprin.finances.feature.userprofile.presentation.model.store.UserProfileEvent
 import serg.chuprin.finances.feature.userprofile.presentation.model.store.UserProfileIntent
-import serg.chuprin.finances.feature.userprofile.presentation.view.adapter.renderer.UserProfileDataPeriodTypeCellRenderer
-import serg.chuprin.finances.feature.userprofile.presentation.view.adapter.renderer.UserProfileImageCellRenderer
-import serg.chuprin.finances.feature.userprofile.presentation.view.adapter.renderer.UserProfileLogoutCellRenderer
+import serg.chuprin.finances.feature.userprofile.presentation.view.adapter.UserProfileCellsListAdapter
 import javax.inject.Inject
 import serg.chuprin.finances.core.api.R as CoreR
 
@@ -46,11 +42,7 @@ class UserProfileFragment :
 
     private val component by component { UserProfileComponent.get() }
 
-    private val cellsAdapter = DiffMultiViewAdapter(DiffCallback<BaseCell>()).apply {
-        registerRenderer(UserProfileImageCellRenderer())
-        registerRenderer(UserProfileLogoutCellRenderer())
-        registerRenderer(UserProfileDataPeriodTypeCellRenderer())
-    }
+    private val cellsAdapter = UserProfileCellsListAdapter()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -76,6 +68,14 @@ class UserProfileFragment :
                 }
             }
             layoutManager = LinearLayoutManager(requireContext())
+            addItemDecoration(
+                CellDividerDecoration(
+                    requireContext(),
+                    cellsAdapter,
+                    marginEndDp = -8,
+                    marginStartDp = 8
+                )
+            )
         }
         postponeEnterTransition()
         view.doOnPreDraw {
