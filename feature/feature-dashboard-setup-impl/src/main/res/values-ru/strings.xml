@@ -4,5 +4,6 @@
     <string name="dashboard_widgets_setup_toolbar_title">
         Настроить виджеты главного экрана
     </string>
+    <string name="dashboard_widgets_setup_menu_save">Сохранить</string>
 
 </resources>

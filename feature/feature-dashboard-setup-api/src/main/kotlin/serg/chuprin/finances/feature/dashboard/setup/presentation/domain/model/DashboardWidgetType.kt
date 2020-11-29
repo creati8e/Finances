@@ -11,6 +11,8 @@ enum class DashboardWidgetType {
 
     companion object {
 
+        val cachedValues = values()
+
         val default = listOf(
             MONEY_ACCOUNTS,
             BALANCE,

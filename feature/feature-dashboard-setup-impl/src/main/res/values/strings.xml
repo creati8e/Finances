@@ -4,5 +4,6 @@
     <string name="dashboard_widgets_setup_toolbar_title">
         Setup dashboard widgets
     </string>
+    <string name="dashboard_widgets_setup_menu_save">Save</string>
 
 </resources>

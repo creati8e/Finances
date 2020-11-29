@@ -1,8 +1,11 @@
 package serg.chuprin.finances.feature.dashboard.setup.impl.di
 
 import dagger.Component
+import serg.chuprin.finances.core.api.di.scopes.ScreenScope
+import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.ViewModelComponent
 import serg.chuprin.finances.feature.dashboard.dependencies.DashboardWidgetsSetupDependencies
 import serg.chuprin.finances.feature.dashboard.setup.DashboardWidgetsSetupApi
+import serg.chuprin.finances.feature.dashboard.setup.impl.presentation.model.viewmodel.DashboardWidgetsSetupViewModel
 import serg.chuprin.finances.injector.Injector
 
 /**
@@ -12,18 +15,19 @@ import serg.chuprin.finances.injector.Injector
     modules = [DashboardWidgetsSetupModule::class],
     dependencies = [DashboardWidgetsSetupDependencies::class]
 )
-interface DashboardWidgetsSetupComponent : DashboardWidgetsSetupApi {
+@ScreenScope
+interface DashboardWidgetsSetupComponent :
+    DashboardWidgetsSetupApi,
+    ViewModelComponent<DashboardWidgetsSetupViewModel> {
 
     companion object {
 
-        private val instance: DashboardWidgetsSetupComponent by lazy {
-            DaggerDashboardWidgetsSetupComponent
+        fun get(): DashboardWidgetsSetupComponent {
+            return DaggerDashboardWidgetsSetupComponent
                 .builder()
                 .dashboardWidgetsSetupDependencies(Injector.getDashboardWidgetsSetupDependencies())
                 .build()
         }
-
-        fun get(): DashboardWidgetsSetupComponent = instance
 
     }
 

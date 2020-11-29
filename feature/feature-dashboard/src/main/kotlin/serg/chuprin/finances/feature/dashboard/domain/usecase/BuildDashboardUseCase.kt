@@ -9,6 +9,7 @@ import serg.chuprin.finances.feature.dashboard.domain.builder.DashboardWidgetBui
 import serg.chuprin.finances.feature.dashboard.domain.model.Dashboard
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidgets
 import serg.chuprin.finances.feature.dashboard.domain.repository.DashboardDataPeriodRepository
+import serg.chuprin.finances.feature.dashboard.setup.presentation.domain.model.CustomizableDashboardWidget
 import serg.chuprin.finances.feature.dashboard.setup.presentation.domain.model.DashboardWidgetType
 import serg.chuprin.finances.feature.dashboard.setup.presentation.domain.repository.DashboardWidgetsRepository
 import javax.inject.Inject
@@ -71,8 +72,10 @@ class BuildDashboardUseCase @Inject constructor(
             .widgetsFlow
             .map { widgets ->
                 widgets
-                    .mapIndexed { index, dashboardWidgetType ->
-                        dashboardWidgetType to index
+                    .filter(CustomizableDashboardWidget::isEnabled)
+                    .sortedBy(CustomizableDashboardWidget::order)
+                    .mapIndexed { index, customizableDashboardWidget ->
+                        customizableDashboardWidget.widgetType to index
                     }
                     .toMap()
             }
