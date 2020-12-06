@@ -39,20 +39,19 @@ class CurrencyChoiceOnboardingFragment :
             viewModel.dispatchIntent(CurrencyChoiceOnboardingIntent.BackPress)
         }
 
-        val backward = MaterialSharedAxis.create(requireContext(), MaterialSharedAxis.X, false)
+        val backward = MaterialSharedAxis(MaterialSharedAxis.X, false)
         reenterTransition = backward
 
-        val forward = MaterialSharedAxis.create(requireContext(), MaterialSharedAxis.X, true)
+        val forward = MaterialSharedAxis(MaterialSharedAxis.X, true)
         exitTransition = forward
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _currencyChoiceListController = CurrencyChoiceListController(
-            context = requireContext(),
             animationContainer = constraintLayout,
-            currencyChoiceView = currencyChoiceView,
-            chosenCurrencyTextView = chosenCurrencyTextView
+            chosenCurrencyTextView = chosenCurrencyTextView,
+            currencyChoiceView = currencyChoiceView
         )
         animateFab(savedInstanceState, view)
 

@@ -25,6 +25,7 @@ dependencies {
     implementation(Libraries.Android.DESIGN)
     implementation(Libraries.Android.FRAGMENT)
     implementation(Libraries.Android.APPCOMPAT)
+    implementation(Libraries.Android.TRANSITION)
     implementation(Libraries.Android.CONSTRAINT_LAYOUT)
 
     // endregion

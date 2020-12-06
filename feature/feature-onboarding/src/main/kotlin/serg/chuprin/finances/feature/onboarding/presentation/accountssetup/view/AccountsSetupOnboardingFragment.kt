@@ -3,17 +3,12 @@ package serg.chuprin.finances.feature.onboarding.presentation.accountssetup.view
 import android.content.Context
 import android.os.Bundle
 import android.text.TextWatcher
-import android.transition.AutoTransition
-import android.transition.Transition
-import android.transition.TransitionManager
-import android.transition.TransitionSet
 import android.view.View
 import androidx.annotation.StringRes
-import androidx.core.transition.doOnEnd
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
+import androidx.transition.*
 import com.google.android.material.transition.MaterialSharedAxis
-import com.google.android.material.transition.Scale
 import kotlinx.android.synthetic.main.fragment_onboarding_accounts_setup.*
 import serg.chuprin.finances.core.api.presentation.model.AmountInputState
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
@@ -54,10 +49,10 @@ class AccountsSetupOnboardingFragment : BaseFragment(R.layout.fragment_onboardin
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val forward = MaterialSharedAxis.create(requireContext(), MaterialSharedAxis.X, true)
+        val forward = MaterialSharedAxis(MaterialSharedAxis.X, true)
         enterTransition = forward
 
-        val backward = MaterialSharedAxis.create(requireContext(), MaterialSharedAxis.X, false)
+        val backward = MaterialSharedAxis(MaterialSharedAxis.X, false)
         returnTransition = backward
     }
 
@@ -148,17 +143,18 @@ class AccountsSetupOnboardingFragment : BaseFragment(R.layout.fragment_onboardin
     private fun showAmountEnterStep(acceptAmountButtonIsEnabled: Boolean) {
         // Animate only if we move from previous state.
         if (buttonsGroup.isVisible) {
-            val transitionSet = buildStepChangeTransition(isEntering = false).apply {
+            val transitionSet = stepChangeTransition {
                 // Animate button itself.
-                addTransition(buildScaleTransition(isEntering = true).apply {
-                    addTarget(acceptAmountButton)
-                })
+                addTransition(
+                    scaleTransition {
+                        addTarget(acceptAmountButton)
+                    }
+                )
                 doOnEnd {
                     amountEditText.showKeyboard()
                 }
             }
             TransitionManager.beginDelayedTransition(constraintLayout, transitionSet)
-
         }
         buttonsGroup.makeGone()
         amountEditText.makeVisible()
@@ -169,7 +165,7 @@ class AccountsSetupOnboardingFragment : BaseFragment(R.layout.fragment_onboardin
     }
 
     private fun showQuestionStep(@StringRes questionSubtitleStringRes: Int) {
-        val transitionSet = buildStepChangeTransition(isEntering = true)
+        val transitionSet = stepChangeTransition()
         TransitionManager.beginDelayedTransition(constraintLayout, transitionSet)
 
         amountEditText.makeGone()
@@ -196,35 +192,30 @@ class AccountsSetupOnboardingFragment : BaseFragment(R.layout.fragment_onboardin
 
     // region Transitions.
 
-    private fun buildStepChangeTransition(isEntering: Boolean): TransitionSet {
+    private fun stepChangeTransition(setup: TransitionSet.() -> Unit = {}): TransitionSet {
         return TransitionSet().apply {
-            addTransition(buildAutoTransition(amountEditText))
-            addTransition(buildAutoTransition(subtitleTextView))
-            addTransition(buildScaleTransition(isEntering).apply {
+            duration = TRANSITION_DURATION
+            addTransition(autoTransition(amountEditText))
+            addTransition(autoTransition(subtitleTextView))
+            addTransition(scaleTransition {
                 addTarget(positiveButton)
                 addTarget(negativeButton)
             })
+            setup(this)
         }
     }
 
-    private fun buildAutoTransition(view: View): AutoTransition {
+    private fun autoTransition(view: View): AutoTransition {
         return AutoTransition().apply {
             duration = TRANSITION_DURATION
             addTarget(view)
         }
     }
 
-    private fun buildScaleTransition(isEntering: Boolean): Transition {
-        return Scale().apply {
+    private fun scaleTransition(setup: Transition.() -> Unit): Transition {
+        return AutoTransition().apply {
             duration = TRANSITION_DURATION
-            this.isEntering = isEntering
-            if (isEntering) {
-                incomingStartScale = 0.1f
-                incomingEndScale = 1f
-            } else {
-                outgoingStartScale = 1f
-                outgoingEndScale = 0.1f
-            }
+            setup(this)
         }
     }
 

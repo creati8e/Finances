@@ -54,10 +54,9 @@ class MoneyAccountCreationFragment : BaseFragment(R.layout.fragment_money_accoun
         }
 
         _currencyChoiceListController = CurrencyChoiceListController(
-            context = requireContext(),
             animationContainer = constraintLayout,
-            currencyChoiceView = currencyChoiceView,
-            chosenCurrencyTextView = chosenCurrencyTextView
+            chosenCurrencyTextView = chosenCurrencyTextView,
+            currencyChoiceView = currencyChoiceView
         )
 
         currencyChoiceView.onCurrencyCellChosen = { cell ->
