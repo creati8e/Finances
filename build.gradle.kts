@@ -16,7 +16,6 @@ plugins {
 }
 
 buildscript {
-    val kotlin_version by extra("1.4.10")
     repositories {
         google()
         jcenter()
@@ -32,7 +31,6 @@ buildscript {
         classpath(BuildScript.Plugins.NAVIGATION)
         classpath(BuildScript.Plugins.GRAPH_VISUALIZER)
         classpath(BuildScript.Plugins.PROGUARD_GENERATOR)
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
     }
 }
 
@@ -87,7 +85,7 @@ fun Project.enableDesugaring(testedExtension: TestedExtension) {
     testedExtension.compileOptions.isCoreLibraryDesugaringEnabled = true
     dependencies.add(
         "coreLibraryDesugaring",
-        "com.android.tools:desugar_jdk_libs:1.0.10"
+        "com.android.tools:desugar_jdk_libs:1.1.1"
     )
 }
 
