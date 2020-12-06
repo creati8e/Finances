@@ -1,6 +1,7 @@
 package serg.chuprin.finances.feature.userprofile.presentation.view
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.doOnPreDraw
@@ -14,6 +15,7 @@ import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.adapter.decoration.CellDividerDecoration
 import serg.chuprin.finances.core.api.presentation.view.dialog.info.InfoDialogFragment
 import serg.chuprin.finances.core.api.presentation.view.dialog.info.showInfoDialog
+import serg.chuprin.finances.core.api.presentation.view.extensions.getAttributeColor
 import serg.chuprin.finances.core.api.presentation.view.setEnterSharedElementTransition
 import serg.chuprin.finances.feature.userprofile.R
 import serg.chuprin.finances.feature.userprofile.presentation.di.UserProfileComponent
@@ -52,7 +54,11 @@ class UserProfileFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setEnterSharedElementTransition()
+        setEnterSharedElementTransition {
+            containerColor = Color.TRANSPARENT
+            startContainerColor = Color.TRANSPARENT
+            endContainerColor = requireContext().getAttributeColor(android.R.attr.colorBackground)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
