@@ -7,7 +7,6 @@ import androidx.core.view.doOnPreDraw
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_money_accounts_list.*
 import serg.chuprin.finances.core.api.presentation.extensions.setupToolbar
-import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.navigation.MoneyAccountsListNavigation
@@ -16,8 +15,7 @@ import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAda
 import serg.chuprin.finances.core.api.presentation.view.adapter.diff.DiffCallback
 import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ZeroDataCellRenderer
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
-import serg.chuprin.finances.core.api.presentation.view.setEnterSharedElementTransition
-import serg.chuprin.finances.core.api.presentation.view.setExitSharedElementTransition
+import serg.chuprin.finances.core.api.presentation.view.setSharedElementTransitions
 import serg.chuprin.finances.feature.moneyaccounts.R
 import serg.chuprin.finances.feature.moneyaccounts.di.MoneyAccountsListComponent
 import serg.chuprin.finances.feature.moneyaccounts.presentation.model.cells.MoneyAccountCell
@@ -38,7 +36,7 @@ class MoneyAccountsListFragment : BaseFragment(R.layout.fragment_money_accounts_
 
     private val component by component { MoneyAccountsListComponent.get() }
 
-    private val cellsAdapter = DiffMultiViewAdapter(DiffCallback<BaseCell>()).apply {
+    private val cellsAdapter = DiffMultiViewAdapter(DiffCallback()).apply {
         registerRenderer(ZeroDataCellRenderer())
         registerRenderer(MoneyAccountCellRenderer())
         clickListener = { cell, _, _ ->
@@ -55,8 +53,7 @@ class MoneyAccountsListFragment : BaseFragment(R.layout.fragment_money_accounts_
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setExitSharedElementTransition()
-        setEnterSharedElementTransition()
+        setSharedElementTransitions()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

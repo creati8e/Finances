@@ -12,7 +12,9 @@ import serg.chuprin.finances.core.api.presentation.view.extensions.getAttributeC
  */
 const val SHARED_ELEMENT_TRANSITION_DURATION = 350L
 
-fun Fragment.setEnterSharedElementTransition(setup: (MaterialContainerTransform.() -> Unit)? = null) {
+fun Fragment.setSharedElementTransitions(
+    enterTransitionSetup: (MaterialContainerTransform.() -> Unit)? = null
+) {
     val context = requireContext()
     val shapeAppearance = ShapeAppearanceModel().withCornerSize(context.dpToPx(16).toFloat())
     sharedElementEnterTransition = MaterialContainerTransform().apply {
@@ -20,8 +22,9 @@ fun Fragment.setEnterSharedElementTransition(setup: (MaterialContainerTransform.
         duration = SHARED_ELEMENT_TRANSITION_DURATION
         fadeMode = MaterialContainerTransform.FADE_MODE_CROSS
         containerColor = context.getAttributeColor(android.R.attr.colorBackground)
-        setup?.invoke(this)
+        enterTransitionSetup?.invoke(this)
     }
+    setExitSharedElementTransition()
 }
 
 fun Fragment.setExitSharedElementTransition() {

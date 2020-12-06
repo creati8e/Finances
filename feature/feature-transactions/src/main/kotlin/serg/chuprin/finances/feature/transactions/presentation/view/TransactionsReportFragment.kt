@@ -13,8 +13,7 @@ import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.vi
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionsReportScreenArguments
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.adapter.decoration.CellDividerDecoration
-import serg.chuprin.finances.core.api.presentation.view.setEnterSharedElementTransition
-import serg.chuprin.finances.core.api.presentation.view.setExitSharedElementTransition
+import serg.chuprin.finances.core.api.presentation.view.setSharedElementTransitions
 import serg.chuprin.finances.feature.transactions.R
 import serg.chuprin.finances.feature.transactions.di.TransactionsReportComponent
 import serg.chuprin.finances.feature.transactions.presentation.view.adapter.TransactionReportCellsAdapter
@@ -44,8 +43,7 @@ class TransactionsReportFragment : BaseFragment(R.layout.fragment_transactions_r
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setExitSharedElementTransition()
-        setEnterSharedElementTransition()
+        setSharedElementTransitions()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

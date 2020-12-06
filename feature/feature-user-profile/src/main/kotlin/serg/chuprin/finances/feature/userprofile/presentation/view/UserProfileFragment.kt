@@ -16,7 +16,7 @@ import serg.chuprin.finances.core.api.presentation.view.adapter.decoration.CellD
 import serg.chuprin.finances.core.api.presentation.view.dialog.info.InfoDialogFragment
 import serg.chuprin.finances.core.api.presentation.view.dialog.info.showInfoDialog
 import serg.chuprin.finances.core.api.presentation.view.extensions.getAttributeColor
-import serg.chuprin.finances.core.api.presentation.view.setEnterSharedElementTransition
+import serg.chuprin.finances.core.api.presentation.view.setSharedElementTransitions
 import serg.chuprin.finances.feature.userprofile.R
 import serg.chuprin.finances.feature.userprofile.presentation.di.UserProfileComponent
 import serg.chuprin.finances.feature.userprofile.presentation.model.cells.UserProfileLogoutCell
@@ -54,7 +54,7 @@ class UserProfileFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setEnterSharedElementTransition {
+        setSharedElementTransitions {
             containerColor = Color.TRANSPARENT
             startContainerColor = Color.TRANSPARENT
             endContainerColor = requireContext().getAttributeColor(android.R.attr.colorBackground)

@@ -14,7 +14,7 @@ import serg.chuprin.finances.core.api.presentation.view.adapter.decoration.CellD
 import serg.chuprin.finances.core.api.presentation.view.extensions.getAttributeColor
 import serg.chuprin.finances.core.api.presentation.view.extensions.getColorInt
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
-import serg.chuprin.finances.core.api.presentation.view.setEnterSharedElementTransition
+import serg.chuprin.finances.core.api.presentation.view.setSharedElementTransitions
 import serg.chuprin.finances.feature.moneyaccount.details.R
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.arguments.MoneyAccountDetailsScreenArguments
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.di.MoneyAccountDetailsComponent
@@ -37,7 +37,7 @@ class MoneyAccountDetailsFragment : BaseFragment(R.layout.fragment_money_account
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setEnterSharedElementTransition()
+        setSharedElementTransitions()
     }
 
     override fun onCreateView(

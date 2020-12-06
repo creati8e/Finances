@@ -18,7 +18,7 @@ import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
 import serg.chuprin.finances.core.api.presentation.view.extensions.shortToast
 import serg.chuprin.finances.core.api.presentation.view.extensions.shouldIgnoreChanges
 import serg.chuprin.finances.core.api.presentation.view.menuConfig
-import serg.chuprin.finances.core.api.presentation.view.setEnterSharedElementTransition
+import serg.chuprin.finances.core.api.presentation.view.setSharedElementTransitions
 import serg.chuprin.finances.feature.moneyaccount.creation.R
 import serg.chuprin.finances.feature.moneyaccount.creation.presentation.di.MoneyAccountCreationComponent
 import serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.store.MoneyAccountCreationEvent
@@ -40,7 +40,7 @@ class MoneyAccountCreationFragment : BaseFragment(R.layout.fragment_money_accoun
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setEnterSharedElementTransition()
+        setSharedElementTransitions()
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             viewModel.dispatchIntent(MoneyAccountCreationIntent.BackPress)
         }

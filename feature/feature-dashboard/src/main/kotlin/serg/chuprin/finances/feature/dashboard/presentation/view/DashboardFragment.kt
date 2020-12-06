@@ -22,7 +22,7 @@ import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisibleOr
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
 import serg.chuprin.finances.core.api.presentation.view.extensions.onViewClick
 import serg.chuprin.finances.core.api.presentation.view.popup.menu.PopupMenuWindow
-import serg.chuprin.finances.core.api.presentation.view.setExitSharedElementTransition
+import serg.chuprin.finances.core.api.presentation.view.setSharedElementTransitions
 import serg.chuprin.finances.feature.dashboard.BuildConfig
 import serg.chuprin.finances.feature.dashboard.R
 import serg.chuprin.finances.feature.dashboard.presentation.di.DashboardComponent
@@ -56,7 +56,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setExitSharedElementTransition()
+        setSharedElementTransitions()
     }
 
     override fun onAttach(context: Context) {

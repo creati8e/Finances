@@ -15,7 +15,7 @@ import serg.chuprin.finances.core.api.presentation.view.MenuConfig
 import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter
 import serg.chuprin.finances.core.api.presentation.view.adapter.diff.DiffCallback
 import serg.chuprin.finances.core.api.presentation.view.menuConfig
-import serg.chuprin.finances.core.api.presentation.view.setEnterSharedElementTransition
+import serg.chuprin.finances.core.api.presentation.view.setSharedElementTransitions
 import serg.chuprin.finances.feature.dashboard.setup.impl.R
 import serg.chuprin.finances.feature.dashboard.setup.impl.di.DashboardWidgetsSetupComponent
 import serg.chuprin.finances.feature.dashboard.setup.impl.presentation.model.cells.DraggableDashboardWidgetCell
@@ -41,7 +41,7 @@ class DashboardWidgetsSetupFragment : BaseFragment(R.layout.fragment_dashboard_w
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setEnterSharedElementTransition()
+        setSharedElementTransitions()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
