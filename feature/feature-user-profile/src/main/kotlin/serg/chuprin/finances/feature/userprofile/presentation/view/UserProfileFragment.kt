@@ -4,10 +4,12 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.doOnPreDraw
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_user_profile.*
 import serg.chuprin.finances.core.api.presentation.extensions.setupToolbar
+import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.navigation.UserProfileNavigation
@@ -16,9 +18,11 @@ import serg.chuprin.finances.core.api.presentation.view.adapter.decoration.CellD
 import serg.chuprin.finances.core.api.presentation.view.dialog.info.InfoDialogFragment
 import serg.chuprin.finances.core.api.presentation.view.dialog.info.showInfoDialog
 import serg.chuprin.finances.core.api.presentation.view.extensions.getAttributeColor
+import serg.chuprin.finances.core.api.presentation.view.popup.menu.PopupMenuWindow
 import serg.chuprin.finances.core.api.presentation.view.setSharedElementTransitions
 import serg.chuprin.finances.feature.userprofile.R
 import serg.chuprin.finances.feature.userprofile.presentation.di.UserProfileComponent
+import serg.chuprin.finances.feature.userprofile.presentation.model.cells.UserProfileDataPeriodTypeCell
 import serg.chuprin.finances.feature.userprofile.presentation.model.cells.UserProfileLogoutCell
 import serg.chuprin.finances.feature.userprofile.presentation.model.cells.UserProfileSetupDashboardWidgetsCell
 import serg.chuprin.finances.feature.userprofile.presentation.model.store.UserProfileEvent
@@ -69,13 +73,7 @@ class UserProfileFragment :
         with(recyclerView) {
             adapter = cellsAdapter.apply {
                 clickListener = { cell, cellView, _ ->
-                    if (cell is UserProfileLogoutCell) {
-                        viewModel.dispatchIntent(UserProfileIntent.ClickOnLogOutButton)
-                    } else if (cell is UserProfileSetupDashboardWidgetsCell) {
-                        val transitionName = cellView.transitionName
-                        val intent = UserProfileIntent.ClickOnDashboardWidgetsSetup(transitionName)
-                        viewModel.dispatchIntent(intent)
-                    }
+                    handleListCellClick(cell, cellView)
                 }
             }
             layoutManager = LinearLayoutManager(requireContext())
@@ -110,14 +108,49 @@ class UserProfileFragment :
                 navigation.navigateToUnauthorizedGraph(rootNavigationController)
             }
             is UserProfileEvent.NavigateToDashboardWidgetsSetupScreen -> {
-                val transitionName = event.transitionName
-                val sharedElementView = recyclerView.findViewWithTag<View>(transitionName)
-                navigation.navigateToDashboardWidgetsSetup(navController, sharedElementView)
+                navigateToDashboardWidgetsSetup(event)
             }
             UserProfileEvent.ShowLogoutConfirmDialog -> {
                 showLogoutDialog()
             }
+            is UserProfileEvent.ShowPeriodTypesPopupMenu -> {
+                showPeriodTypesPopupMenu(event)
+            }
         }
+    }
+
+    private fun handleListCellClick(cell: BaseCell, cellView: View) {
+        when (cell) {
+            is UserProfileLogoutCell -> {
+                viewModel.dispatchIntent(UserProfileIntent.ClickOnLogOutButton)
+            }
+            is UserProfileSetupDashboardWidgetsCell -> {
+                val transitionName = cellView.transitionName
+                val intent = UserProfileIntent.ClickOnDashboardWidgetsSetup(transitionName)
+                viewModel.dispatchIntent(intent)
+            }
+            is UserProfileDataPeriodTypeCell -> {
+                viewModel.dispatchIntent(UserProfileIntent.ClickOnPeriod(cell))
+            }
+        }
+    }
+
+    private fun navigateToDashboardWidgetsSetup(
+        event: UserProfileEvent.NavigateToDashboardWidgetsSetupScreen
+    ) {
+        val transitionName = event.transitionName
+        val sharedElementView = recyclerView.findViewWithTag<View>(transitionName)
+        navigation.navigateToDashboardWidgetsSetup(navController, sharedElementView)
+    }
+
+    private fun showPeriodTypesPopupMenu(event: UserProfileEvent.ShowPeriodTypesPopupMenu) {
+        val anchorView = recyclerView.findViewById<ViewGroup>(R.id.profilePeriodTypeLayout)
+        PopupMenuWindow(
+            cells = event.menuCells,
+            callback = { cell ->
+                viewModel.dispatchIntent(UserProfileIntent.ClickOnPeriodTypeCell(cell))
+            }
+        ).show(anchorView, showAtAnchorCenter = true)
     }
 
     private fun showLogoutDialog() {

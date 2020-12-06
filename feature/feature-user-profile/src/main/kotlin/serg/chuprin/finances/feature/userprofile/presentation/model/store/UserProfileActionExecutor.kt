@@ -1,11 +1,14 @@
 package serg.chuprin.finances.feature.userprofile.presentation.model.store
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
+import serg.chuprin.finances.core.api.presentation.model.builder.DataPeriodTypePopupMenuCellsBuilder
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
 import serg.chuprin.finances.core.mvi.invoke
+import serg.chuprin.finances.feature.userprofile.domain.usecase.ChangeUserDefaultDataPerioduseCase
 import serg.chuprin.finances.feature.userprofile.domain.usecase.LogOutUseCase
 import serg.chuprin.finances.feature.userprofile.presentation.model.builder.UserProfileCellsBuilder
 import javax.inject.Inject
@@ -15,7 +18,9 @@ import javax.inject.Inject
  */
 class UserProfileActionExecutor @Inject constructor(
     private val logOutUseCase: LogOutUseCase,
-    private val cellsBuilder: UserProfileCellsBuilder
+    private val cellsBuilder: UserProfileCellsBuilder,
+    private val changeUserDefaultDataPerioduseCase: ChangeUserDefaultDataPerioduseCase,
+    private val dataPeriodTypePopupMenuCellsBuilder: DataPeriodTypePopupMenuCellsBuilder
 ) : StoreActionExecutor<UserProfileAction, UserProfileState, UserProfileEffect, UserProfileEvent> {
 
     override fun invoke(
@@ -39,8 +44,31 @@ class UserProfileActionExecutor @Inject constructor(
                     is UserProfileIntent.ClickOnDashboardWidgetsSetup -> {
                         handleClickOnDashboardWidgetsSetupIntent(intent, eventConsumer)
                     }
+                    is UserProfileIntent.ClickOnPeriod -> {
+                        handleClickOnPeriodIntent(eventConsumer)
+                    }
+                    is UserProfileIntent.ClickOnPeriodTypeCell -> {
+                        handleClickOnPeriodTypeCellIntent(intent)
+                    }
                 }
             }
+        }
+    }
+
+    private fun handleClickOnPeriodTypeCellIntent(
+        intent: UserProfileIntent.ClickOnPeriodTypeCell
+    ): Flow<UserProfileEffect> {
+        return flow {
+            changeUserDefaultDataPerioduseCase.execute(intent.periodTypePopupMenuCell.periodType)
+        }
+    }
+
+    private fun handleClickOnPeriodIntent(
+        eventConsumer: Consumer<UserProfileEvent>
+    ): Flow<UserProfileEffect> {
+        return emptyFlowAction {
+            val menuCells = dataPeriodTypePopupMenuCellsBuilder.build()
+            eventConsumer(UserProfileEvent.ShowPeriodTypesPopupMenu(menuCells))
         }
     }
 

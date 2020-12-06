@@ -116,6 +116,7 @@ abstract class CustomPopupWindow<T>(
             }
 
             divider = null
+            itemsCanFocus = false
             clipToPadding = false
             isVerticalScrollBarEnabled = false
             adapter = createAdapter(context, cells)

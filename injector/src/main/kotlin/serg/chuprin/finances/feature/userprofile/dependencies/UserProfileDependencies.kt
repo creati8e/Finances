@@ -7,6 +7,7 @@ import serg.chuprin.finances.core.api.domain.repository.DataRepository
 import serg.chuprin.finances.core.api.domain.repository.OnboardingRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.api.presentation.formatter.DataPeriodFormatter
+import serg.chuprin.finances.core.api.presentation.model.builder.DataPeriodTypePopupMenuCellsBuilder
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.api.presentation.navigation.UserProfileNavigation
 
@@ -23,6 +24,7 @@ interface UserProfileDependencies {
     val dataPeriodFormatter: DataPeriodFormatter
     val authorizationGateway: AuthorizationGateway
     val userProfileNavigation: UserProfileNavigation
+    val dataPeriodTypePopupMenuCellsBuilder: DataPeriodTypePopupMenuCellsBuilder
 }
 
 @Component(dependencies = [CoreDependenciesProvider::class])
