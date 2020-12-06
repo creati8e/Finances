@@ -10,7 +10,7 @@
     android:clickable="true"
     android:focusable="true"
     app:cardCornerRadius="@dimen/cornerRadiusBig"
-    app:cardElevation="@dimen/cardViewElevation"
+    app:cardElevation="@dimen/elevationCardView"
     app:rippleColor="@color/money_account_color_selector">
 
     <androidx.constraintlayout.widget.ConstraintLayout

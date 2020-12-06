@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_activated="true">
+        <inset android:insetLeft="@dimen/inset_selection_left" android:insetTop="@dimen/inset_selection_top" android:insetRight="@dimen/inset_selection_right" android:insetBottom="@dimen/inset_selection_bottom">
+            <layer-list>
+                <item>
+                    <shape android:shape="rectangle">
+                        <corners android:bottomLeftRadius="@dimen/radius_selection_bottom_left" android:bottomRightRadius="@dimen/radius_selection_bottom_right" android:topLeftRadius="@dimen/radius_selection_top_left" android:topRightRadius="@dimen/radius_selection_top_right" />
+                        <solid android:color="?android:colorBackground" />
+                    </shape>
+                </item>
+                <item>
+                    <shape android:shape="rectangle">
+                        <corners android:bottomLeftRadius="@dimen/radius_selection_bottom_left" android:bottomRightRadius="@dimen/radius_selection_bottom_right" android:topLeftRadius="@dimen/radius_selection_top_left" android:topRightRadius="@dimen/radius_selection_top_right" />
+                        <solid android:color="?colorControlHighlight" />
+                    </shape>
+                </item>
+            </layer-list>
+        </inset>
+    </item>
+
+    <item>
+        <inset android:insetLeft="@dimen/inset_selection_left" android:insetTop="@dimen/inset_selection_top" android:insetRight="@dimen/inset_selection_right" android:insetBottom="@dimen/inset_selection_bottom">
+            <ripple android:color="?colorControlHighlight">
+                <item android:id="@android:id/mask" android:gravity="center">
+                    <shape android:shape="rectangle">
+                        <corners android:bottomLeftRadius="@dimen/radius_selection_bottom_left" android:bottomRightRadius="@dimen/radius_selection_bottom_right" android:topLeftRadius="@dimen/radius_selection_top_left" android:topRightRadius="@dimen/radius_selection_top_right" />
+                        <solid android:color="@android:color/white" />
+                    </shape>
+                </item>
+            </ripple>
+        </inset>
+    </item>
+
+</selector>

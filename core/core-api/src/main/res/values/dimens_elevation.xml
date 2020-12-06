@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="elevation" type="dimen">4dp</item>
+    <item name="elevationCardView" type="dimen">8dp</item>
+
+</resources>

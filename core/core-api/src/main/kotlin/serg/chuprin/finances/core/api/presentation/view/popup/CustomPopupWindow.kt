@@ -98,7 +98,7 @@ abstract class CustomPopupWindow<T>(
 
             isFocusable = true
             animationStyle = R.style.PopupWindow
-            elevation = context.getDimenDpFloat(R.dimen.cardViewElevation)
+            elevation = context.getDimenDpFloat(R.dimen.elevationCardView)
             setBackgroundDrawable(context.drawable(R.drawable.bg_popup_window))
         }
     }

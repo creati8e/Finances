@@ -10,7 +10,7 @@
     android:paddingTop="12dp"
     android:paddingBottom="8dp"
     app:cardCornerRadius="@dimen/cornerRadius"
-    app:cardElevation="@dimen/cardViewElevation">
+    app:cardElevation="@dimen/elevationCardView">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/subtitleTextView"

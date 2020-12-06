@@ -1,19 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <bool name="windowLightStatusBar">true</bool>
-    <item name="elevation"
-        type="dimen">4dp
-    </item>
-    <item name="cornerRadius"
-        type="dimen">8dp
-    </item>
-    <item name="cornerRadiusSmall"
-        type="dimen">4dp
-    </item>
-    <item name="cornerRadiusBig"
-        type="dimen">16dp
-    </item>
-    <item name="cardViewElevation"
-        type="dimen">8dp
-    </item>
 </resources>
