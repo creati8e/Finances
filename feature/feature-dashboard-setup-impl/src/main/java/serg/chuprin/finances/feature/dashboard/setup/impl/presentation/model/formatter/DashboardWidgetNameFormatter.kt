@@ -1,6 +1,7 @@
 package serg.chuprin.finances.feature.dashboard.setup.impl.presentation.model.formatter
 
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
+import serg.chuprin.finances.feature.dashboard.setup.impl.R
 import serg.chuprin.finances.feature.dashboard.setup.presentation.domain.model.DashboardWidgetType
 import javax.inject.Inject
 
@@ -12,13 +13,13 @@ class DashboardWidgetNameFormatter @Inject constructor(
 ) {
 
     fun format(widgetType: DashboardWidgetType): String {
-        return when (widgetType) {
-            // TODO: Translate.
-            DashboardWidgetType.BALANCE -> "Balance"
-            DashboardWidgetType.CATEGORIES -> "Categories"
-            DashboardWidgetType.MONEY_ACCOUNTS -> "Money accounts"
-            DashboardWidgetType.RECENT_TRANSACTIONS -> "Recent transactions"
+        val stringRes = when (widgetType) {
+            DashboardWidgetType.BALANCE -> R.string.dashboard_widget_balance
+            DashboardWidgetType.CATEGORIES -> R.string.dashboard_widget_categories
+            DashboardWidgetType.MONEY_ACCOUNTS -> R.string.dashboard_widget_money_accounts
+            DashboardWidgetType.RECENT_TRANSACTIONS -> R.string.dashboard_widget_money_accounts
         }
+        return resourceManger.getString(stringRes)
     }
 
 }

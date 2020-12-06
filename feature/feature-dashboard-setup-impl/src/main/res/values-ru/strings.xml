@@ -5,5 +5,9 @@
         Настроить виджеты главного экрана
     </string>
     <string name="dashboard_widgets_setup_menu_save">Сохранить</string>
+    <string name="dashboard_widget_money_accounts">Мои счета</string>
+    <string name="dashboard_widget_recent_transactions">Последние транзакции</string>
+    <string name="dashboard_widget_balance">Баланс</string>
+    <string name="dashboard_widget_categories">Категории</string>
 
 </resources>
