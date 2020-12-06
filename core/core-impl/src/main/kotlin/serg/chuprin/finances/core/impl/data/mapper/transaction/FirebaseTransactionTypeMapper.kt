@@ -23,7 +23,7 @@ internal class FirebaseTransactionTypeMapper @Inject constructor() :
         }
     }
 
-    override fun mapFrom(model: TransactionType): String? {
+    override fun mapFrom(model: TransactionType): String {
         return when (model) {
             TransactionType.PLAIN -> PLAIN
             TransactionType.BALANCE -> BALANCE

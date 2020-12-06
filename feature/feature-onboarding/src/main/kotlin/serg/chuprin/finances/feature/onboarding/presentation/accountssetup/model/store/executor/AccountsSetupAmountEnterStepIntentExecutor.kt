@@ -81,6 +81,7 @@ class AccountsSetupAmountEnterStepIntentExecutor @Inject constructor(
                 )
             )
         return flow {
+            @Suppress("UnnecessaryVariable")
             val bankCardBalance = parsedAmount
 
             onboardingCompletionExecutor.completeOnboarding(

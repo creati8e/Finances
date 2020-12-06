@@ -27,7 +27,7 @@ internal class FirebaseDataPeriodTypeMapper @Inject constructor() :
         }
     }
 
-    override fun mapFrom(model: DataPeriodType): String? {
+    override fun mapFrom(model: DataPeriodType): String {
         return when (model) {
             DataPeriodType.DAY -> TYPE_DAY
             DataPeriodType.WEEK -> TYPE_WEEK

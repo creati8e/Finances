@@ -57,7 +57,7 @@ internal class FirebaseUserDataSource @Inject constructor(
                     }
                 success(userIsNew)
             } catch (throwable: Throwable) {
-                failure<Boolean>(throwable)
+                failure(throwable)
             }
         }
     }

@@ -37,7 +37,7 @@ class DashboardCategoriesWidgetBuilder @Inject constructor(
     override fun build(
         currentUser: User,
         currentPeriod: DataPeriod
-    ): Flow<DashboardWidget.Categories>? {
+    ): Flow<DashboardWidget.Categories> {
         return combine(
             pageFlow(currentUser, currentPeriod, PlainTransactionType.EXPENSE),
             pageFlow(currentUser, currentPeriod, PlainTransactionType.INCOME)

@@ -9,10 +9,7 @@ import java.util.*
  * Immutable wrapper for SortedMap<MoneyAccount, BigDecimal> with predefined comparator.
  * It keeps [MoneyAccount] sorted by name ascending.
  */
-class MoneyAccountBalances :
-    SortedMap<MoneyAccount, BigDecimal> by TreeMap<MoneyAccount, BigDecimal>(
-        accountsComparator
-    ) {
+class MoneyAccountBalances : SortedMap<MoneyAccount, BigDecimal> by TreeMap(accountsComparator) {
 
     companion object {
         val accountsComparator: Comparator<MoneyAccount> =

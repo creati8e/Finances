@@ -1,7 +1,6 @@
 package serg.chuprin.finances.app.launcher.app
 
 import android.os.Bundle
-import androidx.lifecycle.Observer
 import serg.chuprin.finances.app.launcher.app.AppLauncherFragmentDirections.navigateFromAppLauncherToAuthorizedGraph
 import serg.chuprin.finances.app.launcher.app.AppLauncherFragmentDirections.navigateFromAppLauncherToNotAuthorizedGraph
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
@@ -18,7 +17,7 @@ class AppLauncherFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         viewModel.isUserAuthorizedLiveData.observe(
             this,
-            Observer { isUserAuthorized ->
+            { isUserAuthorized ->
                 val action = if (isUserAuthorized) {
                     navigateFromAppLauncherToAuthorizedGraph()
                 } else {

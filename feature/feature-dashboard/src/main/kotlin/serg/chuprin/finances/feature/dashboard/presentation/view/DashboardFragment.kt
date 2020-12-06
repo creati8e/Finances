@@ -103,7 +103,8 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
             is DashboardEvent.ShowPeriodTypesPopupMenu -> {
                 val anchorView = recyclerView.findViewById<ViewGroup>(R.id.currentPeriodLayout)
                 PopupMenuWindow(
-                    event.menuCells, { cell ->
+                    cells = event.menuCells,
+                    callback = { cell ->
                         viewModel.dispatchIntent(DashboardIntent.ClickOnPeriodTypeCell(cell))
                     }
                 ).show(anchorView)

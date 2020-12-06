@@ -31,7 +31,7 @@ class AuthorizationViewModel @Inject constructor(
             val signInResult = signInUseCase.execute(idToken)
             signInStateMutableLiveData.value = when (signInResult) {
                 SignInResult.Error -> SignInState.Error
-                is SignInResult.Success -> SignInState.Success(signInResult.userIsNew)
+                is SignInResult.Success -> SignInState.Success
             }
         }
     }

@@ -45,7 +45,7 @@ class BuildTransactionsReportUseCase @Inject constructor(
             }
     }
 
-    private suspend fun buildTransactionsReport(
+    private fun buildTransactionsReport(
         filter: TransactionsReportFilter,
         transactions: Map<Transaction, TransactionCategoryWithParent?>
     ): TransactionsReport {

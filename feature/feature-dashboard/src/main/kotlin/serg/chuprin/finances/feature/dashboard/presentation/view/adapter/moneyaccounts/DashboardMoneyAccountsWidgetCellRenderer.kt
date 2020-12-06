@@ -112,10 +112,6 @@ class DashboardMoneyAccountsWidgetCellRenderer(
         }
     }
 
-    private fun getLayoutManager(holder: ContainerHolder): LinearLayoutManager {
-        return holder.moneyAccountsRecyclerView.layoutManager as LinearLayoutManager
-    }
-
     private fun handleOnMoneyAccountCellClick(adapterPosition: Int) {
         val cellOrNull = moneyAccountCellsAdapter.getItemOrNull(adapterPosition)
         val cell = cellOrNull as? DashboardMoneyAccountCell ?: return

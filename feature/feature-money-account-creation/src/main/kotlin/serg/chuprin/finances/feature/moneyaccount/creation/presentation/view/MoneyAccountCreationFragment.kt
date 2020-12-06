@@ -122,7 +122,7 @@ class MoneyAccountCreationFragment : BaseFragment(R.layout.fragment_money_accoun
         _currencyChoiceListController = null
     }
 
-    override fun createMenu(): MenuConfig? {
+    override fun createMenu(): MenuConfig {
         return menuConfig {
             addMenu(R.menu.menu_money_account_creation)
             addMenuItemListener { menuItem ->

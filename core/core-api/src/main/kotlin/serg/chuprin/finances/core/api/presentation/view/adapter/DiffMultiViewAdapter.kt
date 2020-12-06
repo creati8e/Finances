@@ -18,7 +18,7 @@ open class DiffMultiViewAdapter<T : Any> : AbsMultiViewAdapter<T> {
     }
 
     constructor(itemCallback: DiffUtil.ItemCallback<T>) {
-        differ = AsyncListDiffer<T>(this, itemCallback)
+        differ = AsyncListDiffer(this, itemCallback)
     }
 
     val items: List<T> get() = differ.currentList

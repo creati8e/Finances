@@ -22,7 +22,7 @@ class TestStateStore<I, SE, A, S, E>(
     bootstrapper: StoreBootstrapper<A>,
     executor: StoreActionExecutor<A, S, SE, E>,
     stateStoreIntentToActionMapper: StoreIntentToActionMapper<I, A>,
-    val reducerTestDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher(),
+    reducerTestDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher(),
     val backgroundTestDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()
 ) : BaseStateStore<I, SE, A, S, E>(
     reducer = reducer,

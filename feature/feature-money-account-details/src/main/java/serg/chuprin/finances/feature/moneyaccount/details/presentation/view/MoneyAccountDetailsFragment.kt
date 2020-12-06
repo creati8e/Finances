@@ -44,7 +44,7 @@ class MoneyAccountDetailsFragment : BaseFragment(R.layout.fragment_money_account
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         return super.onCreateView(inflater, container, savedInstanceState)!!.apply {
             transitionName = screenArguments.transitionName
         }

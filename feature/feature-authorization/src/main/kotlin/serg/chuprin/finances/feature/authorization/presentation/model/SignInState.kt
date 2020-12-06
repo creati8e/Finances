@@ -9,8 +9,6 @@ sealed class SignInState {
 
     object Progress : SignInState()
 
-    class Success(
-        val userIsNew: Boolean
-    ) : SignInState()
+    object Success : SignInState()
 
 }

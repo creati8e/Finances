@@ -23,7 +23,7 @@ internal class FirebaseTransactionCategoryTypeMapper @Inject constructor() :
         }
     }
 
-    override fun mapFrom(model: TransactionCategoryType): String? {
+    override fun mapFrom(model: TransactionCategoryType): String {
         return when (model) {
             TransactionCategoryType.INCOME -> TYPE_INCOME
             TransactionCategoryType.EXPENSE -> TYPE_EXPENSE

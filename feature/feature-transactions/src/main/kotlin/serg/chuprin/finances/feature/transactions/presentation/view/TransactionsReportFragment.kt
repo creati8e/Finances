@@ -35,7 +35,7 @@ class TransactionsReportFragment : BaseFragment(R.layout.fragment_transactions_r
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         return super.onCreateView(inflater, container, savedInstanceState)!!.apply {
             constraintLayout.transitionName = screenArguments.transitionName
         }
