@@ -10,13 +10,13 @@ import serg.chuprin.finances.feature.dashboard.presentation.model.cells.moneyacc
 class DashboardMoneyAccountsDiffCallback : DiffCallback<BaseCell>() {
 
     override fun getChangePayload(
-        oldItem: BaseCell,
-        newItem: BaseCell
+        oldCell: BaseCell,
+        newCell: BaseCell
     ): Any? {
-        if (oldItem is DashboardMoneyAccountCell && newItem is DashboardMoneyAccountCell) {
+        if (oldCell is DashboardMoneyAccountCell && newCell is DashboardMoneyAccountCell) {
             return DashboardMoneyAccountCellChangedPayload
         }
-        return super.getChangePayload(oldItem, newItem)
+        return super.getChangePayload(oldCell, newCell)
     }
 
 }

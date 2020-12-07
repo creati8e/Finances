@@ -3,8 +3,8 @@ package serg.chuprin.finances.feature.dashboard.presentation.view.adapter.diff
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.view.adapter.diff.DiffCallback
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
-import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.categories.diff.DashboardCategoriesWidgetChangedPayload
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.balance.diff.DashboardBalanceWidgetChangedPayload
+import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.categories.diff.DashboardCategoriesWidgetChangedPayload
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.moneyaccounts.diff.DashboardMoneyAccountCellsChangedPayload
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.moneyaccounts.diff.DashboardMoneyAccountsExpansionChangedPayload
 
@@ -13,28 +13,28 @@ import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.moneyac
  */
 class DashboardAdapterDiffCallback : DiffCallback<BaseCell>() {
 
-    override fun getChangePayload(oldItem: BaseCell, newItem: BaseCell): Any? {
-        if (oldItem is DashboardWidgetCell.Balance
-            && newItem is DashboardWidgetCell.Balance
+    override fun getChangePayload(oldCell: BaseCell, newCell: BaseCell): Any? {
+        if (oldCell is DashboardWidgetCell.Balance
+            && newCell is DashboardWidgetCell.Balance
         ) {
             return DashboardBalanceWidgetChangedPayload
         }
-        if (oldItem is DashboardWidgetCell.Categories
-            && newItem is DashboardWidgetCell.Categories
+        if (oldCell is DashboardWidgetCell.Categories
+            && newCell is DashboardWidgetCell.Categories
         ) {
             return DashboardCategoriesWidgetChangedPayload
         }
-        if (oldItem is DashboardWidgetCell.MoneyAccounts
-            && newItem is DashboardWidgetCell.MoneyAccounts
+        if (oldCell is DashboardWidgetCell.MoneyAccounts
+            && newCell is DashboardWidgetCell.MoneyAccounts
         ) {
-            if (oldItem.isExpanded != newItem.isExpanded) {
+            if (oldCell.isExpanded != newCell.isExpanded) {
                 return DashboardMoneyAccountsExpansionChangedPayload
             }
-            if (oldItem.cells != newItem.cells) {
+            if (oldCell.cells != newCell.cells) {
                 return DashboardMoneyAccountCellsChangedPayload
             }
         }
-        return super.getChangePayload(oldItem, newItem)
+        return super.getChangePayload(oldCell, newCell)
     }
 
 }

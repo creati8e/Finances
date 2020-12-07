@@ -29,8 +29,8 @@ class UserProfileCellsBuilder @Inject constructor(
         return mutableListOf(
             profileCell,
             dataPeriodTypeCell,
-            UserProfileSetupDashboardWidgetsCell(),
-            UserProfileLogoutCell()
+            UserProfileSetupDashboardWidgetsCell,
+            UserProfileLogoutCell
         )
     }
 

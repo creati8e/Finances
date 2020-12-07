@@ -9,11 +9,11 @@ import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categori
  */
 class DashboardCategoryPagesDiffCallback : DiffCallback<BaseCell>() {
 
-    override fun getChangePayload(oldItem: BaseCell, newItem: BaseCell): Any? {
-        if (oldItem is DashboardCategoriesPageCell && newItem is DashboardCategoriesPageCell) {
+    override fun getChangePayload(oldCell: BaseCell, newCell: BaseCell): Any? {
+        if (oldCell is DashboardCategoriesPageCell && newCell is DashboardCategoriesPageCell) {
             return DashboardCategoriesPageChangedPayload
         }
-        return super.getChangePayload(oldItem, newItem)
+        return super.getChangePayload(oldCell, newCell)
     }
 
 }

@@ -27,4 +27,9 @@ open class DiffCallback<T : BaseCell> : DiffUtil.ItemCallback<T>() {
         return false
     }
 
+    @Suppress("RedundantOverride")
+    override fun getChangePayload(oldCell: T, newCell: T): Any? {
+        return super.getChangePayload(oldCell, newCell)
+    }
+
 }
