@@ -39,7 +39,6 @@ class DashboardBalanceWidgetBuilder @Inject constructor(
             )
             DashboardWidget.Balance(
                 balance = balanceAmount,
-                dataPeriod = dataPeriod,
                 currency = user.defaultCurrency,
                 currentPeriodIncomes = incomeAmount,
                 currentPeriodExpenses = expenseAmount

@@ -14,10 +14,6 @@ import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.balance
  * Created by Sergey Chuprin on 28.05.2020.
  */
 class DashboardBalanceWidgetCellRenderer(
-    private val clickOnNextPeriod: () -> Unit,
-    private val clickOnCurrentPeriod: () -> Unit,
-    private val clickOnPreviousPeriod: () -> Unit,
-    private val clickOnRestoreDefaultPeriod: () -> Unit,
     private val clickOnCurrentPeriodIncomes: () -> Unit,
     private val clickOnCurrentPeriodExpenses: () -> Unit
 ) : ContainerRenderer<DashboardWidgetCell.Balance>() {
@@ -44,12 +40,8 @@ class DashboardBalanceWidgetCellRenderer(
         longClickListener: LongClick?
     ) {
         with(holder) {
-            nextPeriodButton.onClick(clickOnNextPeriod)
-            currentPeriodLayout.onClick(clickOnCurrentPeriod)
-            previousPeriodButton.onClick(clickOnPreviousPeriod)
             incomesCardView.onClick(clickOnCurrentPeriodIncomes)
             expensesCardView.onClick(clickOnCurrentPeriodExpenses)
-            restoreDefaultPeriodButton.onClick(clickOnRestoreDefaultPeriod)
         }
     }
 
@@ -59,7 +51,6 @@ class DashboardBalanceWidgetCellRenderer(
     ) {
         with(holder) {
             balanceTextView.text = model.balance
-            currentPeriodTextView.text = model.currentPeriod
             incomesCardView.setAmountText(model.incomesAmount)
             expensesCardView.setAmountText(model.expensesAmount)
         }

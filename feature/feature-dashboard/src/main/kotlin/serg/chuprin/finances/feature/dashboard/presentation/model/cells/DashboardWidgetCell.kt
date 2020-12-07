@@ -21,10 +21,14 @@ sealed class DashboardWidgetCell(
 
     data class Balance(
         val balance: String,
-        val currentPeriod: String,
         val expensesAmount: String,
         val incomesAmount: String,
         override val widget: DashboardWidget.Balance
+    ) : DashboardWidgetCell(widget)
+
+    data class PeriodSelector(
+        val currentPeriod: String,
+        override val widget: DashboardWidget.PeriodSelector
     ) : DashboardWidgetCell(widget)
 
     data class RecentTransactions(

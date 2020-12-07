@@ -33,6 +33,7 @@ import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.balance
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.categories.DashboardCategoriesWidgetCellRenderer
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.diff.DashboardAdapterDiffCallback
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.moneyaccounts.DashboardMoneyAccountsWidgetCellRenderer
+import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.period.DashboardPeriodSelectorWidgetCellRenderer
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.transactions.DashboardRecentTransactionsWidgetCellRenderer
 import javax.inject.Inject
 import serg.chuprin.finances.core.api.R as CoreR
@@ -145,20 +146,8 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         return DiffMultiViewAdapter(DashboardAdapterDiffCallback()).apply {
             registerRenderer(
                 DashboardBalanceWidgetCellRenderer(
-                    clickOnCurrentPeriod = {
-                        viewModel.dispatchIntent(DashboardIntent.ClickOnCurrentPeriod)
-                    },
-                    clickOnNextPeriod = {
-                        viewModel.dispatchIntent(DashboardIntent.ClickOnNextPeriodButton)
-                    },
-                    clickOnPreviousPeriod = {
-                        viewModel.dispatchIntent(DashboardIntent.ClickOnPreviousPeriodButton)
-                    },
                     clickOnCurrentPeriodIncomes = {
                         viewModel.dispatchIntent(DashboardIntent.ClickOnCurrentPeriodIncomesButton)
-                    },
-                    clickOnRestoreDefaultPeriod = {
-                        viewModel.dispatchIntent(DashboardIntent.ClickOnRestoreDefaultPeriodButton)
                     },
                     clickOnCurrentPeriodExpenses = {
                         viewModel.dispatchIntent(DashboardIntent.ClickOnCurrentPeriodExpensesButton)
@@ -188,6 +177,22 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
                     },
                     clickOnShowMoneyAccountsListButton = {
                         viewModel.dispatchIntent(DashboardIntent.ClickOnMoneyAccountsListButton)
+                    }
+                )
+            )
+            registerRenderer(
+                DashboardPeriodSelectorWidgetCellRenderer(
+                    clickOnCurrentPeriod = {
+                        viewModel.dispatchIntent(DashboardIntent.ClickOnCurrentPeriod)
+                    },
+                    clickOnNextPeriod = {
+                        viewModel.dispatchIntent(DashboardIntent.ClickOnNextPeriodButton)
+                    },
+                    clickOnPreviousPeriod = {
+                        viewModel.dispatchIntent(DashboardIntent.ClickOnPreviousPeriodButton)
+                    },
+                    clickOnRestoreDefaultPeriod = {
+                        viewModel.dispatchIntent(DashboardIntent.ClickOnRestoreDefaultPeriodButton)
                     }
                 )
             )

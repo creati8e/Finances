@@ -23,12 +23,15 @@ sealed class DashboardWidget(
      * Contains current period, balance and money statistic.
      */
     data class Balance(
-        val dataPeriod: DataPeriod,
         val balance: BigDecimal,
         val currency: Currency,
         val currentPeriodIncomes: BigDecimal,
         val currentPeriodExpenses: BigDecimal
     ) : DashboardWidget(DashboardWidgetType.BALANCE)
+
+    data class PeriodSelector(
+        val dataPeriod: DataPeriod
+    ) : DashboardWidget(DashboardWidgetType.PERIOD_SELECTOR)
 
     data class RecentTransactions(
         val currency: Currency,

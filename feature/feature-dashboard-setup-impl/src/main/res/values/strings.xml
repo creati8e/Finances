@@ -6,6 +6,7 @@
     </string>
     <string name="dashboard_widgets_setup_menu_save">Save</string>
     <string name="dashboard_widget_money_accounts">Money accounts</string>
+    <string name="dashboard_widget_period_selector">Period selector</string>
     <string name="dashboard_widget_recent_transactions">Recent transactions</string>
     <string name="dashboard_widget_balance">Balance</string>
     <string name="dashboard_widget_categories">Categories</string>

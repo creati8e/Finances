@@ -9,5 +9,6 @@
     <string name="dashboard_widget_recent_transactions">Последние транзакции</string>
     <string name="dashboard_widget_balance">Баланс</string>
     <string name="dashboard_widget_categories">Категории</string>
+    <string name="dashboard_widget_period_selector">Выбор периода</string>
 
 </resources>

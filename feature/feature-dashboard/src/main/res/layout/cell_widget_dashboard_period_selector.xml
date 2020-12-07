@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:paddingStart="8dp"
+    android:paddingTop="8dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="16dp">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/currentPeriodLayout"
+        style="@style/ClickableLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:orientation="vertical"
+        android:paddingStart="8dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="4dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/previousPeriodButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/currentPeriodSubtitleTextView"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dashboard_balance_widget_title_current_period"
+            android:textSize="18sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/currentPeriodTextView"
+            style="@style/TextAppearance.MaterialComponents.Caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            tools:text="Month (16.05.2020-16.06.2020)" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/previousPeriodButton"
+        style="@style/ClickableLayout"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:padding="4dp"
+        android:src="@drawable/ic_arrow_left"
+        app:layout_constraintBottom_toBottomOf="@id/currentPeriodLayout"
+        app:layout_constraintEnd_toStartOf="@id/nextPeriodButton"
+        app:layout_constraintTop_toTopOf="@id/currentPeriodLayout" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/nextPeriodButton"
+        style="@style/ClickableLayout"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:padding="4dp"
+        android:src="@drawable/ic_arrow_right"
+        app:layout_constraintBottom_toBottomOf="@id/currentPeriodLayout"
+        app:layout_constraintEnd_toStartOf="@id/restoreDefaultPeriodButton"
+        app:layout_constraintTop_toTopOf="@id/currentPeriodLayout" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/restoreDefaultPeriodButton"
+        style="@style/ClickableLayout"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:padding="6dp"
+        android:src="@drawable/ic_restore"
+        app:layout_constraintBottom_toBottomOf="@id/currentPeriodLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/currentPeriodLayout" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

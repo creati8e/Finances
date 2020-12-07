@@ -7,6 +7,7 @@ import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.balance
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.categories.diff.DashboardCategoriesWidgetChangedPayload
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.moneyaccounts.diff.DashboardMoneyAccountCellsChangedPayload
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.moneyaccounts.diff.DashboardMoneyAccountsExpansionChangedPayload
+import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.period.diff.DashboardPeriodSelectorWidgetCellChangedPayload
 
 /**
  * Created by Sergey Chuprin on 18.04.2020.
@@ -18,6 +19,11 @@ class DashboardAdapterDiffCallback : DiffCallback<BaseCell>() {
             && newCell is DashboardWidgetCell.Balance
         ) {
             return DashboardBalanceWidgetChangedPayload
+        }
+        if (oldCell is DashboardWidgetCell.PeriodSelector
+            && newCell is DashboardWidgetCell.PeriodSelector
+        ) {
+            return DashboardPeriodSelectorWidgetCellChangedPayload
         }
         if (oldCell is DashboardWidgetCell.Categories
             && newCell is DashboardWidgetCell.Categories

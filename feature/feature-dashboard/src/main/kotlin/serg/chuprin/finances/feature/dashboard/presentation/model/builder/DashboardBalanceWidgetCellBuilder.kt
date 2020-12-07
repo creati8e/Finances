@@ -1,7 +1,6 @@
 package serg.chuprin.finances.feature.dashboard.presentation.model.builder
 
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
-import serg.chuprin.finances.core.api.presentation.formatter.DataPeriodFormatter
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
 import java.math.BigDecimal
@@ -12,8 +11,7 @@ import javax.inject.Inject
  * Created by Sergey Chuprin on 17.04.2020.
  */
 class DashboardBalanceWidgetCellBuilder @Inject constructor(
-    private val amountFormatter: AmountFormatter,
-    private val dataPeriodFormatter: DataPeriodFormatter
+    private val amountFormatter: AmountFormatter
 ) : DashboardWidgetCellBuilder {
 
     override fun build(
@@ -26,8 +24,7 @@ class DashboardBalanceWidgetCellBuilder @Inject constructor(
             widget = widget,
             balance = formatAmount(widget.balance, widget.currency),
             incomesAmount = formatAmount(widget.currentPeriodIncomes, widget.currency),
-            expensesAmount = formatAmount(widget.currentPeriodExpenses, widget.currency),
-            currentPeriod = dataPeriodFormatter.formatAsCurrentPeriod(widget.dataPeriod)
+            expensesAmount = formatAmount(widget.currentPeriodExpenses, widget.currency)
         )
     }
 

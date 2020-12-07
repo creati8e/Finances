@@ -6,6 +6,7 @@ package serg.chuprin.finances.feature.dashboard.setup.presentation.domain.model
 enum class DashboardWidgetType {
     MONEY_ACCOUNTS,
     BALANCE,
+    PERIOD_SELECTOR,
     RECENT_TRANSACTIONS,
     CATEGORIES;
 
@@ -14,6 +15,7 @@ enum class DashboardWidgetType {
         val default = listOf(
             MONEY_ACCOUNTS,
             BALANCE,
+            PERIOD_SELECTOR,
             RECENT_TRANSACTIONS,
             CATEGORIES
         )

@@ -44,6 +44,7 @@ class DashboardWidgetsPreferenceMapper
             "balance" -> DashboardWidgetType.BALANCE
             "categories" -> DashboardWidgetType.CATEGORIES
             "money_accounts" -> DashboardWidgetType.MONEY_ACCOUNTS
+            "period_selector" -> DashboardWidgetType.PERIOD_SELECTOR
             "recent_transactions" -> DashboardWidgetType.RECENT_TRANSACTIONS
             else -> throw IllegalArgumentException("Unknown widget type: $this")
         }
@@ -54,6 +55,7 @@ class DashboardWidgetsPreferenceMapper
             DashboardWidgetType.BALANCE -> "balance"
             DashboardWidgetType.CATEGORIES -> "categories"
             DashboardWidgetType.MONEY_ACCOUNTS -> "money_accounts"
+            DashboardWidgetType.PERIOD_SELECTOR -> "period_selector"
             DashboardWidgetType.RECENT_TRANSACTIONS -> "recent_transactions"
         }
     }
