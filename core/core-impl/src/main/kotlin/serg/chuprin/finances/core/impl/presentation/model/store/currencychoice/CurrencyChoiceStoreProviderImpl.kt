@@ -1,5 +1,6 @@
 package serg.chuprin.finances.core.impl.presentation.model.store.currencychoice
 
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStore
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStoreBootstrapper
@@ -16,17 +17,21 @@ internal class CurrencyChoiceStoreProviderImpl @Inject constructor(
 ) : CurrencyChoiceStoreProvider {
 
     override fun provide(bootstrapper: CurrencyChoiceStoreBootstrapper): CurrencyChoiceStore {
-        return CurrencyChoiceStoreImpl(
+        return CurrencyChoiceStoreFactory(
             executor = executorProvider.get(),
-            bootstrapper = {
-                bootstrapper.bootstrap().map { initialParams: CurrencyChoiceStoreInitialParams ->
-                    CurrencyChoiceAction.SetCurrenciesParams(
-                        currentCurrency = initialParams.currentCurrency,
-                        availableCurrencies = initialParams.availableCurrencies
-                    )
-                }
+            bootstrapper = bootstrapper.wrap()
+        ).create()
+    }
+
+    private fun CurrencyChoiceStoreBootstrapper.wrap(): () -> Flow<CurrencyChoiceAction> {
+        return {
+            bootstrap().map { initialParams: CurrencyChoiceStoreInitialParams ->
+                CurrencyChoiceAction.SetCurrenciesParams(
+                    currentCurrency = initialParams.currentCurrency,
+                    availableCurrencies = initialParams.availableCurrencies
+                )
             }
-        )
+        }
     }
 
 }
