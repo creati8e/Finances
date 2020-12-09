@@ -1,6 +1,7 @@
 package serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.store
 
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
@@ -28,10 +29,10 @@ class MoneyAccountCreationStore @Inject constructor(
     intentToActionMapper = MoneyAccountCreationAction::ExecuteIntent
 ), CurrencyChoiceStoreIntentDispatcher by currencyChoiceStore {
 
-    override fun start(intentsFlow: Flow<MoneyAccountCreationIntent>, scope: CoroutineScope) {
-        currencyChoiceStore.start(emptyFlow(), scope)
-        super.start(intentsFlow, scope)
-        scope.launch {
+    override fun start(intentsFlow: Flow<MoneyAccountCreationIntent>, scope: CoroutineScope): Job {
+        return scope.launch {
+            currencyChoiceStore.start(emptyFlow(), scope)
+            super.start(intentsFlow, scope)
             currencyChoiceStore
                 .stateFlow
                 .collect {

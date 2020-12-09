@@ -55,12 +55,12 @@ open class BaseStateStore<I, SE, A, S, E>(
 
     private var isStarted = false
 
-    override fun start(intentsFlow: Flow<I>, scope: CoroutineScope) {
+    override fun start(intentsFlow: Flow<I>, scope: CoroutineScope): Job {
         require(!isStarted) {
             "Store is started already"
         }
         isStarted = true
-        scope.launch {
+        return scope.launch {
             processIntents(this, intentsFlow)
             processActions(this)
             bootstrap(this)

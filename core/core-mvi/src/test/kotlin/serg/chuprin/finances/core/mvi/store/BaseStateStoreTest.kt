@@ -25,7 +25,7 @@ object BaseStateStoreTest : Spek({
             val testStore = CounterTestStoreFactory.build()
 
             When("Dispatch \"Increment action\"") {
-                testStore.testStart()
+                testStore.start()
                 testStore.dispatch(CounterTestIntent.Increment)
             }
 
@@ -44,7 +44,7 @@ object BaseStateStoreTest : Spek({
             val testStore = CounterTestStoreFactory.build(bootstrapper = bootstrapper)
 
             When("Store created and subscriber subscribed") {
-                testStore.testStart()
+                testStore.start()
             }
 
             Then("Bootstrapper emitted action and state changed") {
@@ -62,7 +62,7 @@ object BaseStateStoreTest : Spek({
             val testStore = CounterTestStoreFactory.build(bootstrapper = bootstrapper)
 
             When("Store created and subscriber subscribed") {
-                testStore.testStart()
+                testStore.start()
             }
 
             Then("Bootstrapper emits new actions and they are emits new states") {
@@ -87,7 +87,7 @@ object BaseStateStoreTest : Spek({
             lateinit var job: Job
 
             Given("Store bootstrapped") {
-                job = testStore.testStart()
+                job = testStore.start()
                 assertEquals(2, testStore.capturedStates.size)
                 assertEquals(bootstrappedValue, testStore.state.counter)
             }

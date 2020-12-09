@@ -1,6 +1,7 @@
 package serg.chuprin.finances.feature.onboarding.presentation.currencychoice.model.store
 
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
@@ -29,10 +30,13 @@ class CurrencyChoiceOnboardingStore @Inject constructor(
     CurrencyChoiceOnboardingIntentToActionMapper()
 ), CurrencyChoiceStoreIntentDispatcher by currencyChoiceStore {
 
-    override fun start(intentsFlow: Flow<CurrencyChoiceOnboardingIntent>, scope: CoroutineScope) {
-        currencyChoiceStore.start(emptyFlow(), scope)
-        super.start(intentsFlow, scope)
-        scope.launch {
+    override fun start(
+        intentsFlow: Flow<CurrencyChoiceOnboardingIntent>,
+        scope: CoroutineScope
+    ): Job {
+        return scope.launch {
+            currencyChoiceStore.start(emptyFlow(), scope)
+            super.start(intentsFlow, scope)
             currencyChoiceStore
                 .stateFlow
                 .collect {

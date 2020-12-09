@@ -1,6 +1,7 @@
 package serg.chuprin.finances.core.mvi.store
 
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 
 
@@ -16,20 +17,12 @@ import kotlinx.coroutines.flow.Flow
  * [S] - type of state.
  * [E] - type of single-time events.
  */
-interface StateStore<I, S, E> {
-
-    val state: S
-
-    val stateFlow: Flow<S>
-
-    val eventsFlow: Flow<E>
-
-    fun dispatch(intent: I)
+interface StateStore<I, S, E> : BaseStore<I, S, E> {
 
     /**
      * Start a store's loop.
      * After this function call store is ready to receiving intents.
      */
-    fun start(intentsFlow: Flow<I>, scope: CoroutineScope)
+    fun start(intentsFlow: Flow<I>, scope: CoroutineScope): Job
 
 }
