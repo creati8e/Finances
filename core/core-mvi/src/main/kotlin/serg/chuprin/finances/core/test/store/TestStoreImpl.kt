@@ -40,6 +40,9 @@ open class TestStoreImpl<I, SE, A, S, E>(
 
     override val scope: TestCoroutineScope = TestCoroutineScope(TestCoroutineDispatcher())
 
+    override val backgroundTestDispatcher: TestCoroutineDispatcher =
+        backgroundDispatcher as TestCoroutineDispatcher
+
     override fun start(): Job {
         return start(emptyFlow(), scope)
     }

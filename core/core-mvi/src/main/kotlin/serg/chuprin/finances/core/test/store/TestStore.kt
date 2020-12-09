@@ -1,6 +1,7 @@
 package serg.chuprin.finances.core.test.store
 
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.TestCoroutineScope
 import serg.chuprin.finances.core.mvi.store.BaseStore
 import java.util.*
@@ -18,6 +19,8 @@ interface TestStore<I, S, E> : BaseStore<I, S, E> {
 
     val lastEvent: E
         get() = capturedEvents.last
+
+    val backgroundTestDispatcher: TestCoroutineDispatcher
 
     fun start(): Job
 
