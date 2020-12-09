@@ -4,6 +4,7 @@ import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.Cu
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceState
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStore
 import serg.chuprin.finances.core.mvi.bootstrapper.StoreBootstrapper
+import serg.chuprin.finances.core.mvi.store.StateStore
 import serg.chuprin.finances.core.mvi.store.factory.AbsStoreFactory
 
 /**
@@ -18,4 +19,11 @@ class CurrencyChoiceStoreFactory(
     bootstrapper,
     executor,
     CurrencyChoiceAction::ExecuteIntent
-)
+) {
+
+    override fun create(): CurrencyChoiceStore {
+        return object : CurrencyChoiceStore,
+            StateStore<CurrencyChoiceIntent, CurrencyChoiceState, Nothing> by createBaseStore() {}
+    }
+
+}

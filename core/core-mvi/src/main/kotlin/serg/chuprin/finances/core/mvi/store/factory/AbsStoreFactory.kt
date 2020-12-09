@@ -22,6 +22,13 @@ abstract class AbsStoreFactory<I, SE, A, S, E, STORE : BaseStore<I, S, E>>(
 
     override fun create(): STORE {
         @Suppress("UNCHECKED_CAST")
+        return createBaseStore() as STORE
+    }
+
+    /**
+     * Not good architecture, i know.
+     */
+    protected fun createBaseStore(): BaseStateStore<I, SE, A, S, E> {
         return object : BaseStateStore<I, SE, A, S, E>(
             reducer = reducer,
             executor = executor,
@@ -30,7 +37,7 @@ abstract class AbsStoreFactory<I, SE, A, S, E, STORE : BaseStore<I, S, E>>(
             intentToActionMapper = intentToActionMapper,
             backgroundDispatcher = Dispatchers.Default,
             reducerDispatcher = newSingleThreadContext("Reducer")
-        ) {} as STORE
+        ) {}
     }
 
 }
