@@ -10,7 +10,8 @@ import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.view.
 /**
  * Created by Sergey Chuprin on 10.04.2020.
  */
-@[ScreenScope Subcomponent]
+@ScreenScope
+@Subcomponent(modules = [AccountsSetupOnboardingModule::class])
 interface AccountsSetupOnboardingComponent :
     ViewModelComponent<AccountsSetupOnboardingViewModel>,
     InjectableComponent<AccountsSetupOnboardingFragment>

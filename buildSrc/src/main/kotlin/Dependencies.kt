@@ -136,6 +136,9 @@ object Libraries {
 
         const val MOCKK = "io.mockk:mockk:1.9.3"
         const val STRIKT = "io.strikt:strikt-core:0.28.0"
+
+        // It's required for Strikt.
+        const val FILE_PEEK = "com.christophsturm:filepeek:0.1.2"
         const val ASSERTIONS = "org.jetbrains.kotlin:kotlin-test:$KOTLIN_VER"
         const val SPEK_JVM = "org.spekframework.spek2:spek-dsl-jvm:$SPEK_VER"
         const val COROUTINES = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${VER}"

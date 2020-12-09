@@ -5,22 +5,19 @@ import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
-import serg.chuprin.finances.core.test.utils.TestStateStore
+import serg.chuprin.finances.core.test.factory.TestStoreFactory.Companion.test
 import serg.chuprin.finances.feature.onboarding.domain.usecase.CompleteAccountsSetupOnboardingUseCase
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.AccountsSetupOnboardingFinalStepBuilder
-import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.AccountsSetupOnboardingIntentToActionMapper
-import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.AccountsSetupOnboardingStateReducer
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.AccountsSetupOnboardingStoreBootstrapper
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.executor.AccountsSetupAmountEnterStepIntentExecutor
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.executor.AccountsSetupOnboardingActionExecutor
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.executor.AccountsSetupOnboardingCompletionExecutor
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.executor.AccountsSetupQuestionStateIntentExecutor
-import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.state.AccountsSetupOnboardingState
 
 /**
  * Created by Sergey Chuprin on 16.04.2020.
  */
-object AccountsSetupOnboardingStoreFactory {
+object AccountsSetupOnboardingStoreTestFactory {
 
     fun build(): AccountsSetupOnboardingStoreParams {
 
@@ -46,15 +43,14 @@ object AccountsSetupOnboardingStoreFactory {
                 finalStepBuilder = AccountsSetupOnboardingFinalStepBuilder(resourceManager)
             )
         )
-        val store = TestStateStore(
+
+        val testStore = AccountsSetupOnboardingStoreFactory(
             executor = actionExecutor,
-            initialState = AccountsSetupOnboardingState(),
-            reducer = AccountsSetupOnboardingStateReducer(),
-            bootstrapper = AccountsSetupOnboardingStoreBootstrapper(userRepository),
-            stateStoreIntentToActionMapper = AccountsSetupOnboardingIntentToActionMapper()
-        )
+            bootstrapper = AccountsSetupOnboardingStoreBootstrapper(userRepository)
+        ).test()
+
         return AccountsSetupOnboardingStoreParams(
-            store,
+            testStore,
             amountParser,
             amountFormatter,
             userRepository,

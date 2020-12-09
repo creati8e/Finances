@@ -10,7 +10,7 @@ import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.test.utils.TimberTestTree
 import serg.chuprin.finances.feature.onboarding.R
 import serg.chuprin.finances.feature.onboarding.domain.OnboardingMoneyAccountCreationParams
-import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.factory.AccountsSetupOnboardingStoreFactory
+import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.factory.AccountsSetupOnboardingStoreTestFactory
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.state.AccountsSetupOnboardingState
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.state.AccountsSetupOnboardingStepState
 import strikt.api.Assertion
@@ -32,7 +32,7 @@ object AccountsSetupOnboardingStoreTest : Spek({
 
         Scenario("Starting store") {
 
-            val params = AccountsSetupOnboardingStoreFactory.build()
+            val params = AccountsSetupOnboardingStoreTestFactory.build()
             val store = params.store
 
             val userCurrency = Currency.getInstance("USD")
@@ -42,7 +42,7 @@ object AccountsSetupOnboardingStoreTest : Spek({
             }
 
             When("Starting store") {
-                store.testStart()
+                store.start()
             }
 
             Then("Initial step is cash question") {
@@ -65,12 +65,12 @@ object AccountsSetupOnboardingStoreTest : Spek({
 
         Scenario("User answered positively on cash question") {
 
-            val params = AccountsSetupOnboardingStoreFactory.build()
+            val params = AccountsSetupOnboardingStoreTestFactory.build()
             val store = params.store
 
             Given("Store is started") {
                 params.userRepository.mockCurrentUser()
-                store.testStart()
+                store.start()
             }
 
             When("User clicked on positive button") {
@@ -85,12 +85,12 @@ object AccountsSetupOnboardingStoreTest : Spek({
 
         Scenario("User answered negatively on cash question") {
 
-            val params = AccountsSetupOnboardingStoreFactory.build()
+            val params = AccountsSetupOnboardingStoreTestFactory.build()
             val store = params.store
 
             Given("Store is started") {
                 params.userRepository.mockCurrentUser()
-                store.testStart()
+                store.start()
             }
 
             When("User clicked on negative button") {
@@ -105,7 +105,7 @@ object AccountsSetupOnboardingStoreTest : Spek({
 
         Scenario("User answered positively on bank card question") {
 
-            val params = AccountsSetupOnboardingStoreFactory.build()
+            val params = AccountsSetupOnboardingStoreTestFactory.build()
             val store = params.store
 
             val bankCardEnteredAmount = "10"
@@ -129,7 +129,7 @@ object AccountsSetupOnboardingStoreTest : Spek({
             Given("Current step is bank card question") {
                 params.userRepository.mockCurrentUser()
                 with(store) {
-                    testStart()
+                    start()
 
                     with(params) {
                         every {

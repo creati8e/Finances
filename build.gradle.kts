@@ -117,6 +117,7 @@ fun Project.configureSpek(testedExtension: TestedExtension) {
 
         add("testImplementation", Libraries.Tests.MOCKK)
         add("testImplementation", Libraries.Tests.STRIKT)
+        add("testImplementation", Libraries.Tests.FILE_PEEK)
         add("testImplementation", Libraries.Tests.ASSERTIONS)
 
         add("testImplementation", Libraries.Tests.COROUTINES)
