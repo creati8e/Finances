@@ -3,19 +3,19 @@ package serg.chuprin.finances.core.impl.presentation.model.store.currencychoice
 import kotlinx.coroutines.flow.map
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStore
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStoreBootstrapper
-import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStoreFactory
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStoreInitialParams
+import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStoreProvider
 import javax.inject.Inject
 import javax.inject.Provider
 
 /**
  * Created by Sergey Chuprin on 09.06.2020.
  */
-internal class CurrencyChoiceStoreFactoryImpl @Inject constructor(
+internal class CurrencyChoiceStoreProviderImpl @Inject constructor(
     private val executorProvider: Provider<CurrencyChoiceActionExecutor>
-) : CurrencyChoiceStoreFactory {
+) : CurrencyChoiceStoreProvider {
 
-    override fun create(bootstrapper: CurrencyChoiceStoreBootstrapper): CurrencyChoiceStore {
+    override fun provide(bootstrapper: CurrencyChoiceStoreBootstrapper): CurrencyChoiceStore {
         return CurrencyChoiceStoreImpl(
             executor = executorProvider.get(),
             bootstrapper = {

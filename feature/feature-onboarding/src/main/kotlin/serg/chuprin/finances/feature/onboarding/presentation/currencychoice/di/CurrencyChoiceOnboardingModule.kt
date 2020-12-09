@@ -6,7 +6,7 @@ import dagger.Provides
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStore
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStoreBootstrapper
-import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStoreFactory
+import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStoreProvider
 import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.model.CurrencyChoiceStoreBootstrapperImpl
 
 /**
@@ -19,10 +19,10 @@ interface CurrencyChoiceOnboardingModule {
 
         @[Provides ScreenScope]
         fun provideCurrencyChoiceStore(
-            factory: CurrencyChoiceStoreFactory,
+            provider: CurrencyChoiceStoreProvider,
             storeBootstrapper: CurrencyChoiceStoreBootstrapper
         ): CurrencyChoiceStore {
-            return factory.create(storeBootstrapper)
+            return provider.provide(storeBootstrapper)
         }
 
     }

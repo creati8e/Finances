@@ -6,7 +6,7 @@ import serg.chuprin.finances.core.api.domain.repository.CurrencyRepository
 import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
-import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStoreFactory
+import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStoreProvider
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
 
@@ -20,7 +20,7 @@ interface MoneyAccountCreationDependencies {
     val currencyRepository: CurrencyRepository
     val transactionRepository: TransactionRepository
     val moneyAccountRepository: MoneyAccountRepository
-    val currencyChoiceStoreFactory: CurrencyChoiceStoreFactory
+    val currencyChoiceStoreProvider: CurrencyChoiceStoreProvider
 }
 
 @Component(dependencies = [CoreDependenciesProvider::class])
