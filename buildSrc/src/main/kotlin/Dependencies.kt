@@ -9,7 +9,7 @@ object BuildScript {
 
     object Versions {
         const val KOTLIN_VER = "1.4.10"
-        const val NAVIGATION_VER = "2.3.1"
+        const val NAVIGATION_VER = "2.3.2"
     }
 
     object Plugins {
@@ -30,7 +30,7 @@ object BuildScript {
 
 object Libraries {
 
-    const val COIL = "io.coil-kt:coil:1.0.0"
+    const val COIL = "io.coil-kt:coil:1.1.0"
     const val TIMBER = "com.github.ajalt:timberkt:1.5.1"
     const val FLEXBOX = "com.google.android:flexbox:2.0.1"
     const val JAVAX_ANNOTATIONS = "javax.inject:javax.inject:1"
@@ -56,8 +56,8 @@ object Libraries {
         const val CORE = "androidx.core:core-ktx:1.5.0-alpha05"
 
         const val APPCOMPAT = "androidx.appcompat:appcompat:1.3.0-alpha02"
-        const val FRAGMENT = "androidx.fragment:fragment-ktx:1.3.0-beta01"
-        const val TRANSITION = "androidx.transition:transition-ktx:1.4.0-beta01"
+        const val FRAGMENT = "androidx.fragment:fragment-ktx:1.3.0-beta02"
+        const val TRANSITION = "androidx.transition:transition-ktx:1.4.0-rc01"
         const val VIEWPAGER = "androidx.viewpager2:viewpager2:1.1.0-alpha01"
         const val DESIGN = "com.google.android.material:material:1.3.0-alpha04"
         const val CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:2.0.2"
@@ -96,7 +96,7 @@ object Libraries {
 
     object Coroutines {
 
-        const val VER = "1.4.1"
+        const val VER = "1.4.2"
 
         const val CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$VER"
         const val ANDROID = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$VER"
@@ -104,7 +104,7 @@ object Libraries {
 
     object Dagger {
 
-        private const val VER = "2.29.1"
+        private const val VER = "2.30.1"
         private const val ARTIFACT = "com.google.dagger"
 
         const val COMPILER = "$ARTIFACT:dagger-compiler:$VER"
@@ -135,7 +135,7 @@ object Libraries {
         private const val SPEK_VER = "2.0.14"
 
         const val MOCKK = "io.mockk:mockk:1.9.3"
-        const val STRIKT = "io.strikt:strikt-core:0.28.0"
+        const val STRIKT = "io.strikt:strikt-core:0.28.1"
 
         // It's required for Strikt.
         const val FILE_PEEK = "com.christophsturm:filepeek:0.1.2"
