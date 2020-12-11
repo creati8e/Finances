@@ -1,10 +1,8 @@
 package serg.chuprin.finances.feature.dashboard.data.repository
 
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.channels.ConflatedBroadcastChannel
-import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filterNotNull
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import serg.chuprin.finances.feature.dashboard.domain.repository.DashboardDataPeriodRepository
 import javax.inject.Inject
@@ -17,19 +15,18 @@ class DashboardDataPeriodRepositoryImpl @Inject constructor() : DashboardDataPer
     override val defaultDataPeriod: DataPeriod
         get() = _defaultDataPeriod
 
-    private val periodChannel = ConflatedBroadcastChannel<DataPeriod>()
+    override val currentDataPeriodFlow: Flow<DataPeriod>
+        get() = periodStateFlow.filterNotNull()
+
+    private val periodStateFlow = MutableStateFlow<DataPeriod?>(null)
 
     private lateinit var _defaultDataPeriod: DataPeriod
-
-    @OptIn(FlowPreview::class)
-    override val currentDataPeriodFlow: Flow<DataPeriod>
-        get() = periodChannel.asFlow()
 
     override fun setCurrentDataPeriod(dataPeriod: DataPeriod) {
         if (!::_defaultDataPeriod.isInitialized) {
             _defaultDataPeriod = dataPeriod
         }
-        periodChannel.sendBlocking(dataPeriod)
+        periodStateFlow.value = dataPeriod
     }
 
 }
