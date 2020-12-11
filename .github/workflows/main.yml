@@ -69,7 +69,7 @@ jobs:
       - name: Upload artifact to App Center
         uses: wzieba/AppCenter-Github-Action@v1.3.2
         with:
-          appName: creati8e/Finances
+          appName: gregamer-gmail.com/Finances
           token: ${{secrets.APP_CENTER_TOKEN}}
           group: Public
           file: app/build/outputs/apk/debug/app-debug.apk
