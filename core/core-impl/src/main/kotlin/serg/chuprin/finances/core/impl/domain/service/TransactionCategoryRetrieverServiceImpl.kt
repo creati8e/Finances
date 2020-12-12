@@ -30,10 +30,9 @@ internal class TransactionCategoryRetrieverServiceImpl @Inject constructor(
             .flatMapLatest { transactions ->
                 combine(
                     flowOf(transactions),
-                    categoryRepository.categoriesFlow(transactions.categoryIds)
-                ) { t1, t2 ->
-                    transactionWithCategoriesLinker.linkTransactionsWithCategories(t1, t2)
-                }
+                    categoryRepository.categoriesFlow(transactions.categoryIds),
+                    transactionWithCategoriesLinker::linkTransactionsWithCategories
+                )
             }
     }
 
@@ -45,10 +44,9 @@ internal class TransactionCategoryRetrieverServiceImpl @Inject constructor(
             .flatMapLatest { transactions ->
                 combine(
                     flowOf(transactions),
-                    categoryRepository.categoriesFlow(transactions.categoryIds)
-                ) { t1, t2 ->
-                    transactionWithCategoriesLinker.linkCategoryParentsWithTransactions(t1, t2)
-                }
+                    categoryRepository.categoriesFlow(transactions.categoryIds),
+                    transactionWithCategoriesLinker::linkCategoryParentsWithTransactions
+                )
             }
     }
 

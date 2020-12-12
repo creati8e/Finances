@@ -25,9 +25,7 @@ internal class MoneyAccountServiceImpl @Inject constructor(
     override fun moneyAccountBalancesFlow(user: User): Flow<MoneyAccountBalances> {
         return moneyAccountRepository
             .userAccountsFlow(user.id)
-            .flatMapLatest { moneyAccounts ->
-                calculateBalance(moneyAccounts)
-            }
+            .flatMapLatest(::calculateBalance)
     }
 
     private fun calculateBalance(moneyAccounts: List<MoneyAccount>): Flow<MoneyAccountBalances> {
