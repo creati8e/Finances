@@ -3,34 +3,27 @@ package serg.chuprin.finances.feature.dashboard.presentation.model.store
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import serg.chuprin.finances.core.api.domain.model.orUnknown
-import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
-import serg.chuprin.finances.core.api.presentation.model.DataPeriodUi
 import serg.chuprin.finances.core.api.presentation.model.builder.DataPeriodTypePopupMenuCellsBuilder
-import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
-import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionsReportScreenArguments
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
 import serg.chuprin.finances.core.mvi.invoke
-import serg.chuprin.finances.feature.dashboard.R
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardDataPeriodChangeDirection
-import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
 import serg.chuprin.finances.feature.dashboard.domain.usecase.ChangeDashboardDataPeriodUseCase
 import serg.chuprin.finances.feature.dashboard.domain.usecase.ChangeDataPeriodTypeForDashboardUseCase
 import serg.chuprin.finances.feature.dashboard.domain.usecase.RestoreDefaultDashboardDataPeriodUseCase
+import serg.chuprin.finances.feature.dashboard.presentation.model.builder.DashboardTransactionsReportArgumentsBuilder
 import serg.chuprin.finances.feature.dashboard.presentation.model.builder.DashboardWidgetCellsBuilder
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
-import serg.chuprin.finances.feature.dashboard.setup.presentation.domain.model.DashboardWidgetType
 import javax.inject.Inject
 
 /**
  * Created by Sergey Chuprin on 16.04.2020.
  */
 class DashboardActionExecutor @Inject constructor(
-    private val resourceManger: ResourceManger,
     private val widgetCellsBuilder: DashboardWidgetCellsBuilder,
     private val changeDataPeriodUseCase: ChangeDashboardDataPeriodUseCase,
+    private val reportArgumentsBuilder: DashboardTransactionsReportArgumentsBuilder,
     private val changeDataPeriodTypeUseCase: ChangeDataPeriodTypeForDashboardUseCase,
     private val periodTypePopupMenuCellsBuilder: DataPeriodTypePopupMenuCellsBuilder,
     private val restoreDefaultDataPeriodUseCase: RestoreDefaultDashboardDataPeriodUseCase
@@ -92,39 +85,13 @@ class DashboardActionExecutor @Inject constructor(
         }
     }
 
-    // TODO: Extract to builder.
     private fun handleClickOnCategoryIntent(
         intent: DashboardIntent.ClickOnCategory,
         state: DashboardState,
         eventConsumer: Consumer<DashboardEvent>
     ): Flow<DashboardEffect> {
         return emptyFlowAction {
-            val categoryCell = intent.cell
-            val dataPeriod = DataPeriodUi.create(state.dashboard.currentDataPeriod)
-
-            val arguments = if (categoryCell.isOtherCategory) {
-                val key = DashboardWidgetType.CATEGORIES
-                val widget = (state.dashboard.widgets.getValue(key) as DashboardWidget.Categories)
-                val pages = widget.pages
-                val page = pages.first { it.transactionType == categoryCell.plainTransactionType }
-                val categoryIds = page.otherAmounts!!.mapNotNullTo(ArrayList(), { (category) ->
-                    category?.id?.value
-                })
-
-                TransactionsReportScreenArguments.Category.Other(
-                    dataPeriodUi = dataPeriod,
-                    categoryIds = categoryIds,
-                    transitionName = categoryCell.transitionName,
-                    transactionType = categoryCell.plainTransactionType
-                )
-            } else {
-                TransactionsReportScreenArguments.Category.Concrete(
-                    dataPeriodUi = dataPeriod,
-                    transitionName = categoryCell.transitionName,
-                    categoryId = categoryCell.category?.id.orUnknown(),
-                    transactionType = categoryCell.plainTransactionType
-                )
-            }
+            val arguments = reportArgumentsBuilder.buildForCategory(intent.cell, state)
             eventConsumer(DashboardEvent.NavigateToTransactionsReportScreen(arguments))
         }
     }
@@ -134,12 +101,7 @@ class DashboardActionExecutor @Inject constructor(
         eventConsumer: Consumer<DashboardEvent>
     ): Flow<DashboardEffect> {
         return emptyFlowAction {
-            val arguments = TransactionsReportScreenArguments.AllTransactions(
-                dataPeriodUi = DataPeriodUi.create(state.dashboard.currentDataPeriod),
-                transitionName = getString(
-                    R.string.transition_dashboard_recent_transactions_to_transactions_report
-                )
-            )
+            val arguments = reportArgumentsBuilder.buildForAllTransactions(state)
             eventConsumer(DashboardEvent.NavigateToTransactionsReportScreen(arguments))
         }
     }
@@ -149,14 +111,7 @@ class DashboardActionExecutor @Inject constructor(
         eventConsumer: Consumer<DashboardEvent>
     ): Flow<DashboardEffect> {
         return emptyFlowAction {
-            val dataPeriod = DataPeriodUi.create(state.dashboard.currentDataPeriod)
-            val arguments = TransactionsReportScreenArguments.Transactions(
-                dataPeriodUi = dataPeriod,
-                transactionType = PlainTransactionType.EXPENSE,
-                transitionName = getString(
-                    R.string.transition_dashboard_to_transactions_report_expenses
-                )
-            )
+            val arguments = reportArgumentsBuilder.buildForPeriodExpenses(state)
             eventConsumer(DashboardEvent.NavigateToTransactionsReportScreen(arguments))
         }
     }
@@ -166,14 +121,7 @@ class DashboardActionExecutor @Inject constructor(
         eventConsumer: Consumer<DashboardEvent>
     ): Flow<DashboardEffect> {
         return emptyFlowAction {
-            val dataPeriod = DataPeriodUi.create(state.dashboard.currentDataPeriod)
-            val arguments = TransactionsReportScreenArguments.Transactions(
-                dataPeriodUi = dataPeriod,
-                transactionType = PlainTransactionType.INCOME,
-                transitionName = getString(
-                    R.string.transition_dashboard_to_transactions_report_incomes
-                )
-            )
+            val arguments = reportArgumentsBuilder.buildForPeriodIncome(state)
             eventConsumer(DashboardEvent.NavigateToTransactionsReportScreen(arguments))
         }
     }
@@ -264,7 +212,5 @@ class DashboardActionExecutor @Inject constructor(
             emit(DashboardEffect.DashboardUpdated(action.dashboard, widgetCells))
         }
     }
-
-    private fun getString(stringRes: Int): String = resourceManger.getString(stringRes)
 
 }
