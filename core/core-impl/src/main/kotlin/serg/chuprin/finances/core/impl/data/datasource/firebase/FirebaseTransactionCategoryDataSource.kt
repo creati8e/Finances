@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.tasks.await
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
+import serg.chuprin.finances.core.api.domain.model.query.TransactionCategoriesQuery
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionCategoryFieldsContract.COLLECTION_NAME
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionCategoryFieldsContract.FIELD_OWNER_ID
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionCategoryFieldsContract.FIELD_PARENT_ID
@@ -17,7 +18,8 @@ import javax.inject.Inject
  */
 internal class FirebaseTransactionCategoryDataSource @Inject constructor(
     private val firestore: FirebaseFirestore,
-    private val mapper: FirebaseTransactionCategoryMapper
+    private val mapper: FirebaseTransactionCategoryMapper,
+    private val queryExecutor: FirebaseTransactionCategoryQueryExecutor
 ) {
 
     suspend fun getAllUserCategories(userId: Id): List<DocumentSnapshot> {
@@ -39,6 +41,10 @@ internal class FirebaseTransactionCategoryDataSource @Inject constructor(
                 )
             }
         }
+    }
+
+    fun categoriesFlow(query: TransactionCategoriesQuery): Flow<List<DocumentSnapshot>> {
+        return queryExecutor.execute(query)
     }
 
     @Suppress("MoveLambdaOutsideParentheses")

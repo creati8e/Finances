@@ -1,15 +1,14 @@
-package serg.chuprin.finances.core.impl.data
+package serg.chuprin.finances.core.api.domain.linker
 
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
-import javax.inject.Inject
 
 /**
- * Created by Sergey Chuprin on 01.05.2020.
+ * Created by Sergey Chuprin on 12.12.2020.
  */
-internal class TransactionWithCategoriesLinker @Inject constructor() {
+interface TransactionWithCategoriesLinker {
 
     /**
      * @return map of parent categories associated with transactions.
@@ -18,13 +17,7 @@ internal class TransactionWithCategoriesLinker @Inject constructor() {
     fun linkCategoryParentsWithTransactions(
         transactions: List<Transaction>,
         categoryWithParentMap: Map<Id, TransactionCategoryWithParent>
-    ): Map<TransactionCategory?, List<Transaction>> {
-        return transactions.groupBy { transaction ->
-            categoryWithParentMap[transaction.categoryId]?.run {
-                parentCategory ?: category
-            }
-        }
-    }
+    ): Map<TransactionCategory?, List<Transaction>>
 
     /**
      * @return map of transactions associated with their categories
@@ -33,11 +26,6 @@ internal class TransactionWithCategoriesLinker @Inject constructor() {
     fun linkTransactionsWithCategories(
         transactions: List<Transaction>,
         categoryWithParentMap: Map<Id, TransactionCategoryWithParent>
-    ): Map<Transaction, TransactionCategoryWithParent?> {
-        return transactions.associateBy(
-            { transaction -> transaction },
-            { transaction -> categoryWithParentMap[transaction.categoryId] }
-        )
-    }
+    ): Map<Transaction, TransactionCategoryWithParent?>
 
 }

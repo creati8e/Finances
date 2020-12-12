@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
+import serg.chuprin.finances.core.api.domain.linker.TransactionWithCategoriesLinker
 import serg.chuprin.finances.core.api.domain.model.TransactionCategoriesMap
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
@@ -12,7 +13,6 @@ import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepos
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.api.domain.service.TransactionCategoryRetrieverService
 import serg.chuprin.finances.core.api.extensions.categoryIds
-import serg.chuprin.finances.core.impl.data.TransactionWithCategoriesLinker
 import javax.inject.Inject
 
 /**

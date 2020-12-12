@@ -7,6 +7,7 @@ import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryType
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.model.transaction.TransactionType
+import serg.chuprin.finances.core.impl.domain.linker.TransactionWithCategoriesLinkerImpl
 import strikt.api.expectThat
 import strikt.assertions.isEqualTo
 import java.util.*
@@ -19,7 +20,7 @@ object TransactionWithCategoriesLinkerTest : Spek({
     Feature("Transaction with categories linker") {
 
         val transactionCategoryLinker = TransactionCategoryLinker()
-        val transactionWithCategoriesLinker = TransactionWithCategoriesLinker()
+        val transactionWithCategoriesLinker = TransactionWithCategoriesLinkerImpl()
 
         Scenario("Link category parents with transactions") {
 

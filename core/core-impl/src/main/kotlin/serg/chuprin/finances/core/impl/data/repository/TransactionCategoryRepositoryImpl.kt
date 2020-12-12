@@ -3,10 +3,12 @@ package serg.chuprin.finances.core.impl.data.repository
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import serg.chuprin.finances.core.api.domain.model.CategoriesQueryResult
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryType
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
+import serg.chuprin.finances.core.api.domain.model.query.TransactionCategoriesQuery
 import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepository
 import serg.chuprin.finances.core.impl.data.TransactionCategoryLinker
 import serg.chuprin.finances.core.impl.data.datasource.assets.PredefinedTransactionCategoriesDataSource
@@ -24,6 +26,16 @@ internal class TransactionCategoryRepositoryImpl @Inject constructor(
     private val firebaseDataSource: FirebaseTransactionCategoryDataSource,
     private val predefinedCategoriesDataSource: PredefinedTransactionCategoriesDataSource
 ) : TransactionCategoryRepository {
+
+    override fun categoriesFlow(query: TransactionCategoriesQuery): Flow<CategoriesQueryResult> {
+        return firebaseDataSource
+            .categoriesFlow(query)
+            .map { documents ->
+                CategoriesQueryResult(
+                    documents.mapNotNull(mapper::mapFromSnapshot).linkWithParents()
+                )
+            }
+    }
 
     override suspend fun getUserCategories(
         userId: Id,

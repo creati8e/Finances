@@ -5,14 +5,13 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.api.domain.TransactionsByDayGrouper
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
-import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.model.transaction.TransactionsQuery
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
-import serg.chuprin.finances.core.api.domain.service.TransactionCategoryRetrieverService
+import serg.chuprin.finances.feature.transactions.domain.model.TransactionReportDataSet
 import serg.chuprin.finances.feature.transactions.domain.model.TransactionReportFilter
 import serg.chuprin.finances.feature.transactions.domain.model.TransactionsReport
 import serg.chuprin.finances.feature.transactions.domain.repository.TransactionReportFilterRepository
+import serg.chuprin.finances.feature.transactions.domain.service.TransactionReportDataService
 import javax.inject.Inject
 
 /**
@@ -20,9 +19,9 @@ import javax.inject.Inject
  */
 class BuildTransactionsReportUseCase @Inject constructor(
     private val userRepository: UserRepository,
+    private val reportDataService: TransactionReportDataService,
     private val transactionsByDayGrouper: TransactionsByDayGrouper,
-    private val filterRepository: TransactionReportFilterRepository,
-    private val transactionCategoryRetrieverService: TransactionCategoryRetrieverService
+    private val filterRepository: TransactionReportFilterRepository
 ) {
 
     fun execute(): Flow<TransactionsReport> {
@@ -31,9 +30,7 @@ class BuildTransactionsReportUseCase @Inject constructor(
             .flatMapLatest { filter ->
                 combine(
                     flowOf(filter),
-                    transactionCategoryRetrieverService.transactionsFlow(
-                        createTransactionsQuery(filter)
-                    ),
+                    reportDataService.buildDataForReport(createTransactionsQuery(filter)),
                     ::buildTransactionsReport
                 )
             }
@@ -41,11 +38,11 @@ class BuildTransactionsReportUseCase @Inject constructor(
 
     private fun buildTransactionsReport(
         filter: TransactionReportFilter,
-        transactions: Map<Transaction, TransactionCategoryWithParent?>
+        reportDataSet: TransactionReportDataSet
     ): TransactionsReport {
         return TransactionsReport(
             filter = filter,
-            transactionsGroupedByDay = transactionsByDayGrouper.group(transactions)
+            transactionsGroupedByDay = transactionsByDayGrouper.group(reportDataSet.listData)
         )
     }
 
