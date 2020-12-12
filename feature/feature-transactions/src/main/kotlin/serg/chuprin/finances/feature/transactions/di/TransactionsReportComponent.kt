@@ -4,9 +4,10 @@ import dagger.BindsInstance
 import dagger.Component
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.domain.model.Id
+import serg.chuprin.finances.core.api.domain.model.period.ReportDataPeriod
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.ViewModelComponent
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionsReportScreenArguments
-import serg.chuprin.finances.feature.transactions.presentation.arguments.TransactionsReportInitialFilter
+import serg.chuprin.finances.feature.transactions.domain.model.TransactionReportFilter
 import serg.chuprin.finances.feature.transactions.presentation.model.viewmodel.TransactionsReportViewModel
 import serg.chuprin.finances.feature.transactions.report.dependencies.TransactionsReportDependencies
 import serg.chuprin.finances.injector.Injector
@@ -27,17 +28,40 @@ interface TransactionsReportComponent : ViewModelComponent<TransactionsReportVie
                 .factory()
                 .newComponent(
                     Injector.getTransactionsReportDependencies(),
-                    arguments.toInitialFilter()
+                    arguments.toFilter()
                 )
         }
 
-
-        private fun TransactionsReportScreenArguments.toInitialFilter(): TransactionsReportInitialFilter {
-            return TransactionsReportInitialFilter(
-                dataPeriod = dataPeriodUi?.toDataPeriod(),
-                plainTransactionType = plainTransactionType,
-                categoryIds = categoryIds.map { it?.let { Id.existing(it) } }.toSet()
-            )
+        private fun TransactionsReportScreenArguments.toFilter(): TransactionReportFilter {
+            val reportDataPeriod = ReportDataPeriod.Predefined(dataPeriodUi.toDataPeriod())
+            return when (this) {
+                is TransactionsReportScreenArguments.Transactions -> {
+                    TransactionReportFilter.Plain(
+                        dataPeriod = reportDataPeriod,
+                        transactionType = transactionType
+                    )
+                }
+                is TransactionsReportScreenArguments.AllTransactions -> {
+                    TransactionReportFilter.Plain(
+                        transactionType = null,
+                        dataPeriod = reportDataPeriod
+                    )
+                }
+                is TransactionsReportScreenArguments.Category.Other -> {
+                    TransactionReportFilter.Categories(
+                        dataPeriod = reportDataPeriod,
+                        transactionType = transactionType,
+                        categoryIds = categoryIds.mapTo(mutableSetOf(), Id.Companion::existing)
+                    )
+                }
+                is TransactionsReportScreenArguments.Category.Concrete -> {
+                    TransactionReportFilter.SingleCategory(
+                        categoryId = categoryId,
+                        dataPeriod = reportDataPeriod,
+                        transactionType = transactionType
+                    )
+                }
+            }
         }
 
     }
@@ -47,7 +71,7 @@ interface TransactionsReportComponent : ViewModelComponent<TransactionsReportVie
 
         fun newComponent(
             dependencies: TransactionsReportDependencies,
-            @BindsInstance initialFilter: TransactionsReportInitialFilter
+            @BindsInstance initialFilter: TransactionReportFilter
         ): TransactionsReportComponent
 
     }

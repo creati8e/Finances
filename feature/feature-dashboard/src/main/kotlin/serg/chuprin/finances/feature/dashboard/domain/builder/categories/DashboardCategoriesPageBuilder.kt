@@ -38,6 +38,7 @@ class DashboardCategoriesPageBuilder @Inject constructor() {
             totalAmount = totalAmount,
             transactionType = transactionType,
             categoryAmounts = topCategories,
+            otherAmounts = otherCategories,
             otherAmount = otherCategories?.calculateAmount() ?: BigDecimal.ZERO
         )
     }

@@ -22,5 +22,6 @@ data class DashboardCategoriesWidgetPage(
      * Represents collection of categories associated with amount.
      */
     val categoryAmounts: CategoryAmounts,
+    val otherAmounts: CategoryAmounts?,
     val transactionType: PlainTransactionType
 )

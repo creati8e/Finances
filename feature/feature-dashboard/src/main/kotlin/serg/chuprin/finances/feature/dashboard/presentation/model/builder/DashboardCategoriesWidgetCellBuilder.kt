@@ -55,22 +55,24 @@ class DashboardCategoriesWidgetCellBuilder @Inject constructor(
                 label = label,
                 chartParts = buildChartParts(page),
                 transactionType = page.transactionType,
-                categoryCells = buildCategoryCells(page, currency),
+                categoryCells = buildCategoryCells(page, currency, page.transactionType),
                 totalAmount = amountFormatter.format(currency = currency, amount = page.totalAmount)
             )
-        } else
+        } else {
             return DashboardExpenseCategoriesPageCell(
                 label = label,
                 chartParts = buildChartParts(page),
                 transactionType = page.transactionType,
-                categoryCells = buildCategoryCells(page, currency),
+                categoryCells = buildCategoryCells(page, currency, page.transactionType),
                 totalAmount = amountFormatter.format(currency = currency, amount = page.totalAmount)
             )
+        }
     }
 
     private fun buildCategoryCells(
         page: DashboardCategoriesWidgetPage,
-        currency: Currency
+        currency: Currency,
+        transactionType: PlainTransactionType
     ): List<BaseCell> {
         if (page.categoryAmounts.isEmpty()) {
             return listOf(DashboardCategoriesPageZeroDataCell())
@@ -83,6 +85,7 @@ class DashboardCategoriesWidgetCellBuilder @Inject constructor(
                     chipText = chipText,
                     category = category,
                     isOtherCategory = false,
+                    plainTransactionType = transactionType,
                     colorInt = categoryColorFormatter.format(category),
                     transitionName = if (category?.id == null) {
                         transitionNameBuilder.buildForTransactionsReportUnknownCategory(page.transactionType)
@@ -108,6 +111,7 @@ class DashboardCategoriesWidgetCellBuilder @Inject constructor(
             isOtherCategory = true,
             chipText = "$name $formattedAmount",
             colorInt = getOtherCategoriesColor(),
+            plainTransactionType = page.transactionType,
             transitionName = transitionNameBuilder.buildForTransactionsReportOtherCategory(page.transactionType)
         )
     }

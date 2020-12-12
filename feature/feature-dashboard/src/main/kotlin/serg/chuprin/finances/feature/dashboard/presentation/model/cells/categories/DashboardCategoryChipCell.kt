@@ -2,6 +2,7 @@ package serg.chuprin.finances.feature.dashboard.presentation.model.cells.categor
 
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
+import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.presentation.model.cells.DiffCell
 
 /**
@@ -12,7 +13,8 @@ data class DashboardCategoryChipCell(
     val chipText: String,
     val transitionName: String,
     val isOtherCategory: Boolean,
-    val category: TransactionCategory?
+    val category: TransactionCategory?,
+    val plainTransactionType: PlainTransactionType
 ) : DiffCell<Id> {
 
     override val diffCellId: Id = category?.id ?: Id.UNKNOWN

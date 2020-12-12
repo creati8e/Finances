@@ -20,3 +20,5 @@ inline class Id(
     }
 
 }
+
+fun Id?.orUnknown(): Id = this ?: Id.UNKNOWN

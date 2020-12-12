@@ -10,8 +10,8 @@ import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.model.transaction.TransactionsQuery
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.api.domain.service.TransactionCategoryRetrieverService
+import serg.chuprin.finances.feature.transactions.domain.model.TransactionReportFilter
 import serg.chuprin.finances.feature.transactions.domain.model.TransactionsReport
-import serg.chuprin.finances.feature.transactions.domain.model.TransactionsReportFilter
 import serg.chuprin.finances.feature.transactions.domain.repository.TransactionReportFilterRepository
 import javax.inject.Inject
 
@@ -32,13 +32,7 @@ class BuildTransactionsReportUseCase @Inject constructor(
                 combine(
                     flowOf(filter),
                     transactionCategoryRetrieverService.transactionsFlow(
-                        TransactionsQuery(
-                            endDate = filter.dataPeriod.endDate,
-                            startDate = filter.dataPeriod.startDate,
-                            transactionType = filter.transactionType,
-                            categoryIds = filter.includedCategoryIds,
-                            userId = userRepository.getCurrentUser().id
-                        )
+                        createTransactionsQuery(filter)
                     ),
                     ::buildTransactionsReport
                 )
@@ -46,12 +40,24 @@ class BuildTransactionsReportUseCase @Inject constructor(
     }
 
     private fun buildTransactionsReport(
-        filter: TransactionsReportFilter,
+        filter: TransactionReportFilter,
         transactions: Map<Transaction, TransactionCategoryWithParent?>
     ): TransactionsReport {
         return TransactionsReport(
             filter = filter,
             transactionsGroupedByDay = transactionsByDayGrouper.group(transactions)
+        )
+    }
+
+    private suspend fun createTransactionsQuery(
+        filter: TransactionReportFilter
+    ): TransactionsQuery {
+        return TransactionsQuery(
+            categoryIds = filter.categoryIds,
+            endDate = filter.dataPeriod.endDate,
+            startDate = filter.dataPeriod.startDate,
+            transactionType = filter.transactionType,
+            userId = userRepository.getCurrentUser().id
         )
     }
 
