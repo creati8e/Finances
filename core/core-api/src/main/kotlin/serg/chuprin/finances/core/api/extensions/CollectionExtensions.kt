@@ -16,3 +16,5 @@ fun <K, V> nonNullValuesMap(vararg pairs: Pair<K, V?>): Map<K, V> {
         }
     }
 }
+
+fun <T> Collection<T>.contains(selector: (T) -> Boolean): Boolean = find(selector) != null

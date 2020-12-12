@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 /**
  * Created by Sergey Chuprin on 06.07.2020.
  */
-class TransactionsQuery(
+data class TransactionsQuery(
     val userId: Id? = null,
     val limit: Int? = null,
     val sortOrder: SortOrder? = null,

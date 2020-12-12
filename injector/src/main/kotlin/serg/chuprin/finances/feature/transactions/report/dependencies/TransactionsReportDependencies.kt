@@ -3,6 +3,9 @@ package serg.chuprin.finances.feature.transactions.report.dependencies
 import dagger.Component
 import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
 import serg.chuprin.finances.core.api.domain.TransactionsByDayGrouper
+import serg.chuprin.finances.core.api.domain.linker.TransactionWithCategoriesLinker
+import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepository
+import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.api.domain.service.TransactionCategoryRetrieverService
 import serg.chuprin.finances.core.api.presentation.builder.TransactionCellBuilder
@@ -14,10 +17,13 @@ import serg.chuprin.finances.core.api.presentation.formatter.DateTimeFormatter
 interface TransactionsReportDependencies {
 
     val userRepository: UserRepository
+    val transactionRepository: TransactionRepository
+    val categoryRepository: TransactionCategoryRepository
 
     val dateTimeFormatter: DateTimeFormatter
     val transactionCellBuilder: TransactionCellBuilder
     val transactionsByDayGrouper: TransactionsByDayGrouper
+    val transactionWithCategoriesLinker: TransactionWithCategoriesLinker
     val transactionCategoryRetrieverService: TransactionCategoryRetrieverService
 }
 

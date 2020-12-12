@@ -16,22 +16,19 @@ internal class TransactionCategoryLinker @Inject constructor() {
     fun linkWithParents(
         categories: List<TransactionCategory>
     ): Map<Id, TransactionCategoryWithParent> {
-        return categories.associateBy(
-            { category -> category.id },
-            { category ->
-                val parentCategory = if (category.parentCategoryId?.value.isNullOrEmpty()) {
-                    null
-                } else {
-                    categories.find {
-                        category.parentCategoryId == it.id
-                    }
+        return categories.associateBy(TransactionCategory::id) { category ->
+            val parentCategory = if (category.parentCategoryId?.value.isNullOrEmpty()) {
+                null
+            } else {
+                categories.find {
+                    category.parentCategoryId == it.id
                 }
-                TransactionCategoryWithParent(
-                    category = category,
-                    parentCategory = parentCategory
-                )
             }
-        )
+            TransactionCategoryWithParent(
+                category = category,
+                parentCategory = parentCategory
+            )
+        }
     }
 
 }
