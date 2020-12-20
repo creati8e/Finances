@@ -7,8 +7,9 @@ import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.api.domain.TransactionsByDayGrouper
 import serg.chuprin.finances.core.api.domain.model.transaction.TransactionsQuery
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
-import serg.chuprin.finances.feature.transactions.domain.model.TransactionReportDataSet
 import serg.chuprin.finances.feature.transactions.domain.model.TransactionReportFilter
+import serg.chuprin.finances.feature.transactions.domain.model.TransactionReportPreparedData
+import serg.chuprin.finances.feature.transactions.domain.model.TransactionReportRawData
 import serg.chuprin.finances.feature.transactions.domain.model.TransactionsReport
 import serg.chuprin.finances.feature.transactions.domain.repository.TransactionReportFilterRepository
 import serg.chuprin.finances.feature.transactions.domain.service.TransactionReportDataService
@@ -38,11 +39,14 @@ class BuildTransactionsReportUseCase @Inject constructor(
 
     private fun buildTransactionsReport(
         filter: TransactionReportFilter,
-        reportDataSet: TransactionReportDataSet
+        reportRawData: TransactionReportRawData
     ): TransactionsReport {
         return TransactionsReport(
             filter = filter,
-            transactionsGroupedByDay = transactionsByDayGrouper.group(reportDataSet.listData)
+            preparedData = TransactionReportPreparedData(
+                chartData = reportRawData.chartData,
+                transactionsGroupedByDay = transactionsByDayGrouper.group(reportRawData.listData)
+            )
         )
     }
 

@@ -14,7 +14,7 @@ class TransactionsReportStateReducer :
     ): TransactionsReportState {
         return when (what) {
             is TransactionsReportEffect.ReportBuilt -> {
-                state.copy(cells = what.cells, filter = what.filter)
+                state.copy(cells = what.cells, header = what.header, filter = what.filter)
             }
         }
     }

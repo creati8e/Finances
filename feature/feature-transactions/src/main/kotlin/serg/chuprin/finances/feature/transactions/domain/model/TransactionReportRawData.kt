@@ -7,7 +7,7 @@ import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 /**
  * Created by Sergey Chuprin on 12.12.2020.
  */
-class TransactionReportDataSet(
+data class TransactionReportRawData(
     val chartData: Map<TransactionCategory?, List<Transaction>>,
     val listData: Map<Transaction, TransactionCategoryWithParent?>
 )

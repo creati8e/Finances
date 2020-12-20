@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.BaseStoreViewModel
+import serg.chuprin.finances.feature.transactions.presentation.model.TransactionReportHeader
 import serg.chuprin.finances.feature.transactions.presentation.model.store.TransactionsReportIntent
 import serg.chuprin.finances.feature.transactions.presentation.model.store.TransactionsReportState
 import serg.chuprin.finances.feature.transactions.presentation.model.store.TransactionsReportStore
@@ -18,6 +19,9 @@ class TransactionsReportViewModel @Inject constructor(
 
     val cellsLiveData: LiveData<List<BaseCell>> =
         store.observeParticularStateAsLiveData(TransactionsReportState::cells)
+
+    val headerLiveData: LiveData<TransactionReportHeader> =
+        store.observeParticularStateAsLiveData(TransactionsReportState::header)
 
     init {
         store.start(intentsFlow(), viewModelScope)

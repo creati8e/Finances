@@ -14,3 +14,7 @@ fun Fragment.setupToolbar(toolbar: Toolbar, block: (ActionBar.() -> Unit)? = nul
         supportActionBar?.run { block?.invoke(this) }
     }
 }
+
+fun Fragment.setToolbarTitle(title: String) {
+    (requireActivity() as AppCompatActivity).supportActionBar!!.title = title
+}

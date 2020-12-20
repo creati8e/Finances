@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_transactions_report.*
 import kotlinx.android.synthetic.main.fragment_transactions_report.view.*
 import serg.chuprin.finances.core.api.presentation.extensions.arguments
+import serg.chuprin.finances.core.api.presentation.extensions.setToolbarTitle
 import serg.chuprin.finances.core.api.presentation.extensions.setupToolbar
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionsReportScreenArguments
@@ -65,6 +66,9 @@ class TransactionsReportFragment : BaseFragment(R.layout.fragment_transactions_r
         }
         with(viewModel) {
             cellsLiveData(cellsAdapter::setItems)
+            headerLiveData { header ->
+                setToolbarTitle(header.title)
+            }
         }
     }
 

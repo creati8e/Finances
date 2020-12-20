@@ -10,11 +10,14 @@ import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.api.domain.service.TransactionCategoryRetrieverService
 import serg.chuprin.finances.core.api.presentation.builder.TransactionCellBuilder
 import serg.chuprin.finances.core.api.presentation.formatter.DateTimeFormatter
+import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 
 /**
  * Created by Sergey Chuprin on 12.05.2020.
  */
 interface TransactionsReportDependencies {
+
+    val resourceManger: ResourceManger
 
     val userRepository: UserRepository
     val transactionRepository: TransactionRepository

@@ -15,7 +15,7 @@ import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.model.transaction.TransactionsQuery
 import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepository
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
-import serg.chuprin.finances.feature.transactions.domain.model.TransactionReportDataSet
+import serg.chuprin.finances.feature.transactions.domain.model.TransactionReportRawData
 import javax.inject.Inject
 
 /**
@@ -33,7 +33,7 @@ class TransactionReportDataService @Inject constructor(
      */
     fun buildDataForReport(
         query: TransactionsQuery
-    ): Flow<TransactionReportDataSet> {
+    ): Flow<TransactionReportRawData> {
 
         // FIXME: Unify.
         val categoryType = when (query.transactionType) {
@@ -67,8 +67,8 @@ class TransactionReportDataService @Inject constructor(
     private fun buildDataSet(
         categoryWithParentMap: CategoriesQueryResult,
         transactions: List<Transaction>
-    ): TransactionReportDataSet {
-        return TransactionReportDataSet(
+    ): TransactionReportRawData {
+        return TransactionReportRawData(
             chartData = buildDataForChart(transactions, categoryWithParentMap),
             listData = buildDataForList(transactions, categoryWithParentMap)
         )
