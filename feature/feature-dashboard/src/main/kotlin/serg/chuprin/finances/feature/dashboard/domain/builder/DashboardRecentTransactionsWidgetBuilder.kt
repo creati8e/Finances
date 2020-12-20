@@ -40,7 +40,8 @@ class DashboardRecentTransactionsWidgetBuilder @Inject constructor(
                     userId = currentUser.id,
                     endDate = currentPeriod.endDate,
                     limit = RECENT_TRANSACTIONS_COUNT,
-                    startDate = currentPeriod.startDate
+                    startDate = currentPeriod.startDate,
+                    sortOrder = TransactionsQuery.SortOrder.DATE_DESC
                 )
             )
             .map { map -> DashboardWidget.RecentTransactions(currentUser.defaultCurrency, map) }
