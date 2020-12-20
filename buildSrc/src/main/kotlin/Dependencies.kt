@@ -33,6 +33,7 @@ object Libraries {
     const val COIL = "io.coil-kt:coil:1.1.0"
     const val TIMBER = "com.github.ajalt:timberkt:1.5.1"
     const val FLEXBOX = "com.google.android:flexbox:2.0.1"
+    const val EDGE_TO_EDGE = "de.halfbit:edge-to-edge:0.10"
     const val JAVAX_ANNOTATIONS = "javax.inject:javax.inject:1"
     const val KOTLIN = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$KOTLIN_VER"
     const val PAGE_INDICATOR = "ru.tinkoff.scrollingpagerindicator:scrollingpagerindicator:1.2.1"

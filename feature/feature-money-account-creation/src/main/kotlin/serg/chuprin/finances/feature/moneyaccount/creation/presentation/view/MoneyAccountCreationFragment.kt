@@ -6,6 +6,8 @@ import android.view.Menu
 import android.view.View
 import androidx.activity.addCallback
 import androidx.core.widget.doAfterTextChanged
+import de.halfbit.edgetoedge.Edge
+import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.fragment_money_account_creation.*
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceIntent
 import serg.chuprin.finances.core.api.presentation.currencychoice.view.CurrencyChoiceListController
@@ -48,6 +50,12 @@ class MoneyAccountCreationFragment : BaseFragment(R.layout.fragment_money_accoun
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        edgeToEdge {
+            view.fit { Edge.Top }
+            currencyChoiceView.fit { Edge.Bottom }
+        }
+
         setupToolbar(toolbar) {
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(R.drawable.ic_close)

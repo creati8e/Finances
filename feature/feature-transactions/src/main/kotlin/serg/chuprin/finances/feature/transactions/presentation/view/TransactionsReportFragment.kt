@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import de.halfbit.edgetoedge.Edge
+import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.fragment_transactions_report.*
 import kotlinx.android.synthetic.main.fragment_transactions_report.view.*
 import serg.chuprin.finances.core.api.presentation.extensions.arguments
@@ -50,6 +52,13 @@ class TransactionsReportFragment : BaseFragment(R.layout.fragment_transactions_r
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        edgeToEdge {
+            view.fit { Edge.Top }
+            filterFab.fit { Edge.Bottom + Edge.Right }
+            transactionsRecyclerView.fit { Edge.Bottom }
+        }
+
         setupToolbar(toolbar) {
             setDisplayHomeAsUpEnabled(true)
         }
@@ -66,9 +75,9 @@ class TransactionsReportFragment : BaseFragment(R.layout.fragment_transactions_r
             )
             onScroll { _, _, dy ->
                 if (dy > 0) {
-                    this@TransactionsReportFragment.transactionCreationFab.hide()
+                    this@TransactionsReportFragment.filterFab.hide()
                 } else if (dy < 0) {
-                    this@TransactionsReportFragment.transactionCreationFab.show()
+                    this@TransactionsReportFragment.filterFab.show()
                 }
             }
         }

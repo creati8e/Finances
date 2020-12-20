@@ -6,6 +6,8 @@ import android.view.View
 import androidx.core.view.doOnPreDraw
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import de.halfbit.edgetoedge.Edge
+import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.fragment_dashboard_widgets_setup.*
 import serg.chuprin.finances.core.api.presentation.extensions.setupToolbar
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
@@ -46,6 +48,12 @@ class DashboardWidgetsSetupFragment : BaseFragment(R.layout.fragment_dashboard_w
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        edgeToEdge {
+            view.fit { Edge.Top }
+            recyclerView.fit { Edge.Bottom }
+        }
+
         setupToolbar(toolbar) {
             setDisplayHomeAsUpEnabled(true)
         }

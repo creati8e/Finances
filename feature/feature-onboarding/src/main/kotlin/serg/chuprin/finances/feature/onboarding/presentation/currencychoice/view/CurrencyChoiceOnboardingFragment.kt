@@ -5,6 +5,8 @@ import android.view.View
 import androidx.activity.addCallback
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.transition.MaterialSharedAxis
+import de.halfbit.edgetoedge.Edge
+import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.fragment_onboarding_currency_choice.*
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceIntent
 import serg.chuprin.finances.core.api.presentation.currencychoice.view.CurrencyChoiceListController
@@ -48,6 +50,11 @@ class CurrencyChoiceOnboardingFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        edgeToEdge {
+            view.fit { Edge.Top + Edge.Bottom }
+        }
+
         _currencyChoiceListController = CurrencyChoiceListController(
             animationContainer = constraintLayout,
             chosenCurrencyTextView = chosenCurrencyTextView,

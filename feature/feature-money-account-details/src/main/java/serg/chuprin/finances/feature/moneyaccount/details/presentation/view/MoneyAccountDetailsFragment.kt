@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import de.halfbit.edgetoedge.Edge
+import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.fragment_money_account_details.*
 import serg.chuprin.finances.core.api.presentation.extensions.arguments
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
@@ -52,6 +54,11 @@ class MoneyAccountDetailsFragment : BaseFragment(R.layout.fragment_money_account
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        edgeToEdge {
+            view.fit { Edge.Top }
+            transactionsRecyclerView.fit { Edge.Bottom }
+        }
 
         backButton.onClick {
             navController.navigateUp()

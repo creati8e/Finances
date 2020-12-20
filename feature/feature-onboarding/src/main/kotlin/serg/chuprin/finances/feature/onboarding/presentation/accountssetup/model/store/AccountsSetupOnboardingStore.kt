@@ -6,5 +6,4 @@ import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model
 /**
  * Created by Sergey Chuprin on 11.04.2020.
  */
-interface AccountsSetupOnboardingStore :
-    StateStore<AccountsSetupOnboardingIntent, AccountsSetupOnboardingState, AccountsSetupOnboardingEvent>
+typealias AccountsSetupOnboardingStore = StateStore<AccountsSetupOnboardingIntent, AccountsSetupOnboardingState, AccountsSetupOnboardingEvent>

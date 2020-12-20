@@ -8,6 +8,8 @@ import androidx.core.view.doOnPreDraw
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import coil.transform.RoundedCornersTransformation
+import de.halfbit.edgetoedge.Edge
+import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.cell_widget_dashboard_money_accounts.view.*
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import serg.chuprin.finances.core.api.presentation.model.AppDebugMenu
@@ -67,6 +69,12 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        edgeToEdge {
+            view.fit { Edge.Top }
+            recyclerView.fit { Edge.Bottom }
+            creationTransactionButton.fit { Edge.Bottom + Edge.Left }
+        }
 
         if (::cellsAdapter.isInitialized.not()) {
             cellsAdapter = createAdapter()

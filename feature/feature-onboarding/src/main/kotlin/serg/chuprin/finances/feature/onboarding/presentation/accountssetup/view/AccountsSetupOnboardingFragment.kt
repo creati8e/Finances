@@ -9,6 +9,8 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.transition.*
 import com.google.android.material.transition.MaterialSharedAxis
+import de.halfbit.edgetoedge.Edge
+import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.fragment_onboarding_accounts_setup.*
 import serg.chuprin.finances.core.api.presentation.model.AmountInputState
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
@@ -58,6 +60,11 @@ class AccountsSetupOnboardingFragment : BaseFragment(R.layout.fragment_onboardin
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        edgeToEdge {
+            view.fit { Edge.Top + Edge.Bottom }
+        }
+
         with(viewModel) {
             eventsLiveData(::handleEvent)
             stepStateLiveData(::handleStepState)

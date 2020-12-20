@@ -6,6 +6,8 @@ import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.CommonStatusCodes
+import de.halfbit.edgetoedge.Edge
+import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.fragment_authorization.*
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
@@ -26,14 +28,14 @@ import javax.inject.Inject
  */
 class AuthorizationFragment : BaseFragment(R.layout.fragment_authorization) {
 
+    @Inject
+    lateinit var navigation: AuthorizationNavigation
+
     private val googleSignInObserver = GoogleSignInResultObserver(
         fragment = this,
         onError = ::handleGoogleSignInError,
         onSuccess = { idToken -> viewModel.signIn(idToken) }
     )
-
-    @Inject
-    lateinit var navigation: AuthorizationNavigation
 
     private val viewModel by viewModelFromComponent { component }
 
@@ -51,6 +53,9 @@ class AuthorizationFragment : BaseFragment(R.layout.fragment_authorization) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        edgeToEdge {
+            view.fit { Edge.Bottom + Edge.Top }
+        }
         signInWithGoogleButton.onClick(googleSignInObserver::signIn)
         viewModel.signInStateLiveData(::handleSignInState)
     }

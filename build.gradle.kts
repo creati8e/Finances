@@ -77,6 +77,10 @@ subprojects {
                 }
                 configureSpek(this)
                 enableDesugaring(this)
+
+                if (name.contains("feature")) {
+                    dependencies.add("implementation", Libraries.EDGE_TO_EDGE)
+                }
             }
     }
 }
