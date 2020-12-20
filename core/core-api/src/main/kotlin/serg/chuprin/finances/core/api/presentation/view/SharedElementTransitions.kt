@@ -28,10 +28,6 @@ fun Fragment.setSharedElementTransitions(
 }
 
 fun Fragment.setExitSharedElementTransition() {
-    exitTransition = MaterialElevationScale(/* growing= */ false).apply {
-        duration = SHARED_ELEMENT_TRANSITION_DURATION
-    }
-    reenterTransition = MaterialElevationScale(/* growing= */ true).apply {
-        duration = SHARED_ELEMENT_TRANSITION_DURATION
-    }
+    exitTransition = MaterialElevationScale(/* growing= */ false)
+    reenterTransition = MaterialElevationScale(/* growing= */ true)
 }
