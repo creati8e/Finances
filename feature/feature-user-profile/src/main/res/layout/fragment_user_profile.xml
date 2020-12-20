@@ -18,28 +18,18 @@
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize">
 
-            <RelativeLayout
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/logoTextView"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp">
-
-                <!--TODO: Title is not centered properly-->
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/logoTextView"
-                    style="@style/TextAppearance.MaterialComponents.Headline6"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerVertical="true"
-                    android:gravity="center"
-                    android:text="@string/user_profile_toolbar_title"
-                    android:textAlignment="center"
-                    android:textColor="?android:textColorPrimary" />
-
-            </RelativeLayout>
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:text="@string/user_profile_toolbar_title"
+                android:textColor="?android:textColorPrimary" />
 
         </com.google.android.material.appbar.MaterialToolbar>
 
