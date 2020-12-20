@@ -70,10 +70,6 @@ object DashboardBalanceWidgetBuilderTest : Spek({
                 expectThat(widget.currentPeriodIncomes).isEqualTo(BigDecimal(70))
             }
 
-            And("Current period is valid") {
-                expectThat(widget.dataPeriod).isEqualTo(currentPeriod)
-            }
-
             And("Currency is the same as user's default") {
                 expectThat(widget.currency).isEqualTo(currentUser.defaultCurrency)
             }

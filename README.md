@@ -1,4 +1,4 @@
-APKs are hosted on [AppCenter](http://https://install.appcenter.ms/users/gregamer-gmail.com/apps/finances/distribution_groups/public "AppCenter")
+APKs are hosted on [AppCenter](https://install.appcenter.ms/users/gregamer-gmail.com/apps/finances/distribution_groups/public "AppCenter")
 # Tech stack:
 - **Kotlin** for all code
 - **Kotlin serialization** for parsing JSONs
