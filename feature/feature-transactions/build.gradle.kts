@@ -26,6 +26,7 @@ dependencies {
     implementation(Libraries.Android.DESIGN)
     implementation(Libraries.Android.FRAGMENT)
     implementation(Libraries.Android.APPCOMPAT)
+    implementation(Libraries.Android.RECYCLER_VIEW)
     implementation(Libraries.Android.CONSTRAINT_LAYOUT)
 
     implementationAll(Libraries.Adapter.DEPENDENCIES)

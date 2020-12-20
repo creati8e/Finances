@@ -53,13 +53,11 @@ class CurrencyChoiceListView @JvmOverloads constructor(
             isVerticalFadingEdgeEnabled = true
             setFadingEdgeLength(context.dpToPx(16))
 
-            addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                    if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
-                        hideKeyboard()
-                    }
+            onScrollStateChanged { _, newState ->
+                if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+                    hideKeyboard()
                 }
-            })
+            }
         }
         background = ColorDrawable(context.getBackgroundColor())
         searchEditText.doAfterTextChanged { editable ->

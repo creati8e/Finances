@@ -11,6 +11,7 @@ import serg.chuprin.adapter.LongClick
 import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisibleOrGone
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
+import serg.chuprin.finances.core.api.presentation.view.extensions.onScrollStateChanged
 import serg.chuprin.finances.feature.dashboard.R
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.moneyaccounts.DashboardMoneyAccountCell
@@ -85,15 +86,11 @@ class DashboardMoneyAccountsWidgetCellRenderer(
             with(moneyAccountsRecyclerView) {
                 adapter = moneyAccountCellsAdapter
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                addOnScrollListener(object : RecyclerView.OnScrollListener() {
-
-                    override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                        if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                            adapterState = recyclerView.layoutManager!!.onSaveInstanceState()
-                        }
+                onScrollStateChanged { recyclerView, newState ->
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        adapterState = recyclerView.layoutManager!!.onSaveInstanceState()
                     }
-
-                })
+                }
             }
             addAccountButton.onClick(clickOnCreateMoneyAccountButton)
             showAllAccountsButton.onClick(clickOnShowMoneyAccountsListButton)

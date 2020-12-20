@@ -17,7 +17,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="@string/transactions_report_toolbar_title" />
+            tools:title="@string/transactions_report_toolbar_title" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_add"
+        android:src="@drawable/ic_filter"
         android:transitionName="@string/transition_money_account_creation"
         app:backgroundTint="?colorAccent" />
 

@@ -10,6 +10,7 @@ import serg.chuprin.adapter.ContainerHolder
 import serg.chuprin.adapter.ContainerRenderer
 import serg.chuprin.adapter.LongClick
 import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter
+import serg.chuprin.finances.core.api.presentation.view.extensions.onScrollStateChanged
 import serg.chuprin.finances.feature.dashboard.R
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.DashboardCategoryChipCell
@@ -81,16 +82,12 @@ class DashboardCategoriesWidgetCellRenderer(
                 adapter = pageCellsAdapter
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 LinearSnapHelper().attachToRecyclerView(this)
-                addOnScrollListener(object : RecyclerView.OnScrollListener() {
-
-                    override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                        if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                            val lm = recyclerView.layoutManager!!
-                            adapterState = lm.onSaveInstanceState()
-                        }
+                onScrollStateChanged { recyclerView, newState ->
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        val lm = recyclerView.layoutManager!!
+                        adapterState = lm.onSaveInstanceState()
                     }
-
-                })
+                }
             }
             pageIndicator.attachToRecyclerView(categoryPagesRecyclerView)
         }

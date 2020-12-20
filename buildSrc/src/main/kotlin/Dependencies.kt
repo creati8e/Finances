@@ -60,6 +60,7 @@ object Libraries {
         const val TRANSITION = "androidx.transition:transition-ktx:1.4.0-rc01"
         const val VIEWPAGER = "androidx.viewpager2:viewpager2:1.1.0-alpha01"
         const val DESIGN = "com.google.android.material:material:1.3.0-alpha04"
+        const val RECYCLER_VIEW = "androidx.recyclerview:recyclerview:1.2.0-beta01"
         const val CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:2.0.2"
 
         object Navigation {
