@@ -20,7 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:ellipsize="end"
-        android:maxWidth="36dp"
+        android:maxLines="2"
+        android:textAlignment="center"
         android:textSize="12sp"
         tools:text="@tools:sample/date/hhmm" />
 

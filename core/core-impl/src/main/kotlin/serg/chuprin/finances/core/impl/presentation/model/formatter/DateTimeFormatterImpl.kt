@@ -1,12 +1,14 @@
 package serg.chuprin.finances.core.impl.presentation.model.formatter
 
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
+import serg.chuprin.finances.core.api.domain.model.period.DataPeriodType
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeFormatterBuilder
 import java.time.format.FormatStyle
 import java.time.temporal.ChronoField
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -16,6 +18,10 @@ internal class DateTimeFormatterImpl @Inject constructor() :
     serg.chuprin.finances.core.api.presentation.formatter.DateTimeFormatter {
 
     private companion object {
+        private val DAY_FORMATTER = DateTimeFormatter.ofPattern("d\nMMM")
+        private val WEEK_FORMATTER = DateTimeFormatter.ofPattern("d.W")
+        private val MONTH_NAME_FORMATTER = DateTimeFormatter.ofPattern("MMM\ny")
+
         private val TIME_FORMATTER = DateTimeFormatterBuilder()
             .appendValue(ChronoField.HOUR_OF_DAY, 2)
             .appendLiteral(':')
@@ -31,9 +37,17 @@ internal class DateTimeFormatterImpl @Inject constructor() :
         return dateTime.format(TIME_FORMATTER.localized())
     }
 
-    // TODO: Fix.
     override fun formatDataPeriod(dataPeriod: DataPeriod): String {
-        return dataPeriod.startDate.format(DEFAULT_FORMATTER.localized())
+        return when (dataPeriod.periodType) {
+            DataPeriodType.DAY -> dataPeriod.startDate.format(DAY_FORMATTER.localized())
+            DataPeriodType.WEEK -> dataPeriod.startDate.format(WEEK_FORMATTER.localized())
+            DataPeriodType.MONTH -> {
+                dataPeriod.startDate
+                    .format(MONTH_NAME_FORMATTER.localized())
+                    .capitalize(Locale.getDefault())
+            }
+            DataPeriodType.YEAR -> dataPeriod.startDate.year.toString()
+        }
     }
 
     override fun formatAsDay(localDate: LocalDate): String {

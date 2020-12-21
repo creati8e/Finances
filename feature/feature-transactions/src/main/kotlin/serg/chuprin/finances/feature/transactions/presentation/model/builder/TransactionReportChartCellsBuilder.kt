@@ -43,7 +43,6 @@ class TransactionReportChartCellsBuilder @Inject constructor(
                 barFill = calculatePercent(max = maxAmount, target = amount)
             )
         }
-        return map
     }
 
     private fun calculatePercent(max: BigDecimal, target: BigDecimal): Int {
