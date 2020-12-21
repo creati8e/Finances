@@ -23,6 +23,9 @@
             android:id="@+id/chartRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/cell_transaction_report_chart"
             tools:orientation="horizontal" />

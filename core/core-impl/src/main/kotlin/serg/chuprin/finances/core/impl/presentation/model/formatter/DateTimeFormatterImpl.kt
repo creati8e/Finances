@@ -20,7 +20,7 @@ internal class DateTimeFormatterImpl @Inject constructor() :
     private companion object {
         private val DAY_FORMATTER = DateTimeFormatter.ofPattern("d\nMMM")
         private val WEEK_FORMATTER = DateTimeFormatter.ofPattern("d.W")
-        private val MONTH_NAME_FORMATTER = DateTimeFormatter.ofPattern("MMM\ny")
+        private val MONTH_NAME_FORMATTER = DateTimeFormatter.ofPattern("MMM")
 
         private val TIME_FORMATTER = DateTimeFormatterBuilder()
             .appendValue(ChronoField.HOUR_OF_DAY, 2)
@@ -42,9 +42,11 @@ internal class DateTimeFormatterImpl @Inject constructor() :
             DataPeriodType.DAY -> dataPeriod.startDate.format(DAY_FORMATTER.localized())
             DataPeriodType.WEEK -> dataPeriod.startDate.format(WEEK_FORMATTER.localized())
             DataPeriodType.MONTH -> {
-                dataPeriod.startDate
-                    .format(MONTH_NAME_FORMATTER.localized())
-                    .capitalize(Locale.getDefault())
+                buildString {
+                    append(dataPeriod.startDate.format(MONTH_NAME_FORMATTER.localized()).take(3))
+                    append("\n")
+                    append(dataPeriod.startDate.year)
+                }.capitalize(Locale.getDefault())
             }
             DataPeriodType.YEAR -> dataPeriod.startDate.year.toString()
         }
