@@ -7,15 +7,11 @@ import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.api.domain.linker.TransactionWithCategoriesLinker
 import serg.chuprin.finances.core.api.domain.model.CategoriesQueryResult
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryType
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
-import serg.chuprin.finances.core.api.domain.model.query.TransactionCategoriesQuery
-import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.model.transaction.TransactionsQuery
 import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepository
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
-import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.feature.transactions.domain.model.TransactionReportFilter
 import serg.chuprin.finances.feature.transactions.domain.model.TransactionReportRawData
 import javax.inject.Inject
@@ -24,9 +20,9 @@ import javax.inject.Inject
  * Created by Sergey Chuprin on 12.12.2020.
  */
 class TransactionReportDataService @Inject constructor(
-    private val userRepository: UserRepository,
     private val transactionRepository: TransactionRepository,
     private val categoryRepository: TransactionCategoryRepository,
+    private val queryBuilder: TransactionReportDataServiceQueryBuilder,
     private val transactionWithCategoriesLinker: TransactionWithCategoriesLinker
 ) {
 
@@ -37,93 +33,65 @@ class TransactionReportDataService @Inject constructor(
     suspend fun buildDataForReport(
         filter: TransactionReportFilter
     ): Flow<TransactionReportRawData> {
-
-        val transactionsQuery = createTransactionsQuery(filter)
-
+        /**
+         * Get categories first and retrieve children categories
+         * from [TransactionsQuery.categoryIds] and then observe transactions.
+         */
         return combine(
-            flowOf(transactionsQuery),
-            /**
-             * Get categories first and retrieve children categories
-             * from [TransactionsQuery.categoryIds] and then observe transactions.
-             */
-            categoryRepository.categoriesFlow(createCategoriesQuery(transactionsQuery)),
+            flowOf(filter),
+            categoryRepository.categoriesFlow(queryBuilder.buildForCategories(filter)),
             ::Pair
-        ).flatMapLatest { (query, categories) ->
+        ).flatMapLatest { (filter1, categories) ->
             combine(
+                flowOf(filter1),
                 flowOf(categories),
-                getTransactions(query, categories),
+                getTransactions(categories, filter1),
                 ::buildDataSet
             )
         }
     }
 
     private fun buildDataSet(
-        categoryWithParentMap: CategoriesQueryResult,
+        filter: TransactionReportFilter,
+        categoriesQueryResult: CategoriesQueryResult,
         transactions: List<Transaction>
     ): TransactionReportRawData {
         return TransactionReportRawData(
-            chartData = buildDataForChart(transactions, categoryWithParentMap),
-            listData = buildDataForList(transactions, categoryWithParentMap)
+            chartData = buildDataForChart(transactions, categoriesQueryResult),
+            listData = buildDataForList(transactions, categoriesQueryResult, filter)
         )
     }
 
     private fun buildDataForList(
         transactions: List<Transaction>,
-        categoryWithParentMap: CategoriesQueryResult
+        categoriesQueryResult: CategoriesQueryResult,
+        filter: TransactionReportFilter
     ): Map<Transaction, TransactionCategoryWithParent?> {
+        val transactionsInCurrentPeriod = transactions.filter { transaction ->
+            transaction.dateTime in filter.dataPeriod
+        }
         return transactionWithCategoriesLinker.linkTransactionsWithCategories(
-            transactions,
-            categoryWithParentMap
+            transactionsInCurrentPeriod,
+            categoriesQueryResult
         )
     }
 
     private fun buildDataForChart(
         transactions: List<Transaction>,
-        categoryWithParentMap: CategoriesQueryResult
+        categoriesQueryResult: CategoriesQueryResult
     ): Map<TransactionCategory?, List<Transaction>> {
         return transactionWithCategoriesLinker.linkCategoryParentsWithTransactions(
             transactions,
-            categoryWithParentMap
+            categoriesQueryResult
         )
     }
 
-    private fun getTransactions(
-        originalQuery: TransactionsQuery,
-        categories: CategoriesQueryResult
-    ): Flow<List<Transaction>> {
-        val transactionQueryWithChildrenCategories = originalQuery.copy(
-            categoryIds = categories.mapTo(mutableSetOf(), { (categoryId) -> categoryId })
-        )
-        return transactionRepository.transactionsFlow(transactionQueryWithChildrenCategories)
-    }
-
-    private suspend fun createTransactionsQuery(
+    private suspend fun getTransactions(
+        categoriesQueryResult: CategoriesQueryResult,
         filter: TransactionReportFilter
-    ): TransactionsQuery {
-        return TransactionsQuery(
-            categoryIds = filter.categoryIds,
-            endDate = filter.dataPeriod.endDate,
-            startDate = filter.dataPeriod.startDate,
-            transactionType = filter.transactionType,
-            userId = userRepository.getCurrentUser().id
-        )
-    }
-
-    private fun createCategoriesQuery(
-        transactionsQuery: TransactionsQuery
-    ): TransactionCategoriesQuery {
-        // FIXME: Unify.
-        val categoryType = when (transactionsQuery.transactionType) {
-            PlainTransactionType.INCOME -> TransactionCategoryType.INCOME
-            PlainTransactionType.EXPENSE -> TransactionCategoryType.EXPENSE
-            null -> null
-        }
-        return TransactionCategoriesQuery(
-            type = categoryType,
-            userId = transactionsQuery.userId,
-            relation = TransactionCategoriesQuery.Relation.RETRIEVE_CHILDREN,
-            categoryIds = transactionsQuery.categoryIds.filterNotNullTo(mutableSetOf())
-        )
+    ): Flow<List<Transaction>> {
+        val query = queryBuilder.buildForTransactions(filter, categoriesQueryResult)
+        return transactionRepository.transactionsFlow(query)
     }
 
 }

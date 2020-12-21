@@ -36,4 +36,19 @@ sealed class ReportDataPeriod(
 
     }
 
+    operator fun contains(dateTime: LocalDateTime): Boolean {
+        val startDate = startDate
+        val endDate = endDate
+        if (startDate == null && endDate == null) {
+            return true
+        }
+        if (startDate == null) {
+            return dateTime <= endDate
+        }
+        if (endDate == null) {
+            return dateTime >= startDate
+        }
+        return dateTime in startDate..endDate
+    }
+
 }
