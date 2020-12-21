@@ -22,7 +22,7 @@ class TransactionReportListDataBuilder @Inject constructor(
         filter: TransactionReportFilter
     ): Map<Transaction, TransactionCategoryWithParent?> {
         val transactionsInCurrentPeriod = transactions.filter { transaction ->
-            transaction.dateTime in filter.dataPeriod
+            transaction.dateTime in filter.reportDataPeriod
         }
         return transactionWithCategoriesLinker.linkTransactionsWithCategories(
             transactionsInCurrentPeriod,

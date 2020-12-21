@@ -1,20 +1,19 @@
 package serg.chuprin.finances.feature.transactions.domain.model
 
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.period.ReportDataPeriod
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 
 /**
  * Created by Sergey Chuprin on 11.12.2020.
  */
 sealed class TransactionReportFilter(
-    open val dataPeriod: ReportDataPeriod,
+    open val reportDataPeriod: ReportDataPeriod,
 ) {
 
     data class Plain(
-        override val dataPeriod: ReportDataPeriod,
+        override val reportDataPeriod: ReportDataPeriod,
         override val transactionType: PlainTransactionType?
-    ) : TransactionReportFilter(dataPeriod) {
+    ) : TransactionReportFilter(reportDataPeriod) {
 
         override val categoryIds: Set<Id>
             get() = emptySet()
@@ -23,9 +22,9 @@ sealed class TransactionReportFilter(
 
     data class SingleCategory(
         val categoryId: Id,
-        override val dataPeriod: ReportDataPeriod,
+        override val reportDataPeriod: ReportDataPeriod,
         override val transactionType: PlainTransactionType
-    ) : TransactionReportFilter(dataPeriod) {
+    ) : TransactionReportFilter(reportDataPeriod) {
 
         override val categoryIds: Set<Id>
             get() = setOf(categoryId)
@@ -35,8 +34,8 @@ sealed class TransactionReportFilter(
     data class Categories(
         override val categoryIds: Set<Id>,
         override val transactionType: PlainTransactionType,
-        override val dataPeriod: ReportDataPeriod
-    ) : TransactionReportFilter(dataPeriod)
+        override val reportDataPeriod: ReportDataPeriod
+    ) : TransactionReportFilter(reportDataPeriod)
 
     abstract val transactionType: PlainTransactionType?
 
@@ -46,7 +45,7 @@ sealed class TransactionReportFilter(
 
         val UNINITIALIZED = Plain(
             transactionType = null,
-            dataPeriod = ReportDataPeriod.AllTime
+            reportDataPeriod = ReportDataPeriod.AllTime
         )
 
     }

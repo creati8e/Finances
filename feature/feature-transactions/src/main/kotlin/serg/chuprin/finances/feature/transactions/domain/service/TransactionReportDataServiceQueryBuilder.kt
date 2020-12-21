@@ -2,11 +2,11 @@ package serg.chuprin.finances.feature.transactions.domain.service
 
 import serg.chuprin.finances.core.api.domain.model.CategoriesQueryResult
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryType
-import serg.chuprin.finances.core.api.domain.model.period.ReportDataPeriod
 import serg.chuprin.finances.core.api.domain.model.query.TransactionCategoriesQuery
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.domain.model.transaction.TransactionsQuery
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
+import serg.chuprin.finances.feature.transactions.domain.model.ReportDataPeriod
 import serg.chuprin.finances.feature.transactions.domain.model.TransactionReportFilter
 import javax.inject.Inject
 
@@ -40,7 +40,7 @@ class TransactionReportDataServiceQueryBuilder @Inject constructor(
     ): TransactionsQuery {
         // If report has non-custom and non-all-time period type,
         // get data for all periods from min to max. This data is required for chart building.
-        val (startDate, endDate) = when (val reportDataPeriod = filter.dataPeriod) {
+        val (startDate, endDate) = when (val reportDataPeriod = filter.reportDataPeriod) {
             ReportDataPeriod.AllTime, is ReportDataPeriod.Predefined -> null to null
             is ReportDataPeriod.Custom -> {
                 reportDataPeriod.startDate to reportDataPeriod.endDate

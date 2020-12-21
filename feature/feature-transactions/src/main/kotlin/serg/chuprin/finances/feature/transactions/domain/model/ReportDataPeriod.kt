@@ -1,5 +1,6 @@
-package serg.chuprin.finances.core.api.domain.model.period
+package serg.chuprin.finances.feature.transactions.domain.model
 
+import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import java.time.LocalDateTime
 
 /**
@@ -10,10 +11,12 @@ sealed class ReportDataPeriod(
     open val endDate: LocalDateTime?
 ) {
 
-    object AllTime : ReportDataPeriod(null, null)
+    object AllTime : ReportDataPeriod(null, null) {
+        override val dataPeriod: DataPeriod? = null
+    }
 
     data class Predefined(
-        val dataPeriod: DataPeriod
+        override val dataPeriod: DataPeriod
     ) : ReportDataPeriod(dataPeriod.startDate, dataPeriod.endDate)
 
     sealed class Custom(
@@ -34,7 +37,11 @@ sealed class ReportDataPeriod(
             override val endDate: LocalDateTime
         ) : Custom(startDate, endDate)
 
+        override val dataPeriod: DataPeriod? = null
+
     }
+
+    abstract val dataPeriod: DataPeriod?
 
     operator fun contains(dateTime: LocalDateTime): Boolean {
         val startDate = startDate

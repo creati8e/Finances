@@ -1,10 +1,10 @@
 package serg.chuprin.finances.feature.transactions.domain.service
 
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
-import serg.chuprin.finances.core.api.domain.model.period.ReportDataPeriod
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.extensions.adjustToTheEndOfPeriod
 import serg.chuprin.finances.core.api.extensions.buildSortedMap
+import serg.chuprin.finances.feature.transactions.domain.model.ReportDataPeriod
 import serg.chuprin.finances.feature.transactions.domain.model.TransactionReportFilter
 import java.time.LocalDateTime
 import javax.inject.Inject
@@ -32,7 +32,7 @@ class TransactionReportChartDataBuilder @Inject constructor() {
         if (transactions.isEmpty()) {
             return emptyMap()
         }
-        return when (val reportDataPeriod = filter.dataPeriod) {
+        return when (val reportDataPeriod = filter.reportDataPeriod) {
             // TODO: Think about splitting periods for custom period.
             ReportDataPeriod.AllTime, is ReportDataPeriod.Custom -> emptyMap()
             is ReportDataPeriod.Predefined -> {
