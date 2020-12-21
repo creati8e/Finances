@@ -5,8 +5,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.api.domain.TransactionsByDayGrouper
-import serg.chuprin.finances.core.api.domain.model.transaction.TransactionsQuery
-import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.feature.transactions.domain.model.TransactionReportFilter
 import serg.chuprin.finances.feature.transactions.domain.model.TransactionReportPreparedData
 import serg.chuprin.finances.feature.transactions.domain.model.TransactionReportRawData
@@ -19,7 +17,6 @@ import javax.inject.Inject
  * Created by Sergey Chuprin on 06.07.2020.
  */
 class BuildTransactionsReportUseCase @Inject constructor(
-    private val userRepository: UserRepository,
     private val reportDataService: TransactionReportDataService,
     private val transactionsByDayGrouper: TransactionsByDayGrouper,
     private val filterRepository: TransactionReportFilterRepository
@@ -31,7 +28,7 @@ class BuildTransactionsReportUseCase @Inject constructor(
             .flatMapLatest { filter ->
                 combine(
                     flowOf(filter),
-                    reportDataService.buildDataForReport(createTransactionsQuery(filter)),
+                    reportDataService.buildDataForReport(filter),
                     ::buildTransactionsReport
                 )
             }
@@ -47,18 +44,6 @@ class BuildTransactionsReportUseCase @Inject constructor(
                 chartData = reportRawData.chartData,
                 transactionsGroupedByDay = transactionsByDayGrouper.group(reportRawData.listData)
             )
-        )
-    }
-
-    private suspend fun createTransactionsQuery(
-        filter: TransactionReportFilter
-    ): TransactionsQuery {
-        return TransactionsQuery(
-            categoryIds = filter.categoryIds,
-            endDate = filter.dataPeriod.endDate,
-            startDate = filter.dataPeriod.startDate,
-            transactionType = filter.transactionType,
-            userId = userRepository.getCurrentUser().id
         )
     }
 
