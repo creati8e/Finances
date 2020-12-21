@@ -3,6 +3,7 @@ package serg.chuprin.finances.feature.transactions.domain.service
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import serg.chuprin.finances.core.api.domain.model.period.ReportDataPeriod
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
+import serg.chuprin.finances.core.api.extensions.adjustToTheEndOfPeriod
 import serg.chuprin.finances.core.api.extensions.buildSortedMap
 import serg.chuprin.finances.feature.transactions.domain.model.TransactionReportFilter
 import java.time.LocalDateTime
@@ -46,12 +47,15 @@ class TransactionReportChartDataBuilder @Inject constructor() {
     ): Map<DataPeriod, List<Transaction>> {
 
         // Transactions are sorted here so it's convenient to take first and last.
-        val maxDate = maxOf(transactions.last().dateTime, LocalDateTime.now())
+        val maxDate = maxOf(
+            transactions.last().dateTime,
+            LocalDateTime.now()
+        ).adjustToTheEndOfPeriod(dataPeriod.periodType)
 
         val startDataPeriod = DataPeriod.fromStartDate(
             periodType = dataPeriod.periodType,
             startDate = transactions.first().dateTime
-        )
+        ).minusPeriods(5)
 
         return buildDataPeriods(startDataPeriod, maxDate, transactions)
     }
@@ -75,7 +79,7 @@ class TransactionReportChartDataBuilder @Inject constructor() {
                     currentDataPeriod,
                     transactions.filter { it.dateTime in currentDataPeriod }
                 )
-                currentDataPeriod = startDataPeriod.next()
+                currentDataPeriod = currentDataPeriod.next()
             }
         }
     }

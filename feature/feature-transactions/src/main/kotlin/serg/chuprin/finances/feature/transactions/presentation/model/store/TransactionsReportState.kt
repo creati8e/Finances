@@ -10,7 +10,7 @@ import serg.chuprin.finances.feature.transactions.presentation.model.cells.Trans
  */
 data class TransactionsReportState(
     val transactionListCells: List<BaseCell> = emptyList(),
-    val chartCells: List<TransactionReportChartCell>,
+    val chartCells: List<TransactionReportChartCell> = emptyList(),
     val header: TransactionReportHeader = TransactionReportHeader(),
     val filter: TransactionReportFilter = TransactionReportFilter.UNINITIALIZED
 )

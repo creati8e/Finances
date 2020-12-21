@@ -15,12 +15,16 @@ import serg.chuprin.finances.core.api.presentation.extensions.setupToolbar
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionsReportScreenArguments
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
+import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter
 import serg.chuprin.finances.core.api.presentation.view.adapter.decoration.CellDividerDecoration
+import serg.chuprin.finances.core.api.presentation.view.adapter.diff.DiffCallback
 import serg.chuprin.finances.core.api.presentation.view.extensions.onScroll
 import serg.chuprin.finances.core.api.presentation.view.setSharedElementTransitions
 import serg.chuprin.finances.feature.transactions.R
 import serg.chuprin.finances.feature.transactions.di.TransactionsReportComponent
+import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportChartCell
 import serg.chuprin.finances.feature.transactions.presentation.view.adapter.TransactionReportCellsAdapter
+import serg.chuprin.finances.feature.transactions.presentation.view.adapter.renderer.TransactionChartCellRenderer
 
 /**
  * Created by Sergey Chuprin on 11.05.2020.
@@ -29,7 +33,13 @@ class TransactionsReportFragment : BaseFragment(R.layout.fragment_transactions_r
 
     private val screenArguments by arguments<TransactionsReportScreenArguments>()
 
-    private val cellsAdapter = TransactionReportCellsAdapter()
+    private val transactionCellsAdapter = TransactionReportCellsAdapter()
+
+    private val chartCellsAdapter = DiffMultiViewAdapter(
+        DiffCallback<TransactionReportChartCell>()
+    ).apply {
+        registerRenderer(TransactionChartCellRenderer())
+    }
 
     private val viewModel by viewModelFromComponent {
         TransactionsReportComponent.get(screenArguments)
@@ -62,13 +72,34 @@ class TransactionsReportFragment : BaseFragment(R.layout.fragment_transactions_r
         setupToolbar(toolbar) {
             setDisplayHomeAsUpEnabled(true)
         }
+
+        setupChart()
+        setupTransactionsList()
+
+        with(viewModel) {
+            chartCellsLiveData(chartCellsAdapter::setItems)
+            transactionsListCellsLiveData(transactionCellsAdapter::setItems)
+            headerLiveData { header ->
+                setToolbarTitle(header.title)
+            }
+        }
+    }
+
+    private fun setupChart() {
+        with(chartRecyclerView) {
+            adapter = chartCellsAdapter
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        }
+    }
+
+    private fun setupTransactionsList() {
         with(transactionsRecyclerView) {
-            adapter = cellsAdapter
+            adapter = transactionCellsAdapter
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(
                 CellDividerDecoration(
                     requireContext(),
-                    cellsAdapter,
+                    transactionCellsAdapter,
                     marginEndDp = -8,
                     marginStartDp = 36
                 )
@@ -79,12 +110,6 @@ class TransactionsReportFragment : BaseFragment(R.layout.fragment_transactions_r
                 } else if (dy < 0) {
                     this@TransactionsReportFragment.filterFab.show()
                 }
-            }
-        }
-        with(viewModel) {
-            transactionsListCellsLiveData(cellsAdapter::setItems)
-            headerLiveData { header ->
-                setToolbarTitle(header.title)
             }
         }
     }

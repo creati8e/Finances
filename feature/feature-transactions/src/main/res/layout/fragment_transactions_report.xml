@@ -19,6 +19,14 @@
             android:layout_height="?attr/actionBarSize"
             tools:title="@string/transactions_report_toolbar_title" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/chartRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/cell_transaction_report_chart"
+            tools:orientation="horizontal" />
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView

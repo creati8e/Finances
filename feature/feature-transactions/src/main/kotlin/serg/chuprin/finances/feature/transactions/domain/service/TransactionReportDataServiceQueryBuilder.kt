@@ -41,10 +41,7 @@ class TransactionReportDataServiceQueryBuilder @Inject constructor(
         // If report has non-custom and non-all-time period type,
         // get data for all periods from min to max. This data is required for chart building.
         val (startDate, endDate) = when (val reportDataPeriod = filter.dataPeriod) {
-            ReportDataPeriod.AllTime -> null to null
-            is ReportDataPeriod.Predefined -> {
-                reportDataPeriod.dataPeriod.startDate to reportDataPeriod.dataPeriod.endDate
-            }
+            ReportDataPeriod.AllTime, is ReportDataPeriod.Predefined -> null to null
             is ReportDataPeriod.Custom -> {
                 reportDataPeriod.startDate to reportDataPeriod.endDate
             }

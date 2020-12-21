@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/backgroundDrawable">
+        <shape
+            android:shape="rectangle"
+            android:useLevel="true">
+            <corners android:radius="@dimen/cornerRadius" />
+            <solid android:color="?colorControlHighlight" />
+        </shape>
+    </item>
+    <item android:id="@+id/trackDrawable">
+        <clip
+            android:clipOrientation="vertical"
+            android:drawable="@drawable/bg_chart_track"
+            android:gravity="bottom" />
+    </item>
+</layer-list>
