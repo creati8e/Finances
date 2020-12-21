@@ -88,7 +88,10 @@ class TransactionsReportFragment : BaseFragment(R.layout.fragment_transactions_r
     private fun setupChart() {
         with(chartRecyclerView) {
             adapter = chartCellsAdapter
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false).apply {
+                    stackFromEnd = true
+                }
         }
     }
 
