@@ -5,6 +5,7 @@ import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.feature.transactions.presentation.model.builder.TransactionReportCellsBuilder
+import serg.chuprin.finances.feature.transactions.presentation.model.builder.TransactionReportChartCellsBuilder
 import serg.chuprin.finances.feature.transactions.presentation.model.builder.TransactionReportHeaderBuilder
 import javax.inject.Inject
 
@@ -13,7 +14,8 @@ import javax.inject.Inject
  */
 class TransactionsReportActionExecutor @Inject constructor(
     private val cellsBuilder: TransactionReportCellsBuilder,
-    private val headerBuilder: TransactionReportHeaderBuilder
+    private val headerBuilder: TransactionReportHeaderBuilder,
+    private val chartCellsBuilder: TransactionReportChartCellsBuilder
 ) : StoreActionExecutor<TransactionsReportAction, TransactionsReportState, TransactionsReportEffect, TransactionsReportEvent> {
 
     override fun invoke(
@@ -35,10 +37,12 @@ class TransactionsReportActionExecutor @Inject constructor(
     ): Flow<TransactionsReportEffect> {
         return flowOfSingleValue {
             val report = action.report
+            val preparedData = report.preparedData
             TransactionsReportEffect.ReportBuilt(
                 filter = report.filter,
                 header = headerBuilder.build(report),
-                cells = cellsBuilder.build(report.preparedData.transactionsGroupedByDay)
+                listCells = cellsBuilder.build(preparedData.transactionsGroupedByDay),
+                chartCells = chartCellsBuilder.build(preparedData.chartData, preparedData.currency)
             )
         }
     }

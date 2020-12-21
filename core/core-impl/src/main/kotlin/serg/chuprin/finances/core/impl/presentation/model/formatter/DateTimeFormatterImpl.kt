@@ -1,5 +1,6 @@
 package serg.chuprin.finances.core.impl.presentation.model.formatter
 
+import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -28,6 +29,11 @@ internal class DateTimeFormatterImpl @Inject constructor() :
 
     override fun formatTime(dateTime: LocalDateTime): String {
         return dateTime.format(TIME_FORMATTER.localized())
+    }
+
+    // TODO: Fix.
+    override fun formatDataPeriod(dataPeriod: DataPeriod): String {
+        return dataPeriod.startDate.format(DEFAULT_FORMATTER.localized())
     }
 
     override fun formatAsDay(localDate: LocalDate): String {

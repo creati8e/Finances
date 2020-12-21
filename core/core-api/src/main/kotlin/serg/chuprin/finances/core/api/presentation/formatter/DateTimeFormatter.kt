@@ -1,5 +1,6 @@
 package serg.chuprin.finances.core.api.presentation.formatter
 
+import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -11,6 +12,8 @@ interface DateTimeFormatter {
     fun formatTime(dateTime: LocalDateTime): String
 
     fun formatAsDay(localDate: LocalDate): String
+
+    fun formatDataPeriod(dataPeriod: DataPeriod): String
 
     fun formatForTransaction(dateTime: LocalDateTime): String
 

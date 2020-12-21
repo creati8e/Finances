@@ -82,7 +82,7 @@ class TransactionsReportFragment : BaseFragment(R.layout.fragment_transactions_r
             }
         }
         with(viewModel) {
-            cellsLiveData(cellsAdapter::setItems)
+            transactionsListCellsLiveData(cellsAdapter::setItems)
             headerLiveData { header ->
                 setToolbarTitle(header.title)
             }

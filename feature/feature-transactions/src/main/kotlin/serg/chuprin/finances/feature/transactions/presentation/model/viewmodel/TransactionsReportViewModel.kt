@@ -17,8 +17,8 @@ class TransactionsReportViewModel @Inject constructor(
     store: TransactionsReportStore
 ) : BaseStoreViewModel<TransactionsReportIntent>() {
 
-    val cellsLiveData: LiveData<List<BaseCell>> =
-        store.observeParticularStateAsLiveData(TransactionsReportState::cells)
+    val transactionsListCellsLiveData: LiveData<List<BaseCell>> =
+        store.observeParticularStateAsLiveData(TransactionsReportState::transactionListCells)
 
     val headerLiveData: LiveData<TransactionReportHeader> =
         store.observeParticularStateAsLiveData(TransactionsReportState::header)
