@@ -19,6 +19,10 @@ interface TransactionCategoryRepository {
         type: TransactionCategoryType
     ): Map<Id, TransactionCategoryWithParent>
 
+    suspend fun categories(
+        query: TransactionCategoriesQuery
+    ): Map<Id, TransactionCategoryWithParent>
+
     /**
      * [Map.Entry.key] is category's id;
      */

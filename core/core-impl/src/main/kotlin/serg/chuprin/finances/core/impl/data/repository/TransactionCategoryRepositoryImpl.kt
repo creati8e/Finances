@@ -2,6 +2,7 @@ package serg.chuprin.finances.core.impl.data.repository
 
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import serg.chuprin.finances.core.api.domain.model.CategoriesQueryResult
 import serg.chuprin.finances.core.api.domain.model.Id
@@ -26,6 +27,12 @@ internal class TransactionCategoryRepositoryImpl @Inject constructor(
     private val firebaseDataSource: FirebaseTransactionCategoryDataSource,
     private val predefinedCategoriesDataSource: PredefinedTransactionCategoriesDataSource
 ) : TransactionCategoryRepository {
+
+    override suspend fun categories(
+        query: TransactionCategoriesQuery
+    ): Map<Id, TransactionCategoryWithParent> {
+        return categoriesFlow(query).first()
+    }
 
     override fun categoriesFlow(query: TransactionCategoriesQuery): Flow<CategoriesQueryResult> {
         return firebaseDataSource

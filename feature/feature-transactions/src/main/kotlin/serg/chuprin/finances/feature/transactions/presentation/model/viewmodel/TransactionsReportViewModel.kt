@@ -25,7 +25,7 @@ class TransactionsReportViewModel @Inject constructor(
         store.observeParticularStateAsLiveData(TransactionsReportState::header)
 
     val chartCellsLiveData: LiveData<List<TransactionReportChartCell>> =
-        store.observeParticularStateAsLiveData(TransactionsReportState::chartCells)
+        store.observeParticularStateAsLiveData { state -> state.header.chartCells }
 
     init {
         store.start(intentsFlow(), viewModelScope)
