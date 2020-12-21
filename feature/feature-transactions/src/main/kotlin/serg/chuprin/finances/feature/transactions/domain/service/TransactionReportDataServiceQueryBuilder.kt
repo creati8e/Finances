@@ -54,6 +54,7 @@ class TransactionReportDataServiceQueryBuilder @Inject constructor(
             startDate = startDate,
             transactionType = filter.transactionType,
             userId = userRepository.getCurrentUser().id,
+            sortOrder = TransactionsQuery.SortOrder.DATE_ASC,
             categoryIds = categories.mapTo(mutableSetOf(), { (categoryId) -> categoryId })
         )
     }

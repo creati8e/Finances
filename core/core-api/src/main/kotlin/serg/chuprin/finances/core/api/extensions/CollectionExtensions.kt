@@ -17,4 +17,11 @@ fun <K, V> nonNullValuesMap(vararg pairs: Pair<K, V?>): Map<K, V> {
     }
 }
 
+inline fun <K, V> buildSortedMap(
+    comparator: Comparator<K>,
+    builderAction: MutableMap<K, V>.() -> Unit
+): Map<K, V> {
+    return sortedMapOf<K, V>(comparator).apply(builderAction)
+}
+
 fun <T> Collection<T>.contains(selector: (T) -> Boolean): Boolean = find(selector) != null

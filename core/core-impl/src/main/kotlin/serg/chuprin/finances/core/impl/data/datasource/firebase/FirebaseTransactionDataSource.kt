@@ -54,6 +54,9 @@ internal class FirebaseTransactionDataSource @Inject constructor(
             TransactionsQuery.SortOrder.DATE_DESC -> {
                 orderBy(FIELD_DATE, Query.Direction.DESCENDING)
             }
+            TransactionsQuery.SortOrder.DATE_ASC -> {
+                orderBy(FIELD_DATE, Query.Direction.ASCENDING)
+            }
             null -> this
         }
     }

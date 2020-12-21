@@ -6,6 +6,7 @@ import java.time.LocalDateTime
 /**
  * Created by Sergey Chuprin on 17.04.2020.
  */
+// TODO: Make iterable and comparable.
 data class DataPeriod(
     val startDate: LocalDateTime,
     val endDate: LocalDateTime,
@@ -14,41 +15,61 @@ data class DataPeriod(
 
     companion object {
 
+        fun fromStartDate(
+            startDate: LocalDateTime,
+            periodType: DataPeriodType
+        ): DataPeriod {
+            return when (periodType) {
+                DataPeriodType.DAY -> buildDay(startDate)
+                DataPeriodType.WEEK -> buildWeek(startDate)
+                DataPeriodType.MONTH -> buildMonth(startDate)
+                DataPeriodType.YEAR -> buildYear(startDate)
+            }
+        }
+
         fun from(periodType: DataPeriodType): DataPeriod {
             return when (periodType) {
-                DataPeriodType.MONTH -> {
-                    val startDateTime = LocalDateTime.now().firstDayOfMonth()
-                    DataPeriod(
-                        periodType = periodType,
-                        startDate = startDateTime,
-                        endDate = startDateTime.lastDayOfMonth()
-                    )
-                }
-                DataPeriodType.DAY -> {
-                    val startDateTime = LocalDateTime.now().startOfDay()
-                    DataPeriod(
-                        periodType = periodType,
-                        startDate = startDateTime,
-                        endDate = startDateTime.endOfDay()
-                    )
-                }
-                DataPeriodType.WEEK -> {
-                    val startDateTime = LocalDateTime.now().startOfWeek()
-                    DataPeriod(
-                        periodType = periodType,
-                        startDate = startDateTime,
-                        endDate = startDateTime.endOfWeek()
-                    )
-                }
-                DataPeriodType.YEAR -> {
-                    val startDateTime = LocalDateTime.now().startOfYear()
-                    DataPeriod(
-                        periodType = periodType,
-                        startDate = startDateTime,
-                        endDate = startDateTime.endOfYear()
-                    )
-                }
+                DataPeriodType.DAY -> buildDay(LocalDateTime.now())
+                DataPeriodType.WEEK -> buildWeek(LocalDateTime.now())
+                DataPeriodType.MONTH -> buildMonth(LocalDateTime.now())
+                DataPeriodType.YEAR -> buildYear(LocalDateTime.now())
             }
+        }
+
+        private fun buildDay(startDate: LocalDateTime): DataPeriod {
+            val startDateTime = startDate.startOfDay()
+            return DataPeriod(
+                startDate = startDateTime,
+                periodType = DataPeriodType.DAY,
+                endDate = startDateTime.endOfDay()
+            )
+        }
+
+        private fun buildWeek(startDate: LocalDateTime): DataPeriod {
+            val startDateTime = startDate.startOfWeek()
+            return DataPeriod(
+                periodType = DataPeriodType.WEEK,
+                startDate = startDateTime,
+                endDate = startDateTime.endOfWeek()
+            )
+        }
+
+        private fun buildMonth(startDate: LocalDateTime): DataPeriod {
+            val startDateTime = startDate.firstDayOfMonth()
+            return DataPeriod(
+                startDate = startDateTime,
+                periodType = DataPeriodType.MONTH,
+                endDate = startDateTime.lastDayOfMonth()
+            )
+        }
+
+        private fun buildYear(startDate: LocalDateTime): DataPeriod {
+            val startDateTime = startDate.startOfYear()
+            return DataPeriod(
+                startDate = startDateTime,
+                periodType = DataPeriodType.YEAR,
+                endDate = startDateTime.endOfYear()
+            )
         }
 
     }

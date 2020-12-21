@@ -17,6 +17,6 @@ data class TransactionsQuery(
     val transactionType: PlainTransactionType? = null
 ) {
 
-    enum class SortOrder { DATE_DESC }
+    enum class SortOrder { DATE_DESC, DATE_ASC }
 
 }

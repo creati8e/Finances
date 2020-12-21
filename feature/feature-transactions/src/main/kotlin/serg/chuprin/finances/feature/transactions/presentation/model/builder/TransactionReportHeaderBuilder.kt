@@ -42,12 +42,14 @@ class TransactionReportHeaderBuilder @Inject constructor(
             return filter.transactionType.format()
         }
 
-        // Find parent category.
-        val category = chartData.entries
-            .find { (category) -> category?.parentCategoryId == null }
-            ?.key
-
-        return category?.name ?: filter.transactionType.format()
+        // TODO: Fix.
+        return "Category"
+//        // Find parent category.
+//        val category = chartData.entries
+//            .find { (category) -> category?.parentCategoryId == null }
+//            ?.key
+//
+//        return category?.name ?: filter.transactionType.format()
     }
 
     private fun PlainTransactionType.format(): String {

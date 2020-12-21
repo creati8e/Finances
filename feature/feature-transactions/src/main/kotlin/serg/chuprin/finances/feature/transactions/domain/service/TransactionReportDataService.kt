@@ -4,10 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
-import serg.chuprin.finances.core.api.domain.linker.TransactionWithCategoriesLinker
 import serg.chuprin.finances.core.api.domain.model.CategoriesQueryResult
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.model.transaction.TransactionsQuery
 import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepository
@@ -22,8 +19,9 @@ import javax.inject.Inject
 class TransactionReportDataService @Inject constructor(
     private val transactionRepository: TransactionRepository,
     private val categoryRepository: TransactionCategoryRepository,
-    private val queryBuilder: TransactionReportDataServiceQueryBuilder,
-    private val transactionWithCategoriesLinker: TransactionWithCategoriesLinker
+    private val listDataBuilder: TransactionReportListDataBuilder,
+    private val chartDataBuilder: TransactionReportChartDataBuilder,
+    private val queryBuilder: TransactionReportDataServiceQueryBuilder
 ) {
 
     /**
@@ -57,32 +55,8 @@ class TransactionReportDataService @Inject constructor(
         transactions: List<Transaction>
     ): TransactionReportRawData {
         return TransactionReportRawData(
-            chartData = buildDataForChart(transactions, categoriesQueryResult),
-            listData = buildDataForList(transactions, categoriesQueryResult, filter)
-        )
-    }
-
-    private fun buildDataForList(
-        transactions: List<Transaction>,
-        categoriesQueryResult: CategoriesQueryResult,
-        filter: TransactionReportFilter
-    ): Map<Transaction, TransactionCategoryWithParent?> {
-        val transactionsInCurrentPeriod = transactions.filter { transaction ->
-            transaction.dateTime in filter.dataPeriod
-        }
-        return transactionWithCategoriesLinker.linkTransactionsWithCategories(
-            transactionsInCurrentPeriod,
-            categoriesQueryResult
-        )
-    }
-
-    private fun buildDataForChart(
-        transactions: List<Transaction>,
-        categoriesQueryResult: CategoriesQueryResult
-    ): Map<TransactionCategory?, List<Transaction>> {
-        return transactionWithCategoriesLinker.linkCategoryParentsWithTransactions(
-            transactions,
-            categoriesQueryResult
+            chartData = chartDataBuilder.build(transactions, filter),
+            listData = listDataBuilder.build(transactions, categoriesQueryResult, filter)
         )
     }
 
