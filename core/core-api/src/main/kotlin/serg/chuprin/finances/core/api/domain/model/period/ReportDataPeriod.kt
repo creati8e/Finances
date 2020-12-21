@@ -17,9 +17,9 @@ sealed class ReportDataPeriod(
     ) : ReportDataPeriod(dataPeriod.startDate, dataPeriod.endDate)
 
     sealed class Custom(
-        open val startDate: LocalDateTime?,
-        open val endDate: LocalDateTime?
-    ) {
+        override val startDate: LocalDateTime?,
+        override val endDate: LocalDateTime?
+    ) : ReportDataPeriod(startDate, endDate) {
 
         data class WithStartDate(
             override val startDate: LocalDateTime
