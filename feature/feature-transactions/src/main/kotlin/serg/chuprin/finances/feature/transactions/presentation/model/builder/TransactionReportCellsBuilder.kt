@@ -7,6 +7,7 @@ import serg.chuprin.finances.core.api.presentation.formatter.DateTimeFormatter
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.cells.DateDividerCell
 import serg.chuprin.finances.core.api.presentation.model.cells.ZeroDataCell
+import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.feature.transactions.R
 import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportDataPeriodSummaryCell
 import java.math.BigDecimal
@@ -17,6 +18,7 @@ import javax.inject.Inject
  * Created by Sergey Chuprin on 13.12.2020.
  */
 class TransactionReportCellsBuilder @Inject constructor(
+    private val resourceManger: ResourceManger,
     private val amountFormatter: AmountFormatter,
     private val dateTimeFormatter: DateTimeFormatter,
     private val transactionCellBuilder: TransactionCellBuilder
@@ -58,15 +60,15 @@ class TransactionReportCellsBuilder @Inject constructor(
         amount: BigDecimal,
         currency: Currency
     ): TransactionReportDataPeriodSummaryCell {
-        val amount = amountFormatter.format(
+        val formattedAmount = amountFormatter.format(
             amount = amount,
             round = false,
             withSign = true,
             currency = currency,
             withCurrencySymbol = true
         )
-        val title = "Всего за период"
-        return TransactionReportDataPeriodSummaryCell(title = title, value = amount)
+        val title = resourceManger.getString(R.string.transactions_report_data_period_summary_title)
+        return TransactionReportDataPeriodSummaryCell(title = title, value = formattedAmount)
     }
 
 }

@@ -2,6 +2,7 @@
 <resources>
 
     <string name="transactions_report_toolbar_title">Transactions</string>
+    <string name="transactions_report_data_period_summary_title">Totally in period</string>
     <string name="transactions_report_zero_data_title">No transactions matching filter</string>
 
 </resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="transactions_report_toolbar_title">Транзакции</string>
+    <string name="transactions_report_data_period_summary_title">Всего за период</string>
+    <string name="transactions_report_zero_data_title">Нет транзакций, соответствующих фильтру</string>
+
+</resources>
