@@ -18,7 +18,7 @@ class DashboardWidgetNameFormatter @Inject constructor(
             DashboardWidgetType.CATEGORIES -> R.string.dashboard_widget_categories
             DashboardWidgetType.MONEY_ACCOUNTS -> R.string.dashboard_widget_money_accounts
             DashboardWidgetType.PERIOD_SELECTOR -> R.string.dashboard_widget_period_selector
-            DashboardWidgetType.RECENT_TRANSACTIONS -> R.string.dashboard_widget_money_accounts
+            DashboardWidgetType.RECENT_TRANSACTIONS -> R.string.dashboard_widget_recent_transactions
         }
         return resourceManger.getString(stringRes)
     }
