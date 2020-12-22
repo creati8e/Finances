@@ -6,7 +6,7 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:theme="@style/AppTheme23">
+    tools:theme="@style/AppTheme">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
