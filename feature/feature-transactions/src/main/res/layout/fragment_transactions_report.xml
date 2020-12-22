@@ -1,58 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<androidx.constraintlayout.motion.widget.MotionLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:theme="@style/AppTheme">
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:liftOnScroll="true">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            tools:title="@string/transactions_report_toolbar_title" />
-
-    </com.google.android.material.appbar.AppBarLayout>
+    app:layoutDescription="@xml/collapsing_toolbar">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fakeAppBarLayout"
+        app:layout_constraintVertical_bias="0"
         tools:itemCount="5"
         tools:listitem="@layout/cell_transaction" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/scrollToTopFab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="88dp"
-        android:src="@drawable/ic_arrow_up"
-        android:visibility="invisible"
-        app:tint="?colorIconTint"
-        app:backgroundTint="?android:colorBackground"
-        app:fabSize="mini"
-        tools:ignore="ContentDescription"
-        tools:visibility="visible" />
+    <serg.chuprin.finances.core.api.presentation.view.widget.FakeToolbarLayout
+        android:id="@+id/fakeAppBarLayout"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/filterFab"
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/backButton"
+        style="@style/ToolbarIcon"
+        android:src="@drawable/abc_ic_ab_back_material"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="?android:attr/textColorPrimary"
+        tools:ignore="PrivateResource" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/titleTextView"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
+        android:includeFontPadding="false"
+        android:lineSpacingExtra="0dp"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:transformPivotY="12sp"
+        tools:text="Title" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/subtitleTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        android:lineSpacingExtra="0dp"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="18sp"
+        android:transformPivotY="9sp"
+        android:visibility="gone"
+        tools:text="Subtitle" />
+
+    <RelativeLayout
+        android:id="@+id/fabLayout"
+        android:layout_width="88dp"
+        android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_filter"
-        app:backgroundTint="?colorAccent"
-        tools:ignore="ContentDescription" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/scrollToTopFab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/filterFab"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="6dp"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/ic_arrow_up"
+            android:visibility="invisible"
+            app:backgroundTint="?android:colorBackground"
+            app:fabSize="mini"
+            app:tint="?colorIconTint"
+            tools:ignore="ContentDescription"
+            tools:visibility="visible" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/filterFab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/ic_filter"
+            app:backgroundTint="?colorAccent"
+            tools:ignore="ContentDescription" />
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

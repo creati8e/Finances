@@ -7,4 +7,13 @@
         <item name="android:background">@drawable/bg_selection_rounded_transparent</item>
     </style>
 
+    <style name="ToolbarIcon">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:background">@drawable/bg_selection_borderless</item>
+    </style>
+
 </resources>

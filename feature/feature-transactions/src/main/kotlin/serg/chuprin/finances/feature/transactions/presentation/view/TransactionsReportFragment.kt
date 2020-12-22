@@ -4,23 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.fragment_transactions_report.*
-import kotlinx.android.synthetic.main.fragment_transactions_report.view.*
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionsReportScreenArguments
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.adapter.decoration.CellDividerDecoration
 import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.arguments
-import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.setToolbarTitle
-import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.setupToolbar
+import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisibleOrGone
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
 import serg.chuprin.finances.core.api.presentation.view.extensions.onScroll
 import serg.chuprin.finances.core.api.presentation.view.setSharedElementTransitions
 import serg.chuprin.finances.feature.transactions.R
 import serg.chuprin.finances.feature.transactions.di.TransactionsReportComponent
+import serg.chuprin.finances.feature.transactions.presentation.model.TransactionReportHeader
 import serg.chuprin.finances.feature.transactions.presentation.model.store.TransactionsReportIntent
 import serg.chuprin.finances.feature.transactions.presentation.view.adapter.TransactionReportCellsAdapter
 
@@ -48,7 +48,7 @@ class TransactionsReportFragment : BaseFragment(R.layout.fragment_transactions_r
         savedInstanceState: Bundle?
     ): View {
         return super.onCreateView(inflater, container, savedInstanceState)!!.apply {
-            coordinatorLayout.transitionName = screenArguments.transitionName
+            transitionName = screenArguments.transitionName
         }
     }
 
@@ -63,22 +63,25 @@ class TransactionsReportFragment : BaseFragment(R.layout.fragment_transactions_r
         edgeToEdge {
             view.fit { Edge.Top }
             recyclerView.fit { Edge.Bottom }
-            filterFab.fit { Edge.Bottom + Edge.Right }
-            scrollToTopFab.fit { Edge.Bottom + Edge.Right }
+            fabLayout.fit { Edge.Bottom + Edge.Right }
         }
 
-        setupToolbar(toolbar) {
-            setDisplayHomeAsUpEnabled(true)
+        backButton.onClick {
+            navController.navigateUp()
         }
 
         setupRecyclerView()
 
         with(viewModel) {
+            headerLiveData(::showHeader)
             cellsLiveData(cellsAdapter::setItems)
-            headerLiveData { header ->
-                setToolbarTitle(header.title)
-            }
         }
+    }
+
+    private fun showHeader(header: TransactionReportHeader) {
+        titleTextView.text = header.title
+        subtitleTextView.text = header.subtitle
+        subtitleTextView.makeVisibleOrGone(header.subtitle.isNotEmpty())
     }
 
     private fun setupRecyclerView() {
@@ -108,6 +111,7 @@ class TransactionsReportFragment : BaseFragment(R.layout.fragment_transactions_r
         }
         scrollToTopFab.onClick {
             recyclerView.scrollToPosition(0)
+            (requireView() as MotionLayout).transitionToStart()
         }
     }
 

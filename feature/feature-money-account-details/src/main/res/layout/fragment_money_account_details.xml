@@ -18,7 +18,7 @@
         app:layout_constraintVertical_bias="0"
         tools:itemCount="5" />
 
-    <serg.chuprin.finances.feature.moneyaccount.details.presentation.view.widget.MoneyAccountDetailsToolbarLayout
+    <serg.chuprin.finances.core.api.presentation.view.widget.FakeToolbarLayout
         android:id="@+id/fakeAppBarLayout"
         android:layout_width="0dp"
         android:layout_height="200dp"

@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.moneyaccount.details.presentation.view.widget
+package serg.chuprin.finances.core.api.presentation.view.widget
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -10,7 +10,7 @@ import serg.chuprin.finances.core.api.presentation.view.extensions.getAttributeC
 /**
  * Created by Sergey Chuprin on 09.05.2020.
  */
-class MoneyAccountDetailsToolbarLayout @JvmOverloads constructor(
+class FakeToolbarLayout @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -29,6 +29,5 @@ class MoneyAccountDetailsToolbarLayout @JvmOverloads constructor(
         super.setElevation(elevation)
         materialShapeDrawable.elevation = elevation
     }
-
 
 }

@@ -42,7 +42,10 @@ class TransactionReportHeaderBuilder @Inject constructor(
                 filter.transactionType.format()
             }
         }
-        return TransactionReportHeader(title, listOf(TransactionReportChartListCell(chartCells)))
+        return TransactionReportHeader(
+            title = title,
+            chartListCell = listOf(element = TransactionReportChartListCell(chartCells))
+        )
     }
 
     private suspend fun buildTitleForSingleCategory(
