@@ -30,39 +30,28 @@
         tools:itemCount="5"
         tools:listitem="@layout/cell_transaction" />
 
-    <RelativeLayout
-        android:id="@+id/fabLayout"
-        android:layout_width="88dp"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/scrollToTopFab"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:clipToPadding="false"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="88dp"
+        android:src="@drawable/ic_arrow_up"
+        android:visibility="invisible"
+        app:backgroundTint="?android:colorBackground"
+        app:fabSize="mini"
+        tools:ignore="ContentDescription"
+        tools:visibility="visible" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/scrollToTopFab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/filterFab"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="16dp"
-            android:src="@drawable/ic_arrow_up"
-            android:visibility="invisible"
-            app:backgroundTint="?android:colorBackground"
-            app:fabSize="mini"
-            tools:ignore="ContentDescription"
-            tools:visibility="visible" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/filterFab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:src="@drawable/ic_filter"
-            app:backgroundTint="?colorAccent"
-            tools:ignore="ContentDescription" />
-
-    </RelativeLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/filterFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_filter"
+        app:backgroundTint="?colorAccent"
+        tools:ignore="ContentDescription" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

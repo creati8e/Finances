@@ -63,7 +63,8 @@ class TransactionsReportFragment : BaseFragment(R.layout.fragment_transactions_r
         edgeToEdge {
             view.fit { Edge.Top }
             recyclerView.fit { Edge.Bottom }
-            fabLayout.fit { Edge.Bottom + Edge.Right }
+            filterFab.fit { Edge.Bottom + Edge.Right }
+            scrollToTopFab.fit { Edge.Bottom + Edge.Right }
         }
 
         setupToolbar(toolbar) {
@@ -92,9 +93,14 @@ class TransactionsReportFragment : BaseFragment(R.layout.fragment_transactions_r
                     marginStartDp = 36
                 )
             )
-            onScroll { _, _, dy ->
-                if (dy > 0) {
-                    this@TransactionsReportFragment.scrollToTopFab.show()
+            onScroll { recyclerView, _, _ ->
+                if (recyclerView.childCount > 0) {
+                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                    if (layoutManager.findFirstVisibleItemPosition() == 0) {
+                        this@TransactionsReportFragment.scrollToTopFab.hide()
+                    } else {
+                        this@TransactionsReportFragment.scrollToTopFab.show()
+                    }
                 } else {
                     this@TransactionsReportFragment.scrollToTopFab.hide()
                 }
