@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import serg.chuprin.finances.core.api.domain.model.CategoriesQueryResult
+import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.model.transaction.TransactionsQuery
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
@@ -62,13 +63,20 @@ class TransactionReportTransactionDataService @Inject constructor(
                 reportDataPeriod.startDate to reportDataPeriod.endDate
             }
         }
+
+        val initialCategoryIds: MutableSet<Id?> = if (Id.UNKNOWN in filter.categoryIds) {
+            mutableSetOf(null)
+        } else {
+            mutableSetOf()
+        }
+
         return TransactionsQuery(
             endDate = endDate,
             startDate = startDate,
             transactionType = filter.transactionType,
             userId = userRepository.getCurrentUser().id,
             sortOrder = TransactionsQuery.SortOrder.DATE_ASC,
-            categoryIds = categories.mapTo(mutableSetOf(), { (categoryId) -> categoryId })
+            categoryIds = categories.mapTo(initialCategoryIds, { (categoryId) -> categoryId })
         )
     }
 
