@@ -70,7 +70,19 @@ class TransactionReportChartDataBuilder @Inject constructor() {
             // TODO: Think about splitting periods for custom period.
             ReportDataPeriod.AllTime, is ReportDataPeriod.Custom -> emptyMap()
             is ReportDataPeriod.Predefined -> {
-                buildForPredefinedDataPeriod(reportDataPeriod.dataPeriod, transactions)
+                when (filter) {
+                    is TransactionReportFilter.SingleCategory -> {
+                        buildForPredefinedDataPeriod(reportDataPeriod.dataPeriod, transactions)
+                    }
+                    is TransactionReportFilter.Plain -> {
+                        if (filter.transactionType != null) {
+                            buildForPredefinedDataPeriod(reportDataPeriod.dataPeriod, transactions)
+                        } else {
+                            emptyMap()
+                        }
+                    }
+                    is TransactionReportFilter.Categories -> TODO()
+                }
             }
         }
     }
