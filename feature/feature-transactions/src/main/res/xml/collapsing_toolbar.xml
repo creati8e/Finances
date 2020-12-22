@@ -58,7 +58,8 @@
             app:layout_constraintBottom_toBottomOf="@id/fakeAppBarLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:visibilityMode="ignore" />
 
     </ConstraintSet>
 
@@ -108,7 +109,8 @@
             app:layout_constraintBottom_toBottomOf="@id/fakeAppBarLayout"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/backButton"
-            app:layout_constraintTop_toBottomOf="@id/titleTextView" />
+            app:layout_constraintTop_toBottomOf="@id/titleTextView"
+            app:visibilityMode="ignore" />
 
     </ConstraintSet>
 

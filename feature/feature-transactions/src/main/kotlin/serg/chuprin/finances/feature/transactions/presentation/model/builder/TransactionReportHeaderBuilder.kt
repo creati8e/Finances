@@ -4,6 +4,7 @@ import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.query.TransactionCategoriesQuery
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepository
+import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.feature.transactions.R
 import serg.chuprin.finances.feature.transactions.domain.model.TransactionReportFilter
@@ -29,8 +30,10 @@ class TransactionReportHeaderBuilder @Inject constructor(
             currentDataPeriod = report.filter.reportDataPeriod.dataPeriod
         )
 
+        val filter = report.filter
+
         // TODO: Add formatting for all filter types.
-        val title = when (val filter = report.filter) {
+        val title = when (filter) {
             is TransactionReportFilter.Plain -> {
                 filter.transactionType?.format()
                     ?: resourceManger.getString(R.string.transactions_report_toolbar_title)
@@ -42,10 +45,30 @@ class TransactionReportHeaderBuilder @Inject constructor(
                 filter.transactionType.format()
             }
         }
+
+        val subtitle = when (filter) {
+            is TransactionReportFilter.Plain -> {
+                EMPTY_STRING
+            }
+            is TransactionReportFilter.SingleCategory -> {
+                buildSubtitleForSingleCategory(filter)
+            }
+            is TransactionReportFilter.Categories -> {
+                EMPTY_STRING
+            }
+        }
+
         return TransactionReportHeader(
             title = title,
+            subtitle = subtitle,
             chartListCell = listOf(element = TransactionReportChartListCell(chartCells))
         )
+    }
+
+    private fun buildSubtitleForSingleCategory(
+        filter: TransactionReportFilter.SingleCategory
+    ): String {
+        return filter.transactionType.format()
     }
 
     private suspend fun buildTitleForSingleCategory(
