@@ -17,6 +17,20 @@ class TransactionReportDataServiceQueryBuilder @Inject constructor(
     private val userRepository: UserRepository
 ) {
 
+    companion object {
+
+        val CATEGORY_INTERESTED_KEYS: List<((TransactionReportFilter) -> Any?)> = listOf(
+            TransactionReportFilter::categoryIds,
+            TransactionReportFilter::transactionType
+        )
+
+        val TRANSACTION_INTERESTED_KEYS: List<((TransactionReportFilter) -> Any?)> = listOf(
+            TransactionReportFilter::reportDataPeriod,
+            TransactionReportFilter::transactionType
+        )
+
+    }
+
     suspend fun buildForCategories(
         filter: TransactionReportFilter
     ): TransactionCategoriesQuery {
