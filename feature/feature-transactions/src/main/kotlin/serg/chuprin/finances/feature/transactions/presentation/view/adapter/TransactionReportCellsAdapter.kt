@@ -8,17 +8,22 @@ import serg.chuprin.finances.core.api.presentation.view.adapter.diff.DiffCallbac
 import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.DateDividerCellRenderer
 import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.TransactionCellRenderer
 import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ZeroDataCellRenderer
+import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportChartCell
+import serg.chuprin.finances.feature.transactions.presentation.view.adapter.renderer.TransactionReportChartListCellRenderer
 
 /**
  * Created by Sergey Chuprin on 07.07.2020.
  */
-class TransactionReportCellsAdapter : DiffMultiViewAdapter<BaseCell>(DiffCallback()),
+class TransactionReportCellsAdapter(
+    onChartCellClicked: (TransactionReportChartCell) -> Unit
+) : DiffMultiViewAdapter<BaseCell>(DiffCallback()),
     DividerAdapter {
 
     init {
         registerRenderer(ZeroDataCellRenderer())
         registerRenderer(TransactionCellRenderer())
         registerRenderer(DateDividerCellRenderer())
+        registerRenderer(TransactionReportChartListCellRenderer(onChartCellClicked))
     }
 
     override fun shouldDrawDividerForCellAt(adapterPosition: Int): Boolean {

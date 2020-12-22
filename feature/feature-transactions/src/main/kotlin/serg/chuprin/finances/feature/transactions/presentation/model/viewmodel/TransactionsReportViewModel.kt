@@ -2,10 +2,11 @@ package serg.chuprin.finances.feature.transactions.presentation.model.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.BaseStoreViewModel
 import serg.chuprin.finances.feature.transactions.presentation.model.TransactionReportHeader
-import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportChartCell
 import serg.chuprin.finances.feature.transactions.presentation.model.store.TransactionsReportIntent
 import serg.chuprin.finances.feature.transactions.presentation.model.store.TransactionsReportState
 import serg.chuprin.finances.feature.transactions.presentation.model.store.TransactionsReportStore
@@ -18,14 +19,18 @@ class TransactionsReportViewModel @Inject constructor(
     store: TransactionsReportStore
 ) : BaseStoreViewModel<TransactionsReportIntent>() {
 
-    val transactionsListCellsLiveData: LiveData<List<BaseCell>> =
-        store.observeParticularStateAsLiveData(TransactionsReportState::transactionListCells)
+    val cellsLiveData: LiveData<List<BaseCell>> = store.stateFlow
+        .map { state ->
+            buildList {
+                addAll(state.header.chartListCell)
+                addAll(state.transactionListCells)
+            }
+        }
+        .distinctUntilChanged()
+        .asLiveData()
 
     val headerLiveData: LiveData<TransactionReportHeader> =
         store.observeParticularStateAsLiveData(TransactionsReportState::header)
-
-    val chartCellsLiveData: LiveData<List<TransactionReportChartCell>> =
-        store.observeParticularStateAsLiveData { state -> state.header.chartCells }
 
     init {
         store.start(intentsFlow(), viewModelScope)

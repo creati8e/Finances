@@ -9,6 +9,7 @@ import serg.chuprin.finances.feature.transactions.R
 import serg.chuprin.finances.feature.transactions.domain.model.TransactionReportFilter
 import serg.chuprin.finances.feature.transactions.domain.model.TransactionsReport
 import serg.chuprin.finances.feature.transactions.presentation.model.TransactionReportHeader
+import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportChartListCell
 import javax.inject.Inject
 
 /**
@@ -37,7 +38,7 @@ class TransactionReportHeaderBuilder @Inject constructor(
                 filter.transactionType.format()
             }
         }
-        return TransactionReportHeader(title, chartCells)
+        return TransactionReportHeader(title, listOf(TransactionReportChartListCell(chartCells)))
     }
 
     private suspend fun buildTitleForSingleCategory(
