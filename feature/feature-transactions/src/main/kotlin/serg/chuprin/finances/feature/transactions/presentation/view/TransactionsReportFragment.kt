@@ -16,6 +16,8 @@ import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.vi
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionsReportScreenArguments
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.adapter.decoration.CellDividerDecoration
+import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
+import serg.chuprin.finances.core.api.presentation.view.extensions.onScroll
 import serg.chuprin.finances.core.api.presentation.view.setSharedElementTransitions
 import serg.chuprin.finances.feature.transactions.R
 import serg.chuprin.finances.feature.transactions.di.TransactionsReportComponent
@@ -60,7 +62,7 @@ class TransactionsReportFragment : BaseFragment(R.layout.fragment_transactions_r
         edgeToEdge {
             view.fit { Edge.Top }
             recyclerView.fit { Edge.Bottom }
-            filterFab.fit { Edge.Bottom + Edge.Right }
+            fabLayout.fit { Edge.Bottom + Edge.Right }
         }
 
         setupToolbar(toolbar) {
@@ -89,6 +91,16 @@ class TransactionsReportFragment : BaseFragment(R.layout.fragment_transactions_r
                     marginStartDp = 36
                 )
             )
+            onScroll { _, _, dy ->
+                if (dy > 0) {
+                    this@TransactionsReportFragment.scrollToTopFab.show()
+                } else {
+                    this@TransactionsReportFragment.scrollToTopFab.hide()
+                }
+            }
+        }
+        scrollToTopFab.onClick {
+            recyclerView.scrollToPosition(0)
         }
     }
 
