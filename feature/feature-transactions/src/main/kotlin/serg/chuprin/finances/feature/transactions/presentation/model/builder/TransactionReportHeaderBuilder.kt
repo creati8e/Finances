@@ -23,7 +23,11 @@ class TransactionReportHeaderBuilder @Inject constructor(
 
     suspend fun build(report: TransactionsReport): TransactionReportHeader {
         val preparedData = report.preparedData
-        val chartCells = chartCellsBuilder.build(preparedData.chartData, preparedData.currency)
+        val chartCells = chartCellsBuilder.build(
+            currency = preparedData.currency,
+            chartData = preparedData.chartData,
+            currentDataPeriod = report.filter.reportDataPeriod.dataPeriod
+        )
 
         // TODO: Add formatting for all filter types.
         val title = when (val filter = report.filter) {

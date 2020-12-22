@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="48dp"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_selection_rounded_transparent"
+    android:background="@drawable/bg_chart_cell_selector"
     android:clickable="true"
     android:clipChildren="false"
     android:clipToPadding="false"

@@ -19,6 +19,7 @@ class TransactionChartCellRenderer : ContainerRenderer<TransactionReportChartCel
     override fun bindView(holder: ContainerHolder, model: TransactionReportChartCell) {
         with(holder) {
             chartBar.setProgress(model.barFill)
+            itemView.isActivated = model.isChosen
             dateTextView.text = model.formattedPeriodName
         }
     }

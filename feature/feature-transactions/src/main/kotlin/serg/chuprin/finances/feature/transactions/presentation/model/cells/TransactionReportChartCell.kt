@@ -12,7 +12,8 @@ data class TransactionReportChartCell(
     val formattedAmount: String,
     val formattedPeriodName: String,
     @IntRange(from = 0, to = 100)
-    val barFill: Int
+    val barFill: Int,
+    val isChosen: Boolean
 ) : DiffCell<DataPeriod> {
 
     override val diffCellId: DataPeriod = dataPeriod

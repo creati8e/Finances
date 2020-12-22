@@ -23,6 +23,7 @@ class TransactionReportChartCellsBuilder @Inject constructor(
     }
 
     fun build(
+        currentDataPeriod: DataPeriod?,
         chartData: Map<DataPeriod, BigDecimal>,
         currency: Currency
     ): List<TransactionReportChartCell> {
@@ -40,6 +41,7 @@ class TransactionReportChartCellsBuilder @Inject constructor(
                     currency = currency,
                     withCurrencySymbol = false
                 ),
+                isChosen = dataPeriod == currentDataPeriod,
                 barFill = calculatePercent(max = maxAmount, target = amount)
             )
         }
