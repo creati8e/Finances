@@ -23,6 +23,7 @@ import serg.chuprin.finances.core.api.presentation.view.setSharedElementTransiti
 import serg.chuprin.finances.feature.transactions.R
 import serg.chuprin.finances.feature.transactions.di.TransactionsReportComponent
 import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportChartCell
+import serg.chuprin.finances.feature.transactions.presentation.model.store.TransactionsReportIntent
 import serg.chuprin.finances.feature.transactions.presentation.view.adapter.TransactionReportCellsAdapter
 import serg.chuprin.finances.feature.transactions.presentation.view.adapter.renderer.TransactionChartCellRenderer
 
@@ -92,6 +93,9 @@ class TransactionsReportFragment : BaseFragment(R.layout.fragment_transactions_r
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false).apply {
                     stackFromEnd = true
                 }
+        }
+        chartCellsAdapter.clickListener = { cell, _, _ ->
+            viewModel.dispatchIntent(TransactionsReportIntent.ClickOnDataChartCell(cell))
         }
     }
 

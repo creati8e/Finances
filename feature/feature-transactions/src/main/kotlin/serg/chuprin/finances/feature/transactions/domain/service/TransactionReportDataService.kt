@@ -35,7 +35,7 @@ class TransactionReportDataService @Inject constructor(
 
                 // TODO: Distinct by parameters.
 
-                val sharedFilterFlow = filterRepository.filterFlow
+                val sharedFilterFlow = filterRepository.filterFlow.distinctUntilChanged()
 
                 val sharedCategoriesFlow = sharedFilterFlow
                     .filterForCategories()

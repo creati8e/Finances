@@ -21,11 +21,13 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/chartRecyclerView"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:clipToPadding="false"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
+            tools:itemCount="5"
             tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/cell_transaction_report_chart"
             tools:orientation="horizontal" />
@@ -48,6 +50,7 @@
         android:layout_margin="16dp"
         android:src="@drawable/ic_filter"
         android:transitionName="@string/transition_money_account_creation"
-        app:backgroundTint="?colorAccent" />
+        app:backgroundTint="?colorAccent"
+        tools:ignore="ContentDescription" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

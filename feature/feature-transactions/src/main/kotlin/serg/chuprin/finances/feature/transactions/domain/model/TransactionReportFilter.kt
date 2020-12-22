@@ -10,6 +10,15 @@ sealed class TransactionReportFilter(
     open val reportDataPeriod: ReportDataPeriod,
 ) {
 
+    companion object {
+
+        val UNINITIALIZED = Plain(
+            transactionType = null,
+            reportDataPeriod = ReportDataPeriod.AllTime
+        )
+
+    }
+
     data class Plain(
         override val reportDataPeriod: ReportDataPeriod,
         override val transactionType: PlainTransactionType?
@@ -17,6 +26,10 @@ sealed class TransactionReportFilter(
 
         override val categoryIds: Set<Id>
             get() = emptySet()
+
+        override fun setDataPeriod(dataPeriod: ReportDataPeriod): TransactionReportFilter {
+            return copy(reportDataPeriod = dataPeriod)
+        }
 
     }
 
@@ -29,25 +42,28 @@ sealed class TransactionReportFilter(
         override val categoryIds: Set<Id>
             get() = setOf(categoryId)
 
+        override fun setDataPeriod(dataPeriod: ReportDataPeriod): TransactionReportFilter {
+            return copy(reportDataPeriod = dataPeriod)
+        }
+
     }
 
     data class Categories(
         override val categoryIds: Set<Id>,
         override val transactionType: PlainTransactionType,
         override val reportDataPeriod: ReportDataPeriod
-    ) : TransactionReportFilter(reportDataPeriod)
+    ) : TransactionReportFilter(reportDataPeriod) {
+
+        override fun setDataPeriod(dataPeriod: ReportDataPeriod): TransactionReportFilter {
+            return copy(reportDataPeriod = dataPeriod)
+        }
+
+    }
 
     abstract val transactionType: PlainTransactionType?
 
     abstract val categoryIds: Set<Id>
 
-    companion object {
-
-        val UNINITIALIZED = Plain(
-            transactionType = null,
-            reportDataPeriod = ReportDataPeriod.AllTime
-        )
-
-    }
+    abstract fun setDataPeriod(dataPeriod: ReportDataPeriod): TransactionReportFilter
 
 }

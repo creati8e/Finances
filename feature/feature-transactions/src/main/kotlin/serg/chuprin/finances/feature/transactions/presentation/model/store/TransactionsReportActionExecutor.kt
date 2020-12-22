@@ -4,6 +4,9 @@ import kotlinx.coroutines.flow.Flow
 import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
+import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
+import serg.chuprin.finances.feature.transactions.domain.model.ReportDataPeriod
+import serg.chuprin.finances.feature.transactions.domain.usecase.ChooseDataPeriodUseCase
 import serg.chuprin.finances.feature.transactions.presentation.model.builder.TransactionReportCellsBuilder
 import serg.chuprin.finances.feature.transactions.presentation.model.builder.TransactionReportHeaderBuilder
 import javax.inject.Inject
@@ -14,6 +17,7 @@ import javax.inject.Inject
 class TransactionsReportActionExecutor @Inject constructor(
     private val cellsBuilder: TransactionReportCellsBuilder,
     private val headerBuilder: TransactionReportHeaderBuilder,
+    private val chooseDataPeriodUseCase: ChooseDataPeriodUseCase
 ) : StoreActionExecutor<TransactionsReportAction, TransactionsReportState, TransactionsReportEffect, TransactionsReportEvent> {
 
     override fun invoke(
@@ -23,10 +27,33 @@ class TransactionsReportActionExecutor @Inject constructor(
         actionsFlow: Flow<TransactionsReportAction>
     ): Flow<TransactionsReportEffect> {
         return when (action) {
-            is TransactionsReportAction.ExecuteIntent -> TODO()
+            is TransactionsReportAction.ExecuteIntent -> {
+                when (val intent = action.intent) {
+                    is TransactionsReportIntent.ClickOnDataChartCell -> {
+                        handleClickOnDataChartCellIntent(intent, state)
+                    }
+                }
+            }
             is TransactionsReportAction.FormatReport -> {
                 handleFormatReportAction(action)
             }
+        }
+    }
+
+    private fun handleClickOnDataChartCellIntent(
+        intent: TransactionsReportIntent.ClickOnDataChartCell,
+        state: TransactionsReportState
+    ): Flow<TransactionsReportEffect> {
+        return emptyFlowAction {
+            val reportDataPeriod = when (val dataPeriod = state.filter.reportDataPeriod) {
+                is ReportDataPeriod.Predefined -> {
+                    dataPeriod.copy(dataPeriod = intent.chartCell.dataPeriod)
+                }
+                is ReportDataPeriod.Custom, is ReportDataPeriod.AllTime -> {
+                    throw IllegalStateException("Data period can not be chosen for")
+                }
+            }
+            chooseDataPeriodUseCase.execute(state.filter, reportDataPeriod)
         }
     }
 
