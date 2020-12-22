@@ -7,6 +7,7 @@ import java.util.*
 /**
  * Created by Sergey Chuprin on 21.12.2020.
  */
+// TODO: Delete.
 interface TransactionReportDataPeriodRepository {
 
     val currentDataPeriodFlow: Flow<Optional<DataPeriod>>

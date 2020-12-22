@@ -1,54 +1,56 @@
 package serg.chuprin.finances.feature.transactions.domain.service
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
 import serg.chuprin.finances.core.api.domain.model.CategoriesQueryResult
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryType
-import serg.chuprin.finances.core.api.domain.model.query.TransactionCategoriesQuery
-import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
+import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.model.transaction.TransactionsQuery
+import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
+import serg.chuprin.finances.core.api.extensions.flow.distinctUntilChangedBy
 import serg.chuprin.finances.feature.transactions.domain.model.ReportDataPeriod
 import serg.chuprin.finances.feature.transactions.domain.model.TransactionReportFilter
 import javax.inject.Inject
 
 /**
- * Created by Sergey Chuprin on 21.12.2020.
+ * Created by Sergey Chuprin on 22.12.2020.
  */
-class TransactionReportDataServiceQueryBuilder @Inject constructor(
-    private val userRepository: UserRepository
+class TransactionReportTransactionDataService @Inject constructor(
+    private val userRepository: UserRepository,
+    private val transactionRepository: TransactionRepository
 ) {
 
-    companion object {
+    private companion object {
 
-        val CATEGORY_INTERESTED_KEYS: List<((TransactionReportFilter) -> Any?)> = listOf(
-            TransactionReportFilter::categoryIds,
-            TransactionReportFilter::transactionType
-        )
-
-        val TRANSACTION_INTERESTED_KEYS: List<((TransactionReportFilter) -> Any?)> = listOf(
+        /**
+         * We want to observe transactions with new data from [TransactionReportFilter] only if
+         * [TransactionReportFilter.reportDataPeriod] or [TransactionReportFilter.transactionType] has changed.
+         *
+         * @see [transactionsFlow]
+         */
+        private val INTERESTED_KEYS: List<((TransactionReportFilter) -> Any?)> = listOf(
             TransactionReportFilter::reportDataPeriod,
             TransactionReportFilter::transactionType
         )
 
     }
 
-    suspend fun buildForCategories(
-        filter: TransactionReportFilter
-    ): TransactionCategoriesQuery {
-        // FIXME: Unify maybe.
-        val categoryType = when (filter.transactionType) {
-            PlainTransactionType.INCOME -> TransactionCategoryType.INCOME
-            PlainTransactionType.EXPENSE -> TransactionCategoryType.EXPENSE
-            null -> null
+    suspend fun transactionsFlow(
+        filterFlow: Flow<TransactionReportFilter>,
+        categoriesFlow: SharedFlow<CategoriesQueryResult>
+    ): Flow<List<Transaction>> {
+        return combine(
+            categoriesFlow,
+            filterFlow.distinctUntilChangedBy(INTERESTED_KEYS),
+            ::Pair
+        ).flatMapLatest { (categories, filter) ->
+            transactionRepository.transactionsFlow(buildQuery(filter, categories))
         }
-        return TransactionCategoriesQuery(
-            type = categoryType,
-            categoryIds = filter.categoryIds,
-            userId = userRepository.getCurrentUser().id,
-            relation = TransactionCategoriesQuery.Relation.RETRIEVE_CHILDREN
-        )
     }
 
-    suspend fun buildForTransactions(
+    private suspend fun buildQuery(
         filter: TransactionReportFilter,
         categories: CategoriesQueryResult
     ): TransactionsQuery {
@@ -69,4 +71,5 @@ class TransactionReportDataServiceQueryBuilder @Inject constructor(
             categoryIds = categories.mapTo(mutableSetOf(), { (categoryId) -> categoryId })
         )
     }
+
 }

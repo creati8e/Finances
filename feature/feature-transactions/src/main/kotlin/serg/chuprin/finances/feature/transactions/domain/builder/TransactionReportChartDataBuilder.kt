@@ -1,9 +1,13 @@
-package serg.chuprin.finances.feature.transactions.domain.service
+package serg.chuprin.finances.feature.transactions.domain.builder
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
+import serg.chuprin.finances.core.api.domain.model.period.DataPeriodType
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.extensions.adjustToTheEndOfPeriod
 import serg.chuprin.finances.core.api.extensions.buildSortedMap
+import serg.chuprin.finances.core.api.extensions.flow.distinctUntilChangedBy
 import serg.chuprin.finances.feature.transactions.domain.model.ReportDataPeriod
 import serg.chuprin.finances.feature.transactions.domain.model.TransactionReportFilter
 import java.time.LocalDateTime
@@ -19,13 +23,43 @@ class TransactionReportChartDataBuilder @Inject constructor() {
 
     private companion object {
 
+        private val INTERESTED_KEYS: List<((TransactionReportFilter) -> Any?)> = listOf(
+
+            /**
+             * We want to rebuild chart data if report period type has changed
+             * i.e from [ReportDataPeriod.Predefined] to [ReportDataPeriod.Custom].
+             *
+             * @see [buildData]
+             */
+            { filter -> filter.reportDataPeriod::class.java },
+
+            /**
+             * We want to rebuild chart data if data period type has changed
+             * i.e from [DataPeriodType.DAY] to [DataPeriodType.MONTH].
+             *
+             * @see [buildData]
+             */
+            { filter -> filter.reportDataPeriod.dataPeriod?.periodType }
+        )
+
         private val dataPeriodComparator = Comparator<DataPeriod> { period1, period2 ->
             period1.startDate.compareTo(period2.startDate)
         }
 
     }
 
-    fun build(
+    fun dataFlow(
+        filterFlow: Flow<TransactionReportFilter>,
+        transactionsFlow: Flow<List<Transaction>>
+    ): Flow<Map<DataPeriod, List<Transaction>>> {
+        return combine(
+            transactionsFlow,
+            filterFlow.distinctUntilChangedBy(INTERESTED_KEYS),
+            ::buildData
+        )
+    }
+
+    private fun buildData(
         transactions: List<Transaction>,
         filter: TransactionReportFilter
     ): Map<DataPeriod, List<Transaction>> {

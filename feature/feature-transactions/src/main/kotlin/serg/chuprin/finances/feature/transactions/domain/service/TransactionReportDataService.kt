@@ -3,12 +3,8 @@ package serg.chuprin.finances.feature.transactions.domain.service
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.*
-import serg.chuprin.finances.core.api.domain.model.CategoriesQueryResult
-import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
-import serg.chuprin.finances.core.api.domain.model.transaction.TransactionsQuery
-import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepository
-import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
-import serg.chuprin.finances.feature.transactions.domain.model.TransactionReportFilter
+import serg.chuprin.finances.feature.transactions.domain.builder.TransactionReportChartDataBuilder
+import serg.chuprin.finances.feature.transactions.domain.builder.TransactionReportListDataBuilder
 import serg.chuprin.finances.feature.transactions.domain.model.TransactionReportRawData
 import serg.chuprin.finances.feature.transactions.domain.repository.TransactionReportFilterRepository
 import javax.inject.Inject
@@ -17,89 +13,56 @@ import javax.inject.Inject
  * Created by Sergey Chuprin on 12.12.2020.
  */
 class TransactionReportDataService @Inject constructor(
-    private val transactionRepository: TransactionRepository,
-    private val categoryRepository: TransactionCategoryRepository,
     private val listDataBuilder: TransactionReportListDataBuilder,
     private val filterRepository: TransactionReportFilterRepository,
     private val chartDataBuilder: TransactionReportChartDataBuilder,
-    private val queryBuilder: TransactionReportDataServiceQueryBuilder
+    private val categoriesDataService: TransactionReportCategoriesDataService,
+    private val transactionDataService: TransactionReportTransactionDataService
 ) {
 
-    /**
-     * @return flow emitting map of categories associated with transactions.
-     * Children categories are retrieved for each category from [TransactionsQuery.categoryIds].
-     */
     fun buildDataForReport(): Flow<TransactionReportRawData> {
         return flow {
             coroutineScope {
 
-                // TODO: Distinct by parameters.
+                // distinctUntilChanged here prevents just from duplicate data emissions.
+                val filterFlow = filterRepository.filterFlow.distinctUntilChanged()
 
-                val sharedFilterFlow = filterRepository.filterFlow.distinctUntilChanged()
-
-                val sharedCategoriesFlow = sharedFilterFlow
-                    .filterForCategories()
-                    .flatMapLatest { filter ->
-                        categoryRepository.categoriesFlow(
-                            queryBuilder.buildForCategories(filter)
-                        )
-                    }
+                // Firstly we need to retrieve categories to associate them with transactions.
+                val categoriesFlow = categoriesDataService
+                    .categoriesFlow(filterFlow)
                     .share(coroutineScope = this)
 
-                val sharedTransactionsFlow = combine(
-                    sharedFilterFlow.filterForTransactions(),
-                    sharedCategoriesFlow,
-                    ::Pair
-                ).flatMapLatest { (filter, categories) ->
-                    getTransactions(categories, filter)
-                }.share(coroutineScope = this)
-
-                val chartDataFlow = combine(
-                    sharedTransactionsFlow,
-                    sharedFilterFlow.filterForTransactions(),
-                    chartDataBuilder::build
-                )
-
-                val listDataFlow = combine(
-                    sharedTransactionsFlow,
-                    sharedCategoriesFlow,
-                    sharedFilterFlow,
-                    listDataBuilder::build
-                )
+                // Then we need to retrieve all transactions for all time which are matches filter.
+                // This is required for building historical chart data.
+                //
+                // Cache flow's to reduce overhead: when current data period in filter changed,
+                // we need to retrieve transactions for that data period
+                // (preserving chart data and do not rebuild it).
+                val transactionsFlow = transactionDataService
+                    .transactionsFlow(
+                        filterFlow = filterFlow,
+                        categoriesFlow = categoriesFlow
+                    )
+                    .share(coroutineScope = this)
 
                 emitAll(
                     combine(
-                        sharedFilterFlow,
-                        chartDataFlow,
-                        listDataFlow,
+                        filterFlow,
+                        chartDataBuilder.dataFlow(
+                            filterFlow = filterFlow,
+                            transactionsFlow = transactionsFlow
+                        ),
+                        listDataBuilder.dataFlow(
+                            filterFlow = filterFlow,
+                            categoriesFlow = categoriesFlow,
+                            transactionsFlow = transactionsFlow
+                        ),
                         ::TransactionReportRawData
                     )
-                )
 
+                )
             }
         }
-    }
-
-    private fun Flow<TransactionReportFilter>.filterForCategories(): Flow<TransactionReportFilter> {
-        return this
-//        return distinctUntilChangedBy(
-//            TransactionReportDataServiceQueryBuilder.CATEGORY_INTERESTED_KEYS
-//        )
-    }
-
-    private fun Flow<TransactionReportFilter>.filterForTransactions(): Flow<TransactionReportFilter> {
-        return this
-//        return distinctUntilChangedBy(
-//            TransactionReportDataServiceQueryBuilder.TRANSACTION_INTERESTED_KEYS
-//        )
-    }
-
-    private suspend fun getTransactions(
-        categoriesQueryResult: CategoriesQueryResult,
-        filter: TransactionReportFilter
-    ): Flow<List<Transaction>> {
-        val query = queryBuilder.buildForTransactions(filter, categoriesQueryResult)
-        return transactionRepository.transactionsFlow(query)
     }
 
     private fun <T> Flow<T>.share(coroutineScope: CoroutineScope): SharedFlow<T> {
