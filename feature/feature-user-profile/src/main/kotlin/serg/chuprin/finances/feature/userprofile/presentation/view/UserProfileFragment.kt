@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.fragment_user_profile.*
-import serg.chuprin.finances.core.api.presentation.extensions.setupToolbar
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
@@ -19,6 +18,7 @@ import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.adapter.decoration.CellDividerDecoration
 import serg.chuprin.finances.core.api.presentation.view.dialog.info.InfoDialogFragment
 import serg.chuprin.finances.core.api.presentation.view.dialog.info.showInfoDialog
+import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.setupToolbar
 import serg.chuprin.finances.core.api.presentation.view.extensions.getAttributeColor
 import serg.chuprin.finances.core.api.presentation.view.popup.menu.PopupMenuWindow
 import serg.chuprin.finances.core.api.presentation.view.setSharedElementTransitions

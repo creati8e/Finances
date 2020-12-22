@@ -12,9 +12,9 @@ import androidx.core.view.updatePadding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.dialog_fragment_info.view.*
 import serg.chuprin.finances.core.api.R
-import serg.chuprin.finances.core.api.presentation.extensions.arguments
-import serg.chuprin.finances.core.api.presentation.extensions.inflateCustomView
 import serg.chuprin.finances.core.api.presentation.view.extensions.*
+import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.arguments
+import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.inflateCustomView
 
 /**
  * Created by Sergey Chuprin on 21.07.2020.

@@ -13,10 +13,10 @@ import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.co
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.navigation.AuthorizationNavigation
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
+import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.shortToast
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeGone
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisible
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
-import serg.chuprin.finances.core.api.presentation.view.extensions.shortToast
 import serg.chuprin.finances.feature.authorization.R
 import serg.chuprin.finances.feature.authorization.presentation.di.AuthorizationComponent
 import serg.chuprin.finances.feature.authorization.presentation.model.SignInState

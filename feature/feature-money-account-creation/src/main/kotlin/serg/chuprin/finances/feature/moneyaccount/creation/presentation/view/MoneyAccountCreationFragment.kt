@@ -11,13 +11,13 @@ import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.fragment_money_account_creation.*
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceIntent
 import serg.chuprin.finances.core.api.presentation.currencychoice.view.CurrencyChoiceListController
-import serg.chuprin.finances.core.api.presentation.extensions.setupToolbar
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.MenuConfig
 import serg.chuprin.finances.core.api.presentation.view.extensions.doIgnoringChanges
+import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.setupToolbar
+import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.shortToast
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
-import serg.chuprin.finances.core.api.presentation.view.extensions.shortToast
 import serg.chuprin.finances.core.api.presentation.view.extensions.shouldIgnoreChanges
 import serg.chuprin.finances.core.api.presentation.view.menuConfig
 import serg.chuprin.finances.core.api.presentation.view.setSharedElementTransitions

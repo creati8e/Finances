@@ -9,13 +9,13 @@ import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.fragment_transactions_report.*
 import kotlinx.android.synthetic.main.fragment_transactions_report.view.*
-import serg.chuprin.finances.core.api.presentation.extensions.arguments
-import serg.chuprin.finances.core.api.presentation.extensions.setToolbarTitle
-import serg.chuprin.finances.core.api.presentation.extensions.setupToolbar
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionsReportScreenArguments
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.adapter.decoration.CellDividerDecoration
+import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.arguments
+import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.setToolbarTitle
+import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.setupToolbar
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
 import serg.chuprin.finances.core.api.presentation.view.extensions.onScroll
 import serg.chuprin.finances.core.api.presentation.view.setSharedElementTransitions
@@ -23,6 +23,7 @@ import serg.chuprin.finances.feature.transactions.R
 import serg.chuprin.finances.feature.transactions.di.TransactionsReportComponent
 import serg.chuprin.finances.feature.transactions.presentation.model.store.TransactionsReportIntent
 import serg.chuprin.finances.feature.transactions.presentation.view.adapter.TransactionReportCellsAdapter
+
 
 /**
  * Created by Sergey Chuprin on 11.05.2020.
@@ -47,7 +48,7 @@ class TransactionsReportFragment : BaseFragment(R.layout.fragment_transactions_r
         savedInstanceState: Bundle?
     ): View {
         return super.onCreateView(inflater, container, savedInstanceState)!!.apply {
-            constraintLayout.transitionName = screenArguments.transitionName
+            coordinatorLayout.transitionName = screenArguments.transitionName
         }
     }
 

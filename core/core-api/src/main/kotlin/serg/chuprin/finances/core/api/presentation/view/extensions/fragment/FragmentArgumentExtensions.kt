@@ -1,4 +1,4 @@
-package serg.chuprin.finances.core.api.presentation.extensions
+package serg.chuprin.finances.core.api.presentation.view.extensions.fragment
 
 import android.os.Bundle
 import android.os.Parcelable

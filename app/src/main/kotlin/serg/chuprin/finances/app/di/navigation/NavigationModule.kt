@@ -11,9 +11,9 @@ import serg.chuprin.finances.app.AuthorizedGraphDirections
 import serg.chuprin.finances.app.R
 import serg.chuprin.finances.core.api.di.provider.CoreNavigationProvider
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.presentation.extensions.toBundle
 import serg.chuprin.finances.core.api.presentation.navigation.*
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionsReportScreenArguments
+import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.toBundle
 import serg.chuprin.finances.feature.dashboard.presentation.view.DashboardFragmentDirections
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.arguments.MoneyAccountDetailsScreenArguments
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.view.MoneyAccountDetailsFragment

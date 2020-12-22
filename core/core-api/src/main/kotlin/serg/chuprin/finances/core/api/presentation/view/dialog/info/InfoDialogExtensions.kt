@@ -2,7 +2,7 @@ package serg.chuprin.finances.core.api.presentation.view.dialog.info
 
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
-import serg.chuprin.finances.core.api.presentation.extensions.showDialog
+import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.showDialog
 
 /**
  * Created by Sergey Chuprin on 31.07.2020.

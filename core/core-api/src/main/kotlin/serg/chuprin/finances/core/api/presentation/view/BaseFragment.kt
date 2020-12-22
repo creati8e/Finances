@@ -9,8 +9,8 @@ import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
-import serg.chuprin.finances.core.api.presentation.extensions.setupToolbar
 import serg.chuprin.finances.core.api.presentation.navigation.RootNavigator
+import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.setupToolbar
 
 /**
  * Created by Sergey Chuprin on 02.04.2020.
