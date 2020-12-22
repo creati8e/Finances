@@ -40,8 +40,9 @@ class BuildTransactionsReportUseCase @Inject constructor(
             filter = reportRawData.filter,
             preparedData = TransactionReportPreparedData(
                 currency = user.defaultCurrency,
+                dataPeriodAmount = reportRawData.listData.keys.amount,
                 chartData = calculateAmountsInDataPeriods(reportRawData.chartData),
-                transactionsGroupedByDay = transactionsByDayGrouper.group(reportRawData.listData)
+                dataPeriodTransactions = transactionsByDayGrouper.group(reportRawData.listData)
             )
         )
     }

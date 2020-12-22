@@ -66,7 +66,11 @@ class TransactionsReportActionExecutor @Inject constructor(
             TransactionsReportEffect.ReportBuilt(
                 filter = report.filter,
                 header = headerBuilder.build(report),
-                listCells = cellsBuilder.build(preparedData.transactionsGroupedByDay)
+                listCells = cellsBuilder.build(
+                    currency = preparedData.currency,
+                    dataPeriodAmount = preparedData.dataPeriodAmount,
+                    transactionsGroupedByDay = preparedData.dataPeriodTransactions
+                )
             )
         }
     }

@@ -10,6 +10,7 @@ import java.util.*
  */
 data class TransactionReportPreparedData(
     val currency: Currency,
-    val transactionsGroupedByDay: TransactionsGroupedByDay,
+    val dataPeriodAmount: BigDecimal,
+    val dataPeriodTransactions: TransactionsGroupedByDay,
     val chartData: Map<DataPeriod, BigDecimal>
 )

@@ -10,6 +10,7 @@ import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ZeroDat
 import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportChartCell
 import serg.chuprin.finances.feature.transactions.presentation.view.adapter.diff.TransactionReportCellsDiffCallback
 import serg.chuprin.finances.feature.transactions.presentation.view.adapter.renderer.TransactionReportChartListCellRenderer
+import serg.chuprin.finances.feature.transactions.presentation.view.adapter.renderer.TransactionReportDataPeriodSummaryCellRenderer
 
 /**
  * Created by Sergey Chuprin on 07.07.2020.
@@ -23,6 +24,7 @@ class TransactionReportCellsAdapter(
         registerRenderer(ZeroDataCellRenderer())
         registerRenderer(TransactionCellRenderer())
         registerRenderer(DateDividerCellRenderer())
+        registerRenderer(TransactionReportDataPeriodSummaryCellRenderer())
         registerRenderer(TransactionReportChartListCellRenderer(onChartCellClicked))
     }
 
