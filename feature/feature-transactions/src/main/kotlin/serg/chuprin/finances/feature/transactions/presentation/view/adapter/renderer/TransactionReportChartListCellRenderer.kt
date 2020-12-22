@@ -6,11 +6,13 @@ import serg.chuprin.adapter.Click
 import serg.chuprin.adapter.ContainerHolder
 import serg.chuprin.adapter.ContainerRenderer
 import serg.chuprin.adapter.LongClick
+import serg.chuprin.finances.core.api.extensions.containsType
 import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter
 import serg.chuprin.finances.core.api.presentation.view.adapter.diff.DiffCallback
 import serg.chuprin.finances.feature.transactions.R
 import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportChartCell
 import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportChartListCell
+import serg.chuprin.finances.feature.transactions.presentation.view.adapter.diff.payload.TransactionReportChartListChangedPayload
 
 /**
  * Created by Sergey Chuprin on 22.12.2020.
@@ -29,6 +31,16 @@ class TransactionReportChartListCellRenderer(
 
     override fun bindView(holder: ContainerHolder, model: TransactionReportChartListCell) {
         chartCellsAdapter.setItems(model.chartCells)
+    }
+
+    override fun bindView(
+        holder: ContainerHolder,
+        model: TransactionReportChartListCell,
+        payloads: MutableList<Any>
+    ) {
+        if (payloads.containsType<TransactionReportChartListChangedPayload>()) {
+            chartCellsAdapter.setItems(model.chartCells)
+        }
     }
 
     override fun onVhCreated(

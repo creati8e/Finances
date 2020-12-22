@@ -25,3 +25,5 @@ inline fun <K, V> buildSortedMap(
 }
 
 fun <T> Collection<T>.contains(selector: (T) -> Boolean): Boolean = find(selector) != null
+
+inline fun <reified R> Collection<Any>.containsType(): Boolean = find { it is R } != null
