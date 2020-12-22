@@ -47,19 +47,26 @@ class TransactionReportDataService @Inject constructor(
 
                 emitAll(
                     combine(
-                        filterFlow,
                         chartDataBuilder.dataFlow(
                             filterFlow = filterFlow,
                             transactionsFlow = transactionsFlow
                         ),
-                        listDataBuilder.dataFlow(
-                            filterFlow = filterFlow,
-                            categoriesFlow = categoriesFlow,
-                            transactionsFlow = transactionsFlow
-                        ),
-                        ::TransactionReportRawData
-                    )
-
+                        // Filter and list data emissions must be zipped because list data is updated
+                        // when filter is updated. This is required for preventing simultaneous emissions.
+                        listDataBuilder
+                            .dataFlow(
+                                filterFlow = filterFlow,
+                                categoriesFlow = categoriesFlow,
+                                transactionsFlow = transactionsFlow
+                            )
+                            .zip(filterFlow, ::Pair)
+                    ) { chartData, (transactions, filter) ->
+                        TransactionReportRawData(
+                            filter = filter,
+                            chartData = chartData,
+                            listData = transactions
+                        )
+                    }
                 )
             }
         }
