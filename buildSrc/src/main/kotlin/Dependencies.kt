@@ -124,10 +124,10 @@ object Libraries {
     }
 
     object Debug {
-        private const val VER = "1.10.2"
+        private const val VER = "2.4.3"
 
-        const val DEBUG = "com.github.pandulapeter.beagle:beagle:$VER"
-        const val RELEASE = "com.github.pandulapeter.beagle:beagle-noop:$VER"
+        const val DEBUG = "com.github.pandulapeter.beagle:ui-drawer:$VER"
+        const val RELEASE = "com.github.pandulapeter.beagle:noop:$VER"
 
     }
 

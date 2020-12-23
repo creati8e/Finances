@@ -3,8 +3,8 @@ package serg.chuprin.finances.core.impl.presentation.debug
 import android.app.Application
 import com.github.ajalt.timberkt.Timber
 import com.pandulapeter.beagle.Beagle
-import com.pandulapeter.beagleCore.configuration.Appearance
-import com.pandulapeter.beagleCore.configuration.Trick
+import com.pandulapeter.beagle.common.configuration.Appearance
+import com.pandulapeter.beagle.modules.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -66,40 +66,50 @@ internal class AppDebugMenuImpl @Inject constructor(
 
     override fun initialize(application: Application) {
         Timber.d { "Debug menu is initialized" }
-        with(Beagle) {
-            imprint(application, Appearance(R.style.DebugMenuTheme))
-            learn(
-                Trick.Header(
-                    title = resourceManger.getString(CoreR.string.app_name),
-                    subtitle = "v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
-                ),
-                Trick.KeylineOverlayToggle(),
-                Trick.ViewBoundsOverlayToggle(),
-                Trick.Padding(),
-                Trick.Text(text = "Data generation"),
-                Trick.Button(
-                    text = "Create income transaction",
-                    onButtonPressed = {
-                        launch { createTransaction(TransactionCategoryType.INCOME) }
-                    }
-                ),
-                Trick.Button(
-                    text = "Create expense transaction",
-                    onButtonPressed = {
-                        launch { createTransaction(TransactionCategoryType.EXPENSE) }
-                    }
-                ),
-                Trick.Button(
-                    text = "Create money account",
-                    onButtonPressed = {
-                        launch { createMoneyAccount() }
-                    }
-                )
+        Beagle.initialize(
+            application,
+            Appearance(themeResourceId = R.style.DebugMenuTheme)
+        )
+        Beagle.set(
+            HeaderModule(
+                title = resourceManger.getString(CoreR.string.app_name),
+                text = "v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
+            ),
+            AppInfoButtonModule(),
+            AnimationDurationSwitchModule(),
+            KeylineOverlaySwitchModule(),
+            PaddingModule(),
+            TextModule(
+                text = "Data generation",
+                type = TextModule.Type.SECTION_HEADER
+            ),
+            TextModule(
+                text = "Create income transaction",
+                type = TextModule.Type.BUTTON,
+                onItemSelected = {
+                    launch { createTransaction(TransactionCategoryType.INCOME) }
+                }
+            ),
+            TextModule(
+                text = "Create expense transaction",
+                type = TextModule.Type.BUTTON,
+                onItemSelected = {
+                    launch { createTransaction(TransactionCategoryType.EXPENSE) }
+                }
+            ),
+            TextModule(
+                text = "Create money account",
+                type = TextModule.Type.BUTTON,
+                onItemSelected = {
+                    launch { createMoneyAccount() }
+                }
             )
-        }
+        )
     }
 
-    override fun open() = Beagle.fetch()
+    override fun open() {
+        Beagle.show()
+    }
 
     private suspend fun createTransaction(categoryType: TransactionCategoryType) {
         val currentUser = userRepository.getCurrentUser()
