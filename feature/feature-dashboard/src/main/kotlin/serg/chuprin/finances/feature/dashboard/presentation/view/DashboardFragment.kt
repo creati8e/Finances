@@ -28,6 +28,7 @@ import serg.chuprin.finances.core.api.presentation.view.setSharedElementTransiti
 import serg.chuprin.finances.feature.dashboard.BuildConfig
 import serg.chuprin.finances.feature.dashboard.R
 import serg.chuprin.finances.feature.dashboard.presentation.di.DashboardComponent
+import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardLoadingCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.store.DashboardEvent
 import serg.chuprin.finances.feature.dashboard.presentation.model.store.DashboardIntent
@@ -152,6 +153,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 
     private fun createAdapter(): DiffMultiViewAdapter<BaseCell> {
         return DiffMultiViewAdapter(DashboardAdapterDiffCallback()).apply {
+            registerRenderer<DashboardLoadingCell>(R.layout.cell_dashboard_loading)
             registerRenderer(
                 DashboardBalanceWidgetCellRenderer(
                     clickOnCurrentPeriodIncomes = {
