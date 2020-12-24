@@ -12,5 +12,5 @@ data class TransactionReportPreparedData(
     val currency: Currency,
     val dataPeriodAmount: BigDecimal,
     val dataPeriodTransactions: TransactionsGroupedByDay,
-    val chartData: Map<DataPeriod, BigDecimal>
+    val dataPeriodAmounts: Map<DataPeriod, BigDecimal>
 )

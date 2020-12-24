@@ -41,16 +41,16 @@ class BuildTransactionsReportUseCase @Inject constructor(
             preparedData = TransactionReportPreparedData(
                 currency = user.defaultCurrency,
                 dataPeriodAmount = reportRawData.listData.keys.amount,
-                chartData = calculateAmountsInDataPeriods(reportRawData.chartData),
-                dataPeriodTransactions = transactionsByDayGrouper.group(reportRawData.listData)
+                dataPeriodTransactions = transactionsByDayGrouper.group(reportRawData.listData),
+                dataPeriodAmounts = calculateAmountsInDataPeriods(reportRawData.dataPeriodAmounts)
             )
         )
     }
 
     private fun calculateAmountsInDataPeriods(
-        chartData: Map<DataPeriod, List<Transaction>>
+        dataPeriodAmounts: Map<DataPeriod, List<Transaction>>
     ): Map<DataPeriod, BigDecimal> {
-        return chartData.mapValues { (_, transactions) -> transactions.amount }
+        return dataPeriodAmounts.mapValues { (_, transactions) -> transactions.amount }
     }
 
 }

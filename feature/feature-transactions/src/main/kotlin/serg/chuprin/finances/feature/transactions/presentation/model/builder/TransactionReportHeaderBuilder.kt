@@ -27,7 +27,7 @@ class TransactionReportHeaderBuilder @Inject constructor(
         val preparedData = report.preparedData
         val chartCells = chartCellsBuilder.build(
             currency = preparedData.currency,
-            chartData = preparedData.chartData,
+            dataPeriodAmounts = preparedData.dataPeriodAmounts,
             currentDataPeriod = report.filter.reportDataPeriod.dataPeriod
         )
 

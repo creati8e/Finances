@@ -16,10 +16,10 @@ import javax.inject.Inject
 /**
  * Created by Sergey Chuprin on 21.12.2020.
  *
- * This builder creates data for displaying on chart:
+ * This builder creates data for displaying on data period amounts chart:
  * it puts transactions in each period starting from youngest to oldest.
  */
-class TransactionReportChartDataBuilder @Inject constructor() {
+class TransactionReportDataPeriodAmountsBuilder @Inject constructor() {
 
     private companion object {
 

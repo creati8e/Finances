@@ -24,14 +24,14 @@ class TransactionReportChartCellsBuilder @Inject constructor(
 
     fun build(
         currentDataPeriod: DataPeriod?,
-        chartData: Map<DataPeriod, BigDecimal>,
+        dataPeriodAmounts: Map<DataPeriod, BigDecimal>,
         currency: Currency
     ): List<TransactionReportChartCell> {
-        if (chartData.isEmpty()) {
+        if (dataPeriodAmounts.isEmpty()) {
             return emptyList()
         }
-        val maxAmount = chartData.maxOf { (_, amount) -> amount.abs() }
-        return chartData.map { (dataPeriod, amount) ->
+        val maxAmount = dataPeriodAmounts.maxOf { (_, amount) -> amount.abs() }
+        return dataPeriodAmounts.map { (dataPeriod, amount) ->
             TransactionReportChartCell(
                 dataPeriod = dataPeriod,
                 formattedPeriodName = dateTimeFormatter.formatDataPeriod(dataPeriod),

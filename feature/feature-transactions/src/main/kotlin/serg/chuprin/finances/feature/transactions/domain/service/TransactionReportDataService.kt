@@ -3,7 +3,7 @@ package serg.chuprin.finances.feature.transactions.domain.service
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.*
-import serg.chuprin.finances.feature.transactions.domain.builder.TransactionReportChartDataBuilder
+import serg.chuprin.finances.feature.transactions.domain.builder.TransactionReportDataPeriodAmountsBuilder
 import serg.chuprin.finances.feature.transactions.domain.builder.TransactionReportListDataBuilder
 import serg.chuprin.finances.feature.transactions.domain.model.TransactionReportRawData
 import serg.chuprin.finances.feature.transactions.domain.repository.TransactionReportFilterRepository
@@ -15,9 +15,9 @@ import javax.inject.Inject
 class TransactionReportDataService @Inject constructor(
     private val listDataBuilder: TransactionReportListDataBuilder,
     private val filterRepository: TransactionReportFilterRepository,
-    private val chartDataBuilder: TransactionReportChartDataBuilder,
     private val categoriesDataService: TransactionReportCategoriesDataService,
-    private val transactionDataService: TransactionReportTransactionDataService
+    private val transactionDataService: TransactionReportTransactionDataService,
+    private val dataPeriodAmountsBuilder: TransactionReportDataPeriodAmountsBuilder
 ) {
 
     fun buildDataForReport(): Flow<TransactionReportRawData> {
@@ -33,7 +33,7 @@ class TransactionReportDataService @Inject constructor(
                     .share(coroutineScope = this)
 
                 // Then we need to retrieve all transactions for all time which are matches filter.
-                // This is required for building historical chart data.
+                // This is required for building historical data period amounts.
                 //
                 // Cache flow's to reduce overhead: when current data period in filter changed,
                 // we need to retrieve transactions for that data period
@@ -47,7 +47,7 @@ class TransactionReportDataService @Inject constructor(
 
                 emitAll(
                     combine(
-                        chartDataBuilder.dataFlow(
+                        dataPeriodAmountsBuilder.dataFlow(
                             filterFlow = filterFlow,
                             transactionsFlow = transactionsFlow
                         ),
@@ -60,11 +60,11 @@ class TransactionReportDataService @Inject constructor(
                                 transactionsFlow = transactionsFlow
                             )
                             .zip(filterFlow, ::Pair)
-                    ) { chartData, (transactions, filter) ->
+                    ) { dataPeriodAmounts, (transactions, filter) ->
                         TransactionReportRawData(
                             filter = filter,
-                            chartData = chartData,
-                            listData = transactions
+                            listData = transactions,
+                            dataPeriodAmounts = dataPeriodAmounts
                         )
                     }
                 )

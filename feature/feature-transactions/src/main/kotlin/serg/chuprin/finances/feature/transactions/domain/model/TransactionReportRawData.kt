@@ -9,6 +9,6 @@ import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
  */
 data class TransactionReportRawData(
     val filter: TransactionReportFilter,
-    val chartData: Map<DataPeriod, List<Transaction>>,
+    val dataPeriodAmounts: Map<DataPeriod, List<Transaction>>,
     val listData: Map<Transaction, TransactionCategoryWithParent?>
 )
