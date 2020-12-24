@@ -17,7 +17,8 @@ class TransactionsReportStateReducer :
                 state.copy(
                     header = what.header,
                     filter = what.filter,
-                    transactionListCells = what.listCells
+                    transactionListCells = what.listCells,
+                    categorySharesCell = what.categorySharesCell
                 )
             }
         }

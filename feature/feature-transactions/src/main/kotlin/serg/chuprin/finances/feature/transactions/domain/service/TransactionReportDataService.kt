@@ -4,7 +4,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.*
 import serg.chuprin.finances.feature.transactions.domain.builder.TransactionReportDataPeriodAmountsBuilder
-import serg.chuprin.finances.feature.transactions.domain.builder.TransactionReportListDataBuilder
 import serg.chuprin.finances.feature.transactions.domain.model.TransactionReportRawData
 import serg.chuprin.finances.feature.transactions.domain.repository.TransactionReportFilterRepository
 import javax.inject.Inject
@@ -13,12 +12,11 @@ import javax.inject.Inject
  * Created by Sergey Chuprin on 12.12.2020.
  */
 class TransactionReportDataService @Inject constructor(
-    private val listDataBuilder: TransactionReportListDataBuilder,
     private val filterRepository: TransactionReportFilterRepository,
     private val categoriesDataService: TransactionReportCategoriesDataService,
     private val transactionDataService: TransactionReportTransactionDataService,
     private val dataPeriodAmountsBuilder: TransactionReportDataPeriodAmountsBuilder,
-    private val categoryTransactionsDataService: TransactionReportCategoryTransactionsDataService
+    private val currentPeriodDataService: TransactionReportCurrentPeriodDataService
 ) {
 
     fun dataFlow(): Flow<TransactionReportRawData> {
@@ -54,24 +52,19 @@ class TransactionReportDataService @Inject constructor(
                         ),
                         // Filter and list data emissions must be zipped because list data is updated
                         // when filter is updated. This is required for preventing simultaneous emissions.
-                        listDataBuilder
+                        currentPeriodDataService
                             .dataFlow(
                                 filterFlow = filterFlow,
                                 categoriesFlow = categoriesFlow,
                                 transactionsFlow = transactionsFlow
                             )
-                            .zip(filterFlow, ::Pair),
-                        categoryTransactionsDataService.dataFlow(
-                            filterFlow = filterFlow,
-                            categoriesFlow = categoriesFlow,
-                            transactionsFlow = transactionsFlow
-                        ),
-                    ) { dataPeriodAmounts, (transactions, filter), categoryTransactions ->
+                            .zip(filterFlow, ::Pair)
+                    ) { dataPeriodAmounts, (currentPeriodData, filter) ->
                         TransactionReportRawData(
                             filter = filter,
-                            listData = transactions,
                             dataPeriodAmounts = dataPeriodAmounts,
-                            categoryTransactions = categoryTransactions
+                            listData = currentPeriodData.transactions,
+                            categoryTransactions = currentPeriodData.categoryTransactions
                         )
                     }
                 )

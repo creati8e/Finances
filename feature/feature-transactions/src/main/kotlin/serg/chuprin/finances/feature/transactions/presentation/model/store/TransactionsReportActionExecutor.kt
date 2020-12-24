@@ -7,6 +7,7 @@ import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
 import serg.chuprin.finances.feature.transactions.domain.model.ReportDataPeriod
 import serg.chuprin.finances.feature.transactions.domain.usecase.ChooseDataPeriodUseCase
+import serg.chuprin.finances.feature.transactions.presentation.model.builder.TransactionReportCategorySharesCellBuilder
 import serg.chuprin.finances.feature.transactions.presentation.model.builder.TransactionReportCellsBuilder
 import serg.chuprin.finances.feature.transactions.presentation.model.builder.TransactionReportHeaderBuilder
 import javax.inject.Inject
@@ -17,7 +18,8 @@ import javax.inject.Inject
 class TransactionsReportActionExecutor @Inject constructor(
     private val cellsBuilder: TransactionReportCellsBuilder,
     private val headerBuilder: TransactionReportHeaderBuilder,
-    private val chooseDataPeriodUseCase: ChooseDataPeriodUseCase
+    private val chooseDataPeriodUseCase: ChooseDataPeriodUseCase,
+    private val categorySharesCellBuilder: TransactionReportCategorySharesCellBuilder
 ) : StoreActionExecutor<TransactionsReportAction, TransactionsReportState, TransactionsReportEffect, TransactionsReportEvent> {
 
     override fun invoke(
@@ -66,6 +68,9 @@ class TransactionsReportActionExecutor @Inject constructor(
             TransactionsReportEffect.ReportBuilt(
                 filter = report.filter,
                 header = headerBuilder.build(report),
+                categorySharesCell = preparedData
+                    .categorySharesChart
+                    ?.let(categorySharesCellBuilder::build),
                 listCells = cellsBuilder.build(
                     currency = preparedData.currency,
                     dataPeriodAmount = preparedData.dataPeriodAmount,

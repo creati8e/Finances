@@ -7,6 +7,10 @@ import serg.chuprin.finances.core.api.presentation.view.adapter.DividerAdapter
 import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.DateDividerCellRenderer
 import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.TransactionCellRenderer
 import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ZeroDataCellRenderer
+import serg.chuprin.finances.core.categories.shares.presentation.view.adapter.renderer.CategorySharesCellRenderer
+import serg.chuprin.finances.feature.transactions.R
+import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportCategoryChipCell
+import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportCategorySharesCell
 import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportDataPeriodAmountChartCell
 import serg.chuprin.finances.feature.transactions.presentation.view.adapter.diff.TransactionReportCellsDiffCallback
 import serg.chuprin.finances.feature.transactions.presentation.view.adapter.renderer.TransactionReportChartListCellRenderer
@@ -26,6 +30,17 @@ class TransactionReportCellsAdapter(
         registerRenderer(DateDividerCellRenderer())
         registerRenderer(TransactionReportDataPeriodSummaryCellRenderer())
         registerRenderer(TransactionReportChartListCellRenderer(onChartCellClicked))
+
+        registerRenderer(
+            // TODO: Handle clicks.
+            CategorySharesCellRenderer(
+                onCategoryClicked = {},
+                categoryChipsAdapterSetup = {},
+                type = R.layout.cell_transaction_report_category_shares,
+                categoryChipCellClass = TransactionReportCategoryChipCell::class.java
+            ),
+            TransactionReportCategorySharesCell::class.java
+        )
     }
 
     override fun shouldDrawDividerForCellAt(adapterPosition: Int): Boolean {

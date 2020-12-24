@@ -7,8 +7,10 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":core:core-api"))
     implementation(project(":injector"))
+    implementation(project(":core:core-api"))
+    implementation(project(":core:core-category-shares"))
+
 
     implementation(Libraries.KOTLIN)
     implementation(Libraries.Coroutines.CORE)

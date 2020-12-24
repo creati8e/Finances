@@ -10,6 +10,7 @@ import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.api.domain.service.TransactionCategoryRetrieverService
 import serg.chuprin.finances.core.api.presentation.builder.TransactionCellBuilder
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
+import serg.chuprin.finances.core.api.presentation.formatter.CategoryColorFormatter
 import serg.chuprin.finances.core.api.presentation.formatter.DateTimeFormatter
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 
@@ -26,6 +27,7 @@ interface TransactionsReportDependencies {
 
     val amountFormatter: AmountFormatter
     val dateTimeFormatter: DateTimeFormatter
+    val categoryColorFormatter: CategoryColorFormatter
     val transactionCellBuilder: TransactionCellBuilder
     val transactionsByDayGrouper: TransactionsByDayGrouper
     val transactionWithCategoriesLinker: TransactionWithCategoriesLinker

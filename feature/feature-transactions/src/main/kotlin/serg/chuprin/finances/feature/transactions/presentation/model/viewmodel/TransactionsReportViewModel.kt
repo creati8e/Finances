@@ -23,6 +23,7 @@ class TransactionsReportViewModel @Inject constructor(
         .map { state ->
             buildList {
                 addAll(state.header.dataPeriodAmountsChartListCell)
+                state.categorySharesCell?.let(::add)
                 addAll(state.transactionListCells)
             }
         }

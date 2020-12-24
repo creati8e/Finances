@@ -16,7 +16,7 @@ interface CategoryChipCell : DiffCell<Id> {
 
     val chipText: String
 
-    val transitionName: String
+    val transitionName: String?
 
     val category: TransactionCategory?
 

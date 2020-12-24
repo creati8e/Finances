@@ -7,8 +7,8 @@ plugins {
 dependencies {
     implementation(Libraries.KOTLIN)
 
+    api(project(":core:core-pie-chart"))
     implementation(project(":core:core-api"))
-    implementation(project(":core:core-pie-chart"))
 
     implementation(Libraries.FLEXBOX)
     implementation(Libraries.Android.CORE)

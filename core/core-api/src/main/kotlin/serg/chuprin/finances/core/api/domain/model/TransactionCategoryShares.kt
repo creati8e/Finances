@@ -6,6 +6,4 @@ import java.math.BigDecimal
 /**
  * Created by Sergey Chuprin on 24.12.2020.
  */
-class TransactionCategoryShares(
-    map: Map<TransactionCategory?, BigDecimal>
-) : Map<TransactionCategory?, BigDecimal> by map
+typealias TransactionCategoryShares = List<Pair<TransactionCategory?, BigDecimal>>
