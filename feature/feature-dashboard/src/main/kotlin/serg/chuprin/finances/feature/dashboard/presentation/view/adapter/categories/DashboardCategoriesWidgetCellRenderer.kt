@@ -11,9 +11,11 @@ import serg.chuprin.adapter.ContainerRenderer
 import serg.chuprin.adapter.LongClick
 import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter
 import serg.chuprin.finances.core.api.presentation.view.extensions.onScrollStateChanged
+import serg.chuprin.finances.core.categories.shares.presentation.view.adapter.renderer.CategorySharesCellRenderer
 import serg.chuprin.finances.feature.dashboard.R
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.DashboardCategoryChipCell
+import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.page.DashboardCategoriesPageZeroDataCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.page.DashboardExpenseCategoriesPageCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.page.DashboardIncomeCategoriesPageCell
 import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.categories.diff.DashboardCategoriesWidgetChangedPayload
@@ -33,16 +35,11 @@ class DashboardCategoriesWidgetCellRenderer(
     private val pageCellsAdapter =
         DiffMultiViewAdapter(DashboardCategoryPagesDiffCallback()).apply {
             registerRenderer(
-                DashboardCategoryPageCellRenderer(
-                    R.layout.cell_dashboard_income_categories_page,
-                    onCategoryClicked
-                ), DashboardIncomeCategoriesPageCell::class.java
+                createCategoryChipCellRenderer(R.layout.cell_dashboard_income_categories_page),
+                DashboardIncomeCategoriesPageCell::class.java
             )
             registerRenderer(
-                DashboardCategoryPageCellRenderer(
-                    R.layout.cell_dashboard_expense_categories_page,
-                    onCategoryClicked
-                ),
+                createCategoryChipCellRenderer(R.layout.cell_dashboard_expense_categories_page),
                 DashboardExpenseCategoriesPageCell::class.java
             )
         }
@@ -58,17 +55,6 @@ class DashboardCategoriesWidgetCellRenderer(
     ) {
         if (DashboardCategoriesWidgetChangedPayload in payloads) {
             setCells(holder, model)
-        }
-    }
-
-    private fun setCells(
-        holder: ContainerHolder,
-        model: DashboardWidgetCell.Categories
-    ) {
-        pageCellsAdapter.setItems(model.pageCells) {
-            if (adapterState != null) {
-                holder.categoryPagesRecyclerView.layoutManager?.onRestoreInstanceState(adapterState)
-            }
         }
     }
 
@@ -91,6 +77,32 @@ class DashboardCategoriesWidgetCellRenderer(
             }
             pageIndicator.attachToRecyclerView(categoryPagesRecyclerView)
         }
+    }
+
+    private fun setCells(
+        holder: ContainerHolder,
+        model: DashboardWidgetCell.Categories
+    ) {
+        pageCellsAdapter.setItems(model.pageCells) {
+            if (adapterState != null) {
+                holder.categoryPagesRecyclerView.layoutManager?.onRestoreInstanceState(adapterState)
+            }
+        }
+    }
+
+    private fun createCategoryChipCellRenderer(
+        layoutRes: Int
+    ): CategorySharesCellRenderer<DashboardCategoryChipCell> {
+        return CategorySharesCellRenderer(
+            type = layoutRes,
+            onCategoryClicked = onCategoryClicked,
+            categoryChipCellClass = DashboardCategoryChipCell::class.java,
+            categoryChipsAdapterSetup = {
+                registerRenderer<DashboardCategoriesPageZeroDataCell>(
+                    R.layout.cell_dashboard_categories_page_zero_data
+                )
+            }
+        )
     }
 
 }

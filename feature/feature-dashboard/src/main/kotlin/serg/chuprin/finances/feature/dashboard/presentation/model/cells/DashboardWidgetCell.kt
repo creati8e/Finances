@@ -2,8 +2,8 @@ package serg.chuprin.finances.feature.dashboard.presentation.model.cells
 
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.cells.DiffCell
+import serg.chuprin.finances.core.categories.shares.presentation.model.cell.CategorySharesCell
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
-import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.page.DashboardCategoriesPageCell
 import serg.chuprin.finances.feature.dashboard.setup.presentation.domain.model.DashboardWidgetType
 
 /**
@@ -38,7 +38,7 @@ sealed class DashboardWidgetCell(
     ) : DashboardWidgetCell(widget)
 
     data class Categories(
-        val pageCells: List<DashboardCategoriesPageCell>,
+        val pageCells: List<CategorySharesCell>,
         override val widget: DashboardWidget.Categories
     ) : DashboardWidgetCell(widget)
 

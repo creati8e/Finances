@@ -2,7 +2,7 @@ package serg.chuprin.finances.feature.dashboard.presentation.view.adapter.catego
 
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.view.adapter.diff.DiffCallback
-import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.page.DashboardCategoriesPageCell
+import serg.chuprin.finances.core.categories.shares.presentation.model.cell.CategorySharesCell
 
 /**
  * Created by Sergey Chuprin on 28.04.2020.
@@ -10,8 +10,8 @@ import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categori
 class DashboardCategoryPagesDiffCallback : DiffCallback<BaseCell>() {
 
     override fun getChangePayload(oldCell: BaseCell, newCell: BaseCell): Any? {
-        if (oldCell is DashboardCategoriesPageCell && newCell is DashboardCategoriesPageCell) {
-            return DashboardCategoriesPageChangedPayload
+        if (oldCell is CategorySharesCell && newCell is CategorySharesCell) {
+            return CategorySharesCell.PageChangedPayload()
         }
         return super.getChangePayload(oldCell, newCell)
     }

@@ -16,6 +16,7 @@ include ':core:core-mvi'
 include ':core:core-impl'
 include ':core:core-firebase'
 include ':core:core-pie-chart'
+include ':core:core-category-shares'
 
 // endregion
 

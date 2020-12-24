@@ -7,13 +7,13 @@ import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.formatter.CategoryColorFormatter
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
+import serg.chuprin.finances.core.categories.shares.presentation.model.cell.CategorySharesCell
 import serg.chuprin.finances.core.piechart.model.PieChartDataPart
 import serg.chuprin.finances.feature.dashboard.R
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardCategoriesWidgetPage
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.DashboardCategoryChipCell
-import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.page.DashboardCategoriesPageCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.page.DashboardCategoriesPageZeroDataCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.page.DashboardExpenseCategoriesPageCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.page.DashboardIncomeCategoriesPageCell
@@ -45,7 +45,7 @@ class DashboardCategoriesWidgetCellBuilder @Inject constructor(
     private fun buildPageCell(
         page: DashboardCategoriesWidgetPage,
         currency: Currency
-    ): DashboardCategoriesPageCell {
+    ): CategorySharesCell {
         val label = when (page.transactionType) {
             PlainTransactionType.INCOME -> resourceManger.getString(CoreR.string.incomes)
             PlainTransactionType.EXPENSE -> resourceManger.getString(CoreR.string.expenses)

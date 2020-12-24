@@ -9,6 +9,7 @@ plugins {
 dependencies {
     implementation(project(":core:core-api"))
     implementation(project(":core:core-pie-chart"))
+    implementation(project(":core:core-category-shares"))
     implementation(project(":injector-dashboard"))
     implementation(project(":feature:feature-dashboard-setup-api"))
 

@@ -3,6 +3,7 @@ package serg.chuprin.finances.feature.dashboard.presentation.model.cells.categor
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.cells.DiffCell
+import serg.chuprin.finances.core.categories.shares.presentation.model.cell.CategorySharesCell
 import serg.chuprin.finances.core.piechart.model.PieChartDataPart
 
 /**
@@ -14,7 +15,7 @@ data class DashboardIncomeCategoriesPageCell(
     override val chartParts: List<PieChartDataPart>,
     override val transactionType: PlainTransactionType,
     override val categoryCells: List<BaseCell>
-) : DashboardCategoriesPageCell, DiffCell<PlainTransactionType> {
+) : CategorySharesCell, DiffCell<PlainTransactionType> {
 
     override val diffCellId: PlainTransactionType = transactionType
 
