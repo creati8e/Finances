@@ -17,10 +17,11 @@ class TransactionReportDataService @Inject constructor(
     private val filterRepository: TransactionReportFilterRepository,
     private val categoriesDataService: TransactionReportCategoriesDataService,
     private val transactionDataService: TransactionReportTransactionDataService,
-    private val dataPeriodAmountsBuilder: TransactionReportDataPeriodAmountsBuilder
+    private val dataPeriodAmountsBuilder: TransactionReportDataPeriodAmountsBuilder,
+    private val categoryTransactionsDataService: TransactionReportCategoryTransactionsDataService
 ) {
 
-    fun buildDataForReport(): Flow<TransactionReportRawData> {
+    fun dataFlow(): Flow<TransactionReportRawData> {
         return flow {
             coroutineScope {
 
@@ -29,7 +30,7 @@ class TransactionReportDataService @Inject constructor(
 
                 // Firstly we need to retrieve categories to associate them with transactions.
                 val categoriesFlow = categoriesDataService
-                    .categoriesFlow(filterFlow)
+                    .dataFlow(filterFlow)
                     .share(coroutineScope = this)
 
                 // Then we need to retrieve all transactions for all time which are matches filter.
@@ -39,7 +40,7 @@ class TransactionReportDataService @Inject constructor(
                 // we need to retrieve transactions for that data period
                 // (preserving chart data and do not rebuild it).
                 val transactionsFlow = transactionDataService
-                    .transactionsFlow(
+                    .dataFlow(
                         filterFlow = filterFlow,
                         categoriesFlow = categoriesFlow
                     )
@@ -59,12 +60,18 @@ class TransactionReportDataService @Inject constructor(
                                 categoriesFlow = categoriesFlow,
                                 transactionsFlow = transactionsFlow
                             )
-                            .zip(filterFlow, ::Pair)
-                    ) { dataPeriodAmounts, (transactions, filter) ->
+                            .zip(filterFlow, ::Pair),
+                        categoryTransactionsDataService.dataFlow(
+                            filterFlow = filterFlow,
+                            categoriesFlow = categoriesFlow,
+                            transactionsFlow = transactionsFlow
+                        ),
+                    ) { dataPeriodAmounts, (transactions, filter), categoryTransactions ->
                         TransactionReportRawData(
                             filter = filter,
                             listData = transactions,
-                            dataPeriodAmounts = dataPeriodAmounts
+                            dataPeriodAmounts = dataPeriodAmounts,
+                            categoryTransactions = categoryTransactions
                         )
                     }
                 )

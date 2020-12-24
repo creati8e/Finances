@@ -29,7 +29,7 @@ class TransactionReportTransactionDataService @Inject constructor(
          * We want to observe transactions with new data from [TransactionReportFilter] only if
          * [TransactionReportFilter.reportDataPeriod] or [TransactionReportFilter.transactionType] has changed.
          *
-         * @see [transactionsFlow]
+         * @see [dataFlow]
          */
         private val INTERESTED_KEYS: List<((TransactionReportFilter) -> Any?)> = listOf(
             TransactionReportFilter::reportDataPeriod,
@@ -38,7 +38,7 @@ class TransactionReportTransactionDataService @Inject constructor(
 
     }
 
-    suspend fun transactionsFlow(
+    suspend fun dataFlow(
         filterFlow: Flow<TransactionReportFilter>,
         categoriesFlow: SharedFlow<CategoriesQueryResult>
     ): Flow<List<Transaction>> {

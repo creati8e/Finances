@@ -1,5 +1,6 @@
 package serg.chuprin.finances.feature.transactions.domain.model
 
+import serg.chuprin.finances.core.api.domain.model.TransactionCategoryShares
 import serg.chuprin.finances.core.api.domain.model.TransactionsGroupedByDay
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import java.math.BigDecimal
@@ -12,5 +13,6 @@ data class TransactionReportPreparedData(
     val currency: Currency,
     val dataPeriodAmount: BigDecimal,
     val dataPeriodTransactions: TransactionsGroupedByDay,
-    val dataPeriodAmounts: Map<DataPeriod, BigDecimal>
+    val dataPeriodAmounts: Map<DataPeriod, BigDecimal>,
+    val categoryShares: TransactionCategoryShares
 )

@@ -26,7 +26,7 @@ class TransactionReportCategoriesDataService @Inject constructor(
          * We want to observe categories with new data from [TransactionReportFilter] only if
          * [TransactionReportFilter.categoryIds] or [TransactionReportFilter.transactionType] has changed.
          *
-         * @see [categoriesFlow]
+         * @see [dataFlow]
          */
         private val INTERESTED_KEYS: List<((TransactionReportFilter) -> Any?)> = listOf(
             TransactionReportFilter::categoryIds,
@@ -35,7 +35,14 @@ class TransactionReportCategoriesDataService @Inject constructor(
 
     }
 
-    suspend fun categoriesFlow(
+    /**
+     * @return flow of [CategoriesQueryResult] which contains parent categories
+     * from [TransactionReportFilter.categoryIds] with their children.
+     *
+     * If there's no categories in [TransactionReportFilter.categoryIds]
+     * all categories returned for particular [TransactionReportFilter.transactionType].
+     */
+    suspend fun dataFlow(
         filterFlow: Flow<TransactionReportFilter>
     ): Flow<CategoriesQueryResult> {
         return filterFlow
