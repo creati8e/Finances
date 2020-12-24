@@ -6,5 +6,5 @@ import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
  * Created by Sergey Chuprin on 22.12.2020.
  */
 data class TransactionReportChartListCell(
-    val chartCells: List<TransactionReportChartCell>
+    val dataPeriodAmountChartCells: List<TransactionReportDataPeriodAmountChartCell>
 ) : BaseCell

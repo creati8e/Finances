@@ -10,8 +10,8 @@ import serg.chuprin.finances.feature.transactions.R
 import serg.chuprin.finances.feature.transactions.domain.model.TransactionReportFilter
 import serg.chuprin.finances.feature.transactions.domain.model.TransactionsReport
 import serg.chuprin.finances.feature.transactions.presentation.model.TransactionReportHeader
-import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportChartCell
 import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportChartListCell
+import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportDataPeriodAmountChartCell
 import javax.inject.Inject
 
 /**
@@ -62,17 +62,17 @@ class TransactionReportHeaderBuilder @Inject constructor(
         return TransactionReportHeader(
             title = title,
             subtitle = subtitle,
-            chartListCell = buildTransactionReportChartListCell(chartCells)
+            dataPeriodAmountsChartListCell = buildTransactionReportChartListCell(chartCells)
         )
     }
 
     private fun buildTransactionReportChartListCell(
-        chartCells: List<TransactionReportChartCell>
+        dataPeriodAmountChartCells: List<TransactionReportDataPeriodAmountChartCell>
     ): List<TransactionReportChartListCell> {
-        if (chartCells.isEmpty()) {
+        if (dataPeriodAmountChartCells.isEmpty()) {
             return emptyList()
         }
-        return listOf(TransactionReportChartListCell(chartCells))
+        return listOf(TransactionReportChartListCell(dataPeriodAmountChartCells))
     }
 
     private fun buildSubtitleForSingleCategory(

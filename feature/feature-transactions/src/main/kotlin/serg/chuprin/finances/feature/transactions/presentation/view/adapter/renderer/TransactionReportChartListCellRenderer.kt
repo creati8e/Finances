@@ -10,27 +10,27 @@ import serg.chuprin.finances.core.api.extensions.containsType
 import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter
 import serg.chuprin.finances.core.api.presentation.view.adapter.diff.DiffCallback
 import serg.chuprin.finances.feature.transactions.R
-import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportChartCell
 import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportChartListCell
-import serg.chuprin.finances.feature.transactions.presentation.view.adapter.diff.payload.TransactionReportChartListChangedPayload
+import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportDataPeriodAmountChartCell
+import serg.chuprin.finances.feature.transactions.presentation.view.adapter.diff.payload.TransactionReportDataPeriodAmountsChartListChangedPayload
 
 /**
  * Created by Sergey Chuprin on 22.12.2020.
  */
 class TransactionReportChartListCellRenderer(
-    private val onChartCellClicked: (TransactionReportChartCell) -> Unit
+    private val onChartCellClicked: (TransactionReportDataPeriodAmountChartCell) -> Unit
 ) : ContainerRenderer<TransactionReportChartListCell>() {
 
     override val type: Int = R.layout.cell_transaction_report_chart_list
 
-    private val chartCellsAdapter = DiffMultiViewAdapter(
-        DiffCallback<TransactionReportChartCell>()
+    private val dataPeriodChartCellsAdapter = DiffMultiViewAdapter(
+        DiffCallback<TransactionReportDataPeriodAmountChartCell>()
     ).apply {
-        registerRenderer(TransactionChartCellRenderer())
+        registerRenderer(TransactionDataPeriodAmountChartCellRenderer())
     }
 
     override fun bindView(holder: ContainerHolder, model: TransactionReportChartListCell) {
-        chartCellsAdapter.setItems(model.chartCells)
+        dataPeriodChartCellsAdapter.setItems(model.dataPeriodAmountChartCells)
     }
 
     override fun bindView(
@@ -38,8 +38,8 @@ class TransactionReportChartListCellRenderer(
         model: TransactionReportChartListCell,
         payloads: MutableList<Any>
     ) {
-        if (payloads.containsType<TransactionReportChartListChangedPayload>()) {
-            chartCellsAdapter.setItems(model.chartCells)
+        if (payloads.containsType<TransactionReportDataPeriodAmountsChartListChangedPayload>()) {
+            dataPeriodChartCellsAdapter.setItems(model.dataPeriodAmountChartCells)
         }
     }
 
@@ -50,13 +50,13 @@ class TransactionReportChartListCellRenderer(
     ) {
         with(holder) {
             with(recyclerView) {
-                adapter = chartCellsAdapter
+                adapter = dataPeriodChartCellsAdapter
                 layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false).apply {
                         stackFromEnd = true
                     }
             }
-            chartCellsAdapter.clickListener = { chartCell, _, _ ->
+            dataPeriodChartCellsAdapter.clickListener = { chartCell, _, _ ->
                 onChartCellClicked(chartCell)
             }
         }

@@ -3,7 +3,7 @@ package serg.chuprin.finances.feature.transactions.presentation.model.builder
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.formatter.DateTimeFormatter
-import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportChartCell
+import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportDataPeriodAmountChartCell
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.util.*
@@ -26,13 +26,13 @@ class TransactionReportChartCellsBuilder @Inject constructor(
         currentDataPeriod: DataPeriod?,
         dataPeriodAmounts: Map<DataPeriod, BigDecimal>,
         currency: Currency
-    ): List<TransactionReportChartCell> {
+    ): List<TransactionReportDataPeriodAmountChartCell> {
         if (dataPeriodAmounts.isEmpty()) {
             return emptyList()
         }
         val maxAmount = dataPeriodAmounts.maxOf { (_, amount) -> amount.abs() }
         return dataPeriodAmounts.map { (dataPeriod, amount) ->
-            TransactionReportChartCell(
+            TransactionReportDataPeriodAmountChartCell(
                 dataPeriod = dataPeriod,
                 formattedPeriodName = dateTimeFormatter.formatDataPeriod(dataPeriod),
                 formattedAmount = amountFormatter.format(

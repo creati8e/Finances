@@ -7,7 +7,7 @@ import serg.chuprin.finances.core.api.presentation.view.adapter.DividerAdapter
 import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.DateDividerCellRenderer
 import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.TransactionCellRenderer
 import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ZeroDataCellRenderer
-import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportChartCell
+import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportDataPeriodAmountChartCell
 import serg.chuprin.finances.feature.transactions.presentation.view.adapter.diff.TransactionReportCellsDiffCallback
 import serg.chuprin.finances.feature.transactions.presentation.view.adapter.renderer.TransactionReportChartListCellRenderer
 import serg.chuprin.finances.feature.transactions.presentation.view.adapter.renderer.TransactionReportDataPeriodSummaryCellRenderer
@@ -16,7 +16,7 @@ import serg.chuprin.finances.feature.transactions.presentation.view.adapter.rend
  * Created by Sergey Chuprin on 07.07.2020.
  */
 class TransactionReportCellsAdapter(
-    onChartCellClicked: (TransactionReportChartCell) -> Unit
+    onChartCellClicked: (TransactionReportDataPeriodAmountChartCell) -> Unit
 ) : DiffMultiViewAdapter<BaseCell>(TransactionReportCellsDiffCallback()),
     DividerAdapter {
 

@@ -9,5 +9,5 @@ import serg.chuprin.finances.feature.transactions.presentation.model.cells.Trans
 data class TransactionReportHeader(
     val title: String = EMPTY_STRING,
     val subtitle: String = EMPTY_STRING,
-    val chartListCell: List<TransactionReportChartListCell> = emptyList()
+    val dataPeriodAmountsChartListCell: List<TransactionReportChartListCell> = emptyList()
 )

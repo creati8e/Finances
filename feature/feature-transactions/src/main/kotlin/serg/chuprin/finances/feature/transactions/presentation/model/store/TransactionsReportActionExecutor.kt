@@ -47,7 +47,7 @@ class TransactionsReportActionExecutor @Inject constructor(
         return emptyFlowAction {
             val reportDataPeriod = when (val dataPeriod = state.filter.reportDataPeriod) {
                 is ReportDataPeriod.Predefined -> {
-                    dataPeriod.copy(dataPeriod = intent.chartCell.dataPeriod)
+                    dataPeriod.copy(dataPeriod = intent.dataPeriodAmountChartCell.dataPeriod)
                 }
                 is ReportDataPeriod.Custom, is ReportDataPeriod.AllTime -> {
                     throw IllegalStateException("Data period can not be chosen for")

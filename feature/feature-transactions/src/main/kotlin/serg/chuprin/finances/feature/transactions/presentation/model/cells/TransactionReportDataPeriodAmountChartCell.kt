@@ -7,7 +7,7 @@ import serg.chuprin.finances.core.api.presentation.model.cells.DiffCell
 /**
  * Created by Sergey Chuprin on 21.12.2020.
  */
-data class TransactionReportChartCell(
+data class TransactionReportDataPeriodAmountChartCell(
     val dataPeriod: DataPeriod,
     val formattedAmount: String,
     val formattedPeriodName: String,

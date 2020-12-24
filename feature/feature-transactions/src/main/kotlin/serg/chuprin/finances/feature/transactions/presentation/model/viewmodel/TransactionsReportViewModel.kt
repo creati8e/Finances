@@ -22,7 +22,7 @@ class TransactionsReportViewModel @Inject constructor(
     val cellsLiveData: LiveData<List<BaseCell>> = store.stateFlow
         .map { state ->
             buildList {
-                addAll(state.header.chartListCell)
+                addAll(state.header.dataPeriodAmountsChartListCell)
                 addAll(state.transactionListCells)
             }
         }
