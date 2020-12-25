@@ -10,6 +10,7 @@ import guru.nidi.graphviz.model.MutableNode
 import org.jetbrains.kotlin.gradle.internal.AndroidExtensionsExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import serg.chuprin.finances.config.AppConfig
+import serg.chuprin.finances.config.setIsDebugMenuEnabled
 
 plugins {
     id("com.github.ben-manes.versions") version ("0.36.0")
@@ -150,14 +151,17 @@ fun TestedExtension.configureBuildTypes() {
             isMinifyEnabled = true
             isDebuggable = false
             configProguard(isLibrary)
+            setIsDebugMenuEnabled(false)
         }
         maybeCreate(AppConfig.BuildTypes.DEBUG.name).apply {
             isMinifyEnabled = true
             isDebuggable = false
             configProguard(isLibrary)
+            setIsDebugMenuEnabled(true)
         }
         maybeCreate(AppConfig.BuildTypes.DEV.name).apply {
             isDebuggable = true
+            setIsDebugMenuEnabled(true)
         }
     }
 }

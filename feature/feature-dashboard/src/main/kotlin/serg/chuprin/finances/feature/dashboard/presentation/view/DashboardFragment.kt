@@ -82,7 +82,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
             cellsAdapter = createAdapter()
         }
 
-        debugImageView.makeVisibleOrGone(BuildConfig.DEBUG)
+        debugImageView.makeVisibleOrGone(BuildConfig.IS_DEBUG_MENU_ENABLED)
         debugImageView.onClick(appDebugMenu::open)
 
         userPhotoImageView.onViewClick {
