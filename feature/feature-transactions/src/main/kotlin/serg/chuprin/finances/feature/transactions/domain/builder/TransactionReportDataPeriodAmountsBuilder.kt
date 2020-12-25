@@ -81,7 +81,7 @@ class TransactionReportDataPeriodAmountsBuilder @Inject constructor() {
                             emptyMap()
                         }
                     }
-                    is TransactionReportFilter.Categories -> TODO()
+                    is TransactionReportFilter.Categories -> emptyMap()
                 }
             }
         }

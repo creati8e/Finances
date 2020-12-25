@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
+import serg.chuprin.finances.core.api.presentation.model.cells.SpaceCell
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.BaseStoreViewModel
 import serg.chuprin.finances.feature.transactions.presentation.model.TransactionReportHeader
 import serg.chuprin.finances.feature.transactions.presentation.model.store.TransactionsReportIntent
@@ -23,6 +24,11 @@ class TransactionsReportViewModel @Inject constructor(
         .map { state ->
             buildList {
                 addAll(state.header.dataPeriodAmountsChartListCell)
+                if (state.header.dataPeriodAmountsChartListCell.isNotEmpty()) {
+                    if (state.categorySharesCell != null) {
+                        add(SpaceCell(sizeDp = 24))
+                    }
+                }
                 state.categorySharesCell?.let(::add)
                 addAll(state.transactionListCells)
             }

@@ -5,6 +5,7 @@ import serg.chuprin.finances.core.api.presentation.model.cells.TransactionCell
 import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter
 import serg.chuprin.finances.core.api.presentation.view.adapter.DividerAdapter
 import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.DateDividerCellRenderer
+import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.SpaceCellRenderer
 import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.TransactionCellRenderer
 import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ZeroDataCellRenderer
 import serg.chuprin.finances.core.categories.shares.presentation.view.adapter.renderer.CategorySharesCellRenderer
@@ -25,6 +26,7 @@ class TransactionReportCellsAdapter(
     DividerAdapter {
 
     init {
+        registerRenderer(SpaceCellRenderer())
         registerRenderer(ZeroDataCellRenderer())
         registerRenderer(TransactionCellRenderer())
         registerRenderer(DateDividerCellRenderer())
