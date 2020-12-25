@@ -15,9 +15,12 @@ import javax.inject.Inject
  * Created by Sergey Chuprin on 13.04.2020.
  */
 internal class FirebaseMoneyAccountDataSource @Inject constructor(
-    private val firestore: FirebaseFirestore,
+    firestore: FirebaseFirestore,
     private val mapper: FirebaseMoneyAccountMapper
-) {
+) : BaseFirebaseDataSource(firestore) {
+
+    override val collection: CollectionReference
+        get() = firestore.collection(COLLECTION_NAME)
 
     suspend fun getUserAccounts(userId: Id): List<DocumentSnapshot> {
         return getUserAccountsCollection(userId).get().await()?.documents.orEmpty()
@@ -42,28 +45,15 @@ internal class FirebaseMoneyAccountDataSource @Inject constructor(
     }
 
     suspend fun deleteAccounts(accounts: List<MoneyAccount>) {
-        val collection = getCollection()
-        firestore
-            .runBatch { writeBatch ->
-                accounts.forEach { transaction ->
-                    writeBatch.delete(collection.document(transaction.id.value))
-                }
-            }
-            .awaitWithLogging {
-                "Money accounts were deleted"
-            }
+        delete(accounts.map(MoneyAccount::id))
     }
 
     private fun getUserAccountsCollection(userId: Id): Query {
-        return getCollection().whereEqualTo(FIELD_OWNER_ID, userId.value)
+        return collection.whereEqualTo(FIELD_OWNER_ID, userId.value)
     }
 
     private fun getAccountDocumentById(accountId: Id): DocumentReference {
-        return getCollection().document(accountId.value)
-    }
-
-    private fun getCollection(): CollectionReference {
-        return firestore.collection(COLLECTION_NAME)
+        return collection.document(accountId.value)
     }
 
 }

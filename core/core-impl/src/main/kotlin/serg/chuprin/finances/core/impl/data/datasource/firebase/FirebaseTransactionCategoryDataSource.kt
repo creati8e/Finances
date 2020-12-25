@@ -1,5 +1,6 @@
 package serg.chuprin.finances.core.impl.data.datasource.firebase
 
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.*
@@ -17,13 +18,16 @@ import javax.inject.Inject
  * Created by Sergey Chuprin on 19.04.2020.
  */
 internal class FirebaseTransactionCategoryDataSource @Inject constructor(
-    private val firestore: FirebaseFirestore,
+    firestore: FirebaseFirestore,
     private val mapper: FirebaseTransactionCategoryMapper,
     private val queryExecutor: FirebaseTransactionCategoryQueryExecutor
-) {
+) : BaseFirebaseDataSource(firestore) {
+
+    override val collection: CollectionReference
+        get() = firestore.collection(COLLECTION_NAME)
 
     suspend fun getAllUserCategories(userId: Id): List<DocumentSnapshot> {
-        return getCollection()
+        return collection
             .whereEqualTo(FIELD_OWNER_ID, userId.value)
             .get()
             .await()
@@ -32,7 +36,7 @@ internal class FirebaseTransactionCategoryDataSource @Inject constructor(
     }
 
     fun createCategories(transactionCategories: List<TransactionCategory>) {
-        val collection = getCollection()
+        val collection = collection
         firestore.runBatch { writeBatch ->
             transactionCategories.forEach { transactionCategory ->
                 writeBatch.set(
@@ -44,16 +48,7 @@ internal class FirebaseTransactionCategoryDataSource @Inject constructor(
     }
 
     suspend fun deleteCategories(categories: List<TransactionCategory>) {
-        val collection = getCollection()
-        firestore
-            .runBatch { writeBatch ->
-                categories.forEach { transaction ->
-                    writeBatch.delete(collection.document(transaction.id.value))
-                }
-            }
-            .awaitWithLogging {
-                "Categories were deleted"
-            }
+        delete(categories.map(TransactionCategory::id))
     }
 
     fun categoriesFlow(query: TransactionCategoriesQuery): Flow<List<DocumentSnapshot>> {
@@ -88,7 +83,7 @@ internal class FirebaseTransactionCategoryDataSource @Inject constructor(
         if (categoryIds.isEmpty()) {
             return flowOf(emptyList())
         }
-        return getCollection()
+        return collection
             .asFlow()
             .map { querySnapshot ->
                 querySnapshot.documents.filter { document ->
@@ -96,7 +91,5 @@ internal class FirebaseTransactionCategoryDataSource @Inject constructor(
                 }
             }
     }
-
-    private fun getCollection() = firestore.collection(COLLECTION_NAME)
 
 }

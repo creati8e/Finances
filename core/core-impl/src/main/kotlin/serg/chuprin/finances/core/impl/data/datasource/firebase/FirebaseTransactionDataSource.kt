@@ -21,31 +21,25 @@ import javax.inject.Inject
  * Created by Sergey Chuprin on 04.04.2020.
  */
 internal class FirebaseTransactionDataSource @Inject constructor(
-    private val firestore: FirebaseFirestore,
+    firestore: FirebaseFirestore,
     private val transactionMapper: FirebaseTransactionMapper
-) {
+) : BaseFirebaseDataSource(firestore) {
+
+    override val collection: CollectionReference
+        get() = firestore.collection(COLLECTION_NAME)
 
     suspend fun deleteTransactions(transactions: List<Transaction>) {
-        val collection = getCollection()
-        firestore
-            .runBatch { writeBatch ->
-                transactions.forEach { transaction ->
-                    writeBatch.delete(collection.document(transaction.id.value))
-                }
-            }
-            .awaitWithLogging {
-                "Transactions were deleted"
-            }
+        delete(transactions.map(Transaction::id))
     }
 
     fun createTransaction(transaction: Transaction) {
-        getCollection()
+        collection
             .document(transaction.id.value)
             .set(transactionMapper.mapToFieldsMap(transaction))
     }
 
     fun transactionsFlow(query: TransactionsQuery): Flow<List<DocumentSnapshot>> {
-        return getCollection()
+        return collection
             .limit(query.limit)
             .sortBy(query.sortOrder)
             .filterByUser(query.userId)
@@ -84,7 +78,5 @@ internal class FirebaseTransactionDataSource @Inject constructor(
         return whereGreaterThanOrEqualTo(FIELD_DATE, startDate!!.toDateUTC())
             .whereLessThanOrEqualTo(FIELD_DATE, endDate!!.toDateUTC())
     }
-
-    private fun getCollection(): CollectionReference = firestore.collection(COLLECTION_NAME)
 
 }
