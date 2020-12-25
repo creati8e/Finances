@@ -65,7 +65,10 @@ class TransactionReportTransactionDataService @Inject constructor(
             }
         }
 
-        val initialCategoryIds: MutableSet<Id?> = if (Id.UNKNOWN in filter.categoryIds) {
+        val initialCategoryIds: MutableSet<Id?> = if (
+            Id.UNKNOWN in filter.categoryIds
+            || filter.categoryIds.isEmpty()
+        ) {
             mutableSetOf(null)
         } else {
             mutableSetOf()
