@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <string name="dashboard_no_money_accounts_zero_data_title">No money accounts</string>
+    <string name="dashboard_no_money_accounts_zero_data_button">Create</string>
+
     <string name="dashboard_recent_transactions_widget_subtitle">Recent transactions</string>
     <string name="dashboard_recent_transactions_widget_show_more">Show more</string>
     <string name="dashboard_recent_transactions_widget_no_transactions">No transactions</string>

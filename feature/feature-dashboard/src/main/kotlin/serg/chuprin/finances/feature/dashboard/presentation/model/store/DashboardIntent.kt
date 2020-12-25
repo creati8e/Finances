@@ -10,6 +10,8 @@ import serg.chuprin.finances.feature.dashboard.presentation.model.cells.moneyacc
  */
 sealed class DashboardIntent {
 
+    object ClickOnZeroData : DashboardIntent()
+
     object ClickOnCurrentPeriod : DashboardIntent()
 
     object ClickOnNextPeriodButton : DashboardIntent()

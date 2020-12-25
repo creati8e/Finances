@@ -25,6 +25,19 @@ internal class FirebaseTransactionDataSource @Inject constructor(
     private val transactionMapper: FirebaseTransactionMapper
 ) {
 
+    suspend fun deleteTransactions(transactions: List<Transaction>) {
+        val collection = getCollection()
+        firestore
+            .runBatch { writeBatch ->
+                transactions.forEach { transaction ->
+                    writeBatch.delete(collection.document(transaction.id.value))
+                }
+            }
+            .awaitWithLogging {
+                "Transactions were deleted"
+            }
+    }
+
     fun createTransaction(transaction: Transaction) {
         getCollection()
             .document(transaction.id.value)

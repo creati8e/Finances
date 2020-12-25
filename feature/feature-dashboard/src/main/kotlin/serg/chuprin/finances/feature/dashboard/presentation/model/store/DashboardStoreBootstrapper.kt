@@ -22,7 +22,7 @@ class DashboardStoreBootstrapper @Inject constructor(
     override fun invoke(): Flow<DashboardAction> {
         return buildDashboardUseCase
             .execute()
-            .map { dashboard -> DashboardAction.FormatDashboard(dashboard) }
+            .map(DashboardAction::FormatDashboard)
             .onStart {
                 val currentUser = userRepository.getCurrentUser()
                 dataPeriodRepository.setCurrentDataPeriod(

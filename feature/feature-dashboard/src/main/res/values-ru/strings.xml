@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <string name="dashboard_no_money_accounts_zero_data_title">Нет счетов</string>
+    <string name="dashboard_no_money_accounts_zero_data_button">Создать</string>
+
     <string name="dashboard_recent_transactions_widget_subtitle">Последние транзакции</string>
     <string name="dashboard_recent_transactions_widget_show_more">Смотреть все</string>
     <string name="dashboard_recent_transactions_widget_no_transactions">Нет транзакций</string>

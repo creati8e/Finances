@@ -24,6 +24,10 @@ internal class TransactionRepositoryImpl @Inject constructor(
         firebaseDataSource.createTransaction(transaction)
     }
 
+    override suspend fun deleteTransactions(transactions: List<Transaction>) {
+        firebaseDataSource.deleteTransactions(transactions)
+    }
+
     override fun transactionsFlow(query: TransactionsQuery): Flow<List<Transaction>> {
         return firebaseDataSource
             .transactionsFlow(query)

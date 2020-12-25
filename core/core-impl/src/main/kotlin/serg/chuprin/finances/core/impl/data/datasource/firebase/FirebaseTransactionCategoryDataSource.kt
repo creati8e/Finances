@@ -43,6 +43,19 @@ internal class FirebaseTransactionCategoryDataSource @Inject constructor(
         }
     }
 
+    suspend fun deleteCategories(categories: List<TransactionCategory>) {
+        val collection = getCollection()
+        firestore
+            .runBatch { writeBatch ->
+                categories.forEach { transaction ->
+                    writeBatch.delete(collection.document(transaction.id.value))
+                }
+            }
+            .awaitWithLogging {
+                "Categories were deleted"
+            }
+    }
+
     fun categoriesFlow(query: TransactionCategoriesQuery): Flow<List<DocumentSnapshot>> {
         return queryExecutor.execute(query)
     }

@@ -7,10 +7,10 @@ import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryT
  * Created by Sergey Chuprin on 12.12.2020.
  */
 class TransactionCategoriesQuery(
-    val userId: Id?,
-    val relation: Relation?,
-    val categoryIds: Set<Id>,
-    val type: TransactionCategoryType?
+    val userId: Id? = null,
+    val relation: Relation? = null,
+    val categoryIds: Set<Id> = emptySet(),
+    val type: TransactionCategoryType? = null
 ) {
 
     enum class Relation {

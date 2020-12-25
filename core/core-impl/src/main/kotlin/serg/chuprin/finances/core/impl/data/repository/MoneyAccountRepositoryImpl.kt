@@ -21,6 +21,10 @@ internal class MoneyAccountRepositoryImpl @Inject constructor(
 
     override fun updateAccount(account: MoneyAccount) = dataSource.updateAccount(account)
 
+    override suspend fun deleteAccounts(accounts: List<MoneyAccount>) {
+        dataSource.deleteAccounts(accounts)
+    }
+
     override suspend fun getUserAccounts(userId: Id): List<MoneyAccount> {
         return dataSource.getUserAccounts(userId).mapNotNull(mapper::mapFromSnapshot)
     }

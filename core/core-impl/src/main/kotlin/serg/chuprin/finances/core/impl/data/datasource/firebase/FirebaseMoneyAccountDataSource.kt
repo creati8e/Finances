@@ -41,6 +41,19 @@ internal class FirebaseMoneyAccountDataSource @Inject constructor(
             .map { querySnapshot -> querySnapshot.documents }
     }
 
+    suspend fun deleteAccounts(accounts: List<MoneyAccount>) {
+        val collection = getCollection()
+        firestore
+            .runBatch { writeBatch ->
+                accounts.forEach { transaction ->
+                    writeBatch.delete(collection.document(transaction.id.value))
+                }
+            }
+            .awaitWithLogging {
+                "Money accounts were deleted"
+            }
+    }
+
     private fun getUserAccountsCollection(userId: Id): Query {
         return getCollection().whereEqualTo(FIELD_OWNER_ID, userId.value)
     }

@@ -29,6 +29,9 @@ internal class MoneyAccountServiceImpl @Inject constructor(
     }
 
     private fun calculateBalance(moneyAccounts: List<MoneyAccount>): Flow<MoneyAccountBalances> {
+        if (moneyAccounts.isEmpty()) {
+            return flowOf(MoneyAccountBalances())
+        }
         val flows = moneyAccounts.map { account ->
             combine(
                 flowOf(account),
