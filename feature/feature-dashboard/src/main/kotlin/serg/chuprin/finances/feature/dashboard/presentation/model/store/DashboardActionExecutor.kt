@@ -4,10 +4,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.api.presentation.model.builder.DataPeriodTypePopupMenuCellsBuilder
+import serg.chuprin.finances.core.api.presentation.model.cells.ZeroDataCell
+import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
 import serg.chuprin.finances.core.mvi.invoke
+import serg.chuprin.finances.feature.dashboard.R
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardDataPeriodChangeDirection
 import serg.chuprin.finances.feature.dashboard.domain.usecase.ChangeDashboardDataPeriodUseCase
 import serg.chuprin.finances.feature.dashboard.domain.usecase.ChangeDataPeriodTypeForDashboardUseCase
@@ -16,11 +19,13 @@ import serg.chuprin.finances.feature.dashboard.presentation.model.builder.Dashbo
 import serg.chuprin.finances.feature.dashboard.presentation.model.builder.DashboardWidgetCellsBuilder
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
 import javax.inject.Inject
+import serg.chuprin.finances.core.api.R as CoreR
 
 /**
  * Created by Sergey Chuprin on 16.04.2020.
  */
 class DashboardActionExecutor @Inject constructor(
+    private val resourceManger: ResourceManger,
     private val widgetCellsBuilder: DashboardWidgetCellsBuilder,
     private val changeDataPeriodUseCase: ChangeDashboardDataPeriodUseCase,
     private val reportArgumentsBuilder: DashboardTransactionsReportArgumentsBuilder,
@@ -77,11 +82,22 @@ class DashboardActionExecutor @Inject constructor(
                     is DashboardIntent.ClickOnCategory -> {
                         handleClickOnCategoryIntent(intent, state, eventConsumer)
                     }
+                    DashboardIntent.ClickOnZeroData -> {
+                        handleClickOnZeroDataIntent(eventConsumer)
+                    }
                 }
             }
             is DashboardAction.FormatDashboard -> {
                 handleFormatDashboardAction(action, state)
             }
+        }
+    }
+
+    private fun handleClickOnZeroDataIntent(
+        eventConsumer: Consumer<DashboardEvent>
+    ): Flow<DashboardEffect> {
+        return emptyFlowAction {
+            eventConsumer(DashboardEvent.NavigateToMoneyAccountCreationScreen)
         }
     }
 
@@ -205,12 +221,38 @@ class DashboardActionExecutor @Inject constructor(
         state: DashboardState
     ): Flow<DashboardEffect> {
         return flow {
-            val widgetCells = widgetCellsBuilder.build(
-                existingCells = state.cells,
-                widgets = action.dashboard.widgets
-            )
-            emit(DashboardEffect.DashboardUpdated(action.dashboard, widgetCells))
+            if (action.dashboard.hasNoMoneyAccounts) {
+                emit(
+                    DashboardEffect.DashboardUpdated(
+                        hasNoMoneyAccounts = true,
+                        dashboard = action.dashboard,
+                        cells = listOf(buildNoMoneyAccountsZeroDataCell())
+                    )
+                )
+            } else {
+                val widgetCells = widgetCellsBuilder.build(
+                    existingCells = state.cells,
+                    widgets = action.dashboard.widgets
+                )
+                emit(
+                    DashboardEffect.DashboardUpdated(
+                        cells = widgetCells,
+                        hasNoMoneyAccounts = false,
+                        dashboard = action.dashboard
+                    )
+                )
+            }
         }
     }
+
+    private fun buildNoMoneyAccountsZeroDataCell() = ZeroDataCell(
+        contentMessageRes = null,
+        iconRes = R.drawable.ic_account,
+        titleRes = R.string.dashboard_no_money_accounts_zero_data_title,
+        buttonRes = R.string.dashboard_no_money_accounts_zero_data_button,
+        buttonTransitionName = resourceManger.getString(
+            CoreR.string.transition_money_account_creation
+        )
+    )
 
 }

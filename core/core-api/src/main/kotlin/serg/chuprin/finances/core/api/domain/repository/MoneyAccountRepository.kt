@@ -19,4 +19,6 @@ interface MoneyAccountRepository {
 
     suspend fun getUserAccounts(userId: Id): List<MoneyAccount>
 
+    suspend fun deleteAccounts(accounts: List<MoneyAccount>)
+
 }

@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme23" parent="BaseAppTheme.Clear">
+    <style name="AppTheme"
+        parent="AppTheme23" />
+
+    <style name="AppTheme.Splash"
+        parent="AppThemeSplash23" />
+
+    <style name="AppTheme23"
+        parent="BaseAppTheme.Clear">
         <item name="android:windowLightStatusBar">@bool/windowLightStatusBar</item>
     </style>
 
-    <style name="AppThemeSplash23" parent="BaseAppTheme.Splash">
+    <style name="AppThemeSplash23"
+        parent="BaseAppTheme.Splash">
         <item name="android:windowLightStatusBar">@bool/windowLightStatusBar</item>
     </style>
-
-    <style name="AppTheme" parent="AppTheme23" />
-
-    <style name="AppTheme.Splash" parent="AppThemeSplash23" />
 
 </resources>

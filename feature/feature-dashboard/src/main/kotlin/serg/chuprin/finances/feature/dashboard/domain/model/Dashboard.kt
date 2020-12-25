@@ -9,6 +9,7 @@ import serg.chuprin.finances.core.api.domain.model.period.DataPeriodType
  */
 data class Dashboard(
     val user: User = User.EMPTY,
+    val hasNoMoneyAccounts: Boolean = true,
     val widgets: DashboardWidgets = DashboardWidgets(),
     val currentDataPeriod: DataPeriod = DataPeriod.from(DataPeriodType.DEFAULT)
 )

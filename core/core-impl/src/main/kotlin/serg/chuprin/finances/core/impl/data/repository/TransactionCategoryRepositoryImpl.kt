@@ -34,6 +34,10 @@ internal class TransactionCategoryRepositoryImpl @Inject constructor(
         return categoriesFlow(query).first()
     }
 
+    override suspend fun deleteCategories(categories: List<TransactionCategory>) {
+        firebaseDataSource.deleteCategories(categories)
+    }
+
     override fun categoriesFlow(query: TransactionCategoriesQuery): Flow<CategoriesQueryResult> {
         return firebaseDataSource
             .categoriesFlow(query)

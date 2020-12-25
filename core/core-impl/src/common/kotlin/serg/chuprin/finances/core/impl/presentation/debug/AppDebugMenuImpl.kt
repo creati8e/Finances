@@ -7,19 +7,20 @@ import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.modules.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.MoneyAccount
+import serg.chuprin.finances.core.api.domain.model.OnboardingStep
 import serg.chuprin.finances.core.api.domain.model.User
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryType
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
+import serg.chuprin.finances.core.api.domain.model.query.TransactionCategoriesQuery
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.model.transaction.TransactionType
-import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
-import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepository
-import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
-import serg.chuprin.finances.core.api.domain.repository.UserRepository
+import serg.chuprin.finances.core.api.domain.model.transaction.TransactionsQuery
+import serg.chuprin.finances.core.api.domain.repository.*
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.impl.BuildConfig
 import serg.chuprin.finances.core.impl.R
@@ -34,6 +35,7 @@ import serg.chuprin.finances.core.api.R as CoreR
 internal class AppDebugMenuImpl @Inject constructor(
     private val resourceManger: ResourceManger,
     private val userRepository: UserRepository,
+    private val onboardingRepository: OnboardingRepository,
     private val transactionRepository: TransactionRepository,
     private val moneyAccountRepository: MoneyAccountRepository,
     private val transactionCategoryRepository: TransactionCategoryRepository
@@ -102,6 +104,18 @@ internal class AppDebugMenuImpl @Inject constructor(
                 type = TextModule.Type.BUTTON,
                 onItemSelected = {
                     launch { createMoneyAccount() }
+                }
+            ),
+            PaddingModule(),
+            TextModule(
+                text = "Dangerous",
+                type = TextModule.Type.SECTION_HEADER
+            ),
+            TextModule(
+                text = "Delete all account data",
+                type = TextModule.Type.BUTTON,
+                onItemSelected = {
+                    launch { deleteAccountData() }
                 }
             )
         )
@@ -176,6 +190,25 @@ internal class AppDebugMenuImpl @Inject constructor(
         } else {
             null
         }
+    }
+
+    private suspend fun deleteAccountData() {
+        val currentUser = userRepository.getCurrentUser()
+
+        val transactions = transactionRepository
+            .transactionsFlow(TransactionsQuery(userId = currentUser.id))
+            .first()
+        transactionRepository.deleteTransactions(transactions)
+
+        val accounts = moneyAccountRepository.getUserAccounts(userId = currentUser.id)
+        moneyAccountRepository.deleteAccounts(accounts)
+
+        val categories = transactionCategoryRepository
+            .categoriesFlow(TransactionCategoriesQuery(userId = currentUser.id))
+            .first()
+        transactionCategoryRepository.deleteCategories(categories.values.map { it.category })
+
+        onboardingRepository.onboardingStep = OnboardingStep.INITIAL
     }
 
 }

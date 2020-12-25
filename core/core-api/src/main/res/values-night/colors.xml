@@ -9,4 +9,10 @@
 
     <color name="colorIcon">#FFFFFF</color>
 
+    <!--region Navigation bar-->
+
+    <color name="colorNavbarDivider">#1FFFFFFF</color>
+
+    <!--endregion-->
+
 </resources>

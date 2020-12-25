@@ -77,6 +77,8 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
         android:src="@drawable/ic_add"
-        app:backgroundTint="?colorAccent" />
+        android:visibility="invisible"
+        app:backgroundTint="?colorAccent"
+        tools:visibility="visible" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

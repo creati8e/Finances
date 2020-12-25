@@ -18,4 +18,10 @@
 
     <color name="colorIcon">#FF1D2F3C</color>
 
+    <!--region Navigation Bar-->
+
+    <color name="colorNavbarDivider">#1E000000</color>
+
+    <!--endregion-->
+
 </resources>

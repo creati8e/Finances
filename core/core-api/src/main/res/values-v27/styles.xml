@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme"
+        parent="AppTheme27" />
+
+    <style name="AppTheme.Splash"
+        parent="AppThemeSplash27" />
+
+    <style name="AppTheme27"
+        parent="AppTheme23">
+        <item name="android:windowLightNavigationBar">@bool/windowLightStatusBar</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarDividerColor">@color/colorNavbarDivider</item>
+    </style>
+
+    <style name="AppThemeSplash27"
+        parent="AppThemeSplash23">
+        <item name="android:windowLightNavigationBar">@bool/windowLightStatusBar</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarDividerColor">@color/colorNavbarDivider</item>
+    </style>
+
+</resources>

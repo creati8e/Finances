@@ -20,6 +20,9 @@ class DashboardViewModel @Inject constructor(
     val userPhotoLiveData: LiveData<String> =
         store.observeParticularStateAsLiveData { state -> state.dashboard.user.photoUrl }
 
+    val transactionCreationFabVisibilityLiveData: LiveData<Boolean> =
+        store.observeParticularStateAsLiveData { !it.dashboard.hasNoMoneyAccounts }
+
     val cellsLiveData: LiveData<List<BaseCell>> =
         store.observeParticularStateAsLiveData(DashboardState::cells)
 

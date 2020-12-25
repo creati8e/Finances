@@ -19,6 +19,7 @@ import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.vi
 import serg.chuprin.finances.core.api.presentation.navigation.DashboardNavigation
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter
+import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ZeroDataCellRenderer
 import serg.chuprin.finances.core.api.presentation.view.extensions.getDimenDpFloat
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisibleOrGone
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
@@ -97,6 +98,13 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         with(viewModel) {
             eventsLiveData(::handleEvent)
             cellsLiveData(cellsAdapter::setItems)
+            transactionCreationFabVisibilityLiveData { visible ->
+                if (visible) {
+                    creationTransactionButton.show()
+                } else {
+                    creationTransactionButton.hide()
+                }
+            }
             userPhotoLiveData { photoUrl ->
                 userPhotoImageView.load(photoUrl) {
                     val radius = requireContext().getDimenDpFloat(R.dimen.cornerRadius)
@@ -154,6 +162,11 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
     private fun createAdapter(): DiffMultiViewAdapter<BaseCell> {
         return DiffMultiViewAdapter(DashboardAdapterDiffCallback()).apply {
             registerRenderer<DashboardLoadingCell>(R.layout.cell_dashboard_loading)
+            registerRenderer(
+                ZeroDataCellRenderer(onButtonClick = {
+                    viewModel.dispatchIntent(DashboardIntent.ClickOnZeroData)
+                })
+            )
             registerRenderer(
                 DashboardBalanceWidgetCellRenderer(
                     clickOnCurrentPeriodIncomes = {

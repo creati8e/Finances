@@ -13,4 +13,6 @@ interface TransactionRepository {
 
     fun transactionsFlow(query: TransactionsQuery): Flow<List<Transaction>>
 
+    suspend fun deleteTransactions(transactions: List<Transaction>)
+
 }
