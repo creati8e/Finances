@@ -53,6 +53,7 @@ class DashboardCategoriesWidgetBuilder @Inject constructor(
     ): Flow<DashboardCategoriesWidgetPage> {
         return transactionCategoryRetrieverService
             .categoryTransactionsFlow(
+                currentUser.id,
                 TransactionsQuery(
                     userId = currentUser.id,
                     endDate = currentPeriod.endDate,

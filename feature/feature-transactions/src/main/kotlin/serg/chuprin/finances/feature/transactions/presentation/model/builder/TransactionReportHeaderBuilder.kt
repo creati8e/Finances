@@ -1,6 +1,7 @@
 package serg.chuprin.finances.feature.transactions.presentation.model.builder
 
 import serg.chuprin.finances.core.api.domain.model.Id
+import serg.chuprin.finances.core.api.domain.model.User
 import serg.chuprin.finances.core.api.domain.model.query.TransactionCategoriesQuery
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepository
@@ -40,7 +41,7 @@ class TransactionReportHeaderBuilder @Inject constructor(
                     ?: resourceManger.getString(R.string.transactions_report_toolbar_title)
             }
             is TransactionReportFilter.SingleCategory -> {
-                buildTitleForSingleCategory(filter)
+                buildTitleForSingleCategory(filter, report.currentUser)
             }
             is TransactionReportFilter.Categories -> {
                 filter.transactionType.format()
@@ -82,7 +83,8 @@ class TransactionReportHeaderBuilder @Inject constructor(
     }
 
     private suspend fun buildTitleForSingleCategory(
-        filter: TransactionReportFilter.SingleCategory
+        filter: TransactionReportFilter.SingleCategory,
+        currentUser: User
     ): String {
         if (filter.categoryId == Id.UNKNOWN) {
             return resourceManger.getString(R.string.no_category)
@@ -91,8 +93,8 @@ class TransactionReportHeaderBuilder @Inject constructor(
             .categories(
                 TransactionCategoriesQuery(
                     type = null,
-                    userId = null,
                     relation = null,
+                    userId = currentUser.id,
                     categoryIds = setOf(filter.categoryId)
                 )
             )

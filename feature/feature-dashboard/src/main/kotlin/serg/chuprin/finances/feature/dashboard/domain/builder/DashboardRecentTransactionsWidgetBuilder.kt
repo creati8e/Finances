@@ -36,6 +36,7 @@ class DashboardRecentTransactionsWidgetBuilder @Inject constructor(
         }
         return transactionCategoryRetrieverService
             .transactionsFlow(
+                currentUser.id,
                 TransactionsQuery(
                     userId = currentUser.id,
                     endDate = currentPeriod.endDate,

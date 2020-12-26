@@ -35,6 +35,7 @@ class BuildTransactionsReportUseCase @Inject constructor(
         reportRawData: TransactionReportRawData
     ): TransactionsReport {
         return TransactionsReport(
+            currentUser = user,
             filter = reportRawData.filter,
             preparedData = TransactionReportPreparedData(
                 currency = user.defaultCurrency,

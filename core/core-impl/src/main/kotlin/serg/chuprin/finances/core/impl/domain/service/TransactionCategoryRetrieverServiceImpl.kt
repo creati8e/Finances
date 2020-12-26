@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.api.domain.linker.TransactionWithCategoriesLinker
+import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.TransactionCategoriesMap
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
 import serg.chuprin.finances.core.api.domain.model.query.TransactionCategoriesQuery
@@ -25,7 +26,10 @@ internal class TransactionCategoryRetrieverServiceImpl @Inject constructor(
     private val transactionWithCategoriesLinker: TransactionWithCategoriesLinker
 ) : TransactionCategoryRetrieverService {
 
-    override fun transactionsFlow(query: TransactionsQuery): Flow<TransactionCategoriesMap> {
+    override fun transactionsFlow(
+        userId: Id,
+        query: TransactionsQuery
+    ): Flow<TransactionCategoriesMap> {
         return transactionRepository
             .transactionsFlow(query)
             .flatMapLatest { transactions ->
@@ -33,6 +37,7 @@ internal class TransactionCategoryRetrieverServiceImpl @Inject constructor(
                     flowOf(transactions),
                     categoryRepository.categoriesFlow(
                         TransactionCategoriesQuery(
+                            userId = userId,
                             categoryIds = transactions.categoryIds.toSet(),
                             relation = TransactionCategoriesQuery.Relation.RETRIEVE_PARENTS
                         )
@@ -43,6 +48,7 @@ internal class TransactionCategoryRetrieverServiceImpl @Inject constructor(
     }
 
     override fun categoryTransactionsFlow(
+        userId: Id,
         query: TransactionsQuery
     ): Flow<Map<TransactionCategory?, List<Transaction>>> {
         return transactionRepository
@@ -52,6 +58,7 @@ internal class TransactionCategoryRetrieverServiceImpl @Inject constructor(
                     flowOf(transactions),
                     categoryRepository.categoriesFlow(
                         TransactionCategoriesQuery(
+                            userId = userId,
                             categoryIds = transactions.categoryIds.toSet(),
                             relation = TransactionCategoriesQuery.Relation.RETRIEVE_PARENTS
                         )
