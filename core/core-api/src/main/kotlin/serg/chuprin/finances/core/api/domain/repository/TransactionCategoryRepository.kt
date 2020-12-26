@@ -24,11 +24,6 @@ interface TransactionCategoryRepository {
         query: TransactionCategoriesQuery
     ): Map<Id, TransactionCategoryWithParent>
 
-    /**
-     * [Map.Entry.key] is category's id;
-     */
-    fun categoriesFlow(categoryIds: List<Id>): Flow<Map<Id, TransactionCategoryWithParent>>
-
     fun categoriesFlow(query: TransactionCategoriesQuery): Flow<CategoriesQueryResult>
 
     suspend fun deleteCategories(categories: List<TransactionCategory>)

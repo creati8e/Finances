@@ -71,16 +71,6 @@ internal class TransactionCategoryRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun categoriesFlow(categoryIds: List<Id>): Flow<Map<Id, TransactionCategoryWithParent>> {
-        return firebaseDataSource
-            .categoriesWithParentsFlow(categoryIds.map(Id::value))
-            .map { documentSnapshots ->
-                documentSnapshots
-                    .mapNotNull(mapper::mapFromSnapshot)
-                    .linkWithParents()
-            }
-    }
-
     private fun TransactionCategoryAssetDto.map(userId: Id): TransactionCategory? {
         val type = if (isIncome) {
             TransactionCategoryType.INCOME

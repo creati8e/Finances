@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.api.domain.linker.TransactionWithCategoriesLinker
 import serg.chuprin.finances.core.api.domain.model.TransactionCategoriesMap
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
+import serg.chuprin.finances.core.api.domain.model.query.TransactionCategoriesQuery
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.model.transaction.TransactionsQuery
 import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepository
@@ -30,7 +31,12 @@ internal class TransactionCategoryRetrieverServiceImpl @Inject constructor(
             .flatMapLatest { transactions ->
                 combine(
                     flowOf(transactions),
-                    categoryRepository.categoriesFlow(transactions.categoryIds),
+                    categoryRepository.categoriesFlow(
+                        TransactionCategoriesQuery(
+                            categoryIds = transactions.categoryIds.toSet(),
+                            relation = TransactionCategoriesQuery.Relation.RETRIEVE_PARENTS
+                        )
+                    ),
                     transactionWithCategoriesLinker::linkTransactionsWithCategories
                 )
             }
@@ -44,7 +50,12 @@ internal class TransactionCategoryRetrieverServiceImpl @Inject constructor(
             .flatMapLatest { transactions ->
                 combine(
                     flowOf(transactions),
-                    categoryRepository.categoriesFlow(transactions.categoryIds),
+                    categoryRepository.categoriesFlow(
+                        TransactionCategoriesQuery(
+                            categoryIds = transactions.categoryIds.toSet(),
+                            relation = TransactionCategoriesQuery.Relation.RETRIEVE_PARENTS
+                        )
+                    ),
                     transactionWithCategoriesLinker::linkCategoryParentsWithTransactions
                 )
             }

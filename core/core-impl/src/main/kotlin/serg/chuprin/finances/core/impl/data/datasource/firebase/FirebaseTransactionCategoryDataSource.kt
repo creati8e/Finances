@@ -3,14 +3,13 @@ package serg.chuprin.finances.core.impl.data.datasource.firebase
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.tasks.await
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
 import serg.chuprin.finances.core.api.domain.model.query.TransactionCategoriesQuery
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionCategoryFieldsContract.COLLECTION_NAME
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionCategoryFieldsContract.FIELD_OWNER_ID
-import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionCategoryFieldsContract.FIELD_PARENT_ID
 import serg.chuprin.finances.core.impl.data.mapper.category.FirebaseTransactionCategoryMapper
 import javax.inject.Inject
 
@@ -53,43 +52,6 @@ internal class FirebaseTransactionCategoryDataSource @Inject constructor(
 
     fun categoriesFlow(query: TransactionCategoriesQuery): Flow<List<DocumentSnapshot>> {
         return queryExecutor.execute(query)
-    }
-
-    @Suppress("MoveLambdaOutsideParentheses")
-    fun categoriesWithParentsFlow(categoryIds: List<String>): Flow<List<DocumentSnapshot>> {
-        if (categoryIds.isEmpty()) {
-            return flowOf(emptyList())
-        }
-        return categoriesFlow(categoryIds)
-            .flatMapLatest { documents ->
-                val parentCategoryDocumentsIds = documents
-                    .mapNotNull { document ->
-                        document
-                            .getString(FIELD_PARENT_ID)
-                            ?.takeUnless(String::isEmpty)
-                    }
-                    .distinct()
-                combine(
-                    flowOf(documents),
-                    categoriesFlow(parentCategoryDocumentsIds),
-                    { categoryDocuments, parentCategoryDocuments ->
-                        categoryDocuments + parentCategoryDocuments
-                    }
-                )
-            }
-    }
-
-    private fun categoriesFlow(categoryIds: List<String>): Flow<List<DocumentSnapshot>> {
-        if (categoryIds.isEmpty()) {
-            return flowOf(emptyList())
-        }
-        return collection
-            .asFlow()
-            .map { querySnapshot ->
-                querySnapshot.documents.filter { document ->
-                    document.id in categoryIds
-                }
-            }
     }
 
 }

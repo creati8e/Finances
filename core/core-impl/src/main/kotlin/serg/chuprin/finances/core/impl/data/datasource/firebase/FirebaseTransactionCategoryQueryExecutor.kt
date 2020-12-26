@@ -29,7 +29,10 @@ internal class FirebaseTransactionCategoryQueryExecutor @Inject constructor(
     fun execute(query: TransactionCategoriesQuery): Flow<List<DocumentSnapshot>> {
         return when (query.relation) {
             Relation.RETRIEVE_CHILDREN -> {
-                mergeParentAndChildrenCategories(query)
+                retrieveChildrenCategoriesAndMerge(query)
+            }
+            Relation.RETRIEVE_PARENTS -> {
+                retrieveParentCategoriesAndMerge(query)
             }
             null -> {
                 buildQueryFlow(query).map { querySnapshot ->
@@ -45,17 +48,55 @@ internal class FirebaseTransactionCategoryQueryExecutor @Inject constructor(
         }
     }
 
-    private fun mergeParentAndChildrenCategories(
+    private fun retrieveParentCategoriesAndMerge(
         query: TransactionCategoriesQuery
     ): Flow<List<DocumentSnapshot>> {
         return flow {
             coroutineScope {
-                val sharedFlow = buildQueryFlow(query).shareIn(
+                val sharedCategoriesFlow = buildQueryFlow(query)
+                    .map { it.documents }
+                    .shareIn(
+                        scope = this,
+                        started = SharingStarted.WhileSubscribed(replayExpirationMillis = 0),
+                    )
+
+                val childrenCategoriesFlow = sharedCategoriesFlow.map { documents ->
+                    if (query.categoryIds.isEmpty()) {
+                        documents
+                    } else {
+                        documents.filter { document ->
+                            query.categoryIds.contains { id -> id.value == document.id }
+                        }
+                    }
+                }
+
+                val parentCategoriesFlow = sharedCategoriesFlow
+                    .zip(childrenCategoriesFlow) { allDocuments, childrenDocuments ->
+                        val parentCategoryIds = childrenDocuments.mapTo(
+                            mutableSetOf(),
+                            { document -> document.getString(FIELD_PARENT_ID) }
+                        )
+                        allDocuments.filter { document ->
+                            parentCategoryIds.contains { id -> id == document.id }
+                        }
+                    }
+
+                emitAll(combine(parentCategoriesFlow, childrenCategoriesFlow, ::mergeDocuments))
+            }
+        }
+    }
+
+    private fun retrieveChildrenCategoriesAndMerge(
+        query: TransactionCategoriesQuery
+    ): Flow<List<DocumentSnapshot>> {
+        return flow {
+            coroutineScope {
+                val sharedCategoriesFlow = buildQueryFlow(query).shareIn(
                     scope = this,
                     started = SharingStarted.WhileSubscribed(replayExpirationMillis = 0),
                 )
 
-                val parentCategoriesFlow = sharedFlow.map { querySnapshot ->
+                val parentCategoriesFlow = sharedCategoriesFlow.map { querySnapshot ->
                     if (query.categoryIds.isEmpty()) {
                         querySnapshot.documents
                     } else {
@@ -65,7 +106,7 @@ internal class FirebaseTransactionCategoryQueryExecutor @Inject constructor(
                     }
                 }
 
-                val childrenCategoriesFlow = sharedFlow.map { querySnapshot ->
+                val childrenCategoriesFlow = sharedCategoriesFlow.map { querySnapshot ->
                     if (query.categoryIds.isEmpty()) {
                         querySnapshot.documents
                     } else {

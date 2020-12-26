@@ -19,7 +19,13 @@ class TransactionCategoriesQuery(
          * Indicates that children categories should be retrieved
          * for all categories from [categoryIds].
          */
-        RETRIEVE_CHILDREN
+        RETRIEVE_CHILDREN,
+
+        /**
+         * Indicates that parent categories should be retrieved
+         * for all categories from [categoryIds].
+         */
+        RETRIEVE_PARENTS
     }
 
 }
