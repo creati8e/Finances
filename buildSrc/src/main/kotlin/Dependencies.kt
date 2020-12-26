@@ -123,7 +123,7 @@ object Libraries {
         const val PLAY_SERVICES_KTX = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.4.2"
     }
 
-    object Debug {
+    object DebugMenu {
         private const val VER = "2.4.3"
 
         const val DEBUG = "com.github.pandulapeter.beagle:ui-drawer:$VER"

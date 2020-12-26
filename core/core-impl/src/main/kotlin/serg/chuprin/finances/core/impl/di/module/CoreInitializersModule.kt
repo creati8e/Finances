@@ -30,7 +30,7 @@ internal interface CoreInitializersModule {
 
         @[Provides IntoSet]
         fun provideDebugMenu(implProvider: Provider<AppDebugMenuInitializer>): Initializer {
-            return if (BuildConfig.DEBUG) {
+            return if (BuildConfig.IS_DEBUG_MENU_ENABLED) {
                 implProvider.get()
             } else {
                 AppDebugMenuNoOnImpl()
