@@ -9,9 +9,14 @@ import serg.chuprin.finances.core.api.presentation.model.cells.TransactionCell
  */
 interface TransactionCellBuilder {
 
+    enum class DateTimeFormattingMode {
+        ONLY_TIME, DATE_AND_TIME
+    }
+
     fun build(
         transaction: Transaction,
-        categoryWithParent: TransactionCategoryWithParent?
+        categoryWithParent: TransactionCategoryWithParent?,
+        dateTimeFormattingMode: DateTimeFormattingMode
     ): TransactionCell
 
 }

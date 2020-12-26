@@ -2,6 +2,7 @@ package serg.chuprin.finances.feature.transactions.presentation.model.builder
 
 import serg.chuprin.finances.core.api.domain.model.TransactionsGroupedByDay
 import serg.chuprin.finances.core.api.presentation.builder.TransactionCellBuilder
+import serg.chuprin.finances.core.api.presentation.builder.TransactionCellBuilder.DateTimeFormattingMode
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.formatter.DateTimeFormatter
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
@@ -50,7 +51,13 @@ class TransactionReportCellsBuilder @Inject constructor(
                         )
                     )
                     transactionsWithCategories.forEach { (transaction, category) ->
-                        add(transactionCellBuilder.build(transaction, category))
+                        add(
+                            transactionCellBuilder.build(
+                                transaction = transaction,
+                                categoryWithParent = category,
+                                dateTimeFormattingMode = DateTimeFormattingMode.ONLY_TIME
+                            )
+                        )
                     }
                 }
             }

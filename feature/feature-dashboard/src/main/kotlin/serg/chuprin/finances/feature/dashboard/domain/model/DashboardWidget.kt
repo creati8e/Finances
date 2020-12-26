@@ -34,7 +34,6 @@ sealed class DashboardWidget(
     ) : DashboardWidget(DashboardWidgetType.PERIOD_SELECTOR)
 
     data class RecentTransactions(
-        val currency: Currency,
         val transactionWithCategoryMap: Map<Transaction, TransactionCategoryWithParent?>
     ) : DashboardWidget(DashboardWidgetType.RECENT_TRANSACTIONS)
 

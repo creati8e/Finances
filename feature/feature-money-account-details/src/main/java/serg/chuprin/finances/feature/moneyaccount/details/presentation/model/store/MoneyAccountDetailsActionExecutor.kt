@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.api.domain.model.TransactionsGroupedByDay
 import serg.chuprin.finances.core.api.domain.usecase.MarkMoneyAccountAsFavoriteUseCase
 import serg.chuprin.finances.core.api.presentation.builder.TransactionCellBuilder
+import serg.chuprin.finances.core.api.presentation.builder.TransactionCellBuilder.DateTimeFormattingMode
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.formatter.DateTimeFormatter
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
@@ -103,7 +104,13 @@ class MoneyAccountDetailsActionExecutor @Inject constructor(
                         )
                     )
                     transactionsWithCategories.forEach { (transaction, category) ->
-                        add(transactionCellBuilder.build(transaction, category))
+                        add(
+                            transactionCellBuilder.build(
+                                transaction = transaction,
+                                categoryWithParent = category,
+                                dateTimeFormattingMode = DateTimeFormattingMode.ONLY_TIME
+                            )
+                        )
                     }
                 }
             }

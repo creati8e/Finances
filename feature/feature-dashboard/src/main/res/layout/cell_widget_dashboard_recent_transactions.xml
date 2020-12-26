@@ -30,8 +30,6 @@
         android:layout_below="@id/subtitleTextView"
         android:layout_marginTop="12dp"
         android:clipToPadding="false"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
         tools:itemCount="3"
         tools:listitem="@layout/cell_dashboard_transaction" />
 

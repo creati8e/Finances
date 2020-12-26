@@ -7,6 +7,7 @@ import serg.chuprin.adapter.ContainerHolder
 import serg.chuprin.adapter.ContainerRenderer
 import serg.chuprin.adapter.LongClick
 import serg.chuprin.finances.core.api.presentation.view.adapter.decoration.CellDividerDecoration
+import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.TransactionCellRenderer
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisibleOrGone
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
 import serg.chuprin.finances.feature.dashboard.R
@@ -26,7 +27,7 @@ class DashboardRecentTransactionsWidgetCellRenderer(
         registerRenderer<DashboardRecentTransactionsZeroDataCell>(
             R.layout.cell_dashboard_recent_transactions_zero_data
         )
-        registerRenderer(DashboardRecentTransactionCellRenderer())
+        registerRenderer(TransactionCellRenderer())
     }
 
     override fun bindView(holder: ContainerHolder, model: DashboardWidgetCell.RecentTransactions) {

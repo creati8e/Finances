@@ -44,7 +44,7 @@ class DashboardRecentTransactionsWidgetBuilder @Inject constructor(
                     sortOrder = TransactionsQuery.SortOrder.DATE_DESC
                 )
             )
-            .map { map -> DashboardWidget.RecentTransactions(currentUser.defaultCurrency, map) }
+            .map(DashboardWidget::RecentTransactions)
     }
 
 }
