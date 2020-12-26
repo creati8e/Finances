@@ -3,7 +3,6 @@ package serg.chuprin.finances.core.impl.data.datasource.firebase
 import com.google.firebase.firestore.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.tasks.await
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.MoneyAccount
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseMoneyAccountFieldsContract.COLLECTION_NAME
@@ -21,10 +20,6 @@ internal class FirebaseMoneyAccountDataSource @Inject constructor(
 
     override val collection: CollectionReference
         get() = firestore.collection(COLLECTION_NAME)
-
-    suspend fun getUserAccounts(userId: Id): List<DocumentSnapshot> {
-        return getUserAccountsCollection(userId).get().await()?.documents.orEmpty()
-    }
 
     fun createAccount(account: MoneyAccount) {
         getAccountDocumentById(account.id).set(mapper.mapToFieldsMap(account))

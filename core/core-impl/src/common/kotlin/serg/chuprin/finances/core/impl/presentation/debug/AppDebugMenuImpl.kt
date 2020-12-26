@@ -173,7 +173,7 @@ internal class AppDebugMenuImpl @Inject constructor(
     }
 
     private suspend fun getRandomMoneyAccount(currentUser: User): MoneyAccount {
-        return moneyAccountRepository.getUserAccounts(currentUser.id).shuffled().first()
+        return moneyAccountRepository.userAccountsFlow(currentUser.id).first().shuffled().first()
     }
 
     private suspend fun getRandomCategory(
@@ -200,7 +200,7 @@ internal class AppDebugMenuImpl @Inject constructor(
             .first()
         transactionRepository.deleteTransactions(transactions)
 
-        val accounts = moneyAccountRepository.getUserAccounts(userId = currentUser.id)
+        val accounts = moneyAccountRepository.userAccountsFlow(userId = currentUser.id).first()
         moneyAccountRepository.deleteAccounts(accounts)
 
         val categories = transactionCategoryRepository

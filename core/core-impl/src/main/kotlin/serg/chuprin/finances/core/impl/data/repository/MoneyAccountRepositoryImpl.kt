@@ -25,10 +25,6 @@ internal class MoneyAccountRepositoryImpl @Inject constructor(
         dataSource.deleteAccounts(accounts)
     }
 
-    override suspend fun getUserAccounts(userId: Id): List<MoneyAccount> {
-        return dataSource.getUserAccounts(userId).mapNotNull(mapper::mapFromSnapshot)
-    }
-
     override fun accountFlow(accountId: Id): Flow<MoneyAccount?> {
         return dataSource
             .accountFlow(accountId)
