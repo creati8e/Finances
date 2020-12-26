@@ -135,10 +135,10 @@ fun TestedExtension.configureBuildTypes() {
 
     fun BuildType.configProguard(isLibrary: Boolean): BuildType {
         return if (isLibrary) {
-            consumerProguardFile(File("proguard-rules.pro"))
+            consumerProguardFile(file("proguard-rules.pro"))
         } else {
             proguardFiles(
-                File("proguard-rules.pro"),
+                file("proguard-rules.pro"),
                 getDefaultProguardFile("proguard-android-optimize.txt")
             )
         }

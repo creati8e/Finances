@@ -64,8 +64,8 @@ dependencies {
 
     implementationAll(Libraries.Preferences.DEPENDENCIES)
 
-    add("devImplementation", Libraries.DebugMenu.DEBUG)
-    add("debugImplementation", Libraries.DebugMenu.DEBUG)
+    add(AppConfig.BuildTypes.DEV.implementation, Libraries.DebugMenu.DEBUG)
+    add(AppConfig.BuildTypes.DEBUG.implementation, Libraries.DebugMenu.DEBUG)
     releaseImplementation(Libraries.DebugMenu.RELEASE)
 
 }
