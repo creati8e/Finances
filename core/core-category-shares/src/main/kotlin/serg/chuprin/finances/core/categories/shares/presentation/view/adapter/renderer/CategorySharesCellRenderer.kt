@@ -44,7 +44,7 @@ class CategorySharesCellRenderer<T : CategoryChipCell>(
         model: CategorySharesCell,
         payloads: MutableList<Any>
     ) {
-        if (payloads.containsType<CategorySharesCell.PageChangedPayload>()) {
+        if (payloads.containsType<CategorySharesCell.ChangedPayload>()) {
             bindData(holder, model)
         }
     }

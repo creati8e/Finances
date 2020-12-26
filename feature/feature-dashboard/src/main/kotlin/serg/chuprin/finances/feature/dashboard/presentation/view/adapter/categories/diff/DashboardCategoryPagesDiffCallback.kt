@@ -11,7 +11,7 @@ class DashboardCategoryPagesDiffCallback : DiffCallback<BaseCell>() {
 
     override fun getChangePayload(oldCell: BaseCell, newCell: BaseCell): Any? {
         if (oldCell is CategorySharesCell && newCell is CategorySharesCell) {
-            return CategorySharesCell.PageChangedPayload()
+            return CategorySharesCell.ChangedPayload()
         }
         return super.getChangePayload(oldCell, newCell)
     }

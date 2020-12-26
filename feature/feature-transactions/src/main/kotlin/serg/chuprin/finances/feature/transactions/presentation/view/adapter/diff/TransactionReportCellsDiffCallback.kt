@@ -2,6 +2,8 @@ package serg.chuprin.finances.feature.transactions.presentation.view.adapter.dif
 
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.view.adapter.diff.SmartDiffCallback
+import serg.chuprin.finances.core.categories.shares.presentation.model.cell.CategorySharesCell
+import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportCategorySharesCell
 import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportChartListCell
 import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportDataPeriodSummaryCell
 import serg.chuprin.finances.feature.transactions.presentation.view.adapter.diff.payload.TransactionReportDataPeriodAmountsChartListChangedPayload
@@ -18,6 +20,9 @@ class TransactionReportCellsDiffCallback : SmartDiffCallback<BaseCell>() {
         }
         addPayloadProvider<TransactionReportDataPeriodSummaryCell> { _, _ ->
             TransactionReportDataPeriodSummaryChangedPayload()
+        }
+        addPayloadProvider<TransactionReportCategorySharesCell> { _, _ ->
+            CategorySharesCell.ChangedPayload()
         }
     }
 

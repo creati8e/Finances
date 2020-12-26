@@ -9,7 +9,7 @@ import serg.chuprin.finances.core.piechart.model.PieChartDataPart
  */
 interface CategorySharesCell : BaseCell {
 
-    class PageChangedPayload
+    class ChangedPayload
 
     val label: String
     val totalAmount: String
