@@ -72,4 +72,5 @@ jobs:
           appName: gregamer-gmail.com/Finances
           token: ${{secrets.APP_CENTER_TOKEN}}
           group: Public
+          gitReleaseNotes: true
           file: app/build/outputs/apk/debug/app-debug.apk
