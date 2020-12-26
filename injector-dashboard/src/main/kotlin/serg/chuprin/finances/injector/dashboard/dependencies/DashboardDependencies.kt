@@ -2,7 +2,9 @@ package serg.chuprin.finances.injector.dashboard.dependencies
 
 import dagger.Component
 import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
+import serg.chuprin.finances.core.api.domain.linker.TransactionWithCategoriesLinker
 import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
+import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepository
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.api.domain.service.MoneyAccountService
@@ -30,7 +32,9 @@ interface DashboardDependencies {
     val userRepository: UserRepository
     val transactionRepository: TransactionRepository
     val moneyAccountRepository: MoneyAccountRepository
+    val categoryRepository: TransactionCategoryRepository
     val dashboardWidgetsRepository: DashboardWidgetsRepository
+    val transactionWithCategoriesLinker: TransactionWithCategoriesLinker
 
     val resourceManger: ResourceManger
     val amountFormatter: AmountFormatter

@@ -7,11 +7,10 @@ import serg.chuprin.finances.core.api.domain.model.User
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
-import serg.chuprin.finances.core.api.domain.model.transaction.TransactionsQuery
-import serg.chuprin.finances.core.api.domain.service.TransactionCategoryRetrieverService
 import serg.chuprin.finances.feature.dashboard.domain.builder.DashboardWidgetBuilder
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardCategoriesWidgetPage
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
+import serg.chuprin.finances.feature.dashboard.domain.service.DashboardCategoriesDataService
 import serg.chuprin.finances.feature.dashboard.setup.presentation.domain.model.DashboardWidgetType
 import java.math.BigDecimal
 import javax.inject.Inject
@@ -23,7 +22,7 @@ typealias CategoryAmounts = List<Pair<TransactionCategory?, BigDecimal>>
  */
 class DashboardCategoriesWidgetBuilder @Inject constructor(
     private val pageBuilder: DashboardCategoriesPageBuilder,
-    private val transactionCategoryRetrieverService: TransactionCategoryRetrieverService
+    private val categoriesDataService: DashboardCategoriesDataService
 ) : DashboardWidgetBuilder<DashboardWidget.Categories> {
 
     private companion object {
@@ -51,15 +50,11 @@ class DashboardCategoriesWidgetBuilder @Inject constructor(
         currentPeriod: DataPeriod,
         transactionType: PlainTransactionType
     ): Flow<DashboardCategoriesWidgetPage> {
-        return transactionCategoryRetrieverService
-            .categoryTransactionsFlow(
-                currentUser.id,
-                TransactionsQuery(
-                    userId = currentUser.id,
-                    endDate = currentPeriod.endDate,
-                    transactionType = transactionType,
-                    startDate = currentPeriod.startDate
-                )
+        return categoriesDataService
+            .dataFlow(
+                currentUser = currentUser,
+                currentPeriod = currentPeriod,
+                transactionType = transactionType
             )
             .map { categoryTransactionsMap ->
                 pageBuilder.build(

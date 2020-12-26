@@ -15,6 +15,9 @@ import javax.inject.Inject
 
 /**
  * Created by Sergey Chuprin on 25.12.2020.
+ *
+ * Observes data for current data period from [TransactionReportFilter].
+ * The data is: transactions, category amount shares.
  */
 class TransactionReportCurrentPeriodDataService @Inject constructor(
     private val transactionWithCategoriesLinker: TransactionWithCategoriesLinker

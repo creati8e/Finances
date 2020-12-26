@@ -42,7 +42,10 @@ class GetMoneyAccountDetailsUseCase @Inject constructor(
                     flowOf(moneyAccount),
                     transactionCategoryRetrieverService.transactionsFlow(
                         user.id,
-                        TransactionsQuery(moneyAccountIds = setOf(moneyAccount.id)),
+                        TransactionsQuery(
+                            userId = user.id,
+                            moneyAccountIds = setOf(moneyAccount.id)
+                        ),
                     ),
                     ::buildMoneyAccountDetails
                 )
