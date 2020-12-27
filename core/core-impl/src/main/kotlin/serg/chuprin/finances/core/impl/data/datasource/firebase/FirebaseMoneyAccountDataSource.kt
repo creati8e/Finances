@@ -53,6 +53,9 @@ internal class FirebaseMoneyAccountDataSource @Inject constructor(
     }
 
     private fun QuerySnapshot.filterByAccountIds(accountIds: Set<Id>): List<DocumentSnapshot> {
+        if (accountIds.isEmpty()) {
+            return documents
+        }
         return documents.filter { document ->
             accountIds.contains { accountId -> accountId.value == document.id }
         }
