@@ -31,14 +31,13 @@
             android:label="DashboardFragment"
             tools:layout="@layout/fragment_dashboard">
 
-            <!--TODO: Fix wrong id-->
-            <action
-                android:id="@+id/navigateFromOnboardingToDashboard"
-                app:destination="@+id/moneyAccountsListFragment" />
-
             <action
                 android:id="@+id/navigateFromDashboardToMoneyAccountDetails"
                 app:destination="@id/moneyAccountDetailsFragment" />
+
+            <action
+                android:id="@+id/navigateFromDashboardToMoneyAccountsList"
+                app:destination="@+id/moneyAccountsListFragment" />
 
             <action
                 android:id="@+id/navigateFromDashboardToMoneyAccountCreation"
@@ -130,10 +129,6 @@
             android:name="serg.chuprin.finances.feature.dashboard.setup.impl.presentation.view.DashboardWidgetsSetupFragment"
             android:label="DashboardWidgetsSetupFragment"
             tools:layout="@layout/fragment_dashboard_widgets_setup" />
-
-        <action
-            android:id="@+id/navigateFromDashboardToMoneyAccountsList"
-            app:destination="@+id/moneyAccountsListFragment" />
 
         <action
             android:id="@+id/navigateFromOnboardingToDashboard"

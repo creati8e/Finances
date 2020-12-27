@@ -64,7 +64,7 @@ object NavigationModule : CoreNavigationProvider {
                     navController: NavController,
                     vararg sharedElementView: View
                 ) {
-                    AuthorizedGraphDirections.navigateFromDashboardToMoneyAccountsList().run {
+                    DashboardFragmentDirections.navigateFromDashboardToMoneyAccountsList().run {
                         navController.navigate(
                             this,
                             buildExtrasForSharedElements(sharedElementView)
