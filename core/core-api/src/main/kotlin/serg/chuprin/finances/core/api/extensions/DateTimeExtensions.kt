@@ -1,6 +1,5 @@
 package serg.chuprin.finances.core.api.extensions
 
-import serg.chuprin.finances.core.api.domain.model.period.DataPeriodType
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -80,21 +79,3 @@ fun LocalDateTime.startOfNextYear(): LocalDateTime {
 }
 
 // endregion
-
-fun LocalDateTime.adjustToTheEndOfPeriod(dataPeriodType: DataPeriodType): LocalDateTime {
-    return when (dataPeriodType) {
-        DataPeriodType.DAY -> endOfDay()
-        DataPeriodType.WEEK -> endOfWeek()
-        DataPeriodType.MONTH -> lastDayOfMonth()
-        DataPeriodType.YEAR -> endOfYear()
-    }
-}
-
-fun LocalDateTime.adjustToTheStartOfPeriod(dataPeriodType: DataPeriodType): LocalDateTime {
-    return when (dataPeriodType) {
-        DataPeriodType.DAY -> startOfDay()
-        DataPeriodType.WEEK -> startOfWeek()
-        DataPeriodType.MONTH -> firstDayOfMonth()
-        DataPeriodType.YEAR -> startOfYear()
-    }
-}

@@ -13,19 +13,28 @@ internal object DataPeriodBuilder {
         periodType: DataPeriodType
     ): DataPeriod {
         return when (periodType) {
-            DataPeriodType.DAY -> buildForDay(startDate)
-            DataPeriodType.WEEK -> buildForWeek(startDate)
-            DataPeriodType.MONTH -> buildForMonth(startDate)
-            DataPeriodType.YEAR -> buildForYear(startDate)
+            DataPeriodType.DAY -> buildForDayStart(startDate)
+            DataPeriodType.WEEK -> buildForWeekStart(startDate)
+            DataPeriodType.MONTH -> buildForMonthStart(startDate)
+            DataPeriodType.YEAR -> buildForYearStart(startDate)
+        }
+    }
+
+    fun fromEndDate(endDate: LocalDateTime, periodType: DataPeriodType): DataPeriod {
+        return when (periodType) {
+            DataPeriodType.DAY -> buildForDayEnd(endDate)
+            DataPeriodType.WEEK -> buildForWeekEnd(endDate)
+            DataPeriodType.MONTH -> buildForMonthEnd(endDate)
+            DataPeriodType.YEAR -> buildForYearEnd(endDate)
         }
     }
 
     fun fromPeriodType(periodType: DataPeriodType): DataPeriod {
         return when (periodType) {
-            DataPeriodType.DAY -> buildForDay(LocalDateTime.now())
-            DataPeriodType.WEEK -> buildForWeek(LocalDateTime.now())
-            DataPeriodType.MONTH -> buildForMonth(LocalDateTime.now())
-            DataPeriodType.YEAR -> buildForYear(LocalDateTime.now())
+            DataPeriodType.DAY -> buildForDayStart(LocalDateTime.now())
+            DataPeriodType.WEEK -> buildForWeekStart(LocalDateTime.now())
+            DataPeriodType.MONTH -> buildForMonthStart(LocalDateTime.now())
+            DataPeriodType.YEAR -> buildForYearStart(LocalDateTime.now())
         }
     }
 
@@ -122,12 +131,12 @@ internal object DataPeriodBuilder {
         )
     }
 
-    // endregion
 
+    // endregion
 
     // region Builders.
 
-    private fun buildForDay(startDate: LocalDateTime): DataPeriod {
+    private fun buildForDayStart(startDate: LocalDateTime): DataPeriod {
         val startDateTime = startDate.startOfDay()
         return DataPeriod(
             startDate = startDateTime,
@@ -136,7 +145,7 @@ internal object DataPeriodBuilder {
         )
     }
 
-    private fun buildForWeek(startDate: LocalDateTime): DataPeriod {
+    private fun buildForWeekStart(startDate: LocalDateTime): DataPeriod {
         val startDateTime = startDate.startOfWeek()
         return DataPeriod(
             periodType = DataPeriodType.WEEK,
@@ -145,7 +154,7 @@ internal object DataPeriodBuilder {
         )
     }
 
-    private fun buildForMonth(startDate: LocalDateTime): DataPeriod {
+    private fun buildForMonthStart(startDate: LocalDateTime): DataPeriod {
         val startDateTime = startDate.firstDayOfMonth()
         return DataPeriod(
             startDate = startDateTime,
@@ -154,12 +163,48 @@ internal object DataPeriodBuilder {
         )
     }
 
-    private fun buildForYear(startDate: LocalDateTime): DataPeriod {
+    private fun buildForYearStart(startDate: LocalDateTime): DataPeriod {
         val startDateTime = startDate.startOfYear()
         return DataPeriod(
             startDate = startDateTime,
             periodType = DataPeriodType.YEAR,
             endDate = startDateTime.endOfYear()
+        )
+    }
+
+    private fun buildForDayEnd(endDate: LocalDateTime): DataPeriod {
+        val endDateTime = endDate.endOfDay()
+        return DataPeriod(
+            endDate = endDateTime,
+            periodType = DataPeriodType.DAY,
+            startDate = endDateTime.startOfDay()
+        )
+    }
+
+    private fun buildForWeekEnd(endDate: LocalDateTime): DataPeriod {
+        val endDateTime = endDate.endOfWeek()
+        return DataPeriod(
+            endDate = endDateTime,
+            periodType = DataPeriodType.WEEK,
+            startDate = endDateTime.startOfWeek()
+        )
+    }
+
+    private fun buildForMonthEnd(endDate: LocalDateTime): DataPeriod {
+        val endDateTime = endDate.lastDayOfMonth()
+        return DataPeriod(
+            endDate = endDateTime,
+            periodType = DataPeriodType.MONTH,
+            startDate = endDateTime.firstDayOfMonth()
+        )
+    }
+
+    private fun buildForYearEnd(endDate: LocalDateTime): DataPeriod {
+        val endDateTime = endDate.endOfYear()
+        return DataPeriod(
+            endDate = endDateTime,
+            periodType = DataPeriodType.YEAR,
+            startDate = endDateTime.startOfYear()
         )
     }
 

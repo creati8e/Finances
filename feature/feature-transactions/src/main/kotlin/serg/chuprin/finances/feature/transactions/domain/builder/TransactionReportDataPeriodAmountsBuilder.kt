@@ -5,7 +5,6 @@ import kotlinx.coroutines.flow.combine
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriodType
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
-import serg.chuprin.finances.core.api.extensions.adjustToTheEndOfPeriod
 import serg.chuprin.finances.core.api.extensions.buildSortedMap
 import serg.chuprin.finances.core.api.extensions.flow.distinctUntilChangedBy
 import serg.chuprin.finances.feature.transactions.domain.model.ReportDataPeriod
@@ -93,21 +92,26 @@ class TransactionReportDataPeriodAmountsBuilder @Inject constructor() {
     ): Map<DataPeriod, List<Transaction>> {
 
         // Transactions are sorted here so it's convenient to take first and last.
-        val maxDate = maxOf(
-            transactions.last().dateTime,
-            LocalDateTime.now()
-        ).adjustToTheEndOfPeriod(dataPeriod.periodType)
+        val endDataPeriod = DataPeriod.fromEndDate(
+            endDate = maxOf(
+                transactions.last().dateTime,
+                LocalDateTime.now()
+            ),
+            periodType = dataPeriod.periodType
+        )
 
-        val startDataPeriod = DataPeriod.fromStartDate(
-            periodType = dataPeriod.periodType,
-            startDate = transactions.first().dateTime
-        ).minusPeriods(5)
+        val startDataPeriod = DataPeriod
+            .fromStartDate(
+                periodType = dataPeriod.periodType,
+                startDate = transactions.first().dateTime
+            )
+            .minusPeriods(5)
 
-        return buildDataPeriods(startDataPeriod, maxDate, transactions)
+        return buildDataPeriods(startDataPeriod, endDataPeriod, transactions)
     }
 
     /**
-     * Function that creates range from [startDataPeriod] to [maxDate]
+     * Function that creates range from [startDataPeriod] to [endDataPeriod]
      * and puts transactions into each intermediate [DataPeriod] without
      * skipping intermediate periods.
      *
@@ -115,17 +119,15 @@ class TransactionReportDataPeriodAmountsBuilder @Inject constructor() {
      */
     private fun buildDataPeriods(
         startDataPeriod: DataPeriod,
-        maxDate: LocalDateTime,
+        endDataPeriod: DataPeriod,
         transactions: List<Transaction>
     ): Map<DataPeriod, List<Transaction>> {
         return buildSortedMap(dataPeriodComparator) {
-            var currentDataPeriod = startDataPeriod
-            while (currentDataPeriod.endDate <= maxDate) {
+            for (currentDataPeriod in (startDataPeriod..endDataPeriod)) {
                 put(
                     currentDataPeriod,
                     transactions.filter { it.dateTime in currentDataPeriod }
                 )
-                currentDataPeriod = currentDataPeriod.next()
             }
         }
     }
