@@ -7,7 +7,7 @@ import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryT
  * Created by Sergey Chuprin on 12.12.2020.
  */
 class TransactionCategoriesQuery(
-    val userId: Id,
+    val ownerId: Id,
     val relation: Relation? = null,
     val categoryIds: Set<Id> = emptySet(),
     val type: TransactionCategoryType? = null

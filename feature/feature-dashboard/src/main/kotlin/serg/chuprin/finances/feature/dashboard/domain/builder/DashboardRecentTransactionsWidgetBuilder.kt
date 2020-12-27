@@ -38,7 +38,7 @@ class DashboardRecentTransactionsWidgetBuilder @Inject constructor(
             .transactionsFlow(
                 currentUser.id,
                 TransactionsQuery(
-                    userId = currentUser.id,
+                    ownerId = currentUser.id,
                     endDate = currentPeriod.endDate,
                     limit = RECENT_TRANSACTIONS_COUNT,
                     startDate = currentPeriod.startDate,

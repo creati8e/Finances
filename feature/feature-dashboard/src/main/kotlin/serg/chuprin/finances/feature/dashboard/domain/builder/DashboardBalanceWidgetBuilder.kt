@@ -72,7 +72,7 @@ class DashboardBalanceWidgetBuilder @Inject constructor(
     }
 
     private fun allUserTransactionsFlow(currentUser: User): Flow<List<Transaction>> {
-        return transactionRepository.transactionsFlow(TransactionsQuery(userId = currentUser.id))
+        return transactionRepository.transactionsFlow(TransactionsQuery(ownerId = currentUser.id))
     }
 
 }

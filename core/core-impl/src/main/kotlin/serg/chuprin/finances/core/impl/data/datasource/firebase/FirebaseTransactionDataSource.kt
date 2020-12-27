@@ -42,7 +42,7 @@ internal class FirebaseTransactionDataSource @Inject constructor(
         return collection
             .limit(query.limit)
             .sortBy(query.sortOrder)
-            .filterByUser(query.userId)
+            .filterByUser(query.ownerId)
             .filterByDate(query.startDate, query.endDate)
             .asFlow()
             .map { querySnapshot -> querySnapshot.documents }

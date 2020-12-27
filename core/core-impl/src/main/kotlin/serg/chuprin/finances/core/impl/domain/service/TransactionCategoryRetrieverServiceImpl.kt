@@ -35,7 +35,7 @@ internal class TransactionCategoryRetrieverServiceImpl @Inject constructor(
                     flowOf(transactions),
                     categoryRepository.categoriesFlow(
                         TransactionCategoriesQuery(
-                            userId = userId,
+                            ownerId = userId,
                             categoryIds = transactions.categoryIds.toSet(),
                             relation = TransactionCategoriesQuery.Relation.RETRIEVE_PARENTS
                         )

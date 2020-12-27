@@ -43,7 +43,7 @@ class GetMoneyAccountDetailsUseCase @Inject constructor(
                     transactionCategoryRetrieverService.transactionsFlow(
                         user.id,
                         TransactionsQuery(
-                            userId = user.id,
+                            ownerId = user.id,
                             moneyAccountIds = setOf(moneyAccount.id)
                         ),
                     ),

@@ -95,7 +95,7 @@ class TransactionReportHeaderBuilder @Inject constructor(
                 TransactionCategoriesQuery(
                     type = null,
                     relation = null,
-                    userId = currentUser.id,
+                    ownerId = currentUser.id,
                     categoryIds = setOf(filter.categoryId)
                 )
             )

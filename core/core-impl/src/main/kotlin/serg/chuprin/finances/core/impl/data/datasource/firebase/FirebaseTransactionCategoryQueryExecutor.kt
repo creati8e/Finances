@@ -125,7 +125,7 @@ internal class FirebaseTransactionCategoryQueryExecutor @Inject constructor(
     private fun buildQueryFlow(query: TransactionCategoriesQuery): Flow<QuerySnapshot> {
         return firestore
             .collection(COLLECTION_NAME)
-            .filterByUser(query.userId)
+            .filterByOwner(query.ownerId)
             .filterByType(query.type)
             .asFlow()
     }
@@ -134,7 +134,7 @@ internal class FirebaseTransactionCategoryQueryExecutor @Inject constructor(
         return if (type == null) this else whereEqualTo(FIELD_TYPE, typeMapper.mapFrom(type))
     }
 
-    private fun Query.filterByUser(userId: Id?): Query {
+    private fun Query.filterByOwner(userId: Id?): Query {
         return if (userId == null) this else this.whereEqualTo(FIELD_OWNER_ID, userId.value)
     }
 

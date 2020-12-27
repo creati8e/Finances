@@ -78,7 +78,7 @@ class TransactionReportTransactionDataService @Inject constructor(
             endDate = endDate,
             startDate = startDate,
             transactionType = filter.transactionType,
-            userId = userRepository.getCurrentUser().id,
+            ownerId = userRepository.getCurrentUser().id,
             sortOrder = TransactionsQuery.SortOrder.DATE_ASC,
             categoryIds = categories.mapTo(initialCategoryIds, { (categoryId) -> categoryId })
         )

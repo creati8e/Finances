@@ -35,7 +35,7 @@ class DashboardCategoriesDataService @Inject constructor(
         return transactionRepository
             .transactionsFlow(
                 TransactionsQuery(
-                    userId = currentUser.id,
+                    ownerId = currentUser.id,
                     endDate = currentPeriod.endDate,
                     transactionType = transactionType,
                     startDate = currentPeriod.startDate
@@ -48,7 +48,7 @@ class DashboardCategoriesDataService @Inject constructor(
                     flowOf(transactions),
                     categoryRepository.categoriesFlow(
                         TransactionCategoriesQuery(
-                            userId = currentUser.id,
+                            ownerId = currentUser.id,
                             categoryIds = transactions.categoryIds.toSet(),
                             relation = TransactionCategoriesQuery.Relation.RETRIEVE_PARENTS
                         )

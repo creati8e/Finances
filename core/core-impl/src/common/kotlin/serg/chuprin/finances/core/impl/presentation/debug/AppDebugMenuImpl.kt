@@ -187,7 +187,7 @@ internal class AppDebugMenuImpl @Inject constructor(
     ): TransactionCategoryWithParent? {
         return if (ThreadLocalRandom.current().nextBoolean()) {
             transactionCategoryRepository
-                .categoriesFlow(TransactionCategoriesQuery(userId = currentUser.id, type = type))
+                .categoriesFlow(TransactionCategoriesQuery(ownerId = currentUser.id, type = type))
                 .first()
                 .entries
                 .shuffled()
@@ -202,7 +202,7 @@ internal class AppDebugMenuImpl @Inject constructor(
         val currentUser = userRepository.getCurrentUser()
 
         val transactions = transactionRepository
-            .transactionsFlow(TransactionsQuery(userId = currentUser.id))
+            .transactionsFlow(TransactionsQuery(ownerId = currentUser.id))
             .first()
         transactionRepository.deleteTransactions(transactions)
 
@@ -212,7 +212,7 @@ internal class AppDebugMenuImpl @Inject constructor(
         moneyAccountRepository.deleteAccounts(accounts)
 
         val categories = transactionCategoryRepository
-            .categoriesFlow(TransactionCategoriesQuery(userId = currentUser.id))
+            .categoriesFlow(TransactionCategoriesQuery(ownerId = currentUser.id))
             .first()
         transactionCategoryRepository.deleteCategories(categories.values.map { it.category })
 

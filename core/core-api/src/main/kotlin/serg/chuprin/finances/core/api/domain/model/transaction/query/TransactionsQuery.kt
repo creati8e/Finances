@@ -7,8 +7,8 @@ import java.time.LocalDateTime
 /**
  * Created by Sergey Chuprin on 06.07.2020.
  */
-data class TransactionsQuery(
-    val userId: Id? = null,
+class TransactionsQuery(
+    val ownerId: Id? = null,
     val limit: Int? = null,
     val sortOrder: SortOrder? = null,
     val endDate: LocalDateTime? = null,

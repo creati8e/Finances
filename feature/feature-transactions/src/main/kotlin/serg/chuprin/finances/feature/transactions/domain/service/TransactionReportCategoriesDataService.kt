@@ -64,7 +64,7 @@ class TransactionReportCategoriesDataService @Inject constructor(
         return TransactionCategoriesQuery(
             type = categoryType,
             categoryIds = filter.categoryIds,
-            userId = userRepository.getCurrentUser().id,
+            ownerId = userRepository.getCurrentUser().id,
             relation = TransactionCategoriesQuery.Relation.RETRIEVE_CHILDREN
         )
     }
