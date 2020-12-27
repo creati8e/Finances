@@ -18,7 +18,6 @@ import serg.chuprin.finances.core.piechart.R as PieChartR
 /**
  * Created by Sergey Chuprin on 24.12.2020.
  */
-// TODO: Partial code duplication.
 class TransactionReportCategorySharesCellBuilder @Inject constructor(
     private val resourceManger: ResourceManger,
     private val amountFormatter: AmountFormatter,

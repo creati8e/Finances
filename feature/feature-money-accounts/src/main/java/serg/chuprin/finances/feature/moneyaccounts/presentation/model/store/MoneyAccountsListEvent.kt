@@ -7,7 +7,6 @@ import serg.chuprin.finances.core.api.domain.model.Id
  */
 sealed class MoneyAccountsListEvent {
 
-    // TODO: Create navigator.
     class NavigateToMoneyAccountDetailsScreen(
         val moneyAccountId: Id,
         val transitionName: String
