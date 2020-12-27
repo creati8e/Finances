@@ -2,7 +2,6 @@ package serg.chuprin.finances.core.impl.data.repository
 
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
@@ -28,12 +27,6 @@ internal class TransactionCategoryRepositoryImpl @Inject constructor(
     private val predefinedCategoriesDataSource: PredefinedTransactionCategoriesDataSource
 ) : TransactionCategoryRepository {
 
-    override suspend fun categories(
-        query: TransactionCategoriesQuery
-    ): Map<Id, TransactionCategoryWithParent> {
-        return categoriesFlow(query).first()
-    }
-
     override suspend fun deleteCategories(categories: List<TransactionCategory>) {
         firebaseDataSource.deleteCategories(categories)
     }
@@ -46,20 +39,6 @@ internal class TransactionCategoryRepositoryImpl @Inject constructor(
                     documents.mapNotNull(mapper::mapFromSnapshot).linkWithParents()
                 )
             }
-    }
-
-    override suspend fun getUserCategories(
-        userId: Id,
-        type: TransactionCategoryType
-    ): Map<Id, TransactionCategoryWithParent> {
-        return firebaseDataSource
-            .getAllUserCategories(userId)
-            .mapNotNull { snapshot ->
-                mapper
-                    .mapFromSnapshot(snapshot)
-                    ?.takeIf { category -> category.type == type }
-            }
-            .linkWithParents()
     }
 
     override suspend fun createPredefinedCategories(userId: Id) {

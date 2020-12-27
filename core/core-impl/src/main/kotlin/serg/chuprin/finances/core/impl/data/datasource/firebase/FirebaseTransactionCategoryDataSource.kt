@@ -4,12 +4,9 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.tasks.await
-import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
 import serg.chuprin.finances.core.api.domain.model.category.query.TransactionCategoriesQuery
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionCategoryFieldsContract.COLLECTION_NAME
-import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionCategoryFieldsContract.FIELD_OWNER_ID
 import serg.chuprin.finances.core.impl.data.mapper.category.FirebaseTransactionCategoryMapper
 import javax.inject.Inject
 
@@ -24,15 +21,6 @@ internal class FirebaseTransactionCategoryDataSource @Inject constructor(
 
     override val collection: CollectionReference
         get() = firestore.collection(COLLECTION_NAME)
-
-    suspend fun getAllUserCategories(userId: Id): List<DocumentSnapshot> {
-        return collection
-            .whereEqualTo(FIELD_OWNER_ID, userId.value)
-            .get()
-            .await()
-            ?.documents
-            .orEmpty()
-    }
 
     fun createCategories(transactionCategories: List<TransactionCategory>) {
         val collection = collection

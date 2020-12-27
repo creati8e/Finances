@@ -187,7 +187,8 @@ internal class AppDebugMenuImpl @Inject constructor(
     ): TransactionCategoryWithParent? {
         return if (ThreadLocalRandom.current().nextBoolean()) {
             transactionCategoryRepository
-                .getUserCategories(currentUser.id, type)
+                .categoriesFlow(TransactionCategoriesQuery(userId = currentUser.id, type = type))
+                .first()
                 .entries
                 .shuffled()
                 .first()
