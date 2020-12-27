@@ -2,7 +2,7 @@ package serg.chuprin.finances.feature.transactions.presentation.model.builder
 
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.User
-import serg.chuprin.finances.core.api.domain.model.query.TransactionCategoriesQuery
+import serg.chuprin.finances.core.api.domain.model.category.query.TransactionCategoriesQuery
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepository
 import serg.chuprin.finances.core.api.extensions.EMPTY_STRING

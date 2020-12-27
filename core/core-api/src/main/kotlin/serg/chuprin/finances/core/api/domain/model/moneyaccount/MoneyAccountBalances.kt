@@ -1,4 +1,4 @@
-package serg.chuprin.finances.core.api.domain.model
+package serg.chuprin.finances.core.api.domain.model.moneyaccount
 
 import java.math.BigDecimal
 import java.util.*

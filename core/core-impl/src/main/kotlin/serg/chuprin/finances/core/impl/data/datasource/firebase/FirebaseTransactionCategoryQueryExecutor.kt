@@ -8,8 +8,8 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.*
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryType
-import serg.chuprin.finances.core.api.domain.model.query.TransactionCategoriesQuery
-import serg.chuprin.finances.core.api.domain.model.query.TransactionCategoriesQuery.Relation
+import serg.chuprin.finances.core.api.domain.model.category.query.TransactionCategoriesQuery
+import serg.chuprin.finances.core.api.domain.model.category.query.TransactionCategoriesQuery.Relation
 import serg.chuprin.finances.core.api.extensions.contains
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionCategoryFieldsContract.COLLECTION_NAME
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionCategoryFieldsContract.FIELD_OWNER_ID

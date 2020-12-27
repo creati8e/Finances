@@ -1,5 +1,6 @@
-package serg.chuprin.finances.core.api.domain.model
+package serg.chuprin.finances.core.api.domain.model.moneyaccount
 
+import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
 import java.util.*
 

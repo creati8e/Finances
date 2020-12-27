@@ -2,7 +2,7 @@ package serg.chuprin.finances.feature.moneyaccounts.domain.usecase
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
-import serg.chuprin.finances.core.api.domain.model.MoneyAccountBalances
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccountBalances
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.api.domain.service.MoneyAccountService
 import javax.inject.Inject

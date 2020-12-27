@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.api.domain.model.User
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
-import serg.chuprin.finances.core.api.domain.model.transaction.TransactionsQuery
+import serg.chuprin.finances.core.api.domain.model.transaction.query.TransactionsQuery
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
 import serg.chuprin.finances.feature.dashboard.setup.presentation.domain.model.DashboardWidgetType

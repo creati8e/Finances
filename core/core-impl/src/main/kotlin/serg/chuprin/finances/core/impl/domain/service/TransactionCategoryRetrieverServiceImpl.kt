@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.api.domain.linker.TransactionWithCategoriesLinker
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.TransactionCategoriesMap
-import serg.chuprin.finances.core.api.domain.model.query.TransactionCategoriesQuery
-import serg.chuprin.finances.core.api.domain.model.transaction.TransactionsQuery
+import serg.chuprin.finances.core.api.domain.model.category.query.TransactionCategoriesQuery
+import serg.chuprin.finances.core.api.domain.model.transaction.query.TransactionsQuery
 import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepository
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.api.domain.service.TransactionCategoryRetrieverService

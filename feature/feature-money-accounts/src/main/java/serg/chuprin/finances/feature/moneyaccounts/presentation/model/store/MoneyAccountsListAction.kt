@@ -1,6 +1,6 @@
 package serg.chuprin.finances.feature.moneyaccounts.presentation.model.store
 
-import serg.chuprin.finances.core.api.domain.model.MoneyAccountBalances
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccountBalances
 
 /**
  * Created by Sergey Chuprin on 06.05.2020.

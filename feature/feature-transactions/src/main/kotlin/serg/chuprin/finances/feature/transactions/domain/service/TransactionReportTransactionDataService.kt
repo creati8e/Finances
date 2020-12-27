@@ -4,10 +4,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
-import serg.chuprin.finances.core.api.domain.model.CategoriesQueryResult
 import serg.chuprin.finances.core.api.domain.model.Id
+import serg.chuprin.finances.core.api.domain.model.category.query.result.CategoriesQueryResult
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
-import serg.chuprin.finances.core.api.domain.model.transaction.TransactionsQuery
+import serg.chuprin.finances.core.api.domain.model.transaction.query.TransactionsQuery
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.api.extensions.flow.distinctUntilChangedBy

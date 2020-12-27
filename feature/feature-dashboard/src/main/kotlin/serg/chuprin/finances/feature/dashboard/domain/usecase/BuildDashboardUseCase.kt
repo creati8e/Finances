@@ -3,6 +3,7 @@ package serg.chuprin.finances.feature.dashboard.domain.usecase
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import serg.chuprin.finances.core.api.domain.model.User
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.query.MoneyAccountsQuery
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
@@ -31,7 +32,7 @@ class BuildDashboardUseCase @Inject constructor(
         return userRepository
             .currentUserSingleFlow()
             .flatMapLatest { user ->
-                moneyAccountRepository.userAccountsFlow(user.id)
+                moneyAccountRepository.accountsFlow(MoneyAccountsQuery(ownerId = user.id))
             }
             // Don't bother downstream with money account updates
             // but only if new account created or all accounts deleted.

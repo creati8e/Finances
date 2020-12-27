@@ -1,6 +1,6 @@
 package serg.chuprin.finances.core.api.domain.usecase
 
-import serg.chuprin.finances.core.api.domain.model.MoneyAccount
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
 import javax.inject.Inject
 

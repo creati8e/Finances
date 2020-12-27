@@ -1,7 +1,7 @@
 package serg.chuprin.finances.feature.moneyaccount.creation.domain.usecase
 
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.MoneyAccount
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.model.transaction.TransactionType
 import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository

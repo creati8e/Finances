@@ -2,6 +2,8 @@ package serg.chuprin.finances.core.api.domain.model
 
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccountBalances
 import strikt.api.expectThat
 import strikt.assertions.containsKey
 import strikt.assertions.isNotSameInstanceAs

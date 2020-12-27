@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.tasks.await
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
-import serg.chuprin.finances.core.api.domain.model.query.TransactionCategoriesQuery
+import serg.chuprin.finances.core.api.domain.model.category.query.TransactionCategoriesQuery
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionCategoryFieldsContract.COLLECTION_NAME
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionCategoryFieldsContract.FIELD_OWNER_ID
 import serg.chuprin.finances.core.impl.data.mapper.category.FirebaseTransactionCategoryMapper

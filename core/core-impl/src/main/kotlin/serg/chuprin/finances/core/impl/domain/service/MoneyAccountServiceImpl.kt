@@ -4,10 +4,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
-import serg.chuprin.finances.core.api.domain.model.MoneyAccount
-import serg.chuprin.finances.core.api.domain.model.MoneyAccountBalances
 import serg.chuprin.finances.core.api.domain.model.User
-import serg.chuprin.finances.core.api.domain.model.transaction.TransactionsQuery
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccountBalances
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.query.MoneyAccountsQuery
+import serg.chuprin.finances.core.api.domain.model.transaction.query.TransactionsQuery
 import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.api.domain.service.MoneyAccountService
@@ -24,7 +25,7 @@ internal class MoneyAccountServiceImpl @Inject constructor(
 
     override fun moneyAccountBalancesFlow(user: User): Flow<MoneyAccountBalances> {
         return moneyAccountRepository
-            .userAccountsFlow(user.id)
+            .accountsFlow(MoneyAccountsQuery(ownerId = user.id))
             .flatMapLatest(::calculateBalance)
     }
 

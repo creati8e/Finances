@@ -3,8 +3,8 @@ package serg.chuprin.finances.feature.transactions.domain.service
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import serg.chuprin.finances.core.api.domain.linker.TransactionWithCategoriesLinker
-import serg.chuprin.finances.core.api.domain.model.CategoriesQueryResult
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
+import serg.chuprin.finances.core.api.domain.model.category.query.result.CategoriesQueryResult
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriodType
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.extensions.flow.distinctUntilChangedBy

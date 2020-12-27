@@ -1,6 +1,6 @@
 package serg.chuprin.finances.feature.moneyaccount.details.presentation.model.store
 
-import serg.chuprin.finances.core.api.domain.model.MoneyAccount
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 
 /**

@@ -1,4 +1,4 @@
-package serg.chuprin.finances.core.api.domain.model.query
+package serg.chuprin.finances.core.api.domain.model.category.query
 
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryType

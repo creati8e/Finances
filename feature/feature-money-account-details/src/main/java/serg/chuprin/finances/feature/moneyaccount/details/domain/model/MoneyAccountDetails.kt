@@ -1,7 +1,7 @@
 package serg.chuprin.finances.feature.moneyaccount.details.domain.model
 
-import serg.chuprin.finances.core.api.domain.model.MoneyAccount
 import serg.chuprin.finances.core.api.domain.model.TransactionsGroupedByDay
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import java.math.BigDecimal
 import java.util.*
 

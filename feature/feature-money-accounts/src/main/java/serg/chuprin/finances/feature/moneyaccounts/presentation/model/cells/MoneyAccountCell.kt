@@ -1,7 +1,7 @@
 package serg.chuprin.finances.feature.moneyaccounts.presentation.model.cells
 
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.MoneyAccount
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import serg.chuprin.finances.core.api.presentation.model.cells.DiffCell
 
 /**

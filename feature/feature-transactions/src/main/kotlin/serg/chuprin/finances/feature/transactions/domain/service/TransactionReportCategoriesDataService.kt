@@ -2,9 +2,9 @@ package serg.chuprin.finances.feature.transactions.domain.service
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
-import serg.chuprin.finances.core.api.domain.model.CategoriesQueryResult
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryType
-import serg.chuprin.finances.core.api.domain.model.query.TransactionCategoriesQuery
+import serg.chuprin.finances.core.api.domain.model.category.query.TransactionCategoriesQuery
+import serg.chuprin.finances.core.api.domain.model.category.query.result.CategoriesQueryResult
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository

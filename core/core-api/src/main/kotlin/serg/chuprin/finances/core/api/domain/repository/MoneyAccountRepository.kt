@@ -2,7 +2,8 @@ package serg.chuprin.finances.core.api.domain.repository
 
 import kotlinx.coroutines.flow.Flow
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.MoneyAccount
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.query.MoneyAccountsQuery
 
 /**
  * Created by Sergey Chuprin on 13.04.2020.
@@ -15,7 +16,7 @@ interface MoneyAccountRepository {
 
     fun accountFlow(accountId: Id): Flow<MoneyAccount?>
 
-    fun userAccountsFlow(userId: Id): Flow<List<MoneyAccount>>
+    fun accountsFlow(query: MoneyAccountsQuery): Flow<List<MoneyAccount>>
 
     suspend fun deleteAccounts(accounts: List<MoneyAccount>)
 

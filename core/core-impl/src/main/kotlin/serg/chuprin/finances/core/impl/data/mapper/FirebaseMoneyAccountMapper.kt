@@ -1,7 +1,7 @@
 package serg.chuprin.finances.core.impl.data.mapper
 
 import com.google.firebase.firestore.DocumentSnapshot
-import serg.chuprin.finances.core.api.domain.model.MoneyAccount
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import serg.chuprin.finances.core.api.extensions.nonNullValuesMap
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseMoneyAccountFieldsContract.FIELD_CURRENCY_CODE
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseMoneyAccountFieldsContract.FIELD_IS_FAVORITE

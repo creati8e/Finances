@@ -3,7 +3,8 @@ package serg.chuprin.finances.core.impl.data.repository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.MoneyAccount
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.query.MoneyAccountsQuery
 import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
 import serg.chuprin.finances.core.impl.data.datasource.firebase.FirebaseMoneyAccountDataSource
 import serg.chuprin.finances.core.impl.data.mapper.FirebaseMoneyAccountMapper
@@ -33,9 +34,9 @@ internal class MoneyAccountRepositoryImpl @Inject constructor(
             }
     }
 
-    override fun userAccountsFlow(userId: Id): Flow<List<MoneyAccount>> {
+    override fun accountsFlow(query: MoneyAccountsQuery): Flow<List<MoneyAccount>> {
         return dataSource
-            .userAccountsFlow(userId)
+            .accountsFlow(query)
             .map { accounts ->
                 accounts.mapNotNull(mapper::mapFromSnapshot)
             }

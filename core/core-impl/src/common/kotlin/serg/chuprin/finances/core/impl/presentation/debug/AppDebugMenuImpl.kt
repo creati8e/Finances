@@ -11,15 +11,16 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.MoneyAccount
 import serg.chuprin.finances.core.api.domain.model.OnboardingStep
 import serg.chuprin.finances.core.api.domain.model.User
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryType
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
-import serg.chuprin.finances.core.api.domain.model.query.TransactionCategoriesQuery
+import serg.chuprin.finances.core.api.domain.model.category.query.TransactionCategoriesQuery
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.query.MoneyAccountsQuery
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.model.transaction.TransactionType
-import serg.chuprin.finances.core.api.domain.model.transaction.TransactionsQuery
+import serg.chuprin.finances.core.api.domain.model.transaction.query.TransactionsQuery
 import serg.chuprin.finances.core.api.domain.repository.*
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.impl.BuildConfig
@@ -173,7 +174,11 @@ internal class AppDebugMenuImpl @Inject constructor(
     }
 
     private suspend fun getRandomMoneyAccount(currentUser: User): MoneyAccount {
-        return moneyAccountRepository.userAccountsFlow(currentUser.id).first().shuffled().first()
+        return moneyAccountRepository
+            .accountsFlow(MoneyAccountsQuery(ownerId = currentUser.id))
+            .first()
+            .shuffled()
+            .first()
     }
 
     private suspend fun getRandomCategory(
@@ -200,7 +205,9 @@ internal class AppDebugMenuImpl @Inject constructor(
             .first()
         transactionRepository.deleteTransactions(transactions)
 
-        val accounts = moneyAccountRepository.userAccountsFlow(userId = currentUser.id).first()
+        val accounts = moneyAccountRepository
+            .accountsFlow(MoneyAccountsQuery(ownerId = currentUser.id))
+            .first()
         moneyAccountRepository.deleteAccounts(accounts)
 
         val categories = transactionCategoryRepository

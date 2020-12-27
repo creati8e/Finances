@@ -4,7 +4,9 @@ import com.google.firebase.firestore.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.MoneyAccount
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.query.MoneyAccountsQuery
+import serg.chuprin.finances.core.api.extensions.contains
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseMoneyAccountFieldsContract.COLLECTION_NAME
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseMoneyAccountFieldsContract.FIELD_OWNER_ID
 import serg.chuprin.finances.core.impl.data.mapper.FirebaseMoneyAccountMapper
@@ -33,18 +35,27 @@ internal class FirebaseMoneyAccountDataSource @Inject constructor(
         return getAccountDocumentById(accountId).asFlow()
     }
 
-    fun userAccountsFlow(userId: Id): Flow<List<DocumentSnapshot>> {
-        return getUserAccountsCollection(userId)
+    fun accountsFlow(query: MoneyAccountsQuery): Flow<List<DocumentSnapshot>> {
+        return collection
+            .filterByOwnerId(query.ownerId)
             .asFlow()
-            .map { querySnapshot -> querySnapshot.documents }
+            .map { querySnapshot ->
+                querySnapshot.filterByAccountIds(query.accountIds)
+            }
     }
 
     suspend fun deleteAccounts(accounts: List<MoneyAccount>) {
         delete(accounts.map(MoneyAccount::id))
     }
 
-    private fun getUserAccountsCollection(userId: Id): Query {
-        return collection.whereEqualTo(FIELD_OWNER_ID, userId.value)
+    private fun CollectionReference.filterByOwnerId(ownerId: Id): Query {
+        return whereEqualTo(FIELD_OWNER_ID, ownerId.value)
+    }
+
+    private fun QuerySnapshot.filterByAccountIds(accountIds: Set<Id>): List<DocumentSnapshot> {
+        return documents.filter { document ->
+            accountIds.contains { accountId -> accountId.value == document.id }
+        }
     }
 
     private fun getAccountDocumentById(accountId: Id): DocumentReference {

@@ -1,6 +1,7 @@
-package serg.chuprin.finances.core.api.domain.model.transaction
+package serg.chuprin.finances.core.api.domain.model.transaction.query
 
 import serg.chuprin.finances.core.api.domain.model.Id
+import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import java.time.LocalDateTime
 
 /**
