@@ -41,16 +41,16 @@ internal class TransactionCategoryRepositoryImpl @Inject constructor(
             }
     }
 
-    override suspend fun createPredefinedCategories(userId: Id) {
+    override suspend fun createPredefinedCategories(ownerId: Id) {
         coroutineScope {
             val allCategories = predefinedCategoriesDataSource.getCategories().run {
-                (expenseCategories + incomeCategories).mapNotNull { dto -> dto.map(userId) }
+                (expenseCategories + incomeCategories).mapNotNull { dto -> dto.map(ownerId) }
             }
             firebaseDataSource.createCategories(allCategories)
         }
     }
 
-    private fun TransactionCategoryAssetDto.map(userId: Id): TransactionCategory? {
+    private fun TransactionCategoryAssetDto.map(ownerId: Id): TransactionCategory? {
         val type = if (isIncome) {
             TransactionCategoryType.INCOME
         } else {
@@ -61,7 +61,7 @@ internal class TransactionCategoryRepositoryImpl @Inject constructor(
             type = type,
             name = name,
             colorHex = colorHex,
-            ownerId = userId.value,
+            ownerId = ownerId.value,
             parentCategoryId = parentCategoryId
         )
     }

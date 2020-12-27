@@ -19,7 +19,7 @@ interface TransactionCategoryRetrieverService {
      * ([TransactionCategoryWithParent]] also includes category's parent).
      */
     fun transactionsFlow(
-        userId: Id,
+        ownerId: Id,
         query: TransactionsQuery
     ): Flow<TransactionCategoriesMap>
 

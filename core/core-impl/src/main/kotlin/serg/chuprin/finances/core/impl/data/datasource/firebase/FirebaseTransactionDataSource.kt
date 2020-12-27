@@ -42,14 +42,14 @@ internal class FirebaseTransactionDataSource @Inject constructor(
         return collection
             .limit(query.limit)
             .sortBy(query.sortOrder)
-            .filterByUser(query.ownerId)
+            .filterByOwner(query.ownerId)
             .filterByDate(query.startDate, query.endDate)
             .asFlow()
             .map { querySnapshot -> querySnapshot.documents }
     }
 
-    private fun Query.filterByUser(userId: Id? = null): Query {
-        return if (userId != null) whereEqualTo(FIELD_OWNER_ID, userId.value) else this
+    private fun Query.filterByOwner(ownerId: Id? = null): Query {
+        return if (ownerId != null) whereEqualTo(FIELD_OWNER_ID, ownerId.value) else this
     }
 
     private fun Query.limit(limit: Int?): Query {

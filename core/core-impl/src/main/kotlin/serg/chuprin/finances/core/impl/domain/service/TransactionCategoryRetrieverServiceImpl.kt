@@ -25,7 +25,7 @@ internal class TransactionCategoryRetrieverServiceImpl @Inject constructor(
 ) : TransactionCategoryRetrieverService {
 
     override fun transactionsFlow(
-        userId: Id,
+        ownerId: Id,
         query: TransactionsQuery
     ): Flow<TransactionCategoriesMap> {
         return transactionRepository
@@ -35,7 +35,7 @@ internal class TransactionCategoryRetrieverServiceImpl @Inject constructor(
                     flowOf(transactions),
                     categoryRepository.categoriesFlow(
                         TransactionCategoriesQuery(
-                            ownerId = userId,
+                            ownerId = ownerId,
                             categoryIds = transactions.categoryIds.toSet(),
                             relation = TransactionCategoriesQuery.Relation.RETRIEVE_PARENTS
                         )

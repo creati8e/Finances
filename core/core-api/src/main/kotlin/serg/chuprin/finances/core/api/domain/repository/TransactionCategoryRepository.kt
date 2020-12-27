@@ -11,7 +11,7 @@ import serg.chuprin.finances.core.api.domain.model.category.query.result.Categor
  */
 interface TransactionCategoryRepository {
 
-    suspend fun createPredefinedCategories(userId: Id)
+    suspend fun createPredefinedCategories(ownerId: Id)
 
     fun categoriesFlow(query: TransactionCategoriesQuery): Flow<CategoriesQueryResult>
 

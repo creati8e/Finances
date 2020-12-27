@@ -134,8 +134,8 @@ internal class FirebaseTransactionCategoryQueryExecutor @Inject constructor(
         return if (type == null) this else whereEqualTo(FIELD_TYPE, typeMapper.mapFrom(type))
     }
 
-    private fun Query.filterByOwner(userId: Id?): Query {
-        return if (userId == null) this else this.whereEqualTo(FIELD_OWNER_ID, userId.value)
+    private fun Query.filterByOwner(ownerId: Id?): Query {
+        return if (ownerId == null) this else this.whereEqualTo(FIELD_OWNER_ID, ownerId.value)
     }
 
     private fun mergeDocuments(
