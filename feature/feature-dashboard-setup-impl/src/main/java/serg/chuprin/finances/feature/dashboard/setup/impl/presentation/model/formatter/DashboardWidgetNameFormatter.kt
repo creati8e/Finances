@@ -1,8 +1,8 @@
 package serg.chuprin.finances.feature.dashboard.setup.impl.presentation.model.formatter
 
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
+import serg.chuprin.finances.feature.dashboard.setup.domain.model.DashboardWidgetType
 import serg.chuprin.finances.feature.dashboard.setup.impl.R
-import serg.chuprin.finances.feature.dashboard.setup.presentation.domain.model.DashboardWidgetType
 import javax.inject.Inject
 
 /**

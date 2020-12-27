@@ -12,7 +12,7 @@ import serg.chuprin.finances.feature.dashboard.domain.model.DashboardCategoriesW
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.DashboardCategoryChipCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.store.DashboardState
-import serg.chuprin.finances.feature.dashboard.setup.presentation.domain.model.DashboardWidgetType
+import serg.chuprin.finances.feature.dashboard.setup.domain.model.DashboardWidgetType
 import javax.inject.Inject
 
 /**

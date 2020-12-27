@@ -1,7 +1,7 @@
 package serg.chuprin.finances.feature.dashboard.setup.impl.domain.usecase
 
-import serg.chuprin.finances.feature.dashboard.setup.presentation.domain.model.CustomizableDashboardWidget
-import serg.chuprin.finances.feature.dashboard.setup.presentation.domain.repository.DashboardWidgetsRepository
+import serg.chuprin.finances.feature.dashboard.setup.domain.model.CustomizableDashboardWidget
+import serg.chuprin.finances.feature.dashboard.setup.domain.repository.DashboardWidgetsRepository
 import javax.inject.Inject
 
 /**

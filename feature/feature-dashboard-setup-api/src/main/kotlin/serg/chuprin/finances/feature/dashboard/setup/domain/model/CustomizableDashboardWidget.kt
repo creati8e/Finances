@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.dashboard.setup.presentation.domain.model
+package serg.chuprin.finances.feature.dashboard.setup.domain.model
 
 /**
  * Created by Sergey Chuprin on 29.11.2020.

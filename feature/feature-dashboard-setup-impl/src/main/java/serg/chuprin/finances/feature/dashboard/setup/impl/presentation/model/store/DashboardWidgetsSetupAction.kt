@@ -1,6 +1,6 @@
 package serg.chuprin.finances.feature.dashboard.setup.impl.presentation.model.store
 
-import serg.chuprin.finances.feature.dashboard.setup.presentation.domain.model.CustomizableDashboardWidget
+import serg.chuprin.finances.feature.dashboard.setup.domain.model.CustomizableDashboardWidget
 
 /**
  * Created by Sergey Chuprin on 27.11.2019.

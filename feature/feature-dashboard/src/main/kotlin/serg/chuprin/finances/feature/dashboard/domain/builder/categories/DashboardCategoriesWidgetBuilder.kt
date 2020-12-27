@@ -11,7 +11,7 @@ import serg.chuprin.finances.feature.dashboard.domain.builder.DashboardWidgetBui
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardCategoriesWidgetPage
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
 import serg.chuprin.finances.feature.dashboard.domain.service.DashboardCategoriesDataService
-import serg.chuprin.finances.feature.dashboard.setup.presentation.domain.model.DashboardWidgetType
+import serg.chuprin.finances.feature.dashboard.setup.domain.model.DashboardWidgetType
 import java.math.BigDecimal
 import javax.inject.Inject
 

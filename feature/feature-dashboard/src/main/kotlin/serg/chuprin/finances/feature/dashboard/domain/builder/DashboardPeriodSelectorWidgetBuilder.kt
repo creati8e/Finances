@@ -5,7 +5,7 @@ import serg.chuprin.finances.core.api.domain.model.User
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
-import serg.chuprin.finances.feature.dashboard.setup.presentation.domain.model.DashboardWidgetType
+import serg.chuprin.finances.feature.dashboard.setup.domain.model.DashboardWidgetType
 import javax.inject.Inject
 
 /**

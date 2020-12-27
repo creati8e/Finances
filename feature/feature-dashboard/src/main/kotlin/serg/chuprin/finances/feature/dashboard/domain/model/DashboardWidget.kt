@@ -4,7 +4,7 @@ import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryW
 import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccountBalances
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
-import serg.chuprin.finances.feature.dashboard.setup.presentation.domain.model.DashboardWidgetType
+import serg.chuprin.finances.feature.dashboard.setup.domain.model.DashboardWidgetType
 import java.math.BigDecimal
 import java.util.*
 

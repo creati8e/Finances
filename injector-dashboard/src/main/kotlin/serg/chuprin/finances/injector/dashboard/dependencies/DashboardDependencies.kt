@@ -19,7 +19,7 @@ import serg.chuprin.finances.core.api.presentation.model.builder.DataPeriodTypeP
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.api.presentation.navigation.DashboardNavigation
 import serg.chuprin.finances.feature.dashboard.setup.DashboardWidgetsSetupApi
-import serg.chuprin.finances.feature.dashboard.setup.presentation.domain.repository.DashboardWidgetsRepository
+import serg.chuprin.finances.feature.dashboard.setup.domain.repository.DashboardWidgetsRepository
 
 /**
  * Created by Sergey Chuprin on 03.04.2020.

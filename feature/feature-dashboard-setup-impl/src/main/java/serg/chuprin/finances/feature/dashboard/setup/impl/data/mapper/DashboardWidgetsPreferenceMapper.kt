@@ -1,8 +1,8 @@
 package serg.chuprin.finances.feature.dashboard.setup.impl.data.mapper
 
 import serg.chuprin.finances.core.api.data.datasource.preferences.mapper.PreferenceMapper
-import serg.chuprin.finances.feature.dashboard.setup.presentation.domain.model.CustomizableDashboardWidget
-import serg.chuprin.finances.feature.dashboard.setup.presentation.domain.model.DashboardWidgetType
+import serg.chuprin.finances.feature.dashboard.setup.domain.model.CustomizableDashboardWidget
+import serg.chuprin.finances.feature.dashboard.setup.domain.model.DashboardWidgetType
 import javax.inject.Inject
 
 /**

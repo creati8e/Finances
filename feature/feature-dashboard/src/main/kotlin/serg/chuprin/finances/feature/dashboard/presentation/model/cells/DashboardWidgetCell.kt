@@ -4,7 +4,7 @@ import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.cells.DiffCell
 import serg.chuprin.finances.core.categories.shares.presentation.model.cell.CategorySharesCell
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
-import serg.chuprin.finances.feature.dashboard.setup.presentation.domain.model.DashboardWidgetType
+import serg.chuprin.finances.feature.dashboard.setup.domain.model.DashboardWidgetType
 
 /**
  * Created by Sergey Chuprin on 17.04.2020.

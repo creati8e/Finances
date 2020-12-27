@@ -11,9 +11,9 @@ import serg.chuprin.finances.feature.dashboard.domain.builder.DashboardWidgetBui
 import serg.chuprin.finances.feature.dashboard.domain.model.Dashboard
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidgets
 import serg.chuprin.finances.feature.dashboard.domain.repository.DashboardDataPeriodRepository
-import serg.chuprin.finances.feature.dashboard.setup.presentation.domain.model.CustomizableDashboardWidget
-import serg.chuprin.finances.feature.dashboard.setup.presentation.domain.model.DashboardWidgetType
-import serg.chuprin.finances.feature.dashboard.setup.presentation.domain.repository.DashboardWidgetsRepository
+import serg.chuprin.finances.feature.dashboard.setup.domain.model.CustomizableDashboardWidget
+import serg.chuprin.finances.feature.dashboard.setup.domain.model.DashboardWidgetType
+import serg.chuprin.finances.feature.dashboard.setup.domain.repository.DashboardWidgetsRepository
 import javax.inject.Inject
 
 /**

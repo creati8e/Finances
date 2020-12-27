@@ -1,7 +1,7 @@
 package serg.chuprin.finances.feature.dashboard.setup.impl.presentation.model.cells
 
 import serg.chuprin.finances.core.api.presentation.model.cells.DiffCell
-import serg.chuprin.finances.feature.dashboard.setup.presentation.domain.model.DashboardWidgetType
+import serg.chuprin.finances.feature.dashboard.setup.domain.model.DashboardWidgetType
 
 /**
  * Created by Sergey Chuprin on 29.11.2020.

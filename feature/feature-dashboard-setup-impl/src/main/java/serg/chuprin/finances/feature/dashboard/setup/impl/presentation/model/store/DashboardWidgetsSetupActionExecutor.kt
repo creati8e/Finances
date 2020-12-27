@@ -8,10 +8,10 @@ import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
 import serg.chuprin.finances.core.mvi.invoke
+import serg.chuprin.finances.feature.dashboard.setup.domain.model.CustomizableDashboardWidget
 import serg.chuprin.finances.feature.dashboard.setup.impl.domain.usecase.UpdateDashboardWidgetsUseCase
 import serg.chuprin.finances.feature.dashboard.setup.impl.presentation.model.cells.DraggableDashboardWidgetCell
 import serg.chuprin.finances.feature.dashboard.setup.impl.presentation.model.formatter.DashboardWidgetNameFormatter
-import serg.chuprin.finances.feature.dashboard.setup.presentation.domain.model.CustomizableDashboardWidget
 import java.util.*
 import javax.inject.Inject
 import kotlin.comparisons.reversed as kotlinReversed
