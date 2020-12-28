@@ -66,7 +66,6 @@ class TransactionReportDataPeriodAmountsBuilder @Inject constructor() {
             return emptyMap()
         }
         return when (val reportDataPeriod = filter.reportDataPeriod) {
-            // TODO: Think about splitting periods for custom period.
             ReportDataPeriod.AllTime, is ReportDataPeriod.Custom -> emptyMap()
             is ReportDataPeriod.Predefined -> {
                 when (filter) {

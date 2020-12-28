@@ -19,7 +19,7 @@ internal class DateTimeFormatterImpl @Inject constructor() :
 
     private companion object {
         private val DAY_FORMATTER = DateTimeFormatter.ofPattern("d\nMMM")
-        private val WEEK_FORMATTER = DateTimeFormatter.ofPattern("d.W")
+        private val WEEK_FORMATTER = DateTimeFormatter.ofPattern("d\nMMM")
         private val MONTH_NAME_FORMATTER = DateTimeFormatter.ofPattern("MMM")
 
         private val TIME_FORMATTER = DateTimeFormatterBuilder()
@@ -48,6 +48,7 @@ internal class DateTimeFormatterImpl @Inject constructor() :
                     append(dataPeriod.startDate.year)
                 }.capitalize(Locale.getDefault())
             }
+            // Don't use year formatting because it doesn't work correctly sometimes.
             DataPeriodType.YEAR -> dataPeriod.startDate.year.toString()
         }
     }
