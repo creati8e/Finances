@@ -6,4 +6,9 @@ package serg.chuprin.finances.core.api.domain.model.category
 data class TransactionCategoryWithParent(
     val category: TransactionCategory,
     val parentCategory: TransactionCategory?
-)
+) {
+
+    val isParent: Boolean
+        get() = parentCategory == null
+
+}
