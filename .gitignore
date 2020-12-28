@@ -20,3 +20,5 @@
 /gradle/wrapper/
 /core/core-currency-picker/build/generated/source/buildConfig/dev/serg/chuprin/finances/core/currency_picker/
 /core/core-currency-picker/build/
+/feature/feature-data-report/build/.transforms/
+/feature/feature-data-report/build/

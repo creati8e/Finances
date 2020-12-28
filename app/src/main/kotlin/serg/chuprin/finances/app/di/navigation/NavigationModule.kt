@@ -12,8 +12,10 @@ import serg.chuprin.finances.app.R
 import serg.chuprin.finances.core.api.di.provider.CoreNavigationProvider
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.presentation.navigation.*
+import serg.chuprin.finances.core.api.presentation.screen.arguments.CategoriesListScreenArguments
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionsReportScreenArguments
 import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.toBundle
+import serg.chuprin.finances.feature.categories.impl.presentation.view.CategoriesListFragment
 import serg.chuprin.finances.feature.dashboard.presentation.view.DashboardFragmentDirections
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.arguments.MoneyAccountDetailsScreenArguments
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.view.MoneyAccountDetailsFragment
@@ -143,6 +145,18 @@ object NavigationModule : CoreNavigationProvider {
                                 buildExtrasForSharedElements(sharedElementView)
                             )
                         }
+                }
+
+                override fun navigateToCategoriesList(
+                    navController: NavController,
+                    arguments: CategoriesListScreenArguments
+                ) {
+                    UserProfileFragmentDirections.navigateFromUserProfileToCategoriesList().run {
+                        navController.navigate(
+                            this.actionId,
+                            arguments.toBundle<CategoriesListFragment>(),
+                        )
+                    }
                 }
 
                 override fun navigateToUnauthorizedGraph(rootNavigationController: NavController) {

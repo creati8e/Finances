@@ -3,10 +3,7 @@ package serg.chuprin.finances.feature.userprofile.presentation.model.builder
 import serg.chuprin.finances.core.api.domain.model.User
 import serg.chuprin.finances.core.api.presentation.formatter.DataPeriodFormatter
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
-import serg.chuprin.finances.feature.userprofile.presentation.model.cells.UserProfileDataPeriodTypeCell
-import serg.chuprin.finances.feature.userprofile.presentation.model.cells.UserProfileImageCell
-import serg.chuprin.finances.feature.userprofile.presentation.model.cells.UserProfileLogoutCell
-import serg.chuprin.finances.feature.userprofile.presentation.model.cells.UserProfileSetupDashboardWidgetsCell
+import serg.chuprin.finances.feature.userprofile.presentation.model.cells.*
 import javax.inject.Inject
 
 /**
@@ -30,6 +27,7 @@ class UserProfileCellsBuilder @Inject constructor(
             profileCell,
             dataPeriodTypeCell,
             UserProfileSetupDashboardWidgetsCell,
+            UserProfileCategoriesCell,
             UserProfileLogoutCell
         )
     }

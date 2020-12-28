@@ -5,10 +5,7 @@ import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAda
 import serg.chuprin.finances.core.api.presentation.view.adapter.DividerAdapter
 import serg.chuprin.finances.feature.userprofile.presentation.model.cells.UserProfileMenuCell
 import serg.chuprin.finances.feature.userprofile.presentation.view.adapter.diff.UserProfileDiffCallback
-import serg.chuprin.finances.feature.userprofile.presentation.view.adapter.renderer.UserProfileDashboardWidgetsSetupCellRenderer
-import serg.chuprin.finances.feature.userprofile.presentation.view.adapter.renderer.UserProfileDataPeriodTypeCellRenderer
-import serg.chuprin.finances.feature.userprofile.presentation.view.adapter.renderer.UserProfileImageCellRenderer
-import serg.chuprin.finances.feature.userprofile.presentation.view.adapter.renderer.UserProfileLogoutCellRenderer
+import serg.chuprin.finances.feature.userprofile.presentation.view.adapter.renderer.*
 
 /**
  * Created by Sergey Chuprin on 29.11.2020.
@@ -20,6 +17,7 @@ class UserProfileCellsListAdapter : DiffMultiViewAdapter<BaseCell>(
     init {
         registerRenderer(UserProfileImageCellRenderer())
         registerRenderer(UserProfileLogoutCellRenderer())
+        registerRenderer(UserProfileCategoriesCellRenderer())
         registerRenderer(UserProfileDataPeriodTypeCellRenderer())
         registerRenderer(UserProfileDashboardWidgetsSetupCellRenderer())
     }

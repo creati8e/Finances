@@ -122,6 +122,10 @@
                 android:id="@+id/navigateFromUserProfileToDashboardWidgetsSetup"
                 app:destination="@id/dashboardWidgetsSetupFragment" />
 
+            <action
+                android:id="@+id/navigateFromUserProfileToCategoriesList"
+                app:destination="@id/categoriesListFragment" />
+
         </fragment>
 
         <fragment
@@ -129,6 +133,12 @@
             android:name="serg.chuprin.finances.feature.dashboard.setup.impl.presentation.view.DashboardWidgetsSetupFragment"
             android:label="DashboardWidgetsSetupFragment"
             tools:layout="@layout/fragment_dashboard_widgets_setup" />
+
+        <fragment
+            android:id="@+id/categoriesListFragment"
+            android:name="serg.chuprin.finances.feature.categories.impl.presentation.view.CategoriesListFragment"
+            android:label="CategoriesListFragment"
+            tools:layout="@layout/fragment_categories_list" />
 
         <action
             android:id="@+id/navigateFromOnboardingToDashboard"

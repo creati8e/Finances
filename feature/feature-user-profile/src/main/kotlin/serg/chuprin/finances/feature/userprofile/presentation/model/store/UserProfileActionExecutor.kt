@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
 import serg.chuprin.finances.core.api.presentation.model.builder.DataPeriodTypePopupMenuCellsBuilder
+import serg.chuprin.finances.core.api.presentation.screen.arguments.CategoriesListScreenArguments
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
@@ -50,8 +51,20 @@ class UserProfileActionExecutor @Inject constructor(
                     is UserProfileIntent.ClickOnPeriodTypeCell -> {
                         handleClickOnPeriodTypeCellIntent(intent)
                     }
+                    UserProfileIntent.ClickOnCategoriesCell -> {
+                        handleClickOnCategoriesCellIntent(eventConsumer)
+                    }
                 }
             }
+        }
+    }
+
+    private fun handleClickOnCategoriesCellIntent(
+        eventConsumer: Consumer<UserProfileEvent>
+    ): Flow<UserProfileEffect> {
+        return emptyFlowAction {
+            val arguments = CategoriesListScreenArguments.MultiSelection(isDeletionAvailable = true)
+            eventConsumer(UserProfileEvent.NavigateToCategoriesListScreen(arguments))
         }
     }
 

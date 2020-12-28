@@ -9,7 +9,7 @@ plugins {
 dependencies {
     implementation(project(":injector"))
     implementation(project(":core:core-api"))
-    implementation(project(":feature:feature-dashboard-setup-api"))
+    implementation(project(":feature:feature-categories-api"))
 
     implementation(Libraries.KOTLIN)
     implementation(Libraries.Coroutines.CORE)

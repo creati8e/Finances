@@ -22,6 +22,8 @@ sealed class UserProfileIntent {
 
     object ClickOnLogOutButton : UserProfileIntent()
 
+    object ClickOnCategoriesCell : UserProfileIntent()
+
     object ClickOnOnLogoutConfirmationButton : UserProfileIntent()
 
 }

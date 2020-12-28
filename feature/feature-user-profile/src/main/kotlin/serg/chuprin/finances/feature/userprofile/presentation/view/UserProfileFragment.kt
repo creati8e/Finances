@@ -24,6 +24,7 @@ import serg.chuprin.finances.core.api.presentation.view.popup.menu.PopupMenuWind
 import serg.chuprin.finances.core.api.presentation.view.setSharedElementTransitions
 import serg.chuprin.finances.feature.userprofile.R
 import serg.chuprin.finances.feature.userprofile.presentation.di.UserProfileComponent
+import serg.chuprin.finances.feature.userprofile.presentation.model.cells.UserProfileCategoriesCell
 import serg.chuprin.finances.feature.userprofile.presentation.model.cells.UserProfileDataPeriodTypeCell
 import serg.chuprin.finances.feature.userprofile.presentation.model.cells.UserProfileLogoutCell
 import serg.chuprin.finances.feature.userprofile.presentation.model.cells.UserProfileSetupDashboardWidgetsCell
@@ -115,6 +116,9 @@ class UserProfileFragment :
             UserProfileEvent.NavigateToLoginScreen -> {
                 navigation.navigateToUnauthorizedGraph(rootNavigationController)
             }
+            is UserProfileEvent.NavigateToCategoriesListScreen -> {
+                navigation.navigateToCategoriesList(navController, event.arguments)
+            }
             is UserProfileEvent.NavigateToDashboardWidgetsSetupScreen -> {
                 navigateToDashboardWidgetsSetup(event)
             }
@@ -131,6 +135,9 @@ class UserProfileFragment :
         when (cell) {
             is UserProfileLogoutCell -> {
                 viewModel.dispatchIntent(UserProfileIntent.ClickOnLogOutButton)
+            }
+            is UserProfileCategoriesCell -> {
+                viewModel.dispatchIntent(UserProfileIntent.ClickOnCategoriesCell)
             }
             is UserProfileSetupDashboardWidgetsCell -> {
                 val transitionName = cellView.transitionName
