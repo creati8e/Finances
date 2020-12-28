@@ -9,23 +9,15 @@ import kotlinx.android.parcel.Parcelize
 sealed class CategoriesListScreenArguments : Parcelable {
 
     /**
-     * Selection is not available at all.
-     */
-    @Parcelize
-    object Disabled : CategoriesListScreenArguments()
-
-    /**
      * Allow user to select single category (category picker).
      */
     @Parcelize
-    object SelectSingle : CategoriesListScreenArguments()
+    object Picker : CategoriesListScreenArguments()
 
     /**
-     * Mode when user can edit categories by selecting multiple categories or deleting it.
+     * Mode when user can edit categories or delete them.
      */
     @Parcelize
-    class MultiSelection(
-        val isDeletionAvailable: Boolean
-    ) : CategoriesListScreenArguments()
+    object Editing : CategoriesListScreenArguments()
 
 }

@@ -11,7 +11,11 @@ class CategoriesListStateReducer : StoreStateReducer<CategoriesListEffect, Categ
         what: CategoriesListEffect,
         state: CategoriesListState
     ): CategoriesListState {
-        TODO("Not yet implemented")
+        return when (what) {
+            is CategoriesListEffect.CellsBuilt -> {
+                state.copy(cells = what.cells)
+            }
+        }
     }
 
 }

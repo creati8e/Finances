@@ -63,7 +63,7 @@ class UserProfileActionExecutor @Inject constructor(
         eventConsumer: Consumer<UserProfileEvent>
     ): Flow<UserProfileEffect> {
         return emptyFlowAction {
-            val arguments = CategoriesListScreenArguments.MultiSelection(isDeletionAvailable = true)
+            val arguments = CategoriesListScreenArguments.Editing
             eventConsumer(UserProfileEvent.NavigateToCategoriesListScreen(arguments))
         }
     }

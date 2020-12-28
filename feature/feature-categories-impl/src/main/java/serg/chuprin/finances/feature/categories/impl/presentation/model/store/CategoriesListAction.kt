@@ -1,5 +1,6 @@
 package serg.chuprin.finances.feature.categories.impl.presentation.model.store
 
+import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithChildren
 
 /**
@@ -12,7 +13,8 @@ sealed class CategoriesListAction {
     ) : CategoriesListAction()
 
     class BuildCategoriesList(
-        val categories: Set<TransactionCategoryWithChildren>
+        val categories: Set<TransactionCategoryWithChildren>,
+        val expansions: Map<Id, Boolean>
     ) : CategoriesListAction()
 
 }
