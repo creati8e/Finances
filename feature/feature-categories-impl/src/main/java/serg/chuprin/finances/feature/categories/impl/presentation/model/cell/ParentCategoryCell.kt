@@ -6,6 +6,7 @@ import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
  * Created by Sergey Chuprin on 28.12.2020.
  */
 data class ParentCategoryCell(
-    override val color: Int,
+    val color: Int,
+    val isExpansionAvailable: Boolean,
     override val category: TransactionCategory
 ) : CategoryCell

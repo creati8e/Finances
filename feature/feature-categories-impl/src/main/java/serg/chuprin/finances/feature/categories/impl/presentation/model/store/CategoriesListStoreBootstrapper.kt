@@ -1,9 +1,9 @@
 package serg.chuprin.finances.feature.categories.impl.presentation.model.store
 
+import com.github.ajalt.timberkt.Timber
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onEach
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.mvi.bootstrapper.StoreBootstrapper
 import serg.chuprin.finances.feature.categories.impl.domain.usecase.GetAllUserCategoriesUseCase
@@ -20,15 +20,13 @@ class CategoriesListStoreBootstrapper @Inject constructor(
 ) : StoreBootstrapper<CategoriesListAction> {
 
     override fun invoke(): Flow<CategoriesListAction> {
-        return flow {
-            emitAll(
-                combine(
-                    useCase.execute(),
-                    expansionTracker.expansionsFlow,
-                    CategoriesListAction::BuildCategoriesList
-                )
-            )
-        }
+        return combine(
+            useCase.execute(),
+            expansionTracker.expansionsFlow.onEach {
+                Timber.d { "Emit data expansionsFlow" }
+            },
+            CategoriesListAction::BuildCategoriesList
+        )
     }
 
 }

@@ -6,7 +6,7 @@ import serg.chuprin.adapter.Click
 import serg.chuprin.adapter.ContainerHolder
 import serg.chuprin.adapter.ContainerRenderer
 import serg.chuprin.adapter.LongClick
-import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisible
+import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisibleOrGone
 import serg.chuprin.finances.core.api.presentation.view.extensions.onViewClick
 import serg.chuprin.finances.feature.categories.impl.R
 import serg.chuprin.finances.feature.categories.impl.presentation.model.cell.ParentCategoryCell
@@ -20,8 +20,8 @@ class ParentCategoryCellRenderer : ContainerRenderer<ParentCategoryCell>() {
 
     override fun bindView(holder: ContainerHolder, model: ParentCategoryCell) {
         with(holder) {
-            expansionArrowImageView.makeVisible()
             nameTextView.text = model.category.name
+            expansionArrowImageView.makeVisibleOrGone(model.isExpansionAvailable)
             transactionColorDot.imageTintList = ColorStateList.valueOf(model.color)
         }
     }

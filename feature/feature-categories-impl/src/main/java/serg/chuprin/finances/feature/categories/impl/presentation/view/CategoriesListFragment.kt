@@ -14,6 +14,8 @@ import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.frag
 import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.setupToolbar
 import serg.chuprin.finances.feature.categories.impl.R
 import serg.chuprin.finances.feature.categories.impl.presentation.di.CategoriesListComponent
+import serg.chuprin.finances.feature.categories.impl.presentation.model.cell.ParentCategoryCell
+import serg.chuprin.finances.feature.categories.impl.presentation.model.store.CategoriesListIntent
 import serg.chuprin.finances.feature.categories.impl.presentation.view.adapter.renderer.ChildCategoryCellRenderer
 import serg.chuprin.finances.feature.categories.impl.presentation.view.adapter.renderer.ParentCategoryCellRenderer
 
@@ -53,6 +55,13 @@ class CategoriesListFragment : BaseFragment(R.layout.fragment_categories_list) {
             cellsLiveData(cellsAdapter::setItems)
         }
 
+        cellsAdapter.clickListener = { cell, cellView, _ ->
+            if (cell is ParentCategoryCell && cellView.id == R.id.expansionArrowImageView) {
+                viewModel.dispatchIntent(
+                    CategoriesListIntent.ClickOnParentCategoryExpansionToggle(cell)
+                )
+            }
+        }
     }
 
 }

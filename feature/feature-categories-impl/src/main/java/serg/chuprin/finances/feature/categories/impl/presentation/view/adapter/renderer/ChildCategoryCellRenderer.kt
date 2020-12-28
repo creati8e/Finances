@@ -1,6 +1,5 @@
 package serg.chuprin.finances.feature.categories.impl.presentation.view.adapter.renderer
 
-import android.content.res.ColorStateList
 import kotlinx.android.synthetic.main.view_category.*
 import serg.chuprin.adapter.ContainerHolder
 import serg.chuprin.adapter.ContainerRenderer
@@ -17,9 +16,9 @@ class ChildCategoryCellRenderer : ContainerRenderer<ChildCategoryCell>() {
 
     override fun bindView(holder: ContainerHolder, model: ChildCategoryCell) {
         with(holder) {
+            transactionColorDot.makeGone()
             expansionArrowImageView.makeGone()
             nameTextView.text = model.category.name
-            transactionColorDot.imageTintList = ColorStateList.valueOf(model.color)
         }
     }
 

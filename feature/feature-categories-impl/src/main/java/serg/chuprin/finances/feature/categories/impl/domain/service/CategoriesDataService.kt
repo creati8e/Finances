@@ -1,6 +1,7 @@
 package serg.chuprin.finances.feature.categories.impl.domain.service
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.mapLatest
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
@@ -30,14 +31,18 @@ class CategoriesDataService @Inject constructor(
     /**
      * @return flow of set of parent categories with their children list.
      */
-    suspend fun dataFlow(): Flow<Set<TransactionCategoryWithChildren>> {
-        return categoryRepository
-            .categoriesFlow(
-                TransactionCategoriesQuery(
-                    categoryIds = emptySet(),
-                    ownerId = userRepository.getCurrentUser().id
-                )
-            )
+    fun dataFlow(): Flow<Set<TransactionCategoryWithChildren>> {
+        return userRepository
+            .currentUserSingleFlow()
+            .flatMapLatest { user ->
+                categoryRepository
+                    .categoriesFlow(
+                        TransactionCategoriesQuery(
+                            categoryIds = emptySet(),
+                            ownerId = user.id
+                        )
+                    )
+            }
             .mapLatest { queryResult ->
                 val categories = queryResult.values
                 categories.mapNotNullTo(sortedSetOf(categoryNameComparator)) { categoryWithParent ->

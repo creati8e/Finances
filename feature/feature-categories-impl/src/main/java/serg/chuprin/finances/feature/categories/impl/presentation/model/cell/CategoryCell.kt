@@ -9,8 +9,6 @@ import serg.chuprin.finances.core.api.presentation.model.cells.DiffCell
  */
 interface CategoryCell : DiffCell<Id> {
 
-    val color: Int
-
     val category: TransactionCategory
 
     override val diffCellId: Id

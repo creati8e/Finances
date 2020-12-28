@@ -12,7 +12,7 @@ class GetAllUserCategoriesUseCase @Inject constructor(
     private val dataService: CategoriesDataService
 ) {
 
-    suspend fun execute(): Flow<Set<TransactionCategoryWithChildren>> {
+    fun execute(): Flow<Set<TransactionCategoryWithChildren>> {
         return dataService.dataFlow()
     }
 
