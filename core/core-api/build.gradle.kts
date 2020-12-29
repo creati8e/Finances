@@ -17,6 +17,8 @@ dependencies {
     implementation(Libraries.COIL)
     implementation(Libraries.Adapter)
 
+    implementation(Libraries.Coroutines.Bindings)
+
     // Navigation.
     implementation(Libraries.Android.Navigation)
 

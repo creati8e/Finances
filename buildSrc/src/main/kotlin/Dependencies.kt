@@ -105,6 +105,20 @@ object Libraries {
 
         const val CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$VER"
         const val ANDROID = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$VER"
+
+        object Bindings : DependenciesCollection {
+
+            private const val VER = "1.0.0"
+
+            override fun invoke(): Collection<String> {
+                return listOf(
+                    "io.github.reactivecircus.flowbinding:flowbinding-android:$VER",
+                    "io.github.reactivecircus.flowbinding:flowbinding-material:$VER"
+                )
+            }
+
+        }
+
     }
 
     object Dagger {
