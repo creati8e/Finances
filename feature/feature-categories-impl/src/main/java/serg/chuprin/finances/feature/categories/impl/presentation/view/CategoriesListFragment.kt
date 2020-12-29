@@ -18,7 +18,6 @@ import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter
-import serg.chuprin.finances.core.api.presentation.view.adapter.diff.DiffCallback
 import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ZeroDataCellRenderer
 import serg.chuprin.finances.core.api.presentation.view.extensions.*
 import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.fragmentArguments
@@ -26,6 +25,7 @@ import serg.chuprin.finances.feature.categories.impl.R
 import serg.chuprin.finances.feature.categories.impl.presentation.di.CategoriesListComponent
 import serg.chuprin.finances.feature.categories.impl.presentation.model.cell.ParentCategoryCell
 import serg.chuprin.finances.feature.categories.impl.presentation.model.store.CategoriesListIntent
+import serg.chuprin.finances.feature.categories.impl.presentation.view.adapter.diff.CategoriesListCellsAdapterDiffCallback
 import serg.chuprin.finances.feature.categories.impl.presentation.view.adapter.renderer.ChildCategoryCellRenderer
 import serg.chuprin.finances.feature.categories.impl.presentation.view.adapter.renderer.ParentCategoryCellRenderer
 
@@ -39,11 +39,12 @@ class CategoriesListFragment : BaseFragment(R.layout.fragment_categories_list) {
         CategoriesListComponent.get(fragmentArguments())
     }
 
-    private val cellsAdapter = DiffMultiViewAdapter(DiffCallback()).apply {
-        registerRenderer(ZeroDataCellRenderer())
-        registerRenderer(ChildCategoryCellRenderer())
-        registerRenderer(ParentCategoryCellRenderer())
-    }
+    private val cellsAdapter =
+        DiffMultiViewAdapter(CategoriesListCellsAdapterDiffCallback()).apply {
+            registerRenderer(ZeroDataCellRenderer())
+            registerRenderer(ChildCategoryCellRenderer())
+            registerRenderer(ParentCategoryCellRenderer())
+        }
 
     private var searchEditTextWatcher: TextWatcher? = null
 

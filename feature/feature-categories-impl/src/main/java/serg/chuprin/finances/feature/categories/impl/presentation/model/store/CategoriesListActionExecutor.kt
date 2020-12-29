@@ -127,14 +127,16 @@ class CategoriesListActionExecutor @Inject constructor(
         return flowOfSingleValue {
             val cells = buildList<BaseCell> {
                 action.categories.forEach { categoryWithChildren ->
+                    val category = categoryWithChildren.category
                     add(
                         ParentCategoryCell(
-                            category = categoryWithChildren.category,
-                            isExpansionAvailable = categoryWithChildren.children.isNotEmpty(),
-                            color = categoryColorFormatter.format(categoryWithChildren.category)
+                            category = category,
+                            isExpanded = expansions.containsKey(category.id),
+                            color = categoryColorFormatter.format(category),
+                            isExpansionAvailable = categoryWithChildren.children.isNotEmpty()
                         )
                     )
-                    if (categoryWithChildren.category.id in expansions) {
+                    if (category.id in expansions) {
                         categoryWithChildren.children.forEach { childCategory ->
                             add(ChildCategoryCell(category = childCategory))
                         }
@@ -160,6 +162,7 @@ class CategoriesListActionExecutor @Inject constructor(
         return categories.map { category ->
             ParentCategoryCell(
                 category = category,
+                isExpanded = false,
                 isExpansionAvailable = false,
                 color = categoryColorFormatter.format(category)
             )

@@ -7,6 +7,11 @@ import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
  */
 data class ParentCategoryCell(
     val color: Int,
+    val isExpanded: Boolean,
     val isExpansionAvailable: Boolean,
     override val category: TransactionCategory
-) : CategoryCell
+) : CategoryCell {
+
+    class ExpansionChangedPayload
+
+}
