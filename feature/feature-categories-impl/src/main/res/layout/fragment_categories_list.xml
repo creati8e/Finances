@@ -8,15 +8,96 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?actionBarSize"
         app:liftOnScroll="true">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <FrameLayout
+            android:id="@+id/viewSwitcher"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:navigationIcon="@drawable/ic_close"
-            tools:title="Categories" />
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/defaultToolbarLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/defaultToolbarBackButton"
+                    style="@style/ToolbarIcon"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/abc_ic_ab_back_material"
+                    app:tint="?android:attr/textColorPrimary"
+                    tools:ignore="PrivateResource" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/defaultToolbarTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_toStartOf="@id/defaultToolbarSearchImageView"
+                    android:layout_toEndOf="@id/defaultToolbarBackButton"
+                    android:maxLines="1"
+                    android:text="@string/categories_list_toolbar_title"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/defaultToolbarSearchImageView"
+                    style="@style/ToolbarIcon"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_search"
+                    app:tint="?android:attr/textColorPrimary" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/searchToolbarLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/searchToolbarSearchImageView"
+                    style="@style/ToolbarIcon"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:src="@drawable/ic_search"
+                    app:tint="?android:attr/textColorPrimary"
+                    tools:ignore="PrivateResource" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/searchToolbarEditText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_toStartOf="@id/searchToolbarCloseImageView"
+                    android:layout_toEndOf="@id/searchToolbarSearchImageView"
+                    android:background="@null"
+                    android:hint="@string/categories_list_search_hint"
+                    android:maxLines="1"
+                    android:textCursorDrawable="@drawable/text_cursor"
+                    android:transformPivotY="12sp" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/searchToolbarCloseImageView"
+                    style="@style/ToolbarIcon"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_close"
+                    app:tint="?android:attr/textColorPrimary" />
+
+            </RelativeLayout>
+
+        </FrameLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -24,6 +105,7 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        tools:listitem="@layout/cell_parent_category" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

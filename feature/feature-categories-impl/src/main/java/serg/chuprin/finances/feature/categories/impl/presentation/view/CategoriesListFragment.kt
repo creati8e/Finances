@@ -1,23 +1,29 @@
 package serg.chuprin.finances.feature.categories.impl.presentation.view
 
 import android.os.Bundle
+import android.transition.TransitionInflater
+import android.transition.TransitionManager
 import android.view.View
+import androidx.core.transition.doOnEnd
+import androidx.core.transition.doOnStart
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.fragment_categories_list.*
+import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter
 import serg.chuprin.finances.core.api.presentation.view.adapter.diff.DiffCallback
+import serg.chuprin.finances.core.api.presentation.view.extensions.*
 import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.fragmentArguments
-import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.setupToolbar
 import serg.chuprin.finances.feature.categories.impl.R
 import serg.chuprin.finances.feature.categories.impl.presentation.di.CategoriesListComponent
 import serg.chuprin.finances.feature.categories.impl.presentation.model.cell.ParentCategoryCell
 import serg.chuprin.finances.feature.categories.impl.presentation.model.store.CategoriesListIntent
 import serg.chuprin.finances.feature.categories.impl.presentation.view.adapter.renderer.ChildCategoryCellRenderer
 import serg.chuprin.finances.feature.categories.impl.presentation.view.adapter.renderer.ParentCategoryCellRenderer
+
 
 /**
  * Created by Sergey Chuprin on 28.12.2020.
@@ -41,18 +47,21 @@ class CategoriesListFragment : BaseFragment(R.layout.fragment_categories_list) {
             recyclerView.fit { Edge.Bottom }
         }
 
-        setupToolbar(toolbar) {
-            setDisplayHomeAsUpEnabled(true)
-            setTitle(R.string.categories_list_toolbar_title)
-        }
-
         with(recyclerView) {
             adapter = cellsAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
 
-        with(viewModel) {
-            cellsLiveData(cellsAdapter::setItems)
+        defaultToolbarSearchImageView.onClick {
+            showSearchMode(showSearchMode = true)
+        }
+
+        searchToolbarCloseImageView.onClick {
+            showSearchMode(showSearchMode = false)
+        }
+
+        defaultToolbarBackButton.onClick {
+            navController.navigateUp()
         }
 
         cellsAdapter.clickListener = { cell, cellView, _ ->
@@ -62,6 +71,37 @@ class CategoriesListFragment : BaseFragment(R.layout.fragment_categories_list) {
                 )
             }
         }
+
+        with(viewModel) {
+            cellsLiveData(cellsAdapter::setItems)
+        }
+    }
+
+    private fun showSearchMode(showSearchMode: Boolean) {
+        val transition = TransitionInflater
+            .from(context)
+            .inflateTransition(R.transition.slide_bottom)
+            .setDuration(250L)
+
+        if (showSearchMode) {
+            transition.doOnEnd {
+                searchToolbarEditText.showKeyboard()
+            }
+        } else {
+            transition.doOnStart {
+                searchToolbarEditText.hideKeyboard()
+            }
+            transition.doOnEnd {
+                searchToolbarEditText.doIgnoringChanges {
+                    setText(EMPTY_STRING)
+                }
+            }
+        }
+
+        TransitionManager.beginDelayedTransition(viewSwitcher, transition)
+
+        searchToolbarLayout.makeVisibleOrGone(showSearchMode)
+        defaultToolbarLayout.makeVisibleOrGone(!showSearchMode)
     }
 
 }
