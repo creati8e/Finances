@@ -15,6 +15,7 @@ import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.vi
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter
 import serg.chuprin.finances.core.api.presentation.view.adapter.diff.DiffCallback
+import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ZeroDataCellRenderer
 import serg.chuprin.finances.core.api.presentation.view.extensions.*
 import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.fragmentArguments
 import serg.chuprin.finances.feature.categories.impl.R
@@ -35,6 +36,7 @@ class CategoriesListFragment : BaseFragment(R.layout.fragment_categories_list) {
     }
 
     private val cellsAdapter = DiffMultiViewAdapter(DiffCallback()).apply {
+        registerRenderer(ZeroDataCellRenderer())
         registerRenderer(ChildCategoryCellRenderer())
         registerRenderer(ParentCategoryCellRenderer())
     }
@@ -53,11 +55,11 @@ class CategoriesListFragment : BaseFragment(R.layout.fragment_categories_list) {
         }
 
         defaultToolbarSearchImageView.onClick {
-            showSearchMode(showSearchMode = true)
+            viewModel.dispatchIntent(CategoriesListIntent.ClickOnSearchIcon)
         }
 
         searchToolbarCloseImageView.onClick {
-            showSearchMode(showSearchMode = false)
+            viewModel.dispatchIntent(CategoriesListIntent.ClickOnCloseSearchIcon)
         }
 
         defaultToolbarBackButton.onClick {
@@ -74,6 +76,9 @@ class CategoriesListFragment : BaseFragment(R.layout.fragment_categories_list) {
 
         with(viewModel) {
             cellsLiveData(cellsAdapter::setItems)
+            searchModeActiveLiveData { isSearchModeActive ->
+                showSearchMode(showSearchMode = isSearchModeActive)
+            }
         }
     }
 

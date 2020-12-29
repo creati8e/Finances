@@ -7,6 +7,10 @@ import serg.chuprin.finances.feature.categories.impl.presentation.model.cell.Par
  */
 sealed class CategoriesListIntent {
 
+    object ClickOnSearchIcon : CategoriesListIntent()
+
+    object ClickOnCloseSearchIcon : CategoriesListIntent()
+
     class ClickOnParentCategoryExpansionToggle(
         val parentCategoryCell: ParentCategoryCell
     ) : CategoriesListIntent()

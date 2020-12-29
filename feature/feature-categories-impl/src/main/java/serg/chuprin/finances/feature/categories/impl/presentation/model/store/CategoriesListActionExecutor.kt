@@ -1,13 +1,17 @@
 package serg.chuprin.finances.feature.categories.impl.presentation.model.store
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
+import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
 import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
 import serg.chuprin.finances.core.api.presentation.formatter.CategoryColorFormatter
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
+import serg.chuprin.finances.core.api.presentation.model.cells.ZeroDataCell
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
+import serg.chuprin.finances.feature.categories.impl.R
 import serg.chuprin.finances.feature.categories.impl.presentation.model.cell.ChildCategoryCell
 import serg.chuprin.finances.feature.categories.impl.presentation.model.cell.ParentCategoryCell
 import serg.chuprin.finances.feature.categories.impl.presentation.model.expansion.CategoryListExpansionTracker
@@ -34,12 +38,53 @@ class CategoriesListActionExecutor @Inject constructor(
                     is CategoriesListIntent.ClickOnParentCategoryExpansionToggle -> {
                         handleClickOnParentCategoryExpansionToggleIntent(intent)
                     }
+                    CategoriesListIntent.ClickOnSearchIcon -> {
+                        handleClickOnSearchIconIntent(state)
+                    }
+                    CategoriesListIntent.ClickOnCloseSearchIcon -> {
+                        handleClickOnCloseSearchIconIntent(state)
+                    }
                 }
             }
             is CategoriesListAction.BuildCategoriesList -> {
                 handleBuildCategoriesListAction(action)
             }
         }
+    }
+
+    private fun handleClickOnCloseSearchIconIntent(
+        state: CategoriesListState
+    ): Flow<CategoriesListEffect> {
+        if (state is CategoriesListState.Search) {
+            return flowOfSingleValue {
+                CategoriesListEffect.ExitFromSearchMode(
+                    allCells = state.allCells
+                )
+            }
+        }
+        return emptyFlow()
+    }
+
+    private fun handleClickOnSearchIconIntent(
+        state: CategoriesListState
+    ): Flow<CategoriesListEffect> {
+        if (state is CategoriesListState.AllCategories) {
+            return flowOfSingleValue {
+                CategoriesListEffect.EnteredInSearchMode(
+                    searchCells = listOf(
+                        ZeroDataCell(
+                            iconRes = null,
+                            buttonRes = null,
+                            contentMessageRes = null,
+                            buttonTransitionName = EMPTY_STRING,
+                            titleRes = R.string.categories_list_search_initial_zero_data_title
+                        )
+                    ),
+                    allCells = state.allCells
+                )
+            }
+        }
+        return emptyFlow()
     }
 
     private fun handleClickOnParentCategoryExpansionToggleIntent(

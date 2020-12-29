@@ -21,6 +21,9 @@ class CategoriesListViewModel @Inject constructor(
     val cellsLiveData: LiveData<List<BaseCell>> =
         store.observeParticularStateAsLiveData(CategoriesListState::cells)
 
+    val searchModeActiveLiveData: LiveData<Boolean> =
+        store.observeParticularStateAsLiveData(CategoriesListState::isSearchModeActive)
+
     init {
         store.start(intentsFlow(), viewModelScope)
     }

@@ -11,4 +11,19 @@ sealed class CategoriesListEffect {
         val cells: List<BaseCell>
     ) : CategoriesListEffect()
 
+    class EnteredInSearchMode(
+        /**
+         * Cells wat previously displayed for all categories.
+         */
+        val allCells: List<BaseCell>,
+        val searchCells: List<BaseCell>
+    ) : CategoriesListEffect()
+
+    class ExitFromSearchMode(
+        /**
+         * Cells wat previously displayed for all categories.
+         */
+        val allCells: List<BaseCell>
+    ) : CategoriesListEffect()
+
 }

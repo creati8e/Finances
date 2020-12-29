@@ -3,5 +3,6 @@
 
     <string name="categories_list_toolbar_title">Categories</string>
     <string name="categories_list_search_hint">Search</string>
+    <string name="categories_list_search_initial_zero_data_title">Type something to start search</string>
 
 </resources>
