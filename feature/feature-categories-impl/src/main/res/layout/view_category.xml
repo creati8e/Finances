@@ -26,8 +26,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         app:layout_constraintBottom_toBottomOf="parent"
-
         app:layout_constraintEnd_toStartOf="@id/expansionArrowImageView"
         app:layout_constraintStart_toEndOf="@id/transactionColorDot"
         app:layout_constraintTop_toTopOf="parent"

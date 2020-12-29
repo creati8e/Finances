@@ -26,6 +26,10 @@ class CategoriesDataService @Inject constructor(
             it.category.name
         }
 
+        private val categoryNameComparator1 = compareBy<TransactionCategory> {
+            it.name
+        }
+
     }
 
     /**
@@ -71,8 +75,8 @@ class CategoriesDataService @Inject constructor(
     private fun filterChildrenCategories(
         parentCategoryId: Id,
         categories: Collection<TransactionCategoryWithParent>
-    ): List<TransactionCategory> {
-        return categories.mapNotNull { category ->
+    ): Collection<TransactionCategory> {
+        return categories.mapNotNullTo(sortedSetOf(categoryNameComparator1)) { category ->
             if (category.parentCategory?.id == parentCategoryId) {
                 category.category
             } else {

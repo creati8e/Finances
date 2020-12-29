@@ -5,5 +5,5 @@ package serg.chuprin.finances.core.api.domain.model.category
  */
 data class TransactionCategoryWithChildren(
     val category: TransactionCategory,
-    val children: List<TransactionCategory>
+    val children: Collection<TransactionCategory>
 )
