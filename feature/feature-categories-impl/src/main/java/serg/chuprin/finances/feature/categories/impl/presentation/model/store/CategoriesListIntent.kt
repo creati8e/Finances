@@ -15,4 +15,8 @@ sealed class CategoriesListIntent {
         val parentCategoryCell: ParentCategoryCell
     ) : CategoriesListIntent()
 
+    class EnterSearchQuery(
+        val query: String
+    ) : CategoriesListIntent()
+
 }

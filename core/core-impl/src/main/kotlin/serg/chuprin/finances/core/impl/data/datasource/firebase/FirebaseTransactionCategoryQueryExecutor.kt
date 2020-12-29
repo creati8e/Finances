@@ -12,6 +12,7 @@ import serg.chuprin.finances.core.api.domain.model.category.query.TransactionCat
 import serg.chuprin.finances.core.api.domain.model.category.query.TransactionCategoriesQuery.Relation
 import serg.chuprin.finances.core.api.extensions.contains
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionCategoryFieldsContract.COLLECTION_NAME
+import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionCategoryFieldsContract.FIELD_NAME
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionCategoryFieldsContract.FIELD_OWNER_ID
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionCategoryFieldsContract.FIELD_PARENT_ID
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionCategoryFieldsContract.FIELD_TYPE
@@ -35,11 +36,11 @@ internal class FirebaseTransactionCategoryQueryExecutor @Inject constructor(
                 retrieveParentCategoriesAndMerge(query)
             }
             null -> {
-                buildQueryFlow(query).map { querySnapshot ->
+                buildQueryFlow(query).map { documents ->
                     if (query.categoryIds.isEmpty()) {
-                        querySnapshot.documents
+                        documents
                     } else {
-                        querySnapshot.documents.filter { document ->
+                        documents.filter { document ->
                             query.categoryIds.contains { id -> id.value == document.id }
                         }
                     }
@@ -54,7 +55,6 @@ internal class FirebaseTransactionCategoryQueryExecutor @Inject constructor(
         return flow {
             coroutineScope {
                 val sharedCategoriesFlow = buildQueryFlow(query)
-                    .map { it.documents }
                     .shareIn(
                         scope = this,
                         started = SharingStarted.WhileSubscribed(replayExpirationMillis = 0),
@@ -96,21 +96,21 @@ internal class FirebaseTransactionCategoryQueryExecutor @Inject constructor(
                     started = SharingStarted.WhileSubscribed(replayExpirationMillis = 0),
                 )
 
-                val parentCategoriesFlow = sharedCategoriesFlow.map { querySnapshot ->
+                val parentCategoriesFlow = sharedCategoriesFlow.map { documents ->
                     if (query.categoryIds.isEmpty()) {
-                        querySnapshot.documents
+                        documents
                     } else {
-                        querySnapshot.documents.filter { document ->
+                        documents.filter { document ->
                             query.categoryIds.contains { id -> id.value == document.id }
                         }
                     }
                 }
 
-                val childrenCategoriesFlow = sharedCategoriesFlow.map { querySnapshot ->
+                val childrenCategoriesFlow = sharedCategoriesFlow.map { documents ->
                     if (query.categoryIds.isEmpty()) {
-                        querySnapshot.documents
+                        documents
                     } else {
-                        querySnapshot.documents.filter { document ->
+                        documents.filter { document ->
                             query.categoryIds.contains { id ->
                                 id.value == document.getString(FIELD_PARENT_ID)
                             }
@@ -122,31 +122,28 @@ internal class FirebaseTransactionCategoryQueryExecutor @Inject constructor(
         }
     }
 
-    private fun buildQueryFlow(query: TransactionCategoriesQuery): Flow<QuerySnapshot> {
+    private fun buildQueryFlow(query: TransactionCategoriesQuery): Flow<List<DocumentSnapshot>> {
         return firestore
             .collection(COLLECTION_NAME)
             .filterByOwner(query.ownerId)
             .filterByType(query.type)
-            .filterByName(query.searchByName)
             .asFlow()
+            .filterByName(query.searchByName)
     }
 
     private fun Query.filterByType(type: TransactionCategoryType?): Query {
         return if (type == null) this else whereEqualTo(FIELD_TYPE, typeMapper.mapFrom(type))
     }
 
-    private fun Query.filterByName(name: String?): Query {
+    private fun Flow<QuerySnapshot>.filterByName(name: String?): Flow<List<DocumentSnapshot>> {
         if (name == null) {
-            return this
+            return map { it.documents }
         }
-        val strLength = name.length
-        val strFrontCode = name.slice(0 until strLength)
-        val strEndCode = name.slice(strLength - 1..name.length)
-
-        val endCode = strFrontCode + (strEndCode[0] + 1).toString()
-
-        return whereGreaterThanOrEqualTo("foo", name)
-            .whereLessThan("foo", endCode)
+        return map { querySnapshot ->
+            querySnapshot.documents.filter { documentSnapshot ->
+                documentSnapshot.getString(FIELD_NAME).orEmpty().contains(name, true)
+            }
+        }
     }
 
     private fun Query.filterByOwner(ownerId: Id?): Query {

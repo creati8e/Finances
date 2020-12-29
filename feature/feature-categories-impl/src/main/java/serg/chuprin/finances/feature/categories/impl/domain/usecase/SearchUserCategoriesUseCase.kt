@@ -17,6 +17,14 @@ class SearchUserCategoriesUseCase @Inject constructor(
     private val categoryRepository: TransactionCategoryRepository
 ) {
 
+    private companion object {
+
+        private val categoryNameComparator = compareBy<TransactionCategory> {
+            it.name
+        }
+
+    }
+
     fun execute(nameQuery: String): Flow<Collection<TransactionCategory>> {
         return userRepository
             .currentUserSingleFlow()
@@ -31,7 +39,10 @@ class SearchUserCategoriesUseCase @Inject constructor(
                     )
             }
             .map { queryResult ->
-                queryResult.map { (_, categoryWithParent) -> categoryWithParent.category }
+                queryResult.mapTo(
+                    sortedSetOf(categoryNameComparator),
+                    { (_, categoryWithParent) -> categoryWithParent.category }
+                )
             }
     }
 

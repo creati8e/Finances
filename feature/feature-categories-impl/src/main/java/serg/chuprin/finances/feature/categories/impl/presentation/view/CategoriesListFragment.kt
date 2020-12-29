@@ -1,12 +1,16 @@
 package serg.chuprin.finances.feature.categories.impl.presentation.view
 
 import android.os.Bundle
+import android.text.TextWatcher
 import android.transition.TransitionInflater
 import android.transition.TransitionManager
 import android.view.View
 import androidx.core.transition.doOnEnd
 import androidx.core.transition.doOnStart
+import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.fragment_categories_list.*
@@ -41,6 +45,8 @@ class CategoriesListFragment : BaseFragment(R.layout.fragment_categories_list) {
         registerRenderer(ParentCategoryCellRenderer())
     }
 
+    private var searchEditTextWatcher: TextWatcher? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -49,11 +55,38 @@ class CategoriesListFragment : BaseFragment(R.layout.fragment_categories_list) {
             recyclerView.fit { Edge.Bottom }
         }
 
+        setupCellsList()
+
+        setToolbarIconsClickListeners()
+
+        hideKeyboardOnScrollInSearchMode()
+
+        with(viewModel) {
+            cellsLiveData(cellsAdapter::setItems)
+            searchModeActiveLiveData(::showSearchMode)
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        searchToolbarEditText.removeTextChangedListener(searchEditTextWatcher)
+    }
+
+    private fun setupCellsList() {
         with(recyclerView) {
             adapter = cellsAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
+        cellsAdapter.clickListener = { cell, cellView, _ ->
+            if (cell is ParentCategoryCell && cellView.id == R.id.expansionArrowImageView) {
+                viewModel.dispatchIntent(
+                    CategoriesListIntent.ClickOnParentCategoryExpansionToggle(cell)
+                )
+            }
+        }
+    }
 
+    private fun setToolbarIconsClickListeners() {
         defaultToolbarSearchImageView.onClick {
             viewModel.dispatchIntent(CategoriesListIntent.ClickOnSearchIcon)
         }
@@ -65,24 +98,34 @@ class CategoriesListFragment : BaseFragment(R.layout.fragment_categories_list) {
         defaultToolbarBackButton.onClick {
             navController.navigateUp()
         }
+    }
 
-        cellsAdapter.clickListener = { cell, cellView, _ ->
-            if (cell is ParentCategoryCell && cellView.id == R.id.expansionArrowImageView) {
-                viewModel.dispatchIntent(
-                    CategoriesListIntent.ClickOnParentCategoryExpansionToggle(cell)
-                )
+    private fun hideKeyboardOnScrollInSearchMode() {
+        recyclerView.onScrollStateChanged { _, newState ->
+            if (newState == RecyclerView.SCROLL_STATE_DRAGGING && searchToolbarLayout.isVisible) {
+                searchToolbarEditText.hideKeyboard()
             }
         }
+    }
 
-        with(viewModel) {
-            cellsLiveData(cellsAdapter::setItems)
-            searchModeActiveLiveData { isSearchModeActive ->
-                showSearchMode(showSearchMode = isSearchModeActive)
+    private fun setOrRemoveQueryListener(isSearchModeActive: Boolean) {
+        if (!isSearchModeActive) {
+            searchToolbarEditText.removeTextChangedListener(searchEditTextWatcher)
+            return
+        }
+        searchEditTextWatcher = searchToolbarEditText.doAfterTextChanged { editable ->
+            if (editable != null && !searchToolbarEditText.shouldIgnoreChanges) {
+                viewModel.dispatchIntent(
+                    CategoriesListIntent.EnterSearchQuery(editable.toString())
+                )
             }
         }
     }
 
     private fun showSearchMode(showSearchMode: Boolean) {
+
+        setOrRemoveQueryListener(showSearchMode)
+
         val transition = TransitionInflater
             .from(context)
             .inflateTransition(R.transition.slide_bottom)

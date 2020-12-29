@@ -1,10 +1,15 @@
 package serg.chuprin.finances.feature.categories.impl.presentation.model.store
 
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.first
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
+import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
 import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
 import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
+import serg.chuprin.finances.core.api.extensions.flow.takeUntil
 import serg.chuprin.finances.core.api.presentation.formatter.CategoryColorFormatter
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.cells.ZeroDataCell
@@ -12,6 +17,7 @@ import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
 import serg.chuprin.finances.feature.categories.impl.R
+import serg.chuprin.finances.feature.categories.impl.domain.usecase.SearchUserCategoriesUseCase
 import serg.chuprin.finances.feature.categories.impl.presentation.model.cell.ChildCategoryCell
 import serg.chuprin.finances.feature.categories.impl.presentation.model.cell.ParentCategoryCell
 import serg.chuprin.finances.feature.categories.impl.presentation.model.expansion.CategoryListExpansionTracker
@@ -23,7 +29,8 @@ import javax.inject.Inject
 @ScreenScope
 class CategoriesListActionExecutor @Inject constructor(
     private val expansionTracker: CategoryListExpansionTracker,
-    private val categoryColorFormatter: CategoryColorFormatter
+    private val categoryColorFormatter: CategoryColorFormatter,
+    private val searchUserCategoriesUseCase: SearchUserCategoriesUseCase
 ) : StoreActionExecutor<CategoriesListAction, CategoriesListState, CategoriesListEffect, CategoriesListEvent> {
 
     override fun invoke(
@@ -44,12 +51,30 @@ class CategoriesListActionExecutor @Inject constructor(
                     CategoriesListIntent.ClickOnCloseSearchIcon -> {
                         handleClickOnCloseSearchIconIntent(state)
                     }
+                    is CategoriesListIntent.EnterSearchQuery -> {
+                        handleEnterSearchQueryIntent(intent, actionsFlow)
+                    }
                 }
             }
             is CategoriesListAction.BuildCategoriesList -> {
                 handleBuildCategoriesListAction(action)
             }
         }
+    }
+
+    private fun handleEnterSearchQueryIntent(
+        intent: CategoriesListIntent.EnterSearchQuery,
+        actionsFlow: Flow<CategoriesListAction>
+    ): Flow<CategoriesListEffect> {
+        return flowOfSingleValue {
+            delay(300)
+            // TODO: remove blocking flow.
+            val categories = searchUserCategoriesUseCase.execute(intent.query).first()
+            CategoriesListEffect.CellsBuilt(buildCellsForSearch(categories))
+        }.takeUntil(actionsFlow.filter { action ->
+            action is CategoriesListAction.ExecuteIntent
+                    && action.intent is CategoriesListIntent.EnterSearchQuery
+        })
     }
 
     private fun handleClickOnCloseSearchIconIntent(
@@ -117,6 +142,27 @@ class CategoriesListActionExecutor @Inject constructor(
                 }
             }
             CategoriesListEffect.CellsBuilt(cells)
+        }
+    }
+
+    private fun buildCellsForSearch(categories: Collection<TransactionCategory>): List<BaseCell> {
+        if (categories.isEmpty()) {
+            return listOf(
+                ZeroDataCell(
+                    iconRes = null,
+                    buttonRes = null,
+                    buttonTransitionName = EMPTY_STRING,
+                    titleRes = R.string.categories_list_search_zero_data_title,
+                    contentMessageRes = R.string.categories_list_search_zero_data_message
+                )
+            )
+        }
+        return categories.map { category ->
+            ParentCategoryCell(
+                category = category,
+                isExpansionAvailable = false,
+                color = categoryColorFormatter.format(category)
+            )
         }
     }
 
