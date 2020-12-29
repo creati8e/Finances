@@ -13,7 +13,14 @@ class CategoriesListStateReducer : StoreStateReducer<CategoriesListEffect, Categ
     ): CategoriesListState {
         return when (what) {
             is CategoriesListEffect.CellsBuilt -> {
-                state.copy(cells = what.cells)
+                when (state) {
+                    is CategoriesListState.AllCategories -> {
+                        state.copy(cells = what.cells)
+                    }
+                    is CategoriesListState.Search -> {
+                        state.copy(cells = what.cells)
+                    }
+                }
             }
         }
     }

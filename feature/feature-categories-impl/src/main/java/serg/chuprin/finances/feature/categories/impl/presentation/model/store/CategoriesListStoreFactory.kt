@@ -12,7 +12,7 @@ class CategoriesListStoreFactory @Inject constructor(
     executor: CategoriesListActionExecutor,
     bootstrapper: CategoriesListStoreBootstrapper,
 ) : AbsStoreFactory<CategoriesListIntent, CategoriesListEffect, CategoriesListAction, CategoriesListState, CategoriesListEvent, CategoriesListStore>(
-    CategoriesListState(),
+    CategoriesListState.AllCategories(),
     CategoriesListStateReducer(),
     bootstrapper,
     executor,

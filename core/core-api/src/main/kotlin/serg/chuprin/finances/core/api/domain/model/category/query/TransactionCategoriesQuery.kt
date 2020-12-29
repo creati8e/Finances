@@ -10,6 +10,7 @@ class TransactionCategoriesQuery(
     val ownerId: Id,
     val relation: Relation? = null,
     val categoryIds: Set<Id> = emptySet(),
+    val searchByName: String? = null,
     val type: TransactionCategoryType? = null
 ) {
 

@@ -127,11 +127,26 @@ internal class FirebaseTransactionCategoryQueryExecutor @Inject constructor(
             .collection(COLLECTION_NAME)
             .filterByOwner(query.ownerId)
             .filterByType(query.type)
+            .filterByName(query.searchByName)
             .asFlow()
     }
 
     private fun Query.filterByType(type: TransactionCategoryType?): Query {
         return if (type == null) this else whereEqualTo(FIELD_TYPE, typeMapper.mapFrom(type))
+    }
+
+    private fun Query.filterByName(name: String?): Query {
+        if (name == null) {
+            return this
+        }
+        val strLength = name.length
+        val strFrontCode = name.slice(0 until strLength)
+        val strEndCode = name.slice(strLength - 1..name.length)
+
+        val endCode = strFrontCode + (strEndCode[0] + 1).toString()
+
+        return whereGreaterThanOrEqualTo("foo", name)
+            .whereLessThan("foo", endCode)
     }
 
     private fun Query.filterByOwner(ownerId: Id?): Query {
