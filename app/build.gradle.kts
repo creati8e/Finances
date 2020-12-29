@@ -76,7 +76,6 @@ dependencies {
     implementation(project(":feature:feature-transactions"))
     implementation(project(":feature:feature-authorization"))
     implementation(project(":feature:feature-money-accounts"))
-    implementation(project(":feature:feature-categories-api"))
     implementation(project(":feature:feature-categories-impl"))
     implementation(project(":feature:feature-dashboard-setup-api"))
     implementation(project(":feature:feature-dashboard-setup-impl"))
