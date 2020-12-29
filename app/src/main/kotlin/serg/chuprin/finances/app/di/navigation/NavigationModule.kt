@@ -1,27 +1,11 @@
 package serg.chuprin.finances.app.di.navigation
 
-import android.view.View
 import androidx.navigation.NavController
-import androidx.navigation.fragment.FragmentNavigator
-import androidx.navigation.fragment.FragmentNavigatorExtras
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.Module
 import dagger.Provides
-import serg.chuprin.finances.app.AuthorizedGraphDirections
 import serg.chuprin.finances.app.R
 import serg.chuprin.finances.core.api.di.provider.CoreNavigationProvider
-import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.presentation.navigation.*
-import serg.chuprin.finances.core.api.presentation.screen.arguments.CategoriesListScreenArguments
-import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionsReportScreenArguments
-import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.toBundle
-import serg.chuprin.finances.feature.categories.impl.presentation.view.CategoriesListFragment
-import serg.chuprin.finances.feature.dashboard.presentation.view.DashboardFragmentDirections
-import serg.chuprin.finances.feature.moneyaccount.details.presentation.arguments.MoneyAccountDetailsScreenArguments
-import serg.chuprin.finances.feature.moneyaccount.details.presentation.view.MoneyAccountDetailsFragment
-import serg.chuprin.finances.feature.moneyaccounts.presentation.view.MoneyAccountsListFragmentDirections
-import serg.chuprin.finances.feature.transactions.presentation.view.TransactionsReportFragment
-import serg.chuprin.finances.feature.userprofile.presentation.view.UserProfileFragmentDirections
 
 /**
  * Created by Sergey Chuprin on 03.04.2020.
@@ -31,140 +15,19 @@ object NavigationModule : CoreNavigationProvider {
 
     @get:Provides
     override val dashboardNavigation: DashboardNavigation
-        get() {
-            return object : DashboardNavigation {
-
-                override fun navigateToTransactionsReport(
-                    navController: NavController,
-                    screenArguments: TransactionsReportScreenArguments,
-                    sharedElementView: View
-                ) {
-                    val actionId = DashboardFragmentDirections
-                        .navigateFromDashboardToTransactionsReport()
-                        .actionId
-                    navController.navigate(
-                        actionId,
-                        screenArguments.toBundle<TransactionsReportFragment>(),
-                        null,
-                        sharedElementView.toNavigatorExtras()
-                    )
-                }
-
-                override fun navigateToMoneyAccountCreation(
-                    navController: NavController,
-                    vararg sharedElementView: View
-                ) {
-                    DashboardFragmentDirections.navigateFromDashboardToMoneyAccountCreation().run {
-                        navController.navigate(
-                            this,
-                            buildExtrasForSharedElements(sharedElementView)
-                        )
-                    }
-                }
-
-                override fun navigateToMoneyAccountsList(
-                    navController: NavController,
-                    vararg sharedElementView: View
-                ) {
-                    DashboardFragmentDirections.navigateFromDashboardToMoneyAccountsList().run {
-                        navController.navigate(
-                            this,
-                            buildExtrasForSharedElements(sharedElementView)
-                        )
-                    }
-                }
-
-                override fun navigateToMoneyAccountDetails(
-                    navController: NavController,
-                    moneyAccountId: Id,
-                    transitionName: String,
-                    vararg sharedElementView: View
-                ) {
-                    navController.navigate(
-                        R.id.navigateFromDashboardToMoneyAccountDetails,
-                        MoneyAccountDetailsScreenArguments(moneyAccountId, transitionName)
-                            .toBundle<MoneyAccountDetailsFragment>(),
-                        null,
-                        buildExtrasForSharedElements(sharedElementView)
-                    )
-                }
-
-                override fun navigateToUserProfile(
-                    navController: NavController,
-                    vararg sharedElementView: View
-                ) {
-                    navController.navigate(
-                        R.id.navigateFromDashboardToUserProfile,
-                        null,
-                        null,
-                        buildExtrasForSharedElements(sharedElementView)
-                    )
-                }
-
-            }
-        }
-
-    private fun buildExtrasForSharedElements(
-        sharedElementView: Array<out View>
-    ): FragmentNavigator.Extras {
-        return FragmentNavigator.Extras.Builder().run {
-            sharedElementView.forEach { view ->
-                addSharedElement(view, view.transitionName)
-            }
-            build()
-        }
-    }
-
-    @get:Provides
-    override val onboardingNavigation: OnboardingNavigation
-        get() {
-            return object : OnboardingNavigation {
-
-                override fun navigateToDashboard(navController: NavController) {
-                    AuthorizedGraphDirections.navigateFromOnboardingToDashboard().run {
-                        navController.navigate(this)
-                    }
-                }
-
-            }
-        }
+        get() = DashboardNavigationImpl()
 
     @get:Provides
     override val userProfileNavigation: UserProfileNavigation
-        get() {
-            return object : UserProfileNavigation {
+        get() = UserProfileNavigationImpl()
 
-                override fun navigateToDashboardWidgetsSetup(
-                    navController: NavController,
-                    vararg sharedElementView: View
-                ) {
-                    UserProfileFragmentDirections.navigateFromUserProfileToDashboardWidgetsSetup()
-                        .run {
-                            navController.navigate(
-                                this,
-                                buildExtrasForSharedElements(sharedElementView)
-                            )
-                        }
-                }
+    @get:Provides
+    override val moneyAccountsListNavigation: MoneyAccountsListNavigation
+        get() = MoneyAccountsListNavigationImpl()
 
-                override fun navigateToCategoriesList(
-                    navController: NavController,
-                    arguments: CategoriesListScreenArguments
-                ) {
-                    UserProfileFragmentDirections.navigateFromUserProfileToCategoriesList().run {
-                        navController.navigate(
-                            this.actionId,
-                            arguments.toBundle<CategoriesListFragment>(),
-                        )
-                    }
-                }
-
-                override fun navigateToUnauthorizedGraph(rootNavigationController: NavController) {
-                    rootNavigationController.navigate(R.id.navigateToUnauthorizedGraph)
-                }
-
-            }
-        }
+    @get:Provides
+    override val onboardingNavigation: OnboardingNavigation
+        get() = OnboardingNavigationImpl()
 
     @get:Provides
     override val authorizationNavigation: AuthorizationNavigation
@@ -177,45 +40,5 @@ object NavigationModule : CoreNavigationProvider {
 
             }
         }
-
-    @get:Provides
-    override val moneyAccountsListNavigation: MoneyAccountsListNavigation
-        get() {
-            return object : MoneyAccountsListNavigation {
-
-                override fun navigateToMoneyAccountCreation(
-                    navController: NavController,
-                    vararg sharedElementView: FloatingActionButton
-                ) {
-                    MoneyAccountsListFragmentDirections
-                        .navigateFromMoneyAccountsListToMoneyAccountCreation().run {
-                            navController.navigate(
-                                this,
-                                buildExtrasForSharedElements(sharedElementView)
-                            )
-                        }
-                }
-
-                override fun navigateToMoneyAccountDetails(
-                    navController: NavController,
-                    moneyAccountId: Id,
-                    transitionName: String,
-                    vararg sharedElementViews: View
-                ) {
-                    navController.navigate(
-                        R.id.navigateFromMoneyAccountsListToMoneyAccountDetails,
-                        MoneyAccountDetailsScreenArguments(moneyAccountId, transitionName)
-                            .toBundle<MoneyAccountDetailsFragment>(),
-                        null,
-                        buildExtrasForSharedElements(sharedElementViews)
-                    )
-                }
-
-            }
-        }
-
-    private fun View.toNavigatorExtras(): FragmentNavigator.Extras {
-        return FragmentNavigatorExtras(this to this.transitionName)
-    }
 
 }
