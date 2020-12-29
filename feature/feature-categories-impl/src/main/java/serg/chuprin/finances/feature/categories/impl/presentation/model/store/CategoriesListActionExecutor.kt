@@ -13,9 +13,11 @@ import serg.chuprin.finances.core.api.extensions.flow.takeUntil
 import serg.chuprin.finances.core.api.presentation.formatter.CategoryColorFormatter
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.cells.ZeroDataCell
+import serg.chuprin.finances.core.api.presentation.screen.arguments.CategoriesListScreenArguments
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
+import serg.chuprin.finances.core.mvi.invoke
 import serg.chuprin.finances.feature.categories.impl.R
 import serg.chuprin.finances.feature.categories.impl.domain.usecase.SearchUserCategoriesUseCase
 import serg.chuprin.finances.feature.categories.impl.presentation.model.cell.ChildCategoryCell
@@ -28,6 +30,7 @@ import javax.inject.Inject
  */
 @ScreenScope
 class CategoriesListActionExecutor @Inject constructor(
+    private val screenArguments: CategoriesListScreenArguments,
     private val expansionTracker: CategoryListExpansionTracker,
     private val categoryColorFormatter: CategoryColorFormatter,
     private val searchUserCategoriesUseCase: SearchUserCategoriesUseCase
@@ -54,10 +57,25 @@ class CategoriesListActionExecutor @Inject constructor(
                     is CategoriesListIntent.EnterSearchQuery -> {
                         handleEnterSearchQueryIntent(intent, actionsFlow)
                     }
+                    is CategoriesListIntent.ClickOnCategoryCell -> {
+                        handleClickOnCategoryCell(intent, eventConsumer)
+                    }
                 }
             }
             is CategoriesListAction.BuildCategoriesList -> {
                 handleBuildCategoriesListAction(action)
+            }
+        }
+    }
+
+    private fun handleClickOnCategoryCell(
+        intent: CategoriesListIntent.ClickOnCategoryCell,
+        eventConsumer: Consumer<CategoriesListEvent>
+    ): Flow<CategoriesListEffect> {
+        return emptyFlowAction {
+            if (screenArguments.isInPickerMode()) {
+                val categoryId = intent.categoryCell.category.id
+                eventConsumer(CategoriesListEvent.CloseScreenWithPickerCategory(categoryId))
             }
         }
     }

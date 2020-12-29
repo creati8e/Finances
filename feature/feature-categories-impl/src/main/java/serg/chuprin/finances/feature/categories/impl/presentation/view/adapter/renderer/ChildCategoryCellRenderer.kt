@@ -1,9 +1,12 @@
 package serg.chuprin.finances.feature.categories.impl.presentation.view.adapter.renderer
 
 import kotlinx.android.synthetic.main.view_category.*
+import serg.chuprin.adapter.Click
 import serg.chuprin.adapter.ContainerHolder
 import serg.chuprin.adapter.ContainerRenderer
+import serg.chuprin.adapter.LongClick
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeGone
+import serg.chuprin.finances.core.api.presentation.view.extensions.onViewClick
 import serg.chuprin.finances.feature.categories.impl.R
 import serg.chuprin.finances.feature.categories.impl.presentation.model.cell.ChildCategoryCell
 
@@ -19,6 +22,18 @@ class ChildCategoryCellRenderer : ContainerRenderer<ChildCategoryCell>() {
             transactionColorDot.makeGone()
             expansionArrowImageView.makeGone()
             nameTextView.text = model.category.name
+        }
+    }
+
+    override fun onVhCreated(
+        holder: ContainerHolder,
+        clickListener: Click?,
+        longClickListener: LongClick?
+    ) {
+        with(holder) {
+            itemView.onViewClick { view ->
+                clickListener?.onClick(view, adapterPosition)
+            }
         }
     }
 

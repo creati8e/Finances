@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.BaseStoreViewModel
+import serg.chuprin.finances.feature.categories.impl.presentation.model.store.CategoriesListEvent
 import serg.chuprin.finances.feature.categories.impl.presentation.model.store.CategoriesListIntent
 import serg.chuprin.finances.feature.categories.impl.presentation.model.store.CategoriesListState
 import serg.chuprin.finances.feature.categories.impl.presentation.model.store.CategoriesListStore
@@ -23,6 +24,8 @@ class CategoriesListViewModel @Inject constructor(
 
     val searchModeActiveLiveData: LiveData<Boolean> =
         store.observeParticularStateAsLiveData(CategoriesListState::isSearchModeActive)
+
+    val eventsLiveData: LiveData<CategoriesListEvent> = store.observeEventsAsLiveData()
 
     init {
         store.start(intentsFlow(), viewModelScope)

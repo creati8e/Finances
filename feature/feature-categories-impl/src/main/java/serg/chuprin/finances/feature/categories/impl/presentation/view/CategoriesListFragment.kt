@@ -9,6 +9,7 @@ import androidx.core.transition.doOnEnd
 import androidx.core.transition.doOnStart
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import de.halfbit.edgetoedge.Edge
@@ -16,6 +17,7 @@ import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.fragment_categories_list.*
 import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
+import serg.chuprin.finances.core.api.presentation.screen.arguments.CategoriesListScreenArguments
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter
 import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ZeroDataCellRenderer
@@ -23,7 +25,9 @@ import serg.chuprin.finances.core.api.presentation.view.extensions.*
 import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.fragmentArguments
 import serg.chuprin.finances.feature.categories.impl.R
 import serg.chuprin.finances.feature.categories.impl.presentation.di.CategoriesListComponent
+import serg.chuprin.finances.feature.categories.impl.presentation.model.cell.ChildCategoryCell
 import serg.chuprin.finances.feature.categories.impl.presentation.model.cell.ParentCategoryCell
+import serg.chuprin.finances.feature.categories.impl.presentation.model.store.CategoriesListEvent
 import serg.chuprin.finances.feature.categories.impl.presentation.model.store.CategoriesListIntent
 import serg.chuprin.finances.feature.categories.impl.presentation.view.adapter.diff.CategoriesListCellsAdapterDiffCallback
 import serg.chuprin.finances.feature.categories.impl.presentation.view.adapter.renderer.ChildCategoryCellRenderer
@@ -63,6 +67,7 @@ class CategoriesListFragment : BaseFragment(R.layout.fragment_categories_list) {
         hideKeyboardOnScrollInSearchMode()
 
         with(viewModel) {
+            eventsLiveData(::handleEvent)
             cellsLiveData(cellsAdapter::setItems)
             searchModeActiveLiveData(::showSearchMode)
         }
@@ -73,16 +78,35 @@ class CategoriesListFragment : BaseFragment(R.layout.fragment_categories_list) {
         searchToolbarEditText.removeTextChangedListener(searchEditTextWatcher)
     }
 
+    private fun handleEvent(event: CategoriesListEvent) {
+        return when (event) {
+            is CategoriesListEvent.CloseScreenWithPickerCategory -> {
+                setFragmentResult(
+                    CategoriesListScreenArguments.Picker.REQUEST_KEY,
+                    CategoriesListScreenArguments.Picker.Result(event.categoryId.value).asBundle()
+                )
+                navController.navigateUp()
+                Unit
+            }
+        }
+    }
+
     private fun setupCellsList() {
         with(recyclerView) {
             adapter = cellsAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
         cellsAdapter.clickListener = { cell, cellView, _ ->
-            if (cell is ParentCategoryCell && cellView.id == R.id.expansionArrowImageView) {
-                viewModel.dispatchIntent(
-                    CategoriesListIntent.ClickOnParentCategoryExpansionToggle(cell)
-                )
+            if (cell is ParentCategoryCell) {
+                if (cellView.id == R.id.expansionArrowImageView) {
+                    viewModel.dispatchIntent(
+                        CategoriesListIntent.ClickOnParentCategoryExpansionToggle(cell)
+                    )
+                } else {
+                    viewModel.dispatchIntent(CategoriesListIntent.ClickOnCategoryCell(cell))
+                }
+            } else if (cell is ChildCategoryCell) {
+                viewModel.dispatchIntent(CategoriesListIntent.ClickOnCategoryCell(cell))
             }
         }
     }

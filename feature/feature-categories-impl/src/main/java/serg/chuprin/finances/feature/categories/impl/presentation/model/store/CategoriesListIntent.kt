@@ -1,5 +1,6 @@
 package serg.chuprin.finances.feature.categories.impl.presentation.model.store
 
+import serg.chuprin.finances.feature.categories.impl.presentation.model.cell.CategoryCell
 import serg.chuprin.finances.feature.categories.impl.presentation.model.cell.ParentCategoryCell
 
 /**
@@ -17,6 +18,10 @@ sealed class CategoriesListIntent {
 
     class EnterSearchQuery(
         val query: String
+    ) : CategoriesListIntent()
+
+    class ClickOnCategoryCell(
+        val categoryCell: CategoryCell
     ) : CategoriesListIntent()
 
 }

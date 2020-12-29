@@ -58,6 +58,9 @@ class ParentCategoryCellRenderer : ContainerRenderer<ParentCategoryCell>() {
             expansionArrowImageView.onViewClick { view ->
                 clickListener?.onClick(view, adapterPosition)
             }
+            itemView.onViewClick { view ->
+                clickListener?.onClick(view, adapterPosition)
+            }
         }
     }
 
