@@ -41,17 +41,20 @@ object Libraries {
 
     object Android {
 
-        object Lifecycle {
+        object Lifecycle : DependenciesCollection {
 
             private const val VER = "2.3.0-rc01"
             private const val ARTIFACT = "androidx.lifecycle"
 
-            val DEPENDENCIES = listOf(
-                "$ARTIFACT:lifecycle-common-java8:$VER",
-                "$ARTIFACT:lifecycle-extensions:2.2.0",
-                "$ARTIFACT:lifecycle-viewmodel-ktx:$VER",
-                "$ARTIFACT:lifecycle-livedata-ktx:$VER"
-            )
+            override fun invoke(): Collection<String> {
+                return listOf(
+                    "$ARTIFACT:lifecycle-common-java8:$VER",
+                    "$ARTIFACT:lifecycle-extensions:2.2.0",
+                    "$ARTIFACT:lifecycle-viewmodel-ktx:$VER",
+                    "$ARTIFACT:lifecycle-livedata-ktx:$VER"
+                )
+            }
+
         }
 
         const val CORE = "androidx.core:core-ktx:1.5.0-alpha05"
@@ -64,36 +67,36 @@ object Libraries {
         const val RECYCLER_VIEW = "androidx.recyclerview:recyclerview:1.2.0-beta01"
         const val CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:2.0.2"
 
-        object Navigation {
+        object Navigation : DependenciesCollection {
 
             private const val ARTIFACT = "androidx.navigation"
 
-            val DEPENDENCIES = listOf(
-                "$ARTIFACT:navigation-ui-ktx:$NAVIGATION_VER",
-                "$ARTIFACT:navigation-runtime:$NAVIGATION_VER",
-                "$ARTIFACT:navigation-fragment-ktx:$NAVIGATION_VER"
-            )
+            override fun invoke(): Collection<String> {
+                return listOf(
+                    "$ARTIFACT:navigation-ui-ktx:$NAVIGATION_VER",
+                    "$ARTIFACT:navigation-runtime:$NAVIGATION_VER",
+                    "$ARTIFACT:navigation-fragment-ktx:$NAVIGATION_VER"
+                )
+            }
+
         }
 
     }
 
-    object Adapter {
+    object Adapter : DependenciesCollection {
 
         private const val VER = "1.3.0"
 
-        private const val LIBRARY = "serg.chuprin:multiviewadapter:$VER"
-        private const val EXTENSION = "serg.chuprin:multiviewadapter-kt-extensions:$VER"
-
-        val DEPENDENCIES = listOf(LIBRARY, EXTENSION)
+        override fun invoke(): Collection<String> = listOf(
+            "serg.chuprin:multiviewadapter:$VER",
+            "serg.chuprin:multiviewadapter-kt-extensions:$VER"
+        )
 
     }
 
     object Preferences {
 
-        private const val VER = "2.0.3"
-        private const val ARTIFACT = "com.afollestad.rxkprefs"
-
-        val DEPENDENCIES = listOf("$ARTIFACT:core:$VER")
+        const val LIBRARY = "com.afollestad.rxkprefs:core:2.0.3"
     }
 
     object Coroutines {
@@ -107,12 +110,9 @@ object Libraries {
     object Dagger {
 
         private const val VER = "2.30.1"
-        private const val ARTIFACT = "com.google.dagger"
 
-        const val COMPILER = "$ARTIFACT:dagger-compiler:$VER"
-
-        const val LIBRARY = "$ARTIFACT:dagger:$VER"
-        val DEPENDENCIES = listOf("$ARTIFACT:dagger:$VER")
+        const val LIBRARY = "com.google.dagger:dagger:$VER"
+        const val COMPILER = "com.google.dagger:dagger-compiler:$VER"
 
     }
 

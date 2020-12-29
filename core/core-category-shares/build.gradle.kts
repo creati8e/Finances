@@ -15,7 +15,7 @@ dependencies {
     implementation(Libraries.Android.DESIGN)
     implementation(Libraries.Android.APPCOMPAT)
 
-    implementationAll(Libraries.Adapter.DEPENDENCIES)
+    implementation(Libraries.Adapter)
 
     // Timber.
     implementation(Libraries.TIMBER)

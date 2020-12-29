@@ -92,7 +92,7 @@ dependencies {
     // region DI.
 
     kapt(Libraries.Dagger.COMPILER)
-    implementationAll(Libraries.Dagger.DEPENDENCIES)
+    implementation(Libraries.Dagger.LIBRARY)
 
     // endregion
 
@@ -101,7 +101,7 @@ dependencies {
     implementation(Libraries.COIL)
 
     // Navigation.
-    implementationAll(Libraries.Android.Navigation.DEPENDENCIES)
+    implementation(Libraries.Android.Navigation)
 
     // Android.
     implementation(Libraries.Android.CORE)
@@ -113,7 +113,7 @@ dependencies {
     // endregion
 
     // Architecture components.
-    implementationAll(Libraries.Android.Lifecycle.DEPENDENCIES)
+    implementation(Libraries.Android.Lifecycle)
 
     // Firebase.
     implementation(Libraries.Infrastructure.FIRESTORE)

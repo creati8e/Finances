@@ -24,7 +24,7 @@ dependencies {
     implementation(Libraries.PAGE_INDICATOR)
 
     // Navigation.
-    implementationAll(Libraries.Android.Navigation.DEPENDENCIES)
+    implementation(Libraries.Android.Navigation)
 
     // Android.
     implementation(Libraries.Android.CORE)
@@ -33,18 +33,18 @@ dependencies {
     implementation(Libraries.Android.APPCOMPAT)
     implementation(Libraries.Android.CONSTRAINT_LAYOUT)
 
-    implementationAll(Libraries.Adapter.DEPENDENCIES)
+    implementation(Libraries.Adapter)
 
     // endregion
 
     // region DI.
 
     kapt(Libraries.Dagger.COMPILER)
-    implementationAll(Libraries.Dagger.DEPENDENCIES)
+    implementation(Libraries.Dagger.LIBRARY)
 
     // endregion
 
     // Architecture components.
-    implementationAll(Libraries.Android.Lifecycle.DEPENDENCIES)
+    implementation(Libraries.Android.Lifecycle)
 
 }
