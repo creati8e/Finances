@@ -3,7 +3,6 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("kotlin-android-extensions")
-    id("androidx.navigation.safeargs")
 }
 
 dependencies {

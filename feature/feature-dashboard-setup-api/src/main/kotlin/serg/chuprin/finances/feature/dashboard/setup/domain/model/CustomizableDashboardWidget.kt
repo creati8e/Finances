@@ -3,7 +3,6 @@ package serg.chuprin.finances.feature.dashboard.setup.domain.model
 /**
  * Created by Sergey Chuprin on 29.11.2020.
  */
-// TODO: Move to domain package.
 data class CustomizableDashboardWidget(
     val order: Int,
     val isEnabled: Boolean,

@@ -11,5 +11,4 @@ dependencies {
 
     // Timber.
     implementation(Libraries.TIMBER)
-
 }

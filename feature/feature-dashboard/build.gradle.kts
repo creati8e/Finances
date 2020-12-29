@@ -3,7 +3,6 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("kotlin-android-extensions")
-    id("androidx.navigation.safeargs")
 }
 
 dependencies {
@@ -20,7 +19,6 @@ dependencies {
     // region UI.
 
     implementation(Libraries.COIL)
-    implementation(Libraries.FLEXBOX)
     implementation(Libraries.PAGE_INDICATOR)
 
     // Navigation.
