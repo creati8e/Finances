@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_selected="true">
+        <inset android:inset="4dp">
+            <ripple android:color="?colorControlHighlight">
+                <item android:gravity="center">
+                    <shape android:shape="rectangle">
+                        <corners android:radius="@dimen/cornerRadiusBig" />
+                        <solid android:color="@android:color/transparent" />
+                    </shape>
+                </item>
+            </ripple>
+        </inset>
+    </item>
+
+    <item>
+        <inset android:inset="4dp">
+            <ripple android:color="?colorControlHighlight">
+                <item android:gravity="center">
+                    <shape android:shape="rectangle">
+                        <corners android:radius="@dimen/cornerRadiusBig" />
+                        <solid android:color="?colorAccent" />
+                    </shape>
+                </item>
+            </ripple>
+        </inset>
+    </item>
+
+</selector>

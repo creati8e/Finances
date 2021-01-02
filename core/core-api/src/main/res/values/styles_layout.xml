@@ -16,4 +16,21 @@
         <item name="android:background">@drawable/bg_selection_borderless</item>
     </style>
 
+    <style name="TabLayout">
+        <item name="android:layout_height">36dp</item>
+        <item name="android:layout_width">match_parent</item>
+
+        <item name="android:layout_marginEnd">36dp</item>
+        <item name="android:layout_marginStart">36dp</item>
+
+        <item name="android:background">@drawable/bg_tab_layout</item>
+
+        <item name="tabIndicatorGravity">stretch</item>
+        <item name="tabIndicator">@drawable/bg_tablayout_tab</item>
+        <item name="tabIndicatorColor">@android:color/transparent</item>
+
+        <item name="tabTextColor">?android:textColorPrimary</item>
+        <item name="tabSelectedTextColor">?android:textColorPrimaryInverse</item>
+    </style>
+
 </resources>

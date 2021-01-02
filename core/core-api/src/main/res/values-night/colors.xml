@@ -15,4 +15,6 @@
 
     <!--endregion-->
 
+    <color name="colorTabsBackground">#1F000000</color>
+
 </resources>
