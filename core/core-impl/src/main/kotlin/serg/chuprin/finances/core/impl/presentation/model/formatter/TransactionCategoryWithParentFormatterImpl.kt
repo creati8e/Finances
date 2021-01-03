@@ -17,9 +17,9 @@ internal class TransactionCategoryWithParentFormatterImpl @Inject constructor(
 
     override fun format(
         categoryWithParent: TransactionCategoryWithParent?,
-        transaction: Transaction
+        transaction: Transaction?
     ): String {
-        if (transaction.isBalance) {
+        if (transaction?.isBalance == true) {
             return resourceManger.getString(R.string.balance_correction_transaction)
         }
         if (categoryWithParent == null) {

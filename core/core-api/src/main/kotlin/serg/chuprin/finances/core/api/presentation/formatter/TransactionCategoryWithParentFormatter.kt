@@ -13,7 +13,7 @@ interface TransactionCategoryWithParentFormatter {
      */
     fun format(
         categoryWithParent: TransactionCategoryWithParent?,
-        transaction: Transaction
+        transaction: Transaction?
     ): String
 
 }

@@ -2,7 +2,6 @@ package serg.chuprin.finances.feature.transaction.presentation.model.store
 
 import kotlinx.coroutines.flow.*
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryType
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
 import serg.chuprin.finances.core.api.domain.model.category.query.TransactionCategoriesQuery
@@ -12,7 +11,7 @@ import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
 import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepository
 import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
-import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
+import serg.chuprin.finances.core.api.presentation.formatter.TransactionCategoryWithParentFormatter
 import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
 import serg.chuprin.finances.core.api.presentation.screen.arguments.CategoriesListScreenArguments
 import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountsListScreenArguments
@@ -21,7 +20,6 @@ import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
 import serg.chuprin.finances.core.mvi.invoke
-import serg.chuprin.finances.feature.transaction.R
 import serg.chuprin.finances.feature.transaction.domain.model.TransactionChosenOperation
 import serg.chuprin.finances.feature.transaction.domain.usecase.CreateTransactionUseCase
 import serg.chuprin.finances.feature.transaction.domain.usecase.EditTransactionUseCase
@@ -40,14 +38,14 @@ import javax.inject.Inject
  */
 class TransactionActionExecutor @Inject constructor(
     private val amountParser: AmountParser,
-    private val resourceManger: ResourceManger,
     private val amountFormatter: AmountFormatter,
     private val screenArguments: TransactionScreenArguments,
     private val moneyAccountRepository: MoneyAccountRepository,
     private val editTransactionUseCase: EditTransactionUseCase,
     private val categoryRepository: TransactionCategoryRepository,
     private val createTransactionUseCase: CreateTransactionUseCase,
-    private val chosenDateFormatter: TransactionChosenDateFormatter
+    private val chosenDateFormatter: TransactionChosenDateFormatter,
+    private val categoryNameFormatter: TransactionCategoryWithParentFormatter
 ) : StoreActionExecutor<TransactionAction, TransactionState, TransactionEffect, TransactionEvent> {
 
     override fun invoke(
@@ -87,7 +85,7 @@ class TransactionActionExecutor @Inject constructor(
                         handleClickOnMoneyAccountIntent(eventConsumer)
                     }
                     is TransactionIntent.ChooseMoneyAccount -> {
-                        handleChooseMoneyAccountIntent(intent)
+                        handleChooseMoneyAccountIntent(intent, state)
                     }
                     TransactionIntent.ClickOnUnsavedChangedDialogNegativeButton -> {
                         handleClickOnUnsavedChangedDialogNegativeButtonIntent(eventConsumer)
@@ -112,8 +110,12 @@ class TransactionActionExecutor @Inject constructor(
     }
 
     private fun handleChooseMoneyAccountIntent(
-        intent: TransactionIntent.ChooseMoneyAccount
+        intent: TransactionIntent.ChooseMoneyAccount,
+        state: TransactionState
     ): Flow<TransactionEffect> {
+        if (intent.moneyAccountId == state.chosenMoneyAccount.account.id) {
+            return emptyFlow()
+        }
         return flowOfSingleValue {
             TransactionEffect.MoneyAccountChanged(getMoneyAccount(intent.moneyAccountId))
         }
@@ -162,6 +164,9 @@ class TransactionActionExecutor @Inject constructor(
         intent: TransactionIntent.ChooseCategory,
         state: TransactionState
     ): Flow<TransactionEffect> {
+        if (intent.categoryId == state.chosenCategory.category?.id) {
+            return emptyFlow()
+        }
         return flowOfSingleValue {
             TransactionEffect.CategoryChanged(
                 getCategory(categoryId = intent.categoryId, userId = state.userId)
@@ -347,16 +352,10 @@ class TransactionActionExecutor @Inject constructor(
     private fun formatChosenCategory(
         categoryWithParent: TransactionCategoryWithParent?
     ): TransactionChosenCategory {
-        // TODO: Use existing formatter class.
-        val formattedName = if (categoryWithParent != null) {
-            listOfNotNull(
-                categoryWithParent.parentCategory,
-                categoryWithParent.category
-            ).joinToString(separator = " / ", transform = TransactionCategory::name)
-        } else {
-            resourceManger.getString(R.string.no_category)
-        }
-        return TransactionChosenCategory(formattedName, categoryWithParent?.category)
+        return TransactionChosenCategory(
+            category = categoryWithParent?.category,
+            formattedName = categoryNameFormatter.format(categoryWithParent, transaction = null)
+        )
     }
 
     private fun formatChosenDate(date: LocalDate): TransactionChosenDate {

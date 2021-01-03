@@ -7,6 +7,7 @@ import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepos
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
+import serg.chuprin.finances.core.api.presentation.formatter.TransactionCategoryWithParentFormatter
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
 import serg.chuprin.finances.core.api.presentation.navigation.TransactionNavigation
@@ -19,6 +20,7 @@ interface TransactionDependencies {
     val amountParser: AmountParser
     val resourceManger: ResourceManger
     val amountFormatter: AmountFormatter
+    val categoryNameFormatter: TransactionCategoryWithParentFormatter
 
     val transactionNavigation: TransactionNavigation
 
