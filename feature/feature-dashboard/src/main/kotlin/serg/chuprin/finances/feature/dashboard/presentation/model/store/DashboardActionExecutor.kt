@@ -3,9 +3,11 @@ package serg.chuprin.finances.feature.dashboard.presentation.model.store
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
+import serg.chuprin.finances.core.api.presentation.builder.TransitionNameBuilder
 import serg.chuprin.finances.core.api.presentation.model.builder.DataPeriodTypePopupMenuCellsBuilder
 import serg.chuprin.finances.core.api.presentation.model.cells.ZeroDataCell
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
+import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionScreenArguments
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
@@ -26,6 +28,7 @@ import serg.chuprin.finances.core.api.R as CoreR
  */
 class DashboardActionExecutor @Inject constructor(
     private val resourceManger: ResourceManger,
+    private val transitionNameBuilder: TransitionNameBuilder,
     private val widgetCellsBuilder: DashboardWidgetCellsBuilder,
     private val changeDataPeriodUseCase: ChangeDashboardDataPeriodUseCase,
     private val reportArgumentsBuilder: DashboardTransactionsReportArgumentsBuilder,
@@ -100,7 +103,9 @@ class DashboardActionExecutor @Inject constructor(
         eventConsumer: Consumer<DashboardEvent>
     ): Flow<DashboardEffect> {
         return emptyFlowAction {
-            eventConsumer(DashboardEvent.NavigateToTransactionScreen)
+            val transitionName = transitionNameBuilder.buildForTransaction()
+            val screenArguments = TransactionScreenArguments(transitionName)
+            eventConsumer(DashboardEvent.NavigateToTransactionScreen(screenArguments))
         }
     }
 

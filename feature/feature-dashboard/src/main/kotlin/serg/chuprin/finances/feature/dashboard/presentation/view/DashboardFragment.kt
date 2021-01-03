@@ -164,8 +164,12 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
                     sharedElementView
                 )
             }
-            DashboardEvent.NavigateToTransactionScreen -> {
-                navigation.navigateToTransaction(navController)
+            is DashboardEvent.NavigateToTransactionScreen -> {
+                navigation.navigateToTransaction(
+                    navController,
+                    event.screenArguments,
+                    transactionCreationFab
+                )
             }
         }
     }

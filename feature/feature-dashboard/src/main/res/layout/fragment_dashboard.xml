@@ -77,8 +77,10 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
         android:src="@drawable/ic_add"
+        android:transitionName="@string/transition_transaction"
         android:visibility="invisible"
         app:backgroundTint="?colorAccent"
+        tools:ignore="ContentDescription"
         tools:visibility="visible" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

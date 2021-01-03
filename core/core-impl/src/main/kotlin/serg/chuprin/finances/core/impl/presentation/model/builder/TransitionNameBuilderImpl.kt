@@ -20,6 +20,10 @@ internal class TransitionNameBuilderImpl @Inject constructor(
             return resourceManger.getString(stringRes)
         }
 
+    override fun buildForTransaction(): String {
+        return resourceManger.getString(R.string.transition_transaction)
+    }
+
     override fun buildForTransactionsReport(categoryId: Id?): String {
         return "${transactionsReportBaseTransitionName}${categoryId?.value}"
     }
