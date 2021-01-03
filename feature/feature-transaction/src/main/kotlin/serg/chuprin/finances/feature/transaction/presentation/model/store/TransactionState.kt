@@ -13,6 +13,7 @@ import java.time.LocalDate
  * Created by Sergey Chuprin on 02.01.2021.
  */
 data class TransactionState(
+    val saveButtonIsEnabled: Boolean = false,
     val enteredAmount: TransactionEnteredAmount = TransactionEnteredAmount(
         hasError = false,
         formatted = "0",

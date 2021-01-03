@@ -19,6 +19,7 @@ import serg.chuprin.finances.feature.transaction.presentation.model.TransactionC
 import serg.chuprin.finances.feature.transaction.presentation.model.TransactionChosenMoneyAccount
 import serg.chuprin.finances.feature.transaction.presentation.model.TransactionEnteredAmount
 import serg.chuprin.finances.feature.transaction.presentation.model.formatter.TransactionChosenDateFormatter
+import java.math.BigDecimal
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -89,6 +90,7 @@ class TransactionActionExecutor @Inject constructor(
             )
             val parsedAmount = amountParser.parse(formattedAmount)
             TransactionEffect.AmountEntered(
+                isSaveButtonEnabled = parsedAmount != null && parsedAmount != BigDecimal.ZERO,
                 TransactionEnteredAmount(
                     amount = parsedAmount,
                     formatted = formattedAmount,

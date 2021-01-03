@@ -56,6 +56,7 @@ class TransactionFragment : BaseFragment(R.layout.fragment_transaction) {
         with(viewModel) {
             eventLiveData(::handleEvent)
             chosenDateLiveData(chosenDateTextView::setText)
+            isSaveButtonEnabledLiveData(saveIcon::setEnabled)
             chosenCategoryLiveData(chosenCategoryTextView::setText)
             chosenMoneyAccountLiveData(chosenMoneyAccountTextView::setText)
             enteredAmountLiveData { enteredAmount ->

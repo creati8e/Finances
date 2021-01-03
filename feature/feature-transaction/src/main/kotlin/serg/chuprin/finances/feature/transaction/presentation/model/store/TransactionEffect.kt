@@ -23,6 +23,7 @@ sealed class TransactionEffect {
     ) : TransactionEffect()
 
     class AmountEntered(
+        val isSaveButtonEnabled: Boolean,
         val enteredAmount: TransactionEnteredAmount
     ) : TransactionEffect()
 

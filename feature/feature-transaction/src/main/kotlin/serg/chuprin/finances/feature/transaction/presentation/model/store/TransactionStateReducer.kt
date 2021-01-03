@@ -22,7 +22,10 @@ class TransactionStateReducer : StoreStateReducer<TransactionEffect, Transaction
                 state.copy(chosenMoneyAccount = what.chosenMoneyAccount)
             }
             is TransactionEffect.AmountEntered -> {
-                state.copy(enteredAmount = what.enteredAmount)
+                state.copy(
+                    enteredAmount = what.enteredAmount,
+                    saveButtonIsEnabled = what.isSaveButtonEnabled
+                )
             }
         }
     }

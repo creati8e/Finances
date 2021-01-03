@@ -30,6 +30,9 @@ class TransactionViewModel @Inject constructor(
     val chosenCategoryLiveData: LiveData<String> =
         store.observeParticularStateAsLiveData { state -> state.chosenCategory.formattedName }
 
+    val isSaveButtonEnabledLiveData: LiveData<Boolean> =
+        store.observeParticularStateAsLiveData { state -> state.saveButtonIsEnabled }
+
     val eventLiveData: LiveData<TransactionEvent> = store.observeEventsAsLiveData()
 
     init {

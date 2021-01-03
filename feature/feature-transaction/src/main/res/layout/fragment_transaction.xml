@@ -31,7 +31,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/ic_check" />
+                android:src="@drawable/ic_check"
+                app:tint="@color/color_selector_button" />
 
         </RelativeLayout>
 
