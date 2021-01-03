@@ -4,8 +4,7 @@
     <string name="categories_list_toolbar_title">Категории</string>
     <string name="categories_list_search_hint">Поиск</string>
     <string name="categories_list_search_initial_zero_data_title">Напечатайте что-нибудь, чтобы начать поиск</string>
-
-    <string name="categories_list_search_zero_data_title">Nothing found</string>
-    <string name="categories_list_search_zero_data_message">Try to change query</string>
+    <string name="categories_list_search_zero_data_title">Ничего не найдено</string>
+    <string name="categories_list_search_zero_data_message">Попробуйте изменить запрос</string>
 
 </resources>
