@@ -235,6 +235,11 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
             )
             registerRenderer(
                 DashboardRecentTransactionsWidgetCellRenderer(
+                    onTransactionClick = { transactionCell ->
+                        viewModel.dispatchIntent(
+                            DashboardIntent.ClickOnRecentTransactionCell(transactionCell)
+                        )
+                    },
                     clickOnShowMoreTransactions = {
                         viewModel.dispatchIntent(DashboardIntent.ClickOnShowMoreTransactionsButton)
                     }

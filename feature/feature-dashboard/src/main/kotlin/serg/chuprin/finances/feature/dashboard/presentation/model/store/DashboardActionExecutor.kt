@@ -93,6 +93,9 @@ class DashboardActionExecutor @Inject constructor(
                     DashboardIntent.ClickOnTransactionCreationButton -> {
                         handleClickOnTransactionCreationButtonIntent(eventConsumer)
                     }
+                    is DashboardIntent.ClickOnRecentTransactionCell -> {
+                        handleClickOnRecentTransactionCellIntent(intent, eventConsumer)
+                    }
                 }
             }
             is DashboardAction.FormatDashboard -> {
@@ -101,12 +104,26 @@ class DashboardActionExecutor @Inject constructor(
         }
     }
 
+    private fun handleClickOnRecentTransactionCellIntent(
+        intent: DashboardIntent.ClickOnRecentTransactionCell,
+        eventConsumer: Consumer<DashboardEvent>
+    ): Flow<DashboardEffect> {
+        return emptyFlowAction {
+            val transitionName = transitionNameBuilder.buildForTransaction()
+            val screenArguments = TransactionScreenArguments.Editing(
+                transitionName = transitionName,
+                transactionId = intent.transactionCell.transaction.id
+            )
+            eventConsumer(DashboardEvent.NavigateToTransactionScreen(screenArguments))
+        }
+    }
+
     private fun handleClickOnTransactionCreationButtonIntent(
         eventConsumer: Consumer<DashboardEvent>
     ): Flow<DashboardEffect> {
         return emptyFlowAction {
             val transitionName = transitionNameBuilder.buildForTransaction()
-            val screenArguments = TransactionScreenArguments(transitionName)
+            val screenArguments = TransactionScreenArguments.Creation(transitionName)
             eventConsumer(DashboardEvent.NavigateToTransactionScreen(screenArguments))
         }
     }

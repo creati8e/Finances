@@ -14,6 +14,7 @@ class TransactionsQuery(
     val endDate: LocalDateTime? = null,
     val startDate: LocalDateTime? = null,
     val categoryIds: Set<Id?> = emptySet(),
+    val transactionIds: Set<Id> = emptySet(),
     val moneyAccountIds: Set<Id> = emptySet(),
     val transactionType: PlainTransactionType? = null
 ) {

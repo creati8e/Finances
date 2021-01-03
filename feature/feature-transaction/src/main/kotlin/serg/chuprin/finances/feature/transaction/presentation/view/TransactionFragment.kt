@@ -55,9 +55,9 @@ class TransactionFragment :
 
     private val viewModel by viewModelFromComponent { component }
 
-    private val component by component { TransactionComponent.get() }
-
     private val screenArguments by arguments<TransactionScreenArguments>()
+
+    private val component by component { TransactionComponent.get(screenArguments) }
 
     private val tabsController = TransactionOperationTabsController()
 
@@ -69,7 +69,9 @@ class TransactionFragment :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSharedElementTransitions {
-            if (savedInstanceState == null) {
+            if (savedInstanceState == null
+                && screenArguments is TransactionScreenArguments.Creation
+            ) {
                 doOnEnd {
                     amountEditText?.showKeyboard()
                 }

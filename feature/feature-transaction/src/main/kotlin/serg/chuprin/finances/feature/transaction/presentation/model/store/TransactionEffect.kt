@@ -36,6 +36,8 @@ sealed class TransactionEffect {
     class InitialStateFormatted(
         val userId: Id,
         val chosenDate: TransactionChosenDate,
+        val operation: TransactionChosenOperation,
+        val enteredAmount: TransactionEnteredAmount,
         val chosenCategory: TransactionChosenCategory,
         val chosenMoneyAccount: TransactionChosenMoneyAccount
     ) : TransactionEffect()

@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.map
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.model.transaction.query.TransactionsQuery
+import serg.chuprin.finances.core.api.extensions.contains
 import serg.chuprin.finances.core.api.extensions.toDateUTC
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionFieldsContract.COLLECTION_NAME
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionFieldsContract.FIELD_DATE
@@ -45,7 +46,22 @@ internal class FirebaseTransactionDataSource @Inject constructor(
             .filterByOwner(query.ownerId)
             .filterByDate(query.startDate, query.endDate)
             .asFlow()
-            .map { querySnapshot -> querySnapshot.documents }
+            .map { querySnapshot ->
+                querySnapshot.documents.filterByTransactionIds(query.transactionIds)
+            }
+    }
+
+    private fun List<DocumentSnapshot>.filterByTransactionIds(
+        transactionIds: Set<Id>
+    ): List<DocumentSnapshot> {
+        if (transactionIds.isEmpty()) {
+            return this
+        }
+        return filter { documentSnapshot ->
+            transactionIds.contains { id ->
+                id.value == documentSnapshot.id
+            }
+        }
     }
 
     private fun Query.filterByOwner(ownerId: Id? = null): Query {

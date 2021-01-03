@@ -6,6 +6,7 @@ import serg.chuprin.adapter.Click
 import serg.chuprin.adapter.ContainerHolder
 import serg.chuprin.adapter.ContainerRenderer
 import serg.chuprin.adapter.LongClick
+import serg.chuprin.finances.core.api.presentation.model.cells.TransactionCell
 import serg.chuprin.finances.core.api.presentation.view.adapter.decoration.CellDividerDecoration
 import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.TransactionCellRenderer
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisibleOrGone
@@ -18,6 +19,7 @@ import serg.chuprin.finances.feature.dashboard.presentation.model.cells.transact
  * Created by Sergey Chuprin on 28.05.2020.
  */
 class DashboardRecentTransactionsWidgetCellRenderer(
+    private val onTransactionClick: (TransactionCell) -> Unit,
     private val clickOnShowMoreTransactions: () -> Unit
 ) : ContainerRenderer<DashboardWidgetCell.RecentTransactions>() {
 
@@ -28,6 +30,11 @@ class DashboardRecentTransactionsWidgetCellRenderer(
             R.layout.cell_dashboard_recent_transactions_zero_data
         )
         registerRenderer(TransactionCellRenderer())
+        clickListener = { cell, _, _ ->
+            if (cell is TransactionCell) {
+                onTransactionClick(cell)
+            }
+        }
     }
 
     override fun bindView(holder: ContainerHolder, model: DashboardWidgetCell.RecentTransactions) {

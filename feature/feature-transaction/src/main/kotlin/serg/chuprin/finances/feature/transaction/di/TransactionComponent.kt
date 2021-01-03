@@ -1,9 +1,11 @@
 package serg.chuprin.finances.feature.transaction.di
 
+import dagger.BindsInstance
 import dagger.Component
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.InjectableComponent
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.ViewModelComponent
+import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionScreenArguments
 import serg.chuprin.finances.feature.transaction.TransactionDependencies
 import serg.chuprin.finances.feature.transaction.presentation.model.viewmodel.TransactionViewModel
 import serg.chuprin.finances.feature.transaction.presentation.view.TransactionFragment
@@ -23,10 +25,10 @@ interface TransactionComponent :
 
     companion object {
 
-        fun get(): TransactionComponent {
+        fun get(screenArguments: TransactionScreenArguments): TransactionComponent {
             return DaggerTransactionComponent
                 .factory()
-                .newComponent(Injector.getTransactionDependencies())
+                .newComponent(Injector.getTransactionDependencies(), screenArguments)
         }
 
     }
@@ -35,7 +37,9 @@ interface TransactionComponent :
     interface Factory {
 
         fun newComponent(
-            dependencies: TransactionDependencies
+            dependencies: TransactionDependencies,
+            @BindsInstance
+            screenArguments: TransactionScreenArguments
         ): TransactionComponent
 
     }
