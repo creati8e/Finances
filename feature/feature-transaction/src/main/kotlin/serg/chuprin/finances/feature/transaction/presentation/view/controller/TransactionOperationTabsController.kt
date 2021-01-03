@@ -42,8 +42,10 @@ class TransactionOperationTabsController {
 
     fun selectTabForOperation(tabLayout: TabLayout, operation: TransactionChosenOperation) {
         val tabPosition = operationTabPositions.entries.first { it.value == operation }.key
-        tabLayout.doIgnoringChanges {
-            selectTab(tabLayout.getTabAt(tabPosition))
+        if (tabPosition != tabLayout.selectedTabPosition) {
+            tabLayout.doIgnoringChanges {
+                selectTab(tabLayout.getTabAt(tabPosition), true)
+            }
         }
     }
 
