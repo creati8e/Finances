@@ -16,6 +16,6 @@ interface TransitionNameBuilder {
 
     fun buildForForMoneyAccountDetails(moneyAccountId: Id): String
 
-    fun buildForTransaction(): String
+    fun buildForTransaction(transactionId: Id? = null): String
 
 }

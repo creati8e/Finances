@@ -1,5 +1,6 @@
 package serg.chuprin.finances.core.api.di.provider
 
+import serg.chuprin.finances.core.api.presentation.model.TransactionReportNavigation
 import serg.chuprin.finances.core.api.presentation.navigation.*
 
 /**
@@ -18,5 +19,7 @@ interface CoreNavigationProvider {
     val authorizationNavigation: AuthorizationNavigation
 
     val moneyAccountsListNavigation: MoneyAccountsListNavigation
+
+    val transactionReportNavigation: TransactionReportNavigation
 
 }

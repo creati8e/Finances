@@ -17,6 +17,7 @@ import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.navigation.DashboardNavigation
+import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionScreenArguments
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter
 import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ZeroDataCellRenderer
@@ -164,10 +165,19 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
                 )
             }
             is DashboardEvent.NavigateToTransactionScreen -> {
+                val sharedElementView = when (event.screenArguments) {
+                    is TransactionScreenArguments.Editing -> {
+                        recyclerView.findViewWithTag<View>(
+                            event.screenArguments.transitionName
+                        )
+                    }
+                    is TransactionScreenArguments.Creation -> transactionCreationFab
+                }
+
                 navigation.navigateToTransaction(
                     navController,
                     event.screenArguments,
-                    transactionCreationFab
+                    sharedElementView
                 )
             }
         }

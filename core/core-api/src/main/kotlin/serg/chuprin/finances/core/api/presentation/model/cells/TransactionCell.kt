@@ -15,7 +15,8 @@ data class TransactionCell(
     val isIncome: Boolean,
     val subcategoryName: String,
     val parentCategoryName: String,
-    val transaction: Transaction
+    val transaction: Transaction,
+    val transitionName: String
 ) : DiffCell<Id> {
 
     override val diffCellId: Id = transaction.id

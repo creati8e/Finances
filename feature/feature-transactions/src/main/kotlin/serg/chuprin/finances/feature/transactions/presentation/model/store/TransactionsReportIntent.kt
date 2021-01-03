@@ -1,5 +1,6 @@
 package serg.chuprin.finances.feature.transactions.presentation.model.store
 
+import serg.chuprin.finances.core.api.presentation.model.cells.TransactionCell
 import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportDataPeriodAmountChartCell
 
 /**
@@ -9,6 +10,10 @@ sealed class TransactionsReportIntent {
 
     class ClickOnDataChartCell(
         val dataPeriodAmountChartCell: TransactionReportDataPeriodAmountChartCell
+    ) : TransactionsReportIntent()
+
+    class ClickOnTransactionCell(
+        val transactionCell: TransactionCell
     ) : TransactionsReportIntent()
 
 }

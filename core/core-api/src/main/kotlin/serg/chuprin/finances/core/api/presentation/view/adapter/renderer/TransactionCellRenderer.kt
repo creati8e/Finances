@@ -29,6 +29,9 @@ class TransactionCellRenderer : ContainerRenderer<TransactionCell>() {
             transactionColorDot.imageTintList = ColorStateList.valueOf(model.color)
             subcategoryTextView.makeVisibleOrGone(model.subcategoryName.isNotEmpty())
 
+            itemView.tag = model.transitionName
+            itemView.transitionName = model.transitionName
+
             with(amountTextView) {
                 text = model.amount
 

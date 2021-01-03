@@ -12,12 +12,15 @@ import serg.chuprin.finances.core.api.presentation.builder.TransactionCellBuilde
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.formatter.CategoryColorFormatter
 import serg.chuprin.finances.core.api.presentation.formatter.DateTimeFormatter
+import serg.chuprin.finances.core.api.presentation.model.TransactionReportNavigation
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 
 /**
  * Created by Sergey Chuprin on 12.05.2020.
  */
 interface TransactionsReportDependencies {
+
+    val transactionReportNavigation: TransactionReportNavigation
 
     val resourceManger: ResourceManger
 

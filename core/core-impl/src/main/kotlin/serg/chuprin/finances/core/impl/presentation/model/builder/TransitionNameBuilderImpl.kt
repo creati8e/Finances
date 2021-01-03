@@ -20,8 +20,12 @@ internal class TransitionNameBuilderImpl @Inject constructor(
             return resourceManger.getString(stringRes)
         }
 
-    override fun buildForTransaction(): String {
-        return resourceManger.getString(R.string.transition_transaction)
+    override fun buildForTransaction(transactionId: Id?): String {
+        val baseString = resourceManger.getString(R.string.transition_transaction)
+        if (transactionId == null) {
+            return baseString
+        }
+        return "${baseString}_${transactionId.value}"
     }
 
     override fun buildForTransactionsReport(categoryId: Id?): String {

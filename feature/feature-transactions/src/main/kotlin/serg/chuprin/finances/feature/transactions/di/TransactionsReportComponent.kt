@@ -5,11 +5,13 @@ import dagger.Component
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
+import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.InjectableComponent
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.ViewModelComponent
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionsReportScreenArguments
 import serg.chuprin.finances.feature.transactions.domain.model.ReportDataPeriod
 import serg.chuprin.finances.feature.transactions.domain.model.TransactionReportFilter
 import serg.chuprin.finances.feature.transactions.presentation.model.viewmodel.TransactionsReportViewModel
+import serg.chuprin.finances.feature.transactions.presentation.view.TransactionsReportFragment
 import serg.chuprin.finances.feature.transactions.report.dependencies.TransactionsReportDependencies
 import serg.chuprin.finances.injector.Injector
 
@@ -20,7 +22,9 @@ import serg.chuprin.finances.injector.Injector
     modules = [TransactionsReportModule::class],
     dependencies = [TransactionsReportDependencies::class]
 )]
-interface TransactionsReportComponent : ViewModelComponent<TransactionsReportViewModel> {
+interface TransactionsReportComponent :
+    InjectableComponent<TransactionsReportFragment>,
+    ViewModelComponent<TransactionsReportViewModel> {
 
     companion object {
 

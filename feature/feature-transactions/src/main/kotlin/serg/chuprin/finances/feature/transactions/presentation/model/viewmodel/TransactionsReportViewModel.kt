@@ -8,6 +8,7 @@ import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.cells.SpaceCell
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.BaseStoreViewModel
 import serg.chuprin.finances.feature.transactions.presentation.model.TransactionReportHeader
+import serg.chuprin.finances.feature.transactions.presentation.model.store.TransactionsReportEvent
 import serg.chuprin.finances.feature.transactions.presentation.model.store.TransactionsReportIntent
 import serg.chuprin.finances.feature.transactions.presentation.model.store.TransactionsReportState
 import serg.chuprin.finances.feature.transactions.presentation.model.store.TransactionsReportStore
@@ -35,6 +36,8 @@ class TransactionsReportViewModel @Inject constructor(
         }
         .distinctUntilChanged()
         .asLiveData()
+
+    val eventsLiveData: LiveData<TransactionsReportEvent> = store.observeEventsAsLiveData()
 
     val headerLiveData: LiveData<TransactionReportHeader> =
         store.observeParticularStateAsLiveData(TransactionsReportState::header)

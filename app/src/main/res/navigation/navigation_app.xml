@@ -96,7 +96,13 @@
             android:id="@+id/transactionsReportFragment"
             android:name="serg.chuprin.finances.feature.transactions.presentation.view.TransactionsReportFragment"
             android:label="TransactionsReportFragment"
-            tools:layout="@layout/fragment_transactions_report" />
+            tools:layout="@layout/fragment_transactions_report">
+
+            <action
+                android:id="@+id/navigateFromTransactionReportToTransaction"
+                app:destination="@id/transactionFragment" />
+
+        </fragment>
 
         <fragment
             android:id="@+id/moneyAccountDetailsFragment"

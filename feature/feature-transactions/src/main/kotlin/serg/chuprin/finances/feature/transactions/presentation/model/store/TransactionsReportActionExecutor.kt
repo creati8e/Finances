@@ -2,9 +2,11 @@ package serg.chuprin.finances.feature.transactions.presentation.model.store
 
 import kotlinx.coroutines.flow.Flow
 import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
+import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionScreenArguments
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
+import serg.chuprin.finances.core.mvi.invoke
 import serg.chuprin.finances.feature.transactions.domain.model.ReportDataPeriod
 import serg.chuprin.finances.feature.transactions.domain.usecase.ChooseDataPeriodUseCase
 import serg.chuprin.finances.feature.transactions.presentation.model.builder.TransactionReportCategorySharesCellBuilder
@@ -34,11 +36,27 @@ class TransactionsReportActionExecutor @Inject constructor(
                     is TransactionsReportIntent.ClickOnDataChartCell -> {
                         handleClickOnDataChartCellIntent(intent, state)
                     }
+                    is TransactionsReportIntent.ClickOnTransactionCell -> {
+                        handleClickOnTransactionCellIntent(intent, eventConsumer)
+                    }
                 }
             }
             is TransactionsReportAction.FormatReport -> {
                 handleFormatReportAction(action)
             }
+        }
+    }
+
+    private fun handleClickOnTransactionCellIntent(
+        intent: TransactionsReportIntent.ClickOnTransactionCell,
+        eventConsumer: Consumer<TransactionsReportEvent>
+    ): Flow<TransactionsReportEffect> {
+        return emptyFlowAction {
+            val screenArguments = TransactionScreenArguments.Editing(
+                intent.transactionCell.transaction.id,
+                intent.transactionCell.transitionName
+            )
+            eventConsumer(TransactionsReportEvent.NavigateToTransactionScreen(screenArguments))
         }
     }
 

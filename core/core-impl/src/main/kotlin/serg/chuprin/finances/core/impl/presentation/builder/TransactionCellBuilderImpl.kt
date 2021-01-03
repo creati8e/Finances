@@ -4,6 +4,7 @@ import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryW
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.presentation.builder.TransactionCellBuilder
 import serg.chuprin.finances.core.api.presentation.builder.TransactionCellBuilder.DateTimeFormattingMode
+import serg.chuprin.finances.core.api.presentation.builder.TransitionNameBuilder
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.formatter.CategoryColorFormatter
 import serg.chuprin.finances.core.api.presentation.formatter.DateTimeFormatter
@@ -18,6 +19,7 @@ import javax.inject.Inject
 internal class TransactionCellBuilderImpl @Inject constructor(
     private val amountFormatter: AmountFormatter,
     private val dateTimeFormatter: DateTimeFormatter,
+    private val transitionNameBuilder: TransitionNameBuilder,
     private val categoryColorFormatter: CategoryColorFormatter,
     private val categoryFormatter: TransactionCategoryWithParentFormatter
 ) : TransactionCellBuilder {
@@ -35,6 +37,7 @@ internal class TransactionCellBuilderImpl @Inject constructor(
             subcategoryName = subcategoryName,
             parentCategoryName = parentCategoryName,
             time = transaction.dateTime.format(dateTimeFormattingMode),
+            transitionName = transitionNameBuilder.buildForTransaction(transaction.id),
             color = categoryColorFormatter.format(categoryWithParent?.category),
             amount = amountFormatter.format(
                 round = false,

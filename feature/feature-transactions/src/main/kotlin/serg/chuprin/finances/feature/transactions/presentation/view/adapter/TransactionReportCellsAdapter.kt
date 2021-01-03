@@ -21,6 +21,7 @@ import serg.chuprin.finances.feature.transactions.presentation.view.adapter.rend
  * Created by Sergey Chuprin on 07.07.2020.
  */
 class TransactionReportCellsAdapter(
+    onTransactionClicked: (TransactionCell) -> Unit,
     onChartCellClicked: (TransactionReportDataPeriodAmountChartCell) -> Unit
 ) : DiffMultiViewAdapter<BaseCell>(TransactionReportCellsDiffCallback()),
     DividerAdapter {
@@ -43,6 +44,13 @@ class TransactionReportCellsAdapter(
             ),
             TransactionReportCategorySharesCell::class.java
         )
+
+        clickListener = { cell, _, _ ->
+            if (cell is TransactionCell) {
+                onTransactionClicked(cell)
+            }
+        }
+
     }
 
     override fun shouldDrawDividerForCellAt(adapterPosition: Int): Boolean {

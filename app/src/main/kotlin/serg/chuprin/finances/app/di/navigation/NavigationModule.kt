@@ -5,6 +5,7 @@ import dagger.Module
 import dagger.Provides
 import serg.chuprin.finances.app.R
 import serg.chuprin.finances.core.api.di.provider.CoreNavigationProvider
+import serg.chuprin.finances.core.api.presentation.model.TransactionReportNavigation
 import serg.chuprin.finances.core.api.presentation.navigation.*
 
 /**
@@ -12,6 +13,10 @@ import serg.chuprin.finances.core.api.presentation.navigation.*
  */
 @Module
 object NavigationModule : CoreNavigationProvider {
+
+    @get:Provides
+    override val transactionReportNavigation: TransactionReportNavigation
+        get() = TransactionReportNavigationImpl()
 
     @get:Provides
     override val transactionNavigation: TransactionNavigation

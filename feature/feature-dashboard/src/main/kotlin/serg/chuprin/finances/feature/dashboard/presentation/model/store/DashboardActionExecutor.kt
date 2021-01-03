@@ -109,7 +109,9 @@ class DashboardActionExecutor @Inject constructor(
         eventConsumer: Consumer<DashboardEvent>
     ): Flow<DashboardEffect> {
         return emptyFlowAction {
-            val transitionName = transitionNameBuilder.buildForTransaction()
+            val transitionName = transitionNameBuilder.buildForTransaction(
+                intent.transactionCell.transaction.id
+            )
             val screenArguments = TransactionScreenArguments.Editing(
                 transitionName = transitionName,
                 transactionId = intent.transactionCell.transaction.id

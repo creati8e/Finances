@@ -1,14 +1,16 @@
 package serg.chuprin.finances.feature.transactions.presentation.view
 
+import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.core.view.doOnPreDraw
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.fragment_transactions_report.*
+import serg.chuprin.finances.core.api.presentation.model.TransactionReportNavigation
+import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionsReportScreenArguments
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
@@ -21,8 +23,10 @@ import serg.chuprin.finances.core.api.presentation.view.setSharedElementTransiti
 import serg.chuprin.finances.feature.transactions.R
 import serg.chuprin.finances.feature.transactions.di.TransactionsReportComponent
 import serg.chuprin.finances.feature.transactions.presentation.model.TransactionReportHeader
+import serg.chuprin.finances.feature.transactions.presentation.model.store.TransactionsReportEvent
 import serg.chuprin.finances.feature.transactions.presentation.model.store.TransactionsReportIntent
 import serg.chuprin.finances.feature.transactions.presentation.view.adapter.TransactionReportCellsAdapter
+import javax.inject.Inject
 
 
 /**
@@ -30,26 +34,29 @@ import serg.chuprin.finances.feature.transactions.presentation.view.adapter.Tran
  */
 class TransactionsReportFragment : BaseFragment(R.layout.fragment_transactions_report) {
 
+    @Inject
+    lateinit var navigation: TransactionReportNavigation
+
     private val screenArguments by arguments<TransactionsReportScreenArguments>()
 
     private val cellsAdapter = TransactionReportCellsAdapter(
+        onTransactionClicked = { transactionCell ->
+            viewModel.dispatchIntent(
+                TransactionsReportIntent.ClickOnTransactionCell(transactionCell)
+            )
+        },
         onChartCellClicked = {
             viewModel.dispatchIntent(TransactionsReportIntent.ClickOnDataChartCell(it))
         }
     )
 
-    private val viewModel by viewModelFromComponent {
-        TransactionsReportComponent.get(screenArguments)
-    }
+    private val viewModel by viewModelFromComponent { component }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return super.onCreateView(inflater, container, savedInstanceState)!!.apply {
-            transitionName = screenArguments.transitionName
-        }
+    private val component by component { TransactionsReportComponent.get(screenArguments) }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        component.inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,6 +73,13 @@ class TransactionsReportFragment : BaseFragment(R.layout.fragment_transactions_r
             fabLayout.fit { Edge.Bottom + Edge.Right }
         }
 
+        view.transitionName = screenArguments.transitionName
+
+        postponeEnterTransition()
+        recyclerView.doOnPreDraw {
+            startPostponedEnterTransition()
+        }
+
         backButton.onClick {
             navController.navigateUp()
         }
@@ -74,7 +88,23 @@ class TransactionsReportFragment : BaseFragment(R.layout.fragment_transactions_r
 
         with(viewModel) {
             headerLiveData(::showHeader)
+            eventsLiveData(::handleEvent)
             cellsLiveData(cellsAdapter::setItems)
+        }
+    }
+
+    private fun handleEvent(event: TransactionsReportEvent) {
+        return when (event) {
+            is TransactionsReportEvent.NavigateToTransactionScreen -> {
+                val sharedElementView = recyclerView.findViewWithTag<View>(
+                    event.screenArguments.transitionName
+                )
+                navigation.navigateToTransaction(
+                    navController,
+                    event.screenArguments,
+                    sharedElementView
+                )
+            }
         }
     }
 
