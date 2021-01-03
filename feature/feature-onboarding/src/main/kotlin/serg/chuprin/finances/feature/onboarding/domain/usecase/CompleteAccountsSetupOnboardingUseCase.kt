@@ -72,7 +72,7 @@ class CompleteAccountsSetupOnboardingUseCase @Inject constructor(
                 type = TransactionType.BALANCE,
                 currencyCode = account.currencyCode
             )
-        transactionRepository.createTransaction(balanceTransaction)
+        transactionRepository.createOrUpdate(listOf(balanceTransaction))
     }
 
 }

@@ -1,9 +1,6 @@
 package serg.chuprin.finances.feature.transaction.presentation.model.store
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.*
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryType
@@ -19,6 +16,7 @@ import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
 import serg.chuprin.finances.core.api.presentation.screen.arguments.CategoriesListScreenArguments
 import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountsListScreenArguments
+import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionScreenArguments
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
@@ -26,6 +24,7 @@ import serg.chuprin.finances.core.mvi.invoke
 import serg.chuprin.finances.feature.transaction.R
 import serg.chuprin.finances.feature.transaction.domain.model.TransactionChosenOperation
 import serg.chuprin.finances.feature.transaction.domain.usecase.CreateTransactionUseCase
+import serg.chuprin.finances.feature.transaction.domain.usecase.EditTransactionUseCase
 import serg.chuprin.finances.feature.transaction.presentation.model.TransactionChosenCategory
 import serg.chuprin.finances.feature.transaction.presentation.model.TransactionChosenDate
 import serg.chuprin.finances.feature.transaction.presentation.model.TransactionChosenMoneyAccount
@@ -43,7 +42,9 @@ class TransactionActionExecutor @Inject constructor(
     private val amountParser: AmountParser,
     private val resourceManger: ResourceManger,
     private val amountFormatter: AmountFormatter,
+    private val screenArguments: TransactionScreenArguments,
     private val moneyAccountRepository: MoneyAccountRepository,
+    private val editTransactionUseCase: EditTransactionUseCase,
     private val categoryRepository: TransactionCategoryRepository,
     private val createTransactionUseCase: CreateTransactionUseCase,
     private val chosenDateFormatter: TransactionChosenDateFormatter
@@ -203,16 +204,34 @@ class TransactionActionExecutor @Inject constructor(
         eventConsumer: Consumer<TransactionEvent>
     ): Flow<TransactionEffect> {
         val amount = state.enteredAmount.amount ?: return emptyFlow()
-        return emptyFlowAction {
-            createTransactionUseCase.execute(
-                amount = amount,
-                ownerId = state.userId,
-                operation = state.operation,
-                date = state.chosenDate.localDate,
-                category = state.chosenCategory.category,
-                moneyAccount = state.chosenMoneyAccount.account
-            )
-            eventConsumer(TransactionEvent.CloseScreen)
+        return when (screenArguments) {
+            is TransactionScreenArguments.Editing -> {
+                flow {
+                    editTransactionUseCase.execute(
+                        amount = amount,
+                        ownerId = state.userId,
+                        operation = state.operation,
+                        date = state.chosenDate.localDate,
+                        category = state.chosenCategory.category,
+                        transactionId = screenArguments.transactionId,
+                        moneyAccount = state.chosenMoneyAccount.account
+                    )
+                    eventConsumer(TransactionEvent.CloseScreen)
+                }
+            }
+            is TransactionScreenArguments.Creation -> {
+                emptyFlowAction {
+                    createTransactionUseCase.execute(
+                        amount = amount,
+                        ownerId = state.userId,
+                        operation = state.operation,
+                        date = state.chosenDate.localDate,
+                        category = state.chosenCategory.category,
+                        moneyAccount = state.chosenMoneyAccount.account
+                    )
+                    eventConsumer(TransactionEvent.CloseScreen)
+                }
+            }
         }
     }
 

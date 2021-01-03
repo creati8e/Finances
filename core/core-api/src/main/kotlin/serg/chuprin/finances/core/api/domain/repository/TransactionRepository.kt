@@ -10,7 +10,7 @@ import serg.chuprin.finances.core.api.domain.model.transaction.query.Transaction
  */
 interface TransactionRepository {
 
-    fun createTransaction(transaction: Transaction)
+    fun createOrUpdate(transactions: Collection<Transaction>)
 
     fun transactionsFlow(query: TransactionsQuery): Flow<List<Transaction>>
 

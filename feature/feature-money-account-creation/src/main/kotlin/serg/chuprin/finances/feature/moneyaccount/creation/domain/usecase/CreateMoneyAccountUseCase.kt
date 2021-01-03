@@ -47,7 +47,7 @@ class CreateMoneyAccountUseCase @Inject constructor(
                 _amount = initialBalance.toString(),
                 currencyCode = currencyCode
             )
-            transactionRepository.createTransaction(balanceTransaction)
+            transactionRepository.createOrUpdate(listOf(balanceTransaction))
         }
     }
 

@@ -33,10 +33,16 @@ internal class FirebaseTransactionDataSource @Inject constructor(
         delete(transactions.map(Transaction::id))
     }
 
-    fun createTransaction(transaction: Transaction) {
-        collection
-            .document(transaction.id.value)
-            .set(transactionMapper.mapToFieldsMap(transaction))
+    fun createOrUpdate(transactions: Collection<Transaction>) {
+        val collection = collection
+        firestore.runBatch { writeBatch ->
+            transactions.forEach { transaction ->
+                writeBatch.set(
+                    collection.document(transaction.id.value),
+                    transactionMapper.mapToFieldsMap(transaction)
+                )
+            }
+        }
     }
 
     fun transactionsFlow(query: TransactionsQuery): Flow<List<DocumentSnapshot>> {

@@ -147,7 +147,7 @@ internal class AppDebugMenuImpl @Inject constructor(
             currencyCode = moneyAccount.currencyCode,
             categoryId = categoryWithParent?.category?.id
         )
-        transactionRepository.createTransaction(transaction)
+        transactionRepository.createOrUpdate(listOf(transaction))
         Timber.d { "New test transaction created: $transaction" }
     }
 

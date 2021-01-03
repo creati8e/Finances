@@ -20,8 +20,8 @@ internal class TransactionRepositoryImpl @Inject constructor(
     private val firebaseDataSource: FirebaseTransactionDataSource
 ) : TransactionRepository {
 
-    override fun createTransaction(transaction: Transaction) {
-        firebaseDataSource.createTransaction(transaction)
+    override fun createOrUpdate(transactions: Collection<Transaction>) {
+        firebaseDataSource.createOrUpdate(transactions)
     }
 
     override suspend fun deleteTransactions(transactions: List<Transaction>) {
