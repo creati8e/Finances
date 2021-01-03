@@ -84,11 +84,22 @@ class TransactionActionExecutor @Inject constructor(
                     is TransactionIntent.ChooseMoneyAccount -> {
                         handleChooseMoneyAccountIntent(intent)
                     }
+                    TransactionIntent.ClickOnUnsavedChangedDialogNegativeButton -> {
+                        handleClickOnUnsavedChangedDialogNegativeButtonIntent(eventConsumer)
+                    }
                 }
             }
             is TransactionAction.FormatInitialState -> {
                 handleFormatInitialStateAction(action)
             }
+        }
+    }
+
+    private fun handleClickOnUnsavedChangedDialogNegativeButtonIntent(
+        eventConsumer: Consumer<TransactionEvent>
+    ): Flow<TransactionEffect> {
+        return emptyFlowAction {
+            eventConsumer(TransactionEvent.CloseScreen)
         }
     }
 
@@ -169,9 +180,12 @@ class TransactionActionExecutor @Inject constructor(
         state: TransactionState,
         eventConsumer: Consumer<TransactionEvent>
     ): Flow<TransactionEffect> {
-        // TODO: Add check for unsaved changed.
         return emptyFlowAction {
-            eventConsumer(TransactionEvent.CloseScreen)
+            if (state.saveButtonIsEnabled) {
+                eventConsumer(TransactionEvent.ShowUnsavedChangedDialog)
+            } else {
+                eventConsumer(TransactionEvent.CloseScreen)
+            }
         }
     }
 

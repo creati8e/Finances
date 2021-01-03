@@ -11,6 +11,8 @@ sealed class TransactionEvent {
 
     object CloseScreen : TransactionEvent()
 
+    object ShowUnsavedChangedDialog : TransactionEvent()
+
     class NavigateToCategoryPickerScreen(
         val screenArguments: CategoriesListScreenArguments
     ) : TransactionEvent()

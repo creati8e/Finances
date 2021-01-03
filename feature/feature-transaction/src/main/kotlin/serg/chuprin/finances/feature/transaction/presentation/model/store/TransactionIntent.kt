@@ -19,6 +19,8 @@ sealed class TransactionIntent {
 
     object ClickOnMoneyAccount : TransactionIntent()
 
+    object ClickOnUnsavedChangedDialogNegativeButton : TransactionIntent()
+
     class EnterAmount(
         val amount: String
     ) : TransactionIntent()

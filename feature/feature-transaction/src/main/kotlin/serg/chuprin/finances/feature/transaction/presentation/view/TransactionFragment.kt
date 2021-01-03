@@ -23,8 +23,11 @@ import serg.chuprin.finances.core.api.presentation.screen.arguments.CategoriesLi
 import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountsListScreenArguments
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionScreenArguments
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
+import serg.chuprin.finances.core.api.presentation.view.dialog.info.InfoDialogArguments
+import serg.chuprin.finances.core.api.presentation.view.dialog.info.InfoDialogFragment
 import serg.chuprin.finances.core.api.presentation.view.extensions.*
 import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.arguments
+import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.showDialog
 import serg.chuprin.finances.core.api.presentation.view.setSharedElementTransitions
 import serg.chuprin.finances.feature.transaction.R
 import serg.chuprin.finances.feature.transaction.di.TransactionComponent
@@ -34,11 +37,18 @@ import serg.chuprin.finances.feature.transaction.presentation.view.controller.Tr
 import java.time.ZoneOffset
 import java.util.*
 import javax.inject.Inject
+import serg.chuprin.finances.core.api.R as CoreR
 
 /**
  * Created by Sergey Chuprin on 02.01.2021.
  */
-class TransactionFragment : BaseFragment(R.layout.fragment_transaction) {
+class TransactionFragment :
+    BaseFragment(R.layout.fragment_transaction),
+    InfoDialogFragment.Callback {
+
+    private companion object {
+        private const val RC_UNSAVED_CHANGED_DIALOG = 12312
+    }
 
     @Inject
     lateinit var navigation: TransactionNavigation
@@ -97,6 +107,18 @@ class TransactionFragment : BaseFragment(R.layout.fragment_transaction) {
                     setText(enteredAmount.formatted)
                 }
             }
+        }
+    }
+
+    override fun onInfoDialogPositiveButtonClick(requestCode: Int) {
+        if (requestCode == RC_UNSAVED_CHANGED_DIALOG) {
+            viewModel.dispatchIntent(TransactionIntent.ClickOnSaveButton)
+        }
+    }
+
+    override fun onInfoDialogNegativeButtonClick(requestCode: Int) {
+        if (requestCode == RC_UNSAVED_CHANGED_DIALOG) {
+            viewModel.dispatchIntent(TransactionIntent.ClickOnUnsavedChangedDialogNegativeButton)
         }
     }
 
@@ -181,6 +203,16 @@ class TransactionFragment : BaseFragment(R.layout.fragment_transaction) {
             is TransactionEvent.NavigateToMoneyAccountPickerScreen -> {
                 amountEditText.hideKeyboard()
                 navigation.navigateToMoneyAccountPicker(navController, event.screenArguments)
+            }
+            TransactionEvent.ShowUnsavedChangedDialog -> {
+                val arguments = InfoDialogArguments(
+                    title = null,
+                    negativeText = getString(CoreR.string.no),
+                    positiveText = getString(CoreR.string.yes),
+                    callbackRequestCode = RC_UNSAVED_CHANGED_DIALOG,
+                    message = getString(R.string.transaction_unsaved_changed_dialog_message)
+                )
+                showDialog<InfoDialogFragment>(childFragmentManager, arguments)
             }
         }
     }
