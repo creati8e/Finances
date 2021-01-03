@@ -17,6 +17,8 @@ sealed class TransactionIntent {
 
     object ClickOnCloseButton : TransactionIntent()
 
+    object ClickOnMoneyAccount : TransactionIntent()
+
     class EnterAmount(
         val amount: String
     ) : TransactionIntent()
@@ -31,6 +33,10 @@ sealed class TransactionIntent {
 
     class ChooseDate(
         val localDate: LocalDate
+    ) : TransactionIntent()
+
+    class ChooseMoneyAccount(
+        val moneyAccountId: Id
     ) : TransactionIntent()
 
 }

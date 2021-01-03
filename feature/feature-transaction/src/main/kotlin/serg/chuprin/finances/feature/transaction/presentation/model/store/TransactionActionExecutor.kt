@@ -2,16 +2,19 @@ package serg.chuprin.finances.feature.transaction.presentation.model.store
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryType
 import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
+import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
 import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
 import serg.chuprin.finances.core.api.presentation.screen.arguments.CategoriesListScreenArguments
+import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountsListScreenArguments
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
@@ -32,10 +35,12 @@ import javax.inject.Inject
 /**
  * Created by Sergey Chuprin on 02.01.2021.
  */
+// TODO: Remove calls to user repository.
 class TransactionActionExecutor @Inject constructor(
     private val amountParser: AmountParser,
     private val resourceManger: ResourceManger,
     private val amountFormatter: AmountFormatter,
+    private val moneyAccountRepository: MoneyAccountRepository,
     private val createTransactionUseCase: CreateTransactionUseCase,
     private val chosenDateFormatter: TransactionChosenDateFormatter,
     private val chooseCategoryIntentExecutor: TransactionChooseCategoryIntentExecutor
@@ -74,11 +79,36 @@ class TransactionActionExecutor @Inject constructor(
                     is TransactionIntent.ChooseDate -> {
                         handleChooseDateIntent(intent)
                     }
+                    TransactionIntent.ClickOnMoneyAccount -> {
+                        handleClickOnMoneyAccountIntent(eventConsumer)
+                    }
+                    is TransactionIntent.ChooseMoneyAccount -> {
+                        handleChooseMoneyAccountIntent(intent)
+                    }
                 }
             }
             is TransactionAction.FormatInitialState -> {
                 handleFormatInitialStateAction(action)
             }
+        }
+    }
+
+    private fun handleChooseMoneyAccountIntent(
+        intent: TransactionIntent.ChooseMoneyAccount
+    ): Flow<TransactionEffect> {
+        return flowOfSingleValue {
+            val moneyAccount = moneyAccountRepository.accountFlow(intent.moneyAccountId).first()!!
+            val chosenMoneyAccount = TransactionChosenMoneyAccount(moneyAccount.name, moneyAccount)
+            TransactionEffect.MoneyAccountChanged(chosenMoneyAccount)
+        }
+    }
+
+    private fun handleClickOnMoneyAccountIntent(
+        eventConsumer: Consumer<TransactionEvent>
+    ): Flow<TransactionEffect> {
+        return emptyFlowAction {
+            val screenArguments = MoneyAccountsListScreenArguments.Picker
+            eventConsumer(TransactionEvent.NavigateToMoneyAccountPickerScreen(screenArguments))
         }
     }
 

@@ -20,6 +20,7 @@ import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.co
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.navigation.TransactionNavigation
 import serg.chuprin.finances.core.api.presentation.screen.arguments.CategoriesListScreenArguments
+import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountsListScreenArguments
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionScreenArguments
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.extensions.*
@@ -80,6 +81,7 @@ class TransactionFragment : BaseFragment(R.layout.fragment_transaction) {
         setAmountListener()
 
         setCategoryPickerResultListener()
+        setMoneyAccountPickerResultListener()
 
         with(viewModel) {
             eventLiveData(::handleEvent)
@@ -133,9 +135,22 @@ class TransactionFragment : BaseFragment(R.layout.fragment_transaction) {
         dateLayout.onClick {
             viewModel.dispatchIntent(TransactionIntent.ClickOnDate)
         }
+        moneyAccountLayout.onClick {
+            viewModel.dispatchIntent(TransactionIntent.ClickOnMoneyAccount)
+        }
 
         tabsController.listenTabChanges(transactionTypeTabLayout, lifecycleScope) { operation ->
             viewModel.dispatchIntent(TransactionIntent.ClickOnOperationType(operation))
+        }
+    }
+
+    private fun setMoneyAccountPickerResultListener() {
+        val pickerRequestKey = MoneyAccountsListScreenArguments.Picker.REQUEST_KEY
+        setFragmentResultListener(pickerRequestKey) { requestKey, bundle ->
+            if (requestKey == MoneyAccountsListScreenArguments.Picker.REQUEST_KEY) {
+                val result = MoneyAccountsListScreenArguments.Picker.Result.fromBundle(bundle)
+                viewModel.dispatchIntent(TransactionIntent.ChooseMoneyAccount(result.moneyAccountId))
+            }
         }
     }
 
@@ -161,25 +176,33 @@ class TransactionFragment : BaseFragment(R.layout.fragment_transaction) {
                 navigation.navigateToCategoryPicker(navController, event.screenArguments)
             }
             is TransactionEvent.ShowDatePicker -> {
-                MaterialDatePicker.Builder
-                    .datePicker()
-                    .setSelection(
-                        event.localDate
-                            .atStartOfDay()
-                            .toInstant(ZoneOffset.UTC)
-                            .toEpochMilli()
-                    )
-                    .setTheme(R.style.MaterialDatePicker)
-                    .build()
-                    .apply {
-                        addOnPositiveButtonClickListener { dateMillis ->
-                            val localDate = Date(dateMillis).toLocalDateUTC()
-                            viewModel.dispatchIntent(TransactionIntent.ChooseDate(localDate))
-                        }
-                    }
-                    .show(childFragmentManager, "MaterialDatePicker_TAG")
+                showDatePicker(event)
+            }
+            is TransactionEvent.NavigateToMoneyAccountPickerScreen -> {
+                amountEditText.hideKeyboard()
+                navigation.navigateToMoneyAccountPicker(navController, event.screenArguments)
             }
         }
+    }
+
+    private fun showDatePicker(event: TransactionEvent.ShowDatePicker) {
+        MaterialDatePicker.Builder
+            .datePicker()
+            .setSelection(
+                event.localDate
+                    .atStartOfDay()
+                    .toInstant(ZoneOffset.UTC)
+                    .toEpochMilli()
+            )
+            .setTheme(R.style.MaterialDatePicker)
+            .build()
+            .apply {
+                addOnPositiveButtonClickListener { dateMillis ->
+                    val localDate = Date(dateMillis).toLocalDateUTC()
+                    viewModel.dispatchIntent(TransactionIntent.ChooseDate(localDate))
+                }
+            }
+            .show(childFragmentManager, "MaterialDatePicker_TAG")
     }
 
 }

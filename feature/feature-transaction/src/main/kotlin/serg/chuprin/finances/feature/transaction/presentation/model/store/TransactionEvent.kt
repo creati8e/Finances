@@ -1,6 +1,7 @@
 package serg.chuprin.finances.feature.transaction.presentation.model.store
 
 import serg.chuprin.finances.core.api.presentation.screen.arguments.CategoriesListScreenArguments
+import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountsListScreenArguments
 import java.time.LocalDate
 
 /**
@@ -12,6 +13,10 @@ sealed class TransactionEvent {
 
     class NavigateToCategoryPickerScreen(
         val screenArguments: CategoriesListScreenArguments
+    ) : TransactionEvent()
+
+    class NavigateToMoneyAccountPickerScreen(
+        val screenArguments: MoneyAccountsListScreenArguments
     ) : TransactionEvent()
 
     class ShowDatePicker(

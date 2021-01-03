@@ -117,6 +117,10 @@
             tools:layout="@layout/fragment_transaction">
 
             <action
+                android:id="@+id/navigateFromTransactionToMoneyAccountsList"
+                app:destination="@+id/moneyAccountsListFragment" />
+
+            <action
                 android:id="@+id/navigateFromTransactionToCategoriesList"
                 app:destination="@id/categoriesListFragment" />
 
