@@ -27,6 +27,9 @@ class TransactionStateReducer : StoreStateReducer<TransactionEffect, Transaction
                     saveButtonIsEnabled = what.isSaveButtonEnabled
                 )
             }
+            is TransactionEffect.OperationChanged -> {
+                state.copy(operation = what.operation)
+            }
         }
     }
 

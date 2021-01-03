@@ -58,13 +58,11 @@
                 android:layout_gravity="center_horizontal">
 
                 <com.google.android.material.tabs.TabItem
-                    android:id="@+id/incomeTab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/transaction_tab_income" />
 
                 <com.google.android.material.tabs.TabItem
-                    android:id="@+id/expensesTab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/transaction_tab_expense" />

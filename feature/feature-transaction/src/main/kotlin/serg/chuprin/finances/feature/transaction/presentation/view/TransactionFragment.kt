@@ -27,6 +27,7 @@ import serg.chuprin.finances.feature.transaction.R
 import serg.chuprin.finances.feature.transaction.di.TransactionComponent
 import serg.chuprin.finances.feature.transaction.presentation.model.store.TransactionEvent
 import serg.chuprin.finances.feature.transaction.presentation.model.store.TransactionIntent
+import serg.chuprin.finances.feature.transaction.presentation.view.controller.TransactionOperationTabsController
 import javax.inject.Inject
 
 /**
@@ -42,6 +43,8 @@ class TransactionFragment : BaseFragment(R.layout.fragment_transaction) {
     private val component by component { TransactionComponent.get() }
 
     private val screenArguments by arguments<TransactionScreenArguments>()
+
+    private val tabsController = TransactionOperationTabsController()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -80,6 +83,9 @@ class TransactionFragment : BaseFragment(R.layout.fragment_transaction) {
             isSaveButtonEnabledLiveData(saveIcon::setEnabled)
             chosenCategoryLiveData(chosenCategoryTextView::setText)
             chosenMoneyAccountLiveData(chosenMoneyAccountTextView::setText)
+            chosenOperationLiveData { operation ->
+                tabsController.selectTabForOperation(transactionTypeTabLayout, operation)
+            }
             enteredAmountLiveData { enteredAmount ->
                 amountEditText.doIgnoringChanges {
                     setText(enteredAmount.formatted)
@@ -119,6 +125,10 @@ class TransactionFragment : BaseFragment(R.layout.fragment_transaction) {
         }
         categoryLayout.onClick {
             viewModel.dispatchIntent(TransactionIntent.ClickOnCategory)
+        }
+
+        tabsController.listenTabChanges(transactionTypeTabLayout, lifecycleScope) { operation ->
+            viewModel.dispatchIntent(TransactionIntent.ClickOnOperationType(operation))
         }
     }
 

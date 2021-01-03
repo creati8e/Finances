@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.BaseStoreViewModel
+import serg.chuprin.finances.feature.transaction.presentation.model.TransactionChosenOperation
 import serg.chuprin.finances.feature.transaction.presentation.model.TransactionEnteredAmount
 import serg.chuprin.finances.feature.transaction.presentation.model.store.TransactionEvent
 import serg.chuprin.finances.feature.transaction.presentation.model.store.TransactionIntent
@@ -32,6 +33,9 @@ class TransactionViewModel @Inject constructor(
 
     val isSaveButtonEnabledLiveData: LiveData<Boolean> =
         store.observeParticularStateAsLiveData { state -> state.saveButtonIsEnabled }
+
+    val chosenOperationLiveData: LiveData<TransactionChosenOperation> =
+        store.observeParticularStateAsLiveData { state -> state.operation }
 
     val eventLiveData: LiveData<TransactionEvent> = store.observeEventsAsLiveData()
 

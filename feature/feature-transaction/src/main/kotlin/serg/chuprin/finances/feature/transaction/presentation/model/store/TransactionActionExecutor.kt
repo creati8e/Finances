@@ -60,12 +60,30 @@ class TransactionActionExecutor @Inject constructor(
                     is TransactionIntent.ChooseCategory -> {
                         handleChooseCategoryIntent(intent)
                     }
+                    is TransactionIntent.ClickOnOperationType -> {
+                        handleClickOnOperationTypeIntent(intent, state)
+                    }
                 }
             }
             is TransactionAction.FormatInitialState -> {
                 handleFormatInitialStateAction(action)
             }
         }
+    }
+
+    private fun handleClickOnOperationTypeIntent(
+        intent: TransactionIntent.ClickOnOperationType,
+        state: TransactionState
+    ): Flow<TransactionEffect> {
+        if (state.operation == intent.operation) {
+            return emptyFlow()
+        }
+        val effect = TransactionEffect.OperationChanged(intent.operation)
+        // Remove chosen category if new operation type is not income or expense.
+        if (state.chosenCategory.category != null && !intent.operation.isPlain()) {
+            return flowOf(TransactionEffect.CategoryChanged(buildChosenCategory(null)), effect)
+        }
+        return flowOf(effect)
     }
 
     private fun handleChooseCategoryIntent(
