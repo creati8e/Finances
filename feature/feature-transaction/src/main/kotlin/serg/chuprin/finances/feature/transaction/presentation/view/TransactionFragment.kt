@@ -12,11 +12,10 @@ import kotlinx.coroutines.flow.onEach
 import reactivecircus.flowbinding.android.widget.afterTextChanges
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
-import serg.chuprin.finances.core.api.presentation.view.extensions.doIgnoringChanges
-import serg.chuprin.finances.core.api.presentation.view.extensions.shouldIgnoreChanges
-import serg.chuprin.finances.core.api.presentation.view.extensions.showKeyboard
+import serg.chuprin.finances.core.api.presentation.view.extensions.*
 import serg.chuprin.finances.feature.transaction.R
 import serg.chuprin.finances.feature.transaction.di.TransactionComponent
+import serg.chuprin.finances.feature.transaction.presentation.model.store.TransactionEvent
 import serg.chuprin.finances.feature.transaction.presentation.model.store.TransactionIntent
 
 /**
@@ -33,6 +32,14 @@ class TransactionFragment : BaseFragment(R.layout.fragment_transaction) {
             view.fit { Edge.Top }
         }
 
+        saveIcon.onClick {
+            viewModel.dispatchIntent(TransactionIntent.ClickOnSaveButton)
+        }
+
+        closeIcon.onClick {
+            viewModel.dispatchIntent(TransactionIntent.ClickOnCloseButton)
+        }
+
         amountEditText
             .afterTextChanges()
             .filterNot { event -> event.view.shouldIgnoreChanges }
@@ -47,6 +54,7 @@ class TransactionFragment : BaseFragment(R.layout.fragment_transaction) {
         }
 
         with(viewModel) {
+            eventLiveData(::handleEvent)
             chosenDateLiveData(chosenDateTextView::setText)
             chosenCategoryLiveData(chosenCategoryTextView::setText)
             chosenMoneyAccountLiveData(chosenMoneyAccountTextView::setText)
@@ -54,6 +62,16 @@ class TransactionFragment : BaseFragment(R.layout.fragment_transaction) {
                 amountEditText.doIgnoringChanges {
                     setText(enteredAmount.formatted)
                 }
+            }
+        }
+    }
+
+    private fun handleEvent(event: TransactionEvent) {
+        return when (event) {
+            TransactionEvent.CloseScreen -> {
+                amountEditText.hideKeyboard()
+                navController.navigateUp()
+                Unit
             }
         }
     }

@@ -11,6 +11,8 @@ import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
+import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
+import serg.chuprin.finances.core.mvi.invoke
 import serg.chuprin.finances.feature.transaction.R
 import serg.chuprin.finances.feature.transaction.presentation.model.TransactionChosenCategory
 import serg.chuprin.finances.feature.transaction.presentation.model.TransactionChosenDate
@@ -42,12 +44,34 @@ class TransactionActionExecutor @Inject constructor(
                     is TransactionIntent.EnterAmount -> {
                         handleEnterAmountIntent(intent, state)
                     }
+                    TransactionIntent.ClickOnSaveButton -> {
+                        handleClickOnSaveButtonIntent(eventConsumer)
+                    }
+                    TransactionIntent.ClickOnCloseButton -> {
+                        handleClickOnCloseButtonIntent(state, eventConsumer)
+                    }
                 }
             }
             is TransactionAction.FormatInitialState -> {
                 handleFormatInitialStateAction(action)
             }
         }
+    }
+
+    private fun handleClickOnCloseButtonIntent(
+        state: TransactionState,
+        eventConsumer: Consumer<TransactionEvent>
+    ): Flow<TransactionEffect> {
+        // TODO: Add check for unsaved changed.
+        return emptyFlowAction {
+            eventConsumer(TransactionEvent.CloseScreen)
+        }
+    }
+
+    private fun handleClickOnSaveButtonIntent(
+        eventConsumer: Consumer<TransactionEvent>
+    ): Flow<TransactionEffect> {
+        TODO("Not yet implemented")
     }
 
     private fun handleEnterAmountIntent(

@@ -5,6 +5,10 @@ package serg.chuprin.finances.feature.transaction.presentation.model.store
  */
 sealed class TransactionIntent {
 
+    object ClickOnSaveButton : TransactionIntent()
+
+    object ClickOnCloseButton : TransactionIntent()
+
     class EnterAmount(
         val amount: String
     ) : TransactionIntent()
