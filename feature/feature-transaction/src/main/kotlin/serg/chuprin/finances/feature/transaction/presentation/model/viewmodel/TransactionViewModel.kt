@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.BaseStoreViewModel
-import serg.chuprin.finances.feature.transaction.presentation.model.TransactionChosenOperation
+import serg.chuprin.finances.feature.transaction.domain.model.TransactionChosenOperation
 import serg.chuprin.finances.feature.transaction.presentation.model.TransactionEnteredAmount
 import serg.chuprin.finances.feature.transaction.presentation.model.store.TransactionEvent
 import serg.chuprin.finances.feature.transaction.presentation.model.store.TransactionIntent

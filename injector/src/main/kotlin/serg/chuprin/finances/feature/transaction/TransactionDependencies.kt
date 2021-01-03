@@ -4,6 +4,7 @@ import dagger.Component
 import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
 import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
 import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepository
+import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
@@ -22,6 +23,7 @@ interface TransactionDependencies {
     val transactionNavigation: TransactionNavigation
 
     val userRepository: UserRepository
+    val transactionRepository: TransactionRepository
     val moneyAccountRepository: MoneyAccountRepository
     val categoryRepository: TransactionCategoryRepository
 

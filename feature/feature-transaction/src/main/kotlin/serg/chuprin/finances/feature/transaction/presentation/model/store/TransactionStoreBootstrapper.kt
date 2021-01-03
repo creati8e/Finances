@@ -2,6 +2,7 @@ package serg.chuprin.finances.feature.transaction.presentation.model.store
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import serg.chuprin.finances.core.api.domain.model.moneyaccount.query.MoneyAccountsQuery
 import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
@@ -21,17 +22,19 @@ class TransactionStoreBootstrapper @Inject constructor(
 
     override fun invoke(): Flow<TransactionAction> {
         return flowOfSingleValue {
+            val userId = userRepository.getCurrentUser().id
             TransactionAction.FormatInitialState(
                 category = null,
+                userId = userId,
                 date = LocalDate.now(),
-                moneyAccount = getFirstFavoriteMoneyAccount()
+                moneyAccount = getFirstFavoriteMoneyAccount(userId)
             )
         }
     }
 
-    private suspend fun getFirstFavoriteMoneyAccount(): MoneyAccount {
+    private suspend fun getFirstFavoriteMoneyAccount(userId: Id): MoneyAccount {
         val moneyAccounts = moneyAccountRepository
-            .accountsFlow(MoneyAccountsQuery(userRepository.getCurrentUser().id))
+            .accountsFlow(MoneyAccountsQuery(userId))
             .first()
             .sortedBy(MoneyAccount::name)
 

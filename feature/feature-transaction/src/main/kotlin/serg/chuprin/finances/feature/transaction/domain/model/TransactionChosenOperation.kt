@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.transaction.presentation.model
+package serg.chuprin.finances.feature.transaction.domain.model
 
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 

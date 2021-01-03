@@ -8,7 +8,7 @@ import reactivecircus.flowbinding.material.tabSelectionEvents
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.presentation.view.extensions.doIgnoringChanges
 import serg.chuprin.finances.core.api.presentation.view.extensions.shouldIgnoreChanges
-import serg.chuprin.finances.feature.transaction.presentation.model.TransactionChosenOperation
+import serg.chuprin.finances.feature.transaction.domain.model.TransactionChosenOperation
 
 /**
  * Created by Sergey Chuprin on 03.01.2021.

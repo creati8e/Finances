@@ -17,7 +17,12 @@ import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
 import serg.chuprin.finances.core.mvi.invoke
 import serg.chuprin.finances.feature.transaction.R
-import serg.chuprin.finances.feature.transaction.presentation.model.*
+import serg.chuprin.finances.feature.transaction.domain.model.TransactionChosenOperation
+import serg.chuprin.finances.feature.transaction.domain.usecase.CreateTransactionUseCase
+import serg.chuprin.finances.feature.transaction.presentation.model.TransactionChosenCategory
+import serg.chuprin.finances.feature.transaction.presentation.model.TransactionChosenDate
+import serg.chuprin.finances.feature.transaction.presentation.model.TransactionChosenMoneyAccount
+import serg.chuprin.finances.feature.transaction.presentation.model.TransactionEnteredAmount
 import serg.chuprin.finances.feature.transaction.presentation.model.formatter.TransactionChosenDateFormatter
 import serg.chuprin.finances.feature.transaction.presentation.model.store.executor.TransactionChooseCategoryIntentExecutor
 import java.math.BigDecimal
@@ -31,6 +36,7 @@ class TransactionActionExecutor @Inject constructor(
     private val amountParser: AmountParser,
     private val resourceManger: ResourceManger,
     private val amountFormatter: AmountFormatter,
+    private val createTransactionUseCase: CreateTransactionUseCase,
     private val chosenDateFormatter: TransactionChosenDateFormatter,
     private val chooseCategoryIntentExecutor: TransactionChooseCategoryIntentExecutor
 ) : StoreActionExecutor<TransactionAction, TransactionState, TransactionEffect, TransactionEvent> {
@@ -48,7 +54,7 @@ class TransactionActionExecutor @Inject constructor(
                         handleEnterAmountIntent(intent, state)
                     }
                     TransactionIntent.ClickOnSaveButton -> {
-                        handleClickOnSaveButtonIntent(eventConsumer)
+                        handleClickOnSaveButtonIntent(state, eventConsumer)
                     }
                     TransactionIntent.ClickOnCloseButton -> {
                         handleClickOnCloseButtonIntent(state, eventConsumer)
@@ -119,9 +125,21 @@ class TransactionActionExecutor @Inject constructor(
     }
 
     private fun handleClickOnSaveButtonIntent(
+        state: TransactionState,
         eventConsumer: Consumer<TransactionEvent>
     ): Flow<TransactionEffect> {
-        TODO("Not yet implemented")
+        val amount = state.enteredAmount.amount ?: return emptyFlow()
+        return emptyFlowAction {
+            createTransactionUseCase.execute(
+                amount = amount,
+                ownerId = state.userId,
+                operation = state.operation,
+                date = state.chosenDate.date,
+                category = state.chosenCategory.category,
+                moneyAccount = state.chosenMoneyAccount.account
+            )
+            eventConsumer(TransactionEvent.CloseScreen)
+        }
     }
 
     private fun handleEnterAmountIntent(
@@ -153,9 +171,12 @@ class TransactionActionExecutor @Inject constructor(
         action: TransactionAction.FormatInitialState
     ): Flow<TransactionEffect> {
         return flowOf(
-            TransactionEffect.DateChanged(buildChosenDate(action.date)),
-            TransactionEffect.CategoryChanged(buildChosenCategory(action.category)),
-            TransactionEffect.MoneyAccountChanged(buildChosenMoneyAccount(action.moneyAccount))
+            TransactionEffect.InitialStateFormatted(
+                action.userId,
+                buildChosenDate(action.date),
+                buildChosenCategory(action.category),
+                buildChosenMoneyAccount(action.moneyAccount)
+            )
         )
     }
 

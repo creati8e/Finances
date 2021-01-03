@@ -30,6 +30,14 @@ class TransactionStateReducer : StoreStateReducer<TransactionEffect, Transaction
             is TransactionEffect.OperationChanged -> {
                 state.copy(operation = what.operation)
             }
+            is TransactionEffect.InitialStateFormatted -> {
+                state.copy(
+                    userId = what.userId,
+                    chosenDate = what.chosenDate,
+                    chosenCategory = what.chosenCategory,
+                    chosenMoneyAccount = what.chosenMoneyAccount
+                )
+            }
         }
     }
 
