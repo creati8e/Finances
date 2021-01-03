@@ -11,6 +11,10 @@ sealed class MoneyAccountsListAction {
         val moneyAccountBalances: MoneyAccountBalances
     ) : MoneyAccountsListAction()
 
+    class ChangeAccountCreationButtonVisibility(
+        val isVisible: Boolean
+    ) : MoneyAccountsListAction()
+
     class ExecuteIntent(
         val intent: MoneyAccountsListIntent
     ) : MoneyAccountsListAction()

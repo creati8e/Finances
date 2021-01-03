@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.doOnPreDraw
+import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
@@ -11,10 +12,12 @@ import kotlinx.android.synthetic.main.fragment_money_accounts_list.*
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.navigation.MoneyAccountsListNavigation
+import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountsListScreenArguments
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter
 import serg.chuprin.finances.core.api.presentation.view.adapter.diff.DiffCallback
 import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ZeroDataCellRenderer
+import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.fragmentArguments
 import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.setupToolbar
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
 import serg.chuprin.finances.core.api.presentation.view.setSharedElementTransitions
@@ -36,7 +39,7 @@ class MoneyAccountsListFragment : BaseFragment(R.layout.fragment_money_accounts_
 
     private val viewModel by viewModelFromComponent { component }
 
-    private val component by component { MoneyAccountsListComponent.get() }
+    private val component by component { MoneyAccountsListComponent.get(fragmentArguments()) }
 
     private val cellsAdapter = DiffMultiViewAdapter(DiffCallback()).apply {
         registerRenderer(ZeroDataCellRenderer())
@@ -86,6 +89,13 @@ class MoneyAccountsListFragment : BaseFragment(R.layout.fragment_money_accounts_
         with(viewModel) {
             eventsLiveData(::handleEvent)
             cellsLiveData(cellsAdapter::setItems)
+            moneyAccountCreationButtonVisibilityLiveData { isVisible ->
+                if (isVisible) {
+                    accountCreationFab.show()
+                } else {
+                    accountCreationFab.hide()
+                }
+            }
         }
     }
 
@@ -101,6 +111,15 @@ class MoneyAccountsListFragment : BaseFragment(R.layout.fragment_money_accounts_
             MoneyAccountsListEvent.NavigateToMoneyAccountCreationScreen -> {
                 val sharedElementView = accountCreationFab
                 navigation.navigateToMoneyAccountCreation(navController, sharedElementView)
+            }
+            is MoneyAccountsListEvent.ChooseMoneyAccountAndCloseScreen -> {
+                val moneyAccountId = event.moneyAccountId.value
+                setFragmentResult(
+                    MoneyAccountsListScreenArguments.Picker.REQUEST_KEY,
+                    MoneyAccountsListScreenArguments.Picker.Result(moneyAccountId).asBundle()
+                )
+                navController.navigateUp()
+                Unit
             }
         }
     }

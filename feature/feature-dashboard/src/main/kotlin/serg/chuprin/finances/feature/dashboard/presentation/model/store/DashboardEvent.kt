@@ -2,6 +2,7 @@ package serg.chuprin.finances.feature.dashboard.presentation.model.store
 
 import serg.chuprin.finances.core.api.presentation.model.cells.DataPeriodTypePopupMenuCell
 import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountDetailsScreenArguments
+import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountsListScreenArguments
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionScreenArguments
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionsReportScreenArguments
 
@@ -26,7 +27,9 @@ sealed class DashboardEvent {
         val screenArguments: TransactionScreenArguments
     ) : DashboardEvent()
 
-    object NavigateToMoneyAccountsListScreen : DashboardEvent()
+    class NavigateToMoneyAccountsListScreen(
+        val screenArguments: MoneyAccountsListScreenArguments
+    ) : DashboardEvent()
 
     object NavigateToMoneyAccountCreationScreen : DashboardEvent()
 

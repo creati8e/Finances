@@ -27,5 +27,4 @@ interface MoneyAccountsListDependencies {
 }
 
 @Component(dependencies = [CoreDependenciesProvider::class])
-internal interface MoneyAccountsListDependenciesComponent :
-    MoneyAccountsListDependencies
+internal interface MoneyAccountsListDependenciesComponent : MoneyAccountsListDependencies

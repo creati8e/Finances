@@ -16,6 +16,9 @@ class MoneyAccountsListStateReducer :
             is MoneyAccountsListEffect.CellsBuilt -> {
                 state.copy(cells = what.cells)
             }
+            is MoneyAccountsListEffect.AccountCreationButtonVisibilityChanged -> {
+                state.copy(accountCreationButtonIsVisible = what.isVisible)
+            }
         }
     }
 

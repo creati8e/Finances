@@ -8,6 +8,7 @@ import serg.chuprin.finances.core.api.presentation.model.builder.DataPeriodTypeP
 import serg.chuprin.finances.core.api.presentation.model.cells.ZeroDataCell
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountDetailsScreenArguments
+import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountsListScreenArguments
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionScreenArguments
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
@@ -187,7 +188,8 @@ class DashboardActionExecutor @Inject constructor(
         eventConsumer: Consumer<DashboardEvent>
     ): Flow<DashboardEffect> {
         return emptyFlowAction {
-            eventConsumer(DashboardEvent.NavigateToMoneyAccountsListScreen)
+            val screenArguments = MoneyAccountsListScreenArguments.Editing
+            eventConsumer(DashboardEvent.NavigateToMoneyAccountsListScreen(screenArguments))
         }
     }
 

@@ -11,4 +11,8 @@ sealed class MoneyAccountsListEffect {
         val cells: List<BaseCell>
     ) : MoneyAccountsListEffect()
 
+    class AccountCreationButtonVisibilityChanged(
+        val isVisible: Boolean
+    ) : MoneyAccountsListEffect()
+
 }

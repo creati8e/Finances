@@ -20,6 +20,9 @@ class MoneyAccountsListViewModel @Inject constructor(
     val cellsLiveData: LiveData<List<BaseCell>> =
         store.observeParticularStateAsLiveData(MoneyAccountsListState::cells)
 
+    val moneyAccountCreationButtonVisibilityLiveData: LiveData<Boolean> =
+        store.observeParticularStateAsLiveData { it.accountCreationButtonIsVisible }
+
     val eventsLiveData: LiveData<MoneyAccountsListEvent> = store.observeEventsAsLiveData()
 
     init {

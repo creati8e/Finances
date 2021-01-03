@@ -1,11 +1,13 @@
 package serg.chuprin.finances.feature.moneyaccounts.presentation.model.store
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
 import serg.chuprin.finances.core.api.presentation.builder.TransitionNameBuilder
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.model.cells.ZeroDataCell
 import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountDetailsScreenArguments
+import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountsListScreenArguments
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
@@ -20,7 +22,8 @@ import serg.chuprin.finances.core.api.R as CoreR
  */
 class MoneyAccountsListActionExecutor @Inject constructor(
     private val amountFormatter: AmountFormatter,
-    private val transitionNameBuilder: TransitionNameBuilder
+    private val transitionNameBuilder: TransitionNameBuilder,
+    private val screenArguments: MoneyAccountsListScreenArguments
 ) : StoreActionExecutor<MoneyAccountsListAction, MoneyAccountsListState, MoneyAccountsListEffect, MoneyAccountsListEvent> {
 
     override fun invoke(
@@ -43,7 +46,18 @@ class MoneyAccountsListActionExecutor @Inject constructor(
                     }
                 }
             }
+            is MoneyAccountsListAction.ChangeAccountCreationButtonVisibility -> {
+                handleChangeAccountCreationButtonVisibilityAction(action)
+            }
         }
+    }
+
+    private fun handleChangeAccountCreationButtonVisibilityAction(
+        action: MoneyAccountsListAction.ChangeAccountCreationButtonVisibility
+    ): Flow<MoneyAccountsListEffect> {
+        return flowOf(
+            MoneyAccountsListEffect.AccountCreationButtonVisibilityChanged(action.isVisible)
+        )
     }
 
     private fun handleClickOnMoneyAccountCreationButtonIntent(
@@ -58,6 +72,15 @@ class MoneyAccountsListActionExecutor @Inject constructor(
         intent: MoneyAccountsListIntent.ClickOnMoneyAccount,
         eventConsumer: Consumer<MoneyAccountsListEvent>
     ): Flow<MoneyAccountsListEffect> {
+        if (screenArguments.isInPickerMode()) {
+            return emptyFlowAction {
+                eventConsumer(
+                    MoneyAccountsListEvent.ChooseMoneyAccountAndCloseScreen(
+                        intent.cell.moneyAccount.id
+                    )
+                )
+            }
+        }
         return emptyFlowAction {
             eventConsumer(
                 MoneyAccountsListEvent.NavigateToMoneyAccountDetailsScreen(

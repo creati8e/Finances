@@ -135,9 +135,10 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
                     }
                 ).show(anchorView)
             }
-            DashboardEvent.NavigateToMoneyAccountsListScreen -> {
+            is DashboardEvent.NavigateToMoneyAccountsListScreen -> {
                 navigation.navigateToMoneyAccountsList(
                     navController,
+                    event.screenArguments,
                     recyclerView.moneyAccountsSubtitleLayout
                 )
             }

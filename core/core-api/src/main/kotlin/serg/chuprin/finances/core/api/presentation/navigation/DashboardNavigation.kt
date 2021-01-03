@@ -3,6 +3,7 @@ package serg.chuprin.finances.core.api.presentation.navigation
 import android.view.View
 import androidx.navigation.NavController
 import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountDetailsScreenArguments
+import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountsListScreenArguments
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionScreenArguments
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionsReportScreenArguments
 
@@ -19,7 +20,11 @@ interface DashboardNavigation {
 
     fun navigateToMoneyAccountCreation(navController: NavController, vararg sharedElementView: View)
 
-    fun navigateToMoneyAccountsList(navController: NavController, vararg sharedElementView: View)
+    fun navigateToMoneyAccountsList(
+        navController: NavController,
+        screenArguments: MoneyAccountsListScreenArguments,
+        sharedElementView: View
+    )
 
     fun navigateToMoneyAccountDetails(
         navController: NavController,
