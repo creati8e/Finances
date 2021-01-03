@@ -49,15 +49,15 @@
             app:layout_constraintTop_toBottomOf="@id/bodyTextView">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/positiveButton"
-                style="@style/DialogButtonPositive"
-                tools:text="Ok" />
-
-            <com.google.android.material.button.MaterialButton
                 android:id="@+id/negativeButton"
                 style="@style/DialogButtonNegative"
-                android:layout_marginStart="8dp"
                 tools:text="Cancel" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/positiveButton"
+                style="@style/DialogButtonPositive"
+                android:layout_marginStart="8dp"
+                tools:text="Ok" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
