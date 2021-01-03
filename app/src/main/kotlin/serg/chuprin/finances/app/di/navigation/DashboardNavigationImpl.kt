@@ -16,6 +16,10 @@ import serg.chuprin.finances.feature.transactions.presentation.view.Transactions
  */
 class DashboardNavigationImpl : DashboardNavigation {
 
+    override fun navigateToTransaction(navController: NavController) {
+        navController.navigate(navigateFromDashboardToTransaction())
+    }
+
     override fun navigateToTransactionsReport(
         navController: NavController,
         screenArguments: TransactionsReportScreenArguments,

@@ -85,11 +85,22 @@ class DashboardActionExecutor @Inject constructor(
                     DashboardIntent.ClickOnZeroData -> {
                         handleClickOnZeroDataIntent(eventConsumer)
                     }
+                    DashboardIntent.ClickOnTransactionCreationButton -> {
+                        handleClickOnTransactionCreationButtonIntent(eventConsumer)
+                    }
                 }
             }
             is DashboardAction.FormatDashboard -> {
                 handleFormatDashboardAction(action, state)
             }
+        }
+    }
+
+    private fun handleClickOnTransactionCreationButtonIntent(
+        eventConsumer: Consumer<DashboardEvent>
+    ): Flow<DashboardEffect> {
+        return emptyFlowAction {
+            eventConsumer(DashboardEvent.NavigateToTransactionScreen)
         }
     }
 

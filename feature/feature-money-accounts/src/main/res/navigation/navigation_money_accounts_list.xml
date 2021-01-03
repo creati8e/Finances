@@ -6,6 +6,7 @@
     app:startDestination="@id/moneyAccountsListFragment"
     tools:ignore="UnusedNavigation">
 
+    <!--TODO: Remove-->
     <fragment
         android:id="@+id/moneyAccountsListFragment"
         android:name="serg.chuprin.finances.feature.moneyaccounts.presentation.view.MoneyAccountsListFragment"

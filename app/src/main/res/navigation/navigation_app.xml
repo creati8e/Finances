@@ -51,6 +51,10 @@
                 android:id="@+id/navigateFromDashboardToUserProfile"
                 app:destination="@id/userProfileFragment" />
 
+            <action
+                android:id="@+id/navigateFromDashboardToTransaction"
+                app:destination="@id/transactionFragment" />
+
         </fragment>
 
         <fragment
@@ -105,6 +109,12 @@
                 app:destination="@id/transactionsReportFragment" />
 
         </fragment>
+
+        <fragment
+            android:id="@+id/transactionFragment"
+            android:name="serg.chuprin.finances.feature.transaction.presentation.view.TransactionFragment"
+            android:label="TransactionFragment"
+            tools:layout="@layout/fragment_transaction" />
 
         <fragment
             android:id="@+id/moneyAccountCreationFragment"

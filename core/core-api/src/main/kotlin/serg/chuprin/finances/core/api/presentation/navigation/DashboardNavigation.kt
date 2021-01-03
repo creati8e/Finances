@@ -32,4 +32,8 @@ interface DashboardNavigation {
         vararg sharedElementView: View
     )
 
+    fun navigateToTransaction(
+        navController: NavController
+    )
+
 }

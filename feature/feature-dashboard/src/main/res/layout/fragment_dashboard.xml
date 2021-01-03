@@ -71,7 +71,7 @@
         tools:listitem="@layout/cell_dashboard_preview" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/creationTransactionButton"
+        android:id="@+id/transactionCreationFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"

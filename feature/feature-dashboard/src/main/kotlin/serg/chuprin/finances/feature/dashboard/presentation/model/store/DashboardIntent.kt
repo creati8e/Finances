@@ -30,6 +30,8 @@ sealed class DashboardIntent {
 
     object ClickOnCurrentPeriodExpensesButton : DashboardIntent()
 
+    object ClickOnTransactionCreationButton : DashboardIntent()
+
     class ClickOnPeriodTypeCell(
         val periodTypeCell: DataPeriodTypePopupMenuCell
     ) : DashboardIntent()

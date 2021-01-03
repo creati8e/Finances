@@ -3,5 +3,7 @@
 
     <string name="transaction_tab_income">Income</string>
     <string name="transaction_tab_expense">Expense</string>
+    <string name="transaction_category_subtitle">Category</string>
+    <string name="transaction_date_subtitle">Date</string>
 
 </resources>

@@ -72,6 +72,7 @@ dependencies {
     implementation(project(":core:core-impl"))
     implementation(project(":feature:feature-dashboard"))
     implementation(project(":feature:feature-onboarding"))
+    implementation(project(":feature:feature-transaction"))
     implementation(project(":feature:feature-user-profile"))
     implementation(project(":feature:feature-transactions"))
     implementation(project(":feature:feature-authorization"))

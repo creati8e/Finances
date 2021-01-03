@@ -75,7 +75,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         edgeToEdge {
             view.fit { Edge.Top }
             recyclerView.fit { Edge.Bottom }
-            creationTransactionButton.fit { Edge.Bottom + Edge.Left }
+            transactionCreationFab.fit { Edge.Bottom + Edge.Left }
         }
 
         if (::cellsAdapter.isInitialized.not()) {
@@ -89,6 +89,10 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
             navigation.navigateToUserProfile(navController, it)
         }
 
+        transactionCreationFab.onClick {
+            viewModel.dispatchIntent(DashboardIntent.ClickOnTransactionCreationButton)
+        }
+
         postponeEnterTransition()
         view.doOnPreDraw { startPostponedEnterTransition() }
 
@@ -100,9 +104,9 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
             cellsLiveData(cellsAdapter::setItems)
             transactionCreationFabVisibilityLiveData { visible ->
                 if (visible) {
-                    creationTransactionButton.show()
+                    transactionCreationFab.show()
                 } else {
-                    creationTransactionButton.hide()
+                    transactionCreationFab.hide()
                 }
             }
             userPhotoLiveData { photoUrl ->
@@ -155,6 +159,9 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
                     event.arguments,
                     sharedElementView
                 )
+            }
+            DashboardEvent.NavigateToTransactionScreen -> {
+                navigation.navigateToTransaction(navController)
             }
         }
     }

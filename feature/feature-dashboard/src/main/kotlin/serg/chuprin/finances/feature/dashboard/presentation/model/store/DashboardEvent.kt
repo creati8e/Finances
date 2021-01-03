@@ -22,6 +22,8 @@ sealed class DashboardEvent {
         val arguments: TransactionsReportScreenArguments
     ) : DashboardEvent()
 
+    object NavigateToTransactionScreen : DashboardEvent()
+
     object NavigateToMoneyAccountsListScreen : DashboardEvent()
 
     object NavigateToMoneyAccountCreationScreen : DashboardEvent()
