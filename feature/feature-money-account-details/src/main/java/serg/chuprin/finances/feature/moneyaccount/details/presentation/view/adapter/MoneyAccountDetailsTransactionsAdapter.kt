@@ -12,7 +12,9 @@ import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ZeroDat
 /**
  * Created by Sergey Chuprin on 09.05.2020.
  */
-class MoneyAccountDetailsTransactionsAdapter :
+class MoneyAccountDetailsTransactionsAdapter(
+    onTransactionClicked: (TransactionCell) -> Unit
+) :
     DiffMultiViewAdapter<BaseCell>(DiffCallback()),
     DividerAdapter {
 
@@ -20,6 +22,12 @@ class MoneyAccountDetailsTransactionsAdapter :
         registerRenderer(ZeroDataCellRenderer())
         registerRenderer(TransactionCellRenderer())
         registerRenderer(DateDividerCellRenderer())
+
+        clickListener = { cell, _, _ ->
+            if (cell is TransactionCell) {
+                onTransactionClicked(cell)
+            }
+        }
     }
 
     override fun shouldDrawDividerForCellAt(adapterPosition: Int): Boolean {

@@ -114,6 +114,10 @@
                 android:id="@+id/navigateFromMoneyAccountDetailsToTransactionsReport"
                 app:destination="@id/transactionsReportFragment" />
 
+            <action
+                android:id="@+id/navigateFromMoneyAccountDetailsToTransaction"
+                app:destination="@id/transactionFragment" />
+
         </fragment>
 
         <fragment

@@ -11,6 +11,7 @@ import serg.chuprin.finances.core.api.presentation.formatter.DateTimeFormatter
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.cells.DateDividerCell
 import serg.chuprin.finances.core.api.presentation.model.cells.ZeroDataCell
+import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionScreenArguments
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
@@ -39,12 +40,29 @@ class MoneyAccountDetailsActionExecutor @Inject constructor(
                 handleFormatDetailsAction(action, eventConsumer)
             }
             is MoneyAccountDetailsAction.ExecuteIntent -> {
-                when (action.intent) {
+                when (val intent = action.intent) {
                     MoneyAccountDetailsIntent.ClickOnFavoriteIcon -> {
                         handleClickOnFavoriteIconIntent(state)
                     }
+                    is MoneyAccountDetailsIntent.ClickOnTransactionCell -> {
+                        handleClickOnTransactionCellIntent(intent, eventConsumer)
+                    }
                 }
             }
+        }
+    }
+
+    private fun handleClickOnTransactionCellIntent(
+        intent: MoneyAccountDetailsIntent.ClickOnTransactionCell,
+        eventConsumer: Consumer<MoneyAccountDetailsEvent>
+    ): Flow<MoneyAccountDetailsEffect> {
+        return emptyFlowAction {
+            val transactionCell = intent.transactionCell
+            val screenArguments = TransactionScreenArguments.Editing(
+                transactionId = transactionCell.transaction.id,
+                transitionName = transactionCell.transitionName
+            )
+            eventConsumer(MoneyAccountDetailsEvent.NavigateToTransactionScreen(screenArguments))
         }
     }
 

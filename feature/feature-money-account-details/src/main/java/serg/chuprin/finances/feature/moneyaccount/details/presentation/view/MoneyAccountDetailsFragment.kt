@@ -1,15 +1,17 @@
 package serg.chuprin.finances.feature.moneyaccount.details.presentation.view
 
+import android.content.Context
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.core.view.doOnPreDraw
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.fragment_money_account_details.*
+import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
+import serg.chuprin.finances.core.api.presentation.navigation.MoneyAccountDetailsNavigation
 import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountDetailsScreenArguments
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.adapter.decoration.CellDividerDecoration
@@ -23,33 +25,38 @@ import serg.chuprin.finances.feature.moneyaccount.details.presentation.di.MoneyA
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.model.store.MoneyAccountDetailsEvent
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.model.store.MoneyAccountDetailsIntent
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.view.adapter.MoneyAccountDetailsTransactionsAdapter
+import javax.inject.Inject
 
 /**
  * Created by Sergey Chuprin on 07.05.2020.
  */
 class MoneyAccountDetailsFragment : BaseFragment(R.layout.fragment_money_account_details) {
 
+    @Inject
+    lateinit var navigation: MoneyAccountDetailsNavigation
+
+    private val viewModel by viewModelFromComponent { component }
+
+    private val cellsAdapter = MoneyAccountDetailsTransactionsAdapter(
+        onTransactionClicked = { transactionCell ->
+            viewModel.dispatchIntent(
+                MoneyAccountDetailsIntent.ClickOnTransactionCell(transactionCell)
+            )
+        }
+    )
+
     private val screenArguments by arguments<MoneyAccountDetailsScreenArguments>()
 
-    private val viewModel by viewModelFromComponent {
-        MoneyAccountDetailsComponent.get(screenArguments)
-    }
+    private val component by component { MoneyAccountDetailsComponent.get(screenArguments) }
 
-    private val cellsAdapter = MoneyAccountDetailsTransactionsAdapter()
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        component.inject(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSharedElementTransitions()
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return super.onCreateView(inflater, container, savedInstanceState)!!.apply {
-            transitionName = screenArguments.transitionName
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -60,6 +67,26 @@ class MoneyAccountDetailsFragment : BaseFragment(R.layout.fragment_money_account
             transactionsRecyclerView.fit { Edge.Bottom }
         }
 
+        view.transitionName = screenArguments.transitionName
+        postponeEnterTransition()
+        transactionsRecyclerView.doOnPreDraw {
+            startPostponedEnterTransition()
+        }
+
+        setupClickListeners()
+
+        setupRecyclerView()
+
+        with(viewModel) {
+            eventsLiveData(::handleEvent)
+            isFavoriteLiveData(::showIsFavorite)
+            cellsLiveData(cellsAdapter::setItems)
+            balanceLiveData(balanceTextView::setText)
+            accountNameLiveData(accountNameTextView::setText)
+        }
+    }
+
+    private fun setupClickListeners() {
         backButton.onClick {
             navController.navigateUp()
         }
@@ -67,7 +94,9 @@ class MoneyAccountDetailsFragment : BaseFragment(R.layout.fragment_money_account
         favoriteImageView.onClick {
             viewModel.dispatchIntent(MoneyAccountDetailsIntent.ClickOnFavoriteIcon)
         }
+    }
 
+    private fun setupRecyclerView() {
         with(transactionsRecyclerView) {
             adapter = cellsAdapter
             layoutManager = LinearLayoutManager(requireContext())
@@ -80,14 +109,6 @@ class MoneyAccountDetailsFragment : BaseFragment(R.layout.fragment_money_account
                 )
             )
         }
-
-        with(viewModel) {
-            eventsLiveData(::handleEvent)
-            isFavoriteLiveData(::showIsFavorite)
-            cellsLiveData(cellsAdapter::setItems)
-            balanceLiveData(balanceTextView::setText)
-            accountNameLiveData(accountNameTextView::setText)
-        }
     }
 
     private fun handleEvent(event: MoneyAccountDetailsEvent) {
@@ -95,6 +116,16 @@ class MoneyAccountDetailsFragment : BaseFragment(R.layout.fragment_money_account
             MoneyAccountDetailsEvent.CloseScreen -> {
                 navController.navigateUp()
                 Unit
+            }
+            is MoneyAccountDetailsEvent.NavigateToTransactionScreen -> {
+                val sharedElementView = transactionsRecyclerView.findViewWithTag<View>(
+                    event.screenArguments.transitionName
+                )
+                navigation.navigateToTransaction(
+                    navController,
+                    event.screenArguments,
+                    sharedElementView
+                )
             }
         }
     }

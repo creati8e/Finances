@@ -15,6 +15,10 @@ import serg.chuprin.finances.core.api.presentation.navigation.*
 object NavigationModule : CoreNavigationProvider {
 
     @get:Provides
+    override val moneyAccountDetailsNavigation: MoneyAccountDetailsNavigation
+        get() = MoneyAccountDetailsNavigationImpl()
+
+    @get:Provides
     override val transactionReportNavigation: TransactionReportNavigation
         get() = TransactionReportNavigationImpl()
 
