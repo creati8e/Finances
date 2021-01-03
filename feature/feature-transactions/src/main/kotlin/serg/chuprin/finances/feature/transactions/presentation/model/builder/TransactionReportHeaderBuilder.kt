@@ -1,6 +1,5 @@
 package serg.chuprin.finances.feature.transactions.presentation.model.builder
 
-import kotlinx.coroutines.flow.first
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.User
 import serg.chuprin.finances.core.api.domain.model.category.query.TransactionCategoriesQuery
@@ -91,7 +90,7 @@ class TransactionReportHeaderBuilder @Inject constructor(
             return resourceManger.getString(R.string.no_category)
         }
         val category = categoryRepository
-            .categoriesFlow(
+            .categories(
                 TransactionCategoriesQuery(
                     type = null,
                     relation = null,
@@ -99,7 +98,6 @@ class TransactionReportHeaderBuilder @Inject constructor(
                     categoryIds = setOf(filter.categoryId)
                 )
             )
-            .first()
             .values
             .firstOrNull()
             ?.category

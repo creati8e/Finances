@@ -293,14 +293,13 @@ class TransactionActionExecutor @Inject constructor(
             return formatChosenCategory(categoryWithParent = null)
         }
         val categories = categoryRepository
-            .categoriesFlow(
+            .categories(
                 TransactionCategoriesQuery(
                     ownerId = userId,
                     categoryIds = setOf(categoryId),
                     relation = TransactionCategoriesQuery.Relation.RETRIEVE_PARENTS
                 )
             )
-            .first()
             .values
 
         val categoryWithParent = categories

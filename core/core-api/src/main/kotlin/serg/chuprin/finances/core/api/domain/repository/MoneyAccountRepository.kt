@@ -1,6 +1,7 @@
 package serg.chuprin.finances.core.api.domain.repository
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import serg.chuprin.finances.core.api.domain.model.moneyaccount.query.MoneyAccountsQuery
@@ -19,5 +20,9 @@ interface MoneyAccountRepository {
     fun accountsFlow(query: MoneyAccountsQuery): Flow<List<MoneyAccount>>
 
     suspend fun deleteAccounts(accounts: List<MoneyAccount>)
+
+    suspend fun accounts(query: MoneyAccountsQuery): List<MoneyAccount> {
+        return accountsFlow(query).firstOrNull().orEmpty()
+    }
 
 }

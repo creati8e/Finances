@@ -1,7 +1,6 @@
 package serg.chuprin.finances.feature.transaction.presentation.model.store
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import serg.chuprin.finances.core.api.domain.model.moneyaccount.query.MoneyAccountsQuery
@@ -56,13 +55,12 @@ class TransactionStoreBootstrapper @Inject constructor(
         userId: Id
     ): TransactionAction {
         val transaction = transactionRepository
-            .transactionsFlow(
+            .transactions(
                 TransactionsQuery(
                     ownerId = userId,
                     transactionIds = setOf(transactionId)
                 )
             )
-            .first()
             .first()
 
         // TODO: Remove .toLocalDate from here.
@@ -85,8 +83,7 @@ class TransactionStoreBootstrapper @Inject constructor(
 
     private suspend fun getFirstFavoriteMoneyAccount(userId: Id): MoneyAccount {
         val moneyAccounts = moneyAccountRepository
-            .accountsFlow(MoneyAccountsQuery(ownerId = userId))
-            .first()
+            .accounts(MoneyAccountsQuery(ownerId = userId))
             .sortedBy(MoneyAccount::name)
 
         return moneyAccounts

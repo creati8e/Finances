@@ -7,7 +7,6 @@ import com.pandulapeter.beagle.common.configuration.Appearance
 import com.pandulapeter.beagle.modules.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import serg.chuprin.finances.core.api.domain.model.Id
@@ -175,8 +174,7 @@ internal class AppDebugMenuImpl @Inject constructor(
 
     private suspend fun getRandomMoneyAccount(currentUser: User): MoneyAccount {
         return moneyAccountRepository
-            .accountsFlow(MoneyAccountsQuery(ownerId = currentUser.id))
-            .first()
+            .accounts(MoneyAccountsQuery(ownerId = currentUser.id))
             .shuffled()
             .first()
     }
@@ -187,8 +185,7 @@ internal class AppDebugMenuImpl @Inject constructor(
     ): TransactionCategoryWithParent? {
         return if (ThreadLocalRandom.current().nextBoolean()) {
             transactionCategoryRepository
-                .categoriesFlow(TransactionCategoriesQuery(ownerId = currentUser.id, type = type))
-                .first()
+                .categories(TransactionCategoriesQuery(ownerId = currentUser.id, type = type))
                 .entries
                 .shuffled()
                 .first()
@@ -202,18 +199,15 @@ internal class AppDebugMenuImpl @Inject constructor(
         val currentUser = userRepository.getCurrentUser()
 
         val transactions = transactionRepository
-            .transactionsFlow(TransactionsQuery(ownerId = currentUser.id))
-            .first()
+            .transactions(TransactionsQuery(ownerId = currentUser.id))
         transactionRepository.deleteTransactions(transactions)
 
         val accounts = moneyAccountRepository
-            .accountsFlow(MoneyAccountsQuery(ownerId = currentUser.id))
-            .first()
+            .accounts(MoneyAccountsQuery(ownerId = currentUser.id))
         moneyAccountRepository.deleteAccounts(accounts)
 
         val categories = transactionCategoryRepository
-            .categoriesFlow(TransactionCategoriesQuery(ownerId = currentUser.id))
-            .first()
+            .categories(TransactionCategoriesQuery(ownerId = currentUser.id))
         transactionCategoryRepository.deleteCategories(categories.values.map { it.category })
 
         onboardingRepository.onboardingStep = OnboardingStep.INITIAL
