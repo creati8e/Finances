@@ -35,7 +35,6 @@ import javax.inject.Inject
 /**
  * Created by Sergey Chuprin on 02.01.2021.
  */
-// TODO: Remove calls to user repository.
 class TransactionActionExecutor @Inject constructor(
     private val amountParser: AmountParser,
     private val resourceManger: ResourceManger,
@@ -68,7 +67,7 @@ class TransactionActionExecutor @Inject constructor(
                         handleClickOnCategoryIntent(state, eventConsumer)
                     }
                     is TransactionIntent.ChooseCategory -> {
-                        handleChooseCategoryIntent(intent)
+                        handleChooseCategoryIntent(intent, state)
                     }
                     is TransactionIntent.ClickOnOperationType -> {
                         handleClickOnOperationTypeIntent(intent, state)
@@ -143,9 +142,10 @@ class TransactionActionExecutor @Inject constructor(
     }
 
     private fun handleChooseCategoryIntent(
-        intent: TransactionIntent.ChooseCategory
+        intent: TransactionIntent.ChooseCategory,
+        state: TransactionState
     ): Flow<TransactionEffect> {
-        return chooseCategoryIntentExecutor.execute(intent)
+        return chooseCategoryIntentExecutor.execute(intent, state)
     }
 
     private fun handleClickOnCategoryIntent(
