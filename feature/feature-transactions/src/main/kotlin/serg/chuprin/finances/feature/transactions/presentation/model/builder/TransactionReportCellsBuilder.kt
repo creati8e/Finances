@@ -1,6 +1,8 @@
 package serg.chuprin.finances.feature.transactions.presentation.model.builder
 
+import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.TransactionsGroupedByDay
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import serg.chuprin.finances.core.api.presentation.builder.TransactionCellBuilder
 import serg.chuprin.finances.core.api.presentation.builder.TransactionCellBuilder.DateTimeFormattingMode
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
@@ -28,6 +30,7 @@ class TransactionReportCellsBuilder @Inject constructor(
     fun build(
         currency: Currency,
         dataPeriodAmount: BigDecimal,
+        moneyAccounts: Map<Id, MoneyAccount>,
         transactionsGroupedByDay: TransactionsGroupedByDay
     ): List<BaseCell> {
         if (transactionsGroupedByDay.isEmpty()) {
@@ -55,7 +58,8 @@ class TransactionReportCellsBuilder @Inject constructor(
                             transactionCellBuilder.build(
                                 transaction = transaction,
                                 categoryWithParent = category,
-                                dateTimeFormattingMode = DateTimeFormattingMode.ONLY_TIME
+                                dateTimeFormattingMode = DateTimeFormattingMode.ONLY_TIME,
+                                moneyAccount = moneyAccounts.getValue(transaction.moneyAccountId)
                             )
                         )
                     }

@@ -12,8 +12,8 @@ interface TransactionCategoryWithParentFormatter {
      * @return pair of parent category and child category name.
      */
     fun format(
-        transactionCategoryWithParent: TransactionCategoryWithParent?,
+        categoryWithParent: TransactionCategoryWithParent?,
         transaction: Transaction
-    ): Pair<String, String>
+    ): String
 
 }

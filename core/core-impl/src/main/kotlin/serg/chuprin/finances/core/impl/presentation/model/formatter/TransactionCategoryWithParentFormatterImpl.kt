@@ -1,9 +1,9 @@
 package serg.chuprin.finances.core.impl.presentation.model.formatter
 
 import serg.chuprin.finances.core.api.R
+import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
-import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
 import serg.chuprin.finances.core.api.presentation.formatter.TransactionCategoryWithParentFormatter
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import javax.inject.Inject
@@ -16,20 +16,20 @@ internal class TransactionCategoryWithParentFormatterImpl @Inject constructor(
 ) : TransactionCategoryWithParentFormatter {
 
     override fun format(
-        transactionCategoryWithParent: TransactionCategoryWithParent?,
+        categoryWithParent: TransactionCategoryWithParent?,
         transaction: Transaction
-    ): Pair<String, String> {
+    ): String {
         if (transaction.isBalance) {
-            return resourceManger.getString(R.string.balance_correction_transaction) to EMPTY_STRING
+            return resourceManger.getString(R.string.balance_correction_transaction)
         }
-        val (category, parentCategory) = transactionCategoryWithParent
-            ?: return resourceManger.getString(R.string.no_category) to EMPTY_STRING
-        return when {
-            parentCategory != null -> {
-                parentCategory.name to category.name
-            }
-            else -> category.name to EMPTY_STRING
+        if (categoryWithParent == null) {
+            return resourceManger.getString(R.string.no_category)
         }
+        return listOfNotNull(
+            categoryWithParent.parentCategory,
+            categoryWithParent.category
+        ).joinToString(separator = " / ", transform = TransactionCategory::name)
+
     }
 
 }

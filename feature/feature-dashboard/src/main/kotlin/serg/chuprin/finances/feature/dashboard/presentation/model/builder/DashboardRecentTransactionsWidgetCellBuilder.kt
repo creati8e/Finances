@@ -1,6 +1,8 @@
 package serg.chuprin.finances.feature.dashboard.presentation.model.builder
 
+import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.presentation.builder.TransactionCellBuilder
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
@@ -22,13 +24,14 @@ class DashboardRecentTransactionsWidgetCellBuilder @Inject constructor(
         }
         return DashboardWidgetCell.RecentTransactions(
             widget = widget,
-            cells = buildCells(widget.transactionWithCategoryMap),
+            cells = buildCells(widget.transactionWithCategoryMap, widget.moneyAccounts),
             showMoreTransactionsButtonIsVisible = widget.transactionWithCategoryMap.isNotEmpty()
         )
     }
 
     private fun buildCells(
-        transactionWithCategoryMap: Map<Transaction, TransactionCategoryWithParent?>
+        transactionWithCategoryMap: Map<Transaction, TransactionCategoryWithParent?>,
+        moneyAccounts: Map<Id, MoneyAccount>
     ): List<BaseCell> {
         if (transactionWithCategoryMap.isEmpty()) {
             return listOf(DashboardRecentTransactionsZeroDataCell())
@@ -37,6 +40,7 @@ class DashboardRecentTransactionsWidgetCellBuilder @Inject constructor(
             transactionCellBuilder.build(
                 transaction = transaction,
                 categoryWithParent = categoryWithParent,
+                moneyAccount = moneyAccounts.getValue(transaction.moneyAccountId),
                 dateTimeFormattingMode = TransactionCellBuilder.DateTimeFormattingMode.DATE_AND_TIME
             )
         }

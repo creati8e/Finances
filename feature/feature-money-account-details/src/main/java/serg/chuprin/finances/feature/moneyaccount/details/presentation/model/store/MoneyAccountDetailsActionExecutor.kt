@@ -124,6 +124,7 @@ class MoneyAccountDetailsActionExecutor @Inject constructor(
                     transactionsWithCategories.forEach { (transaction, category) ->
                         add(
                             transactionCellBuilder.build(
+                                moneyAccount = null,
                                 transaction = transaction,
                                 categoryWithParent = category,
                                 dateTimeFormattingMode = DateTimeFormattingMode.ONLY_TIME

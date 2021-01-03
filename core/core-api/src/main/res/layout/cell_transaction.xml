@@ -25,13 +25,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/parentCategoryTextView"
+        android:id="@+id/categoryTextView"
         style="@style/TextAppearance.MaterialComponents.Body1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/subcategoryTextView"
+        android:ellipsize="end"
+        android:maxLines="2"
+        app:layout_constraintBottom_toTopOf="@+id/moneyAccountTextView"
         app:layout_constraintEnd_toStartOf="@id/amountTextView"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@id/transactionColorDot"
@@ -40,18 +42,20 @@
         tools:text="@sample/sample_data.json/categories/categories/category" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/subcategoryTextView"
-        style="@style/TextAppearance.MaterialComponents.Body2"
+        android:id="@+id/moneyAccountTextView"
+        style="@style/TextAppearance.MaterialComponents.Caption"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/timeTextView"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@id/transactionColorDot"
-        app:layout_constraintTop_toBottomOf="@+id/parentCategoryTextView"
+        app:layout_constraintTop_toBottomOf="@+id/categoryTextView"
         tools:text="@sample/sample_data.json/categories/categories/category" />
 
     <androidx.appcompat.widget.AppCompatTextView

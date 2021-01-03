@@ -3,6 +3,11 @@ package serg.chuprin.finances.feature.transactions.domain.service
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.*
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.query.MoneyAccountsQuery
+import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
+import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
+import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.feature.transactions.domain.builder.TransactionReportDataPeriodAmountsBuilder
 import serg.chuprin.finances.feature.transactions.domain.model.TransactionReportRawData
 import serg.chuprin.finances.feature.transactions.domain.repository.TransactionReportFilterRepository
@@ -12,6 +17,8 @@ import javax.inject.Inject
  * Created by Sergey Chuprin on 12.12.2020.
  */
 class TransactionReportDataService @Inject constructor(
+    private val userRepository: UserRepository,
+    private val moneyAccountRepository: MoneyAccountRepository,
     private val filterRepository: TransactionReportFilterRepository,
     private val categoriesDataService: TransactionReportCategoriesDataService,
     private val transactionDataService: TransactionReportTransactionDataService,
@@ -44,8 +51,23 @@ class TransactionReportDataService @Inject constructor(
                     )
                     .share(coroutineScope = this)
 
+
+                val moneyAccountsFlow = combine(
+                    transactionsFlow,
+                    userRepository.currentUserSingleFlow()
+                ) { transactions, user ->
+                    MoneyAccountsQuery(
+                        ownerId = user.id,
+                        accountIds = transactions.mapTo(mutableSetOf(), Transaction::moneyAccountId)
+                    )
+                }
+                    .distinctUntilChanged()
+                    .flatMapLatest(moneyAccountRepository::accountsFlow)
+                    .map { moneyAccounts -> moneyAccounts.associateBy(MoneyAccount::id) }
+
                 emitAll(
                     combine(
+                        moneyAccountsFlow,
                         dataPeriodAmountsBuilder.dataFlow(
                             filterFlow = filterFlow,
                             transactionsFlow = transactionsFlow
@@ -59,9 +81,10 @@ class TransactionReportDataService @Inject constructor(
                                 transactionsFlow = transactionsFlow
                             )
                             .zip(filterFlow, ::Pair)
-                    ) { dataPeriodAmounts, (currentPeriodData, filter) ->
+                    ) { moneyAccounts, dataPeriodAmounts, (currentPeriodData, filter) ->
                         TransactionReportRawData(
                             filter = filter,
+                            moneyAccounts = moneyAccounts,
                             dataPeriodAmounts = dataPeriodAmounts,
                             listData = currentPeriodData.transactions,
                             categoryTransactions = currentPeriodData.categoryTransactions

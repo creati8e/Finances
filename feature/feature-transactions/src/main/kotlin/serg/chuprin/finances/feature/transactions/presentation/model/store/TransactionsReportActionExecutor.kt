@@ -91,6 +91,7 @@ class TransactionsReportActionExecutor @Inject constructor(
                     ?.let(categorySharesCellBuilder::build),
                 listCells = cellsBuilder.build(
                     currency = preparedData.currency,
+                    moneyAccounts = preparedData.moneyAccounts,
                     dataPeriodAmount = preparedData.dataPeriodAmount,
                     transactionsGroupedByDay = preparedData.dataPeriodTransactions
                 )

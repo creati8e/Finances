@@ -1,6 +1,7 @@
 package serg.chuprin.finances.core.impl.presentation.builder
 
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.presentation.builder.TransactionCellBuilder
 import serg.chuprin.finances.core.api.presentation.builder.TransactionCellBuilder.DateTimeFormattingMode
@@ -21,31 +22,33 @@ internal class TransactionCellBuilderImpl @Inject constructor(
     private val dateTimeFormatter: DateTimeFormatter,
     private val transitionNameBuilder: TransitionNameBuilder,
     private val categoryColorFormatter: CategoryColorFormatter,
-    private val categoryFormatter: TransactionCategoryWithParentFormatter
+    private val categoryNameFormatter: TransactionCategoryWithParentFormatter
 ) : TransactionCellBuilder {
 
     override fun build(
         transaction: Transaction,
+        moneyAccount: MoneyAccount?,
         categoryWithParent: TransactionCategoryWithParent?,
         dateTimeFormattingMode: DateTimeFormattingMode
     ): TransactionCell {
-        val (parentCategoryName, subcategoryName) =
-            categoryFormatter.format(categoryWithParent, transaction)
         return TransactionCell(
             transaction = transaction,
-            isIncome = transaction.isIncome,
-            subcategoryName = subcategoryName,
-            parentCategoryName = parentCategoryName,
+            amount = formatAmount(transaction),
+            moneyAccount = moneyAccount?.name.orEmpty(),
             time = transaction.dateTime.format(dateTimeFormattingMode),
-            transitionName = transitionNameBuilder.buildForTransaction(transaction.id),
             color = categoryColorFormatter.format(categoryWithParent?.category),
-            amount = amountFormatter.format(
-                round = false,
-                withSign = true,
-                withCurrencySymbol = true,
-                amount = transaction.amount,
-                currency = transaction.currency
-            )
+            categoryName = categoryNameFormatter.format(categoryWithParent, transaction),
+            transitionName = transitionNameBuilder.buildForTransaction(transaction.id)
+        )
+    }
+
+    private fun formatAmount(transaction: Transaction): String {
+        return amountFormatter.format(
+            round = false,
+            withSign = true,
+            withCurrencySymbol = true,
+            amount = transaction.amount,
+            currency = transaction.currency
         )
     }
 

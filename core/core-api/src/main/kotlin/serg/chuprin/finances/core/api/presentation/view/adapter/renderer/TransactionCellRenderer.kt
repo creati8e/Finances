@@ -24,10 +24,11 @@ class TransactionCellRenderer : ContainerRenderer<TransactionCell>() {
     override fun bindView(holder: ContainerHolder, model: TransactionCell) {
         with(holder) {
             timeTextView.text = model.time
-            subcategoryTextView.text = model.subcategoryName
-            parentCategoryTextView.text = model.parentCategoryName
+            categoryTextView.text = model.categoryName
             transactionColorDot.imageTintList = ColorStateList.valueOf(model.color)
-            subcategoryTextView.makeVisibleOrGone(model.subcategoryName.isNotEmpty())
+
+            moneyAccountTextView.text = model.moneyAccount
+            moneyAccountTextView.makeVisibleOrGone(model.moneyAccount.isNotEmpty())
 
             itemView.tag = model.transitionName
             itemView.transitionName = model.transitionName

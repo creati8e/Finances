@@ -347,6 +347,7 @@ class TransactionActionExecutor @Inject constructor(
     private fun formatChosenCategory(
         categoryWithParent: TransactionCategoryWithParent?
     ): TransactionChosenCategory {
+        // TODO: Use existing formatter class.
         val formattedName = if (categoryWithParent != null) {
             listOfNotNull(
                 categoryWithParent.parentCategory,

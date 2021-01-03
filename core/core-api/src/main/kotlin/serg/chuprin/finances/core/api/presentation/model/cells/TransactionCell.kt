@@ -12,9 +12,9 @@ data class TransactionCell(
     @ColorInt
     val color: Int,
     val time: String,
-    val isIncome: Boolean,
-    val subcategoryName: String,
-    val parentCategoryName: String,
+    val categoryName: String,
+    // Not visible if empty.
+    val moneyAccount: String,
     val transaction: Transaction,
     val transitionName: String
 ) : DiffCell<Id> {
