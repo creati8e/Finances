@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="wrap_content">
 
-    android:orientation="vertical">
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <include layout="@layout/cell_widget_dashboard_balance" />
+        <include layout="@layout/cell_widget_dashboard_balance" />
 
-    <include layout="@layout/cell_widget_dashboard_recent_transactions" />
+        <include layout="@layout/cell_widget_dashboard_period_selector" />
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+        <include layout="@layout/cell_widget_dashboard_recent_transactions" />
+
+        <include layout="@layout/cell_widget_dashboard_categories" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.core.widget.NestedScrollView>

@@ -31,7 +31,7 @@
         android:layout_marginTop="12dp"
         android:clipToPadding="false"
         tools:itemCount="3"
-        tools:listitem="@layout/cell_dashboard_transaction" />
+        tools:listitem="@layout/cell_transaction" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/showMoreButton"

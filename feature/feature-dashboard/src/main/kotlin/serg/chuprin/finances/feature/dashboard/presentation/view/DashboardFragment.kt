@@ -82,8 +82,10 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
             cellsAdapter = createAdapter()
         }
 
-        debugImageView.makeVisibleOrGone(BuildConfig.IS_DEBUG_MENU_ENABLED)
-        debugImageView.onClick(appDebugMenu::open)
+        with(debugImageView) {
+            onClick(appDebugMenu::open)
+            makeVisibleOrGone(BuildConfig.IS_DEBUG_MENU_ENABLED)
+        }
 
         userPhotoImageView.onViewClick {
             navigation.navigateToUserProfile(navController, it)
@@ -96,8 +98,10 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         postponeEnterTransition()
         view.doOnPreDraw { startPostponedEnterTransition() }
 
-        recyclerView.adapter = cellsAdapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        with(recyclerView) {
+            adapter = cellsAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
 
         with(viewModel) {
             eventsLiveData(::handleEvent)
