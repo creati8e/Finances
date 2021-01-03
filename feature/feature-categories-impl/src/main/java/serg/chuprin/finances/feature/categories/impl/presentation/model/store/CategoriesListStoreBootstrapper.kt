@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.onEach
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
+import serg.chuprin.finances.core.api.presentation.screen.arguments.CategoriesListScreenArguments
 import serg.chuprin.finances.core.mvi.bootstrapper.StoreBootstrapper
 import serg.chuprin.finances.feature.categories.impl.domain.usecase.GetAllUserCategoriesUseCase
 import serg.chuprin.finances.feature.categories.impl.presentation.model.expansion.CategoryListExpansionTracker
@@ -16,12 +17,13 @@ import javax.inject.Inject
 @ScreenScope
 class CategoriesListStoreBootstrapper @Inject constructor(
     private val useCase: GetAllUserCategoriesUseCase,
+    private val screenArguments: CategoriesListScreenArguments,
     private val expansionTracker: CategoryListExpansionTracker
 ) : StoreBootstrapper<CategoriesListAction> {
 
     override fun invoke(): Flow<CategoriesListAction> {
         return combine(
-            useCase.execute(),
+            useCase.execute(screenArguments.categoryType),
             expansionTracker.expansionsFlow.onEach {
                 Timber.d { "Emit data expansionsFlow" }
             },

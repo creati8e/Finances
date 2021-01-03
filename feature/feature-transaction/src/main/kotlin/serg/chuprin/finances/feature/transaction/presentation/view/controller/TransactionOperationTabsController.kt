@@ -2,10 +2,7 @@ package serg.chuprin.finances.feature.transaction.presentation.view.controller
 
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.google.android.material.tabs.TabLayout
-import kotlinx.coroutines.flow.filterIsInstance
-import kotlinx.coroutines.flow.filterNot
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import reactivecircus.flowbinding.material.TabLayoutSelectionEvent
 import reactivecircus.flowbinding.material.tabSelectionEvents
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
@@ -32,8 +29,11 @@ class TransactionOperationTabsController {
     ) {
         tabLayout
             .tabSelectionEvents()
+            // Skip initial event.
+            .drop(1)
             .filterNot { event -> event.tabLayout.shouldIgnoreChanges }
             .filterIsInstance<TabLayoutSelectionEvent.TabSelected>()
+            .distinctUntilChangedBy { selected -> selected.tab.position }
             .onEach { event ->
                 onTabSelected(operationTabPositions.getValue(event.tab.position))
             }

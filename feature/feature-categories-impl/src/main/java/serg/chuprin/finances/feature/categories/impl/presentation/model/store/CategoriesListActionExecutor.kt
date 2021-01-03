@@ -87,7 +87,12 @@ class CategoriesListActionExecutor @Inject constructor(
         return flowOfSingleValue {
             delay(300)
             // TODO: remove blocking flow.
-            val categories = searchUserCategoriesUseCase.execute(intent.query).first()
+            val categories = searchUserCategoriesUseCase
+                .execute(
+                    nameQuery = intent.query,
+                    categoryType = screenArguments.categoryType
+                )
+                .first()
             CategoriesListEffect.CellsBuilt(buildCellsForSearch(categories))
         }.takeUntil(actionsFlow.filter { action ->
             action is CategoriesListAction.ExecuteIntent

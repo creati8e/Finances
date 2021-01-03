@@ -5,6 +5,7 @@ import android.os.Parcelable
 import androidx.core.os.bundleOf
 import kotlinx.android.parcel.Parcelize
 import serg.chuprin.finances.core.api.domain.model.Id
+import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryType
 
 /**
  * Created by Sergey Chuprin on 28.12.2020.
@@ -15,9 +16,13 @@ sealed class CategoriesListScreenArguments : Parcelable {
      * Allow user to select single category (category picker).
      */
     @Parcelize
-    object Picker : CategoriesListScreenArguments() {
+    class Picker(
+        override val categoryType: TransactionCategoryType?
+    ) : CategoriesListScreenArguments() {
 
-        const val REQUEST_KEY = "CATEGORIES_LIST_SCREEN_PICKER_REQUEST_KEY"
+        companion object {
+            const val REQUEST_KEY = "CATEGORIES_LIST_SCREEN_PICKER_REQUEST_KEY"
+        }
 
         @Parcelize
         class Result(
@@ -45,6 +50,8 @@ sealed class CategoriesListScreenArguments : Parcelable {
      */
     @Parcelize
     object Editing : CategoriesListScreenArguments()
+
+    open val categoryType: TransactionCategoryType? = null
 
     fun isInPickerMode(): Boolean = this is Picker
 

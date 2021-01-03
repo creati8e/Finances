@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.mapLatest
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
+import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryType
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithChildren
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
 import serg.chuprin.finances.core.api.domain.model.category.query.TransactionCategoriesQuery
@@ -35,15 +36,16 @@ class CategoriesDataService @Inject constructor(
     /**
      * @return flow of set of parent categories with their children list.
      */
-    fun dataFlow(): Flow<Set<TransactionCategoryWithChildren>> {
+    fun dataFlow(categoryType: TransactionCategoryType?): Flow<Set<TransactionCategoryWithChildren>> {
         return userRepository
             .currentUserSingleFlow()
             .flatMapLatest { user ->
                 categoryRepository
                     .categoriesFlow(
                         TransactionCategoriesQuery(
-                            categoryIds = emptySet(),
-                            ownerId = user.id
+                            ownerId = user.id,
+                            type = categoryType,
+                            categoryIds = emptySet()
                         )
                     )
             }

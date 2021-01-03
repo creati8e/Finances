@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
+import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryType
 import serg.chuprin.finances.core.api.domain.model.category.query.TransactionCategoriesQuery
 import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
@@ -25,7 +26,10 @@ class SearchUserCategoriesUseCase @Inject constructor(
 
     }
 
-    fun execute(nameQuery: String): Flow<Collection<TransactionCategory>> {
+    fun execute(
+        nameQuery: String,
+        categoryType: TransactionCategoryType?
+    ): Flow<Collection<TransactionCategory>> {
         return userRepository
             .currentUserSingleFlow()
             .flatMapLatest { user ->
@@ -33,6 +37,7 @@ class SearchUserCategoriesUseCase @Inject constructor(
                     .categoriesFlow(
                         TransactionCategoriesQuery(
                             ownerId = user.id,
+                            type = categoryType,
                             categoryIds = emptySet(),
                             searchByName = nameQuery
                         )
