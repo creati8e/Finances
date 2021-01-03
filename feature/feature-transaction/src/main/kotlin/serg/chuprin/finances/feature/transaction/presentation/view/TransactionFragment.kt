@@ -3,6 +3,7 @@ package serg.chuprin.finances.feature.transaction.presentation.view
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.activity.addCallback
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
@@ -94,6 +95,10 @@ class TransactionFragment :
 
         setCategoryPickerResultListener()
         setMoneyAccountPickerResultListener()
+
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            viewModel.dispatchIntent(TransactionIntent.ClickOnCloseButton)
+        }
 
         with(viewModel) {
             eventLiveData(::handleEvent)
