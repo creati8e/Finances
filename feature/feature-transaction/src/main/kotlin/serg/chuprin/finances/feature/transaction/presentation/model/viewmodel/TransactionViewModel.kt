@@ -1,5 +1,6 @@
 package serg.chuprin.finances.feature.transaction.presentation.model.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.BaseStoreViewModel
@@ -14,6 +15,12 @@ import javax.inject.Inject
 class TransactionViewModel @Inject constructor(
     store: TransactionStore
 ) : BaseStoreViewModel<TransactionIntent>() {
+
+    val chosenDateLiveData: LiveData<String> =
+        store.observeParticularStateAsLiveData { it.chosenDate.formatted }
+
+    val chosenCategoryLiveData: LiveData<String> =
+        store.observeParticularStateAsLiveData { it.chosenCategory.formattedName }
 
     init {
         store.start(intentsFlow(), viewModelScope)

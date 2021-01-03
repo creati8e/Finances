@@ -11,7 +11,14 @@ class TransactionStateReducer : StoreStateReducer<TransactionEffect, Transaction
         what: TransactionEffect,
         state: TransactionState
     ): TransactionState {
-        TODO("Not yet implemented")
+        return when (what) {
+            is TransactionEffect.DateChanged -> {
+                state.copy(chosenDate = what.chosenDate)
+            }
+            is TransactionEffect.CategoryChanged -> {
+                state.copy(chosenCategory = what.chosenCategory)
+            }
+        }
     }
 
 }
