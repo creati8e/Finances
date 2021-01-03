@@ -36,9 +36,16 @@
             @style/MaterialDatePickerDaySelectedStyle
         </item>
 
+        <item name="shapeAppearance">@style/MaterialDatePickerShapeAppearance</item>
+
     </style>
 
     <!--region Picker's parts-->
+
+    <style name="MaterialDatePickerShapeAppearance">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/cornerRadiusBig</item>
+    </style>
 
     <style name="MaterialDatePickerHeader">
         <item name="android:background">?attr/colorAccent</item>
