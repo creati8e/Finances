@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="MaterialDatePicker"
+        parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+
+        <item name="materialCalendarStyle">@style/MaterialDatePickerStyle</item>
+
+        <item name="materialCalendarHeaderLayout">@style/MaterialDatePickerHeader</item>
+        <item name="materialCalendarHeaderToggleButton">
+            @style/MaterialDatePickerHeaderToggleButton
+        </item>
+
+        <!--Buttons bar-->
+        <item name="buttonBarNegativeButtonStyle">
+            @style/MaterialDatePickerButton
+        </item>
+        <item name="buttonBarPositiveButtonStyle">
+            @style/MaterialDatePickerButton
+        </item>
+
+        <!-- Navigation Styles -->
+        <item name="materialCalendarYearNavigationButton">
+            @style/MaterialDatePickerYearNavigationButton
+        </item>
+        <item name="materialCalendarMonthNavigationButton">
+            @style/MaterialDatePickerMonthNavigationButton
+        </item>
+
+    </style>
+
+    <style name="MaterialDatePickerStyle"
+        parent="Widget.MaterialComponents.MaterialCalendar">
+
+        <item name="daySelectedStyle">
+            @style/MaterialDatePickerDaySelectedStyle
+        </item>
+
+    </style>
+
+    <!--region Picker's parts-->
+
+    <style name="MaterialDatePickerHeader">
+        <item name="android:background">?attr/colorAccent</item>
+    </style>
+
+    <style name="MaterialDatePickerHeaderToggleButton"
+        parent="Widget.MaterialComponents.MaterialCalendar.HeaderToggleButton">
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="MaterialDatePickerButton"
+        parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/color_selector_button_text</item>
+        <item name="rippleColor">?colorControlHighlight</item>
+    </style>
+
+    <style name="MaterialDatePickerYearNavigationButton"
+        parent="Widget.MaterialComponents.MaterialCalendar.YearNavigationButton">
+        <item name="android:textColor">@color/color_selector_button_text</item>
+        <item name="rippleColor">?colorControlHighlight</item>
+    </style>
+
+    <style name="MaterialDatePickerMonthNavigationButton"
+        parent="Widget.MaterialComponents.MaterialCalendar.MonthNavigationButton">
+        <item name="android:textColor">@color/color_selector_button_text</item>
+        <item name="rippleColor">?colorControlHighlight</item>
+    </style>
+
+    <style name="MaterialDatePickerDaySelectedStyle"
+        parent="Widget.MaterialComponents.MaterialCalendar.Day.Selected">
+        <item name="itemFillColor">?colorControlHighlight</item>
+    </style>
+
+    <!--endregion-->
+
+</resources>
