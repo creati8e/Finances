@@ -68,11 +68,32 @@ class TransactionActionExecutor @Inject constructor(
                     is TransactionIntent.ClickOnOperationType -> {
                         handleClickOnOperationTypeIntent(intent, state)
                     }
+                    TransactionIntent.ClickOnDate -> {
+                        handleClickOnDate(state, eventConsumer)
+                    }
+                    is TransactionIntent.ChooseDate -> {
+                        handleChooseDateIntent(intent)
+                    }
                 }
             }
             is TransactionAction.FormatInitialState -> {
                 handleFormatInitialStateAction(action)
             }
+        }
+    }
+
+    private fun handleChooseDateIntent(
+        intent: TransactionIntent.ChooseDate
+    ): Flow<TransactionEffect> {
+        return flowOf(TransactionEffect.DateChanged(buildChosenDate(intent.localDate)))
+    }
+
+    private fun handleClickOnDate(
+        state: TransactionState,
+        eventConsumer: Consumer<TransactionEvent>
+    ): Flow<TransactionEffect> {
+        return emptyFlowAction {
+            eventConsumer(TransactionEvent.ShowDatePicker(state.chosenDate.localDate))
         }
     }
 
@@ -134,7 +155,7 @@ class TransactionActionExecutor @Inject constructor(
                 amount = amount,
                 ownerId = state.userId,
                 operation = state.operation,
-                date = state.chosenDate.date,
+                date = state.chosenDate.localDate,
                 category = state.chosenCategory.category,
                 moneyAccount = state.chosenMoneyAccount.account
             )

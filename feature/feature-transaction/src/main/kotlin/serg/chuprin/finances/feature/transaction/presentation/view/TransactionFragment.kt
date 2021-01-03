@@ -7,6 +7,7 @@ import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import androidx.transition.doOnEnd
+import com.google.android.material.datepicker.MaterialDatePicker
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.fragment_transaction.*
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import reactivecircus.flowbinding.android.widget.afterTextChanges
+import serg.chuprin.finances.core.api.extensions.toLocalDateUTC
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.navigation.TransactionNavigation
@@ -28,6 +30,8 @@ import serg.chuprin.finances.feature.transaction.di.TransactionComponent
 import serg.chuprin.finances.feature.transaction.presentation.model.store.TransactionEvent
 import serg.chuprin.finances.feature.transaction.presentation.model.store.TransactionIntent
 import serg.chuprin.finances.feature.transaction.presentation.view.controller.TransactionOperationTabsController
+import java.time.ZoneOffset
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -126,6 +130,9 @@ class TransactionFragment : BaseFragment(R.layout.fragment_transaction) {
         categoryLayout.onClick {
             viewModel.dispatchIntent(TransactionIntent.ClickOnCategory)
         }
+        dateLayout.onClick {
+            viewModel.dispatchIntent(TransactionIntent.ClickOnDate)
+        }
 
         tabsController.listenTabChanges(transactionTypeTabLayout, lifecycleScope) { operation ->
             viewModel.dispatchIntent(TransactionIntent.ClickOnOperationType(operation))
@@ -152,6 +159,25 @@ class TransactionFragment : BaseFragment(R.layout.fragment_transaction) {
             is TransactionEvent.NavigateToCategoryPickerScreen -> {
                 amountEditText.hideKeyboard()
                 navigation.navigateToCategoryPicker(navController, event.screenArguments)
+            }
+            is TransactionEvent.ShowDatePicker -> {
+                MaterialDatePicker.Builder
+                    .datePicker()
+                    .setSelection(
+                        event.localDate
+                            .atStartOfDay()
+                            .toInstant(ZoneOffset.UTC)
+                            .toEpochMilli()
+                    )
+                    .setTheme(R.style.MaterialDatePicker)
+                    .build()
+                    .apply {
+                        addOnPositiveButtonClickListener { dateMillis ->
+                            val localDate = Date(dateMillis).toLocalDateUTC()
+                            viewModel.dispatchIntent(TransactionIntent.ChooseDate(localDate))
+                        }
+                    }
+                    .show(childFragmentManager, "MaterialDatePicker_TAG")
             }
         }
     }

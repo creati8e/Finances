@@ -23,7 +23,7 @@ class TransactionChosenDateFormatter @Inject constructor(
             return resourceManger.getString(R.string.transaction_date_yesterday)
         }
 
-        return DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT).format(date)
+        return DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).format(date)
     }
 
 }

@@ -1,9 +1,6 @@
 package serg.chuprin.finances.core.api.extensions
 
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.LocalTime
-import java.time.ZoneOffset
+import java.time.*
 import java.time.temporal.ChronoField
 import java.time.temporal.TemporalAdjusters
 import java.time.temporal.WeekFields
@@ -17,6 +14,13 @@ fun Date.toLocalDateTimeUTC(): LocalDateTime {
         .ofEpochMilli(time)
         .atOffset(ZoneOffset.UTC)
         .toLocalDateTime()
+}
+
+fun Date.toLocalDateUTC(): LocalDate {
+    return Instant
+        .ofEpochMilli(time)
+        .atOffset(ZoneOffset.UTC)
+        .toLocalDate()
 }
 
 fun LocalDateTime.toDateUTC(): Date {

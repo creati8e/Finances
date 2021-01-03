@@ -36,6 +36,6 @@ data class TransactionState(
     ),
     val chosenDate: TransactionChosenDate = TransactionChosenDate(
         formatted = EMPTY_STRING,
-        date = LocalDate.now()
+        localDate = LocalDate.now()
     )
 )

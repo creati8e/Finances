@@ -7,5 +7,5 @@ import java.time.LocalDate
  */
 data class TransactionChosenDate(
     val formatted: String,
-    val date: LocalDate
+    val localDate: LocalDate
 )
