@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryType
+import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
 import serg.chuprin.finances.core.api.domain.model.category.query.TransactionCategoriesQuery
 import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
@@ -247,8 +248,8 @@ class TransactionActionExecutor @Inject constructor(
                     currency = chosenMoneyAccount.account.currency
                 ),
                 chosenCategory = getCategory(
-                    categoryId = action.categoryId,
-                    userId = action.userId
+                    userId = action.userId,
+                    categoryId = action.categoryId
                 ),
                 userId = action.userId,
                 operation = action.operation,
@@ -289,24 +290,24 @@ class TransactionActionExecutor @Inject constructor(
         userId: Id,
     ): TransactionChosenCategory {
         if (categoryId == null) {
-            return TransactionChosenCategory(
-                category = null,
-                formattedName = resourceManger.getString(R.string.no_category)
-            )
+            return formatChosenCategory(categoryWithParent = null)
         }
-        val category = categoryRepository
+        val categories = categoryRepository
             .categoriesFlow(
                 TransactionCategoriesQuery(
                     ownerId = userId,
-                    categoryIds = setOf(categoryId)
+                    categoryIds = setOf(categoryId),
+                    relation = TransactionCategoriesQuery.Relation.RETRIEVE_PARENTS
                 )
             )
             .first()
             .values
-            .first()
-            .category
 
-        return formatChosenCategory(category)
+        val categoryWithParent = categories
+            .firstOrNull { it.parentCategory != null }
+            ?: categories.first()
+
+        return formatChosenCategory(categoryWithParent)
     }
 
     private fun buildEnteredAmount(
@@ -325,9 +326,18 @@ class TransactionActionExecutor @Inject constructor(
         )
     }
 
-    private fun formatChosenCategory(category: TransactionCategory?): TransactionChosenCategory {
-        val formattedName = category?.name ?: resourceManger.getString(R.string.no_category)
-        return TransactionChosenCategory(formattedName, category)
+    private fun formatChosenCategory(
+        categoryWithParent: TransactionCategoryWithParent?
+    ): TransactionChosenCategory {
+        val formattedName = if (categoryWithParent != null) {
+            listOfNotNull(
+                categoryWithParent.parentCategory,
+                categoryWithParent.category
+            ).joinToString(separator = " / ", transform = TransactionCategory::name)
+        } else {
+            resourceManger.getString(R.string.no_category)
+        }
+        return TransactionChosenCategory(formattedName, categoryWithParent?.category)
     }
 
     private fun formatChosenDate(date: LocalDate): TransactionChosenDate {

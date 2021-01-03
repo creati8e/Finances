@@ -22,4 +22,6 @@ interface CoreNavigationProvider {
 
     val transactionReportNavigation: TransactionReportNavigation
 
+    val moneyAccountDetailsNavigation: MoneyAccountDetailsNavigation
+
 }
