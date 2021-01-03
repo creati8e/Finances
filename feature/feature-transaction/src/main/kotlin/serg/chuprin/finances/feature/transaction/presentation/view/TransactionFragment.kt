@@ -136,6 +136,7 @@ class TransactionFragment :
     private fun setAmountListener() {
         amountEditText
             .afterTextChanges()
+            .skipInitialValue()
             .filterNot { event -> event.view.shouldIgnoreChanges }
             .onEach { event ->
                 val str = event.editable?.toString().orEmpty()
