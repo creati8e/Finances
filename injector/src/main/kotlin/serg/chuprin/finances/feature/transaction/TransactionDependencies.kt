@@ -2,6 +2,8 @@ package serg.chuprin.finances.feature.transaction
 
 import dagger.Component
 import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
+import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
+import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 
 /**
@@ -10,6 +12,9 @@ import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 interface TransactionDependencies {
 
     val resourceManger: ResourceManger
+
+    val userRepository: UserRepository
+    val moneyAccountRepository: MoneyAccountRepository
 
 }
 

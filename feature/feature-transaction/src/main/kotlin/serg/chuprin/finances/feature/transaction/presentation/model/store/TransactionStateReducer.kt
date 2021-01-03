@@ -18,6 +18,9 @@ class TransactionStateReducer : StoreStateReducer<TransactionEffect, Transaction
             is TransactionEffect.CategoryChanged -> {
                 state.copy(chosenCategory = what.chosenCategory)
             }
+            is TransactionEffect.MoneyAccountChanged -> {
+                state.copy(chosenMoneyAccount = what.chosenMoneyAccount)
+            }
         }
     }
 

@@ -16,11 +16,14 @@ class TransactionViewModel @Inject constructor(
     store: TransactionStore
 ) : BaseStoreViewModel<TransactionIntent>() {
 
+    val chosenMoneyAccountLiveData: LiveData<String> =
+        store.observeParticularStateAsLiveData { state -> state.chosenMoneyAccount.formattedName }
+
     val chosenDateLiveData: LiveData<String> =
-        store.observeParticularStateAsLiveData { it.chosenDate.formatted }
+        store.observeParticularStateAsLiveData { state -> state.chosenDate.formatted }
 
     val chosenCategoryLiveData: LiveData<String> =
-        store.observeParticularStateAsLiveData { it.chosenCategory.formattedName }
+        store.observeParticularStateAsLiveData { state -> state.chosenCategory.formattedName }
 
     init {
         store.start(intentsFlow(), viewModelScope)

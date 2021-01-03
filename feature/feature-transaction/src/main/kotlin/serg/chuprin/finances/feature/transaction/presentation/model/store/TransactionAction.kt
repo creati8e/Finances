@@ -1,6 +1,7 @@
 package serg.chuprin.finances.feature.transaction.presentation.model.store
 
 import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import java.time.LocalDate
 
 /**
@@ -14,6 +15,7 @@ sealed class TransactionAction {
 
     class FormatInitialState(
         val date: LocalDate,
+        val moneyAccount: MoneyAccount,
         val category: TransactionCategory?
     ) : TransactionAction()
 

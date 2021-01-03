@@ -5,6 +5,8 @@
     <string name="transaction_tab_expense">Расход</string>
     <string name="transaction_category_subtitle">Категория</string>
 
+    <string name="transaction_money_account_subtitle">Счет</string>
+
     <string name="transaction_date_subtitle">Дата</string>
     <string name="transaction_date_today">Сегодня</string>
     <string name="transaction_date_yesterday">Вчера</string>

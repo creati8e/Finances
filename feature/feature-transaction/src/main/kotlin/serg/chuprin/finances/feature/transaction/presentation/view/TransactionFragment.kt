@@ -27,6 +27,7 @@ class TransactionFragment : BaseFragment(R.layout.fragment_transaction) {
         with(viewModel) {
             chosenDateLiveData(chosenDateTextView::setText)
             chosenCategoryLiveData(chosenCategoryTextView::setText)
+            chosenMoneyAccountLiveData(chosenMoneyAccountTextView::setText)
         }
     }
 
