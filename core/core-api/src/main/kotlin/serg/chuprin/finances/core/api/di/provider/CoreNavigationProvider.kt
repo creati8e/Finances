@@ -7,6 +7,8 @@ import serg.chuprin.finances.core.api.presentation.navigation.*
  */
 interface CoreNavigationProvider {
 
+    val transactionNavigation: TransactionNavigation
+
     val dashboardNavigation: DashboardNavigation
 
     val onboardingNavigation: OnboardingNavigation

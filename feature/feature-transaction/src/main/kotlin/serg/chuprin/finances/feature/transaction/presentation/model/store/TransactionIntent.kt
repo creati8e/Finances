@@ -1,9 +1,13 @@
 package serg.chuprin.finances.feature.transaction.presentation.model.store
 
+import serg.chuprin.finances.core.api.domain.model.Id
+
 /**
  * Created by Sergey Chuprin on 02.01.2021.
  */
 sealed class TransactionIntent {
+
+    object ClickOnCategory : TransactionIntent()
 
     object ClickOnSaveButton : TransactionIntent()
 
@@ -11,6 +15,10 @@ sealed class TransactionIntent {
 
     class EnterAmount(
         val amount: String
+    ) : TransactionIntent()
+
+    class ChooseCategory(
+        val categoryId: Id
     ) : TransactionIntent()
 
 }

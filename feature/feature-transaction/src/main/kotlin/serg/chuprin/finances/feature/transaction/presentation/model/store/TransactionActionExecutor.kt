@@ -9,6 +9,7 @@ import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
+import serg.chuprin.finances.core.api.presentation.screen.arguments.CategoriesListScreenArguments
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
@@ -19,6 +20,7 @@ import serg.chuprin.finances.feature.transaction.presentation.model.TransactionC
 import serg.chuprin.finances.feature.transaction.presentation.model.TransactionChosenMoneyAccount
 import serg.chuprin.finances.feature.transaction.presentation.model.TransactionEnteredAmount
 import serg.chuprin.finances.feature.transaction.presentation.model.formatter.TransactionChosenDateFormatter
+import serg.chuprin.finances.feature.transaction.presentation.model.store.executor.TransactionChooseCategoryIntentExecutor
 import java.math.BigDecimal
 import java.time.LocalDate
 import javax.inject.Inject
@@ -30,7 +32,8 @@ class TransactionActionExecutor @Inject constructor(
     private val amountParser: AmountParser,
     private val resourceManger: ResourceManger,
     private val amountFormatter: AmountFormatter,
-    private val chosenDateFormatter: TransactionChosenDateFormatter
+    private val chosenDateFormatter: TransactionChosenDateFormatter,
+    private val chooseCategoryIntentExecutor: TransactionChooseCategoryIntentExecutor
 ) : StoreActionExecutor<TransactionAction, TransactionState, TransactionEffect, TransactionEvent> {
 
     override fun invoke(
@@ -51,11 +54,32 @@ class TransactionActionExecutor @Inject constructor(
                     TransactionIntent.ClickOnCloseButton -> {
                         handleClickOnCloseButtonIntent(state, eventConsumer)
                     }
+                    TransactionIntent.ClickOnCategory -> {
+                        handleClickOnCategoryIntent(eventConsumer)
+                    }
+                    is TransactionIntent.ChooseCategory -> {
+                        handleChooseCategoryIntent(intent)
+                    }
                 }
             }
             is TransactionAction.FormatInitialState -> {
                 handleFormatInitialStateAction(action)
             }
+        }
+    }
+
+    private fun handleChooseCategoryIntent(
+        intent: TransactionIntent.ChooseCategory
+    ): Flow<TransactionEffect> {
+        return chooseCategoryIntentExecutor.execute(intent)
+    }
+
+    private fun handleClickOnCategoryIntent(
+        eventConsumer: Consumer<TransactionEvent>
+    ): Flow<TransactionEffect> {
+        return emptyFlowAction {
+            val screenArguments = CategoriesListScreenArguments.Picker
+            eventConsumer(TransactionEvent.NavigateToCategoryPickerScreen(screenArguments))
         }
     }
 

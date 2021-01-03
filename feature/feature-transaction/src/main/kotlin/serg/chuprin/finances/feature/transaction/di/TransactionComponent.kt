@@ -2,9 +2,11 @@ package serg.chuprin.finances.feature.transaction.di
 
 import dagger.Component
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
+import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.InjectableComponent
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.ViewModelComponent
 import serg.chuprin.finances.feature.transaction.TransactionDependencies
 import serg.chuprin.finances.feature.transaction.presentation.model.viewmodel.TransactionViewModel
+import serg.chuprin.finances.feature.transaction.presentation.view.TransactionFragment
 import serg.chuprin.finances.injector.Injector
 
 /**
@@ -15,7 +17,9 @@ import serg.chuprin.finances.injector.Injector
     modules = [TransactionModule::class],
     dependencies = [TransactionDependencies::class]
 )
-interface TransactionComponent : ViewModelComponent<TransactionViewModel> {
+interface TransactionComponent :
+    InjectableComponent<TransactionFragment>,
+    ViewModelComponent<TransactionViewModel> {
 
     companion object {
 

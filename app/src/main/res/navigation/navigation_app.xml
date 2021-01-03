@@ -114,7 +114,13 @@
             android:id="@+id/transactionFragment"
             android:name="serg.chuprin.finances.feature.transaction.presentation.view.TransactionFragment"
             android:label="TransactionFragment"
-            tools:layout="@layout/fragment_transaction" />
+            tools:layout="@layout/fragment_transaction">
+
+            <action
+                android:id="@+id/navigateFromTransactionToCategoriesList"
+                app:destination="@id/categoriesListFragment" />
+
+        </fragment>
 
         <fragment
             android:id="@+id/moneyAccountCreationFragment"
