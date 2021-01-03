@@ -5,6 +5,7 @@ import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
 import serg.chuprin.finances.core.api.presentation.builder.TransitionNameBuilder
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.model.cells.ZeroDataCell
+import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountDetailsScreenArguments
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
@@ -60,8 +61,10 @@ class MoneyAccountsListActionExecutor @Inject constructor(
         return emptyFlowAction {
             eventConsumer(
                 MoneyAccountsListEvent.NavigateToMoneyAccountDetailsScreen(
-                    transitionName = intent.cell.transitionName,
-                    moneyAccountId = intent.cell.moneyAccount.id
+                    MoneyAccountDetailsScreenArguments(
+                        transitionName = intent.cell.transitionName,
+                        moneyAccountId = intent.cell.moneyAccount.id
+                    )
                 )
             )
         }

@@ -2,13 +2,12 @@ package serg.chuprin.finances.app.di.navigation
 
 import android.view.View
 import androidx.navigation.NavController
-import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.presentation.navigation.DashboardNavigation
+import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountDetailsScreenArguments
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionScreenArguments
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionsReportScreenArguments
 import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.toBundle
 import serg.chuprin.finances.feature.dashboard.presentation.view.DashboardFragmentDirections.*
-import serg.chuprin.finances.feature.moneyaccount.details.presentation.arguments.MoneyAccountDetailsScreenArguments
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.view.MoneyAccountDetailsFragment
 import serg.chuprin.finances.feature.transaction.presentation.view.TransactionFragment
 import serg.chuprin.finances.feature.transactions.presentation.view.TransactionsReportFragment
@@ -66,14 +65,12 @@ class DashboardNavigationImpl : DashboardNavigation {
 
     override fun navigateToMoneyAccountDetails(
         navController: NavController,
-        moneyAccountId: Id,
-        transitionName: String,
+        screenArguments: MoneyAccountDetailsScreenArguments,
         vararg sharedElementView: View
     ) {
         navController.navigate(
             navigateFromDashboardToMoneyAccountDetails().actionId,
-            MoneyAccountDetailsScreenArguments(moneyAccountId, transitionName)
-                .toBundle<MoneyAccountDetailsFragment>(),
+            screenArguments.toBundle<MoneyAccountDetailsFragment>(),
             null,
             buildExtrasForSharedElements(sharedElementView)
         )

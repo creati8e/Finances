@@ -7,6 +7,7 @@ import serg.chuprin.finances.core.api.presentation.builder.TransitionNameBuilder
 import serg.chuprin.finances.core.api.presentation.model.builder.DataPeriodTypePopupMenuCellsBuilder
 import serg.chuprin.finances.core.api.presentation.model.cells.ZeroDataCell
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
+import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountDetailsScreenArguments
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionScreenArguments
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
@@ -173,8 +174,10 @@ class DashboardActionExecutor @Inject constructor(
         return emptyFlowAction {
             eventConsumer(
                 DashboardEvent.NavigateToMoneyAccountDetailsScreen(
-                    transitionName = intent.cell.transitionName,
-                    moneyAccountId = intent.cell.moneyAccount.id
+                    MoneyAccountDetailsScreenArguments(
+                        transitionName = intent.cell.transitionName,
+                        moneyAccountId = intent.cell.moneyAccount.id
+                    )
                 )
             )
         }

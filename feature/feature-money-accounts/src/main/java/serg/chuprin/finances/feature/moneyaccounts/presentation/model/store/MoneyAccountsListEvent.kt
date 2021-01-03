@@ -1,6 +1,6 @@
 package serg.chuprin.finances.feature.moneyaccounts.presentation.model.store
 
-import serg.chuprin.finances.core.api.domain.model.Id
+import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountDetailsScreenArguments
 
 /**
  * Created by Sergey Chuprin on 06.05.2020.
@@ -8,8 +8,7 @@ import serg.chuprin.finances.core.api.domain.model.Id
 sealed class MoneyAccountsListEvent {
 
     class NavigateToMoneyAccountDetailsScreen(
-        val moneyAccountId: Id,
-        val transitionName: String
+        val screenArguments: MoneyAccountDetailsScreenArguments
     ) : MoneyAccountsListEvent()
 
     object NavigateToMoneyAccountCreationScreen : MoneyAccountsListEvent()

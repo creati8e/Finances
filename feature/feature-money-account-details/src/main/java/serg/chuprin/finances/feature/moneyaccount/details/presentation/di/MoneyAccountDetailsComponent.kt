@@ -4,7 +4,7 @@ import dagger.BindsInstance
 import dagger.Component
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.ViewModelComponent
-import serg.chuprin.finances.feature.moneyaccount.details.presentation.arguments.MoneyAccountDetailsScreenArguments
+import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountDetailsScreenArguments
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.model.viewmodel.MoneyAccountDetailsViewModel
 import serg.chuprin.finances.feature.moneyaccounts.details.dependencies.MoneyAccountDetailsDependencies
 import serg.chuprin.finances.injector.Injector

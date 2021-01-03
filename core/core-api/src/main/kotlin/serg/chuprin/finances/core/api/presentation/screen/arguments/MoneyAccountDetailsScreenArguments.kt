@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.moneyaccount.details.presentation.arguments
+package serg.chuprin.finances.core.api.presentation.screen.arguments
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

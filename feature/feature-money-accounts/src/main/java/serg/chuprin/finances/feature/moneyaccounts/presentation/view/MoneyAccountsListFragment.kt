@@ -92,13 +92,10 @@ class MoneyAccountsListFragment : BaseFragment(R.layout.fragment_money_accounts_
     private fun handleEvent(event: MoneyAccountsListEvent) {
         return when (event) {
             is MoneyAccountsListEvent.NavigateToMoneyAccountDetailsScreen -> {
-                val sharedElementView =
-                    moneyAccountsRecyclerView.findViewWithTag<View>(event.transitionName)
                 navigation.navigateToMoneyAccountDetails(
                     navController,
-                    event.moneyAccountId,
-                    event.transitionName,
-                    sharedElementView
+                    event.screenArguments,
+                    moneyAccountsRecyclerView.findViewWithTag(event.screenArguments.transitionName)
                 )
             }
             MoneyAccountsListEvent.NavigateToMoneyAccountCreationScreen -> {
