@@ -85,7 +85,7 @@ class TransactionActionExecutor @Inject constructor(
         }
         val effect = TransactionEffect.OperationChanged(intent.operation)
         // Remove chosen category if new operation type is not income or expense.
-        if (state.chosenCategory.category != null && !intent.operation.isPlain()) {
+        if (state.chosenCategory.category != null) {
             return flowOf(TransactionEffect.CategoryChanged(buildChosenCategory(null)), effect)
         }
         return flowOf(effect)
