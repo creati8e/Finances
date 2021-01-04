@@ -212,13 +212,13 @@ class TransactionFragment :
                 amountEditText.hideKeyboard()
                 navigation.navigateToMoneyAccountPicker(navController, event.screenArguments)
             }
-            TransactionEvent.ShowUnsavedChangedDialog -> {
+            is TransactionEvent.ShowUnsavedChangedDialog -> {
                 val arguments = InfoDialogArguments(
                     title = null,
                     negativeText = getString(CoreR.string.no),
                     positiveText = getString(CoreR.string.yes),
-                    callbackRequestCode = RC_UNSAVED_CHANGED_DIALOG,
-                    message = getString(R.string.transaction_unsaved_changed_dialog_message)
+                    message = event.message,
+                    callbackRequestCode = RC_UNSAVED_CHANGED_DIALOG
                 )
                 showDialog<InfoDialogFragment>(childFragmentManager, arguments)
             }

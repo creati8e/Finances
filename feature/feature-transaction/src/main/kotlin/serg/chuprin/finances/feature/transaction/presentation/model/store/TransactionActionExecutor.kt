@@ -12,6 +12,7 @@ import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepos
 import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.formatter.TransactionCategoryWithParentFormatter
+import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
 import serg.chuprin.finances.core.api.presentation.screen.arguments.CategoriesListScreenArguments
 import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountsListScreenArguments
@@ -20,6 +21,7 @@ import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
 import serg.chuprin.finances.core.mvi.invoke
+import serg.chuprin.finances.feature.transaction.R
 import serg.chuprin.finances.feature.transaction.domain.model.TransactionChosenOperation
 import serg.chuprin.finances.feature.transaction.domain.usecase.CreateTransactionUseCase
 import serg.chuprin.finances.feature.transaction.domain.usecase.EditTransactionUseCase
@@ -34,6 +36,7 @@ import javax.inject.Inject
  */
 class TransactionActionExecutor @Inject constructor(
     private val amountParser: AmountParser,
+    private val resourceManger: ResourceManger,
     private val amountFormatter: AmountFormatter,
     private val screenArguments: TransactionScreenArguments,
     private val moneyAccountRepository: MoneyAccountRepository,
@@ -209,7 +212,17 @@ class TransactionActionExecutor @Inject constructor(
     ): Flow<TransactionEffect> {
         return emptyFlowAction {
             if (state.saveButtonIsEnabled) {
-                eventConsumer(TransactionEvent.ShowUnsavedChangedDialog)
+                val messageStringRes = if (screenArguments is TransactionScreenArguments.Editing) {
+                    R.string.transaction_unsaved_changes_dialog_message
+                } else {
+                    R.string.transaction_unsaved_transaction_dialog_message
+                }
+                eventConsumer(
+                    TransactionEvent.ShowUnsavedChangedDialog(
+                        resourceManger.getString(messageStringRes)
+                    )
+                )
+
             } else {
                 eventConsumer(TransactionEvent.CloseScreen)
             }

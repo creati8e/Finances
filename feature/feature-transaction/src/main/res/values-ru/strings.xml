@@ -11,6 +11,7 @@
     <string name="transaction_date_today">Сегодня</string>
     <string name="transaction_date_yesterday">Вчера</string>
 
-    <string name="transaction_unsaved_changed_dialog_message">Сохранить транзакцию?</string>
+    <string name="transaction_unsaved_transaction_dialog_message">Сохранить транзакцию?</string>
+    <string name="transaction_unsaved_changes_dialog_message">Сохранить изменения?</string>
 
 </resources>
