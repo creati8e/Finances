@@ -23,12 +23,8 @@ import serg.chuprin.finances.core.mvi.invoke
 import serg.chuprin.finances.feature.transaction.domain.model.TransactionChosenOperation
 import serg.chuprin.finances.feature.transaction.domain.usecase.CreateTransactionUseCase
 import serg.chuprin.finances.feature.transaction.domain.usecase.EditTransactionUseCase
-import serg.chuprin.finances.feature.transaction.presentation.model.TransactionChosenCategory
-import serg.chuprin.finances.feature.transaction.presentation.model.TransactionChosenDate
-import serg.chuprin.finances.feature.transaction.presentation.model.TransactionChosenMoneyAccount
-import serg.chuprin.finances.feature.transaction.presentation.model.TransactionEnteredAmount
+import serg.chuprin.finances.feature.transaction.presentation.model.*
 import serg.chuprin.finances.feature.transaction.presentation.model.formatter.TransactionChosenDateFormatter
-import java.math.BigDecimal
 import java.time.LocalDate
 import java.util.*
 import javax.inject.Inject
@@ -101,6 +97,68 @@ class TransactionActionExecutor @Inject constructor(
         }
     }
 
+    // region Actions.
+
+    private fun handleFormatInitialStateForExistingTransactionAction(
+        action: TransactionAction.FormatInitialStateForExistingTransaction
+    ): Flow<TransactionEffect> {
+        return flowOfSingleValue {
+            val chosenMoneyAccount = getMoneyAccount(action.moneyAccountId)
+            val enteredAmount = buildEnteredAmount(
+                amountString = action.amount.toString(),
+                currency = chosenMoneyAccount.account.currency
+            )
+            val chosenCategory = getCategory(
+                userId = action.userId,
+                categoryId = action.categoryId
+            )
+            val chosenDate = formatChosenDate(action.date)
+            TransactionEffect.InitialStateFormatted(
+                transactionDefaultData = TransactionDefaultData(
+                    chosenDate = chosenDate,
+                    operation = action.operation,
+                    enteredAmount = enteredAmount,
+                    chosenCategory = chosenCategory,
+                    chosenMoneyAccount = chosenMoneyAccount
+                ),
+                chosenDate = chosenDate,
+                userId = action.userId,
+                operation = action.operation,
+                enteredAmount = enteredAmount,
+                chosenCategory = chosenCategory,
+                chosenMoneyAccount = chosenMoneyAccount
+
+            )
+        }
+    }
+
+    private fun handleFormatInitialStateAction(
+        action: TransactionAction.FormatInitialState
+    ): Flow<TransactionEffect> {
+        return flowOf(
+            TransactionEffect.InitialStateFormatted(
+                enteredAmount = buildEnteredAmount(
+                    amountString = action.amount.toString(),
+                    currency = Currency.getInstance(Locale.getDefault())
+                ),
+                userId = action.userId,
+                operation = action.operation,
+                transactionDefaultData = null,
+                chosenDate = formatChosenDate(action.date),
+                chosenCategory = formatChosenCategory(action.category),
+                chosenMoneyAccount = TransactionChosenMoneyAccount(
+                    account = action.moneyAccount,
+                    formattedName = action.moneyAccount.name
+                )
+            )
+        )
+    }
+
+    // endregion
+
+
+    // region Intents.
+
     private fun handleClickOnUnsavedChangedDialogNegativeButtonIntent(
         eventConsumer: Consumer<TransactionEvent>
     ): Flow<TransactionEffect> {
@@ -142,6 +200,19 @@ class TransactionActionExecutor @Inject constructor(
     ): Flow<TransactionEffect> {
         return emptyFlowAction {
             eventConsumer(TransactionEvent.ShowDatePicker(state.chosenDate.localDate))
+        }
+    }
+
+    private fun handleClickOnCloseButtonIntent(
+        state: TransactionState,
+        eventConsumer: Consumer<TransactionEvent>
+    ): Flow<TransactionEffect> {
+        return emptyFlowAction {
+            if (state.saveButtonIsEnabled) {
+                eventConsumer(TransactionEvent.ShowUnsavedChangedDialog)
+            } else {
+                eventConsumer(TransactionEvent.CloseScreen)
+            }
         }
     }
 
@@ -188,19 +259,6 @@ class TransactionActionExecutor @Inject constructor(
             }
             val screenArguments = CategoriesListScreenArguments.Picker(categoryType)
             eventConsumer(TransactionEvent.NavigateToCategoryPickerScreen(screenArguments))
-        }
-    }
-
-    private fun handleClickOnCloseButtonIntent(
-        state: TransactionState,
-        eventConsumer: Consumer<TransactionEvent>
-    ): Flow<TransactionEffect> {
-        return emptyFlowAction {
-            if (state.saveButtonIsEnabled) {
-                eventConsumer(TransactionEvent.ShowUnsavedChangedDialog)
-            } else {
-                eventConsumer(TransactionEvent.CloseScreen)
-            }
         }
     }
 
@@ -253,56 +311,11 @@ class TransactionActionExecutor @Inject constructor(
                 amountString = intent.amount,
                 currency = state.chosenMoneyAccount.account.currency
             )
-            TransactionEffect.AmountEntered(
-                enteredAmount = enteredAmount,
-                isSaveButtonEnabled = enteredAmount.amount != null
-                        && enteredAmount.amount != BigDecimal.ZERO
-            )
+            TransactionEffect.AmountEntered(enteredAmount = enteredAmount)
         }
     }
 
-    private fun handleFormatInitialStateForExistingTransactionAction(
-        action: TransactionAction.FormatInitialStateForExistingTransaction
-    ): Flow<TransactionEffect> {
-        return flowOfSingleValue {
-            val chosenMoneyAccount = getMoneyAccount(action.moneyAccountId)
-            TransactionEffect.InitialStateFormatted(
-                enteredAmount = buildEnteredAmount(
-                    amountString = action.amount.toString(),
-                    currency = chosenMoneyAccount.account.currency
-                ),
-                chosenCategory = getCategory(
-                    userId = action.userId,
-                    categoryId = action.categoryId
-                ),
-                userId = action.userId,
-                operation = action.operation,
-                chosenMoneyAccount = chosenMoneyAccount,
-                chosenDate = formatChosenDate(action.date)
-            )
-        }
-    }
-
-    private fun handleFormatInitialStateAction(
-        action: TransactionAction.FormatInitialState
-    ): Flow<TransactionEffect> {
-        return flowOf(
-            TransactionEffect.InitialStateFormatted(
-                enteredAmount = buildEnteredAmount(
-                    amountString = action.amount.toString(),
-                    currency = Currency.getInstance(Locale.getDefault())
-                ),
-                userId = action.userId,
-                operation = action.operation,
-                chosenDate = formatChosenDate(action.date),
-                chosenCategory = formatChosenCategory(action.category),
-                chosenMoneyAccount = TransactionChosenMoneyAccount(
-                    account = action.moneyAccount,
-                    formattedName = action.moneyAccount.name
-                )
-            )
-        )
-    }
+    // endregion
 
     private suspend fun getMoneyAccount(moneyAccountId: Id): TransactionChosenMoneyAccount {
         val moneyAccount = moneyAccountRepository.accountFlow(moneyAccountId).first()!!

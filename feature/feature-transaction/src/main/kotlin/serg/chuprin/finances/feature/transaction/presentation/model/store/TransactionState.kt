@@ -5,10 +5,7 @@ import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
 import serg.chuprin.finances.feature.transaction.domain.model.TransactionChosenOperation
-import serg.chuprin.finances.feature.transaction.presentation.model.TransactionChosenCategory
-import serg.chuprin.finances.feature.transaction.presentation.model.TransactionChosenDate
-import serg.chuprin.finances.feature.transaction.presentation.model.TransactionChosenMoneyAccount
-import serg.chuprin.finances.feature.transaction.presentation.model.TransactionEnteredAmount
+import serg.chuprin.finances.feature.transaction.presentation.model.*
 import java.math.BigDecimal
 import java.time.LocalDate
 
@@ -37,5 +34,8 @@ data class TransactionState(
     val chosenDate: TransactionChosenDate = TransactionChosenDate(
         formatted = EMPTY_STRING,
         localDate = LocalDate.now()
-    )
+    ),
+    // Default data of existing transaction, if present.
+    // Used only for checking if some data is changed for existing transaction.
+    val transactionDefaultData: TransactionDefaultData? = null
 )
