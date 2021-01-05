@@ -140,7 +140,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
                 navigation.navigateToMoneyAccountsList(
                     navController,
                     event.screenArguments,
-                    recyclerView.moneyAccountsSubtitleLayout
+                    recyclerView.showAllAccountsButton
                 )
             }
             is DashboardEvent.NavigateToMoneyAccountDetailsScreen -> {
@@ -151,9 +151,10 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
                 )
             }
             DashboardEvent.NavigateToMoneyAccountCreationScreen -> {
-                val tag = resources.getString(R.string.transition_money_account_creation)
-                val sharedElementView = recyclerView.findViewWithTag<View>(tag)
-                navigation.navigateToMoneyAccountCreation(navController, sharedElementView)
+                navigation.navigateToMoneyAccountCreation(
+                    navController,
+                    recyclerView.addAccountButton
+                )
             }
             is DashboardEvent.NavigateToTransactionsReportScreen -> {
                 val transitionName = event.arguments.transitionName

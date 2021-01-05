@@ -19,7 +19,6 @@
         android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         android:orientation="horizontal"
-        android:transitionName="@string/transition_money_accounts_list_content"
         android:weightSum="5">
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -81,6 +80,7 @@
             android:layout_width="48dp"
             android:layout_height="40dp"
             android:layout_alignParentTop="true"
+            android:transitionName="@string/transition_money_accounts_list_content"
             android:layout_marginStart="8dp"
             android:layout_toEndOf="@id/addAccountButton"
             app:icon="@drawable/ic_list"
