@@ -61,11 +61,20 @@ class UserProfileFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setSharedElementTransitions {
-            containerColor = Color.TRANSPARENT
-            startContainerColor = Color.TRANSPARENT
-            endContainerColor = requireContext().getAttributeColor(android.R.attr.colorBackground)
-        }
+        setSharedElementTransitions(
+            enterTransitionSetup = {
+                containerColor = Color.TRANSPARENT
+                startContainerColor = Color.TRANSPARENT
+                endContainerColor =
+                    requireContext().getAttributeColor(android.R.attr.colorBackground)
+            },
+            returnTransitionSetup = {
+                containerColor = Color.TRANSPARENT
+                startContainerColor =
+                    requireContext().getAttributeColor(android.R.attr.colorBackground)
+                endContainerColor = Color.TRANSPARENT
+            }
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

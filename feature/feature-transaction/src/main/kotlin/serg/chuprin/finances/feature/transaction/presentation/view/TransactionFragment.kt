@@ -9,6 +9,7 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import androidx.transition.doOnEnd
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.shape.ShapeAppearanceModel
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.fragment_transaction.*
@@ -69,15 +70,26 @@ class TransactionFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setSharedElementTransitions {
-            if (savedInstanceState == null
-                && screenArguments is TransactionScreenArguments.Creation
-            ) {
-                doOnEnd {
-                    amountEditText?.showKeyboard()
+        setSharedElementTransitions(
+            enterTransitionSetup = {
+                val radius = requireContext().dpToPx(28).toFloat()
+                startShapeAppearanceModel = ShapeAppearanceModel().withCornerSize(radius)
+                endShapeAppearanceModel = ShapeAppearanceModel().withCornerSize(radius)
+
+                if (savedInstanceState == null
+                    && screenArguments is TransactionScreenArguments.Creation
+                ) {
+                    doOnEnd {
+                        amountEditText?.showKeyboard()
+                    }
                 }
+            },
+            returnTransitionSetup = {
+                val radius = requireContext().dpToPx(28).toFloat()
+                startShapeAppearanceModel = ShapeAppearanceModel().withCornerSize(radius)
+                endShapeAppearanceModel = ShapeAppearanceModel().withCornerSize(radius)
             }
-        }
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

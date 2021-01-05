@@ -160,7 +160,7 @@ fun TestedExtension.configureBuildTypes() {
             setIsDebugMenuEnabled(true)
         }
         maybeCreate(AppConfig.BuildTypes.DEV.name).apply {
-            isDebuggable = true
+            isDebuggable = false
             setIsDebugMenuEnabled(true)
         }
     }
