@@ -44,7 +44,7 @@
 
     <style name="MaterialDatePickerShapeAppearance">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">@dimen/cornerRadiusBig</item>
+        <item name="cornerSize">@dimen/radiusCornerBig</item>
     </style>
 
     <style name="MaterialDatePickerHeader">

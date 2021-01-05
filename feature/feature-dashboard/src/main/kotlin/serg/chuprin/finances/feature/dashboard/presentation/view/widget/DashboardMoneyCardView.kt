@@ -21,7 +21,7 @@ class DashboardMoneyCardView @JvmOverloads constructor(
         View.inflate(context, R.layout.view_dashboard_money_card, this)
         titleTextView.text = attrs?.let(::getTitleText)
 
-        radius = context.getDimenDpFloat(R.dimen.cornerRadiusBig)
+        radius = context.getDimenDpFloat(R.dimen.radiusCornerBig)
         cardElevation = context.getDimenDpFloat(R.dimen.elevationCardView)
         isClickable = true
         isFocusable = true

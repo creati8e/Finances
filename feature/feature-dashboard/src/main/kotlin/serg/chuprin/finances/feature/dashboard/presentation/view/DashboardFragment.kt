@@ -116,7 +116,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
             }
             userPhotoLiveData { photoUrl ->
                 userPhotoImageView.load(photoUrl) {
-                    val radius = requireContext().getDimenDpFloat(R.dimen.cornerRadius)
+                    val radius = requireContext().getDimenDpFloat(R.dimen.radiusCornerDefault)
                     transformations(RoundedCornersTransformation(radius))
                     error(CoreR.drawable.ic_user_photo_placeholder)
                     placeholder(CoreR.drawable.ic_user_photo_placeholder)

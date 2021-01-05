@@ -10,7 +10,7 @@ import serg.chuprin.finances.core.api.R
  */
 fun ImageView.loadImage(url: String) {
     load(url) {
-        val radius = context.getDimenDpFloat(R.dimen.cornerRadius)
+        val radius = context.getDimenDpFloat(R.dimen.radiusCornerDefault)
         transformations(RoundedCornersTransformation(radius))
         error(R.drawable.ic_user_photo_placeholder)
         placeholder(R.drawable.ic_user_photo_placeholder)

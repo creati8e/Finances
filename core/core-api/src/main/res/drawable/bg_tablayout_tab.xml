@@ -6,7 +6,7 @@
             <ripple android:color="?colorControlHighlight">
                 <item android:gravity="center">
                     <shape android:shape="rectangle">
-                        <corners android:radius="@dimen/cornerRadiusBig" />
+                        <corners android:radius="@dimen/radiusCornerBig" />
                         <solid android:color="@android:color/transparent" />
                     </shape>
                 </item>
@@ -19,7 +19,7 @@
             <ripple android:color="?colorControlHighlight">
                 <item android:gravity="center">
                     <shape android:shape="rectangle">
-                        <corners android:radius="@dimen/cornerRadiusBig" />
+                        <corners android:radius="@dimen/radiusCornerBig" />
                         <solid android:color="?colorAccent" />
                     </shape>
                 </item>

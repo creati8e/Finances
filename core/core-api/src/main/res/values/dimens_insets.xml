@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="inset_selection_left">8dp</dimen>
-    <dimen name="inset_selection_right">8dp</dimen>
-    <dimen name="inset_selection_top">4dp</dimen>
-    <dimen name="inset_selection_bottom">4dp</dimen>
+    <dimen name="insetSelectionLeft">8dp</dimen>
+    <dimen name="insetSelectionRight">8dp</dimen>
+    <dimen name="insetSelectionTop">4dp</dimen>
+    <dimen name="insetSelectionBottom">4dp</dimen>
 
 </resources>

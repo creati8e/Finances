@@ -5,7 +5,7 @@
         <item name="android:textColor">@color/colorRed</item>
         <item name="android:textStyle">bold</item>
         <item name="rippleColor">@color/colorRedRipple</item>
-        <item name="cornerRadius">@dimen/cornerRadius</item>
+        <item name="cornerRadius">@dimen/radiusCornerDefault</item>
     </style>
 
 </resources>

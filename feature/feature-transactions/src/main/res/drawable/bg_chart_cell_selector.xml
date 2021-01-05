@@ -3,7 +3,7 @@
         <shape android:shape="rectangle">
             <stroke android:width="1dp"
                 android:color="@color/colorChosenDataPeriod" />
-            <corners android:radius="@dimen/cornerRadius" />
+            <corners android:radius="@dimen/radiusCornerDefault" />
         </shape>
     </item>
     <item>
@@ -11,7 +11,7 @@
             <item android:id="@android:id/mask"
                 android:gravity="center">
                 <shape android:shape="rectangle">
-                    <corners android:radius="@dimen/cornerRadius" />
+                    <corners android:radius="@dimen/radiusCornerDefault" />
                     <solid android:color="@android:color/white" />
                 </shape>
             </item>

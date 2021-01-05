@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <item name="cornerRadius" type="dimen">8dp</item>
-    <item name="cornerRadiusSmall" type="dimen">4dp</item>
-    <item name="cornerRadiusBig" type="dimen">16dp</item>
+    <item name="radiusCornerDefault"
+        type="dimen">8dp
+    </item>
+    <item name="radiusCornerSmall"
+        type="dimen">4dp
+    </item>
+    <item name="radiusCornerBig"
+        type="dimen">16dp
+    </item>
 
-    <dimen name="radius_selection_top_left">16dp</dimen>
-    <dimen name="radius_selection_top_right">16dp</dimen>
-    <dimen name="radius_selection_bottom_right">16dp</dimen>
-    <dimen name="radius_selection_bottom_left">16dp</dimen>
+    <dimen name="radiusSelectionTopLeft">@dimen/radiusCornerBig</dimen>
+    <dimen name="radiusSelectionTopRight">@dimen/radiusCornerBig</dimen>
+    <dimen name="radiusSelectionBottomRight">@dimen/radiusCornerBig</dimen>
+    <dimen name="radiusSelectionBottomLeft">@dimen/radiusCornerBig</dimen>
 
 </resources>
