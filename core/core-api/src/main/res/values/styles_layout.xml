@@ -23,7 +23,7 @@
         <item name="android:layout_marginEnd">36dp</item>
         <item name="android:layout_marginStart">36dp</item>
 
-        <item name="android:background">@drawable/bg_tab_layout</item>
+        <item name="android:background">@drawable/bg_tablayout</item>
 
         <item name="tabIndicatorGravity">stretch</item>
         <item name="tabIndicator">@drawable/bg_tablayout_tab</item>
