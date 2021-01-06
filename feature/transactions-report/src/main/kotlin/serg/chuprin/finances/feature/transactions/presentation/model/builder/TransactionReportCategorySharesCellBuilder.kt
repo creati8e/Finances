@@ -87,7 +87,7 @@ class TransactionReportCategorySharesCellBuilder @Inject constructor(
 
     private fun formatLabel(chart: TransactionReportCategorySharesChart): String {
         return when (chart.transactionType) {
-            PlainTransactionType.INCOME -> resourceManger.getString(R.string.incomes)
+            PlainTransactionType.INCOME -> resourceManger.getString(R.string.income)
             PlainTransactionType.EXPENSE -> resourceManger.getString(R.string.expenses)
         }
     }

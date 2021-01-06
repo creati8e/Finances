@@ -47,7 +47,7 @@ class DashboardCategoriesWidgetCellBuilder @Inject constructor(
         currency: Currency
     ): CategorySharesCell {
         val label = when (page.transactionType) {
-            PlainTransactionType.INCOME -> resourceManger.getString(CoreR.string.incomes)
+            PlainTransactionType.INCOME -> resourceManger.getString(CoreR.string.income)
             PlainTransactionType.EXPENSE -> resourceManger.getString(CoreR.string.expenses)
         }
         if (page.transactionType == PlainTransactionType.INCOME) {

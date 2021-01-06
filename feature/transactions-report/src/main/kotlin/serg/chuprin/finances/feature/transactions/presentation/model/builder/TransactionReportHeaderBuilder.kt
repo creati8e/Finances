@@ -107,7 +107,7 @@ class TransactionReportHeaderBuilder @Inject constructor(
 
     private fun PlainTransactionType.format(): String {
         val stringRes = when (this) {
-            PlainTransactionType.INCOME -> R.string.incomes
+            PlainTransactionType.INCOME -> R.string.income
             PlainTransactionType.EXPENSE -> R.string.expenses
         }
         return resourceManger.getString(stringRes)
