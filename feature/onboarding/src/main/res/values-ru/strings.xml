@@ -3,7 +3,6 @@
     <string name="onboarding_currency_choice_button">Готово!</string>
     <string name="onboarding_currency_choice_title">Давайте все настроим</string>
     <string name="onboarding_currency_choice_subtitle">Выберите основную валюту</string>
-    <string name="onboarding_currency_choice_currencies_not_found">Валюты не найдены</string>
 
     <string name="onboarding_accounts_setup_start_using_app">Начать пользоваться приложением</string>
     <string name="onboarding_accounts_setup_subtitle_cash_question">Вы пользуетесь наличными?</string>

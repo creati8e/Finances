@@ -9,7 +9,7 @@
     <string name="dashboard_recent_transactions_widget_no_transactions">No transactions</string>
 
     <string name="dashboard_balance_widget_title">Balance</string>
-    <string name="dashboard_balance_widget_incomes">Incomes</string>
+    <string name="dashboard_balance_widget_incomes">Income</string>
     <string name="dashboard_balance_widget_expenses">Expenses</string>
     <string name="dashboard_balance_widget_title_current_period">Current period</string>
 
