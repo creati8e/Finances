@@ -38,7 +38,6 @@ class CompleteAccountsSetupOnboardingUseCase @Inject constructor(
         onboardingRepository.onboardingStep = OnboardingStep.COMPLETED
     }
 
-    // TODO: Add some kind of transactions.
     private fun createMoneyAccount(
         accountParams: OnboardingMoneyAccountCreationParams,
         currentUser: User

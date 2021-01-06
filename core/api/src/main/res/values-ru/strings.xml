@@ -21,4 +21,6 @@
     <string name="expenses">Расходы</string>
     <string name="currency_choice_hint">Искать</string>
 
+    <string name="are_you_sure">Вы уверены?</string>
+
 </resources>

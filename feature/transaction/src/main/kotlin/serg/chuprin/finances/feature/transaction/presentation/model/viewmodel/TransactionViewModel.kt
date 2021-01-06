@@ -8,6 +8,7 @@ import serg.chuprin.finances.feature.transaction.domain.model.TransactionChosenO
 import serg.chuprin.finances.feature.transaction.presentation.model.TransactionEnteredAmount
 import serg.chuprin.finances.feature.transaction.presentation.model.store.TransactionEvent
 import serg.chuprin.finances.feature.transaction.presentation.model.store.TransactionIntent
+import serg.chuprin.finances.feature.transaction.presentation.model.store.TransactionState
 import serg.chuprin.finances.feature.transaction.presentation.model.store.TransactionStore
 import javax.inject.Inject
 
@@ -21,6 +22,9 @@ class TransactionViewModel @Inject constructor(
 
     val enteredAmountLiveData: LiveData<TransactionEnteredAmount> =
         store.observeParticularStateAsLiveData { state -> state.enteredAmount }
+
+    val transactionDeletionButtonVisibilityLiveDate: LiveData<Boolean> =
+        store.observeParticularStateAsLiveData(TransactionState::transactionDeletionButtonIsVisible)
 
     val chosenMoneyAccountLiveData: LiveData<String> =
         store.observeParticularStateAsLiveData { state -> state.chosenMoneyAccount.formattedName }

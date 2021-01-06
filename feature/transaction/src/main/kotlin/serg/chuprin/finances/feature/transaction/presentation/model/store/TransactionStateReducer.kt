@@ -88,7 +88,8 @@ class TransactionStateReducer : StoreStateReducer<TransactionEffect, Transaction
                     enteredAmount = what.enteredAmount,
                     chosenCategory = what.chosenCategory,
                     chosenMoneyAccount = what.chosenMoneyAccount,
-                    transactionDefaultData = what.transactionDefaultData
+                    transactionDefaultData = what.transactionDefaultData,
+                    transactionDeletionButtonIsVisible = what.transactionDeletionButtonIsVisible
                 )
             }
         }

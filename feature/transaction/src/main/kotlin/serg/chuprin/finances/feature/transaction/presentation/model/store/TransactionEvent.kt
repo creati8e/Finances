@@ -11,6 +11,8 @@ sealed class TransactionEvent {
 
     object CloseScreen : TransactionEvent()
 
+    object ShowTransactionDeletionDialog : TransactionEvent()
+
     class ShowUnsavedChangedDialog(
         val message: String
     ) : TransactionEvent()

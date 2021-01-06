@@ -27,7 +27,7 @@ internal class TransactionCategoryRepositoryImpl @Inject constructor(
     private val predefinedCategoriesDataSource: PredefinedTransactionCategoriesDataSource
 ) : TransactionCategoryRepository {
 
-    override suspend fun deleteCategories(categories: List<TransactionCategory>) {
+    override fun deleteCategories(categories: List<TransactionCategory>) {
         firebaseDataSource.deleteCategories(categories)
     }
 

@@ -34,7 +34,7 @@ internal class FirebaseTransactionCategoryDataSource @Inject constructor(
         }
     }
 
-    suspend fun deleteCategories(categories: List<TransactionCategory>) {
+    fun deleteCategories(categories: List<TransactionCategory>) {
         delete(categories.map(TransactionCategory::id))
     }
 

@@ -16,7 +16,7 @@ interface TransactionCategoryRepository {
 
     fun categoriesFlow(query: TransactionCategoriesQuery): Flow<CategoriesQueryResult>
 
-    suspend fun deleteCategories(categories: List<TransactionCategory>)
+    fun deleteCategories(categories: List<TransactionCategory>)
 
     suspend fun categories(query: TransactionCategoriesQuery): CategoriesQueryResult {
         return categoriesFlow(query).firstOrNull() ?: CategoriesQueryResult(emptyMap())

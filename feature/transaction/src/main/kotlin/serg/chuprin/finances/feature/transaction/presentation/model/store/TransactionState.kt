@@ -18,6 +18,7 @@ data class TransactionState(
         PlainTransactionType.EXPENSE
     ),
     val saveButtonIsEnabled: Boolean = false,
+    val transactionDeletionButtonIsVisible: Boolean = false,
     val enteredAmount: TransactionEnteredAmount = TransactionEnteredAmount(
         hasError = false,
         formatted = "0",

@@ -4,6 +4,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.model.transaction.query.TransactionsQuery
@@ -24,8 +25,12 @@ internal class TransactionRepositoryImpl @Inject constructor(
         firebaseDataSource.createOrUpdate(transactions)
     }
 
-    override suspend fun deleteTransactions(transactions: List<Transaction>) {
-        firebaseDataSource.deleteTransactions(transactions)
+    override fun deleteTransactions(transactions: Collection<Transaction>) {
+        firebaseDataSource.deleteTransactions(transactions.map(Transaction::id))
+    }
+
+    override fun deleteTransactionsByIds(transactionIds: Collection<Id>) {
+        firebaseDataSource.deleteTransactions(transactionIds)
     }
 
     override fun transactionsFlow(query: TransactionsQuery): Flow<List<Transaction>> {

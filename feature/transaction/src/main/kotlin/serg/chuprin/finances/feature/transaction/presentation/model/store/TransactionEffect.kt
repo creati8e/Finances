@@ -36,7 +36,8 @@ sealed class TransactionEffect {
         val enteredAmount: TransactionEnteredAmount,
         val chosenCategory: TransactionChosenCategory,
         val chosenMoneyAccount: TransactionChosenMoneyAccount,
-        val transactionDefaultData: TransactionDefaultData?
+        val transactionDefaultData: TransactionDefaultData?,
+        val transactionDeletionButtonIsVisible: Boolean
     ) : TransactionEffect()
 
 }

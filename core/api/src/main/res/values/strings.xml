@@ -21,4 +21,6 @@
     <string name="expenses">Expenses</string>
     <string name="currency_choice_hint">Search</string>
 
+    <string name="are_you_sure">Are you sure?</string>
+
 </resources>

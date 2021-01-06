@@ -183,7 +183,7 @@ class UserProfileFragment :
             positiveText = CoreR.string.yes,
             callbackRequestCode = RC_DIALOG_LOGOUT,
             title = R.string.user_profile_dialog_logout_title,
-            message = R.string.user_profile_dialog_logout_message
+            message = R.string.are_you_sure
         )
     }
 

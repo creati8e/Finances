@@ -44,7 +44,7 @@ internal class FirebaseMoneyAccountDataSource @Inject constructor(
             }
     }
 
-    suspend fun deleteAccounts(accounts: List<MoneyAccount>) {
+    fun deleteAccounts(accounts: List<MoneyAccount>) {
         delete(accounts.map(MoneyAccount::id))
     }
 

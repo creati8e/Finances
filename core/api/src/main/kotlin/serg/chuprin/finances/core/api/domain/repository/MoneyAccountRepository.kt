@@ -19,7 +19,7 @@ interface MoneyAccountRepository {
 
     fun accountsFlow(query: MoneyAccountsQuery): Flow<List<MoneyAccount>>
 
-    suspend fun deleteAccounts(accounts: List<MoneyAccount>)
+    fun deleteAccounts(accounts: List<MoneyAccount>)
 
     suspend fun accounts(query: MoneyAccountsQuery): List<MoneyAccount> {
         return accountsFlow(query).firstOrNull().orEmpty()

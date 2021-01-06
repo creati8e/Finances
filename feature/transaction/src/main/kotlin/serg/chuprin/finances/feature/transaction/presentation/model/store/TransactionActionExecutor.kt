@@ -24,6 +24,7 @@ import serg.chuprin.finances.core.mvi.invoke
 import serg.chuprin.finances.feature.transaction.R
 import serg.chuprin.finances.feature.transaction.domain.model.TransactionChosenOperation
 import serg.chuprin.finances.feature.transaction.domain.usecase.CreateTransactionUseCase
+import serg.chuprin.finances.feature.transaction.domain.usecase.DeleteTransactionUseCase
 import serg.chuprin.finances.feature.transaction.domain.usecase.EditTransactionUseCase
 import serg.chuprin.finances.feature.transaction.presentation.model.*
 import serg.chuprin.finances.feature.transaction.presentation.model.formatter.TransactionChosenDateFormatter
@@ -37,14 +38,30 @@ import javax.inject.Inject
 class TransactionActionExecutor @Inject constructor(
     private val amountParser: AmountParser,
     private val resourceManger: ResourceManger,
-    private val amountFormatter: AmountFormatter,
     private val screenArguments: TransactionScreenArguments,
-    private val moneyAccountRepository: MoneyAccountRepository,
+
+    // region Use cases.
+
     private val editTransactionUseCase: EditTransactionUseCase,
-    private val categoryRepository: TransactionCategoryRepository,
     private val createTransactionUseCase: CreateTransactionUseCase,
+    private val deleteTransactionUseCase: DeleteTransactionUseCase,
+
+    // endregion
+
+    // region Repositories.
+
+    private val moneyAccountRepository: MoneyAccountRepository,
+    private val categoryRepository: TransactionCategoryRepository,
+
+    // endregion
+
+    // region Formatters.
+
+    private val amountFormatter: AmountFormatter,
     private val chosenDateFormatter: TransactionChosenDateFormatter,
     private val categoryNameFormatter: TransactionCategoryWithParentFormatter
+
+    // endregion
 ) : StoreActionExecutor<TransactionAction, TransactionState, TransactionEffect, TransactionEvent> {
 
     override fun invoke(
@@ -89,6 +106,12 @@ class TransactionActionExecutor @Inject constructor(
                     TransactionIntent.ClickOnUnsavedChangedDialogNegativeButton -> {
                         handleClickOnUnsavedChangedDialogNegativeButtonIntent(eventConsumer)
                     }
+                    TransactionIntent.ClickOnDeleteTransaction -> {
+                        handleClickOnDeleteTransactionIntent(eventConsumer)
+                    }
+                    TransactionIntent.ClickOnConfirmTransactionDeletion -> {
+                        handleClickOnConfirmTransactionDeletionIntent(eventConsumer)
+                    }
                 }
             }
             is TransactionAction.FormatInitialState -> {
@@ -97,6 +120,29 @@ class TransactionActionExecutor @Inject constructor(
             is TransactionAction.FormatInitialStateForExistingTransaction -> {
                 handleFormatInitialStateForExistingTransactionAction(action)
             }
+        }
+    }
+
+    private fun handleClickOnConfirmTransactionDeletionIntent(
+        eventConsumer: Consumer<TransactionEvent>
+    ): Flow<TransactionEffect> {
+        if (screenArguments !is TransactionScreenArguments.Editing) {
+            return emptyFlow()
+        }
+        return flow {
+            deleteTransactionUseCase.execute(screenArguments.transactionId)
+            eventConsumer(TransactionEvent.CloseScreen)
+        }
+    }
+
+    private fun handleClickOnDeleteTransactionIntent(
+        eventConsumer: Consumer<TransactionEvent>
+    ): Flow<TransactionEffect> {
+        if (screenArguments !is TransactionScreenArguments.Editing) {
+            return emptyFlow()
+        }
+        return emptyFlowAction {
+            eventConsumer(TransactionEvent.ShowTransactionDeletionDialog)
         }
     }
 
@@ -129,8 +175,8 @@ class TransactionActionExecutor @Inject constructor(
                 operation = action.operation,
                 enteredAmount = enteredAmount,
                 chosenCategory = chosenCategory,
-                chosenMoneyAccount = chosenMoneyAccount
-
+                chosenMoneyAccount = chosenMoneyAccount,
+                transactionDeletionButtonIsVisible = true
             )
         }
     }
@@ -148,6 +194,7 @@ class TransactionActionExecutor @Inject constructor(
                 operation = action.operation,
                 transactionDefaultData = null,
                 chosenDate = formatChosenDate(action.date),
+                transactionDeletionButtonIsVisible = false,
                 chosenCategory = formatChosenCategory(action.category),
                 chosenMoneyAccount = TransactionChosenMoneyAccount(
                     account = action.moneyAccount,

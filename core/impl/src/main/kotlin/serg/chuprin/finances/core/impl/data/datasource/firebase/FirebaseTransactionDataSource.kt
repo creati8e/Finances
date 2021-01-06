@@ -29,8 +29,8 @@ internal class FirebaseTransactionDataSource @Inject constructor(
     override val collection: CollectionReference
         get() = firestore.collection(COLLECTION_NAME)
 
-    suspend fun deleteTransactions(transactions: List<Transaction>) {
-        delete(transactions.map(Transaction::id))
+    fun deleteTransactions(transactionIds: Collection<Id>) {
+        delete(transactionIds)
     }
 
     fun createOrUpdate(transactions: Collection<Transaction>) {

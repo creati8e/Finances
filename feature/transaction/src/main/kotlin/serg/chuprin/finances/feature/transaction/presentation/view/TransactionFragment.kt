@@ -50,6 +50,7 @@ class TransactionFragment :
 
     private companion object {
         private const val RC_UNSAVED_CHANGED_DIALOG = 12312
+        private const val RC_TRANSACTION_DELETION_DIALOG = 12313
     }
 
     @Inject
@@ -118,6 +119,8 @@ class TransactionFragment :
             isSaveButtonEnabledLiveData(saveIcon::setEnabled)
             chosenCategoryLiveData(chosenCategoryTextView::setText)
             chosenMoneyAccountLiveData(chosenMoneyAccountTextView::setText)
+            transactionDeletionButtonVisibilityLiveDate(deleteTransactionButton::makeVisibleOrGone)
+
             chosenOperationLiveData { operation ->
                 tabsController.selectTabForOperation(transactionTypeTabLayout, operation)
             }
@@ -132,6 +135,8 @@ class TransactionFragment :
     override fun onInfoDialogPositiveButtonClick(requestCode: Int) {
         if (requestCode == RC_UNSAVED_CHANGED_DIALOG) {
             viewModel.dispatchIntent(TransactionIntent.ClickOnSaveButton)
+        } else if (requestCode == RC_TRANSACTION_DELETION_DIALOG) {
+            viewModel.dispatchIntent(TransactionIntent.ClickOnConfirmTransactionDeletion)
         }
     }
 
@@ -179,6 +184,9 @@ class TransactionFragment :
         }
         moneyAccountLayout.onClick {
             viewModel.dispatchIntent(TransactionIntent.ClickOnMoneyAccount)
+        }
+        deleteTransactionButton.onClick {
+            viewModel.dispatchIntent(TransactionIntent.ClickOnDeleteTransaction)
         }
 
         tabsController.listenTabChanges(transactionTypeTabLayout, lifecycleScope) { operation ->
@@ -231,6 +239,16 @@ class TransactionFragment :
                     positiveText = getString(CoreR.string.yes),
                     message = event.message,
                     callbackRequestCode = RC_UNSAVED_CHANGED_DIALOG
+                )
+                showDialog<InfoDialogFragment>(childFragmentManager, arguments)
+            }
+            TransactionEvent.ShowTransactionDeletionDialog -> {
+                val arguments = InfoDialogArguments(
+                    title = null,
+                    negativeText = getString(CoreR.string.no),
+                    positiveText = getString(CoreR.string.yes),
+                    message = getString(R.string.are_you_sure),
+                    callbackRequestCode = RC_TRANSACTION_DELETION_DIALOG
                 )
                 showDialog<InfoDialogFragment>(childFragmentManager, arguments)
             }

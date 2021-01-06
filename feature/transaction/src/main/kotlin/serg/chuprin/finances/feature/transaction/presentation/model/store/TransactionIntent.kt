@@ -19,6 +19,10 @@ sealed class TransactionIntent {
 
     object ClickOnMoneyAccount : TransactionIntent()
 
+    object ClickOnDeleteTransaction : TransactionIntent()
+
+    object ClickOnConfirmTransactionDeletion : TransactionIntent()
+
     object ClickOnUnsavedChangedDialogNegativeButton : TransactionIntent()
 
     class EnterAmount(

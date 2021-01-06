@@ -168,6 +168,16 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/deleteTransactionButton"
+                style="@style/DangerousButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@string/transaction_delete_button"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.core.widget.NestedScrollView>

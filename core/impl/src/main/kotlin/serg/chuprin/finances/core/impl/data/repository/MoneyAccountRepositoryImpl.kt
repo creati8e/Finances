@@ -22,7 +22,7 @@ internal class MoneyAccountRepositoryImpl @Inject constructor(
 
     override fun updateAccount(account: MoneyAccount) = dataSource.updateAccount(account)
 
-    override suspend fun deleteAccounts(accounts: List<MoneyAccount>) {
+    override fun deleteAccounts(accounts: List<MoneyAccount>) {
         dataSource.deleteAccounts(accounts)
     }
 
