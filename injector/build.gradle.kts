@@ -5,8 +5,8 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":core:core-impl"))
-    implementation(project(":feature:feature-dashboard-setup-api"))
+    implementation(project(":core:impl"))
+    implementation(project(":feature:dashboard-setup-api"))
 
     implementation(Libraries.KOTLIN)
     // region DI.

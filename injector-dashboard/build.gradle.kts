@@ -5,9 +5,9 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":core:core-impl"))
-    implementation(project(":feature:feature-dashboard-setup-api"))
-    implementation(project(":feature:feature-dashboard-setup-impl"))
+    implementation(project(":core:impl"))
+    implementation(project(":feature:dashboard-setup-api"))
+    implementation(project(":feature:dashboard-setup-impl"))
 
     implementation(Libraries.KOTLIN)
 

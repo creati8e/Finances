@@ -11,29 +11,29 @@ include ':injector-dashboard'
 
 // region Core
 
-include ':core:core-api'
-include ':core:core-mvi'
-include ':core:core-impl'
-include ':core:core-firebase'
-include ':core:core-pie-chart'
-include ':core:core-category-shares'
+include ':core:api'
+include ':core:mvi'
+include ':core:impl'
+include ':core:firebase'
+include ':core:pie-chart'
+include ':core:category-shares'
 
 // endregion
 
 
 // region Features
 
-include ':feature:feature-dashboard'
-include ':feature:feature-onboarding'
-include ':feature:feature-transaction'
-include ':feature:feature-transactions'
-include ':feature:feature-user-profile'
-include ':feature:feature-authorization'
-include ':feature:feature-money-accounts'
-include ':feature:feature-categories-impl'
-include ':feature:feature-dashboard-setup-api'
-include ':feature:feature-dashboard-setup-impl'
-include ':feature:feature-money-account-details'
-include ':feature:feature-money-account-creation'
+include ':feature:dashboard'
+include ':feature:onboarding'
+include ':feature:transaction'
+include ':feature:user-profile'
+include ':feature:authorization'
+include ':feature:categories-list'
+include ':feature:transactions-report'
+include ':feature:money-accounts-list'
+include ':feature:dashboard-setup-api'
+include ':feature:dashboard-setup-impl'
+include ':feature:money-account-details'
+include ':feature:money-account-creation'
 
 // endregion

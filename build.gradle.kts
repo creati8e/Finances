@@ -79,7 +79,7 @@ subprojects {
                 configureSpek(this)
                 enableDesugaring(this)
 
-                if (name.contains("feature")) {
+                if (group.toString().contains("feature", ignoreCase = true)) {
                     dependencies.add("implementation", Libraries.EDGE_TO_EDGE)
                 }
             }

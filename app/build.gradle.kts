@@ -69,19 +69,19 @@ dependencies {
     // region Modules.
 
     implementation(project(":injector"))
-    implementation(project(":core:core-impl"))
-    implementation(project(":feature:feature-dashboard"))
-    implementation(project(":feature:feature-onboarding"))
-    implementation(project(":feature:feature-transaction"))
-    implementation(project(":feature:feature-user-profile"))
-    implementation(project(":feature:feature-transactions"))
-    implementation(project(":feature:feature-authorization"))
-    implementation(project(":feature:feature-money-accounts"))
-    implementation(project(":feature:feature-categories-impl"))
-    implementation(project(":feature:feature-dashboard-setup-api"))
-    implementation(project(":feature:feature-dashboard-setup-impl"))
-    implementation(project(":feature:feature-money-account-details"))
-    implementation(project(":feature:feature-money-account-creation"))
+    implementation(project(":core:impl"))
+    implementation(project(":feature:dashboard"))
+    implementation(project(":feature:onboarding"))
+    implementation(project(":feature:transaction"))
+    implementation(project(":feature:user-profile"))
+    implementation(project(":feature:transactions-report"))
+    implementation(project(":feature:authorization"))
+    implementation(project(":feature:money-accounts-list"))
+    implementation(project(":feature:categories-list"))
+    implementation(project(":feature:dashboard-setup-api"))
+    implementation(project(":feature:dashboard-setup-impl"))
+    implementation(project(":feature:money-account-details"))
+    implementation(project(":feature:money-account-creation"))
 
     // endregion
 
