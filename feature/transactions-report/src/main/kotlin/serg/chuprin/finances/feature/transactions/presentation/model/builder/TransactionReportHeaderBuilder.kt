@@ -11,8 +11,6 @@ import serg.chuprin.finances.feature.transactions.R
 import serg.chuprin.finances.feature.transactions.domain.model.TransactionReportFilter
 import serg.chuprin.finances.feature.transactions.domain.model.TransactionsReport
 import serg.chuprin.finances.feature.transactions.presentation.model.TransactionReportHeader
-import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportChartListCell
-import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportDataPeriodAmountChartCell
 import javax.inject.Inject
 
 /**
@@ -20,18 +18,10 @@ import javax.inject.Inject
  */
 class TransactionReportHeaderBuilder @Inject constructor(
     private val resourceManger: ResourceManger,
-    private val categoryRepository: TransactionCategoryRepository,
-    private val chartCellsBuilder: TransactionReportChartCellsBuilder
+    private val categoryRepository: TransactionCategoryRepository
 ) {
 
     suspend fun build(report: TransactionsReport): TransactionReportHeader {
-        val preparedData = report.preparedData
-        val chartCells = chartCellsBuilder.build(
-            currency = preparedData.currency,
-            dataPeriodAmounts = preparedData.dataPeriodAmounts,
-            currentDataPeriod = report.filter.reportDataPeriod.dataPeriod
-        )
-
         val filter = report.filter
 
         // TODO: Add formatting for all filter types.
@@ -53,33 +43,13 @@ class TransactionReportHeaderBuilder @Inject constructor(
                 EMPTY_STRING
             }
             is TransactionReportFilter.SingleCategory -> {
-                buildSubtitleForSingleCategory(filter)
+                filter.transactionType.format()
             }
             is TransactionReportFilter.Categories -> {
                 EMPTY_STRING
             }
         }
-
-        return TransactionReportHeader(
-            title = title,
-            subtitle = subtitle,
-            dataPeriodAmountsChartListCell = buildTransactionReportChartListCell(chartCells)
-        )
-    }
-
-    private fun buildTransactionReportChartListCell(
-        dataPeriodAmountChartCells: List<TransactionReportDataPeriodAmountChartCell>
-    ): List<TransactionReportChartListCell> {
-        if (dataPeriodAmountChartCells.isEmpty()) {
-            return emptyList()
-        }
-        return listOf(TransactionReportChartListCell(dataPeriodAmountChartCells))
-    }
-
-    private fun buildSubtitleForSingleCategory(
-        filter: TransactionReportFilter.SingleCategory
-    ): String {
-        return filter.transactionType.format()
+        return TransactionReportHeader(title = title, subtitle = subtitle)
     }
 
     private suspend fun buildTitleForSingleCategory(

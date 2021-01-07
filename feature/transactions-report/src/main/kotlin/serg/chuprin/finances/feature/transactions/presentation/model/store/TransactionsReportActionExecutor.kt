@@ -9,7 +9,6 @@ import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
 import serg.chuprin.finances.core.mvi.invoke
 import serg.chuprin.finances.feature.transactions.domain.model.ReportDataPeriod
 import serg.chuprin.finances.feature.transactions.domain.usecase.ChooseDataPeriodUseCase
-import serg.chuprin.finances.feature.transactions.presentation.model.builder.TransactionReportCategorySharesCellBuilder
 import serg.chuprin.finances.feature.transactions.presentation.model.builder.TransactionReportCellsBuilder
 import serg.chuprin.finances.feature.transactions.presentation.model.builder.TransactionReportHeaderBuilder
 import javax.inject.Inject
@@ -20,8 +19,7 @@ import javax.inject.Inject
 class TransactionsReportActionExecutor @Inject constructor(
     private val cellsBuilder: TransactionReportCellsBuilder,
     private val headerBuilder: TransactionReportHeaderBuilder,
-    private val chooseDataPeriodUseCase: ChooseDataPeriodUseCase,
-    private val categorySharesCellBuilder: TransactionReportCategorySharesCellBuilder
+    private val chooseDataPeriodUseCase: ChooseDataPeriodUseCase
 ) : StoreActionExecutor<TransactionsReportAction, TransactionsReportState, TransactionsReportEffect, TransactionsReportEvent> {
 
     override fun invoke(
@@ -81,20 +79,10 @@ class TransactionsReportActionExecutor @Inject constructor(
         action: TransactionsReportAction.FormatReport
     ): Flow<TransactionsReportEffect> {
         return flowOfSingleValue {
-            val report = action.report
-            val preparedData = report.preparedData
             TransactionsReportEffect.ReportBuilt(
-                filter = report.filter,
-                header = headerBuilder.build(report),
-                categorySharesCell = preparedData
-                    .categorySharesChart
-                    ?.let(categorySharesCellBuilder::build),
-                listCells = cellsBuilder.build(
-                    currency = preparedData.currency,
-                    moneyAccounts = preparedData.moneyAccounts,
-                    dataPeriodAmount = preparedData.dataPeriodAmount,
-                    transactionsGroupedByDay = preparedData.dataPeriodTransactions
-                )
+                filter = action.report.filter,
+                header = headerBuilder.build(action.report),
+                listCells = cellsBuilder.build(action.report)
             )
         }
     }
