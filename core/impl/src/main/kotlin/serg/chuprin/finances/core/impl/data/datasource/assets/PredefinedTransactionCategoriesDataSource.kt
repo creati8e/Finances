@@ -10,6 +10,7 @@ import kotlinx.serialization.json.Json
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.impl.data.model.PredefinedTransactionCategories
 import java.io.BufferedReader
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -21,7 +22,9 @@ internal class PredefinedTransactionCategoriesDataSource @Inject constructor(
 
     private companion object {
         private const val FILE_INCOME_CATEGORIES = "income_transaction_categories.json"
+        private const val FILE_INCOME_CATEGORIES_EN = "income_transaction_categories_en.json"
         private const val FILE_EXPENSE_CATEGORIES = "expense_transaction_categories.json"
+        private const val FILE_EXPENSE_CATEGORIES_EN = "expense_transaction_categories_en.json"
     }
 
     suspend fun getCategories(): PredefinedTransactionCategories {
@@ -30,9 +33,14 @@ internal class PredefinedTransactionCategoriesDataSource @Inject constructor(
                 // Retrieve all categories without reopening AssetManager.
                 // It crashes for unknown reason otherwise.
                 context.assets.use { assetManager ->
+                    val locale = Locale.getDefault()
                     val predefinedTransactionCategories = PredefinedTransactionCategories(
-                        incomeCategories = assetManager.getCategories(FILE_INCOME_CATEGORIES),
-                        expenseCategories = assetManager.getCategories(FILE_EXPENSE_CATEGORIES)
+                        incomeCategories = assetManager.getCategories(
+                            getIncomeCategoriesFilename(locale)
+                        ),
+                        expenseCategories = assetManager.getCategories(
+                            getExpenseCategoriesFilename(locale)
+                        )
                     )
                     predefinedTransactionCategories
                 }
@@ -82,6 +90,20 @@ internal class PredefinedTransactionCategoriesDataSource @Inject constructor(
             }
 
         return parentCategories.values + childCategories
+    }
+
+    private fun getIncomeCategoriesFilename(locale: Locale): String {
+        if (locale.language.contains("en", ignoreCase = true)) {
+            return FILE_INCOME_CATEGORIES_EN
+        }
+        return FILE_INCOME_CATEGORIES
+    }
+
+    private fun getExpenseCategoriesFilename(locale: Locale): String {
+        if (locale.language.contains("en", ignoreCase = true)) {
+            return FILE_EXPENSE_CATEGORIES_EN
+        }
+        return FILE_EXPENSE_CATEGORIES
     }
 
 }

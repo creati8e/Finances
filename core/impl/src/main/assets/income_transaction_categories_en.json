@@ -1,0 +1,57 @@
+[
+  {
+    "color": "#8EC8C5",
+    "name": "Salary",
+    "id": "BB2C4A5F-86C7-42C4-9870-8DE720989FEA",
+    "is_income": true
+  },
+  {
+    "color": "#75A8F5",
+    "name": "Dividends",
+    "id": "6912162F-4A1F-4B3E-9A9E-F7E3294B0A8F",
+    "is_income": true
+  },
+  {
+    "color": "#F9E07B",
+    "name": "Gifts",
+    "id": "C90F2BBB-FCC7-42A4-9073-D0D856EF6A84",
+    "is_income": true
+  },
+  {
+    "color": "#DDDDDD",
+    "name": "Other",
+    "id": "B7F4FCB1-8720-4F9C-BE2D-AE1A950E9695",
+    "is_income": true
+  },
+  {
+    "color": "#D0EB1D",
+    "name": "Accrued interest on balances",
+    "id": "F8BC8C71-C841-405B-BB10-ECB14DA95F3E",
+    "is_income": true
+  },
+  {
+    "color": "#95B6E7",
+    "name": "Part-time job",
+    "id": "03A801F5-F239-4134-923E-222AFFAC60E0",
+    "is_income": true
+  },
+  {
+    "color": "#E87DAD",
+    "name": "Rent",
+    "id": "A5E90A89-38D2-460C-B1A4-E7D1781A9535",
+    "is_income": true
+  },
+  {
+    "color": "#CDBB82",
+    "name": "Stock exchange",
+    "id": "A76EEB0D-9F5C-4CC8-A730-27E45C460699",
+    "is_income": true
+  },
+  {
+    "color": "#8EC8C5",
+    "name": "Bonus",
+    "id": "836CB2C0-D055-4E84-9586-44A4B571FD2E",
+    "parent_category_id": "BB2C4A5F-86C7-42C4-9870-8DE720989FEA",
+    "is_income": true
+  }
+]
