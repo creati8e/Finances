@@ -1,6 +1,7 @@
 package serg.chuprin.finances.feature.transactions.domain.service
 
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.*
 import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
@@ -26,6 +27,7 @@ class TransactionReportDataService @Inject constructor(
     private val currentPeriodDataService: TransactionReportCurrentPeriodDataService
 ) {
 
+    @OptIn(FlowPreview::class)
     fun dataFlow(): Flow<TransactionReportRawData> {
         return flow {
             coroutineScope {
@@ -67,6 +69,7 @@ class TransactionReportDataService @Inject constructor(
 
                 emitAll(
                     combine(
+                        filterFlow,
                         moneyAccountsFlow,
                         dataPeriodAmountsBuilder.dataFlow(
                             filterFlow = filterFlow,
@@ -74,14 +77,12 @@ class TransactionReportDataService @Inject constructor(
                         ),
                         // Filter and list data emissions must be zipped because list data is updated
                         // when filter is updated. This is required for preventing simultaneous emissions.
-                        currentPeriodDataService
-                            .dataFlow(
-                                filterFlow = filterFlow,
-                                categoriesFlow = categoriesFlow,
-                                transactionsFlow = transactionsFlow
-                            )
-                            .zip(filterFlow, ::Pair)
-                    ) { moneyAccounts, dataPeriodAmounts, (currentPeriodData, filter) ->
+                        currentPeriodDataService.dataFlow(
+                            filterFlow = filterFlow,
+                            categoriesFlow = categoriesFlow,
+                            transactionsFlow = transactionsFlow
+                        )
+                    ) { filter, moneyAccounts, dataPeriodAmounts, currentPeriodData ->
                         TransactionReportRawData(
                             filter = filter,
                             moneyAccounts = moneyAccounts,
@@ -89,7 +90,7 @@ class TransactionReportDataService @Inject constructor(
                             listData = currentPeriodData.transactions,
                             categoryTransactions = currentPeriodData.categoryTransactions
                         )
-                    }
+                    }.debounce(100)
                 )
             }
         }
