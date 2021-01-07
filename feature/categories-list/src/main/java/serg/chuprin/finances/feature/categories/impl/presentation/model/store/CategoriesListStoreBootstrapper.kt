@@ -24,9 +24,7 @@ class CategoriesListStoreBootstrapper @Inject constructor(
     override fun invoke(): Flow<CategoriesListAction> {
         return combine(
             useCase.execute(screenArguments.categoryType),
-            expansionTracker.expansionsFlow.onEach {
-                Timber.d { "Emit data expansionsFlow" }
-            },
+            expansionTracker.expansionsFlow,
             CategoriesListAction::BuildCategoriesList
         )
     }
