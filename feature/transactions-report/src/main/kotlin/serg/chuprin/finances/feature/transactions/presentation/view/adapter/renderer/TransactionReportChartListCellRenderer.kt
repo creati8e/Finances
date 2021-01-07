@@ -12,7 +12,6 @@ import serg.chuprin.finances.core.api.presentation.view.adapter.diff.DiffCallbac
 import serg.chuprin.finances.feature.transactions.R
 import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportChartListCell
 import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportDataPeriodAmountChartCell
-import serg.chuprin.finances.feature.transactions.presentation.view.adapter.diff.payload.TransactionReportDataPeriodAmountsChartListChangedPayload
 
 /**
  * Created by Sergey Chuprin on 22.12.2020.
@@ -38,7 +37,7 @@ class TransactionReportChartListCellRenderer(
         model: TransactionReportChartListCell,
         payloads: MutableList<Any>
     ) {
-        if (payloads.containsType<TransactionReportDataPeriodAmountsChartListChangedPayload>()) {
+        if (payloads.containsType<TransactionReportChartListCell.ChangedPayload>()) {
             dataPeriodChartCellsAdapter.setItems(model.dataPeriodAmountChartCells)
         }
     }

@@ -5,6 +5,7 @@ import serg.chuprin.adapter.Click
 import serg.chuprin.adapter.ContainerHolder
 import serg.chuprin.adapter.ContainerRenderer
 import serg.chuprin.adapter.LongClick
+import serg.chuprin.finances.core.api.extensions.containsType
 import serg.chuprin.finances.core.api.presentation.view.extensions.onViewClick
 import serg.chuprin.finances.feature.transactions.R
 import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportDataPeriodAmountChartCell
@@ -21,10 +22,16 @@ class TransactionDataPeriodAmountChartCellRenderer :
         holder: ContainerHolder,
         model: TransactionReportDataPeriodAmountChartCell
     ) {
-        with(holder) {
-            chartBar.setProgress(model.barFill)
-            itemView.isActivated = model.isChosen
-            dateTextView.text = model.formattedPeriodName
+        bind(holder, model)
+    }
+
+    override fun bindView(
+        holder: ContainerHolder,
+        model: TransactionReportDataPeriodAmountChartCell,
+        payloads: MutableList<Any>
+    ) {
+        if (payloads.containsType<TransactionReportDataPeriodAmountChartCell.ChangedPayload>()) {
+            bind(holder, model)
         }
     }
 
@@ -37,6 +44,17 @@ class TransactionDataPeriodAmountChartCellRenderer :
             itemView.onViewClick { view ->
                 clickListener?.onClick(view, adapterPosition)
             }
+        }
+    }
+
+    private fun bind(
+        holder: ContainerHolder,
+        model: TransactionReportDataPeriodAmountChartCell
+    ) {
+        with(holder) {
+            chartBar.setProgress(model.barFill)
+            itemView.isActivated = model.isChosen
+            dateTextView.text = model.formattedPeriodName
         }
     }
 

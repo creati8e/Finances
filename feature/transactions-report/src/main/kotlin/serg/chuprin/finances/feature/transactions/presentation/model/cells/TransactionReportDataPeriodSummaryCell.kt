@@ -8,4 +8,8 @@ import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 data class TransactionReportDataPeriodSummaryCell(
     val title: String,
     val value: String
-) : BaseCell
+) : BaseCell {
+
+    class ChangedPayload
+
+}

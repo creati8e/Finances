@@ -6,7 +6,6 @@ import serg.chuprin.adapter.ContainerRenderer
 import serg.chuprin.finances.core.api.extensions.containsType
 import serg.chuprin.finances.feature.transactions.R
 import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportDataPeriodSummaryCell
-import serg.chuprin.finances.feature.transactions.presentation.view.adapter.diff.payload.TransactionReportDataPeriodSummaryChangedPayload
 
 /**
  * Created by Sergey Chuprin on 22.12.2020.
@@ -25,7 +24,7 @@ class TransactionReportDataPeriodSummaryCellRenderer :
         model: TransactionReportDataPeriodSummaryCell,
         payloads: MutableList<Any>
     ) {
-        if (payloads.containsType<TransactionReportDataPeriodSummaryChangedPayload>()) {
+        if (payloads.containsType<TransactionReportDataPeriodSummaryCell.ChangedPayload>()) {
             bind(holder, model)
         }
     }

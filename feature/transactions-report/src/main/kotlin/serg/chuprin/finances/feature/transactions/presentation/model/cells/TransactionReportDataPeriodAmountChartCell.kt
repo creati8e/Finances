@@ -16,6 +16,8 @@ data class TransactionReportDataPeriodAmountChartCell(
     val isChosen: Boolean
 ) : DiffCell<DataPeriod> {
 
+    class ChangedPayload
+
     override val diffCellId: DataPeriod = dataPeriod
 
 }

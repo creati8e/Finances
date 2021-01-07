@@ -7,4 +7,8 @@ import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
  */
 data class TransactionReportChartListCell(
     val dataPeriodAmountChartCells: List<TransactionReportDataPeriodAmountChartCell>
-) : BaseCell
+) : BaseCell {
+
+    class ChangedPayload
+
+}

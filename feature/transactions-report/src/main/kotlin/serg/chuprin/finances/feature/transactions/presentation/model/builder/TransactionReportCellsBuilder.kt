@@ -93,6 +93,7 @@ class TransactionReportCellsBuilder @Inject constructor(
     private fun buildZeroDataCell(): ZeroDataCell {
         return ZeroDataCell(
             iconRes = null,
+            fillParent = false,
             contentMessageRes = null,
             titleRes = R.string.transactions_report_zero_data_title
         )
