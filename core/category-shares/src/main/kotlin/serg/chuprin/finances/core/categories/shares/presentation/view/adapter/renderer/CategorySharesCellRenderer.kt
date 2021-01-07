@@ -2,7 +2,7 @@ package serg.chuprin.finances.core.categories.shares.presentation.view.adapter.r
 
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
-import kotlinx.android.synthetic.main.view_dashboard_categories_page.*
+import kotlinx.android.synthetic.main.view_category_shares.*
 import serg.chuprin.adapter.Click
 import serg.chuprin.adapter.ContainerHolder
 import serg.chuprin.adapter.ContainerRenderer
