@@ -5,6 +5,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <include layout="@layout/view_dashboard_categories_page" />
+    <include layout="@layout/view_category_shares" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>
