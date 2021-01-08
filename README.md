@@ -1,4 +1,6 @@
-# Finances - finance control app as technology playground (🛠️)
+<img src="screenshots/app_icon.png"  width="100" />
+
+# Finances - finance control app as technology playground (WIP 🛠️)
 APKs are hosted on [AppCenter](https://install.appcenter.ms/users/gregamer-gmail.com/apps/finances/distribution_groups/public "AppCenter")
 # Tech stack:
 - **Kotlin** for all code
