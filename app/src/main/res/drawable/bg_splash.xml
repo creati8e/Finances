@@ -5,11 +5,9 @@
     <item android:drawable="?android:colorBackground" />
 
     <item>
-        <inset android:inset="100dp">
-            <bitmap
-                android:gravity="center"
-                android:src="@drawable/ic_splash" />
-        </inset>
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/img_splash" />
     </item>
 
 </layer-list>

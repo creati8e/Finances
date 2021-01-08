@@ -14,7 +14,7 @@
 
     <style name="BaseAppTheme.Splash"
         parent="BaseAppTheme">
-        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:background">@drawable/bg_splash</item>
     </style>
 
 </resources>

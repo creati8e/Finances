@@ -8,14 +8,14 @@
         parent="AppThemeSplash27" />
 
     <style name="AppTheme27"
-        parent="AppTheme23">
+        parent="AppTheme26">
         <item name="android:windowLightNavigationBar">@bool/windowLightStatusBar</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:navigationBarDividerColor">@color/colorNavbarDivider</item>
     </style>
 
     <style name="AppThemeSplash27"
-        parent="AppThemeSplash23">
+        parent="AppThemeSplash26">
         <item name="android:windowLightNavigationBar">@bool/windowLightStatusBar</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:navigationBarDividerColor">@color/colorNavbarDivider</item>

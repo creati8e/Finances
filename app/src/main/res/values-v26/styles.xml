@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme"
+        parent="AppTheme26" />
+
+    <style name="AppTheme.Splash"
+        parent="AppThemeSplash26" />
+
+    <style name="AppTheme26"
+        parent="AppTheme23">
+        <item name="background">@null</item>
+        <item name="android:windowSplashscreenContent">@null</item>
+    </style>
+
+    <style name="AppThemeSplash26"
+        parent="AppThemeSplash23">
+        <item name="background">@null</item>
+        <item name="android:windowSplashscreenContent">@drawable/bg_splash</item>
+    </style>
+
+</resources>
