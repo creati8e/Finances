@@ -17,7 +17,6 @@
         tools:itemCount="5"
         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/cell_transaction_report_data_period_amount_chart"
-        tools:orientation="horizontal"
-        tools:theme="@style/AppTheme" />
+        tools:orientation="horizontal" />
 
 </FrameLayout>

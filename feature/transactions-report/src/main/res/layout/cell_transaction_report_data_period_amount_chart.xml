@@ -11,8 +11,7 @@
     android:focusable="true"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:padding="8dp"
-    tools:theme="@style/AppTheme">
+    android:padding="8dp">
 
     <serg.chuprin.finances.feature.transactions.presentation.view.widget.ChartBarView
         android:id="@+id/chartBar"

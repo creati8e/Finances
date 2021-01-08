@@ -1,17 +1,5 @@
 <resources>
 
-    <style name="AppTheme" parent="BaseAppTheme.Clear" />
-
-    <style name="AppTheme.Splash" parent="BaseAppTheme.Splash" />
-
-    <style name="BaseAppTheme.Clear" parent="BaseAppTheme">
-        <item name="android:background">@null</item>
-    </style>
-
-    <style name="BaseAppTheme.Splash" parent="BaseAppTheme">
-        <item name="android:background">@color/colorPrimary</item>
-    </style>
-
     <style name="BaseAppTheme"
         parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowBackground">@color/colorPrimary</item>
