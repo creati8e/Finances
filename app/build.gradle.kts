@@ -5,7 +5,6 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("kotlin-android-extensions")
-    id("ru.cleverpumpkin.badge")
     id("ru.cleverpumpkin.proguard-dictionaries-generator")
     id("androidx.navigation.safeargs")
 }
@@ -34,22 +33,6 @@ android {
             signingConfig = signingConfigs.getByName(AppConfig.BuildTypes.DEBUG.name)
         }
         maybeCreate(AppConfig.BuildTypes.RELEASE.name)
-    }
-}
-
-badge {
-    iconNames = listOf("@mipmap/ic_launcher_foreground")
-    buildTypes {
-        create(AppConfig.BuildTypes.DEV.name) {
-            enabled = true
-            fontSize = 12
-            text = AppConfig.VERSION_NAME
-        }
-        create(AppConfig.BuildTypes.DEBUG.name) {
-            enabled = true
-            fontSize = 12
-            text = AppConfig.VERSION_NAME
-        }
     }
 }
 

@@ -28,7 +28,6 @@ buildscript {
         classpath(BuildScript.Plugins.KOTLIN)
         classpath(BuildScript.Plugins.JUNIT5)
         classpath(BuildScript.Plugins.ANDROID)
-        classpath(BuildScript.Plugins.APP_BADGE)
         classpath(BuildScript.Plugins.NAVIGATION)
         classpath(BuildScript.Plugins.GRAPH_VISUALIZER)
         classpath(BuildScript.Plugins.PROGUARD_GENERATOR)

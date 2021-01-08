@@ -24,7 +24,6 @@ APKs are hosted on [AppCenter](https://install.appcenter.ms/users/gregamer-gmail
 
 # Some other tools:
 - [**Gradle Modules Graph visualizer**](https://github.com/vanniktech/gradle-dependency-graph-generator-plugin)
-- [**AppBadge**](https://github.com/CleverPumpkin/App-Badge) - for drawing version name on app icon
 - [**Proguard & R8 Dictionaries Generator**](https://github.com/CleverPumpkin/Proguard-Dictionaries-Generator) - for generating randomized dictionaries for Proguard (and R8)
 # Screens
 |    Screen     | Remarks                                                                    | How it looks                                             |
