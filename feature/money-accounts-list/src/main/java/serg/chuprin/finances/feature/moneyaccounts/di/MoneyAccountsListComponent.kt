@@ -14,7 +14,11 @@ import serg.chuprin.finances.injector.Injector
 /**
  * Created by Sergey Chuprin on 26.04.2020.
  */
-@[ScreenScope Component(dependencies = [MoneyAccountsListDependencies::class])]
+@ScreenScope
+@Component(
+    modules = [MoneyAccountsListModule::class],
+    dependencies = [MoneyAccountsListDependencies::class]
+)
 interface MoneyAccountsListComponent :
     ViewModelComponent<MoneyAccountsListViewModel>,
     InjectableComponent<MoneyAccountsListFragment> {
