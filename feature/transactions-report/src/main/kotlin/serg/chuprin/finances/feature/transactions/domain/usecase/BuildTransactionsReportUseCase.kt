@@ -3,6 +3,7 @@ package serg.chuprin.finances.feature.transactions.domain.usecase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import serg.chuprin.finances.core.api.domain.TransactionsByDayGrouper
+import serg.chuprin.finances.core.api.domain.model.CategoryShares
 import serg.chuprin.finances.core.api.domain.model.User
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
@@ -58,10 +59,12 @@ class BuildTransactionsReportUseCase @Inject constructor(
         }
         val transactionType = reportRawData.filter.transactionType ?: return null
 
-        val categoryShares = reportRawData
-            .categoryToTransactionsList
-            .map { (category, transactions) -> category to transactions.amount.abs() }
-            .sortedByDescending { (_, amount) -> amount }
+        val categoryShares = CategoryShares(
+            reportRawData
+                .categoryToTransactionsList
+                .map { (category, transactions) -> category to transactions.amount.abs() }
+                .sortedByDescending { (_, amount) -> amount }
+        )
 
         val totalAmount = categoryShares.run {
             var amount = BigDecimal.ZERO

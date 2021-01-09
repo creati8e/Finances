@@ -47,18 +47,20 @@ class DashboardCategoriesPageBuilder @Inject constructor() {
         topCategoriesCount: Int
     ): Pair<CategoryShares, CategoryShares?> {
         return if (size > topCategoriesCount) {
-            take(topCategoriesCount) to takeLast(size - topCategoriesCount)
+            val popularCategoryShares = CategoryShares(take(topCategoriesCount))
+            val otherCategoryShares = CategoryShares(takeLast(size - topCategoriesCount))
+            popularCategoryShares to otherCategoryShares
         } else {
             this to null
         }
     }
 
     private fun CategoryToTransactionsList.calculateCategoryShares(): CategoryShares {
-        return this
-            .map { (categoryWithParent, transactions) ->
+        return CategoryShares(
+            map { (categoryWithParent, transactions) ->
                 categoryWithParent to transactions.amount.abs()
-            }
-            .sortedByDescending { (_, amount) -> amount }
+            }.sortedByDescending { (_, amount) -> amount }
+        )
     }
 
     private fun CategoryShares.calculateTotal(): BigDecimal {
