@@ -3,7 +3,7 @@ package serg.chuprin.finances.feature.categories.impl.presentation.view.adapter.
 import kotlinx.android.synthetic.main.view_category.*
 import serg.chuprin.adapter.Click
 import serg.chuprin.adapter.ContainerHolder
-import serg.chuprin.adapter.ContainerRenderer
+import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ContainerRenderer
 import serg.chuprin.adapter.LongClick
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeGone
 import serg.chuprin.finances.core.api.presentation.view.extensions.onViewClick
@@ -17,20 +17,20 @@ class ChildCategoryCellRenderer : ContainerRenderer<ChildCategoryCell>() {
 
     override val type: Int = R.layout.cell_child_category
 
-    override fun bindView(holder: ContainerHolder, model: ChildCategoryCell) {
-        with(holder) {
+    override fun bindView(viewHolder: ContainerHolder, cell: ChildCategoryCell) {
+        with(viewHolder) {
             transactionColorDot.makeGone()
             expansionArrowImageView.makeGone()
-            nameTextView.text = model.category.name
+            nameTextView.text = cell.category.name
         }
     }
 
     override fun onVhCreated(
-        holder: ContainerHolder,
+        viewHolder: ContainerHolder,
         clickListener: Click?,
         longClickListener: LongClick?
     ) {
-        with(holder) {
+        with(viewHolder) {
             itemView.onViewClick { view ->
                 clickListener?.onClick(view, adapterPosition)
             }

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.cell_widget_dashboard_categories.*
 import serg.chuprin.adapter.Click
 import serg.chuprin.adapter.ContainerHolder
-import serg.chuprin.adapter.ContainerRenderer
+import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ContainerRenderer
 import serg.chuprin.adapter.LongClick
 import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter
 import serg.chuprin.finances.core.api.presentation.view.extensions.onScrollStateChanged
@@ -44,26 +44,26 @@ class DashboardCategoriesWidgetCellRenderer(
             )
         }
 
-    override fun bindView(holder: ContainerHolder, model: DashboardWidgetCell.Categories) {
-        setCells(holder, model)
+    override fun bindView(viewHolder: ContainerHolder, cell: DashboardWidgetCell.Categories) {
+        setCells(viewHolder, cell)
     }
 
     override fun bindView(
-        holder: ContainerHolder,
-        model: DashboardWidgetCell.Categories,
+        viewHolder: ContainerHolder,
+        cell: DashboardWidgetCell.Categories,
         payloads: MutableList<Any>
     ) {
         if (DashboardCategoriesWidgetChangedPayload in payloads) {
-            setCells(holder, model)
+            setCells(viewHolder, cell)
         }
     }
 
     override fun onVhCreated(
-        holder: ContainerHolder,
+        viewHolder: ContainerHolder,
         clickListener: Click?,
         longClickListener: LongClick?
     ) {
-        with(holder) {
+        with(viewHolder) {
             with(categoryPagesRecyclerView) {
                 adapter = pageCellsAdapter
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -80,12 +80,12 @@ class DashboardCategoriesWidgetCellRenderer(
     }
 
     private fun setCells(
-        holder: ContainerHolder,
-        model: DashboardWidgetCell.Categories
+        viewHolder: ContainerHolder,
+        cell: DashboardWidgetCell.Categories
     ) {
-        pageCellsAdapter.setItems(model.pageCells) {
+        pageCellsAdapter.setItems(cell.pageCells) {
             if (adapterState != null) {
-                holder.categoryPagesRecyclerView.layoutManager?.onRestoreInstanceState(adapterState)
+                viewHolder.categoryPagesRecyclerView.layoutManager?.onRestoreInstanceState(adapterState)
             }
         }
     }

@@ -6,7 +6,7 @@ import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import kotlinx.android.synthetic.main.view_category.*
 import serg.chuprin.adapter.Click
 import serg.chuprin.adapter.ContainerHolder
-import serg.chuprin.adapter.ContainerRenderer
+import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ContainerRenderer
 import serg.chuprin.adapter.LongClick
 import serg.chuprin.finances.core.api.extensions.containsType
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisibleOrGone
@@ -27,34 +27,34 @@ class ParentCategoryCellRenderer : ContainerRenderer<ParentCategoryCell>() {
 
     override val type: Int = R.layout.cell_parent_category
 
-    override fun bindView(holder: ContainerHolder, model: ParentCategoryCell) {
-        with(holder) {
-            nameTextView.text = model.category.name
-            transactionColorDot.imageTintList = ColorStateList.valueOf(model.color)
+    override fun bindView(viewHolder: ContainerHolder, cell: ParentCategoryCell) {
+        with(viewHolder) {
+            nameTextView.text = cell.category.name
+            transactionColorDot.imageTintList = ColorStateList.valueOf(cell.color)
 
-            expansionArrowImageView.makeVisibleOrGone(model.isExpansionAvailable)
-            if (model.isExpansionAvailable) {
-                expansionArrowImageView.rotation = if (model.isExpanded) -180f else 0f
+            expansionArrowImageView.makeVisibleOrGone(cell.isExpansionAvailable)
+            if (cell.isExpansionAvailable) {
+                expansionArrowImageView.rotation = if (cell.isExpanded) -180f else 0f
             }
         }
     }
 
     override fun bindView(
-        holder: ContainerHolder,
-        model: ParentCategoryCell,
+        viewHolder: ContainerHolder,
+        cell: ParentCategoryCell,
         payloads: MutableList<Any>
     ) {
         if (payloads.containsType<ParentCategoryCell.ExpansionChangedPayload>()) {
-            animateExpansionArrow(holder.expansionArrowImageView, model.isExpanded)
+            animateExpansionArrow(viewHolder.expansionArrowImageView, cell.isExpanded)
         }
     }
 
     override fun onVhCreated(
-        holder: ContainerHolder,
+        viewHolder: ContainerHolder,
         clickListener: Click?,
         longClickListener: LongClick?
     ) {
-        with(holder) {
+        with(viewHolder) {
             expansionArrowImageView.onViewClick { view ->
                 clickListener?.onClick(view, adapterPosition)
             }

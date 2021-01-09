@@ -2,7 +2,7 @@ package serg.chuprin.finances.feature.userprofile.presentation.view.adapter.rend
 
 import kotlinx.android.synthetic.main.cell_user_profile_image.*
 import serg.chuprin.adapter.ContainerHolder
-import serg.chuprin.adapter.ContainerRenderer
+import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ContainerRenderer
 import serg.chuprin.finances.core.api.presentation.view.extensions.loadImage
 import serg.chuprin.finances.feature.userprofile.R
 import serg.chuprin.finances.feature.userprofile.presentation.model.cells.UserProfileImageCell
@@ -15,28 +15,28 @@ class UserProfileImageCellRenderer : ContainerRenderer<UserProfileImageCell>() {
 
     override val type: Int = R.layout.cell_user_profile_image
 
-    override fun bindView(holder: ContainerHolder, model: UserProfileImageCell) {
-        bind(holder, model)
+    override fun bindView(viewHolder: ContainerHolder, cell: UserProfileImageCell) {
+        bind(viewHolder, cell)
     }
 
     override fun bindView(
-        holder: ContainerHolder,
-        model: UserProfileImageCell,
+        viewHolder: ContainerHolder,
+        cell: UserProfileImageCell,
         payloads: MutableList<Any>
     ) {
         if (payloads.any { it is UserProfileChangedDiffPayload }) {
-            bind(holder, model)
+            bind(viewHolder, cell)
         }
     }
 
     private fun bind(
-        holder: ContainerHolder,
-        model: UserProfileImageCell
+        viewHolder: ContainerHolder,
+        cell: UserProfileImageCell
     ) {
-        with(holder) {
-            emailTextView.text = model.email
-            usernameTextView.text = model.username
-            userPhotoImageView.loadImage(model.imageUrl)
+        with(viewHolder) {
+            emailTextView.text = cell.email
+            usernameTextView.text = cell.username
+            userPhotoImageView.loadImage(cell.imageUrl)
         }
     }
 

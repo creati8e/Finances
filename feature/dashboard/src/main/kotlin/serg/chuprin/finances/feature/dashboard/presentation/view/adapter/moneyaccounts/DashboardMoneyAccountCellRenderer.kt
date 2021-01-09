@@ -3,7 +3,7 @@ package serg.chuprin.finances.feature.dashboard.presentation.view.adapter.moneya
 import kotlinx.android.synthetic.main.cell_dashboard_money_account.*
 import serg.chuprin.adapter.Click
 import serg.chuprin.adapter.ContainerHolder
-import serg.chuprin.adapter.ContainerRenderer
+import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ContainerRenderer
 import serg.chuprin.adapter.LongClick
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisibleOrGone
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
@@ -20,34 +20,34 @@ class DashboardMoneyAccountCellRenderer(
 
     override val type: Int = R.layout.cell_dashboard_money_account
 
-    override fun bindView(holder: ContainerHolder, model: DashboardMoneyAccountCell) {
-        bindData(holder, model)
+    override fun bindView(viewHolder: ContainerHolder, cell: DashboardMoneyAccountCell) {
+        bindData(viewHolder, cell)
     }
 
     override fun bindView(
-        holder: ContainerHolder,
-        model: DashboardMoneyAccountCell,
+        viewHolder: ContainerHolder,
+        cell: DashboardMoneyAccountCell,
         payloads: MutableList<Any>
     ) {
         if (DashboardMoneyAccountCellChangedPayload in payloads) {
-            bindData(holder, model)
+            bindData(viewHolder, cell)
         }
     }
 
     override fun onVhCreated(
-        holder: ContainerHolder,
+        viewHolder: ContainerHolder,
         clickListener: Click?,
         longClickListener: LongClick?
     ) {
-        with(holder) {
+        with(viewHolder) {
             cardView.onClick {
                 onCellClicked(adapterPosition)
             }
         }
     }
 
-    private fun bindData(holder: ContainerHolder, cell: DashboardMoneyAccountCell) {
-        with(holder) {
+    private fun bindData(viewHolder: ContainerHolder, cell: DashboardMoneyAccountCell) {
+        with(viewHolder) {
             cardView.tag = cell.transitionName
             cardView.transitionName = cell.transitionName
 

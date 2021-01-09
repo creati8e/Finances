@@ -4,7 +4,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.cell_widget_dashboard_recent_transactions.*
 import serg.chuprin.adapter.Click
 import serg.chuprin.adapter.ContainerHolder
-import serg.chuprin.adapter.ContainerRenderer
+import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ContainerRenderer
 import serg.chuprin.adapter.LongClick
 import serg.chuprin.finances.core.api.presentation.model.cells.TransactionCell
 import serg.chuprin.finances.core.api.presentation.view.adapter.decoration.CellDividerDecoration
@@ -37,19 +37,19 @@ class DashboardRecentTransactionsWidgetCellRenderer(
         }
     }
 
-    override fun bindView(holder: ContainerHolder, model: DashboardWidgetCell.RecentTransactions) {
-        recentTransactionsAdapter.setItems(model.cells)
-        with(holder) {
-            showMoreButton.makeVisibleOrGone(model.showMoreTransactionsButtonIsVisible)
+    override fun bindView(viewHolder: ContainerHolder, cell: DashboardWidgetCell.RecentTransactions) {
+        recentTransactionsAdapter.setItems(cell.cells)
+        with(viewHolder) {
+            showMoreButton.makeVisibleOrGone(cell.showMoreTransactionsButtonIsVisible)
         }
     }
 
     override fun onVhCreated(
-        holder: ContainerHolder,
+        viewHolder: ContainerHolder,
         clickListener: Click?,
         longClickListener: LongClick?
     ) {
-        with(holder) {
+        with(viewHolder) {
             showMoreButton.onClick(clickOnShowMoreTransactions)
             with(recentTransactionsRecyclerView) {
                 adapter = recentTransactionsAdapter

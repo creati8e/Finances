@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.cell_widget_dashboard_money_accounts.*
 import serg.chuprin.adapter.Click
 import serg.chuprin.adapter.ContainerHolder
-import serg.chuprin.adapter.ContainerRenderer
+import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ContainerRenderer
 import serg.chuprin.adapter.LongClick
 import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisibleOrGone
@@ -44,45 +44,45 @@ class DashboardMoneyAccountsWidgetCellRenderer(
             registerRenderer(DashboardMoneyAccountCellRenderer(::handleOnMoneyAccountCellClick))
         }
 
-    override fun bindView(holder: ContainerHolder, model: DashboardWidgetCell.MoneyAccounts) {
-        bindMoneyAccountCells(holder, model)
-        with(holder) {
+    override fun bindView(viewHolder: ContainerHolder, cell: DashboardWidgetCell.MoneyAccounts) {
+        bindMoneyAccountCells(viewHolder, cell)
+        with(viewHolder) {
             expansionArrowImageView.setImageResource(
-                if (model.isExpanded) {
+                if (cell.isExpanded) {
                     R.drawable.ic_collapse
                 } else {
                     R.drawable.ic_expand
                 }
             )
-            expandableLayout.makeVisibleOrGone(model.isExpanded)
+            expandableLayout.makeVisibleOrGone(cell.isExpanded)
         }
     }
 
     override fun bindView(
-        holder: ContainerHolder,
-        model: DashboardWidgetCell.MoneyAccounts,
+        viewHolder: ContainerHolder,
+        cell: DashboardWidgetCell.MoneyAccounts,
         payloads: MutableList<Any>
     ) {
         if (DashboardMoneyAccountsExpansionChangedPayload in payloads) {
-            with(holder) {
+            with(viewHolder) {
                 animationController.toggleExpansion(
-                    model.isExpanded,
+                    cell.isExpanded,
                     expandableLayout,
                     expansionArrowImageView
                 )
             }
         }
         if (DashboardMoneyAccountCellsChangedPayload in payloads) {
-            bindMoneyAccountCells(holder, model)
+            bindMoneyAccountCells(viewHolder, cell)
         }
     }
 
     override fun onVhCreated(
-        holder: ContainerHolder,
+        viewHolder: ContainerHolder,
         clickListener: Click?,
         longClickListener: LongClick?
     ) {
-        with(holder) {
+        with(viewHolder) {
             with(moneyAccountsRecyclerView) {
                 adapter = moneyAccountCellsAdapter
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -99,12 +99,12 @@ class DashboardMoneyAccountsWidgetCellRenderer(
     }
 
     private fun bindMoneyAccountCells(
-        holder: ContainerHolder,
-        model: DashboardWidgetCell.MoneyAccounts
+        viewHolder: ContainerHolder,
+        cell: DashboardWidgetCell.MoneyAccounts
     ) {
-        moneyAccountCellsAdapter.setItems(model.cells) {
+        moneyAccountCellsAdapter.setItems(cell.cells) {
             if (adapterState != null) {
-                holder.moneyAccountsRecyclerView.layoutManager?.onRestoreInstanceState(adapterState)
+                viewHolder.moneyAccountsRecyclerView.layoutManager?.onRestoreInstanceState(adapterState)
             }
         }
     }

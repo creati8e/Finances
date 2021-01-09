@@ -4,7 +4,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.cell_transaction_report_chart_list.*
 import serg.chuprin.adapter.Click
 import serg.chuprin.adapter.ContainerHolder
-import serg.chuprin.adapter.ContainerRenderer
+import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ContainerRenderer
 import serg.chuprin.adapter.LongClick
 import serg.chuprin.finances.core.api.extensions.containsType
 import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter
@@ -28,26 +28,26 @@ class TransactionReportChartListCellRenderer(
         registerRenderer(TransactionDataPeriodAmountChartCellRenderer())
     }
 
-    override fun bindView(holder: ContainerHolder, model: TransactionReportChartListCell) {
-        dataPeriodChartCellsAdapter.setItems(model.dataPeriodAmountChartCells)
+    override fun bindView(viewHolder: ContainerHolder, cell: TransactionReportChartListCell) {
+        dataPeriodChartCellsAdapter.setItems(cell.dataPeriodAmountChartCells)
     }
 
     override fun bindView(
-        holder: ContainerHolder,
-        model: TransactionReportChartListCell,
+        viewHolder: ContainerHolder,
+        cell: TransactionReportChartListCell,
         payloads: MutableList<Any>
     ) {
         if (payloads.containsType<TransactionReportChartListCell.ChangedPayload>()) {
-            dataPeriodChartCellsAdapter.setItems(model.dataPeriodAmountChartCells)
+            dataPeriodChartCellsAdapter.setItems(cell.dataPeriodAmountChartCells)
         }
     }
 
     override fun onVhCreated(
-        holder: ContainerHolder,
+        viewHolder: ContainerHolder,
         clickListener: Click?,
         longClickListener: LongClick?
     ) {
-        with(holder) {
+        with(viewHolder) {
             with(recyclerView) {
                 adapter = dataPeriodChartCellsAdapter
                 layoutManager =

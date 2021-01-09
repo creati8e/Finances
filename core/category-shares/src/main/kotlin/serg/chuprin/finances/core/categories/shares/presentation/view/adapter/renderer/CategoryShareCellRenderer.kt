@@ -5,9 +5,9 @@ import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.cell_dashboard_category.*
 import serg.chuprin.adapter.Click
 import serg.chuprin.adapter.ContainerHolder
-import serg.chuprin.adapter.ContainerRenderer
 import serg.chuprin.adapter.LongClick
 import serg.chuprin.finances.core.api.extensions.containsType
+import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ContainerRenderer
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
 import serg.chuprin.finances.core.categories.shares.R
 import serg.chuprin.finances.core.categories.shares.presentation.model.cell.CategoryShareCell
@@ -21,26 +21,26 @@ class CategoryShareCellRenderer<T : CategoryShareCell>(
 
     override val type: Int = R.layout.cell_dashboard_category
 
-    override fun bindView(holder: ContainerHolder, model: T) {
-        bindData(holder.categoryChip, model)
+    override fun bindView(viewHolder: ContainerHolder, cell: T) {
+        bindData(viewHolder.categoryChip, cell)
     }
 
     override fun bindView(
-        holder: ContainerHolder,
-        model: T,
+        viewHolder: ContainerHolder,
+        cell: T,
         payloads: MutableList<Any>
     ) {
         if (payloads.containsType<CategoryShareCell.CellChangedPayload>()) {
-            bindData(holder.categoryChip, model)
+            bindData(viewHolder.categoryChip, cell)
         }
     }
 
     override fun onVhCreated(
-        holder: ContainerHolder,
+        viewHolder: ContainerHolder,
         clickListener: Click?,
         longClickListener: LongClick?
     ) {
-        with(holder) {
+        with(viewHolder) {
             categoryChip.onClick {
                 onCategoryClicked(adapterPosition)
             }

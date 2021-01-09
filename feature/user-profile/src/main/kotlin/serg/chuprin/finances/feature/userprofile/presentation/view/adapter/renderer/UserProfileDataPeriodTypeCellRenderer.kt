@@ -3,7 +3,7 @@ package serg.chuprin.finances.feature.userprofile.presentation.view.adapter.rend
 import kotlinx.android.synthetic.main.cell_user_profile_data_period_type.*
 import serg.chuprin.adapter.Click
 import serg.chuprin.adapter.ContainerHolder
-import serg.chuprin.adapter.ContainerRenderer
+import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ContainerRenderer
 import serg.chuprin.adapter.LongClick
 import serg.chuprin.finances.core.api.presentation.view.extensions.onViewClick
 import serg.chuprin.finances.feature.userprofile.R
@@ -17,26 +17,26 @@ class UserProfileDataPeriodTypeCellRenderer : ContainerRenderer<UserProfileDataP
 
     override val type: Int = R.layout.cell_user_profile_data_period_type
 
-    override fun bindView(holder: ContainerHolder, model: UserProfileDataPeriodTypeCell) {
-        bind(holder, model)
+    override fun bindView(viewHolder: ContainerHolder, cell: UserProfileDataPeriodTypeCell) {
+        bind(viewHolder, cell)
     }
 
     override fun bindView(
-        holder: ContainerHolder,
-        model: UserProfileDataPeriodTypeCell,
+        viewHolder: ContainerHolder,
+        cell: UserProfileDataPeriodTypeCell,
         payloads: MutableList<Any>
     ) {
         if (payloads.any { it is UserProfilePeriodChangedDiffPayload }) {
-            bind(holder, model)
+            bind(viewHolder, cell)
         }
     }
 
     override fun onVhCreated(
-        holder: ContainerHolder,
+        viewHolder: ContainerHolder,
         clickListener: Click?,
         longClickListener: LongClick?
     ) {
-        with(holder) {
+        with(viewHolder) {
             itemView.onViewClick { view ->
                 clickListener?.onClick(view, adapterPosition)
             }
@@ -44,10 +44,10 @@ class UserProfileDataPeriodTypeCellRenderer : ContainerRenderer<UserProfileDataP
     }
 
     private fun bind(
-        holder: ContainerHolder,
-        model: UserProfileDataPeriodTypeCell
+        viewHolder: ContainerHolder,
+        cell: UserProfileDataPeriodTypeCell
     ) {
-        holder.dataPeriodTypeValueTextView.text = model.periodTypeDisplayName
+        viewHolder.dataPeriodTypeValueTextView.text = cell.periodTypeDisplayName
     }
 
 }

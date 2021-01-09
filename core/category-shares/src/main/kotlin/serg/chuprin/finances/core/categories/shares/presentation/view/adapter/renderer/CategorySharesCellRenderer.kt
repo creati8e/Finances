@@ -5,7 +5,7 @@ import com.google.android.flexbox.JustifyContent
 import kotlinx.android.synthetic.main.view_category_shares.*
 import serg.chuprin.adapter.Click
 import serg.chuprin.adapter.ContainerHolder
-import serg.chuprin.adapter.ContainerRenderer
+import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ContainerRenderer
 import serg.chuprin.adapter.LongClick
 import serg.chuprin.finances.core.api.extensions.containsType
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
@@ -35,26 +35,26 @@ class CategorySharesCellRenderer<T : CategoryShareCell>(
         )
     }
 
-    override fun bindView(holder: ContainerHolder, model: CategorySharesCell) {
-        bindData(holder, model)
+    override fun bindView(viewHolder: ContainerHolder, cell: CategorySharesCell) {
+        bindData(viewHolder, cell)
     }
 
     override fun bindView(
-        holder: ContainerHolder,
-        model: CategorySharesCell,
+        viewHolder: ContainerHolder,
+        cell: CategorySharesCell,
         payloads: MutableList<Any>
     ) {
         if (payloads.containsType<CategorySharesCell.ChangedPayload>()) {
-            bindData(holder, model)
+            bindData(viewHolder, cell)
         }
     }
 
     override fun onVhCreated(
-        holder: ContainerHolder,
+        viewHolder: ContainerHolder,
         clickListener: Click?,
         longClickListener: LongClick?
     ) {
-        with(holder.categoryChipsRecyclerView) {
+        with(viewHolder.categoryChipsRecyclerView) {
             adapter = categoryCellsAdapter
             layoutManager = FlexboxLayoutManager(context).apply {
                 justifyContent = JustifyContent.CENTER
@@ -63,15 +63,15 @@ class CategorySharesCellRenderer<T : CategoryShareCell>(
     }
 
     private fun bindData(
-        holder: ContainerHolder,
-        model: CategorySharesCell
+        viewHolder: ContainerHolder,
+        cell: CategorySharesCell
     ) {
-        categoryCellsAdapter.setItems(model.categoryCells)
-        holder.pieChart.setData(
+        categoryCellsAdapter.setItems(cell.categoryCells)
+        viewHolder.pieChart.setData(
             animate = false,
-            secondaryText = model.label,
-            primaryText = model.totalAmount,
-            pieChartData = PieChartData(model.chartParts)
+            secondaryText = cell.label,
+            primaryText = cell.totalAmount,
+            pieChartData = PieChartData(cell.chartParts)
         )
     }
 

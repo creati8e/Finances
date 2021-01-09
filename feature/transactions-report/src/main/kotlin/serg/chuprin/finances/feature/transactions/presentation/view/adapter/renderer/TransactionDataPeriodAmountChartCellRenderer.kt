@@ -3,7 +3,7 @@ package serg.chuprin.finances.feature.transactions.presentation.view.adapter.ren
 import kotlinx.android.synthetic.main.cell_transaction_report_data_period_amount_chart.*
 import serg.chuprin.adapter.Click
 import serg.chuprin.adapter.ContainerHolder
-import serg.chuprin.adapter.ContainerRenderer
+import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ContainerRenderer
 import serg.chuprin.adapter.LongClick
 import serg.chuprin.finances.core.api.extensions.containsType
 import serg.chuprin.finances.core.api.presentation.view.extensions.onViewClick
@@ -19,28 +19,28 @@ class TransactionDataPeriodAmountChartCellRenderer :
     override val type: Int = R.layout.cell_transaction_report_data_period_amount_chart
 
     override fun bindView(
-        holder: ContainerHolder,
-        model: TransactionReportDataPeriodAmountChartCell
+        viewHolder: ContainerHolder,
+        cell: TransactionReportDataPeriodAmountChartCell
     ) {
-        bind(holder, model)
+        bind(viewHolder, cell)
     }
 
     override fun bindView(
-        holder: ContainerHolder,
-        model: TransactionReportDataPeriodAmountChartCell,
+        viewHolder: ContainerHolder,
+        cell: TransactionReportDataPeriodAmountChartCell,
         payloads: MutableList<Any>
     ) {
         if (payloads.containsType<TransactionReportDataPeriodAmountChartCell.ChangedPayload>()) {
-            bind(holder, model)
+            bind(viewHolder, cell)
         }
     }
 
     override fun onVhCreated(
-        holder: ContainerHolder,
+        viewHolder: ContainerHolder,
         clickListener: Click?,
         longClickListener: LongClick?
     ) {
-        with(holder) {
+        with(viewHolder) {
             itemView.onViewClick { view ->
                 clickListener?.onClick(view, adapterPosition)
             }
@@ -48,13 +48,13 @@ class TransactionDataPeriodAmountChartCellRenderer :
     }
 
     private fun bind(
-        holder: ContainerHolder,
-        model: TransactionReportDataPeriodAmountChartCell
+        viewHolder: ContainerHolder,
+        cell: TransactionReportDataPeriodAmountChartCell
     ) {
-        with(holder) {
-            chartBar.setProgress(model.barFill)
-            itemView.isActivated = model.isChosen
-            dateTextView.text = model.formattedPeriodName
+        with(viewHolder) {
+            chartBar.setProgress(cell.barFill)
+            itemView.isActivated = cell.isChosen
+            dateTextView.text = cell.formattedPeriodName
         }
     }
 

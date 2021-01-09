@@ -3,7 +3,7 @@ package serg.chuprin.finances.feature.dashboard.presentation.view.adapter.period
 import kotlinx.android.synthetic.main.cell_widget_dashboard_period_selector.*
 import serg.chuprin.adapter.Click
 import serg.chuprin.adapter.ContainerHolder
-import serg.chuprin.adapter.ContainerRenderer
+import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ContainerRenderer
 import serg.chuprin.adapter.LongClick
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
 import serg.chuprin.finances.feature.dashboard.R
@@ -22,26 +22,26 @@ class DashboardPeriodSelectorWidgetCellRenderer(
 
     override val type: Int = R.layout.cell_widget_dashboard_period_selector
 
-    override fun bindView(holder: ContainerHolder, model: DashboardWidgetCell.PeriodSelector) {
-        bindData(holder, model)
+    override fun bindView(viewHolder: ContainerHolder, cell: DashboardWidgetCell.PeriodSelector) {
+        bindData(viewHolder, cell)
     }
 
     override fun bindView(
-        holder: ContainerHolder,
-        model: DashboardWidgetCell.PeriodSelector,
+        viewHolder: ContainerHolder,
+        cell: DashboardWidgetCell.PeriodSelector,
         payloads: MutableList<Any>
     ) {
         if (DashboardPeriodSelectorWidgetCellChangedPayload in payloads) {
-            bindData(holder, model)
+            bindData(viewHolder, cell)
         }
     }
 
     override fun onVhCreated(
-        holder: ContainerHolder,
+        viewHolder: ContainerHolder,
         clickListener: Click?,
         longClickListener: LongClick?
     ) {
-        with(holder) {
+        with(viewHolder) {
             nextPeriodButton.onClick(clickOnNextPeriod)
             currentPeriodLayout.onClick(clickOnCurrentPeriod)
             previousPeriodButton.onClick(clickOnPreviousPeriod)
@@ -50,11 +50,11 @@ class DashboardPeriodSelectorWidgetCellRenderer(
     }
 
     private fun bindData(
-        holder: ContainerHolder,
-        model: DashboardWidgetCell.PeriodSelector
+        viewHolder: ContainerHolder,
+        cell: DashboardWidgetCell.PeriodSelector
     ) {
-        with(holder) {
-            currentPeriodTextView.text = model.currentPeriod
+        with(viewHolder) {
+            currentPeriodTextView.text = cell.currentPeriod
         }
     }
 

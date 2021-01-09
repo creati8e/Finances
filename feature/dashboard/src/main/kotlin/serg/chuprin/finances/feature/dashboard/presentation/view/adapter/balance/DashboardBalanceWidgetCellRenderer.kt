@@ -3,7 +3,7 @@ package serg.chuprin.finances.feature.dashboard.presentation.view.adapter.balanc
 import kotlinx.android.synthetic.main.cell_widget_dashboard_balance.*
 import serg.chuprin.adapter.Click
 import serg.chuprin.adapter.ContainerHolder
-import serg.chuprin.adapter.ContainerRenderer
+import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ContainerRenderer
 import serg.chuprin.adapter.LongClick
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
 import serg.chuprin.finances.feature.dashboard.R
@@ -20,39 +20,39 @@ class DashboardBalanceWidgetCellRenderer(
 
     override val type: Int = R.layout.cell_widget_dashboard_balance
 
-    override fun bindView(holder: ContainerHolder, model: DashboardWidgetCell.Balance) {
-        bindData(holder, model)
+    override fun bindView(viewHolder: ContainerHolder, cell: DashboardWidgetCell.Balance) {
+        bindData(viewHolder, cell)
     }
 
     override fun bindView(
-        holder: ContainerHolder,
-        model: DashboardWidgetCell.Balance,
+        viewHolder: ContainerHolder,
+        cell: DashboardWidgetCell.Balance,
         payloads: MutableList<Any>
     ) {
         if (DashboardBalanceWidgetChangedPayload in payloads) {
-            bindData(holder, model)
+            bindData(viewHolder, cell)
         }
     }
 
     override fun onVhCreated(
-        holder: ContainerHolder,
+        viewHolder: ContainerHolder,
         clickListener: Click?,
         longClickListener: LongClick?
     ) {
-        with(holder) {
+        with(viewHolder) {
             incomesCardView.onClick(clickOnCurrentPeriodIncomes)
             expensesCardView.onClick(clickOnCurrentPeriodExpenses)
         }
     }
 
     private fun bindData(
-        holder: ContainerHolder,
-        model: DashboardWidgetCell.Balance
+        viewHolder: ContainerHolder,
+        cell: DashboardWidgetCell.Balance
     ) {
-        with(holder) {
-            balanceTextView.text = model.balance
-            incomesCardView.setAmountText(model.incomesAmount)
-            expensesCardView.setAmountText(model.expensesAmount)
+        with(viewHolder) {
+            balanceTextView.text = cell.balance
+            incomesCardView.setAmountText(cell.incomesAmount)
+            expensesCardView.setAmountText(cell.expensesAmount)
         }
     }
 

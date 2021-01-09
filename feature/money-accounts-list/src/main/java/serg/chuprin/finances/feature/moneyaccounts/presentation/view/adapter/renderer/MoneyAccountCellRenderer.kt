@@ -3,7 +3,7 @@ package serg.chuprin.finances.feature.moneyaccounts.presentation.view.adapter.re
 import kotlinx.android.synthetic.main.cell_money_account.*
 import serg.chuprin.adapter.Click
 import serg.chuprin.adapter.ContainerHolder
-import serg.chuprin.adapter.ContainerRenderer
+import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ContainerRenderer
 import serg.chuprin.adapter.LongClick
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisibleOrGone
 import serg.chuprin.finances.core.api.presentation.view.extensions.onViewClick
@@ -17,26 +17,26 @@ class MoneyAccountCellRenderer : ContainerRenderer<MoneyAccountCell>() {
 
     override val type: Int = R.layout.cell_money_account
 
-    override fun bindView(holder: ContainerHolder, model: MoneyAccountCell) {
-        with(holder) {
-            nameTextView.text = model.name
-            balanceTextView.text = model.balance
-            favoriteImageView.makeVisibleOrGone(model.favoriteIconIsVisible)
+    override fun bindView(viewHolder: ContainerHolder, cell: MoneyAccountCell) {
+        with(viewHolder) {
+            nameTextView.text = cell.name
+            balanceTextView.text = cell.balance
+            favoriteImageView.makeVisibleOrGone(cell.favoriteIconIsVisible)
 
             with(itemView) {
-                tag = model.transitionName
-                transitionName = model.transitionName
-                isActivated = model.favoriteIconIsVisible
+                tag = cell.transitionName
+                transitionName = cell.transitionName
+                isActivated = cell.favoriteIconIsVisible
             }
         }
     }
 
     override fun onVhCreated(
-        holder: ContainerHolder,
+        viewHolder: ContainerHolder,
         clickListener: Click?,
         longClickListener: LongClick?
     ) {
-        with(holder) {
+        with(viewHolder) {
             itemView.onViewClick { view ->
                 clickListener?.onClick(view, adapterPosition)
             }

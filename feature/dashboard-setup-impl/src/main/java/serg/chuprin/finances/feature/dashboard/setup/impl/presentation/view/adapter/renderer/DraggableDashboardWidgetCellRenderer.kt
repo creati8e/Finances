@@ -3,7 +3,7 @@ package serg.chuprin.finances.feature.dashboard.setup.impl.presentation.view.ada
 import kotlinx.android.synthetic.main.cell_draggable_dashboard_widget.*
 import serg.chuprin.adapter.Click
 import serg.chuprin.adapter.ContainerHolder
-import serg.chuprin.adapter.ContainerRenderer
+import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ContainerRenderer
 import serg.chuprin.adapter.LongClick
 import serg.chuprin.finances.core.api.presentation.view.extensions.doIgnoringChanges
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
@@ -20,24 +20,24 @@ class DraggableDashboardWidgetCellRenderer(
 
     override val type: Int = R.layout.cell_draggable_dashboard_widget
 
-    override fun bindView(holder: ContainerHolder, model: DraggableDashboardWidgetCell) {
-        with(holder) {
+    override fun bindView(viewHolder: ContainerHolder, cell: DraggableDashboardWidgetCell) {
+        with(viewHolder) {
             with(checkBox) {
                 doIgnoringChanges {
-                    isChecked = model.isChecked
+                    isChecked = cell.isChecked
                 }
             }
-            widgetNameTextView.text = model.name
+            widgetNameTextView.text = cell.name
         }
     }
 
     override fun onVhCreated(
-        holder: ContainerHolder,
+        viewHolder: ContainerHolder,
         clickListener: Click?,
         longClickListener: LongClick?
     ) {
-        super.onVhCreated(holder, clickListener, longClickListener)
-        with(holder) {
+        super.onVhCreated(viewHolder, clickListener, longClickListener)
+        with(viewHolder) {
             itemView.onClick {
                 onCheckedChanged(adapterPosition)
             }

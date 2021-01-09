@@ -3,7 +3,7 @@ package serg.chuprin.finances.core.api.presentation.currencychoice.view.adapter.
 import kotlinx.android.synthetic.main.cell_currency.*
 import serg.chuprin.adapter.Click
 import serg.chuprin.adapter.ContainerHolder
-import serg.chuprin.adapter.ContainerRenderer
+import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ContainerRenderer
 import serg.chuprin.adapter.LongClick
 import serg.chuprin.finances.core.api.R
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.cells.CurrencyCell
@@ -16,19 +16,19 @@ class CurrencyCellRenderer : ContainerRenderer<CurrencyCell>() {
 
     override val type: Int = R.layout.cell_currency
 
-    override fun bindView(holder: ContainerHolder, model: CurrencyCell) {
-        with(holder.textView) {
-            text = model.displayName
-            isActivated = model.isChosen
+    override fun bindView(viewHolder: ContainerHolder, cell: CurrencyCell) {
+        with(viewHolder.textView) {
+            text = cell.displayName
+            isActivated = cell.isChosen
         }
     }
 
     override fun onVhCreated(
-        holder: ContainerHolder,
+        viewHolder: ContainerHolder,
         clickListener: Click?,
         longClickListener: LongClick?
     ) {
-        with(holder) {
+        with(viewHolder) {
             itemView.onViewClick { view ->
                 clickListener?.onClick(view, adapterPosition)
             }

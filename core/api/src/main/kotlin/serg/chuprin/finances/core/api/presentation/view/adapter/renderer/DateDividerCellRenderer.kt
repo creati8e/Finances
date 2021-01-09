@@ -2,7 +2,6 @@ package serg.chuprin.finances.core.api.presentation.view.adapter.renderer
 
 import kotlinx.android.synthetic.main.cell_date_divider.*
 import serg.chuprin.adapter.ContainerHolder
-import serg.chuprin.adapter.ContainerRenderer
 import serg.chuprin.finances.core.api.R
 import serg.chuprin.finances.core.api.presentation.model.cells.DateDividerCell
 
@@ -13,8 +12,8 @@ class DateDividerCellRenderer : ContainerRenderer<DateDividerCell>() {
 
     override val type: Int = R.layout.cell_date_divider
 
-    override fun bindView(holder: ContainerHolder, model: DateDividerCell) {
-        holder.textView.text = model.dateFormatted
+    override fun bindView(viewHolder: ContainerHolder, cell: DateDividerCell) {
+        viewHolder.textView.text = cell.dateFormatted
     }
 
 }

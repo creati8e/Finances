@@ -2,7 +2,7 @@ package serg.chuprin.finances.feature.userprofile.presentation.view.adapter.rend
 
 import serg.chuprin.adapter.Click
 import serg.chuprin.adapter.ContainerHolder
-import serg.chuprin.adapter.ContainerRenderer
+import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ContainerRenderer
 import serg.chuprin.adapter.LongClick
 import serg.chuprin.finances.core.api.presentation.view.extensions.onViewClick
 import serg.chuprin.finances.feature.userprofile.R
@@ -16,11 +16,11 @@ class UserProfileCategoriesCellRenderer : ContainerRenderer<UserProfileCategorie
     override val type: Int = R.layout.cell_user_profile_categories
 
     override fun onVhCreated(
-        holder: ContainerHolder,
+        viewHolder: ContainerHolder,
         clickListener: Click?,
         longClickListener: LongClick?
     ) {
-        with(holder) {
+        with(viewHolder) {
             itemView.onViewClick { view ->
                 clickListener?.onClick(view, adapterPosition)
             }

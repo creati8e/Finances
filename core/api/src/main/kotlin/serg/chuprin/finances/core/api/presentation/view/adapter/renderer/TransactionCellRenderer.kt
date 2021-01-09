@@ -4,7 +4,6 @@ import android.content.res.ColorStateList
 import kotlinx.android.synthetic.main.cell_transaction.*
 import serg.chuprin.adapter.Click
 import serg.chuprin.adapter.ContainerHolder
-import serg.chuprin.adapter.ContainerRenderer
 import serg.chuprin.adapter.LongClick
 import serg.chuprin.finances.core.api.R
 import serg.chuprin.finances.core.api.domain.model.transaction.TransactionType
@@ -21,24 +20,24 @@ class TransactionCellRenderer : ContainerRenderer<TransactionCell>() {
 
     override val type: Int = R.layout.cell_transaction
 
-    override fun bindView(holder: ContainerHolder, model: TransactionCell) {
-        with(holder) {
-            timeTextView.text = model.time
-            categoryTextView.text = model.categoryName
-            transactionColorDot.imageTintList = ColorStateList.valueOf(model.color)
+    override fun bindView(viewHolder: ContainerHolder, cell: TransactionCell) {
+        with(viewHolder) {
+            timeTextView.text = cell.time
+            categoryTextView.text = cell.categoryName
+            transactionColorDot.imageTintList = ColorStateList.valueOf(cell.color)
 
-            moneyAccountTextView.text = model.moneyAccount
-            moneyAccountTextView.makeVisibleOrGone(model.moneyAccount.isNotEmpty())
+            moneyAccountTextView.text = cell.moneyAccount
+            moneyAccountTextView.makeVisibleOrGone(cell.moneyAccount.isNotEmpty())
 
-            itemView.tag = model.transitionName
-            itemView.transitionName = model.transitionName
+            itemView.tag = cell.transitionName
+            itemView.transitionName = cell.transitionName
 
             with(amountTextView) {
-                text = model.amount
+                text = cell.amount
 
-                when (model.transaction.type) {
+                when (cell.transaction.type) {
                     TransactionType.PLAIN -> {
-                        if (model.transaction.isIncome) {
+                        if (cell.transaction.isIncome) {
                             setTextColor(context.getColorInt(R.color.colorGreen))
                         } else {
                             setTextColor(context.getColorInt(R.color.colorRed))
@@ -53,11 +52,11 @@ class TransactionCellRenderer : ContainerRenderer<TransactionCell>() {
     }
 
     override fun onVhCreated(
-        holder: ContainerHolder,
+        viewHolder: ContainerHolder,
         clickListener: Click?,
         longClickListener: LongClick?
     ) {
-        with(holder) {
+        with(viewHolder) {
             itemView.onViewClick { view ->
                 clickListener?.onClick(view, adapterPosition)
             }
