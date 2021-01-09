@@ -1,5 +1,6 @@
 package serg.chuprin.finances.feature.dashboard.domain.builder.categories
 
+import kotlinx.coroutines.runBlocking
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 import serg.chuprin.finances.core.api.domain.model.CategoryToTransactionsList
@@ -9,6 +10,7 @@ import serg.chuprin.finances.core.api.domain.model.category.CategoryType
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.model.transaction.TransactionType
+import serg.chuprin.finances.core.api.test.TransactionAmountCalculatorTestImpl
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardCategoriesWidgetPage
 import strikt.api.expectThat
 import strikt.assertions.containsExactlyInAnyOrder
@@ -23,7 +25,7 @@ object DashboardCategoriesPageBuilderTest : Spek({
 
     Feature("Dashboard categories page builder") {
 
-        val builder = DashboardCategoriesPageBuilder()
+        val builder = DashboardCategoriesPageBuilder(TransactionAmountCalculatorTestImpl())
 
         Scenario("Build pages") {
 
@@ -78,11 +80,13 @@ object DashboardCategoriesPageBuilderTest : Spek({
             lateinit var expenseCategoriesPage: DashboardCategoriesWidgetPage
 
             When("Method is called for income categories") {
-                incomeCategoriesPage = builder.build(
-                    PlainTransactionType.INCOME,
-                    incomeCategoryToTransactionsList,
-                    topCategoriesCount
-                )
+                incomeCategoriesPage = runBlocking {
+                    builder.build(
+                        PlainTransactionType.INCOME,
+                        incomeCategoryToTransactionsList,
+                        topCategoriesCount
+                    )
+                }
             }
 
             Then("Page has valid total amount") {
@@ -104,11 +108,13 @@ object DashboardCategoriesPageBuilderTest : Spek({
             }
 
             When("Method is called for expense categories") {
-                expenseCategoriesPage = builder.build(
-                    PlainTransactionType.EXPENSE,
-                    expenseCategoryToTransactionsList,
-                    topCategoriesCount
-                )
+                expenseCategoriesPage = runBlocking {
+                    builder.build(
+                        PlainTransactionType.EXPENSE,
+                        expenseCategoryToTransactionsList,
+                        topCategoriesCount
+                    )
+                }
             }
             And("Page has valid total amount") {
                 expectThat(expenseCategoriesPage.totalAmount).isEqualTo("145".toBigDecimal())
