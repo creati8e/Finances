@@ -1,20 +1,8 @@
 package serg.chuprin.finances.feature.dashboard.presentation.model.store
 
-import serg.chuprin.finances.core.api.di.scopes.ScreenScope
-import serg.chuprin.finances.core.mvi.store.BaseStateStore
-import javax.inject.Inject
+import serg.chuprin.finances.core.mvi.store.StateStore
 
 /**
  * Created by Sergey Chuprin on 16.04.2020.
  */
-@ScreenScope
-class DashboardStore @Inject constructor(
-    actionExecutor: DashboardActionExecutor,
-    bootstrapper: DashboardStoreBootstrapper
-) : BaseStateStore<DashboardIntent, DashboardEffect, DashboardAction, DashboardState, DashboardEvent>(
-    DashboardState(),
-    DashboardStateReducer(),
-    bootstrapper,
-    actionExecutor,
-    DashboardIntentToActionMapper()
-)
+typealias DashboardStore = StateStore<DashboardIntent, DashboardState, DashboardEvent>
