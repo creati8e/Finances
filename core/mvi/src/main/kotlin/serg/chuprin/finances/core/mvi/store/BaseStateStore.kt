@@ -16,14 +16,14 @@ import serg.chuprin.finances.core.mvi.reducer.StoreStateReducer
  * Created by Sergey Chuprin on 14.07.2019.
  *
  * [I] - type of intent, sent by user.
- * [SE] - type of effect, produced by [executor].
+ * [SE] - type of effect, produced by [actionExecutor].
  * [A] - type of action, converted from [I].
  * [S] - type of state, produced by loop.
  *
  * Flow is the following:
  * 1. Intent of type [I] dispatched to store using [dispatch] method.
  * 2. This intent converted to internal action of type [A] using [intentToActionMapper].
- * 3. This action is processed by [executor]. As a result, an effect of type [SE] is produced.
+ * 3. This action is processed by [actionExecutor]. As a result, an effect of type [SE] is produced.
  * 4. This effect processed by [reducer].
  * 5. New state is produced and [stateFlow] emits new state.
  *
@@ -35,7 +35,7 @@ open class BaseStateStore<I, SE, A, S, E>(
     protected val initialState: S,
     protected val reducer: StoreStateReducer<SE, S>,
     protected val bootstrapper: StoreBootstrapper<A>,
-    protected val executor: StoreActionExecutor<A, S, SE, E>,
+    protected val actionExecutor: StoreActionExecutor<A, S, SE, E>,
     protected val intentToActionMapper: StoreIntentToActionMapper<I, A>,
     protected val backgroundDispatcher: CoroutineDispatcher = Dispatchers.Default,
     protected val reducerDispatcher: CoroutineDispatcher = newSingleThreadContext("Reducer thread")
@@ -101,7 +101,7 @@ open class BaseStateStore<I, SE, A, S, E>(
         coroutineScope.launch(CoroutineName("Effect reducer coroutine")) {
             actionsChannel.asFlow()
                 .flatMapMerge { action ->
-                    executor(
+                    actionExecutor(
                         action,
                         state,
                         eventsChannel.asConsumer(),

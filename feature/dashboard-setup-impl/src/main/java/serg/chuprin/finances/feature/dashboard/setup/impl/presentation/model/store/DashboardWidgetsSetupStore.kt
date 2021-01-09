@@ -12,7 +12,7 @@ class DashboardWidgetsSetupStore @Inject constructor(
     actionExecutor: DashboardWidgetsSetupActionExecutor,
     bootstrapper: DashboardWidgetsSetupStoreBootstrapper
 ) : BaseStateStore<DashboardWidgetsSetupIntent, DashboardWidgetsSetupEffect, DashboardWidgetsSetupAction, DashboardWidgetsSetupState, DashboardWidgetsSetupEvent>(
-    executor = actionExecutor,
+    actionExecutor = actionExecutor,
     bootstrapper = bootstrapper,
     initialState = DashboardWidgetsSetupState(),
     reducer = DashboardWidgetsSetupStateReducer(),

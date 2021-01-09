@@ -9,12 +9,12 @@ import javax.inject.Inject
  */
 @ScreenScope
 class TransactionStoreFactory @Inject constructor(
-    executor: TransactionActionExecutor,
+    actionExecutor: TransactionActionExecutor,
     bootstrapper: TransactionStoreBootstrapper
 ) : AbsStoreFactory<TransactionIntent, TransactionEffect, TransactionAction, TransactionState, TransactionEvent, TransactionStore>(
     TransactionState(),
     TransactionStateReducer(),
     bootstrapper,
-    executor,
+    actionExecutor,
     TransactionAction::ExecuteIntent
 )

@@ -15,7 +15,7 @@ class CounterTestStoreFactory(
     bootstrapper = bootstrapper,
     reducer = CounterTestReducer(),
     initialState = CounterTestState(),
-    executor = CounterTestActionExecutor(),
+    actionExecutor = CounterTestActionExecutor(),
     intentToActionMapper = CounterTestIntentToActionMapper()
 ) {
 

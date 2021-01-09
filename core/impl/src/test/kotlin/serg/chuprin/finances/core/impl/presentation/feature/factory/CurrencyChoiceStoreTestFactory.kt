@@ -18,7 +18,7 @@ object CurrencyChoiceStoreTestFactory {
 
         val testStore = CurrencyChoiceStoreFactory(
             bootstrapper = CurrencyChoiceStoreTestBootstrapper(currencyRepository),
-            executor = CurrencyChoiceActionExecutor(SearchCurrenciesUseCase(currencyRepository))
+            actionExecutor = CurrencyChoiceActionExecutor(SearchCurrenciesUseCase(currencyRepository))
         ).test()
 
         return CurrencyChoiceStoreTestParams(

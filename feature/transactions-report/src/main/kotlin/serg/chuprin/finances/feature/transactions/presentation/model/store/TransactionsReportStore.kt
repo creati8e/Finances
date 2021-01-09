@@ -9,12 +9,12 @@ import javax.inject.Inject
  */
 @ScreenScope
 class TransactionsReportStore @Inject constructor(
-    executor: TransactionsReportActionExecutor,
+    actionExecutor: TransactionsReportActionExecutor,
     bootstrapper: TransactionsReportStoreBootstrapper
 ) : BaseStateStore<TransactionsReportIntent, TransactionsReportEffect, TransactionsReportAction, TransactionsReportState, TransactionsReportEvent>(
     TransactionsReportState(),
     TransactionsReportStateReducer(),
     bootstrapper,
-    executor,
+    actionExecutor,
     TransactionsReportIntentToActionMapper()
 )

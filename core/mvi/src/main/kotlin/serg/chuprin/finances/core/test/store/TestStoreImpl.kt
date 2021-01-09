@@ -28,11 +28,11 @@ open class TestStoreImpl<I, SE, A, S, E>(
     initialState: S,
     reducer: StoreStateReducer<SE, S>,
     bootstrapper: StoreBootstrapper<A>,
-    executor: StoreActionExecutor<A, S, SE, E>,
+    actionExecutor: StoreActionExecutor<A, S, SE, E>,
     intentToActionMapper: StoreIntentToActionMapper<I, A>
 ) : BaseStateStore<I, SE, A, S, E>(
     reducer = reducer,
-    executor = executor,
+    actionExecutor = actionExecutor,
     initialState = initialState,
     bootstrapper = bootstrapper,
     reducerDispatcher = TestCoroutineDispatcher(),

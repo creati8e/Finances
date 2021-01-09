@@ -24,7 +24,7 @@ abstract class AbsStoreFactory<I, SE, A, S, E, STORE : BaseStore<I, S, E>>(
     val initialState: S,
     val reducer: StoreStateReducer<SE, S>,
     val bootstrapper: StoreBootstrapper<A>,
-    val executor: StoreActionExecutor<A, S, SE, E>,
+    val actionExecutor: StoreActionExecutor<A, S, SE, E>,
     val intentToActionMapper: StoreIntentToActionMapper<I, A>,
 ) : StoreFactory<I, S, E, STORE> {
 
@@ -39,7 +39,7 @@ abstract class AbsStoreFactory<I, SE, A, S, E, STORE : BaseStore<I, S, E>>(
     protected fun createBaseStore(): BaseStateStore<I, SE, A, S, E> {
         return object : BaseStateStore<I, SE, A, S, E>(
             reducer = reducer,
-            executor = executor,
+            actionExecutor = actionExecutor,
             initialState = initialState,
             bootstrapper = bootstrapper,
             intentToActionMapper = intentToActionMapper,

@@ -18,7 +18,7 @@ internal class CurrencyChoiceStoreProviderImpl @Inject constructor(
 
     override fun provide(bootstrapper: CurrencyChoiceStoreBootstrapper): CurrencyChoiceStore {
         return CurrencyChoiceStoreFactory(
-            executor = executorProvider.get(),
+            actionExecutor = executorProvider.get(),
             bootstrapper = bootstrapper.wrap()
         ).create()
     }

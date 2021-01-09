@@ -20,13 +20,13 @@ import javax.inject.Inject
  */
 @ScreenScope
 class CurrencyChoiceOnboardingStore @Inject constructor(
-    executor: CurrencyChoiceOnboardingActionExecutor,
+    actionExecutor: CurrencyChoiceOnboardingActionExecutor,
     private val currencyChoiceStore: CurrencyChoiceStore
 ) : BaseStateStore<CurrencyChoiceOnboardingIntent, CurrencyChoiceOnboardingEffect, CurrencyChoiceOnboardingAction, CurrencyChoiceOnboardingState, CurrencyChoiceOnboardingEvent>(
     CurrencyChoiceOnboardingState(),
     CurrencyChoiceOnboardingStateReducer(),
     BypassStoreBootstrapper(),
-    executor,
+    actionExecutor,
     CurrencyChoiceOnboardingIntentToActionMapper()
 ), CurrencyChoiceStoreIntentDispatcher by currencyChoiceStore {
 

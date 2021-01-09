@@ -9,12 +9,12 @@ import javax.inject.Inject
  */
 @ScreenScope
 class MoneyAccountsListStore @Inject constructor(
-    executor: MoneyAccountsListActionExecutor,
+    actionExecutor: MoneyAccountsListActionExecutor,
     bootstrapper: MoneyAccountsListStoreBootstrapper
 ) : BaseStateStore<MoneyAccountsListIntent, MoneyAccountsListEffect, MoneyAccountsListAction, MoneyAccountsListState, MoneyAccountsListEvent>(
     MoneyAccountsListState(),
     MoneyAccountsListStateReducer(),
     bootstrapper,
-    executor,
+    actionExecutor,
     MoneyAccountsListIntentToActionMapper()
 )

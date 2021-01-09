@@ -12,12 +12,12 @@ import javax.inject.Inject
  */
 @ScreenScope
 class AccountsSetupOnboardingStoreFactory @Inject constructor(
-    executor: AccountsSetupOnboardingActionExecutor,
+    actionExecutor: AccountsSetupOnboardingActionExecutor,
     bootstrapper: AccountsSetupOnboardingStoreBootstrapper
 ) : AbsStoreFactory<AccountsSetupOnboardingIntent, AccountsSetupOnboardingEffect, AccountsSetupOnboardingAction, AccountsSetupOnboardingState, AccountsSetupOnboardingEvent, AccountsSetupOnboardingStore>(
     AccountsSetupOnboardingState(),
     AccountsSetupOnboardingStateReducer(),
     bootstrapper,
-    executor,
+    actionExecutor,
     AccountsSetupOnboardingIntentToActionMapper()
 )

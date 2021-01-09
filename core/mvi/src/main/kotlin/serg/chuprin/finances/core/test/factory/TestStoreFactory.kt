@@ -14,7 +14,7 @@ class TestStoreFactory<I, SE, A, S, E, STORE : StateStore<I, S, E>>(
     private val delegate: AbsStoreFactory<I, SE, A, S, E, STORE>
 ) : AbsStoreFactory<I, SE, A, S, E, TestStore<I, S, E>>(
     reducer = delegate.reducer,
-    executor = delegate.executor,
+    actionExecutor = delegate.actionExecutor,
     initialState = delegate.initialState,
     bootstrapper = delegate.bootstrapper,
     intentToActionMapper = delegate.intentToActionMapper
@@ -39,7 +39,7 @@ class TestStoreFactory<I, SE, A, S, E, STORE : StateStore<I, S, E>>(
     override fun create(): TestStore<I, S, E> {
         return object : TestStoreImpl<I, SE, A, S, E>(
             reducer = delegate.reducer,
-            executor = delegate.executor,
+            actionExecutor = delegate.actionExecutor,
             initialState = delegate.initialState,
             bootstrapper = delegate.bootstrapper,
             intentToActionMapper = delegate.intentToActionMapper

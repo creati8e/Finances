@@ -9,12 +9,12 @@ import javax.inject.Inject
  */
 @ScreenScope
 class DashboardStore @Inject constructor(
-    executor: DashboardActionExecutor,
+    actionExecutor: DashboardActionExecutor,
     bootstrapper: DashboardStoreBootstrapper
 ) : BaseStateStore<DashboardIntent, DashboardEffect, DashboardAction, DashboardState, DashboardEvent>(
     DashboardState(),
     DashboardStateReducer(),
     bootstrapper,
-    executor,
+    actionExecutor,
     DashboardIntentToActionMapper()
 )

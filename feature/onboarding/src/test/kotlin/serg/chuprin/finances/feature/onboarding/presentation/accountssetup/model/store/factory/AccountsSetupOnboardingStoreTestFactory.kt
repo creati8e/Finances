@@ -45,7 +45,7 @@ object AccountsSetupOnboardingStoreTestFactory {
         )
 
         val testStore = AccountsSetupOnboardingStoreFactory(
-            executor = actionExecutor,
+            actionExecutor = actionExecutor,
             bootstrapper = AccountsSetupOnboardingStoreBootstrapper(userRepository)
         ).test()
 

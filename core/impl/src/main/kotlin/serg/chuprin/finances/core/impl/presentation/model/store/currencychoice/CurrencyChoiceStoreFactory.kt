@@ -12,12 +12,12 @@ import serg.chuprin.finances.core.mvi.store.factory.AbsStoreFactory
  */
 class CurrencyChoiceStoreFactory(
     bootstrapper: StoreBootstrapper<CurrencyChoiceAction>,
-    executor: CurrencyChoiceActionExecutor,
+    actionExecutor: CurrencyChoiceActionExecutor,
 ) : AbsStoreFactory<CurrencyChoiceIntent, CurrencyChoiceEffect, CurrencyChoiceAction, CurrencyChoiceState, Nothing, CurrencyChoiceStore>(
     CurrencyChoiceState(),
     CurrencyChoiceStateReducer(),
     bootstrapper,
-    executor,
+    actionExecutor,
     CurrencyChoiceAction::ExecuteIntent
 ) {
 

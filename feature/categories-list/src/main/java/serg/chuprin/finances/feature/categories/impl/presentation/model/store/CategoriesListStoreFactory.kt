@@ -9,12 +9,12 @@ import javax.inject.Inject
  */
 @ScreenScope
 class CategoriesListStoreFactory @Inject constructor(
-    executor: CategoriesListActionExecutor,
+    actionExecutor: CategoriesListActionExecutor,
     bootstrapper: CategoriesListStoreBootstrapper,
 ) : AbsStoreFactory<CategoriesListIntent, CategoriesListEffect, CategoriesListAction, CategoriesListState, CategoriesListEvent, CategoriesListStore>(
     CategoriesListState.AllCategories(),
     CategoriesListStateReducer(),
     bootstrapper,
-    executor,
+    actionExecutor,
     CategoriesListAction::ExecuteIntent
 )

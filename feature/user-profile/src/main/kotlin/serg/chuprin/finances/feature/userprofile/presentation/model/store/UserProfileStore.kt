@@ -7,12 +7,12 @@ import javax.inject.Inject
  * Created by Sergey Chuprin on 31.07.2020.
  */
 class UserProfileStore @Inject constructor(
-    executor: UserProfileActionExecutor,
+    actionExecutor: UserProfileActionExecutor,
     bootstrapper: UserProfileBootstrapper
 ) : BaseStateStore<UserProfileIntent, UserProfileEffect, UserProfileAction, UserProfileState, UserProfileEvent>(
     UserProfileState(),
     UserProfileStateReducer(),
     bootstrapper,
-    executor,
+    actionExecutor,
     UserProfileAction::ExecuteIntent
 )
