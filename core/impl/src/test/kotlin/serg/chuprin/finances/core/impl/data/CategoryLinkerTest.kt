@@ -6,6 +6,7 @@ import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.category.Category
 import serg.chuprin.finances.core.api.domain.model.category.CategoryType
 import serg.chuprin.finances.core.api.domain.model.category.CategoryWithParent
+import serg.chuprin.finances.core.api.domain.model.category.CategoryWithParentForId
 import strikt.api.expectThat
 import strikt.assertions.getValue
 import strikt.assertions.hasSize
@@ -36,14 +37,14 @@ object CategoryLinkerTest : Spek({
                 category3
             )
 
-            lateinit var linked: Map<Id, CategoryWithParent>
+            lateinit var categoryWithParentForId: CategoryWithParentForId
 
             When("Method is called") {
-                linked = linker.linkWithParents(categories)
+                categoryWithParentForId = linker.linkWithParents(categories)
             }
 
             Then("Map is valid") {
-                expectThat(linked) {
+                expectThat(categoryWithParentForId) {
                     hasSize(categories.size)
                     getValue(category1.id)
                         .isEqualTo(CategoryWithParent(category1, null))

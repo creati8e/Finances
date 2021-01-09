@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import serg.chuprin.finances.core.api.domain.model.category.CategoryType
 import serg.chuprin.finances.core.api.domain.model.category.query.CategoriesQuery
-import serg.chuprin.finances.core.api.domain.model.category.query.result.CategoriesQueryResult
+import serg.chuprin.finances.core.api.domain.model.category.CategoryWithParentForId
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.domain.repository.CategoryRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
@@ -36,7 +36,7 @@ class TransactionReportCategoriesDataService @Inject constructor(
     }
 
     /**
-     * @return flow of [CategoriesQueryResult] which contains parent categories
+     * @return flow of [CategoryWithParentForId] which contains parent categories
      * from [TransactionReportFilter.categoryIds] with their children.
      *
      * If there's no categories in [TransactionReportFilter.categoryIds]
@@ -44,7 +44,7 @@ class TransactionReportCategoriesDataService @Inject constructor(
      */
     suspend fun dataFlow(
         filterFlow: Flow<TransactionReportFilter>
-    ): Flow<CategoriesQueryResult> {
+    ): Flow<CategoryWithParentForId> {
         return filterFlow
             .distinctUntilChangedBy(INTERESTED_KEYS)
             .flatMapLatest { filter ->

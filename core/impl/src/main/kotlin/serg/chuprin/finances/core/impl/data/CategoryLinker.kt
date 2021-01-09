@@ -3,6 +3,7 @@ package serg.chuprin.finances.core.impl.data
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.category.Category
 import serg.chuprin.finances.core.api.domain.model.category.CategoryWithParent
+import serg.chuprin.finances.core.api.domain.model.category.CategoryWithParentForId
 import javax.inject.Inject
 
 /**
@@ -13,10 +14,8 @@ import javax.inject.Inject
  */
 internal class CategoryLinker @Inject constructor() {
 
-    fun linkWithParents(
-        categories: List<Category>
-    ): Map<Id, CategoryWithParent> {
-        return categories.associateBy(Category::id) { category ->
+    fun linkWithParents(categories: List<Category>): CategoryWithParentForId {
+        val map = categories.associateBy(Category::id) { category ->
             val parentCategory = if (category.parentCategoryId?.value.isNullOrEmpty()) {
                 null
             } else {
@@ -29,6 +28,7 @@ internal class CategoryLinker @Inject constructor() {
                 parentCategory = parentCategory
             )
         }
+        return CategoryWithParentForId(map)
     }
 
 }
