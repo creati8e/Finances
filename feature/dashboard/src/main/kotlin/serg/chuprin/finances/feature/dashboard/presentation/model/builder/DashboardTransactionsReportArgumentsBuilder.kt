@@ -61,7 +61,7 @@ class DashboardTransactionsReportArgumentsBuilder @Inject constructor(
 
         if (categoryCell.isOtherCategory) {
             val categoryIds = getCategoriesPage(state, categoryCell)
-                .otherAmounts
+                .otherCategoryShares
                 .orEmpty()
                 .mapNotNullTo(ArrayList(), { (category) -> category?.id?.value })
 

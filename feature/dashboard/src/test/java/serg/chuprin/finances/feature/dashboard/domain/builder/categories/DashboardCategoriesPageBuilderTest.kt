@@ -90,11 +90,11 @@ object DashboardCategoriesPageBuilderTest : Spek({
             }
 
             And("Page has valid 'other' amount") {
-                expectThat(incomeCategoriesPage.otherAmount).isEqualTo("180".toBigDecimal())
+                expectThat(incomeCategoriesPage.otherCategoriesShare).isEqualTo("180".toBigDecimal())
             }
 
             And("Page has valid category amounts") {
-                expectThat(incomeCategoriesPage.categoryAmounts)
+                expectThat(incomeCategoriesPage.categoryShares)
                     .containsExactlyInAnyOrder(
                         listOf(
                             incomeCategory2 to "180".toBigDecimal(),
@@ -115,11 +115,11 @@ object DashboardCategoriesPageBuilderTest : Spek({
             }
 
             And("Page has valid 'other' amount") {
-                expectThat(expenseCategoriesPage.otherAmount).isEqualTo("15".toBigDecimal())
+                expectThat(expenseCategoriesPage.otherCategoriesShare).isEqualTo("15".toBigDecimal())
             }
 
             And("Page has valid category amounts") {
-                expectThat(expenseCategoriesPage.categoryAmounts)
+                expectThat(expenseCategoriesPage.categoryShares)
                     .containsExactlyInAnyOrder(
                         listOf(
                             expenseCategory1 to "100".toBigDecimal(),

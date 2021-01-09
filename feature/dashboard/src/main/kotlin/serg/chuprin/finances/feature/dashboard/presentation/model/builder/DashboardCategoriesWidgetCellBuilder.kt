@@ -74,10 +74,10 @@ class DashboardCategoriesWidgetCellBuilder @Inject constructor(
         currency: Currency,
         transactionType: PlainTransactionType
     ): List<BaseCell> {
-        if (page.categoryAmounts.isEmpty()) {
+        if (page.categoryShares.isEmpty()) {
             return listOf(DashboardCategoriesPageZeroDataCell())
         }
-        return page.categoryAmounts
+        return page.categoryShares
             .mapTo(mutableListOf()) { (category, amount) ->
                 val categoryName = category?.name ?: getString(CoreR.string.no_category)
                 val chipText = "$categoryName ${amountFormatter.format(amount, currency)}"
@@ -88,13 +88,15 @@ class DashboardCategoriesWidgetCellBuilder @Inject constructor(
                     plainTransactionType = transactionType,
                     colorInt = categoryColorFormatter.format(category),
                     transitionName = if (category?.id == null) {
-                        transitionNameBuilder.buildForTransactionsReportUnknownCategory(page.transactionType)
+                        transitionNameBuilder.buildForTransactionsReportUnknownCategory(
+                            page.transactionType
+                        )
                     } else {
                         transitionNameBuilder.buildForTransactionsReport(category.id)
                     }
                 )
             }.apply {
-                if (page.otherAmount != BigDecimal.ZERO) {
+                if (page.otherCategoriesShare != BigDecimal.ZERO) {
                     add(buildOtherCategoriesCell(page, currency))
                 }
             }
@@ -105,19 +107,21 @@ class DashboardCategoriesWidgetCellBuilder @Inject constructor(
         currency: Currency
     ): DashboardCategoryChipCell {
         val name = getString(R.string.dashboard_categories_widget_other_categories)
-        val formattedAmount = amountFormatter.format(page.otherAmount, currency)
+        val formattedShare = amountFormatter.format(page.otherCategoriesShare, currency)
         return DashboardCategoryChipCell(
             category = null,
             isOtherCategory = true,
-            chipText = "$name $formattedAmount",
+            chipText = "$name $formattedShare",
             colorInt = getOtherCategoriesColor(),
             plainTransactionType = page.transactionType,
-            transitionName = transitionNameBuilder.buildForTransactionsReportOtherCategory(page.transactionType)
+            transitionName = transitionNameBuilder.buildForTransactionsReportOtherCategory(
+                page.transactionType
+            )
         )
     }
 
     private fun buildChartParts(page: DashboardCategoriesWidgetPage): List<PieChartDataPart> {
-        if (page.categoryAmounts.isEmpty()) {
+        if (page.categoryShares.isEmpty()) {
             return listOf(
                 PieChartDataPart(
                     value = 1f,
@@ -125,17 +129,17 @@ class DashboardCategoriesWidgetCellBuilder @Inject constructor(
                 )
             )
         }
-        return page.categoryAmounts.mapTo(mutableListOf()) { (category, amount) ->
+        return page.categoryShares.mapTo(mutableListOf()) { (category, amount) ->
             PieChartDataPart(
                 value = amount.toFloat(),
                 colorInt = categoryColorFormatter.format(category)
             )
         }.apply {
-            if (page.otherAmount != BigDecimal.ZERO) {
+            if (page.otherCategoriesShare != BigDecimal.ZERO) {
                 add(
                     PieChartDataPart(
-                        value = page.otherAmount.toFloat(),
-                        colorInt = getOtherCategoriesColor()
+                        colorInt = getOtherCategoriesColor(),
+                        value = page.otherCategoriesShare.toFloat()
                     )
                 )
             }

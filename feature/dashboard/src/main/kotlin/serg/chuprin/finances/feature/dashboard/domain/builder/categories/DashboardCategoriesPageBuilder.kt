@@ -1,5 +1,6 @@
 package serg.chuprin.finances.feature.dashboard.domain.builder.categories
 
+import serg.chuprin.finances.core.api.domain.model.CategoryShares
 import serg.chuprin.finances.core.api.domain.model.CategoryToTransactionsList
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.extensions.amount
@@ -23,28 +24,28 @@ class DashboardCategoriesPageBuilder @Inject constructor() {
         topCategoriesCount: Int
     ): DashboardCategoriesWidgetPage {
 
-        val categoryAmounts = categoryToTransactionsList.calculateCategoryAmounts()
+        val categoryShares = categoryToTransactionsList.calculateCategoryShares()
 
-        val (topCategories, otherCategories) = categoryAmounts
+        val (topCategoryShares, otherCategoryShares) = categoryShares
             .splitToPopularAndOther(topCategoriesCount)
 
-        val totalAmount = categoryAmounts.fold(
+        val totalAmount = categoryShares.fold(
             BigDecimal.ZERO,
-            { amount, (_, categoryAmount) -> amount + categoryAmount }
+            { totalShare, (_, categoryShare) -> totalShare + categoryShare }
         )
 
         return DashboardCategoriesWidgetPage(
             totalAmount = totalAmount,
             transactionType = transactionType,
-            categoryAmounts = topCategories,
-            otherAmounts = otherCategories,
-            otherAmount = otherCategories?.calculateAmount() ?: BigDecimal.ZERO
+            categoryShares = topCategoryShares,
+            otherCategoryShares = otherCategoryShares,
+            otherCategoriesShare = otherCategoryShares?.calculateTotal() ?: BigDecimal.ZERO
         )
     }
 
-    private fun CategoryAmounts.splitToPopularAndOther(
+    private fun CategoryShares.splitToPopularAndOther(
         topCategoriesCount: Int
-    ): Pair<CategoryAmounts, CategoryAmounts?> {
+    ): Pair<CategoryShares, CategoryShares?> {
         return if (size > topCategoriesCount) {
             take(topCategoriesCount) to takeLast(size - topCategoriesCount)
         } else {
@@ -52,7 +53,7 @@ class DashboardCategoriesPageBuilder @Inject constructor() {
         }
     }
 
-    private fun CategoryToTransactionsList.calculateCategoryAmounts(): CategoryAmounts {
+    private fun CategoryToTransactionsList.calculateCategoryShares(): CategoryShares {
         return this
             .map { (categoryWithParent, transactions) ->
                 categoryWithParent to transactions.amount.abs()
@@ -60,7 +61,7 @@ class DashboardCategoriesPageBuilder @Inject constructor() {
             .sortedByDescending { (_, amount) -> amount }
     }
 
-    private fun CategoryAmounts.calculateAmount(): BigDecimal {
+    private fun CategoryShares.calculateTotal(): BigDecimal {
         return fold(BigDecimal.ZERO, { acc, (_, amount) -> acc + amount })
     }
 

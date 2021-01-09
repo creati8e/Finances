@@ -1,7 +1,7 @@
 package serg.chuprin.finances.feature.dashboard.domain.model
 
+import serg.chuprin.finances.core.api.domain.model.CategoryShares
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
-import serg.chuprin.finances.feature.dashboard.domain.builder.categories.CategoryAmounts
 import java.math.BigDecimal
 
 /**
@@ -9,19 +9,22 @@ import java.math.BigDecimal
  */
 data class DashboardCategoriesWidgetPage(
     /**
-     * Represents total amount of all [categoryAmounts].
-     * Equals [BigDecimal.ZERO] if [categoryAmounts] is empty.
+     * Represents total amount of all [categoryShares].
+     * Equals [BigDecimal.ZERO] if [categoryShares] is empty.
      */
     val totalAmount: BigDecimal,
     /**
-     * Represents amount of all categories not included in [categoryAmounts].
+     * Represents amount of all categories not included in [categoryShares].
      * Could be [BigDecimal.ZERO].
      */
-    val otherAmount: BigDecimal,
+    val otherCategoriesShare: BigDecimal,
     /**
-     * Represents collection of categories associated with amount.
+     * Represents categories associated with amount.
      */
-    val categoryAmounts: CategoryAmounts,
-    val otherAmounts: CategoryAmounts?,
+    val categoryShares: CategoryShares,
+    /**
+     * Represents "other" categories associated with amount.
+     */
+    val otherCategoryShares: CategoryShares?,
     val transactionType: PlainTransactionType
 )

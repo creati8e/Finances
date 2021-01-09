@@ -8,6 +8,7 @@ import serg.chuprin.finances.core.api.presentation.model.cells.DiffCell
 /**
  * Created by Sergey Chuprin on 24.12.2020.
  */
+// TODO: Rename to 'CategoryShareCell'.
 interface CategoryChipCell : DiffCell<Id> {
 
     class CellChangedPayload
