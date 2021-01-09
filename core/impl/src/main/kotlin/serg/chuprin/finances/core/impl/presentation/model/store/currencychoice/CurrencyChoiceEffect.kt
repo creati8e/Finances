@@ -11,23 +11,23 @@ import java.util.*
 sealed class CurrencyChoiceEffect {
 
     /**
-     * This effect is produced when currency chosen from list.
-     * List could be filter or not.
+     * This effect is produced when currency was chosen from list.
+     * List could be filtered or not.
      */
     class CurrencyChosen(
         val currency: Currency,
         val chosenCurrencyDisplayName: String,
         /**
-         * All currencies, not only filtered.
+         * All cells, not just filtered.
          */
-        val allCurrencyCellsWithChosen: List<CurrencyCell>
+        val unfilteredCells: List<CurrencyCell>
     ) : CurrencyChoiceEffect()
 
     class CurrenciesFilteredByQuery(
         /**
          * Contains filtered [CurrencyCell] or [ZeroDataCell] if currencies not found.
          */
-        val currentCells: List<BaseCell>
+        val filteredCells: List<BaseCell>
     ) : CurrencyChoiceEffect()
 
     class CurrencyPickerVisibilityChanged(
@@ -35,17 +35,17 @@ sealed class CurrencyChoiceEffect {
         /**
          * List of all currencies to replace current filtered cells list.
          */
-        val currentCells: List<CurrencyCell>
+        val unfilteredCells: List<CurrencyCell>
     ) : CurrencyChoiceEffect()
 
     /**
      * Initial effect produced as result of store bootstrapping.
      */
     class SetCurrencyParams(
-        val currentCurrency: Currency,
+        val chosenCurrency: Currency,
         val chosenCurrencyDisplayName: String,
         val availableCurrencies: List<Currency>,
-        val allCurrencyCellsWithChosen: List<CurrencyCell>
+        val unfilteredCells: List<CurrencyCell>
     ) : CurrencyChoiceEffect()
 
 }

@@ -13,6 +13,7 @@ import serg.chuprin.finances.core.api.presentation.view.extensions.onViewClick
  * Created by Sergey Chuprin on 05.04.2020.
  */
 class CurrencyCellRenderer : ContainerRenderer<CurrencyCell>() {
+
     override val type: Int = R.layout.cell_currency
 
     override fun bindView(holder: ContainerHolder, model: CurrencyCell) {

@@ -9,7 +9,7 @@ import java.util.*
 sealed class CurrencyChoiceAction {
 
     class SetCurrenciesParams(
-        val currentCurrency: Currency,
+        val chosenCurrency: Currency,
         val availableCurrencies: List<Currency>
     ) : CurrencyChoiceAction()
 

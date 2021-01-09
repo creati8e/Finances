@@ -16,7 +16,7 @@ class CurrencyChoiceStoreTestBootstrapper(
     override fun invoke(): Flow<CurrencyChoiceAction> {
         return flowOfSingleValue {
             CurrencyChoiceAction.SetCurrenciesParams(
-                currentCurrency = currencyRepository.getDefaultCurrency(),
+                chosenCurrency = currencyRepository.getDefaultCurrency(),
                 availableCurrencies = currencyRepository.getAvailableCurrencies()
             )
         }

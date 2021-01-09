@@ -18,29 +18,29 @@ class CurrencyChoiceStateReducer :
                 state.copy(
                     currencyPickerIsVisible = false,
                     chosenCurrency = effect.currency,
-                    currentCells = effect.allCurrencyCellsWithChosen,
-                    defaultCurrencyCells = effect.allCurrencyCellsWithChosen,
+                    currentCells = effect.unfilteredCells,
+                    defaultCurrencyCells = effect.unfilteredCells,
                     chosenCurrencyDisplayName = effect.chosenCurrencyDisplayName
                 )
             }
             is CurrencyChoiceEffect.SetCurrencyParams -> {
                 state.copy(
                     currencyPickerIsVisible = false,
-                    chosenCurrency = effect.currentCurrency,
-                    currentCells = effect.allCurrencyCellsWithChosen,
+                    chosenCurrency = effect.chosenCurrency,
+                    currentCells = effect.unfilteredCells,
+                    defaultCurrencyCells = effect.unfilteredCells,
                     availableCurrencies = effect.availableCurrencies,
-                    defaultCurrencyCells = effect.allCurrencyCellsWithChosen,
                     chosenCurrencyDisplayName = effect.chosenCurrencyDisplayName
                 )
             }
             is CurrencyChoiceEffect.CurrencyPickerVisibilityChanged -> {
                 state.copy(
-                    currentCells = effect.currentCells,
+                    currentCells = effect.unfilteredCells,
                     currencyPickerIsVisible = effect.visible
                 )
             }
             is CurrencyChoiceEffect.CurrenciesFilteredByQuery -> {
-                state.copy(currentCells = effect.currentCells)
+                state.copy(currentCells = effect.filteredCells)
             }
         }
     }

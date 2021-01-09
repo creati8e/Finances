@@ -56,7 +56,7 @@ class CurrencyChoiceOnboardingActionExecutor @Inject constructor(
     ): Flow<CurrencyChoiceOnboardingEffect> {
         if (state.currencyPickerIsVisible) {
             return emptyFlowAction {
-                currencyChoiceStore.dispatch(CurrencyChoiceIntent.CloseCurrencyPicker)
+                currencyChoiceStore.dispatch(CurrencyChoiceIntent.ClickOnCloseCurrencyPicker)
             }
         }
         return emptyFlowAction {

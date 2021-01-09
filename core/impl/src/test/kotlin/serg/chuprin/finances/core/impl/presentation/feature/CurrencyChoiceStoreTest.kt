@@ -87,7 +87,7 @@ object CurrencyChoiceStoreTest : Spek({
             )
 
             When("New currency is picked from picker") {
-                store.dispatch(CurrencyChoiceIntent.ChooseCurrency(newChosenCurrencyCell))
+                store.dispatch(CurrencyChoiceIntent.ClickOnCurrencyCell(newChosenCurrencyCell))
             }
 
             Then("Currency's name is displayed") {
@@ -135,7 +135,7 @@ object CurrencyChoiceStoreTest : Spek({
 
             When("User enters first search query") {
                 with(store) {
-                    dispatch(CurrencyChoiceIntent.SearchCurrencies(firstSearchQuery))
+                    dispatch(CurrencyChoiceIntent.EnterCurrencySearchQuery(firstSearchQuery))
                     backgroundTestDispatcher.advanceTimeBy(300)
                 }
             }
@@ -151,7 +151,7 @@ object CurrencyChoiceStoreTest : Spek({
 
             When("User enters second search query") {
                 with(store) {
-                    dispatch(CurrencyChoiceIntent.SearchCurrencies(secondSearchQuery))
+                    dispatch(CurrencyChoiceIntent.EnterCurrencySearchQuery(secondSearchQuery))
                     backgroundTestDispatcher.advanceTimeBy(300)
                 }
             }
@@ -163,7 +163,7 @@ object CurrencyChoiceStoreTest : Spek({
 
             When("Users enters third search query") {
                 with(store) {
-                    dispatch(CurrencyChoiceIntent.SearchCurrencies(thirdSearchQuery))
+                    dispatch(CurrencyChoiceIntent.EnterCurrencySearchQuery(thirdSearchQuery))
                     backgroundTestDispatcher.advanceTimeBy(300)
                 }
             }
@@ -192,7 +192,7 @@ object CurrencyChoiceStoreTest : Spek({
             }
 
             When("User pressed back") {
-                store.dispatch(CurrencyChoiceIntent.CloseCurrencyPicker)
+                store.dispatch(CurrencyChoiceIntent.ClickOnCloseCurrencyPicker)
             }
 
             Then("Currency picker is closed") {

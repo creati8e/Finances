@@ -27,7 +27,7 @@ internal class CurrencyChoiceStoreProviderImpl @Inject constructor(
         return {
             bootstrap().map { initialParams: CurrencyChoiceStoreInitialParams ->
                 CurrencyChoiceAction.SetCurrenciesParams(
-                    currentCurrency = initialParams.currentCurrency,
+                    chosenCurrency = initialParams.chosenCurrency,
                     availableCurrencies = initialParams.availableCurrencies
                 )
             }

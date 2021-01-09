@@ -7,21 +7,27 @@ import serg.chuprin.finances.core.api.presentation.currencychoice.model.cells.Cu
  */
 sealed class CurrencyChoiceIntent {
 
-    object CloseCurrencyPicker : CurrencyChoiceIntent()
+    /**
+     * User wants to close currency picker.
+     */
+    object ClickOnCloseCurrencyPicker : CurrencyChoiceIntent()
 
     /**
-     * User want to open currency picker.
+     * User wants to open currency picker.
      */
     object ClickOnCurrencyPicker : CurrencyChoiceIntent()
 
-    class SearchCurrencies(
+    /**
+     * Some search query was entered.
+     */
+    class EnterCurrencySearchQuery(
         val searchQuery: String
     ) : CurrencyChoiceIntent()
 
     /**
      * User has chosen a particular currency from currencies list.
      */
-    class ChooseCurrency(
+    class ClickOnCurrencyCell(
         val currencyCell: CurrencyCell
     ) : CurrencyChoiceIntent()
 

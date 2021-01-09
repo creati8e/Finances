@@ -16,11 +16,9 @@ class CurrencyChoiceStoreBootstrapperImpl @Inject constructor(
 
     override fun bootstrap(): Flow<CurrencyChoiceStoreInitialParams> {
         return flowOfSingleValue {
-            val defaultCurrency = currencyRepository.getDefaultCurrency()
-            val availableCurrencies = currencyRepository.getAvailableCurrencies()
             CurrencyChoiceStoreInitialParams(
-                currentCurrency = defaultCurrency,
-                availableCurrencies = availableCurrencies
+                chosenCurrency = currencyRepository.getDefaultCurrency(),
+                availableCurrencies = currencyRepository.getAvailableCurrencies()
             )
         }
     }

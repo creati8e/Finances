@@ -114,7 +114,7 @@ class MoneyAccountCreationActionExecutor @Inject constructor(
     ): Flow<MoneyAccountCreationEffect> {
         if (state.currencyPickerIsVisible) {
             return emptyFlowAction {
-                currencyChoiceStore.dispatch(CurrencyChoiceIntent.CloseCurrencyPicker)
+                currencyChoiceStore.dispatch(CurrencyChoiceIntent.ClickOnCloseCurrencyPicker)
             }
         }
         return emptyFlowAction {

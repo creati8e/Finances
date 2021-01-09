@@ -34,16 +34,16 @@ class CurrencyChoiceActionExecutor @Inject constructor(
         return when (action) {
             is CurrencyChoiceAction.ExecuteIntent -> {
                 when (val intent = action.intent) {
-                    is CurrencyChoiceIntent.ChooseCurrency -> {
+                    is CurrencyChoiceIntent.ClickOnCurrencyCell -> {
                         handleChooseCurrencyIntent(intent, state)
                     }
-                    is CurrencyChoiceIntent.SearchCurrencies -> {
+                    is CurrencyChoiceIntent.EnterCurrencySearchQuery -> {
                         handleSearchCurrenciesIntent(intent, state, actionsFlow)
                     }
                     CurrencyChoiceIntent.ClickOnCurrencyPicker -> {
                         handleCurrencyPickerVisibilityChangeIntent(visible = true, state = state)
                     }
-                    CurrencyChoiceIntent.CloseCurrencyPicker -> {
+                    CurrencyChoiceIntent.ClickOnCloseCurrencyPicker -> {
                         handleCurrencyPickerVisibilityChangeIntent(visible = false, state = state)
                     }
                 }
@@ -55,7 +55,7 @@ class CurrencyChoiceActionExecutor @Inject constructor(
     }
 
     private fun handleSearchCurrenciesIntent(
-        intent: CurrencyChoiceIntent.SearchCurrencies,
+        intent: CurrencyChoiceIntent.EnterCurrencySearchQuery,
         state: CurrencyChoiceState,
         actionsFlow: Flow<CurrencyChoiceAction>
     ): Flow<CurrencyChoiceEffect> {
@@ -73,24 +73,24 @@ class CurrencyChoiceActionExecutor @Inject constructor(
                         )
                     )
                 } else {
-                    buildCurrencyCells(currencies, state.chosenCurrency)
+                    buildCellsWithChosenCurrency(currencies, state.chosenCurrency)
                 }
             )
         }.takeUntil(actionsFlow.filter { action -> isSearchCurrenciesAction(action) })
     }
 
     private fun handleChooseCurrencyIntent(
-        intent: CurrencyChoiceIntent.ChooseCurrency,
+        intent: CurrencyChoiceIntent.ClickOnCurrencyCell,
         state: CurrencyChoiceState
     ): Flow<CurrencyChoiceEffect> {
         return flowOfSingleValue {
-            val updatedCurrencyCells = buildCurrencyCells(
+            val cellsWithChosenCurrency = buildCellsWithChosenCurrency(
                 currencies = state.availableCurrencies,
                 chosenCurrency = intent.currencyCell.currency
             )
             CurrencyChoiceEffect.CurrencyChosen(
                 currency = intent.currencyCell.currency,
-                allCurrencyCellsWithChosen = updatedCurrencyCells,
+                unfilteredCells = cellsWithChosenCurrency,
                 chosenCurrencyDisplayName = intent.currencyCell.displayName
             )
         }
@@ -106,7 +106,7 @@ class CurrencyChoiceActionExecutor @Inject constructor(
         return flowOf(
             CurrencyChoiceEffect.CurrencyPickerVisibilityChanged(
                 visible = visible,
-                currentCells = state.defaultCurrencyCells
+                unfilteredCells = state.defaultCurrencyCells
             )
         )
     }
@@ -115,20 +115,20 @@ class CurrencyChoiceActionExecutor @Inject constructor(
         action: CurrencyChoiceAction.SetCurrenciesParams
     ): Flow<CurrencyChoiceEffect> {
         return flowOfSingleValue {
-            val currencyCells = buildCurrencyCells(
-                chosenCurrency = action.currentCurrency,
+            val cellsWithChosenCurrency = buildCellsWithChosenCurrency(
+                chosenCurrency = action.chosenCurrency,
                 currencies = action.availableCurrencies
             )
             CurrencyChoiceEffect.SetCurrencyParams(
-                currentCurrency = action.currentCurrency,
-                allCurrencyCellsWithChosen = currencyCells,
+                chosenCurrency = action.chosenCurrency,
                 availableCurrencies = action.availableCurrencies,
-                chosenCurrencyDisplayName = action.currentCurrency.buildDisplayName()
+                unfilteredCells = cellsWithChosenCurrency,
+                chosenCurrencyDisplayName = action.chosenCurrency.buildDisplayName()
             )
         }
     }
 
-    private fun buildCurrencyCells(
+    private fun buildCellsWithChosenCurrency(
         currencies: List<Currency>,
         chosenCurrency: Currency?
     ): List<CurrencyCell> {
@@ -146,7 +146,7 @@ class CurrencyChoiceActionExecutor @Inject constructor(
 
     private fun isSearchCurrenciesAction(action: CurrencyChoiceAction): Boolean {
         return (action is CurrencyChoiceAction.ExecuteIntent
-                && action.intent is CurrencyChoiceIntent.SearchCurrencies)
+                && action.intent is CurrencyChoiceIntent.EnterCurrencySearchQuery)
     }
 
     private fun Currency.buildDisplayName(locale: Locale = Locale.getDefault()): String {

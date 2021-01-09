@@ -68,13 +68,13 @@ class MoneyAccountCreationFragment : BaseFragment(R.layout.fragment_money_accoun
         )
 
         currencyChoiceView.onCurrencyCellChosen = { cell ->
-            viewModel.dispatch(CurrencyChoiceIntent.ChooseCurrency(cell))
+            viewModel.dispatch(CurrencyChoiceIntent.ClickOnCurrencyCell(cell))
         }
         currencyChoiceView.onCloseClicked = {
-            viewModel.dispatch(CurrencyChoiceIntent.CloseCurrencyPicker)
+            viewModel.dispatch(CurrencyChoiceIntent.ClickOnCloseCurrencyPicker)
         }
         currencyChoiceView.onSearchQueryChanged = { searchQuery ->
-            viewModel.dispatch(CurrencyChoiceIntent.SearchCurrencies(searchQuery))
+            viewModel.dispatch(CurrencyChoiceIntent.EnterCurrencySearchQuery(searchQuery))
         }
         chosenCurrencyTextView.onClick {
             viewModel.dispatch(CurrencyChoiceIntent.ClickOnCurrencyPicker)
