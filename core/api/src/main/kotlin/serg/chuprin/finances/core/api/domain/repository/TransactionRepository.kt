@@ -15,9 +15,7 @@ interface TransactionRepository {
 
     fun transactionsFlow(query: TransactionsQuery): Flow<List<Transaction>>
 
-    fun deleteTransactionsByIds(transactionIds: Collection<Id>)
-
-    fun deleteTransactions(transactions: Collection<Transaction>)
+    fun deleteTransactions(transactionIds: Collection<Id>)
 
     suspend fun transactions(query: TransactionsQuery): List<Transaction> {
         return transactionsFlow(query).firstOrNull().orEmpty()

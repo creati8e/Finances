@@ -25,11 +25,7 @@ internal class TransactionRepositoryImpl @Inject constructor(
         firebaseDataSource.createOrUpdate(transactions)
     }
 
-    override fun deleteTransactions(transactions: Collection<Transaction>) {
-        firebaseDataSource.deleteTransactions(transactions.map(Transaction::id))
-    }
-
-    override fun deleteTransactionsByIds(transactionIds: Collection<Id>) {
+    override fun deleteTransactions(transactionIds: Collection<Id>) {
         firebaseDataSource.deleteTransactions(transactionIds)
     }
 

@@ -4,6 +4,8 @@ import java.util.*
 
 /**
  * Created by Sergey Chuprin on 04.04.2020.
+ *
+ * An unique ID for app's domain entities.
  */
 inline class Id(
     val value: String

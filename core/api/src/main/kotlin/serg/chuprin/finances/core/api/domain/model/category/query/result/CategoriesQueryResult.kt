@@ -8,4 +8,12 @@ import serg.chuprin.finances.core.api.domain.model.category.CategoryWithParent
  */
 class CategoriesQueryResult(
     map: Map<Id, CategoryWithParent>
-) : Map<Id, CategoryWithParent> by map
+) : Map<Id, CategoryWithParent> by map {
+
+    override fun equals(other: Any?): Boolean {
+        return (other as? CategoriesQueryResult)?.entries == entries
+    }
+
+    override fun hashCode(): Int = entries.hashCode()
+
+}

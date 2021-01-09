@@ -200,15 +200,15 @@ internal class AppDebugMenuImpl @Inject constructor(
 
         val transactions = transactionRepository
             .transactions(TransactionsQuery(ownerId = currentUser.id))
-        transactionRepository.deleteTransactions(transactions)
+        transactionRepository.deleteTransactions(transactions.map(Transaction::id))
 
         val accounts = moneyAccountRepository
             .accounts(MoneyAccountsQuery(ownerId = currentUser.id))
-        moneyAccountRepository.deleteAccounts(accounts)
+        moneyAccountRepository.deleteAccounts(accounts.map(MoneyAccount::id))
 
         val categories = categoryRepository
             .categories(CategoriesQuery(ownerId = currentUser.id))
-        categoryRepository.deleteCategories(categories.values.map { it.category })
+        categoryRepository.deleteCategories(categories.values.map { it.category.id })
 
         onboardingRepository.onboardingStep = OnboardingStep.INITIAL
     }

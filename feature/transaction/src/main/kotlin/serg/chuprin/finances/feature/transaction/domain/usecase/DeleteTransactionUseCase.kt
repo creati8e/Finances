@@ -12,7 +12,7 @@ class DeleteTransactionUseCase @Inject constructor(
 ) {
 
     fun execute(transactionId: Id) {
-        transactionRepository.deleteTransactionsByIds(setOf(transactionId))
+        transactionRepository.deleteTransactions(setOf(transactionId))
     }
 
 }

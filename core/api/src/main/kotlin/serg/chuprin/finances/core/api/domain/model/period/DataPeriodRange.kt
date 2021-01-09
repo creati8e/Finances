@@ -15,6 +15,13 @@ class DataPeriodRange(
 
         private var initValue = start
 
+        init {
+            require(start.periodType == endInclusive.periodType) {
+                "Unable to iterate from start data period ($start) to end ($endInclusive) " +
+                        "because they has different period types."
+            }
+        }
+
         override fun next(): DataPeriod = initValue++
 
         override fun hasNext(): Boolean = initValue <= endInclusive

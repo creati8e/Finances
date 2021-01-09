@@ -14,6 +14,10 @@ class CategoriesQuery(
     val type: CategoryType? = null
 ) {
 
+    /**
+     * Represents a 'relation' between parent and children categories or vice versa.
+     * Relation is applied to provided [categoryIds].
+     */
     enum class Relation {
 
         /**

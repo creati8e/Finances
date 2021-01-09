@@ -44,9 +44,7 @@ internal class FirebaseMoneyAccountDataSource @Inject constructor(
             }
     }
 
-    fun deleteAccounts(accounts: List<MoneyAccount>) {
-        delete(accounts.map(MoneyAccount::id))
-    }
+    fun deleteAccounts(accountIds: Collection<Id>) = delete(accountIds)
 
     private fun CollectionReference.filterByOwnerId(ownerId: Id): Query {
         return whereEqualTo(FIELD_OWNER_ID, ownerId.value)

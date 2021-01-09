@@ -4,6 +4,7 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow
+import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.category.Category
 import serg.chuprin.finances.core.api.domain.model.category.query.CategoriesQuery
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseCategoryFieldsContract.COLLECTION_NAME
@@ -34,9 +35,7 @@ internal class FirebaseCategoryDataSource @Inject constructor(
         }
     }
 
-    fun deleteCategories(categories: List<Category>) {
-        delete(categories.map(Category::id))
-    }
+    fun deleteCategories(categoryIds: Collection<Id>) = delete(categoryIds)
 
     fun categoriesFlow(query: CategoriesQuery): Flow<List<DocumentSnapshot>> {
         return queryExecutor.execute(query)
