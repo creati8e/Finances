@@ -16,9 +16,9 @@
         transition_money_account_creation
     </string>
 
-    <string name="transition_dashboard_to_transactions_report_incomes"
+    <string name="transition_dashboard_to_transactions_report_income"
         translatable="false">
-        transition_dashboard_to_transactions_report_incomes
+        transition_dashboard_to_transactions_report_income
     </string>
 
     <string name="transition_dashboard_to_transactions_report_expenses"

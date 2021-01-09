@@ -22,9 +22,7 @@ internal interface CoreBuildersModule {
     ): DataPeriodTypePopupMenuCellsBuilder
 
     @[Binds Reusable]
-    fun bindTransitionNameBuilder(
-        impl: TransitionNameBuilderImpl
-    ): TransitionNameBuilder
+    fun bindTransitionNameBuilder(impl: TransitionNameBuilderImpl): TransitionNameBuilder
 
     @[Binds Reusable]
     fun bindTransactionCellBuilder(impl: TransactionCellBuilderImpl): TransactionCellBuilder

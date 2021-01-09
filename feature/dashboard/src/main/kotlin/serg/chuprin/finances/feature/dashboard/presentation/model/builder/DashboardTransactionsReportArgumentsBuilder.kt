@@ -49,7 +49,7 @@ class DashboardTransactionsReportArgumentsBuilder @Inject constructor(
         return buildForPeriodTransactions(
             dataPeriod = state.dashboard.currentDataPeriod,
             transactionType = PlainTransactionType.INCOME,
-            transitionNameStringRes = R.string.transition_dashboard_to_transactions_report_incomes
+            transitionNameStringRes = R.string.transition_dashboard_to_transactions_report_income
         )
     }
 
