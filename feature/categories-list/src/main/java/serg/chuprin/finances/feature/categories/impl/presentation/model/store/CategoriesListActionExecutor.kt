@@ -86,7 +86,6 @@ class CategoriesListActionExecutor @Inject constructor(
     ): Flow<CategoriesListEffect> {
         return flowOfSingleValue {
             delay(300)
-            // TODO: remove blocking flow.
             val categories = searchUserCategoriesUseCase
                 .execute(
                     nameQuery = intent.query,

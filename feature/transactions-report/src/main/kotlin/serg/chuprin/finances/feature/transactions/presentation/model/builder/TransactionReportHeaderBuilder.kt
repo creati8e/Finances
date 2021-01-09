@@ -24,7 +24,6 @@ class TransactionReportHeaderBuilder @Inject constructor(
     suspend fun build(report: TransactionsReport): TransactionReportHeader {
         val filter = report.filter
 
-        // TODO: Add formatting for all filter types.
         val title = when (filter) {
             is TransactionReportFilter.Plain -> {
                 filter.transactionType?.format()
