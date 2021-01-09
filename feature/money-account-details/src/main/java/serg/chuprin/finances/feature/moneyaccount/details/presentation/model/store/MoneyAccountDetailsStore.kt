@@ -1,20 +1,8 @@
 package serg.chuprin.finances.feature.moneyaccount.details.presentation.model.store
 
-import serg.chuprin.finances.core.api.di.scopes.ScreenScope
-import serg.chuprin.finances.core.mvi.store.BaseStateStore
-import javax.inject.Inject
+import serg.chuprin.finances.core.mvi.store.StateStore
 
 /**
- * Created by Sergey Chuprin on 07.05.2020.
+ * Created by Sergey Chuprin on 09.01.2021.
  */
-@ScreenScope
-class MoneyAccountDetailsStore @Inject constructor(
-    actionExecutor: MoneyAccountDetailsActionExecutor,
-    bootstrapper: MoneyAccountDetailsStoreBootstrapper
-) : BaseStateStore<MoneyAccountDetailsIntent, MoneyAccountDetailsEffect, MoneyAccountDetailsAction, MoneyAccountDetailsState, MoneyAccountDetailsEvent>(
-    MoneyAccountDetailsState(),
-    MoneyAccountDetailsStateReducer(),
-    bootstrapper,
-    actionExecutor,
-    MoneyAccountDetailsIntentToActionMapper()
-)
+typealias MoneyAccountDetailsStore = StateStore<MoneyAccountDetailsIntent, MoneyAccountDetailsState, MoneyAccountDetailsEvent>
