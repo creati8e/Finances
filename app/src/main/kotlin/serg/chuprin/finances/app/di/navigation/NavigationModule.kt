@@ -5,7 +5,7 @@ import dagger.Module
 import dagger.Provides
 import serg.chuprin.finances.app.R
 import serg.chuprin.finances.core.api.di.provider.CoreNavigationProvider
-import serg.chuprin.finances.core.api.presentation.model.TransactionReportNavigation
+import serg.chuprin.finances.core.api.presentation.navigation.TransactionReportNavigation
 import serg.chuprin.finances.core.api.presentation.navigation.*
 
 /**

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.fragment_transactions_report.*
-import serg.chuprin.finances.core.api.presentation.model.TransactionReportNavigation
+import serg.chuprin.finances.core.api.presentation.navigation.TransactionReportNavigation
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionsReportScreenArguments

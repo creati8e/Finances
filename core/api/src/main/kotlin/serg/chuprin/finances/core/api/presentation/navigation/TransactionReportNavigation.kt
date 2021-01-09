@@ -1,4 +1,4 @@
-package serg.chuprin.finances.core.api.presentation.model
+package serg.chuprin.finances.core.api.presentation.navigation
 
 import android.view.View
 import androidx.navigation.NavController
