@@ -49,7 +49,7 @@ class TransactionReportDataService @Inject constructor(
                 val transactionsFlow = transactionDataService
                     .dataFlow(
                         filterFlow = filterFlow,
-                        categoryWithParentForIdFlow = categoriesFlow
+                        categoryIdToCategoryFlow = categoriesFlow
                     )
                     .share(coroutineScope = this)
 

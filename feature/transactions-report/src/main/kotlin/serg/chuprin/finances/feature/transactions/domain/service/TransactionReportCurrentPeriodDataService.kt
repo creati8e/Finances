@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import serg.chuprin.finances.core.api.domain.linker.TransactionWithCategoriesLinker
 import serg.chuprin.finances.core.api.domain.model.CategoryToTransactionsList
-import serg.chuprin.finances.core.api.domain.model.category.CategoryWithParentForId
+import serg.chuprin.finances.core.api.domain.model.category.CategoryIdToCategory
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriodType
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.extensions.flow.distinctUntilChangedBy
@@ -40,7 +40,7 @@ class TransactionReportCurrentPeriodDataService @Inject constructor(
 
     fun dataFlow(
         transactionsFlow: Flow<List<Transaction>>,
-        categoriesFlow: Flow<CategoryWithParentForId>,
+        categoriesFlow: Flow<CategoryIdToCategory>,
         filterFlow: Flow<TransactionReportFilter>
     ): Flow<TransactionReportCurrentPeriodData> {
         return combine(
@@ -53,7 +53,7 @@ class TransactionReportCurrentPeriodDataService @Inject constructor(
 
     private fun buildData(
         transactions: List<Transaction>,
-        categoryWithParentForId: CategoryWithParentForId,
+        categoryIdToCategory: CategoryIdToCategory,
         filter: TransactionReportFilter
     ): TransactionReportCurrentPeriodData {
         val transactionsInCurrentPeriod = transactions.filter { transaction ->
@@ -61,20 +61,20 @@ class TransactionReportCurrentPeriodDataService @Inject constructor(
         }
         val transactionCategories = transactionWithCategoriesLinker.linkTransactionsWithCategories(
             transactionsInCurrentPeriod,
-            categoryWithParentForId
+            categoryIdToCategory
         )
         return TransactionReportCurrentPeriodData(
             transactionToCategory = transactionCategories,
             categoryToTransactionsList = buildCategoryTransactions(
                 filter = filter,
-                categoryWithParentForId = categoryWithParentForId,
+                categoryIdToCategory = categoryIdToCategory,
                 transactionsInCurrentPeriod = transactionsInCurrentPeriod
             )
         )
     }
 
     private fun buildCategoryTransactions(
-        categoryWithParentForId: CategoryWithParentForId,
+        categoryIdToCategory: CategoryIdToCategory,
         filter: TransactionReportFilter,
         transactionsInCurrentPeriod: List<Transaction>
     ): CategoryToTransactionsList {
@@ -82,7 +82,7 @@ class TransactionReportCurrentPeriodDataService @Inject constructor(
         fun link(): CategoryToTransactionsList {
             return transactionWithCategoriesLinker.linkCategoryParentsWithTransactions(
                 transactionsInCurrentPeriod,
-                categoryWithParentForId
+                categoryIdToCategory
             )
         }
 

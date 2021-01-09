@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.category.CategoryWithParentForId
+import serg.chuprin.finances.core.api.domain.model.category.CategoryIdToCategory
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.model.transaction.query.TransactionsQuery
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
@@ -40,10 +40,10 @@ class TransactionReportTransactionDataService @Inject constructor(
 
     suspend fun dataFlow(
         filterFlow: Flow<TransactionReportFilter>,
-        categoryWithParentForIdFlow: SharedFlow<CategoryWithParentForId>
+        categoryIdToCategoryFlow: SharedFlow<CategoryIdToCategory>
     ): Flow<List<Transaction>> {
         return combine(
-            categoryWithParentForIdFlow,
+            categoryIdToCategoryFlow,
             filterFlow.distinctUntilChangedBy(INTERESTED_KEYS),
             ::Pair
         ).flatMapLatest { (categories, filter) ->
@@ -53,7 +53,7 @@ class TransactionReportTransactionDataService @Inject constructor(
 
     private suspend fun buildQuery(
         filter: TransactionReportFilter,
-        categoryWithParentForId: CategoryWithParentForId
+        categoryIdToCategory: CategoryIdToCategory
     ): TransactionsQuery {
         // If report has non-custom and non-all-time period type,
         // get data for all periods from min to max.
@@ -80,7 +80,7 @@ class TransactionReportTransactionDataService @Inject constructor(
             transactionType = filter.transactionType,
             ownerId = userRepository.getCurrentUser().id,
             sortOrder = TransactionsQuery.SortOrder.DATE_ASC,
-            categoryIds = categoryWithParentForId.mapTo(initialCategoryIds, { (categoryId) ->
+            categoryIds = categoryIdToCategory.mapTo(initialCategoryIds, { (categoryId) ->
                 categoryId
             })
         )

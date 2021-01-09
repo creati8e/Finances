@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.map
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.category.Category
 import serg.chuprin.finances.core.api.domain.model.category.query.CategoriesQuery
-import serg.chuprin.finances.core.api.domain.model.category.CategoryWithParentForId
+import serg.chuprin.finances.core.api.domain.model.category.CategoryIdToCategory
 import serg.chuprin.finances.core.api.domain.repository.CategoryRepository
 import serg.chuprin.finances.core.impl.data.CategoryLinker
 import serg.chuprin.finances.core.impl.data.datasource.assets.PredefinedCategoriesDataSource
@@ -30,11 +30,11 @@ internal class CategoryRepositoryImpl @Inject constructor(
         firebaseDataSource.deleteCategories(categoryIds)
     }
 
-    override fun categoriesFlow(query: CategoriesQuery): Flow<CategoryWithParentForId> {
+    override fun categoriesFlow(query: CategoriesQuery): Flow<CategoryIdToCategory> {
         return firebaseDataSource
             .categoriesFlow(query)
             .map { documents ->
-                CategoryWithParentForId(
+                CategoryIdToCategory(
                     documents.mapNotNull(firebaseMapper::mapFromSnapshot).linkWithParents()
                 )
             }
@@ -52,7 +52,7 @@ internal class CategoryRepositoryImpl @Inject constructor(
         }
     }
 
-    private fun List<Category>.linkWithParents(): CategoryWithParentForId {
+    private fun List<Category>.linkWithParents(): CategoryIdToCategory {
         return linker.linkWithParents(this)
     }
 
