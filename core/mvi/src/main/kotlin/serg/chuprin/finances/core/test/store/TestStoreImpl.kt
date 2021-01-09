@@ -17,6 +17,12 @@ import java.util.*
 
 /**
  * Created by Sergey Chuprin on 08.12.2020.
+ *
+ * Test store contains the same logic as [BaseStateStore] but it capture all
+ * states and events into [capturedStates] and [capturedEvents] accordingly.
+ *
+ * Also it uses [TestCoroutineDispatcher] for [backgroundDispatcher] and [reducerDispatcher].
+ * For time-based actions there is [backgroundTestDispatcher] exposed.
  */
 open class TestStoreImpl<I, SE, A, S, E>(
     initialState: S,

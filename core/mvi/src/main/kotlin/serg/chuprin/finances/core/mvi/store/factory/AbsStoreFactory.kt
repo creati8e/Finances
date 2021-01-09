@@ -8,9 +8,17 @@ import serg.chuprin.finances.core.mvi.mapper.StoreIntentToActionMapper
 import serg.chuprin.finances.core.mvi.reducer.StoreStateReducer
 import serg.chuprin.finances.core.mvi.store.BaseStateStore
 import serg.chuprin.finances.core.mvi.store.BaseStore
+import serg.chuprin.finances.core.test.factory.TestStoreFactory
+import serg.chuprin.finances.core.test.factory.TestStoreFactory.Companion.test
 
 /**
  * Created by Sergey Chuprin on 08.12.2020.
+ *
+ * Abstract factory for store store creation.
+ * Preferring creation store via factory prevents code duplication for store creation
+ * for tests and allows more convenient testing.
+ *
+ * @see [TestStoreFactory], [TestStoreFactory.test].
  */
 abstract class AbsStoreFactory<I, SE, A, S, E, STORE : BaseStore<I, S, E>>(
     val initialState: S,
