@@ -2,6 +2,7 @@ package serg.chuprin.finances.feature.dashboard.domain.builder.categories
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import serg.chuprin.finances.core.api.domain.model.User
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
@@ -34,10 +35,11 @@ class DashboardCategoriesWidgetBuilder @Inject constructor(
         currentPeriod: DataPeriod
     ): Flow<DashboardWidget.Categories> {
         return combine(
+            flowOf(currentUser),
             pageFlow(currentUser, currentPeriod, PlainTransactionType.EXPENSE),
             pageFlow(currentUser, currentPeriod, PlainTransactionType.INCOME)
-        ) { page1, page2 ->
-            DashboardWidget.Categories(currentUser.defaultCurrency, listOf(page1, page2))
+        ) { user, page1, page2 ->
+            DashboardWidget.Categories(user.defaultCurrency, listOf(page1, page2))
         }
     }
 

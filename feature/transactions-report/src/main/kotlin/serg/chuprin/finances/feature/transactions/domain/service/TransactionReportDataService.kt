@@ -1,7 +1,6 @@
 package serg.chuprin.finances.feature.transactions.domain.service
 
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.*
 import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
@@ -27,7 +26,6 @@ class TransactionReportDataService @Inject constructor(
     private val currentPeriodDataService: TransactionReportCurrentPeriodDataService
 ) {
 
-    @OptIn(FlowPreview::class)
     fun dataFlow(): Flow<TransactionReportRawData> {
         return flow {
             coroutineScope {

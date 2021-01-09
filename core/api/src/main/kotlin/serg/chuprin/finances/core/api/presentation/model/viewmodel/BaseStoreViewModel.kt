@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
@@ -23,7 +22,6 @@ abstract class BaseStoreViewModel<INTENT> : ViewModel() {
         intentsChannel.offer(intent)
     }
 
-    @OptIn(FlowPreview::class)
     protected fun intentsFlow(): Flow<INTENT> = intentsChannel.asFlow()
 
     protected fun <E, STORE : StateStore<*, *, E>> STORE.observeEventsAsLiveData(): LiveData<E> {

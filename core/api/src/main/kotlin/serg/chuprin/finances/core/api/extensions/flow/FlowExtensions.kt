@@ -1,6 +1,5 @@
 package serg.chuprin.finances.core.api.extensions.flow
 
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flow
@@ -14,7 +13,6 @@ fun <T> flowOfSingleValue(block: suspend () -> T): Flow<T> {
     }
 }
 
-@OptIn(FlowPreview::class)
 fun <T> Flow<T>.takeUntil(otherFlow: Flow<Any>): Flow<T> {
     return FlowTakeUntil(this, otherFlow)
 }

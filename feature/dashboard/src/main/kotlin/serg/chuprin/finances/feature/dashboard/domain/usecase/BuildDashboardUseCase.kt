@@ -1,6 +1,5 @@
 package serg.chuprin.finances.feature.dashboard.domain.usecase
 
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import serg.chuprin.finances.core.api.domain.model.User
 import serg.chuprin.finances.core.api.domain.model.moneyaccount.query.MoneyAccountsQuery
@@ -27,7 +26,6 @@ class BuildDashboardUseCase @Inject constructor(
     private val widgetBuilders: Set<@JvmSuppressWildcards DashboardWidgetBuilder<*>>
 ) {
 
-    @OptIn(FlowPreview::class)
     fun execute(): Flow<Dashboard> {
         return userRepository
             .currentUserSingleFlow()
@@ -39,7 +37,7 @@ class BuildDashboardUseCase @Inject constructor(
             .distinctUntilChanged { old, new ->
                 old.size == new.size || !(old.isEmpty() || new.isEmpty())
             }
-            .flatMapConcat { moneyAccounts ->
+            .flatMapLatest { moneyAccounts ->
                 if (moneyAccounts.isEmpty()) {
                     flowOf(Dashboard(hasNoMoneyAccounts = true))
                 } else {
@@ -50,9 +48,7 @@ class BuildDashboardUseCase @Inject constructor(
                             .currentDataPeriodFlow
                             .distinctUntilChanged(),
                         getOrderedWidgetsFlow(),
-                        transform = { currentUser, currentPeriod, widgets ->
-                            Triple(currentUser, currentPeriod, widgets)
-                        }
+                        transform = ::Triple
                     ).flatMapLatest { (currentUser, currentPeriod, orderedWidgets) ->
                         buildDashboard(currentUser, currentPeriod, orderedWidgets)
                     }
@@ -60,7 +56,6 @@ class BuildDashboardUseCase @Inject constructor(
             }
     }
 
-    @OptIn(FlowPreview::class)
     private fun buildDashboard(
         currentUser: User,
         currentPeriod: DataPeriod,
@@ -72,8 +67,8 @@ class BuildDashboardUseCase @Inject constructor(
                 ?.build(currentUser, currentPeriod)
         }
 
-        return combine(flows) { arr ->
-            arr.fold(
+        return combine(flows) { flowsArray ->
+            flowsArray.fold(
                 initial = Dashboard(
                     user = currentUser,
                     hasNoMoneyAccounts = false,
