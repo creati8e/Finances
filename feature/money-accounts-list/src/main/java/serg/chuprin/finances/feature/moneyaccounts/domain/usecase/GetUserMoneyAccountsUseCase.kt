@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccountBalances
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
-import serg.chuprin.finances.core.api.domain.service.MoneyAccountService
+import serg.chuprin.finances.core.api.domain.service.MoneyAccountBalanceService
 import javax.inject.Inject
 
 /**
@@ -12,15 +12,13 @@ import javax.inject.Inject
  */
 class GetUserMoneyAccountsUseCase @Inject constructor(
     private val userRepository: UserRepository,
-    private val moneyAccountService: MoneyAccountService
+    private val moneyAccountBalanceService: MoneyAccountBalanceService
 ) {
 
     fun execute(): Flow<MoneyAccountBalances> {
         return userRepository
             .currentUserSingleFlow()
-            .flatMapLatest { user ->
-                moneyAccountService.moneyAccountBalancesFlow(user)
-            }
+            .flatMapLatest(moneyAccountBalanceService::balancesFlow)
     }
 
 }

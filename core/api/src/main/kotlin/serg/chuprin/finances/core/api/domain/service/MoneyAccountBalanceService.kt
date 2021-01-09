@@ -7,8 +7,8 @@ import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccountBala
 /**
  * Created by Sergey Chuprin on 06.05.2020.
  */
-interface MoneyAccountService {
+interface MoneyAccountBalanceService {
 
-    fun moneyAccountBalancesFlow(user: User): Flow<MoneyAccountBalances>
+    fun balancesFlow(user: User): Flow<MoneyAccountBalances>
 
 }

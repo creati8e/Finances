@@ -5,7 +5,7 @@ import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
 import serg.chuprin.finances.core.api.domain.TransactionsByDayGrouper
 import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
-import serg.chuprin.finances.core.api.domain.service.MoneyAccountService
+import serg.chuprin.finances.core.api.domain.service.MoneyAccountBalanceService
 import serg.chuprin.finances.core.api.domain.service.TransactionCategoryRetrieverService
 import serg.chuprin.finances.core.api.domain.usecase.MarkMoneyAccountAsFavoriteUseCase
 import serg.chuprin.finances.core.api.presentation.builder.TransactionCellBuilder
@@ -25,7 +25,7 @@ interface MoneyAccountDetailsDependencies {
 
     val markMoneyAccountAsFavoriteUseCase: MarkMoneyAccountAsFavoriteUseCase
 
-    val moneyAccountService: MoneyAccountService
+    val moneyAccountBalanceService: MoneyAccountBalanceService
     val transactionCategoryRetrieverService: TransactionCategoryRetrieverService
 
     val transactionCellBuilder: TransactionCellBuilder

@@ -1,6 +1,6 @@
 package serg.chuprin.finances.core.api.di.provider
 
-import serg.chuprin.finances.core.api.domain.service.MoneyAccountService
+import serg.chuprin.finances.core.api.domain.service.MoneyAccountBalanceService
 import serg.chuprin.finances.core.api.domain.service.TransactionCategoryRetrieverService
 
 /**
@@ -8,7 +8,7 @@ import serg.chuprin.finances.core.api.domain.service.TransactionCategoryRetrieve
  */
 interface CoreServicesProvider {
 
-    val moneyAccountService: MoneyAccountService
+    val moneyAccountBalanceService: MoneyAccountBalanceService
 
     val transactionCategoryRetrieverService: TransactionCategoryRetrieverService
 

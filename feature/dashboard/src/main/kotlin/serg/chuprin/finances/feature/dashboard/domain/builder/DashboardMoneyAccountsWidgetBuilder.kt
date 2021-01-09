@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import serg.chuprin.finances.core.api.domain.model.User
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
-import serg.chuprin.finances.core.api.domain.service.MoneyAccountService
+import serg.chuprin.finances.core.api.domain.service.MoneyAccountBalanceService
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
 import serg.chuprin.finances.feature.dashboard.setup.domain.model.DashboardWidgetType
 import javax.inject.Inject
@@ -13,7 +13,7 @@ import javax.inject.Inject
  * Created by Sergey Chuprin on 20.04.2020.
  */
 class DashboardMoneyAccountsWidgetBuilder @Inject constructor(
-    private val moneyAccountService: MoneyAccountService
+    private val moneyAccountBalanceService: MoneyAccountBalanceService
 ) : DashboardWidgetBuilder<DashboardWidget.MoneyAccounts> {
 
     override fun isForType(widgetType: DashboardWidgetType): Boolean {
@@ -24,11 +24,9 @@ class DashboardMoneyAccountsWidgetBuilder @Inject constructor(
         currentUser: User,
         currentPeriod: DataPeriod
     ): Flow<DashboardWidget.MoneyAccounts> {
-        return moneyAccountService
-            .moneyAccountBalancesFlow(currentUser)
-            .map { moneyAccounts ->
-                DashboardWidget.MoneyAccounts(moneyAccounts)
-            }
+        return moneyAccountBalanceService
+            .balancesFlow(currentUser)
+            .map(DashboardWidget::MoneyAccounts)
     }
 
 }

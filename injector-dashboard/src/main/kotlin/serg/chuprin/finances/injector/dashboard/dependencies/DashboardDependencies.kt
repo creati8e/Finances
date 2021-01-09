@@ -7,7 +7,7 @@ import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
 import serg.chuprin.finances.core.api.domain.repository.CategoryRepository
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
-import serg.chuprin.finances.core.api.domain.service.MoneyAccountService
+import serg.chuprin.finances.core.api.domain.service.MoneyAccountBalanceService
 import serg.chuprin.finances.core.api.domain.service.TransactionCategoryRetrieverService
 import serg.chuprin.finances.core.api.presentation.builder.TransactionCellBuilder
 import serg.chuprin.finances.core.api.presentation.builder.TransitionNameBuilder
@@ -45,7 +45,7 @@ interface DashboardDependencies {
     val transactionCellBuilder: TransactionCellBuilder
     val dataPeriodTypePopupMenuCellsBuilder: DataPeriodTypePopupMenuCellsBuilder
 
-    val moneyAccountService: MoneyAccountService
+    val moneyAccountBalanceService: MoneyAccountBalanceService
     val transactionCategoryRetrieverService: TransactionCategoryRetrieverService
 }
 
