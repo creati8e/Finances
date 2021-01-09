@@ -19,5 +19,5 @@ class AccountsSetupOnboardingStoreFactory @Inject constructor(
     AccountsSetupOnboardingStateReducer(),
     bootstrapper,
     actionExecutor,
-    AccountsSetupOnboardingIntentToActionMapper()
+    AccountsSetupOnboardingAction::ExecuteIntent
 )

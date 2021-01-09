@@ -27,7 +27,7 @@ class CurrencyChoiceOnboardingStore @Inject constructor(
     CurrencyChoiceOnboardingStateReducer(),
     BypassStoreBootstrapper(),
     actionExecutor,
-    CurrencyChoiceOnboardingIntentToActionMapper()
+    CurrencyChoiceOnboardingAction::ExecuteIntent
 ), CurrencyChoiceStoreIntentDispatcher by currencyChoiceStore {
 
     override fun start(
