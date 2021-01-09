@@ -7,7 +7,7 @@ import javax.inject.Inject
 /**
  * Created by Sergey Chuprin on 06.12.2020.
  */
-class ChangeUserDefaultDataPerioduseCase @Inject constructor(
+class ChangeUserDefaultDataPeriodUseCase @Inject constructor(
     private val userRepository: UserRepository
 ) {
 

@@ -12,7 +12,11 @@ import serg.chuprin.finances.injector.Injector
 /**
  * Created by Sergey Chuprin on 31.07.2020.
  */
-@[ScreenScope Component(dependencies = [UserProfileDependencies::class])]
+@ScreenScope
+@Component(
+    modules = [UserProfileModule::class],
+    dependencies = [UserProfileDependencies::class]
+)
 interface UserProfileComponent :
     ViewModelComponent<UserProfileViewModel>,
     InjectableComponent<UserProfileFragment> {

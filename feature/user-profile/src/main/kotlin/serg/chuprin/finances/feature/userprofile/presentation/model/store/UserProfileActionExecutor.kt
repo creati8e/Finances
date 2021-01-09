@@ -9,7 +9,7 @@ import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
 import serg.chuprin.finances.core.mvi.invoke
-import serg.chuprin.finances.feature.userprofile.domain.usecase.ChangeUserDefaultDataPerioduseCase
+import serg.chuprin.finances.feature.userprofile.domain.usecase.ChangeUserDefaultDataPeriodUseCase
 import serg.chuprin.finances.feature.userprofile.domain.usecase.LogOutUseCase
 import serg.chuprin.finances.feature.userprofile.presentation.model.builder.UserProfileCellsBuilder
 import javax.inject.Inject
@@ -20,7 +20,7 @@ import javax.inject.Inject
 class UserProfileActionExecutor @Inject constructor(
     private val logOutUseCase: LogOutUseCase,
     private val cellsBuilder: UserProfileCellsBuilder,
-    private val changeUserDefaultDataPerioduseCase: ChangeUserDefaultDataPerioduseCase,
+    private val changeUserDefaultDataPeriodUseCase: ChangeUserDefaultDataPeriodUseCase,
     private val dataPeriodTypePopupMenuCellsBuilder: DataPeriodTypePopupMenuCellsBuilder
 ) : StoreActionExecutor<UserProfileAction, UserProfileState, UserProfileEffect, UserProfileEvent> {
 
@@ -72,7 +72,7 @@ class UserProfileActionExecutor @Inject constructor(
         intent: UserProfileIntent.ClickOnPeriodTypeCell
     ): Flow<UserProfileEffect> {
         return flow {
-            changeUserDefaultDataPerioduseCase.execute(intent.periodTypePopupMenuCell.periodType)
+            changeUserDefaultDataPeriodUseCase.execute(intent.periodTypePopupMenuCell.periodType)
         }
     }
 

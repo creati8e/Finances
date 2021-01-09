@@ -1,18 +1,8 @@
 package serg.chuprin.finances.feature.userprofile.presentation.model.store
 
-import serg.chuprin.finances.core.mvi.store.BaseStateStore
-import javax.inject.Inject
+import serg.chuprin.finances.core.mvi.store.StateStore
 
 /**
- * Created by Sergey Chuprin on 31.07.2020.
+ * Created by Sergey Chuprin on 09.01.2021.
  */
-class UserProfileStore @Inject constructor(
-    actionExecutor: UserProfileActionExecutor,
-    bootstrapper: UserProfileBootstrapper
-) : BaseStateStore<UserProfileIntent, UserProfileEffect, UserProfileAction, UserProfileState, UserProfileEvent>(
-    UserProfileState(),
-    UserProfileStateReducer(),
-    bootstrapper,
-    actionExecutor,
-    UserProfileAction::ExecuteIntent
-)
+typealias UserProfileStore = StateStore<UserProfileIntent, UserProfileState, UserProfileEvent>
