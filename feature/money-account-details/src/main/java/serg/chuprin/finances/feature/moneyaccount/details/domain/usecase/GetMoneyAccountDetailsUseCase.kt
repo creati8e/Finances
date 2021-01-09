@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.api.domain.TransactionsByDayGrouper
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.TransactionCategoriesMap
+import serg.chuprin.finances.core.api.domain.model.TransactionCategories
 import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import serg.chuprin.finances.core.api.domain.model.transaction.query.TransactionsQuery
 import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
@@ -55,12 +55,12 @@ class GetMoneyAccountDetailsUseCase @Inject constructor(
 
     private fun buildMoneyAccountDetails(
         moneyAccount: MoneyAccount,
-        categories: TransactionCategoriesMap
+        transactionCategories: TransactionCategories
     ): MoneyAccountDetails {
         return MoneyAccountDetails(
             moneyAccount = moneyAccount,
-            balance = categories.amount,
-            transactionsGroupedByDay = transactionsByDayGrouper.group(categories)
+            balance = transactionCategories.amount,
+            transactionsGroupedByDay = transactionsByDayGrouper.group(transactionCategories)
         )
     }
 

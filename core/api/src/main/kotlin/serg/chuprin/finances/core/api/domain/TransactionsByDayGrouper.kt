@@ -1,6 +1,6 @@
 package serg.chuprin.finances.core.api.domain
 
-import serg.chuprin.finances.core.api.domain.model.TransactionCategoriesMap
+import serg.chuprin.finances.core.api.domain.model.TransactionCategories
 import serg.chuprin.finances.core.api.domain.model.TransactionsGroupedByDay
 import javax.inject.Inject
 
@@ -12,7 +12,7 @@ import javax.inject.Inject
 class TransactionsByDayGrouper @Inject constructor() {
 
     fun group(
-        transactionCategories: TransactionCategoriesMap
+        transactionCategories: TransactionCategories
     ): TransactionsGroupedByDay {
         return transactionCategories.entries
             .groupBy { (transaction) ->

@@ -2,7 +2,7 @@ package serg.chuprin.finances.core.api.domain.service
 
 import kotlinx.coroutines.flow.Flow
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.TransactionCategoriesMap
+import serg.chuprin.finances.core.api.domain.model.TransactionCategories
 import serg.chuprin.finances.core.api.domain.model.category.CategoryWithParent
 import serg.chuprin.finances.core.api.domain.model.transaction.query.TransactionsQuery
 
@@ -21,6 +21,6 @@ interface TransactionCategoryRetrieverService {
     fun transactionsFlow(
         ownerId: Id,
         query: TransactionsQuery
-    ): Flow<TransactionCategoriesMap>
+    ): Flow<TransactionCategories>
 
 }

@@ -65,7 +65,7 @@ class TransactionReportCurrentPeriodDataService @Inject constructor(
                 categoriesQueryResult
             )
         return TransactionReportCurrentPeriodData(
-            transactions = transactionsWithCategories,
+            transactionCategories = transactionsWithCategories,
             categoryTransactions = buildCategoryTransactions(
                 filter = filter,
                 categoriesQueryResult = categoriesQueryResult,

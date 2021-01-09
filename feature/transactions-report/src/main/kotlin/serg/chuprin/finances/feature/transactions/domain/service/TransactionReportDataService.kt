@@ -87,8 +87,8 @@ class TransactionReportDataService @Inject constructor(
                             filter = filter,
                             moneyAccounts = moneyAccounts,
                             dataPeriodAmounts = dataPeriodAmounts,
-                            listData = currentPeriodData.transactions,
-                            categoryTransactions = currentPeriodData.categoryTransactions
+                            categoryTransactions = currentPeriodData.categoryTransactions,
+                            transactionCategories = currentPeriodData.transactionCategories
                         )
                     }.debounce(100)
                 )
