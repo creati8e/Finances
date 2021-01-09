@@ -64,7 +64,7 @@ class TransactionReportCurrentPeriodDataService @Inject constructor(
             categoryWithParentForId
         )
         return TransactionReportCurrentPeriodData(
-            transactionCategories = transactionCategories,
+            transactionToCategory = transactionCategories,
             categoryToTransactionsList = buildCategoryTransactions(
                 filter = filter,
                 categoryWithParentForId = categoryWithParentForId,

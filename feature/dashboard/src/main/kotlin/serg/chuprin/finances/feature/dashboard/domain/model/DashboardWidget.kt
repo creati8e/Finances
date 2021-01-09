@@ -1,7 +1,7 @@
 package serg.chuprin.finances.feature.dashboard.domain.model
 
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.TransactionCategories
+import serg.chuprin.finances.core.api.domain.model.TransactionToCategory
 import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccountBalances
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
@@ -36,7 +36,7 @@ sealed class DashboardWidget(
 
     data class RecentTransactions(
         val moneyAccounts: Map<Id, MoneyAccount>,
-        val transactionCategories: TransactionCategories
+        val transactionToCategory: TransactionToCategory
     ) : DashboardWidget(DashboardWidgetType.RECENT_TRANSACTIONS)
 
     data class Categories(

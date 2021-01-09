@@ -1,7 +1,7 @@
 package serg.chuprin.finances.feature.dashboard.presentation.model.builder
 
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.TransactionCategories
+import serg.chuprin.finances.core.api.domain.model.TransactionToCategory
 import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import serg.chuprin.finances.core.api.presentation.builder.TransactionCellBuilder
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
@@ -23,19 +23,19 @@ class DashboardRecentTransactionsWidgetCellBuilder @Inject constructor(
         }
         return DashboardWidgetCell.RecentTransactions(
             widget = widget,
-            cells = buildCells(widget.transactionCategories, widget.moneyAccounts),
-            showMoreTransactionsButtonIsVisible = widget.transactionCategories.isNotEmpty()
+            cells = buildCells(widget.transactionToCategory, widget.moneyAccounts),
+            showMoreTransactionsButtonIsVisible = widget.transactionToCategory.isNotEmpty()
         )
     }
 
     private fun buildCells(
-        transactionCategories: TransactionCategories,
+        transactionToCategory: TransactionToCategory,
         moneyAccounts: Map<Id, MoneyAccount>
     ): List<BaseCell> {
-        if (transactionCategories.isEmpty()) {
+        if (transactionToCategory.isEmpty()) {
             return listOf(DashboardRecentTransactionsZeroDataCell())
         }
-        return transactionCategories.map { (transaction, categoryWithParent) ->
+        return transactionToCategory.map { (transaction, categoryWithParent) ->
             transactionCellBuilder.build(
                 transaction = transaction,
                 categoryWithParent = categoryWithParent,

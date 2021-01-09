@@ -1,6 +1,6 @@
 package serg.chuprin.finances.core.api.domain.linker
 
-import serg.chuprin.finances.core.api.domain.model.TransactionCategories
+import serg.chuprin.finances.core.api.domain.model.TransactionToCategory
 import serg.chuprin.finances.core.api.domain.model.CategoryToTransactionsList
 import serg.chuprin.finances.core.api.domain.model.category.CategoryWithParent
 import serg.chuprin.finances.core.api.domain.model.category.CategoryWithParentForId
@@ -27,6 +27,6 @@ interface TransactionWithCategoriesLinker {
     fun linkTransactionsWithCategories(
         transactions: List<Transaction>,
         categoryWithParentForId: CategoryWithParentForId
-    ): TransactionCategories
+    ): TransactionToCategory
 
 }

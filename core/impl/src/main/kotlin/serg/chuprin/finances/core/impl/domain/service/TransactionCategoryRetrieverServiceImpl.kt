@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.api.domain.linker.TransactionWithCategoriesLinker
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.TransactionCategories
+import serg.chuprin.finances.core.api.domain.model.TransactionToCategory
 import serg.chuprin.finances.core.api.domain.model.category.query.CategoriesQuery
 import serg.chuprin.finances.core.api.domain.model.transaction.query.TransactionsQuery
 import serg.chuprin.finances.core.api.domain.repository.CategoryRepository
@@ -27,7 +27,7 @@ internal class TransactionCategoryRetrieverServiceImpl @Inject constructor(
     override fun transactionsFlow(
         ownerId: Id,
         query: TransactionsQuery
-    ): Flow<TransactionCategories> {
+    ): Flow<TransactionToCategory> {
         return transactionRepository
             .transactionsFlow(query)
             .flatMapLatest { transactions ->
