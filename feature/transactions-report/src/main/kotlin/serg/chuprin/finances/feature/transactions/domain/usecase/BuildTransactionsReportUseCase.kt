@@ -24,7 +24,7 @@ class BuildTransactionsReportUseCase @Inject constructor(
     private val transactionAmountCalculator: TransactionAmountCalculator
 ) {
 
-    fun execute(): Flow<TransactionsReport> {
+    suspend fun execute(): Flow<TransactionsReport> {
         return combine(
             userRepository.currentUserSingleFlow(),
             reportDataService.dataFlow(),
@@ -32,7 +32,7 @@ class BuildTransactionsReportUseCase @Inject constructor(
         )
     }
 
-    private fun buildTransactionsReport(
+    private suspend fun buildTransactionsReport(
         user: User,
         reportRawData: TransactionReportRawData
     ): TransactionsReport {
@@ -54,7 +54,7 @@ class BuildTransactionsReportUseCase @Inject constructor(
         )
     }
 
-    private fun buildCategorySharesChart(
+    private suspend fun buildCategorySharesChart(
         user: User,
         reportRawData: TransactionReportRawData
     ): TransactionReportCategorySharesChart? {
@@ -92,7 +92,7 @@ class BuildTransactionsReportUseCase @Inject constructor(
         )
     }
 
-    private fun calculateAmountsInDataPeriods(
+    private suspend fun calculateAmountsInDataPeriods(
         dataPeriodAmounts: Map<DataPeriod, List<Transaction>>
     ): Map<DataPeriod, BigDecimal> {
         return dataPeriodAmounts.mapValues { (_, transactions) ->

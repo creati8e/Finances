@@ -1,6 +1,8 @@
 package serg.chuprin.finances.feature.transactions.presentation.model.store
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import serg.chuprin.finances.core.mvi.bootstrapper.StoreBootstrapper
 import serg.chuprin.finances.feature.transactions.domain.usecase.BuildTransactionsReportUseCase
@@ -14,9 +16,13 @@ class TransactionsReportStoreBootstrapper @Inject constructor(
 ) : StoreBootstrapper<TransactionsReportAction> {
 
     override fun invoke(): Flow<TransactionsReportAction> {
-        return buildTransactionsReportUseCase
-            .execute()
-            .map(TransactionsReportAction::FormatReport)
+        return flow {
+            emitAll(
+                buildTransactionsReportUseCase
+                    .execute()
+                    .map(TransactionsReportAction::FormatReport)
+            )
+        }
     }
 
 }

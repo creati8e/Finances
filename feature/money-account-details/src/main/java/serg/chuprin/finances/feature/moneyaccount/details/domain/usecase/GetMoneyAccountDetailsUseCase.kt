@@ -54,7 +54,7 @@ class GetMoneyAccountDetailsUseCase @Inject constructor(
         }
     }
 
-    private fun buildMoneyAccountDetails(
+    private suspend fun buildMoneyAccountDetails(
         moneyAccount: MoneyAccount,
         transactionToCategory: TransactionToCategory
     ): MoneyAccountDetails {
@@ -63,8 +63,8 @@ class GetMoneyAccountDetailsUseCase @Inject constructor(
             transactions = transactionToCategory.keys
         )
         return MoneyAccountDetails(
-            moneyAccount = moneyAccount,
             balance = balance,
+            moneyAccount = moneyAccount,
             transactionsGroupedByDay = transactionsByDayGrouper.group(transactionToCategory)
         )
     }

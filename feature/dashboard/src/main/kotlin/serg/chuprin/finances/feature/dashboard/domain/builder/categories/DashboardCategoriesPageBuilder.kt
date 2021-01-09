@@ -20,7 +20,7 @@ class DashboardCategoriesPageBuilder @Inject constructor(
     private val transactionAmountCalculator: TransactionAmountCalculator
 ) {
 
-    fun build(
+    suspend fun build(
         transactionType: PlainTransactionType,
         categoryToTransactionsList: CategoryToTransactionsList,
         topCategoriesCount: Int
@@ -57,7 +57,7 @@ class DashboardCategoriesPageBuilder @Inject constructor(
         }
     }
 
-    private fun CategoryToTransactionsList.calculateCategoryShares(): CategoryShares {
+    private suspend fun CategoryToTransactionsList.calculateCategoryShares(): CategoryShares {
         return CategoryShares(
             map { (categoryWithParent, transactions) ->
                 Pair(

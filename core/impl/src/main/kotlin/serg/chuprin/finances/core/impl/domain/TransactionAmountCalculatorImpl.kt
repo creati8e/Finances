@@ -10,7 +10,7 @@ import javax.inject.Inject
  */
 internal class TransactionAmountCalculatorImpl @Inject constructor() : TransactionAmountCalculator {
 
-    override fun calculate(
+    override suspend fun calculate(
         transactions: Collection<Transaction>,
         isAbsoluteAmount: Boolean
     ): BigDecimal {

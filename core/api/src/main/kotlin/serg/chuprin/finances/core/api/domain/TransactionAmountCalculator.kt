@@ -11,7 +11,7 @@ interface TransactionAmountCalculator {
     /**
      * @return total amount of [Transaction.amount] from [transactions] with respect to multi-currency.
      */
-    fun calculate(
+    suspend fun calculate(
         transactions: Collection<Transaction>,
         /**
          * Indicates whether amount should be calculated
