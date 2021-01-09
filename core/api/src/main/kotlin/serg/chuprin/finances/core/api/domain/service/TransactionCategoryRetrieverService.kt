@@ -3,7 +3,7 @@ package serg.chuprin.finances.core.api.domain.service
 import kotlinx.coroutines.flow.Flow
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.TransactionCategoriesMap
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
+import serg.chuprin.finances.core.api.domain.model.category.CategoryWithParent
 import serg.chuprin.finances.core.api.domain.model.transaction.query.TransactionsQuery
 
 /**
@@ -16,7 +16,7 @@ interface TransactionCategoryRetrieverService {
 
     /**
      * @return flow emitting map of transactions associated with their categories
-     * ([TransactionCategoryWithParent]] also includes category's parent).
+     * ([CategoryWithParent]] also includes category's parent).
      */
     fun transactionsFlow(
         ownerId: Id,

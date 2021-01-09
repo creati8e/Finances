@@ -1,7 +1,7 @@
 package serg.chuprin.finances.core.categories.shares.presentation.model.cell
 
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
+import serg.chuprin.finances.core.api.domain.model.category.Category
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.presentation.model.cells.DiffCell
 
@@ -18,7 +18,7 @@ interface CategoryChipCell : DiffCell<Id> {
 
     val transitionName: String?
 
-    val category: TransactionCategory?
+    val category: Category?
 
     val plainTransactionType: PlainTransactionType
 

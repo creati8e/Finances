@@ -3,9 +3,9 @@ package serg.chuprin.finances.core.impl.data
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryType
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
+import serg.chuprin.finances.core.api.domain.model.category.Category
+import serg.chuprin.finances.core.api.domain.model.category.CategoryType
+import serg.chuprin.finances.core.api.domain.model.category.CategoryWithParent
 import strikt.api.expectThat
 import strikt.assertions.getValue
 import strikt.assertions.hasSize
@@ -14,11 +14,11 @@ import strikt.assertions.isEqualTo
 /**
  * Created by Sergey Chuprin on 01.05.2020.
  */
-object TransactionCategoryLinkerTest : Spek({
+object CategoryLinkerTest : Spek({
 
     Feature("Transaction category linker") {
 
-        val linker = TransactionCategoryLinker()
+        val linker = CategoryLinker()
 
         Scenario("Linking categories with parents") {
 
@@ -36,7 +36,7 @@ object TransactionCategoryLinkerTest : Spek({
                 category3
             )
 
-            lateinit var linked: Map<Id, TransactionCategoryWithParent>
+            lateinit var linked: Map<Id, CategoryWithParent>
 
             When("Method is called") {
                 linked = linker.linkWithParents(categories)
@@ -46,19 +46,19 @@ object TransactionCategoryLinkerTest : Spek({
                 expectThat(linked) {
                     hasSize(categories.size)
                     getValue(category1.id)
-                        .isEqualTo(TransactionCategoryWithParent(category1, null))
+                        .isEqualTo(CategoryWithParent(category1, null))
 
                     getValue(parentCategory2.id)
-                        .isEqualTo(TransactionCategoryWithParent(parentCategory2, null))
+                        .isEqualTo(CategoryWithParent(parentCategory2, null))
 
                     getValue(parentCategory3.id)
-                        .isEqualTo(TransactionCategoryWithParent(parentCategory3, null))
+                        .isEqualTo(CategoryWithParent(parentCategory3, null))
 
                     getValue(category2.id)
-                        .isEqualTo(TransactionCategoryWithParent(category2, parentCategory2))
+                        .isEqualTo(CategoryWithParent(category2, parentCategory2))
 
                     getValue(category3.id)
-                        .isEqualTo(TransactionCategoryWithParent(category3, parentCategory3))
+                        .isEqualTo(CategoryWithParent(category3, parentCategory3))
                 }
             }
 
@@ -68,13 +68,13 @@ object TransactionCategoryLinkerTest : Spek({
 
 })
 
-private fun createCategory(id: Id, parentCategoryId: Id?): TransactionCategory {
-    return TransactionCategory(
+private fun createCategory(id: Id, parentCategoryId: Id?): Category {
+    return Category(
         id = id,
         name = "",
         colorHex = "",
         ownerId = Id.UNKNOWN,
         parentCategoryId = parentCategoryId,
-        type = TransactionCategoryType.INCOME
+        type = CategoryType.INCOME
     )
 }

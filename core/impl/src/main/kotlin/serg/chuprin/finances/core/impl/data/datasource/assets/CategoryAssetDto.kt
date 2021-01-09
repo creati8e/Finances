@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
  * Created by Sergey Chuprin on 19.04.2020.
  */
 @Serializable
-internal class TransactionCategoryAssetDto(
+internal class CategoryAssetDto(
     @SerialName("name")
     val name: String,
 

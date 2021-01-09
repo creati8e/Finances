@@ -3,7 +3,7 @@ package serg.chuprin.finances.core.impl.data.datasource.firebase.contract
 /**
  * Created by Sergey Chuprin on 19.04.2020.
  */
-internal object FirebaseTransactionCategoryFieldsContract {
+internal object FirebaseCategoryFieldsContract {
 
     const val COLLECTION_NAME = "category"
 

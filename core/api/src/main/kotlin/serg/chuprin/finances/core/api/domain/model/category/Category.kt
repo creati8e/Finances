@@ -5,13 +5,13 @@ import serg.chuprin.finances.core.api.domain.model.Id
 /**
  * Created by Sergey Chuprin on 19.04.2020.
  */
-data class TransactionCategory(
+data class Category(
     val id: Id,
     val ownerId: Id,
     val name: String,
     val colorHex: String,
     val parentCategoryId: Id? = null,
-    val type: TransactionCategoryType
+    val type: CategoryType
 ) {
 
     companion object {
@@ -22,14 +22,14 @@ data class TransactionCategory(
             ownerId: String?,
             colorHex: String?,
             parentCategoryId: String?,
-            type: TransactionCategoryType?
-        ): TransactionCategory? {
+            type: CategoryType?
+        ): Category? {
             if (type == null) return null
             if (id.isNullOrEmpty()) return null
             if (name.isNullOrEmpty()) return null
             if (ownerId.isNullOrEmpty()) return null
             if (colorHex.isNullOrEmpty()) return null
-            return TransactionCategory(
+            return Category(
                 name = name,
                 type = type,
                 colorHex = colorHex,

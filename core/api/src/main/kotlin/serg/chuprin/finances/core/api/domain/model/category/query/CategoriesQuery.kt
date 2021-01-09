@@ -1,17 +1,17 @@
 package serg.chuprin.finances.core.api.domain.model.category.query
 
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryType
+import serg.chuprin.finances.core.api.domain.model.category.CategoryType
 
 /**
  * Created by Sergey Chuprin on 12.12.2020.
  */
-class TransactionCategoriesQuery(
+class CategoriesQuery(
     val ownerId: Id,
     val relation: Relation? = null,
     val categoryIds: Set<Id> = emptySet(),
     val searchByName: String? = null,
-    val type: TransactionCategoryType? = null
+    val type: CategoryType? = null
 ) {
 
     enum class Relation {

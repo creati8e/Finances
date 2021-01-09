@@ -3,8 +3,8 @@ package serg.chuprin.finances.feature.dashboard.domain.builder.categories
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryType
+import serg.chuprin.finances.core.api.domain.model.category.Category
+import serg.chuprin.finances.core.api.domain.model.category.CategoryType
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.model.transaction.TransactionType
@@ -32,7 +32,7 @@ object DashboardCategoriesPageBuilderTest : Spek({
             val incomeCategory1 = createCategory(Id("incomeCategory1"))
             val incomeCategory2 = createCategory(Id("incomeCategory2"))
 
-            val incomeCategoryTransactionsMap: Map<TransactionCategory?, List<Transaction>> =
+            val incomeCategoryTransactionsMap: Map<Category?, List<Transaction>> =
                 mapOf(
                     incomeCategory1 to listOf(
                         createTransaction("500"),
@@ -55,7 +55,7 @@ object DashboardCategoriesPageBuilderTest : Spek({
             val expenseCategory1 = createCategory(Id("expenseCategory1"))
             val expenseCategory2 = createCategory(Id("expenseCategory2"))
 
-            val expenseCategoryTransactionsMap: Map<TransactionCategory?, List<Transaction>> =
+            val expenseCategoryTransactionsMap: Map<Category?, List<Transaction>> =
                 mapOf(
                     expenseCategory1 to listOf(
                         createTransaction("-40"),
@@ -144,13 +144,13 @@ private fun createTransaction(amount: String): Transaction {
     )
 }
 
-private fun createCategory(id: Id): TransactionCategory {
-    return TransactionCategory(
+private fun createCategory(id: Id): Category {
+    return Category(
         id = id,
         name = "",
         colorHex = "",
         ownerId = Id.UNKNOWN,
         parentCategoryId = null,
-        type = TransactionCategoryType.INCOME
+        type = CategoryType.INCOME
     )
 }

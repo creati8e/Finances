@@ -15,6 +15,6 @@ interface CoreFormattersProvider {
 
     val categoryColorFormatter: CategoryColorFormatter
 
-    val transactionCategoryWithParentFormatter: TransactionCategoryWithParentFormatter
+    val categoryWithParentFormatter: CategoryWithParentFormatter
 
 }

@@ -2,16 +2,16 @@ package serg.chuprin.finances.feature.transaction.presentation.model.store
 
 import kotlinx.coroutines.flow.*
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryType
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
-import serg.chuprin.finances.core.api.domain.model.category.query.TransactionCategoriesQuery
+import serg.chuprin.finances.core.api.domain.model.category.CategoryType
+import serg.chuprin.finances.core.api.domain.model.category.CategoryWithParent
+import serg.chuprin.finances.core.api.domain.model.category.query.CategoriesQuery
 import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
-import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepository
+import serg.chuprin.finances.core.api.domain.repository.CategoryRepository
 import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
-import serg.chuprin.finances.core.api.presentation.formatter.TransactionCategoryWithParentFormatter
+import serg.chuprin.finances.core.api.presentation.formatter.CategoryWithParentFormatter
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
 import serg.chuprin.finances.core.api.presentation.screen.arguments.CategoriesListScreenArguments
@@ -51,7 +51,7 @@ class TransactionActionExecutor @Inject constructor(
     // region Repositories.
 
     private val moneyAccountRepository: MoneyAccountRepository,
-    private val categoryRepository: TransactionCategoryRepository,
+    private val categoryRepository: CategoryRepository,
 
     // endregion
 
@@ -59,7 +59,7 @@ class TransactionActionExecutor @Inject constructor(
 
     private val amountFormatter: AmountFormatter,
     private val chosenDateFormatter: TransactionChosenDateFormatter,
-    private val categoryNameFormatter: TransactionCategoryWithParentFormatter
+    private val categoryNameFormatter: CategoryWithParentFormatter
 
     // endregion
 ) : StoreActionExecutor<TransactionAction, TransactionState, TransactionEffect, TransactionEvent> {
@@ -313,8 +313,8 @@ class TransactionActionExecutor @Inject constructor(
             val categoryType = when (
                 (state.operation as? TransactionChosenOperation.Plain)?.type
             ) {
-                PlainTransactionType.EXPENSE -> TransactionCategoryType.EXPENSE
-                PlainTransactionType.INCOME -> TransactionCategoryType.INCOME
+                PlainTransactionType.EXPENSE -> CategoryType.EXPENSE
+                PlainTransactionType.INCOME -> CategoryType.INCOME
                 null -> null
             }
             val screenArguments = CategoriesListScreenArguments.Picker(categoryType)
@@ -391,10 +391,10 @@ class TransactionActionExecutor @Inject constructor(
         }
         val categories = categoryRepository
             .categories(
-                TransactionCategoriesQuery(
+                CategoriesQuery(
                     ownerId = userId,
                     categoryIds = setOf(categoryId),
-                    relation = TransactionCategoriesQuery.Relation.RETRIEVE_PARENTS
+                    relation = CategoriesQuery.Relation.RETRIEVE_PARENTS
                 )
             )
             .values
@@ -423,7 +423,7 @@ class TransactionActionExecutor @Inject constructor(
     }
 
     private fun formatChosenCategory(
-        categoryWithParent: TransactionCategoryWithParent?
+        categoryWithParent: CategoryWithParent?
     ): TransactionChosenCategory {
         return TransactionChosenCategory(
             category = categoryWithParent?.category,

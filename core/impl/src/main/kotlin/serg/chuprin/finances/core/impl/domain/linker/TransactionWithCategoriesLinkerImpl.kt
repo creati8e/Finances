@@ -2,8 +2,8 @@ package serg.chuprin.finances.core.impl.domain.linker
 
 import serg.chuprin.finances.core.api.domain.linker.TransactionWithCategoriesLinker
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
+import serg.chuprin.finances.core.api.domain.model.category.Category
+import serg.chuprin.finances.core.api.domain.model.category.CategoryWithParent
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import javax.inject.Inject
 
@@ -15,8 +15,8 @@ internal class TransactionWithCategoriesLinkerImpl
 
     override fun linkCategoryParentsWithTransactions(
         transactions: List<Transaction>,
-        categoryWithParentMap: Map<Id, TransactionCategoryWithParent>
-    ): Map<TransactionCategory?, List<Transaction>> {
+        categoryWithParentMap: Map<Id, CategoryWithParent>
+    ): Map<Category?, List<Transaction>> {
         return transactions.groupBy { transaction ->
             categoryWithParentMap[transaction.categoryId]?.run {
                 parentCategory ?: category
@@ -27,8 +27,8 @@ internal class TransactionWithCategoriesLinkerImpl
 
     override fun linkTransactionsWithCategories(
         transactions: List<Transaction>,
-        categoryWithParentMap: Map<Id, TransactionCategoryWithParent>
-    ): Map<Transaction, TransactionCategoryWithParent?> {
+        categoryWithParentMap: Map<Id, CategoryWithParent>
+    ): Map<Transaction, CategoryWithParent?> {
         return transactions.associateBy(
             { transaction -> transaction },
             { transaction -> categoryWithParentMap[transaction.categoryId] }

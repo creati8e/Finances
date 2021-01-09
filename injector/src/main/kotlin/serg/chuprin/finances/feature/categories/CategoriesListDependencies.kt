@@ -2,7 +2,7 @@ package serg.chuprin.finances.feature.categories
 
 import dagger.Component
 import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
-import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepository
+import serg.chuprin.finances.core.api.domain.repository.CategoryRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.api.presentation.formatter.CategoryColorFormatter
 
@@ -14,7 +14,7 @@ interface CategoriesListDependencies {
     val categoryColorFormatter: CategoryColorFormatter
 
     val userRepository: UserRepository
-    val categoryRepository: TransactionCategoryRepository
+    val categoryRepository: CategoryRepository
 
 }
 

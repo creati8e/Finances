@@ -21,7 +21,7 @@ class CompleteAccountsSetupOnboardingUseCase @Inject constructor(
     private val onboardingRepository: OnboardingRepository,
     private val transactionRepository: TransactionRepository,
     private val moneyAccountRepository: MoneyAccountRepository,
-    private val transactionCategoryRepository: TransactionCategoryRepository
+    private val categoryRepository: CategoryRepository
 ) {
 
     suspend fun execute(
@@ -39,7 +39,7 @@ class CompleteAccountsSetupOnboardingUseCase @Inject constructor(
         if (bankAccountCardParams != null) {
             createMoneyAccount(bankAccountCardParams, currentUser)
         }
-        transactionCategoryRepository.createPredefinedCategories(currentUser.id)
+        categoryRepository.createPredefinedCategories(currentUser.id)
         onboardingRepository.onboardingStep = OnboardingStep.COMPLETED
     }
 

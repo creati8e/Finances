@@ -1,22 +1,22 @@
 package serg.chuprin.finances.core.impl.presentation.model.formatter
 
 import serg.chuprin.finances.core.api.R
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
+import serg.chuprin.finances.core.api.domain.model.category.Category
+import serg.chuprin.finances.core.api.domain.model.category.CategoryWithParent
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
-import serg.chuprin.finances.core.api.presentation.formatter.TransactionCategoryWithParentFormatter
+import serg.chuprin.finances.core.api.presentation.formatter.CategoryWithParentFormatter
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import javax.inject.Inject
 
 /**
  * Created by Sergey Chuprin on 07.05.2020.
  */
-internal class TransactionCategoryWithParentFormatterImpl @Inject constructor(
+internal class CategoryWithParentFormatterImpl @Inject constructor(
     private val resourceManger: ResourceManger
-) : TransactionCategoryWithParentFormatter {
+) : CategoryWithParentFormatter {
 
     override fun format(
-        categoryWithParent: TransactionCategoryWithParent?,
+        categoryWithParent: CategoryWithParent?,
         transaction: Transaction?
     ): String {
         if (transaction?.isBalance == true) {
@@ -28,7 +28,7 @@ internal class TransactionCategoryWithParentFormatterImpl @Inject constructor(
         return listOfNotNull(
             categoryWithParent.parentCategory,
             categoryWithParent.category
-        ).joinToString(separator = " / ", transform = TransactionCategory::name)
+        ).joinToString(separator = " / ", transform = Category::name)
 
     }
 

@@ -1,6 +1,6 @@
 package serg.chuprin.finances.feature.transactions.domain.model
 
-import serg.chuprin.finances.core.api.domain.model.TransactionCategoryShares
+import serg.chuprin.finances.core.api.domain.model.CategoryShares
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import java.math.BigDecimal
 import java.util.*
@@ -14,6 +14,6 @@ data class TransactionReportCategorySharesChart(
     /**
      * List of category amount pairs sorted by amount descending.
      */
-    val categoryShares: TransactionCategoryShares,
+    val categoryShares: CategoryShares,
     val transactionType: PlainTransactionType
 )

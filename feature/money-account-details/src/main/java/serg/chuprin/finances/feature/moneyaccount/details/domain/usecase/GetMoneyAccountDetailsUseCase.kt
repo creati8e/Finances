@@ -55,12 +55,12 @@ class GetMoneyAccountDetailsUseCase @Inject constructor(
 
     private fun buildMoneyAccountDetails(
         moneyAccount: MoneyAccount,
-        transactionCategories: TransactionCategoriesMap
+        categories: TransactionCategoriesMap
     ): MoneyAccountDetails {
         return MoneyAccountDetails(
             moneyAccount = moneyAccount,
-            balance = transactionCategories.amount,
-            transactionsGroupedByDay = transactionsByDayGrouper.group(transactionCategories)
+            balance = categories.amount,
+            transactionsGroupedByDay = transactionsByDayGrouper.group(categories)
         )
     }
 

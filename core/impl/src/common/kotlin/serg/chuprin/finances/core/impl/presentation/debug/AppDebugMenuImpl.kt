@@ -12,9 +12,9 @@ import kotlinx.coroutines.withContext
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.OnboardingStep
 import serg.chuprin.finances.core.api.domain.model.User
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryType
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
-import serg.chuprin.finances.core.api.domain.model.category.query.TransactionCategoriesQuery
+import serg.chuprin.finances.core.api.domain.model.category.CategoryType
+import serg.chuprin.finances.core.api.domain.model.category.CategoryWithParent
+import serg.chuprin.finances.core.api.domain.model.category.query.CategoriesQuery
 import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import serg.chuprin.finances.core.api.domain.model.moneyaccount.query.MoneyAccountsQuery
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
@@ -38,7 +38,7 @@ internal class AppDebugMenuImpl @Inject constructor(
     private val onboardingRepository: OnboardingRepository,
     private val transactionRepository: TransactionRepository,
     private val moneyAccountRepository: MoneyAccountRepository,
-    private val transactionCategoryRepository: TransactionCategoryRepository
+    private val categoryRepository: CategoryRepository
 ) : AppDebugMenuInitializer {
 
     private companion object {
@@ -89,14 +89,14 @@ internal class AppDebugMenuImpl @Inject constructor(
                 text = "Create income transaction",
                 type = TextModule.Type.BUTTON,
                 onItemSelected = {
-                    launch { createTransaction(TransactionCategoryType.INCOME) }
+                    launch { createTransaction(CategoryType.INCOME) }
                 }
             ),
             TextModule(
                 text = "Create expense transaction",
                 type = TextModule.Type.BUTTON,
                 onItemSelected = {
-                    launch { createTransaction(TransactionCategoryType.EXPENSE) }
+                    launch { createTransaction(CategoryType.EXPENSE) }
                 }
             ),
             TextModule(
@@ -125,7 +125,7 @@ internal class AppDebugMenuImpl @Inject constructor(
         Beagle.show()
     }
 
-    private suspend fun createTransaction(categoryType: TransactionCategoryType) {
+    private suspend fun createTransaction(categoryType: CategoryType) {
         val currentUser = userRepository.getCurrentUser()
 
         val categoryWithParent = getRandomCategory(currentUser, categoryType)
@@ -133,8 +133,8 @@ internal class AppDebugMenuImpl @Inject constructor(
 
         val amount = ThreadLocalRandom.current().nextInt(100, 2000).run {
             when (categoryType) {
-                TransactionCategoryType.INCOME -> this
-                TransactionCategoryType.EXPENSE -> this * -1
+                CategoryType.INCOME -> this
+                CategoryType.EXPENSE -> this * -1
             }
         }
 
@@ -181,11 +181,11 @@ internal class AppDebugMenuImpl @Inject constructor(
 
     private suspend fun getRandomCategory(
         currentUser: User,
-        type: TransactionCategoryType
-    ): TransactionCategoryWithParent? {
+        type: CategoryType
+    ): CategoryWithParent? {
         return if (ThreadLocalRandom.current().nextBoolean()) {
-            transactionCategoryRepository
-                .categories(TransactionCategoriesQuery(ownerId = currentUser.id, type = type))
+            categoryRepository
+                .categories(CategoriesQuery(ownerId = currentUser.id, type = type))
                 .entries
                 .shuffled()
                 .first()
@@ -206,9 +206,9 @@ internal class AppDebugMenuImpl @Inject constructor(
             .accounts(MoneyAccountsQuery(ownerId = currentUser.id))
         moneyAccountRepository.deleteAccounts(accounts)
 
-        val categories = transactionCategoryRepository
-            .categories(TransactionCategoriesQuery(ownerId = currentUser.id))
-        transactionCategoryRepository.deleteCategories(categories.values.map { it.category })
+        val categories = categoryRepository
+            .categories(CategoriesQuery(ownerId = currentUser.id))
+        categoryRepository.deleteCategories(categories.values.map { it.category })
 
         onboardingRepository.onboardingStep = OnboardingStep.INITIAL
     }

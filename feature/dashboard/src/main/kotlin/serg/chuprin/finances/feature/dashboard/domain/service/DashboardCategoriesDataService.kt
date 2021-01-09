@@ -6,13 +6,13 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.api.domain.linker.TransactionWithCategoriesLinker
 import serg.chuprin.finances.core.api.domain.model.User
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
-import serg.chuprin.finances.core.api.domain.model.category.query.TransactionCategoriesQuery
+import serg.chuprin.finances.core.api.domain.model.category.Category
+import serg.chuprin.finances.core.api.domain.model.category.query.CategoriesQuery
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.model.transaction.query.TransactionsQuery
-import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepository
+import serg.chuprin.finances.core.api.domain.repository.CategoryRepository
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.api.extensions.categoryIds
 import javax.inject.Inject
@@ -22,7 +22,7 @@ import javax.inject.Inject
  */
 class DashboardCategoriesDataService @Inject constructor(
     private val transactionRepository: TransactionRepository,
-    private val categoryRepository: TransactionCategoryRepository,
+    private val categoryRepository: CategoryRepository,
     private val transactionWithCategoriesLinker: TransactionWithCategoriesLinker
 ) {
 
@@ -30,7 +30,7 @@ class DashboardCategoriesDataService @Inject constructor(
         currentUser: User,
         currentPeriod: DataPeriod,
         transactionType: PlainTransactionType
-    ): Flow<Map<TransactionCategory?, List<Transaction>>> {
+    ): Flow<Map<Category?, List<Transaction>>> {
         // Get user transactions in period.
         return transactionRepository
             .transactionsFlow(
@@ -47,10 +47,10 @@ class DashboardCategoriesDataService @Inject constructor(
                 combine(
                     flowOf(transactions),
                     categoryRepository.categoriesFlow(
-                        TransactionCategoriesQuery(
+                        CategoriesQuery(
                             ownerId = currentUser.id,
                             categoryIds = transactions.categoryIds.toSet(),
-                            relation = TransactionCategoriesQuery.Relation.RETRIEVE_PARENTS
+                            relation = CategoriesQuery.Relation.RETRIEVE_PARENTS
                         )
                     ),
                     transactionWithCategoriesLinker::linkCategoryParentsWithTransactions

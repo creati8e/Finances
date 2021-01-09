@@ -1,7 +1,7 @@
 package serg.chuprin.finances.feature.categories.impl.presentation.model.cell
 
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
+import serg.chuprin.finances.core.api.domain.model.category.Category
 import serg.chuprin.finances.core.api.presentation.model.cells.DiffCell
 
 /**
@@ -9,7 +9,7 @@ import serg.chuprin.finances.core.api.presentation.model.cells.DiffCell
  */
 interface CategoryCell : DiffCell<Id> {
 
-    val category: TransactionCategory
+    val category: Category
 
     override val diffCellId: Id
         get() = category.id

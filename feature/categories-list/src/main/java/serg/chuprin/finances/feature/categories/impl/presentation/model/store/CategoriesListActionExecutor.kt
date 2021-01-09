@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
+import serg.chuprin.finances.core.api.domain.model.category.Category
 import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
 import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
 import serg.chuprin.finances.core.api.extensions.flow.takeUntil
@@ -170,7 +170,7 @@ class CategoriesListActionExecutor @Inject constructor(
         }
     }
 
-    private fun buildCellsForSearch(categories: Collection<TransactionCategory>): List<BaseCell> {
+    private fun buildCellsForSearch(categories: Collection<Category>): List<BaseCell> {
         if (categories.isEmpty()) {
             return listOf(
                 ZeroDataCell(

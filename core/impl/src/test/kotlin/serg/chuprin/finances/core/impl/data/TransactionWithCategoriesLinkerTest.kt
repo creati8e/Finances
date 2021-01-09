@@ -3,8 +3,8 @@ package serg.chuprin.finances.core.impl.data
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryType
+import serg.chuprin.finances.core.api.domain.model.category.Category
+import serg.chuprin.finances.core.api.domain.model.category.CategoryType
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.model.transaction.TransactionType
 import serg.chuprin.finances.core.impl.domain.linker.TransactionWithCategoriesLinkerImpl
@@ -19,8 +19,8 @@ object TransactionWithCategoriesLinkerTest : Spek({
 
     Feature("Transaction with categories linker") {
 
-        val transactionCategoryLinker = TransactionCategoryLinker()
-        val transactionWithCategoriesLinker = TransactionWithCategoriesLinkerImpl()
+        val categoryLinker = CategoryLinker()
+        val transactionWithCategoriesLinkerImpl = TransactionWithCategoriesLinkerImpl()
 
         Scenario("Link category parents with transactions") {
 
@@ -53,13 +53,13 @@ object TransactionWithCategoriesLinkerTest : Spek({
                 )
             )
 
-            lateinit var categoryTransactionsMap: Map<TransactionCategory?, List<Transaction>>
+            lateinit var categoryTransactionsMap: Map<Category?, List<Transaction>>
 
             When("Method is called") {
-                categoryTransactionsMap = transactionWithCategoriesLinker
+                categoryTransactionsMap = transactionWithCategoriesLinkerImpl
                     .linkCategoryParentsWithTransactions(
                         expectedMap.flatMap { (_, transactions) -> transactions },
-                        transactionCategoryLinker.linkWithParents(categories)
+                        categoryLinker.linkWithParents(categories)
                     )
             }
 
@@ -88,13 +88,13 @@ private fun createTransaction(id: Id, categoryId: Id? = null): Transaction {
     )
 }
 
-private fun createCategory(id: Id, parentCategoryId: Id? = null): TransactionCategory {
-    return TransactionCategory(
+private fun createCategory(id: Id, parentCategoryId: Id? = null): Category {
+    return Category(
         id = id,
         name = "",
         colorHex = "",
         ownerId = Id.UNKNOWN,
         parentCategoryId = parentCategoryId,
-        type = TransactionCategoryType.INCOME
+        type = CategoryType.INCOME
     )
 }

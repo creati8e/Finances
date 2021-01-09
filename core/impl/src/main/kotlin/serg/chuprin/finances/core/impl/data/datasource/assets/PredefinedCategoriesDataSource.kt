@@ -8,7 +8,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.impl.data.model.PredefinedTransactionCategories
+import serg.chuprin.finances.core.impl.data.model.PredefinedCategories
 import java.io.BufferedReader
 import java.util.*
 import javax.inject.Inject
@@ -16,7 +16,7 @@ import javax.inject.Inject
 /**
  * Created by Sergey Chuprin on 19.04.2020.
  */
-internal class PredefinedTransactionCategoriesDataSource @Inject constructor(
+internal class PredefinedCategoriesDataSource @Inject constructor(
     private val context: Context
 ) {
 
@@ -27,14 +27,14 @@ internal class PredefinedTransactionCategoriesDataSource @Inject constructor(
         private const val FILE_EXPENSE_CATEGORIES_EN = "expense_transaction_categories_en.json"
     }
 
-    suspend fun getCategories(): PredefinedTransactionCategories {
+    suspend fun getCategories(): PredefinedCategories {
         return withContext(Dispatchers.IO) {
             try {
                 // Retrieve all categories without reopening AssetManager.
                 // It crashes for unknown reason otherwise.
                 context.assets.use { assetManager ->
                     val locale = Locale.getDefault()
-                    val predefinedTransactionCategories = PredefinedTransactionCategories(
+                    val predefinedCategories = PredefinedCategories(
                         incomeCategories = assetManager.getCategories(
                             getIncomeCategoriesFilename(locale)
                         ),
@@ -42,18 +42,18 @@ internal class PredefinedTransactionCategoriesDataSource @Inject constructor(
                             getExpenseCategoriesFilename(locale)
                         )
                     )
-                    predefinedTransactionCategories
+                    predefinedCategories
                 }
             } catch (throwable: Throwable) {
                 Timber.d(throwable) { "An error occurred when getting predefined categories" }
-                PredefinedTransactionCategories(emptyList(), emptyList())
+                PredefinedCategories(emptyList(), emptyList())
             }
         }
     }
 
-    private fun AssetManager.getCategories(filename: String): List<TransactionCategoryAssetDto> {
+    private fun AssetManager.getCategories(filename: String): List<CategoryAssetDto> {
         val json = open(filename).bufferedReader().use(BufferedReader::readText)
-        val deserializer = ListSerializer(TransactionCategoryAssetDto.serializer())
+        val deserializer = ListSerializer(CategoryAssetDto.serializer())
         return Json.decodeFromString(deserializer, json).generateIds()
     }
 
@@ -61,7 +61,7 @@ internal class PredefinedTransactionCategoriesDataSource @Inject constructor(
      * We use categories from json file and all categories contains hardcoded ids.
      * It's required to generate new ids.
      */
-    private fun List<TransactionCategoryAssetDto>.generateIds(): List<TransactionCategoryAssetDto> {
+    private fun List<CategoryAssetDto>.generateIds(): List<CategoryAssetDto> {
 
         // Group ba parent category id presence.
         val groupedByParentCategory = groupBy { dto -> dto.parentCategoryId == null }

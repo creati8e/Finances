@@ -2,9 +2,9 @@ package serg.chuprin.finances.feature.transactions.presentation.model.builder
 
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.User
-import serg.chuprin.finances.core.api.domain.model.category.query.TransactionCategoriesQuery
+import serg.chuprin.finances.core.api.domain.model.category.query.CategoriesQuery
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
-import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepository
+import serg.chuprin.finances.core.api.domain.repository.CategoryRepository
 import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.feature.transactions.R
@@ -18,7 +18,7 @@ import javax.inject.Inject
  */
 class TransactionReportHeaderBuilder @Inject constructor(
     private val resourceManger: ResourceManger,
-    private val categoryRepository: TransactionCategoryRepository
+    private val categoryRepository: CategoryRepository
 ) {
 
     suspend fun build(report: TransactionsReport): TransactionReportHeader {
@@ -61,7 +61,7 @@ class TransactionReportHeaderBuilder @Inject constructor(
         }
         val category = categoryRepository
             .categories(
-                TransactionCategoriesQuery(
+                CategoriesQuery(
                     type = null,
                     relation = null,
                     ownerId = currentUser.id,

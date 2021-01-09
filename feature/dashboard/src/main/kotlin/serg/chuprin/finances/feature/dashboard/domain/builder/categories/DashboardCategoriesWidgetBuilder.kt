@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import serg.chuprin.finances.core.api.domain.model.User
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
+import serg.chuprin.finances.core.api.domain.model.category.Category
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.feature.dashboard.domain.builder.DashboardWidgetBuilder
@@ -15,7 +15,7 @@ import serg.chuprin.finances.feature.dashboard.setup.domain.model.DashboardWidge
 import java.math.BigDecimal
 import javax.inject.Inject
 
-typealias CategoryAmounts = List<Pair<TransactionCategory?, BigDecimal>>
+typealias CategoryAmounts = List<Pair<Category?, BigDecimal>>
 
 /**
  * Created by Sergey Chuprin on 23.04.2020.

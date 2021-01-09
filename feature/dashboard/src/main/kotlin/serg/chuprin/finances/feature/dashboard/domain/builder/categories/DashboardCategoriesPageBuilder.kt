@@ -1,6 +1,6 @@
 package serg.chuprin.finances.feature.dashboard.domain.builder.categories
 
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
+import serg.chuprin.finances.core.api.domain.model.category.Category
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.extensions.amount
@@ -20,7 +20,7 @@ class DashboardCategoriesPageBuilder @Inject constructor() {
 
     fun build(
         transactionType: PlainTransactionType,
-        categoryTransactionsMap: Map<TransactionCategory?, List<Transaction>>,
+        categoryTransactionsMap: Map<Category?, List<Transaction>>,
         topCategoriesCount: Int
     ): DashboardCategoriesWidgetPage {
 
@@ -53,7 +53,7 @@ class DashboardCategoriesPageBuilder @Inject constructor() {
         }
     }
 
-    private fun Map<TransactionCategory?, List<Transaction>>.calculateCategoryAmounts(): CategoryAmounts {
+    private fun Map<Category?, List<Transaction>>.calculateCategoryAmounts(): CategoryAmounts {
         return this
             .map { (categoryWithParent, transactions) ->
                 categoryWithParent to transactions.amount.abs()

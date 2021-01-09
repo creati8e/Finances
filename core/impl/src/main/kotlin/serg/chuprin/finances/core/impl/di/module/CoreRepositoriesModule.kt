@@ -28,9 +28,7 @@ internal interface CoreRepositoriesModule {
     fun bindMoneyAccountRepository(impl: MoneyAccountRepositoryImpl): MoneyAccountRepository
 
     @[Binds AppScope]
-    fun bindTransactionCategoryRepository(
-        impl: TransactionCategoryRepositoryImpl
-    ): TransactionCategoryRepository
+    fun bindCategoryRepository(impl: CategoryRepositoryImpl): CategoryRepository
 
     @[Binds]
     fun bindDataRepository(impl: DataRepositoryImpl): DataRepository

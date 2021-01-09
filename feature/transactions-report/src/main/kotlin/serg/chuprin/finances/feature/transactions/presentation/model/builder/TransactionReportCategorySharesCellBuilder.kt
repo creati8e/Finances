@@ -1,7 +1,7 @@
 package serg.chuprin.finances.feature.transactions.presentation.model.builder
 
 import serg.chuprin.finances.core.api.R
-import serg.chuprin.finances.core.api.domain.model.TransactionCategoryShares
+import serg.chuprin.finances.core.api.domain.model.CategoryShares
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.formatter.CategoryColorFormatter
@@ -44,7 +44,7 @@ class TransactionReportCategorySharesCellBuilder @Inject constructor(
     }
 
     private fun buildChartParts(
-        categoryShares: TransactionCategoryShares
+        categoryShares: CategoryShares
     ): List<PieChartDataPart> {
         if (categoryShares.isEmpty()) {
             return listOf(
@@ -63,7 +63,7 @@ class TransactionReportCategorySharesCellBuilder @Inject constructor(
     }
 
     private fun buildCategoryCells(
-        categoryShares: TransactionCategoryShares,
+        categoryShares: CategoryShares,
         currency: Currency,
         transactionType: PlainTransactionType
     ): List<BaseCell> {

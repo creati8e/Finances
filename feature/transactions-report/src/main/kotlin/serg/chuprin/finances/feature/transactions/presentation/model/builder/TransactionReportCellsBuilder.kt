@@ -1,7 +1,7 @@
 package serg.chuprin.finances.feature.transactions.presentation.model.builder
 
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
+import serg.chuprin.finances.core.api.domain.model.category.CategoryWithParent
 import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.presentation.builder.TransactionCellBuilder
@@ -72,7 +72,7 @@ class TransactionReportCellsBuilder @Inject constructor(
 
     private fun buildTransactionCell(
         transaction: Transaction,
-        category: TransactionCategoryWithParent?,
+        category: CategoryWithParent?,
         moneyAccounts: Map<Id, MoneyAccount>
     ): TransactionCell {
         return transactionCellBuilder.build(

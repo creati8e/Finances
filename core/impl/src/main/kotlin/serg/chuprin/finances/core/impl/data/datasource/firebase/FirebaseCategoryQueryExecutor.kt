@@ -7,27 +7,27 @@ import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.*
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryType
-import serg.chuprin.finances.core.api.domain.model.category.query.TransactionCategoriesQuery
-import serg.chuprin.finances.core.api.domain.model.category.query.TransactionCategoriesQuery.Relation
+import serg.chuprin.finances.core.api.domain.model.category.CategoryType
+import serg.chuprin.finances.core.api.domain.model.category.query.CategoriesQuery
+import serg.chuprin.finances.core.api.domain.model.category.query.CategoriesQuery.Relation
 import serg.chuprin.finances.core.api.extensions.contains
-import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionCategoryFieldsContract.COLLECTION_NAME
-import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionCategoryFieldsContract.FIELD_NAME
-import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionCategoryFieldsContract.FIELD_OWNER_ID
-import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionCategoryFieldsContract.FIELD_PARENT_ID
-import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionCategoryFieldsContract.FIELD_TYPE
-import serg.chuprin.finances.core.impl.data.mapper.category.FirebaseTransactionCategoryTypeMapper
+import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseCategoryFieldsContract.COLLECTION_NAME
+import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseCategoryFieldsContract.FIELD_NAME
+import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseCategoryFieldsContract.FIELD_OWNER_ID
+import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseCategoryFieldsContract.FIELD_PARENT_ID
+import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseCategoryFieldsContract.FIELD_TYPE
+import serg.chuprin.finances.core.impl.data.mapper.category.FirebaseCategoryTypeMapper
 import javax.inject.Inject
 
 /**
  * Created by Sergey Chuprin on 12.12.2020.
  */
-internal class FirebaseTransactionCategoryQueryExecutor @Inject constructor(
+internal class FirebaseCategoryQueryExecutor @Inject constructor(
     private val firestore: FirebaseFirestore,
-    private val typeMapper: FirebaseTransactionCategoryTypeMapper
+    private val typeMapper: FirebaseCategoryTypeMapper
 ) {
 
-    fun execute(query: TransactionCategoriesQuery): Flow<List<DocumentSnapshot>> {
+    fun execute(query: CategoriesQuery): Flow<List<DocumentSnapshot>> {
         return when (query.relation) {
             Relation.RETRIEVE_CHILDREN -> {
                 retrieveChildrenCategoriesAndMerge(query)
@@ -50,7 +50,7 @@ internal class FirebaseTransactionCategoryQueryExecutor @Inject constructor(
     }
 
     private fun retrieveParentCategoriesAndMerge(
-        query: TransactionCategoriesQuery
+        query: CategoriesQuery
     ): Flow<List<DocumentSnapshot>> {
         return flow {
             coroutineScope {
@@ -87,7 +87,7 @@ internal class FirebaseTransactionCategoryQueryExecutor @Inject constructor(
     }
 
     private fun retrieveChildrenCategoriesAndMerge(
-        query: TransactionCategoriesQuery
+        query: CategoriesQuery
     ): Flow<List<DocumentSnapshot>> {
         return flow {
             coroutineScope {
@@ -122,7 +122,7 @@ internal class FirebaseTransactionCategoryQueryExecutor @Inject constructor(
         }
     }
 
-    private fun buildQueryFlow(query: TransactionCategoriesQuery): Flow<List<DocumentSnapshot>> {
+    private fun buildQueryFlow(query: CategoriesQuery): Flow<List<DocumentSnapshot>> {
         return firestore
             .collection(COLLECTION_NAME)
             .filterByOwner(query.ownerId)
@@ -131,7 +131,7 @@ internal class FirebaseTransactionCategoryQueryExecutor @Inject constructor(
             .filterByName(query.searchByName)
     }
 
-    private fun Query.filterByType(type: TransactionCategoryType?): Query {
+    private fun Query.filterByType(type: CategoryType?): Query {
         return if (type == null) this else whereEqualTo(FIELD_TYPE, typeMapper.mapFrom(type))
     }
 

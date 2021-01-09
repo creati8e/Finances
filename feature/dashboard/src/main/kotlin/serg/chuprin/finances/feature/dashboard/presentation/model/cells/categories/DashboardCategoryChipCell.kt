@@ -1,6 +1,6 @@
 package serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories
 
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
+import serg.chuprin.finances.core.api.domain.model.category.Category
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.categories.shares.presentation.model.cell.CategoryChipCell
 
@@ -12,6 +12,6 @@ data class DashboardCategoryChipCell(
     override val chipText: String,
     override val transitionName: String,
     val isOtherCategory: Boolean,
-    override val category: TransactionCategory?,
+    override val category: Category?,
     override val plainTransactionType: PlainTransactionType
 ) : CategoryChipCell

@@ -1,7 +1,7 @@
 package serg.chuprin.finances.feature.transaction.presentation.model.store
 
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
+import serg.chuprin.finances.core.api.domain.model.category.CategoryWithParent
 import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import serg.chuprin.finances.feature.transaction.domain.model.TransactionChosenOperation
 import java.math.BigDecimal
@@ -21,7 +21,7 @@ sealed class TransactionAction {
         val date: LocalDate,
         val amount: BigDecimal,
         val moneyAccount: MoneyAccount,
-        val category: TransactionCategoryWithParent?,
+        val category: CategoryWithParent?,
         val operation: TransactionChosenOperation
     ) : TransactionAction()
 

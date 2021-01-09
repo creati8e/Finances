@@ -16,9 +16,9 @@ internal interface CoreFormattersModule {
     fun bindDateTimeFormatter(impl: DateTimeFormatterImpl): DateTimeFormatter
 
     @[Binds Reusable]
-    fun bindTransactionCategoryWithParentFormatter(
-        impl: TransactionCategoryWithParentFormatterImpl
-    ): TransactionCategoryWithParentFormatter
+    fun bindCategoryWithParentFormatter(
+        impl: CategoryWithParentFormatterImpl
+    ): CategoryWithParentFormatter
 
     @[Binds Reusable]
     fun bindAmountFormatter(impl: AmountFormatterImpl): AmountFormatter

@@ -3,7 +3,7 @@ package serg.chuprin.finances.feature.transactions.domain.service
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import serg.chuprin.finances.core.api.domain.linker.TransactionWithCategoriesLinker
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
+import serg.chuprin.finances.core.api.domain.model.category.Category
 import serg.chuprin.finances.core.api.domain.model.category.query.result.CategoriesQueryResult
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriodType
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
@@ -78,9 +78,9 @@ class TransactionReportCurrentPeriodDataService @Inject constructor(
         categoriesQueryResult: CategoriesQueryResult,
         filter: TransactionReportFilter,
         transactionsInCurrentPeriod: List<Transaction>
-    ): Map<TransactionCategory?, List<Transaction>> {
+    ): Map<Category?, List<Transaction>> {
 
-        fun link(): Map<TransactionCategory?, List<Transaction>> {
+        fun link(): Map<Category?, List<Transaction>> {
             return transactionWithCategoriesLinker.linkCategoryParentsWithTransactions(
                 transactionsInCurrentPeriod,
                 categoriesQueryResult

@@ -4,12 +4,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.mapLatest
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryType
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithChildren
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
-import serg.chuprin.finances.core.api.domain.model.category.query.TransactionCategoriesQuery
-import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepository
+import serg.chuprin.finances.core.api.domain.model.category.Category
+import serg.chuprin.finances.core.api.domain.model.category.CategoryType
+import serg.chuprin.finances.core.api.domain.model.category.CategoryWithChildren
+import serg.chuprin.finances.core.api.domain.model.category.CategoryWithParent
+import serg.chuprin.finances.core.api.domain.model.category.query.CategoriesQuery
+import serg.chuprin.finances.core.api.domain.repository.CategoryRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import javax.inject.Inject
 
@@ -18,16 +18,16 @@ import javax.inject.Inject
  */
 class CategoriesDataService @Inject constructor(
     private val userRepository: UserRepository,
-    private val categoryRepository: TransactionCategoryRepository
+    private val categoryRepository: CategoryRepository
 ) {
 
     private companion object {
 
-        private val categoryNameComparator = compareBy<TransactionCategoryWithChildren> {
+        private val categoryNameComparator = compareBy<CategoryWithChildren> {
             it.category.name
         }
 
-        private val categoryNameComparator1 = compareBy<TransactionCategory> {
+        private val categoryNameComparator1 = compareBy<Category> {
             it.name
         }
 
@@ -36,13 +36,13 @@ class CategoriesDataService @Inject constructor(
     /**
      * @return flow of set of parent categories with their children list.
      */
-    fun dataFlow(categoryType: TransactionCategoryType?): Flow<Set<TransactionCategoryWithChildren>> {
+    fun dataFlow(categoryType: CategoryType?): Flow<Set<CategoryWithChildren>> {
         return userRepository
             .currentUserSingleFlow()
             .flatMapLatest { user ->
                 categoryRepository
                     .categoriesFlow(
-                        TransactionCategoriesQuery(
+                        CategoriesQuery(
                             ownerId = user.id,
                             type = categoryType,
                             categoryIds = emptySet()
@@ -62,10 +62,10 @@ class CategoriesDataService @Inject constructor(
     }
 
     private fun buildParentCategory(
-        parentCategory: TransactionCategory,
-        categories: Collection<TransactionCategoryWithParent>
-    ): TransactionCategoryWithChildren {
-        return TransactionCategoryWithChildren(
+        parentCategory: Category,
+        categories: Collection<CategoryWithParent>
+    ): CategoryWithChildren {
+        return CategoryWithChildren(
             category = parentCategory,
             children = filterChildrenCategories(
                 categories = categories,
@@ -76,8 +76,8 @@ class CategoriesDataService @Inject constructor(
 
     private fun filterChildrenCategories(
         parentCategoryId: Id,
-        categories: Collection<TransactionCategoryWithParent>
-    ): Collection<TransactionCategory> {
+        categories: Collection<CategoryWithParent>
+    ): Collection<Category> {
         return categories.mapNotNullTo(sortedSetOf(categoryNameComparator1)) { category ->
             if (category.parentCategory?.id == parentCategoryId) {
                 category.category

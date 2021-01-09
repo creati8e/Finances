@@ -1,6 +1,6 @@
 package serg.chuprin.finances.core.impl.presentation.builder
 
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
+import serg.chuprin.finances.core.api.domain.model.category.CategoryWithParent
 import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.presentation.builder.TransactionCellBuilder
@@ -9,7 +9,7 @@ import serg.chuprin.finances.core.api.presentation.builder.TransitionNameBuilder
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.formatter.CategoryColorFormatter
 import serg.chuprin.finances.core.api.presentation.formatter.DateTimeFormatter
-import serg.chuprin.finances.core.api.presentation.formatter.TransactionCategoryWithParentFormatter
+import serg.chuprin.finances.core.api.presentation.formatter.CategoryWithParentFormatter
 import serg.chuprin.finances.core.api.presentation.model.cells.TransactionCell
 import java.time.LocalDateTime
 import javax.inject.Inject
@@ -22,13 +22,13 @@ internal class TransactionCellBuilderImpl @Inject constructor(
     private val dateTimeFormatter: DateTimeFormatter,
     private val transitionNameBuilder: TransitionNameBuilder,
     private val categoryColorFormatter: CategoryColorFormatter,
-    private val categoryNameFormatter: TransactionCategoryWithParentFormatter
+    private val categoryNameFormatter: CategoryWithParentFormatter
 ) : TransactionCellBuilder {
 
     override fun build(
         transaction: Transaction,
         moneyAccount: MoneyAccount?,
-        categoryWithParent: TransactionCategoryWithParent?,
+        categoryWithParent: CategoryWithParent?,
         dateTimeFormattingMode: DateTimeFormattingMode
     ): TransactionCell {
         return TransactionCell(

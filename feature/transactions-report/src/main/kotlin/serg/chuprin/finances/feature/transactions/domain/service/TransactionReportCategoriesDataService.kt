@@ -2,11 +2,11 @@ package serg.chuprin.finances.feature.transactions.domain.service
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryType
-import serg.chuprin.finances.core.api.domain.model.category.query.TransactionCategoriesQuery
+import serg.chuprin.finances.core.api.domain.model.category.CategoryType
+import serg.chuprin.finances.core.api.domain.model.category.query.CategoriesQuery
 import serg.chuprin.finances.core.api.domain.model.category.query.result.CategoriesQueryResult
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
-import serg.chuprin.finances.core.api.domain.repository.TransactionCategoryRepository
+import serg.chuprin.finances.core.api.domain.repository.CategoryRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.api.extensions.flow.distinctUntilChangedBy
 import serg.chuprin.finances.feature.transactions.domain.model.TransactionReportFilter
@@ -17,7 +17,7 @@ import javax.inject.Inject
  */
 class TransactionReportCategoriesDataService @Inject constructor(
     private val userRepository: UserRepository,
-    private val categoryRepository: TransactionCategoryRepository
+    private val categoryRepository: CategoryRepository
 ) {
 
     private companion object {
@@ -54,18 +54,18 @@ class TransactionReportCategoriesDataService @Inject constructor(
 
     private suspend fun buildQuery(
         filter: TransactionReportFilter
-    ): TransactionCategoriesQuery {
+    ): CategoriesQuery {
         // FIXME: Unify maybe.
         val categoryType = when (filter.transactionType) {
-            PlainTransactionType.INCOME -> TransactionCategoryType.INCOME
-            PlainTransactionType.EXPENSE -> TransactionCategoryType.EXPENSE
+            PlainTransactionType.INCOME -> CategoryType.INCOME
+            PlainTransactionType.EXPENSE -> CategoryType.EXPENSE
             null -> null
         }
-        return TransactionCategoriesQuery(
+        return CategoriesQuery(
             type = categoryType,
             categoryIds = filter.categoryIds,
             ownerId = userRepository.getCurrentUser().id,
-            relation = TransactionCategoriesQuery.Relation.RETRIEVE_CHILDREN
+            relation = CategoriesQuery.Relation.RETRIEVE_CHILDREN
         )
     }
 

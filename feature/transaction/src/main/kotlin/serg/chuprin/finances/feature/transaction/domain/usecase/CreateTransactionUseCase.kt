@@ -1,7 +1,7 @@
 package serg.chuprin.finances.feature.transaction.domain.usecase
 
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategory
+import serg.chuprin.finances.core.api.domain.model.category.Category
 import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
@@ -27,7 +27,7 @@ class CreateTransactionUseCase @Inject constructor(
         date: LocalDate,
         amount: BigDecimal,
         moneyAccount: MoneyAccount,
-        category: TransactionCategory?,
+        category: Category?,
         operation: TransactionChosenOperation
     ) {
         val transactionType = when (operation) {

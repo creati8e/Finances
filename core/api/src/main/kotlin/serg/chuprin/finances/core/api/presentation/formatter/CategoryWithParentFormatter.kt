@@ -1,18 +1,18 @@
 package serg.chuprin.finances.core.api.presentation.formatter
 
-import serg.chuprin.finances.core.api.domain.model.category.TransactionCategoryWithParent
+import serg.chuprin.finances.core.api.domain.model.category.CategoryWithParent
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 
 /**
  * Created by Sergey Chuprin on 07.05.2020.
  */
-interface TransactionCategoryWithParentFormatter {
+interface CategoryWithParentFormatter {
 
     /**
      * @return pair of parent category and child category name.
      */
     fun format(
-        categoryWithParent: TransactionCategoryWithParent?,
+        categoryWithParent: CategoryWithParent?,
         transaction: Transaction?
     ): String
 
