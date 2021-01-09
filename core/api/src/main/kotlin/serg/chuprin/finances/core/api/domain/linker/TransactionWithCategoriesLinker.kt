@@ -1,7 +1,7 @@
 package serg.chuprin.finances.core.api.domain.linker
 
 import serg.chuprin.finances.core.api.domain.model.TransactionCategories
-import serg.chuprin.finances.core.api.domain.model.category.Category
+import serg.chuprin.finances.core.api.domain.model.CategoryToTransactionsList
 import serg.chuprin.finances.core.api.domain.model.category.CategoryWithParent
 import serg.chuprin.finances.core.api.domain.model.category.CategoryWithParentForId
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
@@ -18,7 +18,7 @@ interface TransactionWithCategoriesLinker {
     fun linkCategoryParentsWithTransactions(
         transactions: List<Transaction>,
         categoryWithParentForId: CategoryWithParentForId
-    ): Map<Category?, List<Transaction>>
+    ): CategoryToTransactionsList
 
     /**
      * @return map of transactions associated with their categories

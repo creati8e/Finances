@@ -3,6 +3,7 @@ package serg.chuprin.finances.core.impl.data
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 import serg.chuprin.finances.core.api.domain.model.Id
+import serg.chuprin.finances.core.api.domain.model.CategoryToTransactionsList
 import serg.chuprin.finances.core.api.domain.model.category.Category
 import serg.chuprin.finances.core.api.domain.model.category.CategoryType
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
@@ -36,36 +37,38 @@ object TransactionWithCategoriesLinkerTest : Spek({
                 parentCategory3
             )
 
-            val expectedMap = mapOf(
-                null to listOf(
-                    createTransaction(Id("transaction3")),
-                    createTransaction(Id("transaction5"))
-                ),
-                parentCategory1 to listOf(
-                    createTransaction(Id("transaction1"), Id("category1")),
-                    createTransaction(Id("transaction6"), Id("parentCategory1"))
-                ),
-                category2 to listOf(
-                    createTransaction(Id("transaction2"), Id("category2"))
-                ),
-                parentCategory3 to listOf(
-                    createTransaction(Id("transaction4"), Id("parentCategory3"))
+            val expectedCategoryToTransactionsList = CategoryToTransactionsList(
+                mapOf(
+                    null to listOf(
+                        createTransaction(Id("transaction3")),
+                        createTransaction(Id("transaction5"))
+                    ),
+                    parentCategory1 to listOf(
+                        createTransaction(Id("transaction1"), Id("category1")),
+                        createTransaction(Id("transaction6"), Id("parentCategory1"))
+                    ),
+                    category2 to listOf(
+                        createTransaction(Id("transaction2"), Id("category2"))
+                    ),
+                    parentCategory3 to listOf(
+                        createTransaction(Id("transaction4"), Id("parentCategory3"))
+                    )
                 )
             )
 
-            lateinit var categoryTransactionsMap: Map<Category?, List<Transaction>>
+            lateinit var categoryToTransactionsList: CategoryToTransactionsList
 
             When("Method is called") {
-                categoryTransactionsMap = transactionWithCategoriesLinkerImpl
+                categoryToTransactionsList = transactionWithCategoriesLinkerImpl
                     .linkCategoryParentsWithTransactions(
-                        expectedMap.flatMap { (_, transactions) -> transactions },
+                        expectedCategoryToTransactionsList.flatMap { (_, transactions) -> transactions },
                         categoryLinker.linkWithParents(categories)
                     )
             }
 
             Then("Created map is valid") {
-                expectThat(categoryTransactionsMap) {
-                    isEqualTo(expectedMap)
+                expectThat(categoryToTransactionsList) {
+                    isEqualTo(expectedCategoryToTransactionsList)
                 }
             }
 

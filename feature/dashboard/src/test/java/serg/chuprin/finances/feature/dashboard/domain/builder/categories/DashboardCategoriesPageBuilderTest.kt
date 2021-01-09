@@ -2,6 +2,7 @@ package serg.chuprin.finances.feature.dashboard.domain.builder.categories
 
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
+import serg.chuprin.finances.core.api.domain.model.CategoryToTransactionsList
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.category.Category
 import serg.chuprin.finances.core.api.domain.model.category.CategoryType
@@ -32,7 +33,7 @@ object DashboardCategoriesPageBuilderTest : Spek({
             val incomeCategory1 = createCategory(Id("incomeCategory1"))
             val incomeCategory2 = createCategory(Id("incomeCategory2"))
 
-            val incomeCategoryTransactionsMap: Map<Category?, List<Transaction>> =
+            val incomeCategoryToTransactionsList = CategoryToTransactionsList(
                 mapOf(
                     incomeCategory1 to listOf(
                         createTransaction("500"),
@@ -51,11 +52,12 @@ object DashboardCategoriesPageBuilderTest : Spek({
                         createTransaction("10")
                     )
                 )
+            )
 
             val expenseCategory1 = createCategory(Id("expenseCategory1"))
             val expenseCategory2 = createCategory(Id("expenseCategory2"))
 
-            val expenseCategoryTransactionsMap: Map<Category?, List<Transaction>> =
+            val expenseCategoryToTransactionsList = CategoryToTransactionsList(
                 mapOf(
                     expenseCategory1 to listOf(
                         createTransaction("-40"),
@@ -70,6 +72,7 @@ object DashboardCategoriesPageBuilderTest : Spek({
                         createTransaction("-5")
                     )
                 )
+            )
 
             lateinit var incomeCategoriesPage: DashboardCategoriesWidgetPage
             lateinit var expenseCategoriesPage: DashboardCategoriesWidgetPage
@@ -77,7 +80,7 @@ object DashboardCategoriesPageBuilderTest : Spek({
             When("Method is called for income categories") {
                 incomeCategoriesPage = builder.build(
                     PlainTransactionType.INCOME,
-                    incomeCategoryTransactionsMap,
+                    incomeCategoryToTransactionsList,
                     topCategoriesCount
                 )
             }
@@ -103,7 +106,7 @@ object DashboardCategoriesPageBuilderTest : Spek({
             When("Method is called for expense categories") {
                 expenseCategoriesPage = builder.build(
                     PlainTransactionType.EXPENSE,
-                    expenseCategoryTransactionsMap,
+                    expenseCategoryToTransactionsList,
                     topCategoriesCount
                 )
             }

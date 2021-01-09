@@ -59,7 +59,7 @@ class BuildTransactionsReportUseCase @Inject constructor(
         val transactionType = reportRawData.filter.transactionType ?: return null
 
         val categoryShares = reportRawData
-            .categoryTransactions
+            .categoryToTransactionsList
             .map { (category, transactions) -> category to transactions.amount.abs() }
             .sortedByDescending { (_, amount) -> amount }
 

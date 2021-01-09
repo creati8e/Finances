@@ -5,12 +5,11 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.api.domain.linker.TransactionWithCategoriesLinker
+import serg.chuprin.finances.core.api.domain.model.CategoryToTransactionsList
 import serg.chuprin.finances.core.api.domain.model.User
-import serg.chuprin.finances.core.api.domain.model.category.Category
 import serg.chuprin.finances.core.api.domain.model.category.query.CategoriesQuery
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
-import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.model.transaction.query.TransactionsQuery
 import serg.chuprin.finances.core.api.domain.repository.CategoryRepository
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
@@ -30,7 +29,7 @@ class DashboardCategoriesDataService @Inject constructor(
         currentUser: User,
         currentPeriod: DataPeriod,
         transactionType: PlainTransactionType
-    ): Flow<Map<Category?, List<Transaction>>> {
+    ): Flow<CategoryToTransactionsList> {
         // Get user transactions in period.
         return transactionRepository
             .transactionsFlow(

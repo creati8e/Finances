@@ -3,7 +3,7 @@ package serg.chuprin.finances.feature.transactions.domain.service
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import serg.chuprin.finances.core.api.domain.linker.TransactionWithCategoriesLinker
-import serg.chuprin.finances.core.api.domain.model.category.Category
+import serg.chuprin.finances.core.api.domain.model.CategoryToTransactionsList
 import serg.chuprin.finances.core.api.domain.model.category.CategoryWithParentForId
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriodType
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
@@ -65,7 +65,7 @@ class TransactionReportCurrentPeriodDataService @Inject constructor(
         )
         return TransactionReportCurrentPeriodData(
             transactionCategories = transactionCategories,
-            categoryTransactions = buildCategoryTransactions(
+            categoryToTransactionsList = buildCategoryTransactions(
                 filter = filter,
                 categoryWithParentForId = categoryWithParentForId,
                 transactionsInCurrentPeriod = transactionsInCurrentPeriod
@@ -77,9 +77,9 @@ class TransactionReportCurrentPeriodDataService @Inject constructor(
         categoryWithParentForId: CategoryWithParentForId,
         filter: TransactionReportFilter,
         transactionsInCurrentPeriod: List<Transaction>
-    ): Map<Category?, List<Transaction>> {
+    ): CategoryToTransactionsList {
 
-        fun link(): Map<Category?, List<Transaction>> {
+        fun link(): CategoryToTransactionsList {
             return transactionWithCategoriesLinker.linkCategoryParentsWithTransactions(
                 transactionsInCurrentPeriod,
                 categoryWithParentForId
@@ -88,10 +88,10 @@ class TransactionReportCurrentPeriodDataService @Inject constructor(
 
         return when (filter) {
             is TransactionReportFilter.Categories -> link()
-            is TransactionReportFilter.SingleCategory -> emptyMap()
+            is TransactionReportFilter.SingleCategory -> CategoryToTransactionsList()
             is TransactionReportFilter.Plain -> {
                 if (filter.transactionType == null) {
-                    emptyMap()
+                    CategoryToTransactionsList()
                 } else {
                     link()
                 }

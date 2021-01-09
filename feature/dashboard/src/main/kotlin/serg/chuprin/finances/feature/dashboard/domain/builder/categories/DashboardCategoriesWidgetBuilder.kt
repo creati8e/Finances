@@ -56,11 +56,11 @@ class DashboardCategoriesWidgetBuilder @Inject constructor(
                 currentPeriod = currentPeriod,
                 transactionType = transactionType
             )
-            .map { categoryTransactionsMap ->
+            .map { transactionsListForCategory ->
                 pageBuilder.build(
                     transactionType = transactionType,
                     topCategoriesCount = TOP_CATEGORIES_COUNT,
-                    categoryTransactionsMap = categoryTransactionsMap
+                    categoryToTransactionsList = transactionsListForCategory
                 )
             }
     }

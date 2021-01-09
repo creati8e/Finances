@@ -2,7 +2,7 @@ package serg.chuprin.finances.core.impl.domain.linker
 
 import serg.chuprin.finances.core.api.domain.linker.TransactionWithCategoriesLinker
 import serg.chuprin.finances.core.api.domain.model.TransactionCategories
-import serg.chuprin.finances.core.api.domain.model.category.Category
+import serg.chuprin.finances.core.api.domain.model.CategoryToTransactionsList
 import serg.chuprin.finances.core.api.domain.model.category.CategoryWithParentForId
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import javax.inject.Inject
@@ -16,14 +16,15 @@ internal class TransactionWithCategoriesLinkerImpl
     override fun linkCategoryParentsWithTransactions(
         transactions: List<Transaction>,
         categoryWithParentForId: CategoryWithParentForId
-    ): Map<Category?, List<Transaction>> {
-        return transactions.groupBy { transaction ->
-            categoryWithParentForId[transaction.categoryId]?.run {
-                parentCategory ?: category
+    ): CategoryToTransactionsList {
+        return CategoryToTransactionsList(
+            transactions.groupBy { transaction ->
+                categoryWithParentForId[transaction.categoryId]?.run {
+                    parentCategory ?: category
+                }
             }
-        }
+        )
     }
-
 
     override fun linkTransactionsWithCategories(
         transactions: List<Transaction>,

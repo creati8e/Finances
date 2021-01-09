@@ -1,8 +1,7 @@
 package serg.chuprin.finances.feature.dashboard.domain.builder.categories
 
-import serg.chuprin.finances.core.api.domain.model.category.Category
+import serg.chuprin.finances.core.api.domain.model.CategoryToTransactionsList
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
-import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.extensions.amount
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardCategoriesWidgetPage
 import java.math.BigDecimal
@@ -20,11 +19,11 @@ class DashboardCategoriesPageBuilder @Inject constructor() {
 
     fun build(
         transactionType: PlainTransactionType,
-        categoryTransactionsMap: Map<Category?, List<Transaction>>,
+        categoryToTransactionsList: CategoryToTransactionsList,
         topCategoriesCount: Int
     ): DashboardCategoriesWidgetPage {
 
-        val categoryAmounts = categoryTransactionsMap.calculateCategoryAmounts()
+        val categoryAmounts = categoryToTransactionsList.calculateCategoryAmounts()
 
         val (topCategories, otherCategories) = categoryAmounts
             .splitToPopularAndOther(topCategoriesCount)
@@ -53,7 +52,7 @@ class DashboardCategoriesPageBuilder @Inject constructor() {
         }
     }
 
-    private fun Map<Category?, List<Transaction>>.calculateCategoryAmounts(): CategoryAmounts {
+    private fun CategoryToTransactionsList.calculateCategoryAmounts(): CategoryAmounts {
         return this
             .map { (categoryWithParent, transactions) ->
                 categoryWithParent to transactions.amount.abs()
