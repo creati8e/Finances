@@ -10,7 +10,7 @@ import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.Transac
 import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ZeroDataCellRenderer
 import serg.chuprin.finances.core.categories.shares.presentation.view.adapter.renderer.CategorySharesCellRenderer
 import serg.chuprin.finances.feature.transactions.R
-import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportCategoryChipCell
+import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportCategoryShareCell
 import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportCategorySharesCell
 import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportDataPeriodAmountChartCell
 import serg.chuprin.finances.feature.transactions.presentation.view.adapter.diff.TransactionReportCellsDiffCallback
@@ -40,7 +40,7 @@ class TransactionReportCellsAdapter(
                 onCategoryClicked = {},
                 categoryChipsAdapterSetup = {},
                 type = R.layout.cell_transaction_report_category_shares,
-                categoryChipCellClass = TransactionReportCategoryChipCell::class.java
+                categoryChipCellClass = TransactionReportCategoryShareCell::class.java
             ),
             TransactionReportCategorySharesCell::class.java
         )

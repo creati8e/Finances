@@ -10,7 +10,7 @@ import serg.chuprin.finances.core.api.presentation.screen.arguments.Transactions
 import serg.chuprin.finances.feature.dashboard.R
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardCategoriesWidgetPage
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
-import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.DashboardCategoryChipCell
+import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.DashboardCategoryShareCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.store.DashboardState
 import serg.chuprin.finances.feature.dashboard.setup.domain.model.DashboardWidgetType
 import javax.inject.Inject
@@ -54,7 +54,7 @@ class DashboardTransactionsReportArgumentsBuilder @Inject constructor(
     }
 
     fun buildForCategory(
-        categoryCell: DashboardCategoryChipCell,
+        categoryCell: DashboardCategoryShareCell,
         state: DashboardState
     ): TransactionsReportScreenArguments {
         val dataPeriod = DataPeriodUi.create(state.dashboard.currentDataPeriod)
@@ -94,7 +94,7 @@ class DashboardTransactionsReportArgumentsBuilder @Inject constructor(
 
     private fun getCategoriesPage(
         state: DashboardState,
-        categoryCell: DashboardCategoryChipCell
+        categoryCell: DashboardCategoryShareCell
     ): DashboardCategoriesWidgetPage {
         val key = DashboardWidgetType.CATEGORIES
         val widget = (state.dashboard.widgets.getValue(key) as DashboardWidget.Categories)

@@ -9,7 +9,7 @@ import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.piechart.model.PieChartDataPart
 import serg.chuprin.finances.feature.transactions.domain.model.TransactionReportCategorySharesChart
-import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportCategoryChipCell
+import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportCategoryShareCell
 import serg.chuprin.finances.feature.transactions.presentation.model.cells.TransactionReportCategorySharesCell
 import java.util.*
 import javax.inject.Inject
@@ -31,7 +31,7 @@ class TransactionReportCategorySharesCellBuilder @Inject constructor(
             label = formatLabel(chart),
             transactionType = chart.transactionType,
             chartParts = buildChartParts(chart.categoryShares),
-            categoryCells = buildCategoryCells(
+            categoryCells = buildCategoryShareCells(
                 currency = chart.currency,
                 categoryShares = chart.categoryShares,
                 transactionType = chart.transactionType
@@ -62,7 +62,7 @@ class TransactionReportCategorySharesCellBuilder @Inject constructor(
         }
     }
 
-    private fun buildCategoryCells(
+    private fun buildCategoryShareCells(
         categoryShares: CategoryShares,
         currency: Currency,
         transactionType: PlainTransactionType
@@ -74,10 +74,10 @@ class TransactionReportCategorySharesCellBuilder @Inject constructor(
             .mapTo(mutableListOf()) { (category, amount) ->
 
                 val categoryName = category?.name ?: resourceManger.getString(R.string.no_category)
-                val chipText = "$categoryName ${amountFormatter.format(amount, currency)}"
+                val text = "$categoryName ${amountFormatter.format(amount, currency)}"
 
-                TransactionReportCategoryChipCell(
-                    chipText = chipText,
+                TransactionReportCategoryShareCell(
+                    text = text,
                     category = category,
                     plainTransactionType = transactionType,
                     colorInt = categoryColorFormatter.format(category)

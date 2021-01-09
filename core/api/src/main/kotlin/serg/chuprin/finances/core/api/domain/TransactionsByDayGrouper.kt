@@ -18,8 +18,8 @@ class TransactionsByDayGrouper @Inject constructor() {
             .groupBy { (transaction) ->
                 transaction.dateTime.toLocalDate()
             }
-            .mapValues { (_, transactionAndCategoriesList) ->
-                transactionAndCategoriesList.sortedByDescending { (transaction) ->
+            .mapValues { (_, transactionToCategory) ->
+                transactionToCategory.sortedByDescending { (transaction) ->
                     transaction.dateTime
                 }
             }

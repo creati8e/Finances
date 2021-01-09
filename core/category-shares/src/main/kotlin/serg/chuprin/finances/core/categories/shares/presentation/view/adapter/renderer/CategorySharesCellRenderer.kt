@@ -10,7 +10,7 @@ import serg.chuprin.adapter.LongClick
 import serg.chuprin.finances.core.api.extensions.containsType
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter
-import serg.chuprin.finances.core.categories.shares.presentation.model.cell.CategoryChipCell
+import serg.chuprin.finances.core.categories.shares.presentation.model.cell.CategoryShareCell
 import serg.chuprin.finances.core.categories.shares.presentation.model.cell.CategorySharesCell
 import serg.chuprin.finances.core.categories.shares.presentation.view.adapter.diff.CategoryChipCellsAdapterDiffCallback
 import serg.chuprin.finances.core.piechart.model.PieChartData
@@ -18,7 +18,7 @@ import serg.chuprin.finances.core.piechart.model.PieChartData
 /**
  * Created by Sergey Chuprin on 28.05.2020.
  */
-class CategorySharesCellRenderer<T : CategoryChipCell>(
+class CategorySharesCellRenderer<T : CategoryShareCell>(
     override val type: Int,
     private val categoryChipCellClass: Class<T>,
     private val onCategoryClicked: (cell: T) -> Unit,
@@ -30,7 +30,7 @@ class CategorySharesCellRenderer<T : CategoryChipCell>(
     ).apply {
         categoryChipsAdapterSetup?.invoke(this)
         registerRenderer(
-            CategoryChipCellRenderer(::handleOnCategoryChipClick),
+            CategoryShareCellRenderer(::handleOnCategoryChipClick),
             categoryChipCellClass
         )
     }
@@ -77,7 +77,7 @@ class CategorySharesCellRenderer<T : CategoryChipCell>(
 
     private fun handleOnCategoryChipClick(adapterPosition: Int) {
         val itemOrNull = categoryCellsAdapter.getItemOrNull(adapterPosition)
-        val cell = itemOrNull as? CategoryChipCell ?: return
+        val cell = itemOrNull as? CategoryShareCell ?: return
 
         @Suppress("UNCHECKED_CAST")
         onCategoryClicked(cell as T)

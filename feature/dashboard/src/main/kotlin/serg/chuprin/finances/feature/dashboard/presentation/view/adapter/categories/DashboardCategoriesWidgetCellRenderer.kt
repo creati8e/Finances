@@ -14,7 +14,7 @@ import serg.chuprin.finances.core.api.presentation.view.extensions.onScrollState
 import serg.chuprin.finances.core.categories.shares.presentation.view.adapter.renderer.CategorySharesCellRenderer
 import serg.chuprin.finances.feature.dashboard.R
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
-import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.DashboardCategoryChipCell
+import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.DashboardCategoryShareCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.page.DashboardCategoriesPageZeroDataCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.page.DashboardExpenseCategoriesPageCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.page.DashboardIncomeCategoriesPageCell
@@ -25,7 +25,7 @@ import serg.chuprin.finances.feature.dashboard.presentation.view.adapter.categor
  * Created by Sergey Chuprin on 28.05.2020.
  */
 class DashboardCategoriesWidgetCellRenderer(
-    private val onCategoryClicked: (cell: DashboardCategoryChipCell) -> Unit
+    private val onCategoryClicked: (cell: DashboardCategoryShareCell) -> Unit
 ) : ContainerRenderer<DashboardWidgetCell.Categories>() {
 
     override val type: Int = R.layout.cell_widget_dashboard_categories
@@ -92,11 +92,11 @@ class DashboardCategoriesWidgetCellRenderer(
 
     private fun createCategoryChipCellRenderer(
         layoutRes: Int
-    ): CategorySharesCellRenderer<DashboardCategoryChipCell> {
+    ): CategorySharesCellRenderer<DashboardCategoryShareCell> {
         return CategorySharesCellRenderer(
             type = layoutRes,
             onCategoryClicked = onCategoryClicked,
-            categoryChipCellClass = DashboardCategoryChipCell::class.java,
+            categoryChipCellClass = DashboardCategoryShareCell::class.java,
             categoryChipsAdapterSetup = {
                 registerRenderer<DashboardCategoriesPageZeroDataCell>(
                     R.layout.cell_dashboard_categories_page_zero_data

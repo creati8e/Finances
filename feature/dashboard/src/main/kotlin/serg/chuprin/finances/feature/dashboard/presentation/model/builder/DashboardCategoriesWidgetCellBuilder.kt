@@ -13,7 +13,7 @@ import serg.chuprin.finances.feature.dashboard.R
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardCategoriesWidgetPage
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
-import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.DashboardCategoryChipCell
+import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.DashboardCategoryShareCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.page.DashboardCategoriesPageZeroDataCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.page.DashboardExpenseCategoriesPageCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.categories.page.DashboardIncomeCategoriesPageCell
@@ -81,8 +81,8 @@ class DashboardCategoriesWidgetCellBuilder @Inject constructor(
             .mapTo(mutableListOf()) { (category, amount) ->
                 val categoryName = category?.name ?: getString(CoreR.string.no_category)
                 val chipText = "$categoryName ${amountFormatter.format(amount, currency)}"
-                DashboardCategoryChipCell(
-                    chipText = chipText,
+                DashboardCategoryShareCell(
+                    text = chipText,
                     category = category,
                     isOtherCategory = false,
                     plainTransactionType = transactionType,
@@ -105,13 +105,13 @@ class DashboardCategoriesWidgetCellBuilder @Inject constructor(
     private fun buildOtherCategoriesCell(
         page: DashboardCategoriesWidgetPage,
         currency: Currency
-    ): DashboardCategoryChipCell {
+    ): DashboardCategoryShareCell {
         val name = getString(R.string.dashboard_categories_widget_other_categories)
         val formattedShare = amountFormatter.format(page.otherCategoriesShare, currency)
-        return DashboardCategoryChipCell(
+        return DashboardCategoryShareCell(
             category = null,
             isOtherCategory = true,
-            chipText = "$name $formattedShare",
+            text = "$name $formattedShare",
             colorInt = getOtherCategoriesColor(),
             plainTransactionType = page.transactionType,
             transitionName = transitionNameBuilder.buildForTransactionsReportOtherCategory(
