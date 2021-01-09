@@ -1,20 +1,8 @@
 package serg.chuprin.finances.feature.transactions.presentation.model.store
 
-import serg.chuprin.finances.core.api.di.scopes.ScreenScope
-import serg.chuprin.finances.core.mvi.store.BaseStateStore
-import javax.inject.Inject
+import serg.chuprin.finances.core.mvi.store.StateStore
 
 /**
- * Created by Sergey Chuprin on 12.05.2020.
+ * Created by Sergey Chuprin on 09.01.2021.
  */
-@ScreenScope
-class TransactionsReportStore @Inject constructor(
-    actionExecutor: TransactionsReportActionExecutor,
-    bootstrapper: TransactionsReportStoreBootstrapper
-) : BaseStateStore<TransactionsReportIntent, TransactionsReportEffect, TransactionsReportAction, TransactionsReportState, TransactionsReportEvent>(
-    TransactionsReportState(),
-    TransactionsReportStateReducer(),
-    bootstrapper,
-    actionExecutor,
-    TransactionsReportIntentToActionMapper()
-)
+typealias TransactionsReportStore = StateStore<TransactionsReportIntent, TransactionsReportState, TransactionsReportEvent>
