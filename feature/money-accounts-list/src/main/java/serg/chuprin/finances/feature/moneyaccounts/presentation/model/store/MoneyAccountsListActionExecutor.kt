@@ -97,7 +97,7 @@ class MoneyAccountsListActionExecutor @Inject constructor(
         action: MoneyAccountsListAction.BuildMoneyAccountCells
     ): Flow<MoneyAccountsListEffect> {
         return flowOfSingleValue {
-            val cells = if (action.moneyAccountBalances.isEmpty()) {
+            val cells = if (action.moneyAccountToBalance.isEmpty()) {
                 listOf(
                     ZeroDataCell(
                         contentMessageRes = null,
@@ -106,7 +106,7 @@ class MoneyAccountsListActionExecutor @Inject constructor(
                     )
                 )
             } else {
-                action.moneyAccountBalances.map { (moneyAccount, amount) ->
+                action.moneyAccountToBalance.map { (moneyAccount, amount) ->
                     MoneyAccountCell(
                         name = moneyAccount.name,
                         moneyAccount = moneyAccount,

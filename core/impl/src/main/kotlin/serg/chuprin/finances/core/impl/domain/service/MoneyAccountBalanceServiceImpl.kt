@@ -3,7 +3,7 @@ package serg.chuprin.finances.core.impl.domain.service
 import kotlinx.coroutines.flow.*
 import serg.chuprin.finances.core.api.domain.model.User
 import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
-import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccountBalances
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccountToBalance
 import serg.chuprin.finances.core.api.domain.model.moneyaccount.query.MoneyAccountsQuery
 import serg.chuprin.finances.core.api.domain.model.transaction.query.TransactionsQuery
 import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
@@ -20,15 +20,15 @@ internal class MoneyAccountBalanceServiceImpl @Inject constructor(
     private val moneyAccountRepository: MoneyAccountRepository
 ) : MoneyAccountBalanceService {
 
-    override fun balancesFlow(user: User): Flow<MoneyAccountBalances> {
+    override fun balancesFlow(user: User): Flow<MoneyAccountToBalance> {
         return moneyAccountRepository
             .accountsFlow(MoneyAccountsQuery(ownerId = user.id))
             .flatMapLatest(::calculateBalances)
     }
 
-    private fun calculateBalances(moneyAccounts: List<MoneyAccount>): Flow<MoneyAccountBalances> {
+    private fun calculateBalances(moneyAccounts: List<MoneyAccount>): Flow<MoneyAccountToBalance> {
         if (moneyAccounts.isEmpty()) {
-            return flowOf(MoneyAccountBalances())
+            return flowOf(MoneyAccountToBalance())
         }
         val balanceFlows = moneyAccounts.map { account ->
             combine(
@@ -42,7 +42,7 @@ internal class MoneyAccountBalanceServiceImpl @Inject constructor(
             )
         }
         return combine(balanceFlows) { array ->
-            array.fold(MoneyAccountBalances(), { accountBalances, (account, balance) ->
+            array.fold(MoneyAccountToBalance(), { accountBalances, (account, balance) ->
                 accountBalances.add(account, balance)
             })
         }

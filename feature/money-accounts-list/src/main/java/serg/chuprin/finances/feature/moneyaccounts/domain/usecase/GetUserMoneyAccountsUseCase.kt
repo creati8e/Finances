@@ -2,7 +2,7 @@ package serg.chuprin.finances.feature.moneyaccounts.domain.usecase
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
-import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccountBalances
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccountToBalance
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.api.domain.service.MoneyAccountBalanceService
 import javax.inject.Inject
@@ -15,7 +15,7 @@ class GetUserMoneyAccountsUseCase @Inject constructor(
     private val moneyAccountBalanceService: MoneyAccountBalanceService
 ) {
 
-    fun execute(): Flow<MoneyAccountBalances> {
+    fun execute(): Flow<MoneyAccountToBalance> {
         return userRepository
             .currentUserSingleFlow()
             .flatMapLatest(moneyAccountBalanceService::balancesFlow)

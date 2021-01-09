@@ -9,17 +9,17 @@ import java.util.*
  * Immutable wrapper for SortedMap<MoneyAccount, BigDecimal> with predefined comparator.
  * It keeps [MoneyAccount] sorted by name ascending.
  */
-class MoneyAccountBalances : SortedMap<MoneyAccount, BigDecimal> by TreeMap(accountsComparator) {
+class MoneyAccountToBalance : SortedMap<MoneyAccount, BigDecimal> by TreeMap(accountsComparator) {
 
     companion object {
         val accountsComparator: Comparator<MoneyAccount> =
             compareByDescending(MoneyAccount::isFavorite).thenComparing(MoneyAccount::name)
     }
 
-    fun add(moneyAccount: MoneyAccount, balance: BigDecimal): MoneyAccountBalances {
-        return MoneyAccountBalances()
+    fun add(moneyAccount: MoneyAccount, balance: BigDecimal): MoneyAccountToBalance {
+        return MoneyAccountToBalance()
             .apply {
-                putAll(this@MoneyAccountBalances)
+                putAll(this@MoneyAccountToBalance)
                 put(moneyAccount, balance)
             }
     }
@@ -27,7 +27,7 @@ class MoneyAccountBalances : SortedMap<MoneyAccount, BigDecimal> by TreeMap(acco
     override fun hashCode(): Int = entries.hashCode()
 
     override fun equals(other: Any?): Boolean {
-        return (other as? MoneyAccountBalances)?.entries == entries
+        return (other as? MoneyAccountToBalance)?.entries == entries
     }
 
 }

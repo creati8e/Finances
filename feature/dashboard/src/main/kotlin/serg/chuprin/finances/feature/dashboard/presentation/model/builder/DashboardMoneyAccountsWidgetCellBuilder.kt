@@ -42,11 +42,11 @@ class DashboardMoneyAccountsWidgetCellBuilder @Inject constructor(
     }
 
     private fun buildCells(widget: DashboardWidget.MoneyAccounts): List<BaseCell> {
-        if (widget.moneyAccountBalances.isEmpty()) {
+        if (widget.moneyAccountToBalance.isEmpty()) {
             return listOf(DashboardMoneyAccountWidgetZeroDataCell())
         }
         return widget
-            .moneyAccountBalances
+            .moneyAccountToBalance
             .map { (moneyAccount, balance) ->
                 DashboardMoneyAccountCell(
                     name = moneyAccount.name,

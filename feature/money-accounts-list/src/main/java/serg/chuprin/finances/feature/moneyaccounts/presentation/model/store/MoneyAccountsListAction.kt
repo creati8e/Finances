@@ -1,6 +1,6 @@
 package serg.chuprin.finances.feature.moneyaccounts.presentation.model.store
 
-import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccountBalances
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccountToBalance
 
 /**
  * Created by Sergey Chuprin on 06.05.2020.
@@ -8,7 +8,7 @@ import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccountBala
 sealed class MoneyAccountsListAction {
 
     class BuildMoneyAccountCells(
-        val moneyAccountBalances: MoneyAccountBalances
+        val moneyAccountToBalance: MoneyAccountToBalance
     ) : MoneyAccountsListAction()
 
     class ChangeAccountCreationButtonVisibility(

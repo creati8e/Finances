@@ -3,7 +3,7 @@ package serg.chuprin.finances.feature.dashboard.domain.model
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.TransactionToCategory
 import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
-import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccountBalances
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccountToBalance
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriod
 import serg.chuprin.finances.feature.dashboard.setup.domain.model.DashboardWidgetType
 import java.math.BigDecimal
@@ -17,7 +17,7 @@ sealed class DashboardWidget(
 ) {
 
     data class MoneyAccounts(
-        val moneyAccountBalances: MoneyAccountBalances
+        val moneyAccountToBalance: MoneyAccountToBalance
     ) : DashboardWidget(DashboardWidgetType.MONEY_ACCOUNTS)
 
     /**

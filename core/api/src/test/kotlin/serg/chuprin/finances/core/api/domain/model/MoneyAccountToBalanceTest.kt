@@ -3,7 +3,7 @@ package serg.chuprin.finances.core.api.domain.model
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
-import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccountBalances
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccountToBalance
 import strikt.api.expectThat
 import strikt.assertions.containsKey
 import strikt.assertions.isNotSameInstanceAs
@@ -14,16 +14,16 @@ import java.math.BigDecimal
 /**
  * Created by Sergey Chuprin on 26.04.2020.
  */
-object MoneyAccountBalancesTest : Spek({
+object MoneyAccountToBalanceTest : Spek({
 
-    Feature("Dashboard money accounts") {
+    Feature("Money account to balance") {
 
         Scenario("Adding new account") {
 
             val originalAccounts =
-                MoneyAccountBalances()
+                MoneyAccountToBalance()
 
-            lateinit var accountAmounts1: MoneyAccountBalances
+            lateinit var accountAmounts1: MoneyAccountToBalance
             val firstAccount =
                 createAccount(
                     "account",
@@ -50,10 +50,10 @@ object MoneyAccountBalancesTest : Spek({
 
         Scenario("Preserving sort order after new accounts adding") {
 
-            lateinit var accountBalances: MoneyAccountBalances
+            lateinit var accountToBalance: MoneyAccountToBalance
 
             When("Accounts are added") {
-                accountBalances = MoneyAccountBalances()
+                accountToBalance = MoneyAccountToBalance()
                     .add(
                         createAccount(
                             "a",
@@ -81,9 +81,9 @@ object MoneyAccountBalancesTest : Spek({
             }
 
             Then("Keys are properly sorted") {
-                expectThat(accountBalances)
+                expectThat(accountToBalance)
                     .get { keys }
-                    .isSorted(MoneyAccountBalances.accountsComparator)
+                    .isSorted(MoneyAccountToBalance.accountsComparator)
             }
 
         }

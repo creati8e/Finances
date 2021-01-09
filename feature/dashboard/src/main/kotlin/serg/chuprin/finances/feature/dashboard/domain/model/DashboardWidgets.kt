@@ -1,6 +1,6 @@
 package serg.chuprin.finances.feature.dashboard.domain.model
 
-import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccountBalances
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccountToBalance
 import serg.chuprin.finances.feature.dashboard.setup.domain.model.DashboardWidgetType
 import java.util.*
 
@@ -30,7 +30,7 @@ class DashboardWidgets(
     override fun hashCode(): Int = entries.hashCode()
 
     override fun equals(other: Any?): Boolean {
-        return (other as? MoneyAccountBalances)?.entries == entries
+        return (other as? MoneyAccountToBalance)?.entries == entries
     }
 
 }
