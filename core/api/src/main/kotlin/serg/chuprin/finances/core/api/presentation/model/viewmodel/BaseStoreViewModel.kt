@@ -1,6 +1,9 @@
 package serg.chuprin.finances.core.api.presentation.model.viewmodel
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
@@ -20,56 +23,44 @@ abstract class BaseStoreViewModel<INTENT> : ViewModel() {
         intentsChannel.offer(intent)
     }
 
-    protected fun <T> Flow<T>.asLiveData(): LiveData<T> {
-        return asLiveData(viewModelScope.coroutineContext)
-    }
+    @OptIn(FlowPreview::class)
+    protected fun intentsFlow(): Flow<INTENT> = intentsChannel.asFlow()
 
     protected fun <E, STORE : StateStore<*, *, E>> STORE.observeEventsAsLiveData(): LiveData<E> {
-        return SingleEventLiveData<E>().apply {
-            viewModelScope.launch {
-                eventsFlow.collect { event ->
-                    value = event
-                }
-            }
-        }
+        return eventsFlow.asSingleEventLiveData()
     }
 
     protected inline fun <E, STORE : StateStore<*, *, E>, reified T> STORE.observeTypedEventsAsLiveData(): LiveData<T> {
-        return SingleEventLiveData<T>().apply {
-            viewModelScope.launch {
-                eventsFlow
-                    .filter { it is T }
-                    .collect { event ->
-                        value = event as T
-                    }
-            }
-        }
+        return eventsFlow.filterIsInstance<T>().asSingleEventLiveData()
     }
 
     protected fun <STATE, STORE : StateStore<*, STATE, *>, PROPERTY> STORE.observeParticularStateAsLiveData(
         picker: (STATE) -> PROPERTY
     ): LiveData<PROPERTY> {
-        return liveData {
-            stateFlow
-                .map { state -> picker(state) }
-                .distinctUntilChanged()
-                .collect { property ->
-                    emit(property)
-                }
-        }
+        return stateFlow
+            .map { state -> picker(state) }
+            .distinctUntilChanged()
+            .asLiveData()
     }
 
     protected fun <STATE, STORE : StateStore<*, STATE, *>> STORE.observeStateAsLiveData(): LiveData<STATE> {
-        return liveData {
-            stateFlow
-                .distinctUntilChanged()
-                .collect { state ->
-                    emit(state)
-                }
-        }
+        return stateFlow
+            .distinctUntilChanged()
+            .asLiveData()
     }
 
-    @OptIn(FlowPreview::class)
-    protected fun intentsFlow(): Flow<INTENT> = intentsChannel.asFlow()
+    protected fun <T> Flow<T>.asLiveData(): LiveData<T> {
+        return asLiveData(viewModelScope.coroutineContext)
+    }
+
+    protected fun <T> Flow<T>.asSingleEventLiveData(): SingleEventLiveData<T> {
+        return SingleEventLiveData<T>().apply {
+            viewModelScope.launch {
+                collect { event ->
+                    value = event
+                }
+            }
+        }
+    }
 
 }
