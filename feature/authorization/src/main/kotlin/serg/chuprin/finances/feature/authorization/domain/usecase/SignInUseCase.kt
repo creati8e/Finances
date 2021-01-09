@@ -1,6 +1,5 @@
 package serg.chuprin.finances.feature.authorization.domain.usecase
 
-import kotlinx.coroutines.coroutineScope
 import serg.chuprin.finances.core.api.domain.gateway.AuthorizationGateway
 import serg.chuprin.finances.core.api.domain.model.OnboardingStep
 import serg.chuprin.finances.core.api.domain.model.SignInResult
@@ -16,20 +15,17 @@ class SignInUseCase @Inject constructor(
 ) {
 
     suspend fun execute(idToken: String): SignInResult {
-        return coroutineScope {
-            authorizationGateway
-                .signIn(idToken)
-                .fold(
-                    { userIsNew ->
-                        if (!userIsNew) {
-                            onboardingRepository.onboardingStep = OnboardingStep.COMPLETED
-                        }
-                        SignInResult.Success(userIsNew)
-                    },
-                    { SignInResult.Error }
-                )
-        }
-
+        return authorizationGateway
+            .signIn(idToken)
+            .fold(
+                { userIsNew ->
+                    if (!userIsNew) {
+                        onboardingRepository.onboardingStep = OnboardingStep.COMPLETED
+                    }
+                    SignInResult.Success
+                },
+                { SignInResult.Error }
+            )
     }
 
 }

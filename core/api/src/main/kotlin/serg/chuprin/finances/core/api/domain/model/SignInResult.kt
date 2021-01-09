@@ -7,8 +7,6 @@ sealed class SignInResult {
 
     object Error : SignInResult()
 
-    class Success(
-        val userIsNew: Boolean
-    ) : SignInResult()
+    object Success : SignInResult()
 
 }

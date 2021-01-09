@@ -8,8 +8,9 @@ import java.util.*
 
 /**
  * Created by Sergey Chuprin on 03.04.2020.
+ *
+ * Transaction represents operations in money accounts: expense, income, balance correction etc.
  */
-@Suppress("DataClassPrivateConstructor")
 data class Transaction(
     val id: Id,
     val ownerId: Id,
@@ -19,7 +20,9 @@ data class Transaction(
     val categoryId: Id? = null,
     private val _date: Date = Date(),
     /**
-     * String representation of [BigDecimal]; May start with "-" symbol.
+     * String representation of [BigDecimal].
+     * For expense transaction it starts with "-" symbol.
+     * I.e "-12.5".
      */
     private val _amount: String
 ) {

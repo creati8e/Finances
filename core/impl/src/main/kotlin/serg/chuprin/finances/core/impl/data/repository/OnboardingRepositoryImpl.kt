@@ -19,7 +19,7 @@ internal class OnboardingRepositoryImpl @Inject constructor(
 
         override val preferenceValuesMap: Map<OnboardingStep, String> = mapOf(
             OnboardingStep.COMPLETED to "completed",
-            OnboardingStep.ACCOUNT_SETUP to "account_setup",
+            OnboardingStep.ACCOUNTS_SETUP to "account_setup",
             OnboardingStep.CURRENCY_CHOICE to "currency_choice"
         )
 

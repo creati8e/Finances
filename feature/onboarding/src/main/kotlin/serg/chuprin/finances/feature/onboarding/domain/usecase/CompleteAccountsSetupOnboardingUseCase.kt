@@ -13,6 +13,8 @@ import javax.inject.Inject
 
 /**
  * Created by Sergey Chuprin on 12.04.2020.
+ *
+ * Completes onboarding flow by creating money accounts and initial balance transactions.
  */
 class CompleteAccountsSetupOnboardingUseCase @Inject constructor(
     private val userRepository: UserRepository,
@@ -26,6 +28,9 @@ class CompleteAccountsSetupOnboardingUseCase @Inject constructor(
         cashAccountParams: OnboardingMoneyAccountCreationParams?,
         bankAccountCardParams: OnboardingMoneyAccountCreationParams?
     ) {
+        if (cashAccountParams == null && bankAccountCardParams == null) {
+            return
+        }
         val currentUser = userRepository.getCurrentUser()
 
         if (cashAccountParams != null) {

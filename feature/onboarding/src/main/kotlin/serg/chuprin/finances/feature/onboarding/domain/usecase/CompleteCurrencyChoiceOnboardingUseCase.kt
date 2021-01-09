@@ -10,6 +10,9 @@ import javax.inject.Inject
 
 /**
  * Created by Sergey Chuprin on 08.04.2020.
+ *
+ * Completes currency choice onboarding by creating [User] with
+ * default currency set and default data period type.
  */
 class CompleteCurrencyChoiceOnboardingUseCase @Inject constructor(
     private val userRepository: UserRepository,
@@ -18,7 +21,7 @@ class CompleteCurrencyChoiceOnboardingUseCase @Inject constructor(
 
     suspend fun execute(chosenCurrency: Currency) {
         createOnboardedUser(chosenCurrency)
-        onboardingRepository.onboardingStep = OnboardingStep.ACCOUNT_SETUP
+        onboardingRepository.onboardingStep = OnboardingStep.ACCOUNTS_SETUP
     }
 
     private suspend fun createOnboardedUser(chosenCurrency: Currency) {

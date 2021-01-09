@@ -23,7 +23,7 @@ class OnboardingLaunchFragment : BaseFragment(R.layout.fragment_onboarding_launc
     private fun setCurrentFragment(currentStep: OnboardingStep) {
         return when (currentStep) {
             OnboardingStep.COMPLETED -> Unit
-            OnboardingStep.ACCOUNT_SETUP -> {
+            OnboardingStep.ACCOUNTS_SETUP -> {
                 OnboardingLaunchFragmentDirections.navigateToAccountsSetupOnboarding().run {
                     navController.navigate(this)
                 }
