@@ -2,10 +2,11 @@ package serg.chuprin.finances.feature.transactions.report.dependencies
 
 import dagger.Component
 import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
+import serg.chuprin.finances.core.api.domain.TransactionAmountCalculator
 import serg.chuprin.finances.core.api.domain.TransactionsByDayGrouper
 import serg.chuprin.finances.core.api.domain.linker.TransactionWithCategoriesLinker
-import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
 import serg.chuprin.finances.core.api.domain.repository.CategoryRepository
+import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.api.domain.service.TransactionCategoryRetrieverService
@@ -23,18 +24,19 @@ interface TransactionsReportDependencies {
 
     val transactionReportNavigation: TransactionReportNavigation
 
-    val resourceManger: ResourceManger
-
     val userRepository: UserRepository
+    val categoryRepository: CategoryRepository
     val transactionRepository: TransactionRepository
     val moneyAccountRepository: MoneyAccountRepository
-    val categoryRepository: CategoryRepository
 
     val amountFormatter: AmountFormatter
     val dateTimeFormatter: DateTimeFormatter
     val categoryColorFormatter: CategoryColorFormatter
+
+    val resourceManger: ResourceManger
     val transactionCellBuilder: TransactionCellBuilder
     val transactionsByDayGrouper: TransactionsByDayGrouper
+    val transactionAmountCalculator: TransactionAmountCalculator
     val transactionWithCategoriesLinker: TransactionWithCategoriesLinker
     val transactionCategoryRetrieverService: TransactionCategoryRetrieverService
 }

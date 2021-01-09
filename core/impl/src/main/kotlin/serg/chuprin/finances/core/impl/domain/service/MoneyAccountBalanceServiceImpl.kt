@@ -1,6 +1,7 @@
 package serg.chuprin.finances.core.impl.domain.service
 
 import kotlinx.coroutines.flow.*
+import serg.chuprin.finances.core.api.domain.TransactionAmountCalculator
 import serg.chuprin.finances.core.api.domain.model.User
 import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccountToBalance
@@ -9,7 +10,6 @@ import serg.chuprin.finances.core.api.domain.model.transaction.query.Transaction
 import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.api.domain.service.MoneyAccountBalanceService
-import serg.chuprin.finances.core.api.extensions.amount
 import javax.inject.Inject
 
 /**
@@ -17,7 +17,8 @@ import javax.inject.Inject
  */
 internal class MoneyAccountBalanceServiceImpl @Inject constructor(
     private val transactionRepository: TransactionRepository,
-    private val moneyAccountRepository: MoneyAccountRepository
+    private val moneyAccountRepository: MoneyAccountRepository,
+    private val transactionAmountCalculator: TransactionAmountCalculator
 ) : MoneyAccountBalanceService {
 
     override fun balancesFlow(user: User): Flow<MoneyAccountToBalance> {
@@ -37,7 +38,12 @@ internal class MoneyAccountBalanceServiceImpl @Inject constructor(
                     .transactionsFlow(
                         TransactionsQuery(moneyAccountIds = setOf(account.id))
                     )
-                    .map { transactions -> transactions.amount },
+                    .map { transactions ->
+                        transactionAmountCalculator.calculate(
+                            transactions,
+                            isAbsoluteAmount = false
+                        )
+                    },
                 ::Pair
             )
         }

@@ -1,9 +1,9 @@
 package serg.chuprin.finances.feature.dashboard.domain.builder.categories
 
+import serg.chuprin.finances.core.api.domain.TransactionAmountCalculator
 import serg.chuprin.finances.core.api.domain.model.CategoryShares
 import serg.chuprin.finances.core.api.domain.model.CategoryToTransactionsList
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
-import serg.chuprin.finances.core.api.extensions.amount
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardCategoriesWidgetPage
 import java.math.BigDecimal
 import javax.inject.Inject
@@ -16,7 +16,9 @@ import javax.inject.Inject
  * sorts them by amount and takes only most passed count.
  * For other categories amount is calculated too.
  */
-class DashboardCategoriesPageBuilder @Inject constructor() {
+class DashboardCategoriesPageBuilder @Inject constructor(
+    private val transactionAmountCalculator: TransactionAmountCalculator
+) {
 
     fun build(
         transactionType: PlainTransactionType,
@@ -58,7 +60,13 @@ class DashboardCategoriesPageBuilder @Inject constructor() {
     private fun CategoryToTransactionsList.calculateCategoryShares(): CategoryShares {
         return CategoryShares(
             map { (categoryWithParent, transactions) ->
-                categoryWithParent to transactions.amount.abs()
+                Pair(
+                    categoryWithParent,
+                    transactionAmountCalculator.calculate(
+                        transactions,
+                        isAbsoluteAmount = true
+                    )
+                )
             }.sortedByDescending { (_, amount) -> amount }
         )
     }

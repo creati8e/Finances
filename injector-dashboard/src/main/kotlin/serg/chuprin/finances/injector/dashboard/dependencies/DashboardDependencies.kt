@@ -2,9 +2,10 @@ package serg.chuprin.finances.injector.dashboard.dependencies
 
 import dagger.Component
 import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
+import serg.chuprin.finances.core.api.domain.TransactionAmountCalculator
 import serg.chuprin.finances.core.api.domain.linker.TransactionWithCategoriesLinker
-import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
 import serg.chuprin.finances.core.api.domain.repository.CategoryRepository
+import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.api.domain.service.MoneyAccountBalanceService
@@ -43,6 +44,7 @@ interface DashboardDependencies {
 
     val transitionNameBuilder: TransitionNameBuilder
     val transactionCellBuilder: TransactionCellBuilder
+    val transactionAmountCalculator: TransactionAmountCalculator
     val dataPeriodTypePopupMenuCellsBuilder: DataPeriodTypePopupMenuCellsBuilder
 
     val moneyAccountBalanceService: MoneyAccountBalanceService

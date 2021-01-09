@@ -2,6 +2,7 @@ package serg.chuprin.finances.feature.moneyaccounts.details.dependencies
 
 import dagger.Component
 import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
+import serg.chuprin.finances.core.api.domain.TransactionAmountCalculator
 import serg.chuprin.finances.core.api.domain.TransactionsByDayGrouper
 import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
@@ -30,6 +31,7 @@ interface MoneyAccountDetailsDependencies {
 
     val transactionCellBuilder: TransactionCellBuilder
     val transactionsByDayGrouper: TransactionsByDayGrouper
+    val transactionAmountCalculator: TransactionAmountCalculator
 
     val amountFormatter: AmountFormatter
     val dateTimeFormatter: DateTimeFormatter
