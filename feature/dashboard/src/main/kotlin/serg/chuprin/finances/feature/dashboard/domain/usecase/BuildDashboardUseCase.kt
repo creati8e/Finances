@@ -30,20 +30,24 @@ class BuildDashboardUseCase @Inject constructor(
         return userRepository
             .currentUserSingleFlow()
             .flatMapLatest { user ->
-                moneyAccountRepository.accountsFlow(MoneyAccountsQuery(ownerId = user.id))
+                combine(
+                    flowOf(user),
+                    moneyAccountRepository.accountsFlow(MoneyAccountsQuery(ownerId = user.id)),
+                    ::Pair
+                )
             }
             // Don't bother downstream with money account updates
             // but only if new account created or all accounts deleted.
-            .distinctUntilChanged { old, new ->
-                old.size == new.size || !(old.isEmpty() || new.isEmpty())
+            .distinctUntilChanged { (_, oldAccounts), (_, newAccounts) ->
+                oldAccounts.size == newAccounts.size
+                        || !(oldAccounts.isEmpty() || newAccounts.isEmpty())
             }
-            .flatMapLatest { moneyAccounts ->
+            .flatMapLatest { (user, moneyAccounts) ->
                 if (moneyAccounts.isEmpty()) {
                     flowOf(Dashboard(hasNoMoneyAccounts = true))
                 } else {
                     combine(
-                        userRepository
-                            .currentUserSingleFlow(),
+                        flowOf(user),
                         dataPeriodRepository
                             .currentDataPeriodFlow
                             .distinctUntilChanged(),
