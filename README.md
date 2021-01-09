@@ -27,6 +27,15 @@ APKs are hosted on [AppCenter](https://install.appcenter.ms/users/gregamer-gmail
 # Some other tools:
 - [**Gradle Modules Graph visualizer**](https://github.com/vanniktech/gradle-dependency-graph-generator-plugin)
 - [**Proguard & R8 Dictionaries Generator**](https://github.com/CleverPumpkin/Proguard-Dictionaries-Generator) - for generating randomized dictionaries for Proguard (and R8)
+
+# Interesting stuff:
+- [Dashboard building](feature/dashboard/src/main/kotlin/serg/chuprin/finances/feature/dashboard/domain/usecase/BuildDashboardUseCase.kt)
+- [Transactions report building](feature/transactions-report/src/main/kotlin/serg/chuprin/finances/feature/transactions/domain/usecase/BuildTransactionsReportUseCase.kt)
+- [Working with data periods](core/api/src/main/kotlin/serg/chuprin/finances/core/api/domain/model/period/DataPeriod.kt)
+- [MVI implementation](core/mvi/src/main/kotlin/serg/chuprin/finances/core/mvi)
+- [Pie chart](core/pie-chart/src/main/kotlin/serg/chuprin/finances/core/piechart/PieChartView.kt)
+- [Modules configuration](build.gradle.kts)
+- 
 # Screens
 |    Screen     | Remarks                                                                    | How it looks                                             |
 |:-------------:|:---------------------------------------------------------------------------|:---------------------------------------------------------|
@@ -34,8 +43,17 @@ APKs are hosted on [AppCenter](https://install.appcenter.ms/users/gregamer-gmail
 |  Onboarding   |                                                                            | <img src="screenshots/onboarding.gif"  width="250" />    |
 |   Dashboard   |                                                                            | <img src="screenshots/dashboard.jpg"  width="250" />     |
 |    Report     | Filter button is not working,<br> clicking on category shares does nothing | <img src="screenshots/report.jpg"  width="250" />        |
-| Money account | Editing money account is not supported yet                                 | <img src="screenshots/money_account.jpg"  width="250" /> |
+| Money account | Editing money account isn't supported yet                                 | <img src="screenshots/money_account.jpg"  width="250" /> |
 |     User      |                                                                            | <img src="screenshots/user.jpg"  width="250" />          |
-|  Transaction  | Editing balance transaction is not supported yet                           | <img src="screenshots/transaction.jpg"  width="250" />   |
+|  Transaction  | Editing balance transaction isn't supported yet                           | <img src="screenshots/transaction.jpg"  width="250" />   |
 |  Categories   |                                                                            | <img src="screenshots/categories.jpg"  width="250" />    |
-And some other screens not listed above
+
+Some other screens not listed above
+
+# What's not working:
+- No multi-currency support (all amounts are calculated in default user's currency)
+- Editing money account is not working
+- Filter button on transactions report screen is not working
+- Clicking on category on transactions report screen is not working
+- Editing balance transaction is not supported yet
+- ... 
