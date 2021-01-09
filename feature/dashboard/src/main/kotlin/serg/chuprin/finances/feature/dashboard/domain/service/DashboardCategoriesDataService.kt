@@ -48,7 +48,7 @@ class DashboardCategoriesDataService @Inject constructor(
                     categoryRepository.categoriesFlow(
                         CategoriesQuery(
                             ownerId = currentUser.id,
-                            categoryIds = transactions.categoryIds.toSet(),
+                            categoryIds = transactions.categoryIds,
                             relation = CategoriesQuery.Relation.RETRIEVE_PARENTS
                         )
                     ),

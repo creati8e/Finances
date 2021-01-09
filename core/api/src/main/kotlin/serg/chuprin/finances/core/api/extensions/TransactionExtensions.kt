@@ -7,8 +7,8 @@ import java.math.BigDecimal
 /**
  * Created by Sergey Chuprin on 20.04.2020.
  */
-val Collection<Transaction>.categoryIds: List<Id>
-    get() = mapNotNull(Transaction::categoryId).distinct()
+val Collection<Transaction>.categoryIds: Set<Id>
+    get() = mapNotNullTo(mutableSetOf(), Transaction::categoryId)
 
 val Collection<Transaction>.amount: BigDecimal
     get() {
