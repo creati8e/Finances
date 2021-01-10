@@ -8,3 +8,7 @@ import com.android.build.gradle.internal.dsl.BuildType
 fun BuildType.setIsDebugMenuEnabled(enabled: Boolean) {
     buildConfigField("boolean", "IS_DEBUG_MENU_ENABLED", enabled.toString())
 }
+
+fun BuildType.setIsCrashlyticsEnabled(enabled: Boolean) {
+    buildConfigField("boolean", "IS_CRASHLYTICS_ENABLED", enabled.toString())
+}

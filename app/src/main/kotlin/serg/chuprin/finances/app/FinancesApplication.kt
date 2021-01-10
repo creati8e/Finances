@@ -1,6 +1,7 @@
 package serg.chuprin.finances.app
 
 import android.app.Application
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import serg.chuprin.finances.app.di.navigation.NavigationComponent
 import serg.chuprin.finances.core.impl.di.CoreDependenciesComponent
 
@@ -20,6 +21,10 @@ class FinancesApplication : Application() {
     }
 
     private fun initializeComponents() {
+
+        val isCrashlyticsEnabled = BuildConfig.IS_CRASHLYTICS_ENABLED
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(isCrashlyticsEnabled)
+
         CoreDependenciesComponent.init(this, NavigationComponent.instance)
         CoreDependenciesComponent.get().appInitializer.initialize(this)
     }

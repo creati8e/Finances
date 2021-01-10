@@ -52,6 +52,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "101897485244-0a9ebaoiah8o3dgc6i119n1or379ntrl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "serg.chuprin.finances.debug",
+            "certificate_hash": "df20e615a0c25fae3bf77aab15325cdaad1962ad"
+          }
+        },
+        {
           "client_id": "101897485244-l66n2datndiucs2rdlua3jh51t6f9aqo.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
