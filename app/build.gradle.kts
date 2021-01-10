@@ -1,3 +1,4 @@
+import org.apache.commons.io.output.ByteArrayOutputStream
 import serg.chuprin.finances.config.AppConfig
 import serg.chuprin.finances.config.setIsCrashlyticsEnabled
 
@@ -28,11 +29,13 @@ android {
     buildTypes {
         maybeCreate(AppConfig.BuildTypes.DEBUG.name).apply {
             applicationIdSuffix = ".debug"
+            versionNameSuffix = "+${getLastCommitHash()}"
             signingConfig = signingConfigs.getByName(AppConfig.BuildTypes.DEBUG.name)
             setIsCrashlyticsEnabled(true)
         }
         maybeCreate(AppConfig.BuildTypes.DEV.name).apply {
             applicationIdSuffix = ".debug"
+            versionNameSuffix = "+${getLastCommitHash()}"
             signingConfig = signingConfigs.getByName(AppConfig.BuildTypes.DEBUG.name)
             setIsCrashlyticsEnabled(false)
         }
@@ -109,4 +112,14 @@ dependencies {
     implementation(Libraries.Infrastructure.AUTH)
     implementation(Libraries.Infrastructure.FIRESTORE)
 
+}
+
+fun getLastCommitHash(): String {
+    val stdout = ByteArrayOutputStream()
+    exec {
+        commandLine("git", "rev-parse", "--short", "HEAD")
+        standardOutput = stdout
+    }
+    @Suppress("DEPRECATION")
+    return stdout.toString().trim()
 }
