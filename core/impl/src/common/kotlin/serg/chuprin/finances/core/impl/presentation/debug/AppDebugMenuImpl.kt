@@ -10,7 +10,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.OnboardingStep
 import serg.chuprin.finances.core.api.domain.model.User
 import serg.chuprin.finances.core.api.domain.model.category.CategoryType
 import serg.chuprin.finances.core.api.domain.model.category.CategoryWithParent
@@ -35,7 +34,6 @@ import serg.chuprin.finances.core.api.R as CoreR
 internal class AppDebugMenuImpl @Inject constructor(
     private val resourceManger: ResourceManger,
     private val userRepository: UserRepository,
-    private val onboardingRepository: OnboardingRepository,
     private val transactionRepository: TransactionRepository,
     private val moneyAccountRepository: MoneyAccountRepository,
     private val categoryRepository: CategoryRepository
@@ -209,8 +207,6 @@ internal class AppDebugMenuImpl @Inject constructor(
         val categories = categoryRepository
             .categories(CategoriesQuery(ownerId = currentUser.id))
         categoryRepository.deleteCategories(categories.values.map { it.category.id })
-
-        onboardingRepository.onboardingStep = OnboardingStep.INITIAL
     }
 
 }
