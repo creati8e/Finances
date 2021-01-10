@@ -1,6 +1,5 @@
 package serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.store
 
-import com.github.ajalt.timberkt.Timber
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flow
@@ -96,7 +95,6 @@ class MoneyAccountCreationActionExecutor @Inject constructor(
                 input = intent.balance,
                 currency = state.chosenCurrency!!
             )
-            Timber.d { "formattedBalance: $formattedBalance" }
             val parsedBalance = amountParser.parse(formattedBalance)
             MoneyAccountCreationEffect.BalanceEntered(
                 balance = parsedBalance,

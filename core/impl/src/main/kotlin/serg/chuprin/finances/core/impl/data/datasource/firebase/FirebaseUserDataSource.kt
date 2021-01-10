@@ -52,9 +52,6 @@ internal class FirebaseUserDataSource @Inject constructor(
                 document
                     .set(fieldsMap, SetOptions.merge())
                     .await()
-                    .also {
-                        Timber.d { "User created" }
-                    }
                 success(userIsNew)
             } catch (throwable: Throwable) {
                 failure(throwable)
