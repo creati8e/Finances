@@ -48,7 +48,7 @@ internal class CategoryRepositoryImpl @Inject constructor(
                         assetMapper.mapFromAsset(dto, ownerId)
                     }
             }
-            firebaseDataSource.createCategories(allCategories)
+            firebaseDataSource.createOrUpdateCategories(allCategories)
         }
     }
 

@@ -23,16 +23,8 @@ internal class FirebaseCategoryDataSource @Inject constructor(
     override val collection: CollectionReference
         get() = firestore.collection(COLLECTION_NAME)
 
-    fun createCategories(categories: List<Category>) {
-        val collection = collection
-        firestore.runBatch { writeBatch ->
-            categories.forEach { category ->
-                writeBatch.set(
-                    collection.document(category.id.value),
-                    mapper.mapToFieldsMap(category)
-                )
-            }
-        }
+    fun createOrUpdateCategories(categories: List<Category>) {
+        createOrUpdate(categories.associateBy(Category::id, mapper::mapToFieldsMap))
     }
 
     fun deleteCategories(categoryIds: Collection<Id>) = delete(categoryIds)

@@ -47,6 +47,9 @@ internal class FirebaseUserDataSource @Inject constructor(
                 }
                 val document = getCollection().document(firebaseUser.uid)
                 val documentSnapshot = document.get().await()
+
+                // Currency code field is fine for detecting whether user is new or not
+                // because it's set only after onboarding flow completion.
                 val userIsNew = !documentSnapshot.exists()
                         || documentSnapshot.getString(FIELD_DEFAULT_CURRENCY_CODE).isNullOrEmpty()
                 document

@@ -23,26 +23,16 @@ import javax.inject.Inject
  */
 internal class FirebaseTransactionDataSource @Inject constructor(
     firestore: FirebaseFirestore,
-    private val transactionMapper: FirebaseTransactionMapper
+    private val mapper: FirebaseTransactionMapper
 ) : BaseFirebaseDataSource(firestore) {
 
     override val collection: CollectionReference
         get() = firestore.collection(COLLECTION_NAME)
 
-    fun deleteTransactions(transactionIds: Collection<Id>) {
-        delete(transactionIds)
-    }
+    fun deleteTransactions(transactionIds: Collection<Id>) = delete(transactionIds)
 
     fun createOrUpdate(transactions: Collection<Transaction>) {
-        val collection = collection
-        firestore.runBatch { writeBatch ->
-            transactions.forEach { transaction ->
-                writeBatch.set(
-                    collection.document(transaction.id.value),
-                    transactionMapper.mapToFieldsMap(transaction)
-                )
-            }
-        }
+        createOrUpdate(transactions.associateBy(Transaction::id, mapper::mapToFieldsMap))
     }
 
     fun transactionsFlow(query: TransactionsQuery): Flow<List<DocumentSnapshot>> {
