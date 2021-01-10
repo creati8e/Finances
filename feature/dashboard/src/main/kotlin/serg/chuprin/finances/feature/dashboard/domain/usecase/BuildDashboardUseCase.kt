@@ -44,7 +44,7 @@ class BuildDashboardUseCase @Inject constructor(
             }
             .flatMapLatest { (user, moneyAccounts) ->
                 if (moneyAccounts.isEmpty()) {
-                    flowOf(Dashboard(hasNoMoneyAccounts = true))
+                    flowOf(Dashboard(user = user, hasNoMoneyAccounts = true))
                 } else {
                     combine(
                         flowOf(user),
