@@ -7,6 +7,7 @@ import serg.chuprin.finances.core.api.domain.model.category.Category
 import serg.chuprin.finances.core.api.domain.model.category.CategoryType
 import serg.chuprin.finances.core.api.domain.model.category.CategoryWithParent
 import serg.chuprin.finances.core.api.domain.model.category.CategoryIdToCategory
+import serg.chuprin.finances.core.impl.domain.linker.CategoryLinker
 import strikt.api.expectThat
 import strikt.assertions.getValue
 import strikt.assertions.hasSize

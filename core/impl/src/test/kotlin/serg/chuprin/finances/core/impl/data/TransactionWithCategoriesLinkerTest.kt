@@ -8,6 +8,7 @@ import serg.chuprin.finances.core.api.domain.model.category.Category
 import serg.chuprin.finances.core.api.domain.model.category.CategoryType
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.model.transaction.TransactionType
+import serg.chuprin.finances.core.impl.domain.linker.CategoryLinker
 import serg.chuprin.finances.core.impl.domain.linker.TransactionWithCategoriesLinkerImpl
 import strikt.api.expectThat
 import strikt.assertions.isEqualTo

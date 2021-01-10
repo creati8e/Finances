@@ -1,4 +1,4 @@
-package serg.chuprin.finances.core.impl.data
+package serg.chuprin.finances.core.impl.domain.linker
 
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.category.Category

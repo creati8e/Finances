@@ -8,7 +8,7 @@ import serg.chuprin.finances.core.api.domain.model.category.Category
 import serg.chuprin.finances.core.api.domain.model.category.query.CategoriesQuery
 import serg.chuprin.finances.core.api.domain.model.category.CategoryIdToCategory
 import serg.chuprin.finances.core.api.domain.repository.CategoryRepository
-import serg.chuprin.finances.core.impl.data.CategoryLinker
+import serg.chuprin.finances.core.impl.domain.linker.CategoryLinker
 import serg.chuprin.finances.core.impl.data.datasource.assets.PredefinedCategoriesDataSource
 import serg.chuprin.finances.core.impl.data.datasource.firebase.FirebaseCategoryDataSource
 import serg.chuprin.finances.core.impl.data.mapper.category.CategoryAssetMapper
