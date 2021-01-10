@@ -2,10 +2,7 @@ package serg.chuprin.finances.feature.moneyaccounts.creation
 
 import dagger.Component
 import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
-import serg.chuprin.finances.core.api.domain.repository.CurrencyRepository
-import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
-import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
-import serg.chuprin.finances.core.api.domain.repository.UserRepository
+import serg.chuprin.finances.core.api.domain.repository.*
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStoreProvider
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
@@ -16,10 +13,13 @@ import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
 interface MoneyAccountCreationDependencies {
     val amountParser: AmountParser
     val amountFormatter: AmountFormatter
+
     val userRepository: UserRepository
+    val categoryRepository: CategoryRepository
     val currencyRepository: CurrencyRepository
     val transactionRepository: TransactionRepository
     val moneyAccountRepository: MoneyAccountRepository
+
     val currencyChoiceStoreProvider: CurrencyChoiceStoreProvider
 }
 
