@@ -36,7 +36,7 @@ class CreateMoneyAccountUseCase @Inject constructor(
             id = moneyAccountId,
             currencyCode = currencyCode
         )
-        moneyAccountRepository.createAccount(moneyAccount)
+        moneyAccountRepository.createOrUpdateAccount(moneyAccount)
 
         if (initialBalance != BigDecimal.ZERO) {
             val balanceTransaction = Transaction(

@@ -158,7 +158,7 @@ internal class AppDebugMenuImpl @Inject constructor(
             currencyCode = currentUser.defaultCurrencyCode,
             isFavorite = ThreadLocalRandom.current().nextBoolean()
         )
-        moneyAccountRepository.createAccount(moneyAccount)
+        moneyAccountRepository.createOrUpdateAccount(moneyAccount)
         Timber.d { "New test money account created: $moneyAccount" }
     }
 

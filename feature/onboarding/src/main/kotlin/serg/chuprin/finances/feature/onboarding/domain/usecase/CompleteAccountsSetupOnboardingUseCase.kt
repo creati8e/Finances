@@ -54,7 +54,7 @@ class CompleteAccountsSetupOnboardingUseCase @Inject constructor(
             name = accountParams.accountName,
             currencyCode = currentUser.defaultCurrencyCode
         )
-        moneyAccountRepository.createAccount(moneyAccount)
+        moneyAccountRepository.createOrUpdateAccount(moneyAccount)
         setInitialAccountBalance(
             user = currentUser,
             account = moneyAccount,

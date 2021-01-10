@@ -18,9 +18,9 @@ internal class MoneyAccountRepositoryImpl @Inject constructor(
     private val dataSource: FirebaseMoneyAccountDataSource
 ) : MoneyAccountRepository {
 
-    override fun createAccount(account: MoneyAccount) = dataSource.createAccount(account)
-
-    override fun updateAccount(account: MoneyAccount) = dataSource.updateAccount(account)
+    override fun createOrUpdateAccount(account: MoneyAccount) {
+        dataSource.createOrUpdateAccount(account)
+    }
 
     override fun deleteAccounts(accountIds: Collection<Id>) = dataSource.deleteAccounts(accountIds)
 

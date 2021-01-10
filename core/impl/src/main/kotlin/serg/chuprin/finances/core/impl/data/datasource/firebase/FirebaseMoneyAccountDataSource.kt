@@ -23,11 +23,7 @@ internal class FirebaseMoneyAccountDataSource @Inject constructor(
     override val collection: CollectionReference
         get() = firestore.collection(COLLECTION_NAME)
 
-    fun createAccount(account: MoneyAccount) {
-        getAccountDocumentById(account.id).set(mapper.mapToFieldsMap(account))
-    }
-
-    fun updateAccount(account: MoneyAccount) {
+    fun createOrUpdateAccount(account: MoneyAccount) {
         getAccountDocumentById(account.id).set(mapper.mapToFieldsMap(account))
     }
 

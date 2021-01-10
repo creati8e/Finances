@@ -13,7 +13,7 @@ class MarkMoneyAccountAsFavoriteUseCase @Inject constructor(
 
     fun execute(moneyAccount: MoneyAccount, markAsFavorite: Boolean) {
         val updatedAccount = moneyAccount.copy(isFavorite = markAsFavorite)
-        moneyAccountRepository.updateAccount(updatedAccount)
+        moneyAccountRepository.createOrUpdateAccount(updatedAccount)
     }
 
 }

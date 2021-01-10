@@ -11,9 +11,7 @@ import serg.chuprin.finances.core.api.domain.model.moneyaccount.query.MoneyAccou
  */
 interface MoneyAccountRepository {
 
-    fun updateAccount(account: MoneyAccount)
-
-    fun createAccount(account: MoneyAccount)
+    fun createOrUpdateAccount(account: MoneyAccount)
 
     fun accountFlow(accountId: Id): Flow<MoneyAccount?>
 
