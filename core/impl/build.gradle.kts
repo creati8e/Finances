@@ -67,4 +67,6 @@ dependencies {
     add(AppConfig.BuildTypes.DEBUG.implementation, Libraries.DebugMenu.DEBUG)
     releaseImplementation(Libraries.DebugMenu.RELEASE)
 
+    testImplementation(project(":core:test"))
+
 }

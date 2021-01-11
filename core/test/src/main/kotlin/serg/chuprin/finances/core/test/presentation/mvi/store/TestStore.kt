@@ -1,4 +1,4 @@
-package serg.chuprin.finances.core.test.store
+package serg.chuprin.finances.core.test.presentation.mvi.store
 
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.test.TestCoroutineDispatcher

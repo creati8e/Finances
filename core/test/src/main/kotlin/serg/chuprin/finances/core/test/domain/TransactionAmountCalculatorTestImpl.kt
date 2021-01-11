@@ -1,4 +1,4 @@
-package serg.chuprin.finances.core.api.test
+package serg.chuprin.finances.core.test.domain
 
 import serg.chuprin.finances.core.api.domain.TransactionAmountCalculator
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction

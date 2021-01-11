@@ -1,9 +1,9 @@
-package serg.chuprin.finances.core.test.factory
+package serg.chuprin.finances.core.test.presentation.mvi.factory
 
 import serg.chuprin.finances.core.mvi.store.StateStore
 import serg.chuprin.finances.core.mvi.store.factory.AbsStoreFactory
-import serg.chuprin.finances.core.test.store.TestStore
-import serg.chuprin.finances.core.test.store.TestStoreImpl
+import serg.chuprin.finances.core.test.presentation.mvi.store.TestStore
+import serg.chuprin.finances.core.test.presentation.mvi.store.TestStoreImpl
 
 /**
  * Created by Sergey Chuprin on 08.12.2020.

@@ -7,7 +7,7 @@ import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.User
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriodType
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
-import serg.chuprin.finances.core.test.utils.TimberTestTree
+import serg.chuprin.finances.core.api.extensions.TimberConsoleTree
 import serg.chuprin.finances.feature.onboarding.R
 import serg.chuprin.finances.feature.onboarding.domain.OnboardingMoneyAccountCreationParams
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.factory.AccountsSetupOnboardingStoreTestFactory
@@ -28,7 +28,7 @@ object AccountsSetupOnboardingStoreTest : Spek({
 
     Feature("Accounts setup onboarding store") {
 
-        Timber.plant(TimberTestTree())
+        Timber.plant(TimberConsoleTree())
 
         Scenario("Starting store") {
 

@@ -10,7 +10,7 @@ import serg.chuprin.finances.core.api.domain.model.category.CategoryType
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.model.transaction.TransactionType
-import serg.chuprin.finances.core.api.test.TransactionAmountCalculatorTestImpl
+import serg.chuprin.finances.core.test.domain.TransactionAmountCalculatorTestImpl
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardCategoriesWidgetPage
 import strikt.api.expectThat
 import strikt.assertions.containsExactlyInAnyOrder

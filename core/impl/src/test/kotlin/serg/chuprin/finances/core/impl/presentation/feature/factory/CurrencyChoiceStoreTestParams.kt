@@ -3,7 +3,7 @@ package serg.chuprin.finances.core.impl.presentation.feature.factory
 import serg.chuprin.finances.core.api.domain.repository.CurrencyRepository
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceIntent
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceState
-import serg.chuprin.finances.core.test.store.TestStore
+import serg.chuprin.finances.core.test.presentation.mvi.store.TestStore
 
 /**
  * Created by Sergey Chuprin on 09.12.2020.

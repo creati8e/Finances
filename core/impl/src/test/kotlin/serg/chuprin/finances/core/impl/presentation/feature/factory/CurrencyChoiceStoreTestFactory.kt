@@ -6,7 +6,7 @@ import serg.chuprin.finances.core.api.domain.usecase.SearchCurrenciesUseCase
 import serg.chuprin.finances.core.impl.presentation.feature.CurrencyChoiceStoreTestBootstrapper
 import serg.chuprin.finances.core.impl.presentation.model.store.currencychoice.CurrencyChoiceActionExecutor
 import serg.chuprin.finances.core.impl.presentation.model.store.currencychoice.CurrencyChoiceStoreFactory
-import serg.chuprin.finances.core.test.factory.TestStoreFactory.Companion.test
+import serg.chuprin.finances.core.test.presentation.mvi.factory.TestStoreFactory.Companion.test
 
 /**
  * Created by Sergey Chuprin on 09.12.2020.

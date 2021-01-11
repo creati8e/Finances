@@ -2,7 +2,6 @@ package serg.chuprin.finances.core.api.extensions
 
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
-import serg.chuprin.finances.core.test.utils.TimberTestTree
 import strikt.api.expectThat
 import strikt.assertions.isEqualTo
 import timber.log.Timber
@@ -16,7 +15,7 @@ object DateTimeExtensionsTest : Spek({
 
     Feature("Date time extensions") {
 
-        Timber.plant(TimberTestTree())
+        Timber.plant(TimberConsoleTree())
 
         Scenario("Converting date to local date time") {
 
