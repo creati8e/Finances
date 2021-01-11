@@ -24,6 +24,7 @@ import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.impl.BuildConfig
 import serg.chuprin.finances.core.impl.R
 import serg.chuprin.finances.core.impl.di.initializer.AppDebugMenuInitializer
+import java.time.LocalDateTime
 import java.util.concurrent.ThreadLocalRandom
 import javax.inject.Inject
 import serg.chuprin.finances.core.api.R as CoreR
@@ -142,6 +143,7 @@ internal class AppDebugMenuImpl @Inject constructor(
             _amount = amount.toString(),
             type = TransactionType.PLAIN,
             moneyAccountId = moneyAccount.id,
+            _dateTime = LocalDateTime.now(),
             currencyCode = moneyAccount.currencyCode,
             categoryId = categoryWithParent?.category?.id
         )

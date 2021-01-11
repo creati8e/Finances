@@ -15,13 +15,11 @@ import serg.chuprin.finances.core.api.domain.model.period.DataPeriodType
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.model.transaction.TransactionType
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
-import serg.chuprin.finances.core.api.extensions.toDateUTC
 import serg.chuprin.finances.feature.dashboard.domain.model.DashboardWidget
 import strikt.api.expectThat
 import strikt.assertions.isEqualTo
 import java.math.BigDecimal
 import java.time.LocalDateTime
-import java.util.*
 
 /**
  * Created by Sergey Chuprin on 17.04.2020.
@@ -81,26 +79,26 @@ object DashboardBalanceWidgetBuilderTest : Spek({
 })
 
 private fun createTransactionsForScenario1(user: User): List<Transaction> {
-    val futureTransactionDate = LocalDateTime.now().plusMonths(2).toDateUTC()
-    val pastTransactionDate = LocalDateTime.now().minusMonths(2).toDateUTC()
+    val futureTransactionDate = LocalDateTime.now().plusMonths(2)
+    val pastTransactionDate = LocalDateTime.now().minusMonths(2)
     return listOf(
         createTransaction(user, TransactionType.BALANCE, amount = "100"),
         createTransaction(user, TransactionType.PLAIN, amount = "-50"),
         createTransaction(user, TransactionType.PLAIN, amount = "70"),
-        createTransaction(user, TransactionType.PLAIN, amount = "3", date = pastTransactionDate),
-        createTransaction(user, TransactionType.BALANCE, amount = "5", date = pastTransactionDate),
-        createTransaction(user, TransactionType.PLAIN, amount = "30", date = futureTransactionDate),
-        createTransaction(user, TransactionType.BALANCE, amount = "1", date = futureTransactionDate)
+        createTransaction(user, TransactionType.PLAIN, amount = "3", dateTime = pastTransactionDate),
+        createTransaction(user, TransactionType.BALANCE, amount = "5", dateTime = pastTransactionDate),
+        createTransaction(user, TransactionType.PLAIN, amount = "30", dateTime = futureTransactionDate),
+        createTransaction(user, TransactionType.BALANCE, amount = "1", dateTime = futureTransactionDate)
     )
 }
 
 private fun createTransaction(
     user: User,
     type: TransactionType,
-    date: Date = Date(),
+    dateTime: LocalDateTime = LocalDateTime.now(),
     amount: String
 ): Transaction {
-    return Transaction(Id.createNew(), user.id, Id.createNew(), type, "USD", null, date, amount)
+    return Transaction(Id.createNew(), user.id, Id.createNew(), type, "USD", null, dateTime, amount)
 }
 
 private fun createTestUser(

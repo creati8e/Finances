@@ -4,6 +4,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.extensions.nonNullValuesMap
 import serg.chuprin.finances.core.api.extensions.toDateUTC
+import serg.chuprin.finances.core.api.extensions.toLocalDateTimeUTC
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionFieldsContract.FIELD_AMOUNT
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionFieldsContract.FIELD_CATEGORY_ID
 import serg.chuprin.finances.core.impl.data.datasource.firebase.contract.FirebaseTransactionFieldsContract.FIELD_CURRENCY_CODE
@@ -24,12 +25,12 @@ internal class FirebaseTransactionMapper @Inject constructor(
     override fun mapFromSnapshot(snapshot: DocumentSnapshot): Transaction? {
         return Transaction.create(
             id = snapshot.id,
-            date = snapshot.getDate(FIELD_DATE),
             amount = snapshot.getString(FIELD_AMOUNT),
             ownerId = snapshot.getString(FIELD_OWNER_ID),
             categoryId = snapshot.getString(FIELD_CATEGORY_ID),
             currencyCode = snapshot.getString(FIELD_CURRENCY_CODE),
             moneyAccountId = snapshot.getString(FIELD_MONEY_ACCOUNT_ID),
+            dateTime = snapshot.getDate(FIELD_DATE)?.toLocalDateTimeUTC(),
             type = snapshot.getString(FIELD_TYPE)?.let(typeMapper::mapTo)
         )
     }

@@ -2,8 +2,8 @@ package serg.chuprin.finances.core.impl.data
 
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
-import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.CategoryToTransactionsList
+import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.category.Category
 import serg.chuprin.finances.core.api.domain.model.category.CategoryType
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
@@ -12,7 +12,7 @@ import serg.chuprin.finances.core.impl.domain.linker.CategoryLinker
 import serg.chuprin.finances.core.impl.domain.linker.TransactionWithCategoriesLinkerImpl
 import strikt.api.expectThat
 import strikt.assertions.isEqualTo
-import java.util.*
+import java.time.LocalDateTime
 
 /**
  * Created by Sergey Chuprin on 01.05.2020.
@@ -87,7 +87,7 @@ private fun createTransaction(id: Id, categoryId: Id? = null): Transaction {
         type = TransactionType.PLAIN,
         currencyCode = "USD",
         categoryId = categoryId,
-        _date = Date(),
+        _dateTime = LocalDateTime.now(),
         _amount = "100"
     )
 }

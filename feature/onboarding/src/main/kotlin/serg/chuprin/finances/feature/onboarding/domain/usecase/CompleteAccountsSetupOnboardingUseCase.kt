@@ -9,6 +9,7 @@ import serg.chuprin.finances.core.api.domain.model.transaction.TransactionType
 import serg.chuprin.finances.core.api.domain.repository.*
 import serg.chuprin.finances.feature.onboarding.domain.OnboardingMoneyAccountCreationParams
 import java.math.BigDecimal
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 /**
@@ -73,6 +74,7 @@ class CompleteAccountsSetupOnboardingUseCase @Inject constructor(
             moneyAccountId = account.id,
             _amount = balance.toString(),
             type = TransactionType.BALANCE,
+            _dateTime = LocalDateTime.now(),
             currencyCode = account.currencyCode
         )
         transactionRepository.createOrUpdate(listOf(balanceTransaction))

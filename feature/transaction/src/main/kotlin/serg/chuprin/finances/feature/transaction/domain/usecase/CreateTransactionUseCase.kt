@@ -7,12 +7,10 @@ import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionT
 import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.model.transaction.TransactionType
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
-import serg.chuprin.finances.core.api.extensions.toDateUTC
 import serg.chuprin.finances.feature.transaction.domain.model.TransactionChosenOperation
 import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.util.*
 import javax.inject.Inject
 
 /**
@@ -38,7 +36,7 @@ class CreateTransactionUseCase @Inject constructor(
             ownerId = ownerId,
             type = transactionType,
             categoryId = category?.id,
-            _date = adjustDate(date),
+            _dateTime = adjustDate(date),
             moneyAccountId = moneyAccount.id,
             currencyCode = moneyAccount.currencyCode,
             _amount = normalizeAmount(operation, amount).toString()
@@ -49,13 +47,12 @@ class CreateTransactionUseCase @Inject constructor(
     /**
      * Take current time if date is today.
      */
-    private fun adjustDate(date: LocalDate): Date {
-        val dateTime = if (date == LocalDate.now()) {
-            LocalDateTime.now().withNano(0)
+    private fun adjustDate(date: LocalDate): LocalDateTime {
+        return if (date == LocalDate.now()) {
+            LocalDateTime.now()
         } else {
             date.atStartOfDay()
         }
-        return dateTime.toDateUTC()
     }
 
     private fun normalizeAmount(

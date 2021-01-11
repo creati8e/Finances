@@ -15,7 +15,7 @@ import serg.chuprin.finances.feature.dashboard.domain.model.DashboardCategoriesW
 import strikt.api.expectThat
 import strikt.assertions.containsExactlyInAnyOrder
 import strikt.assertions.isEqualTo
-import java.util.*
+import java.time.LocalDateTime
 
 /**
  * Created by Sergey Chuprin on 01.05.2020.
@@ -148,7 +148,7 @@ private fun createTransaction(amount: String): Transaction {
         type = TransactionType.PLAIN,
         currencyCode = "USD",
         categoryId = null,
-        _date = Date(),
+        _dateTime = LocalDateTime.now(),
         _amount = amount
     )
 }

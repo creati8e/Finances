@@ -10,6 +10,7 @@ import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import java.math.BigDecimal
+import java.time.LocalDateTime
 import java.util.*
 import javax.inject.Inject
 
@@ -67,6 +68,7 @@ class CreateMoneyAccountUseCase @Inject constructor(
             ownerId = userId,
             currencyCode = currencyCode,
             type = TransactionType.BALANCE,
+            _dateTime = LocalDateTime.now(),
             moneyAccountId = moneyAccountId,
             _amount = initialBalance.toString()
         )

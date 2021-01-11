@@ -38,7 +38,7 @@ object CreateTransactionUseCaseTest : Spek({
 
             val amount = BigDecimal.ONE
             val userId = Id.existing("1")
-            val todayDateTime = LocalDateTime.now().withNano(0)
+            val todayDateTime = LocalDateTime.now().withNano(0).withSecond(0)
 
             When("Execute use case") {
                 useCase.execute(
@@ -80,7 +80,7 @@ object CreateTransactionUseCaseTest : Spek({
         Scenario("Create income transaction with yesterday date") {
 
             val userId = Id.existing("1")
-            val yesterdayDateTime = LocalDateTime.now().minusDays(1).withNano(0)
+            val yesterdayDateTime = LocalDateTime.now().minusDays(1).withNano(0).withSecond(0)
 
             When("Execute use case") {
                 useCase.execute(

@@ -1,7 +1,6 @@
 package serg.chuprin.finances.core.api.domain.model.transaction
 
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.extensions.toLocalDateTimeUTC
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.util.*
@@ -18,7 +17,7 @@ data class Transaction(
     val type: TransactionType,
     val currencyCode: String,
     val categoryId: Id? = null,
-    private val _date: Date = Date(),
+    private val _dateTime: LocalDateTime,
     /**
      * String representation of [BigDecimal].
      * For expense transaction it starts with "-" symbol.
@@ -31,7 +30,7 @@ data class Transaction(
 
         fun create(
             id: String?,
-            date: Date?,
+            dateTime: LocalDateTime?,
             ownerId: String?,
             amount: String?,
             categoryId: String?,
@@ -40,7 +39,7 @@ data class Transaction(
             moneyAccountId: String?
         ): Transaction? {
             if (type == null) return null
-            if (date == null) return null
+            if (dateTime == null) return null
             if (ownerId == null) return null
             if (id.isNullOrBlank()) return null
             if (moneyAccountId == null) return null
@@ -48,7 +47,7 @@ data class Transaction(
             if (currencyCode.isNullOrEmpty()) return null
             return Transaction(
                 type = type,
-                _date = date,
+                _dateTime = dateTime,
                 _amount = amount,
                 id = Id.existing(id),
                 currencyCode = currencyCode,
@@ -76,7 +75,7 @@ data class Transaction(
         get() = type == TransactionType.PLAIN
 
     val dateTime: LocalDateTime
-        get() = _date.toLocalDateTimeUTC()
+        get() = _dateTime.withSecond(0).withNano(0)
 
     val currency: Currency
         get() = Currency.getInstance(currencyCode)
