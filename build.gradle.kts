@@ -29,7 +29,6 @@ buildscript {
         classpath(BuildScript.Plugins.JUNIT5)
         classpath(BuildScript.Plugins.ANDROID)
         classpath(BuildScript.Plugins.NAVIGATION)
-        classpath(BuildScript.Plugins.CRASHLYTICS)
         classpath(BuildScript.Plugins.GRAPH_VISUALIZER)
         classpath(BuildScript.Plugins.PROGUARD_GENERATOR)
     }

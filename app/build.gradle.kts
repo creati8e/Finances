@@ -1,6 +1,5 @@
 import org.apache.commons.io.output.ByteArrayOutputStream
 import serg.chuprin.finances.config.AppConfig
-import serg.chuprin.finances.config.setIsCrashlyticsEnabled
 
 plugins {
     id("com.android.application")
@@ -9,7 +8,6 @@ plugins {
     id("kotlin-android-extensions")
     id("ru.cleverpumpkin.proguard-dictionaries-generator")
     id("androidx.navigation.safeargs")
-    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -31,16 +29,11 @@ android {
             applicationIdSuffix = ".debug"
             versionNameSuffix = "+${getLastCommitHash()}"
             signingConfig = signingConfigs.getByName(AppConfig.BuildTypes.DEBUG.name)
-            setIsCrashlyticsEnabled(true)
         }
         maybeCreate(AppConfig.BuildTypes.DEV.name).apply {
             applicationIdSuffix = ".debug"
             versionNameSuffix = "+${getLastCommitHash()}"
             signingConfig = signingConfigs.getByName(AppConfig.BuildTypes.DEBUG.name)
-            setIsCrashlyticsEnabled(false)
-        }
-        maybeCreate(AppConfig.BuildTypes.RELEASE.name).apply {
-            setIsCrashlyticsEnabled(true)
         }
     }
 }
@@ -108,7 +101,6 @@ dependencies {
     implementation(Libraries.Android.Lifecycle)
 
     // Firebase.
-    implementation(Libraries.Infrastructure.CRASHLYTICS)
     implementation(Libraries.Infrastructure.AUTH)
     implementation(Libraries.Infrastructure.FIRESTORE)
 

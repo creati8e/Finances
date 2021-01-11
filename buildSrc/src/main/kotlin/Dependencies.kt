@@ -15,7 +15,6 @@ object BuildScript {
     object Plugins {
         const val GMS = "com.google.gms:google-services:4.3.4"
         const val ANDROID = "com.android.tools.build:gradle:4.1.1"
-        const val CRASHLYTICS = "com.google.firebase:firebase-crashlytics-gradle:2.4.1"
         const val JUNIT5 = "de.mannodermaus.gradle.plugins:android-junit5:1.7.0.0"
         const val KOTLIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:$KOTLIN_VER"
         const val NAVIGATION =
@@ -134,7 +133,6 @@ object Libraries {
         const val AUTH = "com.google.firebase:firebase-auth:20.0.1"
         const val FIRESTORE = "com.google.firebase:firebase-firestore-ktx:22.0.1"
         const val GMS_AUTH = "com.google.android.gms:play-services-auth:19.0.0"
-        const val CRASHLYTICS = "com.google.firebase:firebase-crashlytics-ktx:17.3.0"
         const val PLAY_SERVICES_KTX = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.4.2"
     }
 
