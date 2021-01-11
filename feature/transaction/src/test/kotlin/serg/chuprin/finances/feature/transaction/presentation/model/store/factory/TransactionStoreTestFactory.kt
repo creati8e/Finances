@@ -4,6 +4,11 @@ import io.mockk.*
 import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.User
+import serg.chuprin.finances.core.api.domain.model.category.Category
+import serg.chuprin.finances.core.api.domain.model.category.CategoryIdToCategory
+import serg.chuprin.finances.core.api.domain.model.category.CategoryType
+import serg.chuprin.finances.core.api.domain.model.category.CategoryWithParent
+import serg.chuprin.finances.core.api.domain.model.category.query.CategoriesQuery
 import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import serg.chuprin.finances.core.api.domain.model.period.DataPeriodType
 import serg.chuprin.finances.core.api.domain.repository.CategoryRepository
@@ -16,7 +21,6 @@ import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionScreenArguments
 import serg.chuprin.finances.core.test.presentation.formatter.CategoryWithParentFormatterTestImpl
 import serg.chuprin.finances.core.test.presentation.mvi.factory.TestStoreFactory.Companion.test
-import serg.chuprin.finances.feature.transaction.R
 import serg.chuprin.finances.feature.transaction.domain.usecase.CreateTransactionUseCase
 import serg.chuprin.finances.feature.transaction.domain.usecase.DeleteTransactionUseCase
 import serg.chuprin.finances.feature.transaction.domain.usecase.EditTransactionUseCase
@@ -35,20 +39,21 @@ object TransactionStoreTestFactory {
         screenArguments: TransactionScreenArguments
     ): TransactionStoreTestData {
 
+        // region Static test data.
+
         val testUser = createTestUser()
+        val testCategories = createTestCategories(testUser.id)
         val testMoneyAccounts = createTestMoneyAccounts(testUser.id)
+
+        // endregion
 
         val amountParser = mockk<AmountParser>()
         val resourceManger = mockk<ResourceManger>().apply {
             every { getString(any()) } returns "some_string"
         }
 
-        val chosenDateFormatter = TransactionChosenDateFormatter(resourceManger.apply {
-            every { getString(R.string.transaction_date_today) } returns "Today"
-            every { getString(R.string.transaction_date_yesterday) } returns "Yesterday"
-        })
+        val categoryRepository = mockCategoryRepository(testCategories)
 
-        val categoryRepository = mockk<CategoryRepository>()
         val transactionRepository = mockk<TransactionRepository>().apply {
             every { createOrUpdate(any()) } just runs
             every { deleteTransactions(any()) } just runs
@@ -64,9 +69,9 @@ object TransactionStoreTestFactory {
             resourceManger = resourceManger,
             screenArguments = screenArguments,
             categoryRepository = categoryRepository,
-            chosenDateFormatter = chosenDateFormatter,
             moneyAccountRepository = moneyAccountRepository,
             categoryNameFormatter = CategoryWithParentFormatterTestImpl(),
+            chosenDateFormatter = TransactionChosenDateFormatter(resourceManger),
             editTransactionUseCase = EditTransactionUseCase(transactionRepository),
             createTransactionUseCase = CreateTransactionUseCase(transactionRepository),
             deleteTransactionUseCase = DeleteTransactionUseCase(transactionRepository)
@@ -80,7 +85,22 @@ object TransactionStoreTestFactory {
         )
 
         val store = TransactionStoreFactory(actionExecutor, bootstrapper).test()
-        return TransactionStoreTestData(store, { testMoneyAccounts })
+        return TransactionStoreTestData(
+            testStore = store,
+            moneyAccounts = { testMoneyAccounts },
+            expenseCategories = { testCategories }
+        )
+    }
+
+    private fun mockCategoryRepository(testCategories: CategoryIdToCategory): CategoryRepository {
+        return mockk<CategoryRepository>().apply {
+            val categoriesQuerySlot = slot<CategoriesQuery>()
+            coEvery { categories(capture(categoriesQuerySlot)) } answers {
+                CategoryIdToCategory(
+                    testCategories.filterKeys { it in categoriesQuerySlot.captured.categoryIds }
+                )
+            }
+        }
     }
 
     private fun mockMoneyAccountRepository(
@@ -98,6 +118,28 @@ object TransactionStoreTestFactory {
                 flowOf(testMoneyAccounts.find { it.id.value == moneyAccountIdSlot.captured })
             }
         }
+    }
+
+    private fun createTestCategories(ownerId: Id): CategoryIdToCategory {
+        return CategoryIdToCategory(
+            (0..5)
+                .map { index -> Id.existing("$index") }
+                .associateBy(
+                    { id -> id },
+                    { id ->
+                        CategoryWithParent(
+                            category = Category(
+                                id = id,
+                                ownerId = ownerId,
+                                colorHex = "#000",
+                                parentCategoryId = null,
+                                type = CategoryType.EXPENSE,
+                                name = "Category_${id.value}"
+                            ),
+                            parentCategory = null
+                        )
+                    }
+                ))
     }
 
     private fun createTestMoneyAccounts(ownerId: Id): List<MoneyAccount> {

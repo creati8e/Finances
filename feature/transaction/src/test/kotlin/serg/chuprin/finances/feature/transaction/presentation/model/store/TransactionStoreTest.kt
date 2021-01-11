@@ -3,14 +3,22 @@ package serg.chuprin.finances.feature.transaction.presentation.model.store
 import com.github.ajalt.timberkt.Timber
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
+import org.spekframework.spek2.style.gherkin.ScenarioBody
+import serg.chuprin.finances.core.api.domain.model.category.Category
+import serg.chuprin.finances.core.api.domain.model.category.CategoryIdToCategory
+import serg.chuprin.finances.core.api.domain.model.category.CategoryType
 import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
 import serg.chuprin.finances.core.api.extensions.TimberConsoleTree
+import serg.chuprin.finances.core.api.presentation.screen.arguments.CategoriesListScreenArguments
+import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountsListScreenArguments
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionScreenArguments
 import serg.chuprin.finances.feature.transaction.domain.model.TransactionChosenOperation
 import serg.chuprin.finances.feature.transaction.presentation.model.store.factory.TransactionStoreTestFactory
+import serg.chuprin.finances.feature.transaction.presentation.model.store.factory.TransactionTestStore
 import strikt.api.expectThat
+import strikt.assertions.isA
 import strikt.assertions.isEqualTo
 import strikt.assertions.isFalse
 import strikt.assertions.isNull
@@ -28,9 +36,10 @@ object TransactionStoreTest : Spek({
 
         Scenario("Transaction creation mode") {
 
-            val (testStore, moneyAccounts) = TransactionStoreTestFactory.testStore(
-                TransactionScreenArguments.Creation(transitionName = EMPTY_STRING)
-            )
+            val (testStore, moneyAccounts, categories) =
+                TransactionStoreTestFactory.testStore(
+                    TransactionScreenArguments.Creation(transitionName = EMPTY_STRING)
+                )
 
             When("Store is started") {
                 testStore.start()
@@ -70,31 +79,103 @@ object TransactionStoreTest : Spek({
                 }
             }
 
-            lateinit var chosenMoneyAccount: MoneyAccount
+            clickOnChooseMoneyAccountButton(testStore)
 
-            When("Choose money account") {
-                chosenMoneyAccount = moneyAccounts().first { account ->
-                    account != testStore.state.chosenMoneyAccount.account
-                }
-                testStore.dispatch(TransactionIntent.ChooseMoneyAccount(chosenMoneyAccount.id))
-            }
+            chooseMoneyAccount(testStore, moneyAccounts)
 
-            Then("This account became chosen") {
-                expectThat(testStore.state) {
+            clickOnChooseCategoryButton(testStore)
 
-                    get { this.chosenMoneyAccount.account }
-                        .describedAs("Chosen money account")
-                        .isEqualTo(chosenMoneyAccount)
-
-                    get { saveButtonIsEnabled }
-                        .describedAs("Save transaction button is enabled")
-                        .isFalse()
-                }
-
-            }
+            chooseCategory(testStore, categories)
 
         }
 
     }
 
 })
+
+private fun ScenarioBody.chooseCategory(
+    testStore: TransactionTestStore,
+    categories: () -> CategoryIdToCategory
+) {
+    lateinit var chosenCategory: Category
+
+    When("Choose category") {
+        chosenCategory = categories().entries.last().value.category
+        testStore.dispatch(TransactionIntent.ChooseCategory(chosenCategory.id))
+    }
+
+    Then("This category became chosen") {
+        expectThat(testStore.state) {
+            get { this.chosenCategory.category }
+                .describedAs("Chosen category")
+                .isEqualTo(chosenCategory)
+
+            get { saveButtonIsEnabled }
+                .describedAs("Save transaction button is enabled")
+                .isFalse()
+        }
+    }
+}
+
+private fun ScenarioBody.clickOnChooseCategoryButton(testStore: TransactionTestStore) {
+    When("Click on choose category button") {
+        testStore.dispatch(TransactionIntent.ClickOnCategory)
+    }
+
+    Then("Categories list navigation event is produced") {
+        expectThat(testStore.capturedEvents.last)
+
+            .describedAs("Transaction event")
+            .isA<TransactionEvent.NavigateToCategoryPickerScreen>()
+
+            .get { screenArguments }
+            .describedAs("Categories list screen arguments")
+            .isA<CategoriesListScreenArguments.Picker>()
+
+            .get { categoryType }
+            .describedAs("Category type")
+            .isEqualTo(CategoryType.EXPENSE)
+    }
+}
+
+private fun ScenarioBody.chooseMoneyAccount(
+    testStore: TransactionTestStore,
+    moneyAccounts: () -> Collection<MoneyAccount>
+) {
+    lateinit var chosenMoneyAccount: MoneyAccount
+
+    When("Choose money account") {
+        chosenMoneyAccount = moneyAccounts().first { account ->
+            account != testStore.state.chosenMoneyAccount.account
+        }
+        testStore.dispatch(TransactionIntent.ChooseMoneyAccount(chosenMoneyAccount.id))
+    }
+
+    Then("This account became chosen") {
+        expectThat(testStore.state) {
+            get { this.chosenMoneyAccount.account }
+                .describedAs("Chosen money account")
+                .isEqualTo(chosenMoneyAccount)
+
+            get { saveButtonIsEnabled }
+                .describedAs("Save transaction button is enabled")
+                .isFalse()
+        }
+
+    }
+}
+
+private fun ScenarioBody.clickOnChooseMoneyAccountButton(testStore: TransactionTestStore) {
+    When("Click on money account selection button") {
+        testStore.dispatch(TransactionIntent.ClickOnMoneyAccount)
+    }
+
+    Then("Money accounts navigation event is produced") {
+        expectThat(testStore.capturedEvents.last)
+            .describedAs("Transaction event")
+            .isA<TransactionEvent.NavigateToMoneyAccountPickerScreen>()
+            .get { screenArguments }
+            .describedAs("Money accounts list screen arguments")
+            .isA<MoneyAccountsListScreenArguments.Picker>()
+    }
+}
