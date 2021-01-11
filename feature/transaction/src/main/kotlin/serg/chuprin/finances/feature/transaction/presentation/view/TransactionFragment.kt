@@ -120,6 +120,7 @@ class TransactionFragment :
         with(viewModel) {
             eventLiveData(::handleEvent)
             chosenDateLiveData(chosenDateTextView::setText)
+            enteredAmountLiveData(amountEditText::setAmount)
             isSaveButtonEnabledLiveData(saveIcon::setEnabled)
             chosenCategoryLiveData(chosenCategoryTextView::setText)
             chosenMoneyAccountLiveData(chosenMoneyAccountTextView::setText)
@@ -127,9 +128,6 @@ class TransactionFragment :
 
             chosenOperationLiveData { operation ->
                 tabsController.selectTabForOperation(transactionTypeTabLayout, operation)
-            }
-            if (savedInstanceState == null) {
-                enteredAmountLiveData(amountEditText::setAmount)
             }
         }
     }

@@ -3,7 +3,6 @@ package serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.v
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.mapNotNull
-import kotlinx.coroutines.flow.take
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStoreIntentDispatcher
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
@@ -31,10 +30,9 @@ class MoneyAccountCreationViewModel @Inject constructor(
     val currencyCellsLiveData: LiveData<List<BaseCell>> =
         store.observeParticularStateAsLiveData(MoneyAccountCreationState::currentCells)
 
-    val balanceStateLiveData: LiveData<BigDecimal?> = store
+    val balanceStateLiveData: LiveData<BigDecimal> = store
         .stateFlow
         .mapNotNull { state -> state.balance }
-        .take(1)
         .asLiveData()
 
     val savingButtonIsEnabledLiveData: LiveData<Boolean> =

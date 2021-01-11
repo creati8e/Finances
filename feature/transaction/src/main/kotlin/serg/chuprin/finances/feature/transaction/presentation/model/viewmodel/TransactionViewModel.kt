@@ -2,9 +2,7 @@ package serg.chuprin.finances.feature.transaction.presentation.model.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.mapNotNull
-import kotlinx.coroutines.flow.take
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.BaseStoreViewModel
@@ -35,15 +33,9 @@ class TransactionViewModel @Inject constructor(
             }
         }
 
-    /**
-     * If amount exists (when editing existing transaction for example), we need to set it only once.
-     */
-    val enteredAmountLiveData: LiveData<BigDecimal?> = store
+    val enteredAmountLiveData: LiveData<BigDecimal> = store
         .stateFlow
         .mapNotNull { state -> state.enteredAmount }
-        // Skip initial value.
-        .drop(1)
-        .take(1)
         .asLiveData()
 
     val transactionDeletionButtonVisibilityLiveDate: LiveData<Boolean> =

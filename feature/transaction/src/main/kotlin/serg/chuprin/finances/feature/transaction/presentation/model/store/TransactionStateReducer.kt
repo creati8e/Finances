@@ -1,6 +1,5 @@
 package serg.chuprin.finances.feature.transaction.presentation.model.store
 
-import com.github.ajalt.timberkt.Timber
 import serg.chuprin.finances.core.mvi.reducer.StoreStateReducer
 import serg.chuprin.finances.feature.transaction.domain.model.TransactionChosenOperation
 import serg.chuprin.finances.feature.transaction.presentation.model.TransactionChosenCategory
@@ -59,7 +58,6 @@ class TransactionStateReducer : StoreStateReducer<TransactionEffect, Transaction
                 )
             }
             is TransactionEffect.AmountEntered -> {
-                Timber.d { "Entered amount: ${what.enteredAmount}" }
                 state.copy(
                     enteredAmount = what.enteredAmount,
                     saveButtonIsEnabled = checkSaveButtonEnabledStatus(

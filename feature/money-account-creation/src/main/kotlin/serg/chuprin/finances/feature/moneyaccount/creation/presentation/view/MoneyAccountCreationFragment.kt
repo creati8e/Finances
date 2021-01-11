@@ -109,9 +109,7 @@ class MoneyAccountCreationFragment : BaseFragment(R.layout.fragment_money_accoun
             savingButtonIsEnabledLiveData { isEnabled ->
                 menu?.setSavingMenuItemEnabled(isEnabled)
             }
-            if (savedInstanceState == null) {
-                balanceStateLiveData(balanceEditText::setAmount)
-            }
+            balanceStateLiveData(balanceEditText::setAmount)
         }
     }
 
