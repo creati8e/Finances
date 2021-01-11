@@ -2,6 +2,7 @@ package serg.chuprin.finances.feature.transaction.presentation.model.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.take
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
@@ -40,6 +41,8 @@ class TransactionViewModel @Inject constructor(
     val enteredAmountLiveData: LiveData<BigDecimal?> = store
         .stateFlow
         .mapNotNull { state -> state.enteredAmount }
+        // Skip initial value.
+        .drop(1)
         .take(1)
         .asLiveData()
 
