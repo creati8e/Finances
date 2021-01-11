@@ -31,4 +31,9 @@ dependencies {
     // Timber.
     implementation(Libraries.TIMBER)
 
+    implementation(Libraries.Tests.MOCKK)
+    implementation(Libraries.Tests.STRIKT)
+    implementation(Libraries.Tests.FILE_PEEK)
+    implementation(Libraries.Tests.ASSERTIONS)
+
 }

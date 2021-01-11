@@ -182,8 +182,8 @@ class TransactionActionExecutor @Inject constructor(
     ): Flow<TransactionEffect> {
         return flowOf(
             TransactionEffect.InitialStateFormatted(
-                enteredAmount = null,
                 userId = action.userId,
+                enteredAmount = action.amount,
                 operation = action.operation,
                 transactionDefaultData = null,
                 chosenDate = formatChosenDate(action.date),
