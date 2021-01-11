@@ -25,7 +25,6 @@ class MoneyAccountCreationStateReducer :
             is MoneyAccountCreationEffect.BalanceEntered -> {
                 state.copy(
                     balance = what.balance,
-                    balanceInputState = what.balanceInputState,
                     savingButtonIsEnabled = state.moneyAccountName.isNotBlank() && what.balance != null
                 )
             }

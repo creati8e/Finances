@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.take
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.BaseStoreViewModel
 import serg.chuprin.finances.feature.transaction.domain.model.TransactionChosenOperation
 import serg.chuprin.finances.feature.transaction.presentation.model.store.TransactionEvent
@@ -23,8 +24,15 @@ class TransactionViewModel @Inject constructor(
     private val store: TransactionStore
 ) : BaseStoreViewModel<TransactionIntent>() {
 
-    val currency: Currency
-        get() = store.state.chosenMoneyAccount.account.currency
+    val currency: Currency?
+        get() {
+            val moneyAccount = store.state.chosenMoneyAccount.account
+            return if (moneyAccount == MoneyAccount.EMPTY) {
+                null
+            } else {
+                moneyAccount.currency
+            }
+        }
 
     /**
      * If amount exists (when editing existing transaction for example), we need to set it only once.

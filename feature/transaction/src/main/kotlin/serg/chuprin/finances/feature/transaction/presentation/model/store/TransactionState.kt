@@ -20,8 +20,8 @@ data class TransactionState(
     val operation: TransactionChosenOperation = TransactionChosenOperation.Plain(
         PlainTransactionType.EXPENSE
     ),
-    val enteredAmount: BigDecimal? = null,
     val saveButtonIsEnabled: Boolean = false,
+    val enteredAmount: BigDecimal? = BigDecimal.ZERO,
     val transactionDeletionButtonIsVisible: Boolean = false,
     val chosenMoneyAccount: TransactionChosenMoneyAccount = TransactionChosenMoneyAccount(
         formattedName = EMPTY_STRING,

@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStore
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStoreIntentDispatcher
+import serg.chuprin.finances.core.mvi.bootstrapper.BypassStoreBootstrapper
 import serg.chuprin.finances.core.mvi.store.BaseStateStore
 import javax.inject.Inject
 
@@ -19,12 +20,11 @@ import javax.inject.Inject
 @ScreenScope
 class MoneyAccountCreationStore @Inject constructor(
     actionExecutor: MoneyAccountCreationActionExecutor,
-    bootstrapper: MoneyAccountCreationBootstrapper,
     private val currencyChoiceStore: CurrencyChoiceStore
 ) : BaseStateStore<MoneyAccountCreationIntent, MoneyAccountCreationEffect, MoneyAccountCreationAction, MoneyAccountCreationState, MoneyAccountCreationEvent>(
     MoneyAccountCreationState(),
     MoneyAccountCreationStateReducer(),
-    bootstrapper,
+    BypassStoreBootstrapper(),
     actionExecutor,
     intentToActionMapper = MoneyAccountCreationAction::ExecuteIntent
 ), CurrencyChoiceStoreIntentDispatcher by currencyChoiceStore {

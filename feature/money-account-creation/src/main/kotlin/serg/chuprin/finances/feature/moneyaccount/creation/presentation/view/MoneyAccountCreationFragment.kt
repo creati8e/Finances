@@ -1,5 +1,6 @@
 package serg.chuprin.finances.feature.moneyaccount.creation.presentation.view
 
+import android.content.Context
 import android.os.Bundle
 import android.text.TextWatcher
 import android.view.Menu
@@ -11,10 +12,11 @@ import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.fragment_money_account_creation.*
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceIntent
 import serg.chuprin.finances.core.api.presentation.currencychoice.view.CurrencyChoiceListController
+import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
+import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.MenuConfig
-import serg.chuprin.finances.core.api.presentation.view.extensions.doIgnoringChanges
 import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.setupToolbar
 import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.shortToast
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
@@ -25,13 +27,19 @@ import serg.chuprin.finances.feature.moneyaccount.creation.R
 import serg.chuprin.finances.feature.moneyaccount.creation.presentation.di.MoneyAccountCreationComponent
 import serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.store.MoneyAccountCreationEvent
 import serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.store.MoneyAccountCreationIntent
+import javax.inject.Inject
 
 /**
  * Created by Sergey Chuprin on 10.05.2020.
  */
 class MoneyAccountCreationFragment : BaseFragment(R.layout.fragment_money_account_creation) {
 
-    private val viewModel by viewModelFromComponent { MoneyAccountCreationComponent.get() }
+    @Inject
+    lateinit var amountFormatter: AmountFormatter
+
+    private val viewModel by viewModelFromComponent { component }
+
+    private val component by component { MoneyAccountCreationComponent.get() }
 
     private val currencyChoiceListController
         get() = _currencyChoiceListController!!
@@ -39,6 +47,11 @@ class MoneyAccountCreationFragment : BaseFragment(R.layout.fragment_money_accoun
     private var accountNameEditTextTextWatcher: TextWatcher? = null
     private var balanceEditTextTextWatcher: TextWatcher? = null
     private var _currencyChoiceListController: CurrencyChoiceListController? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        component.inject(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +72,15 @@ class MoneyAccountCreationFragment : BaseFragment(R.layout.fragment_money_accoun
         setupToolbar(toolbar) {
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(R.drawable.ic_close)
+        }
+
+        balanceEditText.setFormatter { input ->
+            val currency = viewModel.currency
+            if (currency == null) {
+                "0"
+            } else {
+                amountFormatter.formatInput(input, currency)
+            }
         }
 
         _currencyChoiceListController = CurrencyChoiceListController(
@@ -84,14 +106,11 @@ class MoneyAccountCreationFragment : BaseFragment(R.layout.fragment_money_accoun
             currencyCellsLiveData(currencyChoiceView::setCells)
             chosenCurrencyDisplayNameLiveData(chosenCurrencyTextView::setText)
             currencyPickerVisibilityLiveData(currencyChoiceListController::showOrHide)
-            balanceStateLiveData { balanceState ->
-                initialBalanceTil.isErrorEnabled = balanceState.hasError
-                balanceEditText.doIgnoringChanges {
-                    setText(balanceState.formattedAmount)
-                }
-            }
             savingButtonIsEnabledLiveData { isEnabled ->
                 menu?.setSavingMenuItemEnabled(isEnabled)
+            }
+            if (savedInstanceState == null) {
+                balanceStateLiveData(balanceEditText::setAmount)
             }
         }
     }

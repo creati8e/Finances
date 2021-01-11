@@ -7,8 +7,6 @@ import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceIntent
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStore
-import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
-import serg.chuprin.finances.core.api.presentation.model.AmountInputState
 import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
@@ -23,7 +21,6 @@ import javax.inject.Inject
 @ScreenScope
 class MoneyAccountCreationActionExecutor @Inject constructor(
     private val amountParser: AmountParser,
-    private val amountFormatter: AmountFormatter,
     private val currencyChoiceStore: CurrencyChoiceStore,
     private val createMoneyAccountUseCase: CreateMoneyAccountUseCase
 ) : StoreActionExecutor<MoneyAccountCreationAction, MoneyAccountCreationState, MoneyAccountCreationEffect, MoneyAccountCreationEvent> {
@@ -47,7 +44,7 @@ class MoneyAccountCreationActionExecutor @Inject constructor(
                         handleEnterTitleIntent(intent)
                     }
                     is MoneyAccountCreationIntent.EnterBalance -> {
-                        handleEnterAmountIntent(intent, state)
+                        handleEnterAmountIntent(intent)
                     }
                 }
             }
@@ -64,12 +61,12 @@ class MoneyAccountCreationActionExecutor @Inject constructor(
         if (state.savingButtonIsEnabled.not()) {
             return emptyFlow()
         }
-        val initialBalance = state.balance ?: return emptyFlow()
+        val balance = state.balance ?: return emptyFlow()
         val chosenCurrency = state.chosenCurrency ?: return emptyFlow()
         return flow {
             createMoneyAccountUseCase.execute(
                 currency = chosenCurrency,
-                initialBalance = initialBalance,
+                initialBalance = balance,
                 accountName = state.moneyAccountName
             )
             eventConsumer(MoneyAccountCreationEvent.ShowAccountCreatedMessage)
@@ -86,23 +83,10 @@ class MoneyAccountCreationActionExecutor @Inject constructor(
     }
 
     private fun handleEnterAmountIntent(
-        intent: MoneyAccountCreationIntent.EnterBalance,
-        state: MoneyAccountCreationState
+        intent: MoneyAccountCreationIntent.EnterBalance
     ): Flow<MoneyAccountCreationEffect> {
         return flowOfSingleValue {
-            // Currency is always chosen.
-            val formattedBalance = amountFormatter.formatInput(
-                input = intent.balance,
-                currency = state.chosenCurrency!!
-            )
-            val parsedBalance = amountParser.parse(formattedBalance)
-            MoneyAccountCreationEffect.BalanceEntered(
-                balance = parsedBalance,
-                balanceInputState = AmountInputState(
-                    hasError = parsedBalance == null,
-                    formattedAmount = formattedBalance
-                )
-            )
+            MoneyAccountCreationEffect.BalanceEntered(amountParser.parse(intent.balance))
         }
     }
 

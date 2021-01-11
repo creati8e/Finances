@@ -2,15 +2,18 @@ package serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.v
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.flow.take
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStoreIntentDispatcher
-import serg.chuprin.finances.core.api.presentation.model.AmountInputState
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.BaseStoreViewModel
 import serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.store.MoneyAccountCreationEvent
 import serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.store.MoneyAccountCreationIntent
 import serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.store.MoneyAccountCreationState
 import serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.store.MoneyAccountCreationStore
+import java.math.BigDecimal
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -22,11 +25,17 @@ class MoneyAccountCreationViewModel @Inject constructor(
 ) : BaseStoreViewModel<MoneyAccountCreationIntent>(),
     CurrencyChoiceStoreIntentDispatcher by store {
 
+    val currency: Currency?
+        get() = store.state.chosenCurrency
+
     val currencyCellsLiveData: LiveData<List<BaseCell>> =
         store.observeParticularStateAsLiveData(MoneyAccountCreationState::currentCells)
 
-    val balanceStateLiveData: LiveData<AmountInputState> =
-        store.observeParticularStateAsLiveData(MoneyAccountCreationState::balanceInputState)
+    val balanceStateLiveData: LiveData<BigDecimal?> = store
+        .stateFlow
+        .mapNotNull { state -> state.balance }
+        .take(1)
+        .asLiveData()
 
     val savingButtonIsEnabledLiveData: LiveData<Boolean> =
         store.observeParticularStateAsLiveData(MoneyAccountCreationState::savingButtonIsEnabled)

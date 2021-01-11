@@ -1,7 +1,6 @@
 package serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.store
 
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceState
-import serg.chuprin.finances.core.api.presentation.model.AmountInputState
 import java.math.BigDecimal
 
 /**
@@ -14,8 +13,7 @@ sealed class MoneyAccountCreationEffect {
     ) : MoneyAccountCreationEffect()
 
     class BalanceEntered(
-        val balance: BigDecimal?,
-        val balanceInputState: AmountInputState
+        val balance: BigDecimal?
     ) : MoneyAccountCreationEffect()
 
     class CurrencyChoiceStateUpdated(

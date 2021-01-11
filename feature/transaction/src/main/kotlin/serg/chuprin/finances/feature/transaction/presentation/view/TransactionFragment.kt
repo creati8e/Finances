@@ -161,7 +161,12 @@ class TransactionFragment :
 
     private fun setAmountInput() {
         amountEditText.setFormatter { input ->
-            amountFormatter.formatInput(input, viewModel.currency)
+            val currency = viewModel.currency
+            if (currency == null) {
+                "0"
+            } else {
+                amountFormatter.formatInput(input, currency)
+            }
         }
 
         amountEditText
