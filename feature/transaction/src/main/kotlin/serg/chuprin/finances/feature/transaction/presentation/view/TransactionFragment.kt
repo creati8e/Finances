@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import reactivecircus.flowbinding.android.widget.afterTextChanges
 import serg.chuprin.finances.core.api.extensions.toLocalDateUTC
+import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.navigation.TransactionNavigation
@@ -55,6 +56,9 @@ class TransactionFragment :
 
     @Inject
     lateinit var navigation: TransactionNavigation
+
+    @Inject
+    lateinit var amountFormatter: AmountFormatter
 
     private val viewModel by viewModelFromComponent { component }
 
@@ -104,7 +108,7 @@ class TransactionFragment :
 
         setClickListeners()
 
-        setAmountListener()
+        setAmountInput()
 
         setCategoryPickerResultListener()
         setMoneyAccountPickerResultListener()
@@ -124,10 +128,8 @@ class TransactionFragment :
             chosenOperationLiveData { operation ->
                 tabsController.selectTabForOperation(transactionTypeTabLayout, operation)
             }
-            enteredAmountLiveData { enteredAmount ->
-                amountEditText.doIgnoringChanges {
-                    setText(enteredAmount.formatted)
-                }
+            if (savedInstanceState == null) {
+                enteredAmountLiveData(amountEditText::setAmount)
             }
         }
     }
@@ -157,7 +159,11 @@ class TransactionFragment :
         }
     }
 
-    private fun setAmountListener() {
+    private fun setAmountInput() {
+        amountEditText.setFormatter { input ->
+            amountFormatter.formatInput(input, viewModel.currency)
+        }
+
         amountEditText
             .afterTextChanges()
             .skipInitialValue()

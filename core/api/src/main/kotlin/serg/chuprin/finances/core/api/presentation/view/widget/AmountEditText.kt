@@ -2,9 +2,13 @@ package serg.chuprin.finances.core.api.presentation.view.widget
 
 import android.content.Context
 import android.text.InputType
+import android.text.TextWatcher
 import android.text.method.DigitsKeyListener
 import android.util.AttributeSet
+import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.textfield.TextInputEditText
+import serg.chuprin.finances.core.api.presentation.view.extensions.shouldIgnoreChanges
+import java.math.BigDecimal
 
 /**
  * Created by Sergey Chuprin on 12.04.2020.
@@ -23,9 +27,27 @@ class AmountEditText : TextInputEditText {
         defStyleAttr
     )
 
+    private var textWatcher: TextWatcher? = null
+    private var formatter: ((String) -> String)? = null
+
     init {
         inputType = InputType.TYPE_CLASS_NUMBER
         keyListener = DigitsKeyListener.getInstance("0123456789.,")
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        textWatcher = doAfterTextChanged { editable ->
+            if (!shouldIgnoreChanges) {
+                format(editable?.toString().orEmpty())
+            }
+        }
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        removeTextChangedListener(textWatcher)
+        textWatcher = null
     }
 
     /**
@@ -42,5 +64,20 @@ class AmountEditText : TextInputEditText {
         super.onSelectionChanged(start, end)
     }
 
+    fun setFormatter(formatter: (String) -> String) {
+        this.formatter = formatter
+    }
+
+    fun setAmount(enteredAmount: BigDecimal?) {
+        format(enteredAmount?.toString().orEmpty())
+    }
+
+    private fun format(input: String) {
+        val formatter = this.formatter ?: return
+
+        shouldIgnoreChanges = true
+        setText(formatter(input))
+        shouldIgnoreChanges = false
+    }
 
 }

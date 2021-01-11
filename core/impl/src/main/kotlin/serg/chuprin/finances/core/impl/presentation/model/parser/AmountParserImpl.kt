@@ -25,13 +25,17 @@ internal class AmountParserImpl @Inject constructor() : AmountParser {
         if (normalizedAmount.isEmpty()) {
             return null
         }
-        return BigDecimal(
-            if (normalizedAmount.endsWith(decimalFormat.decimalSeparator)) {
-                normalizedAmount.dropLast(1).replace(",", ".")
-            } else {
-                normalizedAmount.replace(",", ".")
-            }
-        )
+        return try {
+            BigDecimal(
+                if (normalizedAmount.endsWith(decimalFormat.decimalSeparator)) {
+                    normalizedAmount.dropLast(1).replace(",", ".")
+                } else {
+                    normalizedAmount.replace(",", ".")
+                }
+            )
+        } catch (e: NumberFormatException) {
+            null
+        }
     }
 
     private fun isCorrectAmount(amount: String, formatSymbols: DecimalFormatSymbols): Boolean {

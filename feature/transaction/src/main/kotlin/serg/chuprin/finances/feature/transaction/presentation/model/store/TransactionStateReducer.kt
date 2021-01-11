@@ -1,8 +1,12 @@
 package serg.chuprin.finances.feature.transaction.presentation.model.store
 
+import com.github.ajalt.timberkt.Timber
 import serg.chuprin.finances.core.mvi.reducer.StoreStateReducer
 import serg.chuprin.finances.feature.transaction.domain.model.TransactionChosenOperation
-import serg.chuprin.finances.feature.transaction.presentation.model.*
+import serg.chuprin.finances.feature.transaction.presentation.model.TransactionChosenCategory
+import serg.chuprin.finances.feature.transaction.presentation.model.TransactionChosenDate
+import serg.chuprin.finances.feature.transaction.presentation.model.TransactionChosenMoneyAccount
+import serg.chuprin.finances.feature.transaction.presentation.model.TransactionDefaultData
 import java.math.BigDecimal
 
 /**
@@ -55,6 +59,7 @@ class TransactionStateReducer : StoreStateReducer<TransactionEffect, Transaction
                 )
             }
             is TransactionEffect.AmountEntered -> {
+                Timber.d { "Entered amount: ${what.enteredAmount}" }
                 state.copy(
                     enteredAmount = what.enteredAmount,
                     saveButtonIsEnabled = checkSaveButtonEnabledStatus(
@@ -100,16 +105,16 @@ class TransactionStateReducer : StoreStateReducer<TransactionEffect, Transaction
         chosenDate: TransactionChosenDate,
         chosenCategory: TransactionChosenCategory,
         chosenMoneyAccount: TransactionChosenMoneyAccount,
-        enteredAmount: TransactionEnteredAmount,
+        enteredAmount: BigDecimal?,
         operation: TransactionChosenOperation
     ): Boolean {
         // If default data is null, then screen in transaction creation mode.
         if (transactionDefaultData == null) {
-            return enteredAmount.amount != null && enteredAmount.amount != BigDecimal.ZERO
+            return enteredAmount != null && enteredAmount != BigDecimal.ZERO
         }
         return transactionDefaultData.chosenDate.localDate != chosenDate.localDate
                 || transactionDefaultData.operation != operation
-                || transactionDefaultData.enteredAmount.amount != enteredAmount.amount
+                || transactionDefaultData.enteredAmount != enteredAmount
                 || transactionDefaultData.chosenCategory.category != chosenCategory.category
                 || transactionDefaultData.chosenMoneyAccount.account != chosenMoneyAccount.account
     }

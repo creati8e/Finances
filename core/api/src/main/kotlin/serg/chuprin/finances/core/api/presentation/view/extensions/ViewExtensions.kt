@@ -103,13 +103,16 @@ fun TextView.setTextOrHide(text: String) {
 
 const val VIEW_TAG_IGNORE_CHANGES = "VIEW_TAG_IGNORE_CHANGES"
 
-inline val View.shouldIgnoreChanges: Boolean
+inline var View.shouldIgnoreChanges: Boolean
     get() = tag == VIEW_TAG_IGNORE_CHANGES
+    set(value) {
+        tag = VIEW_TAG_IGNORE_CHANGES.takeIf { value }
+    }
 
 inline fun <V : View> V.doIgnoringChanges(block: V.() -> Unit) {
-    tag = VIEW_TAG_IGNORE_CHANGES
+    shouldIgnoreChanges = true
     block()
-    tag = null
+    shouldIgnoreChanges = false
 }
 
 fun View.adjustHeightToFillParent() {

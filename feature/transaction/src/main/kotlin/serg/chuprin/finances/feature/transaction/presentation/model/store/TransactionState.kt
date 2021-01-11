@@ -5,7 +5,10 @@ import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
 import serg.chuprin.finances.feature.transaction.domain.model.TransactionChosenOperation
-import serg.chuprin.finances.feature.transaction.presentation.model.*
+import serg.chuprin.finances.feature.transaction.presentation.model.TransactionChosenCategory
+import serg.chuprin.finances.feature.transaction.presentation.model.TransactionChosenDate
+import serg.chuprin.finances.feature.transaction.presentation.model.TransactionChosenMoneyAccount
+import serg.chuprin.finances.feature.transaction.presentation.model.TransactionDefaultData
 import java.math.BigDecimal
 import java.time.LocalDate
 
@@ -17,13 +20,9 @@ data class TransactionState(
     val operation: TransactionChosenOperation = TransactionChosenOperation.Plain(
         PlainTransactionType.EXPENSE
     ),
+    val enteredAmount: BigDecimal? = null,
     val saveButtonIsEnabled: Boolean = false,
     val transactionDeletionButtonIsVisible: Boolean = false,
-    val enteredAmount: TransactionEnteredAmount = TransactionEnteredAmount(
-        hasError = false,
-        formatted = "0",
-        amount = BigDecimal.ZERO
-    ),
     val chosenMoneyAccount: TransactionChosenMoneyAccount = TransactionChosenMoneyAccount(
         formattedName = EMPTY_STRING,
         account = MoneyAccount.EMPTY
