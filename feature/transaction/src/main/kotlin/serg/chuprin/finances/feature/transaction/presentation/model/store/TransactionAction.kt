@@ -6,6 +6,7 @@ import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import serg.chuprin.finances.feature.transaction.domain.model.TransactionChosenOperation
 import java.math.BigDecimal
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 /**
  * Created by Sergey Chuprin on 02.01.2021.
@@ -27,7 +28,7 @@ sealed class TransactionAction {
 
     class FormatInitialStateForExistingTransaction(
         val userId: Id,
-        val date: LocalDate,
+        val dateTime: LocalDateTime,
         val amount: BigDecimal,
         val categoryId: Id?,
         val moneyAccountId: Id,

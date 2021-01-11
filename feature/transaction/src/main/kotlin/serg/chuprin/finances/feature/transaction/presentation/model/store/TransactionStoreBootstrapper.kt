@@ -20,7 +20,6 @@ import javax.inject.Inject
 /**
  * Created by Sergey Chuprin on 02.01.2021.
  */
-// TODO: Format category as parent/children.
 class TransactionStoreBootstrapper @Inject constructor(
     private val userRepository: UserRepository,
     private val screenArguments: TransactionScreenArguments,
@@ -63,11 +62,10 @@ class TransactionStoreBootstrapper @Inject constructor(
             )
             .first()
 
-        // TODO: Remove .toLocalDate from here.
         return TransactionAction.FormatInitialStateForExistingTransaction(
             userId = userId,
+            dateTime = transaction.dateTime,
             categoryId = transaction.categoryId,
-            date = transaction.dateTime.toLocalDate(),
             // Transaction may contains "-" at amount beginning. Remove it.
             amount = transaction.amount.abs(),
             moneyAccountId = transaction.moneyAccountId,

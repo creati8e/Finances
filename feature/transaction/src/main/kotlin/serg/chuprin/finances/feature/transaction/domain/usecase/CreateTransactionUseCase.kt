@@ -67,9 +67,7 @@ class CreateTransactionUseCase @Inject constructor(
                     amount
                 }
             }
-            else -> {
-                amount
-            }
+            else -> amount
         }
     }
 

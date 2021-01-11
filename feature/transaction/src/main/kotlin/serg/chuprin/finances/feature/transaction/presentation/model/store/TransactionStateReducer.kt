@@ -110,11 +110,11 @@ class TransactionStateReducer : StoreStateReducer<TransactionEffect, Transaction
         if (transactionDefaultData == null) {
             return enteredAmount != null && enteredAmount != BigDecimal.ZERO
         }
-        return transactionDefaultData.chosenDate.localDate != chosenDate.localDate
+        return transactionDefaultData.localDate != chosenDate.localDate
                 || transactionDefaultData.operation != operation
                 || transactionDefaultData.enteredAmount != enteredAmount
-                || transactionDefaultData.chosenCategory.category != chosenCategory.category
-                || transactionDefaultData.chosenMoneyAccount.account != chosenMoneyAccount.account
+                || transactionDefaultData.category != chosenCategory.category
+                || transactionDefaultData.moneyAccount != chosenMoneyAccount.account
     }
 
 }

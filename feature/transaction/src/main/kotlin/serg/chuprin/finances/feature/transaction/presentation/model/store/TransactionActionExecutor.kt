@@ -158,22 +158,21 @@ class TransactionActionExecutor @Inject constructor(
                 userId = action.userId,
                 categoryId = action.categoryId
             )
-            val chosenDate = formatChosenDate(action.date)
             TransactionEffect.InitialStateFormatted(
                 transactionDefaultData = TransactionDefaultData(
-                    chosenDate = chosenDate,
+                    dateTime = action.dateTime,
                     operation = action.operation,
                     enteredAmount = action.amount,
-                    chosenCategory = chosenCategory,
-                    chosenMoneyAccount = chosenMoneyAccount
+                    category = chosenCategory.category,
+                    moneyAccount = chosenMoneyAccount.account
                 ),
-                chosenDate = chosenDate,
                 userId = action.userId,
                 operation = action.operation,
                 enteredAmount = action.amount,
                 chosenCategory = chosenCategory,
                 chosenMoneyAccount = chosenMoneyAccount,
-                transactionDeletionButtonIsVisible = true
+                transactionDeletionButtonIsVisible = true,
+                chosenDate = formatChosenDate(action.dateTime.toLocalDate())
             )
         }
     }
@@ -328,10 +327,11 @@ class TransactionActionExecutor @Inject constructor(
                         amount = amount,
                         ownerId = state.userId,
                         operation = state.operation,
-                        date = state.chosenDate.localDate,
+                        newDate = state.chosenDate.localDate,
                         category = state.chosenCategory.category,
                         transactionId = screenArguments.transactionId,
-                        moneyAccount = state.chosenMoneyAccount.account
+                        moneyAccount = state.chosenMoneyAccount.account,
+                        existingDateTime = state.transactionDefaultData!!.dateTime
                     )
                     eventConsumer(TransactionEvent.CloseScreen)
                 }
