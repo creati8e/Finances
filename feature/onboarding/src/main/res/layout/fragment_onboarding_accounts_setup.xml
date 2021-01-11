@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            app:layout_constraintBottom_toTopOf="@+id/amountEditText"
+            app:layout_constraintBottom_toTopOf="@+id/balanceEditText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/titleTextView"
@@ -42,7 +42,7 @@
             tools:text="Do you use cash?" />
 
         <serg.chuprin.finances.core.api.presentation.view.widget.AmountEditText
-            android:id="@+id/amountEditText"
+            android:id="@+id/balanceEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16sp"
@@ -54,7 +54,7 @@
             android:textAlignment="center"
             android:textSize="30sp"
             android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/acceptAmountButton"
+            app:layout_constraintBottom_toTopOf="@+id/acceptBalanceButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/subtitleTextView"
@@ -70,7 +70,7 @@
             app:layout_constraintEnd_toStartOf="@id/negativeButton"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/amountEditText"
+            app:layout_constraintTop_toBottomOf="@id/balanceEditText"
             app:rippleColor="?colorControlHighlight" />
 
         <com.google.android.material.button.MaterialButton
@@ -82,12 +82,12 @@
             app:iconTint="@color/colorOnboardingRed"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/positiveButton"
-            app:layout_constraintTop_toBottomOf="@id/amountEditText"
+            app:layout_constraintTop_toBottomOf="@id/balanceEditText"
             app:rippleColor="@color/colorRedRipple"
             tools:layout_marginStart="72dp" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/acceptAmountButton"
+            android:id="@+id/acceptBalanceButton"
             style="@style/MaterialButtonIconCircle"
             android:layout_marginTop="16dp"
             android:visibility="gone"
@@ -96,7 +96,7 @@
             app:layout_constraintBottom_toTopOf="@+id/startUsingAppButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/amountEditText"
+            app:layout_constraintTop_toBottomOf="@+id/balanceEditText"
             app:rippleColor="?colorControlHighlight"
             tools:visibility="visible" />
 
@@ -112,7 +112,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/acceptAmountButton"
+            app:layout_constraintTop_toBottomOf="@id/acceptBalanceButton"
             app:layout_constraintVertical_bias="0"
             tools:visibility="visible" />
 

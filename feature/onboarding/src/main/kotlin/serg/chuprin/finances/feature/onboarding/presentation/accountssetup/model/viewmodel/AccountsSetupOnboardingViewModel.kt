@@ -29,13 +29,12 @@ class AccountsSetupOnboardingViewModel @Inject constructor(
     val eventsLiveData: LiveData<AccountsSetupOnboardingEvent> = store.observeEventsAsLiveData()
 
     /**
-     * Do not do any diffing in order to properly display formatted amount and replace existing input.
+     * Do not do any diffing in order to properly display formatted balance and replace existing input.
      */
-    val balanceLiveData: LiveData<BigDecimal> =
-        store
-            .stateFlow
-            .mapNotNull { it.stepState.balanceOrNull }
-            .asLiveData()
+    val balanceLiveData: LiveData<BigDecimal> = store
+        .stateFlow
+        .mapNotNull { state -> state.stepState.balanceOrNull }
+        .asLiveData()
 
     init {
         store.start(intentsFlow(), viewModelScope)

@@ -27,30 +27,30 @@ class AccountsSetupOnboardingStateReducer :
             is AccountsSetupOnboardingEffect.CurrencyIsSet -> {
                 state.copy(currency = effect.currency)
             }
-            is AccountsSetupOnboardingEffect.AmountEntered -> {
-                reduceAmountEnteredEffect(state, effect)
+            is AccountsSetupOnboardingEffect.BalanceEntered -> {
+                reduceBalanceEnteredEffect(state, effect)
             }
         }
     }
 
-    private fun reduceAmountEnteredEffect(
+    private fun reduceBalanceEnteredEffect(
         state: AccountsSetupOnboardingState,
-        effect: AccountsSetupOnboardingEffect.AmountEntered
+        effect: AccountsSetupOnboardingEffect.BalanceEntered
     ): AccountsSetupOnboardingState {
         return when (val stepState = state.stepState) {
-            is AccountsSetupOnboardingStepState.CashAmountEnter -> {
+            is AccountsSetupOnboardingStepState.CashBalanceEnter -> {
                 state.copy(
                     stepState = stepState.copy(
                         balance = effect.balance,
-                        acceptAmountButtonIsEnabled = effect.acceptButtonIsEnabled
+                        acceptBalanceButtonIsEnabled = effect.acceptButtonIsEnabled
                     )
                 )
             }
-            is AccountsSetupOnboardingStepState.BankCardAmountEnter -> {
+            is AccountsSetupOnboardingStepState.BankCardBalanceEnter -> {
                 state.copy(
                     stepState = stepState.copy(
                         balance = effect.balance,
-                        acceptAmountButtonIsEnabled = effect.acceptButtonIsEnabled
+                        acceptBalanceButtonIsEnabled = effect.acceptButtonIsEnabled
                     )
                 )
             }

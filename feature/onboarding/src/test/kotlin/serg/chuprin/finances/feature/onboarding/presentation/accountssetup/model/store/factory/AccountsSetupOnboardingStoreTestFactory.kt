@@ -9,7 +9,7 @@ import serg.chuprin.finances.core.test.factory.TestStoreFactory.Companion.test
 import serg.chuprin.finances.feature.onboarding.domain.usecase.CompleteAccountsSetupOnboardingUseCase
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.AccountsSetupOnboardingFinalStepBuilder
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.AccountsSetupOnboardingStoreBootstrapper
-import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.executor.AccountsSetupAmountEnterStepIntentExecutor
+import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.executor.AccountsSetupBalanceEnterStepIntentExecutor
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.executor.AccountsSetupOnboardingActionExecutor
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.executor.AccountsSetupOnboardingCompletionExecutor
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.executor.AccountsSetupQuestionStateIntentExecutor
@@ -36,7 +36,7 @@ object AccountsSetupOnboardingStoreTestFactory {
                 onboardingCompletionExecutor = onboardingCompletionExecutor,
                 finalStepBuilder = AccountsSetupOnboardingFinalStepBuilder(resourceManager)
             ),
-            AccountsSetupAmountEnterStepIntentExecutor(
+            AccountsSetupBalanceEnterStepIntentExecutor(
                 amountParser = amountParser,
                 finalStepBuilder = AccountsSetupOnboardingFinalStepBuilder(resourceManager),
                 onboardingCompletionExecutor = onboardingCompletionExecutor

@@ -16,20 +16,19 @@ import javax.inject.Inject
 /**
  * Created by Sergey Chuprin on 16.04.2020.
  */
-class AccountsSetupAmountEnterStepIntentExecutor @Inject constructor(
+class AccountsSetupBalanceEnterStepIntentExecutor @Inject constructor(
     private val amountParser: AmountParser,
     private val finalStepBuilder: AccountsSetupOnboardingFinalStepBuilder,
     private val onboardingCompletionExecutor: AccountsSetupOnboardingCompletionExecutor
 ) {
 
-    fun handleInputAmountIntent(
-        intent: AccountsSetupOnboardingIntent.InputAmount
+    fun handleEnterBalanceIntent(
+        intent: AccountsSetupOnboardingIntent.EnterBalance
     ): Flow<AccountsSetupOnboardingEffect> {
         return flowOfSingleValue {
-            val parsedAmount = amountParser.parse(intent.enteredAmount)
-            AccountsSetupOnboardingEffect.AmountEntered(
-                balance = parsedAmount,
-                acceptButtonIsEnabled = true
+            AccountsSetupOnboardingEffect.BalanceEntered(
+                acceptButtonIsEnabled = true,
+                balance = amountParser.parse(intent.enteredBalance)
             )
         }
     }
@@ -38,11 +37,11 @@ class AccountsSetupAmountEnterStepIntentExecutor @Inject constructor(
         state: AccountsSetupOnboardingState
     ): Flow<AccountsSetupOnboardingEffect> {
         return when (val stepState = state.stepState) {
-            is AccountsSetupOnboardingStepState.CashAmountEnter -> {
-                acceptBalanceInCashAmountEnterState(stepState)
+            is AccountsSetupOnboardingStepState.CashBalanceEnter -> {
+                acceptBalanceInCashState(stepState)
             }
-            is AccountsSetupOnboardingStepState.BankCardAmountEnter -> {
-                acceptBalanceInBankCardAmountEnterState(stepState, state)
+            is AccountsSetupOnboardingStepState.BankCardBalanceEnter -> {
+                acceptBalanceInBankCardState(stepState, state)
             }
             AccountsSetupOnboardingStepState.CashQuestion,
             AccountsSetupOnboardingStepState.BankCardQuestion,
@@ -53,8 +52,8 @@ class AccountsSetupAmountEnterStepIntentExecutor @Inject constructor(
         }
     }
 
-    private fun acceptBalanceInBankCardAmountEnterState(
-        stepState: AccountsSetupOnboardingStepState.BankCardAmountEnter,
+    private fun acceptBalanceInBankCardState(
+        stepState: AccountsSetupOnboardingStepState.BankCardBalanceEnter,
         state: AccountsSetupOnboardingState
     ): Flow<AccountsSetupOnboardingEffect> {
         return flow {
@@ -83,8 +82,8 @@ class AccountsSetupAmountEnterStepIntentExecutor @Inject constructor(
         }
     }
 
-    private fun acceptBalanceInCashAmountEnterState(
-        stepState: AccountsSetupOnboardingStepState.CashAmountEnter
+    private fun acceptBalanceInCashState(
+        stepState: AccountsSetupOnboardingStepState.CashBalanceEnter
     ): Flow<AccountsSetupOnboardingEffect> {
         return flowOf(
             AccountsSetupOnboardingEffect.AccountBalanceAccepted(

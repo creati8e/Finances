@@ -15,9 +15,9 @@ sealed class AccountsSetupOnboardingStepState {
     /**
      * 2 step.
      */
-    data class CashAmountEnter(
+    data class CashBalanceEnter(
         val balance: BigDecimal? = BigDecimal.ZERO,
-        val acceptAmountButtonIsEnabled: Boolean = false
+        val acceptBalanceButtonIsEnabled: Boolean = false
     ) : AccountsSetupOnboardingStepState()
 
     /**
@@ -28,10 +28,9 @@ sealed class AccountsSetupOnboardingStepState {
     /**
      * 4 step.
      */
-    // TODO: Rename and create sealed class.
-    data class BankCardAmountEnter(
+    data class BankCardBalanceEnter(
         val balance: BigDecimal? = BigDecimal.ZERO,
-        val acceptAmountButtonIsEnabled: Boolean = false
+        val acceptBalanceButtonIsEnabled: Boolean = false
     ) : AccountsSetupOnboardingStepState()
 
     /**
@@ -43,8 +42,8 @@ sealed class AccountsSetupOnboardingStepState {
 
     val balanceOrNull: BigDecimal?
         get() {
-            return (this as? CashAmountEnter)?.balance
-                ?: (this as? BankCardAmountEnter)?.balance
+            return (this as? CashBalanceEnter)?.balance
+                ?: (this as? BankCardBalanceEnter)?.balance
         }
 
 }

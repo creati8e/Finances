@@ -20,7 +20,7 @@ import javax.inject.Inject
  */
 class AccountsSetupOnboardingActionExecutor @Inject constructor(
     private val questionStateIntentExecutor: AccountsSetupQuestionStateIntentExecutor,
-    private val amountEnterStepIntentExecutor: AccountsSetupAmountEnterStepIntentExecutor
+    private val balanceEnterStepIntentExecutor: AccountsSetupBalanceEnterStepIntentExecutor
 ) : StoreActionExecutor<AccountsSetupOnboardingAction, AccountsSetupOnboardingState, AccountsSetupOnboardingEffect, AccountsSetupOnboardingEvent> {
 
     override fun invoke(
@@ -42,10 +42,10 @@ class AccountsSetupOnboardingActionExecutor @Inject constructor(
                         questionStateIntentExecutor.handleClickOnNegativeButtonIntent(state)
                     }
                     is AccountsSetupOnboardingIntent.ClickOnAcceptBalanceButton -> {
-                        amountEnterStepIntentExecutor.handleClickOnAcceptBalanceButtonIntent(state)
+                        balanceEnterStepIntentExecutor.handleClickOnAcceptBalanceButtonIntent(state)
                     }
-                    is AccountsSetupOnboardingIntent.InputAmount -> {
-                        amountEnterStepIntentExecutor.handleInputAmountIntent(intent)
+                    is AccountsSetupOnboardingIntent.EnterBalance -> {
+                        balanceEnterStepIntentExecutor.handleEnterBalanceIntent(intent)
                     }
                     AccountsSetupOnboardingIntent.ClickOnStartUsingAppButton -> {
                         handleClickOnStartUsingAppButtonIntent(state, eventConsumer)

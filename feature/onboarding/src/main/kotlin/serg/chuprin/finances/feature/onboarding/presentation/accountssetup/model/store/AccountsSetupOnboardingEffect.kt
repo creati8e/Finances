@@ -22,7 +22,7 @@ sealed class AccountsSetupOnboardingEffect {
         val stepState: AccountsSetupOnboardingStepState
     ) : AccountsSetupOnboardingEffect()
 
-    class AmountEntered(
+    class BalanceEntered(
         val acceptButtonIsEnabled: Boolean,
         val balance: BigDecimal?
     ) : AccountsSetupOnboardingEffect()

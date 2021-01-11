@@ -11,7 +11,7 @@ data class AccountsSetupOnboardingState(
     val bankCardBalance: BigDecimal? = null,
     /**
      * Represents default currency retrieved from previous onboarding step.
-     * It's used for amount formatting when user enter balance for new money accounts.
+     * It's used for balance formatting when user enter balance for new money accounts.
      */
     val currency: Currency = Currency.getInstance(Locale.getDefault()),
     val stepState: AccountsSetupOnboardingStepState = AccountsSetupOnboardingStepState.CashQuestion

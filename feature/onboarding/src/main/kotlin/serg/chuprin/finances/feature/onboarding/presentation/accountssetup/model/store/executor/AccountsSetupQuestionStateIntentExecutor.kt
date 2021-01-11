@@ -23,16 +23,16 @@ class AccountsSetupQuestionStateIntentExecutor @Inject constructor(
     ): Flow<AccountsSetupOnboardingEffect> {
         return when (state.stepState) {
             AccountsSetupOnboardingStepState.CashQuestion -> {
-                val stepState = AccountsSetupOnboardingStepState.CashAmountEnter()
+                val stepState = AccountsSetupOnboardingStepState.CashBalanceEnter()
                 flowOf(AccountsSetupOnboardingEffect.StepChanged(stepState))
             }
             AccountsSetupOnboardingStepState.BankCardQuestion -> {
-                val stepState = AccountsSetupOnboardingStepState.BankCardAmountEnter()
+                val stepState = AccountsSetupOnboardingStepState.BankCardBalanceEnter()
                 flowOf(AccountsSetupOnboardingEffect.StepChanged(stepState))
             }
             is AccountsSetupOnboardingStepState.EverythingIsSetUp,
-            is AccountsSetupOnboardingStepState.BankCardAmountEnter,
-            is AccountsSetupOnboardingStepState.CashAmountEnter -> {
+            is AccountsSetupOnboardingStepState.BankCardBalanceEnter,
+            is AccountsSetupOnboardingStepState.CashBalanceEnter -> {
                 emptyFlow()
             }
         }
@@ -63,8 +63,8 @@ class AccountsSetupQuestionStateIntentExecutor @Inject constructor(
                 }
             }
             is AccountsSetupOnboardingStepState.EverythingIsSetUp,
-            is AccountsSetupOnboardingStepState.BankCardAmountEnter,
-            is AccountsSetupOnboardingStepState.CashAmountEnter -> {
+            is AccountsSetupOnboardingStepState.BankCardBalanceEnter,
+            is AccountsSetupOnboardingStepState.CashBalanceEnter -> {
                 emptyFlow()
             }
         }

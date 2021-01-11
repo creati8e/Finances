@@ -23,7 +23,6 @@ import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.AccountsSetupOnboardingIntent
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.state.AccountsSetupOnboardingStepState
 import serg.chuprin.finances.feature.onboarding.presentation.launch.di.OnboardingFeatureComponent
-import java.math.BigDecimal
 import javax.inject.Inject
 
 /**
@@ -54,12 +53,8 @@ class AccountsSetupOnboardingFragment : BaseFragment(R.layout.fragment_onboardin
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val forward = MaterialSharedAxis(MaterialSharedAxis.X, true)
-        enterTransition = forward
-
-        val backward = MaterialSharedAxis(MaterialSharedAxis.X, false)
-        returnTransition = backward
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -69,49 +64,31 @@ class AccountsSetupOnboardingFragment : BaseFragment(R.layout.fragment_onboardin
             view.fit { Edge.Top + Edge.Bottom }
         }
 
+        setupBalanceInput()
+
+        setClickListeners()
+
         with(viewModel) {
             eventsLiveData(::handleEvent)
             stepStateLiveData(::handleStepState)
-            balanceLiveData(::showAmountInputState)
-        }
-
-        with(amountEditText) {
-            isHorizontalFadingEdgeEnabled = true
-            setFadingEdgeLength(requireContext().dpToPx(8))
-            doOnEditorAction(func = ::acceptEnteredBalance)
-            setFormatter { input ->
-                amountFormatter.formatInput(input, viewModel.currency)
-            }
-        }
-
-        startUsingAppButton.onClick {
-            viewModel.dispatchIntent(AccountsSetupOnboardingIntent.ClickOnStartUsingAppButton)
-        }
-
-        acceptAmountButton.onClick(::acceptEnteredBalance)
-
-        positiveButton.onClick {
-            viewModel.dispatchIntent(AccountsSetupOnboardingIntent.ClickOnPositiveButton)
-        }
-        negativeButton.onClick {
-            viewModel.dispatchIntent(AccountsSetupOnboardingIntent.ClickOnNegativeButton)
+            balanceLiveData(balanceEditText::setAmount)
         }
     }
 
     override fun onStart() {
         super.onStart()
-        textWatcher = amountEditText.doAfterTextChanged { editable ->
+        textWatcher = balanceEditText.doAfterTextChanged { editable ->
             // Check if this event is not self-change.
-            if (!amountEditText.shouldIgnoreChanges) {
-                val enteredAmount = editable?.toString().orEmpty()
-                viewModel.dispatchIntent(AccountsSetupOnboardingIntent.InputAmount(enteredAmount))
+            if (!balanceEditText.shouldIgnoreChanges) {
+                val enteredBalance = editable?.toString().orEmpty()
+                viewModel.dispatchIntent(AccountsSetupOnboardingIntent.EnterBalance(enteredBalance))
             }
         }
     }
 
     override fun onStop() {
         super.onStop()
-        amountEditText.removeTextChangedListener(textWatcher)
+        balanceEditText.removeTextChangedListener(textWatcher)
         textWatcher = null
     }
 
@@ -126,55 +103,55 @@ class AccountsSetupOnboardingFragment : BaseFragment(R.layout.fragment_onboardin
     private fun handleStepState(stepState: AccountsSetupOnboardingStepState) {
         return when (stepState) {
             AccountsSetupOnboardingStepState.CashQuestion -> {
-                acceptAmountButton.makeGone()
-                amountEditText.hideKeyboard()
+                acceptBalanceButton.makeGone()
+                balanceEditText.hideKeyboard()
                 showQuestionStep(R.string.onboarding_accounts_setup_subtitle_cash_question)
             }
             AccountsSetupOnboardingStepState.BankCardQuestion -> {
-                acceptAmountButton.makeGone()
-                amountEditText.hideKeyboard()
+                acceptBalanceButton.makeGone()
+                balanceEditText.hideKeyboard()
                 showQuestionStep(R.string.onboarding_accounts_setup_subtitle_bank_card_question)
             }
-            is AccountsSetupOnboardingStepState.CashAmountEnter -> {
-                showAmountEnterStep(stepState.acceptAmountButtonIsEnabled)
+            is AccountsSetupOnboardingStepState.CashBalanceEnter -> {
+                showBalanceEnterStep(stepState.acceptBalanceButtonIsEnabled)
             }
-            is AccountsSetupOnboardingStepState.BankCardAmountEnter -> {
-                showAmountEnterStep(stepState.acceptAmountButtonIsEnabled)
+            is AccountsSetupOnboardingStepState.BankCardBalanceEnter -> {
+                showBalanceEnterStep(stepState.acceptBalanceButtonIsEnabled)
             }
             is AccountsSetupOnboardingStepState.EverythingIsSetUp -> {
                 TransitionManager.beginDelayedTransition(constraintLayout)
                 buttonsGroup.makeGone()
                 titleTextView.makeGone()
-                amountEditText.makeGone()
-                acceptAmountButton.makeGone()
-                amountEditText.hideKeyboard()
+                balanceEditText.makeGone()
+                acceptBalanceButton.makeGone()
+                balanceEditText.hideKeyboard()
                 startUsingAppButton.makeVisible()
                 subtitleTextView.setText(stepState.message)
             }
         }
     }
 
-    private fun showAmountEnterStep(acceptAmountButtonIsEnabled: Boolean) {
+    private fun showBalanceEnterStep(acceptBalanceButtonIsEnabled: Boolean) {
         // Animate only if we move from previous state.
         if (buttonsGroup.isVisible) {
             val transitionSet = stepChangeTransition {
                 // Animate button itself.
                 addTransition(
                     scaleTransition {
-                        addTarget(acceptAmountButton)
+                        addTarget(acceptBalanceButton)
                     }
                 )
                 doOnEnd {
-                    amountEditText.showKeyboard()
+                    balanceEditText.showKeyboard()
                 }
             }
             TransitionManager.beginDelayedTransition(constraintLayout, transitionSet)
         }
         buttonsGroup.makeGone()
-        amountEditText.makeVisible()
-        acceptAmountButton.makeVisible()
+        balanceEditText.makeVisible()
+        acceptBalanceButton.makeVisible()
 
-        acceptAmountButton.isEnabled = acceptAmountButtonIsEnabled
+        acceptBalanceButton.isEnabled = acceptBalanceButtonIsEnabled
         subtitleTextView.setText(R.string.onboarding_accounts_setup_subtitle_enter_current_balance)
     }
 
@@ -182,7 +159,7 @@ class AccountsSetupOnboardingFragment : BaseFragment(R.layout.fragment_onboardin
         val transitionSet = stepChangeTransition()
         TransitionManager.beginDelayedTransition(constraintLayout, transitionSet)
 
-        amountEditText.makeGone()
+        balanceEditText.makeGone()
         buttonsGroup.makeVisible()
         subtitleTextView.setText(questionSubtitleStringRes)
     }
@@ -191,17 +168,13 @@ class AccountsSetupOnboardingFragment : BaseFragment(R.layout.fragment_onboardin
         viewModel.dispatchIntent(AccountsSetupOnboardingIntent.ClickOnAcceptBalanceButton)
     }
 
-    private fun showAmountInputState(balance: BigDecimal) {
-        amountEditText.setAmount(balance)
-    }
-
-
     // region Transitions.
+
 
     private fun stepChangeTransition(setup: TransitionSet.() -> Unit = {}): TransitionSet {
         return TransitionSet().apply {
             duration = TRANSITION_DURATION
-            addTransition(autoTransition(amountEditText))
+            addTransition(autoTransition(balanceEditText))
             addTransition(autoTransition(subtitleTextView))
             addTransition(scaleTransition {
                 addTarget(positiveButton)
@@ -226,5 +199,31 @@ class AccountsSetupOnboardingFragment : BaseFragment(R.layout.fragment_onboardin
     }
 
     // endregion
+
+    private fun setupBalanceInput() {
+        with(balanceEditText) {
+            isHorizontalFadingEdgeEnabled = true
+            setFadingEdgeLength(requireContext().dpToPx(8))
+            doOnEditorAction(func = ::acceptEnteredBalance)
+            setFormatter { input ->
+                amountFormatter.formatInput(input, viewModel.currency)
+            }
+        }
+    }
+
+    private fun setClickListeners() {
+        startUsingAppButton.onClick {
+            viewModel.dispatchIntent(AccountsSetupOnboardingIntent.ClickOnStartUsingAppButton)
+        }
+
+        acceptBalanceButton.onClick(::acceptEnteredBalance)
+
+        positiveButton.onClick {
+            viewModel.dispatchIntent(AccountsSetupOnboardingIntent.ClickOnPositiveButton)
+        }
+        negativeButton.onClick {
+            viewModel.dispatchIntent(AccountsSetupOnboardingIntent.ClickOnNegativeButton)
+        }
+    }
 
 }

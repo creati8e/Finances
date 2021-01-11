@@ -49,7 +49,7 @@ object AccountsSetupOnboardingStoreTest : Spek({
                 store.state.assertCurrentStepIs<AccountsSetupOnboardingStepState.CashQuestion>()
             }
 
-            And("Amounts are nulls") {
+            And("Balances are nulls") {
                 expectThat(store.state) {
                     get { cashBalance }.isNull()
                     get { bankCardBalance }.isNull()
@@ -77,8 +77,8 @@ object AccountsSetupOnboardingStoreTest : Spek({
                 store.dispatch(AccountsSetupOnboardingIntent.ClickOnPositiveButton)
             }
 
-            Then("Current step changed to cash amount entering") {
-                store.state.assertCurrentStepIs<AccountsSetupOnboardingStepState.CashAmountEnter>()
+            Then("Current step changed to cash balance entering") {
+                store.state.assertCurrentStepIs<AccountsSetupOnboardingStepState.CashBalanceEnter>()
             }
 
         }
@@ -97,7 +97,7 @@ object AccountsSetupOnboardingStoreTest : Spek({
                 store.dispatch(AccountsSetupOnboardingIntent.ClickOnNegativeButton)
             }
 
-            Then("Current step changed to cash amount entering") {
+            Then("Current step changed to cash balance entering") {
                 store.state.assertCurrentStepIs<AccountsSetupOnboardingStepState.BankCardQuestion>()
             }
 
@@ -108,20 +108,20 @@ object AccountsSetupOnboardingStoreTest : Spek({
             val params = AccountsSetupOnboardingStoreTestFactory.build()
             val store = params.store
 
-            val bankCardEnteredAmount = "10"
+            val bankCardEnteredBalance = "10"
             val bankCardAccountName = "bank_card"
-            val bankCardAmountBigDecimal = bankCardEnteredAmount.toBigDecimal()
+            val bankCardBalanceBigDecimal = bankCardEnteredBalance.toBigDecimal()
             val bankAccountCardParams = OnboardingMoneyAccountCreationParams(
                 accountName = bankCardAccountName,
-                balance = bankCardAmountBigDecimal
+                balance = bankCardBalanceBigDecimal
             )
 
-            val cashEnteredAmount = "5"
+            val cashEnteredBalance = "5"
             val cashAccountName = "cash"
-            val cashEnteredAmountBigDecimal = cashEnteredAmount.toBigDecimal()
+            val cashEnteredBalanceBigDecimal = cashEnteredBalance.toBigDecimal()
             val cashAccountCardParams = OnboardingMoneyAccountCreationParams(
                 accountName = cashAccountName,
-                balance = cashEnteredAmountBigDecimal
+                balance = cashEnteredBalanceBigDecimal
             )
 
             val finalStepMessage = "final_step_message"
@@ -133,20 +133,20 @@ object AccountsSetupOnboardingStoreTest : Spek({
 
                     with(params) {
                         every {
-                            amountFormatter.formatInput(cashEnteredAmount, any())
-                        } returns cashEnteredAmount
+                            amountFormatter.formatInput(cashEnteredBalance, any())
+                        } returns cashEnteredBalance
 
                         every {
-                            amountParser.parse(cashEnteredAmount)
-                        } returns cashEnteredAmountBigDecimal
+                            amountParser.parse(cashEnteredBalance)
+                        } returns cashEnteredBalanceBigDecimal
                     }
 
                     dispatch(AccountsSetupOnboardingIntent.ClickOnPositiveButton)
-                    dispatch(AccountsSetupOnboardingIntent.InputAmount(cashEnteredAmount))
+                    dispatch(AccountsSetupOnboardingIntent.EnterBalance(cashEnteredBalance))
                     dispatch(AccountsSetupOnboardingIntent.ClickOnAcceptBalanceButton)
 
                     state.assertCurrentStepIs<AccountsSetupOnboardingStepState.BankCardQuestion>()
-                    expectThat(state.cashBalance).isEqualTo(cashEnteredAmountBigDecimal)
+                    expectThat(state.cashBalance).isEqualTo(cashEnteredBalanceBigDecimal)
                 }
             }
 
@@ -154,11 +154,11 @@ object AccountsSetupOnboardingStoreTest : Spek({
                 store.dispatch(AccountsSetupOnboardingIntent.ClickOnPositiveButton)
             }
 
-            Then("Current step changed to bank card amount entering") {
-                store.state.assertCurrentStepIs<AccountsSetupOnboardingStepState.BankCardAmountEnter>()
+            Then("Current step changed to bank card balance entering") {
+                store.state.assertCurrentStepIs<AccountsSetupOnboardingStepState.BankCardBalanceEnter>()
             }
 
-            When("Some amount is entered and accepted") {
+            When("Some balance is entered and accepted") {
                 with(params) {
                     coEvery {
                         completeOnboardingUseCase.execute(
@@ -181,21 +181,21 @@ object AccountsSetupOnboardingStoreTest : Spek({
                     } returns finalStepMessage
 
                     every {
-                        amountFormatter.formatInput(bankCardEnteredAmount, any())
-                    } returns bankCardEnteredAmount
+                        amountFormatter.formatInput(bankCardEnteredBalance, any())
+                    } returns bankCardEnteredBalance
 
                     every {
-                        amountParser.parse(bankCardEnteredAmount)
-                    } returns bankCardAmountBigDecimal
+                        amountParser.parse(bankCardEnteredBalance)
+                    } returns bankCardBalanceBigDecimal
                 }
 
                 with(store) {
-                    dispatch(AccountsSetupOnboardingIntent.InputAmount(bankCardEnteredAmount))
+                    dispatch(AccountsSetupOnboardingIntent.EnterBalance(bankCardEnteredBalance))
                     dispatch(AccountsSetupOnboardingIntent.ClickOnAcceptBalanceButton)
                 }
             }
 
-            Then("Onboarding have been completed with entered amount") {
+            Then("Onboarding have been completed with entered balance") {
                 with(params) {
                     coVerify {
                         completeOnboardingUseCase.execute(
@@ -208,8 +208,8 @@ object AccountsSetupOnboardingStoreTest : Spek({
 
             Then("State contains this balance in property") {
                 expectThat(store.state) {
-                    get { cashBalance }.isEqualTo(cashEnteredAmountBigDecimal)
-                    get { bankCardBalance }.isEqualTo(bankCardAmountBigDecimal)
+                    get { cashBalance }.isEqualTo(cashEnteredBalanceBigDecimal)
+                    get { bankCardBalance }.isEqualTo(bankCardBalanceBigDecimal)
                 }
             }
 
