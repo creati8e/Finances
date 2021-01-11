@@ -61,7 +61,7 @@ class AccountsSetupOnboardingFragment : BaseFragment(R.layout.fragment_onboardin
         super.onViewCreated(view, savedInstanceState)
 
         edgeToEdge {
-            view.fit { Edge.Top + Edge.Bottom }
+            view.fit { Edge.All }
         }
 
         setupBalanceInput()

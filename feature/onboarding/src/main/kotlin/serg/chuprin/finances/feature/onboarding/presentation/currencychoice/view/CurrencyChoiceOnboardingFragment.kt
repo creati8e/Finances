@@ -52,7 +52,7 @@ class CurrencyChoiceOnboardingFragment :
         super.onViewCreated(view, savedInstanceState)
 
         edgeToEdge {
-            view.fit { Edge.Top + Edge.Bottom }
+            view.fit { Edge.All }
         }
 
         _currencyChoiceListController = CurrencyChoiceListController(

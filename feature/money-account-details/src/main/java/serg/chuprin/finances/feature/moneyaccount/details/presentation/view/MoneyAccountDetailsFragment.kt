@@ -63,7 +63,7 @@ class MoneyAccountDetailsFragment : BaseFragment(R.layout.fragment_money_account
         super.onViewCreated(view, savedInstanceState)
 
         edgeToEdge {
-            view.fit { Edge.Top }
+            view.fit { Edge.Top + Edge.Left + Edge.Right }
             transactionsRecyclerView.fit { Edge.Bottom }
         }
 

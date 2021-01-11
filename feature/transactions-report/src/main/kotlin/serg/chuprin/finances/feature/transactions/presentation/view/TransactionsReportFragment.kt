@@ -68,7 +68,7 @@ class TransactionsReportFragment : BaseFragment(R.layout.fragment_transactions_r
         super.onViewCreated(view, savedInstanceState)
 
         edgeToEdge {
-            view.fit { Edge.Top }
+            view.fit { Edge.Top + Edge.Left + Edge.Right }
             recyclerView.fit { Edge.Bottom }
             fabLayout.fit { Edge.Bottom + Edge.Right }
         }

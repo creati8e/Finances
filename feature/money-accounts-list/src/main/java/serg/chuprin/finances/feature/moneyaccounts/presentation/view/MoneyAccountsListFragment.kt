@@ -65,7 +65,7 @@ class MoneyAccountsListFragment : BaseFragment(R.layout.fragment_money_accounts_
         super.onViewCreated(view, savedInstanceState)
 
         edgeToEdge {
-            view.fit { Edge.Top }
+            view.fit { Edge.Top + Edge.Left + Edge.Right }
             moneyAccountsRecyclerView.fit { Edge.Bottom }
             accountCreationFab.fit { Edge.Bottom + Edge.Right }
         }

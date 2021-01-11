@@ -56,7 +56,7 @@ class CategoriesListFragment : BaseFragment(R.layout.fragment_categories_list) {
         super.onViewCreated(view, savedInstanceState)
 
         edgeToEdge {
-            view.fit { Edge.Top }
+            view.fit { Edge.Top + Edge.Left + Edge.Right }
             recyclerView.fit { Edge.Bottom }
         }
 

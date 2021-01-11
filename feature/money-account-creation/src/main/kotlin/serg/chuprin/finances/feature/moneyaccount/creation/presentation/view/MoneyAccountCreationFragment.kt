@@ -65,7 +65,7 @@ class MoneyAccountCreationFragment : BaseFragment(R.layout.fragment_money_accoun
         super.onViewCreated(view, savedInstanceState)
 
         edgeToEdge {
-            view.fit { Edge.Top }
+            view.fit { Edge.Top + Edge.Left + Edge.Right }
             currencyChoiceView.fit { Edge.Bottom }
         }
 

@@ -54,7 +54,7 @@ class AuthorizationFragment : BaseFragment(R.layout.fragment_authorization) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         edgeToEdge {
-            view.fit { Edge.Bottom + Edge.Top }
+            view.fit { Edge.All }
         }
         signInWithGoogleButton.onClick(googleSignInObserver::signIn)
         viewModel.signInStateLiveData(::handleSignInState)

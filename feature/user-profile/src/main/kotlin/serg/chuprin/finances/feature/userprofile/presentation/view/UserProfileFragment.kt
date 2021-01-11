@@ -81,7 +81,7 @@ class UserProfileFragment :
         super.onViewCreated(view, savedInstanceState)
 
         edgeToEdge {
-            view.fit { Edge.Top }
+            view.fit { Edge.Top + Edge.Left + Edge.Right }
             recyclerView.fit { Edge.Bottom }
         }
 
