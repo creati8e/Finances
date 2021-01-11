@@ -38,9 +38,8 @@ object AccountsSetupOnboardingStoreTestFactory {
             ),
             AccountsSetupAmountEnterStepIntentExecutor(
                 amountParser = amountParser,
-                amountFormatter = amountFormatter,
-                onboardingCompletionExecutor = onboardingCompletionExecutor,
-                finalStepBuilder = AccountsSetupOnboardingFinalStepBuilder(resourceManager)
+                finalStepBuilder = AccountsSetupOnboardingFinalStepBuilder(resourceManager),
+                onboardingCompletionExecutor = onboardingCompletionExecutor
             )
         )
 

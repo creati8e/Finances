@@ -5,8 +5,6 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
-import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
-import serg.chuprin.finances.core.api.presentation.model.AmountInputState
 import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.AccountsSetupOnboardingEffect
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.AccountsSetupOnboardingFinalStepBuilder
@@ -20,26 +18,18 @@ import javax.inject.Inject
  */
 class AccountsSetupAmountEnterStepIntentExecutor @Inject constructor(
     private val amountParser: AmountParser,
-    private val amountFormatter: AmountFormatter,
     private val finalStepBuilder: AccountsSetupOnboardingFinalStepBuilder,
     private val onboardingCompletionExecutor: AccountsSetupOnboardingCompletionExecutor
 ) {
 
     fun handleInputAmountIntent(
-        intent: AccountsSetupOnboardingIntent.InputAmount,
-        state: AccountsSetupOnboardingState
+        intent: AccountsSetupOnboardingIntent.InputAmount
     ): Flow<AccountsSetupOnboardingEffect> {
         return flowOfSingleValue {
-            val formattedAmount = amountFormatter.formatInput(
-                currency = state.currency,
-                input = intent.enteredAmount
-            )
+            val parsedAmount = amountParser.parse(intent.enteredAmount)
             AccountsSetupOnboardingEffect.AmountEntered(
-                acceptButtonIsVisible = true,
-                amountInputState = AmountInputState(
-                    hasError = false,
-                    formattedAmount = formattedAmount
-                )
+                balance = parsedAmount,
+                acceptButtonIsEnabled = true
             )
         }
     }
@@ -67,22 +57,9 @@ class AccountsSetupAmountEnterStepIntentExecutor @Inject constructor(
         stepState: AccountsSetupOnboardingStepState.BankCardAmountEnter,
         state: AccountsSetupOnboardingState
     ): Flow<AccountsSetupOnboardingEffect> {
-        val amount = stepState.amountInputState.formattedAmount
-        val parsedAmount = amountParser.parse(amount)
-            ?: return flowOf(
-                AccountsSetupOnboardingEffect.EnteredAmountParsedWithError(
-                    stepState.copy(
-                        acceptAmountButtonIsEnabled = false,
-                        amountInputState = AmountInputState(
-                            hasError = true,
-                            formattedAmount = amount
-                        )
-                    )
-                )
-            )
         return flow {
             @Suppress("UnnecessaryVariable")
-            val bankCardBalance = parsedAmount
+            val bankCardBalance = stepState.balance
 
             onboardingCompletionExecutor.completeOnboarding(
                 cashBalance = state.cashBalance,
@@ -109,24 +86,11 @@ class AccountsSetupAmountEnterStepIntentExecutor @Inject constructor(
     private fun acceptBalanceInCashAmountEnterState(
         stepState: AccountsSetupOnboardingStepState.CashAmountEnter
     ): Flow<AccountsSetupOnboardingEffect> {
-        val amount = stepState.amountInputState.formattedAmount
-        val parsedAmount = amountParser.parse(amount)
-            ?: return flowOf(
-                AccountsSetupOnboardingEffect.EnteredAmountParsedWithError(
-                    stepState.copy(
-                        acceptAmountButtonIsEnabled = false,
-                        amountInputState = AmountInputState(
-                            hasError = true,
-                            formattedAmount = amount
-                        )
-                    )
-                )
-            )
         return flowOf(
             AccountsSetupOnboardingEffect.AccountBalanceAccepted(
-                // Bank card balance not entered on this step yet.
+                // Bank card balance is not entered on this step yet.
                 bankCardBalance = null,
-                cashBalance = parsedAmount
+                cashBalance = stepState.balance
             ),
             AccountsSetupOnboardingEffect.StepChanged(
                 AccountsSetupOnboardingStepState.BankCardQuestion

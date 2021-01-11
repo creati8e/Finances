@@ -1,6 +1,6 @@
 package serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.state
 
-import serg.chuprin.finances.core.api.presentation.model.AmountInputState
+import java.math.BigDecimal
 
 /**
  * Created by Sergey Chuprin on 11.04.2020.
@@ -16,7 +16,7 @@ sealed class AccountsSetupOnboardingStepState {
      * 2 step.
      */
     data class CashAmountEnter(
-        val amountInputState: AmountInputState = AmountInputState(),
+        val balance: BigDecimal? = BigDecimal.ZERO,
         val acceptAmountButtonIsEnabled: Boolean = false
     ) : AccountsSetupOnboardingStepState()
 
@@ -28,8 +28,9 @@ sealed class AccountsSetupOnboardingStepState {
     /**
      * 4 step.
      */
+    // TODO: Rename and create sealed class.
     data class BankCardAmountEnter(
-        val amountInputState: AmountInputState = AmountInputState(),
+        val balance: BigDecimal? = BigDecimal.ZERO,
         val acceptAmountButtonIsEnabled: Boolean = false
     ) : AccountsSetupOnboardingStepState()
 
@@ -40,10 +41,10 @@ sealed class AccountsSetupOnboardingStepState {
         val message: String
     ) : AccountsSetupOnboardingStepState()
 
-    val amountInputStateOrNull: AmountInputState?
+    val balanceOrNull: BigDecimal?
         get() {
-            return (this as? CashAmountEnter)?.amountInputState
-                ?: (this as? BankCardAmountEnter)?.amountInputState
+            return (this as? CashAmountEnter)?.balance
+                ?: (this as? BankCardAmountEnter)?.balance
         }
 
 }

@@ -12,7 +12,7 @@ import com.google.android.material.transition.MaterialSharedAxis
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.fragment_onboarding_accounts_setup.*
-import serg.chuprin.finances.core.api.presentation.model.AmountInputState
+import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.navigation.OnboardingNavigation
@@ -23,6 +23,7 @@ import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.AccountsSetupOnboardingIntent
 import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.state.AccountsSetupOnboardingStepState
 import serg.chuprin.finances.feature.onboarding.presentation.launch.di.OnboardingFeatureComponent
+import java.math.BigDecimal
 import javax.inject.Inject
 
 /**
@@ -36,6 +37,9 @@ class AccountsSetupOnboardingFragment : BaseFragment(R.layout.fragment_onboardin
 
     @Inject
     lateinit var onboardingNavigation: OnboardingNavigation
+
+    @Inject
+    lateinit var amountFormatter: AmountFormatter
 
     private val viewModel by viewModelFromComponent { component }
 
@@ -68,13 +72,16 @@ class AccountsSetupOnboardingFragment : BaseFragment(R.layout.fragment_onboardin
         with(viewModel) {
             eventsLiveData(::handleEvent)
             stepStateLiveData(::handleStepState)
-            amountInputStateLiveData(::showAmountInputState)
+            balanceLiveData(::showAmountInputState)
         }
 
         with(amountEditText) {
             isHorizontalFadingEdgeEnabled = true
             setFadingEdgeLength(requireContext().dpToPx(8))
             doOnEditorAction(func = ::acceptEnteredBalance)
+            setFormatter { input ->
+                amountFormatter.formatInput(input, viewModel.currency)
+            }
         }
 
         startUsingAppButton.onClick {
@@ -184,16 +191,8 @@ class AccountsSetupOnboardingFragment : BaseFragment(R.layout.fragment_onboardin
         viewModel.dispatchIntent(AccountsSetupOnboardingIntent.ClickOnAcceptBalanceButton)
     }
 
-    private fun showAmountInputState(amountInputState: AmountInputState) {
-        amountEditText.doIgnoringChanges {
-            setText(amountInputState.formattedAmount)
-        }
-        val textColor = if (amountInputState.hasError) {
-            requireContext().getColorInt(R.color.colorRed)
-        } else {
-            requireContext().getAttributeColor(android.R.attr.textColorPrimary)
-        }
-        amountEditText.setTextColor(textColor)
+    private fun showAmountInputState(balance: BigDecimal) {
+        amountEditText.setAmount(balance)
     }
 
 

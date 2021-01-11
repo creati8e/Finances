@@ -45,7 +45,7 @@ class AccountsSetupOnboardingActionExecutor @Inject constructor(
                         amountEnterStepIntentExecutor.handleClickOnAcceptBalanceButtonIntent(state)
                     }
                     is AccountsSetupOnboardingIntent.InputAmount -> {
-                        amountEnterStepIntentExecutor.handleInputAmountIntent(intent, state)
+                        amountEnterStepIntentExecutor.handleInputAmountIntent(intent)
                     }
                     AccountsSetupOnboardingIntent.ClickOnStartUsingAppButton -> {
                         handleClickOnStartUsingAppButtonIntent(state, eventConsumer)
