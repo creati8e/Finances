@@ -51,7 +51,7 @@ class CreateTransactionUseCase @Inject constructor(
      */
     private fun adjustDate(date: LocalDate): Date {
         val dateTime = if (date == LocalDate.now()) {
-            LocalDateTime.now()
+            LocalDateTime.now().withNano(0)
         } else {
             date.atStartOfDay()
         }
