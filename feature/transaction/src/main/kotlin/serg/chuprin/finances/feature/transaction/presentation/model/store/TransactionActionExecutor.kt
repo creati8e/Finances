@@ -5,7 +5,6 @@ import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.category.CategoryType
 import serg.chuprin.finances.core.api.domain.model.category.CategoryWithParent
 import serg.chuprin.finances.core.api.domain.model.category.query.CategoriesQuery
-import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import serg.chuprin.finances.core.api.domain.model.transaction.PlainTransactionType
 import serg.chuprin.finances.core.api.domain.repository.CategoryRepository
 import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
@@ -74,7 +73,7 @@ class TransactionActionExecutor @Inject constructor(
             is TransactionAction.ExecuteIntent -> {
                 when (val intent = action.intent) {
                     is TransactionIntent.EnterAmount -> {
-                        handleEnterAmountIntent(intent, state)
+                        handleEnterAmountIntent(intent)
                     }
                     TransactionIntent.ClickOnSaveButton -> {
                         handleClickOnSaveButtonIntent(state, eventConsumer)
@@ -118,7 +117,7 @@ class TransactionActionExecutor @Inject constructor(
                 handleFormatInitialStateAction(action)
             }
             is TransactionAction.FormatInitialStateForExistingTransaction -> {
-                handleFormatInitialStateForExistingTransactionAction(action)
+                handleFormatInitialStateForExistingTransactionAction(action, state)
             }
         }
     }
@@ -149,11 +148,13 @@ class TransactionActionExecutor @Inject constructor(
     // region Actions.
 
     private fun handleFormatInitialStateForExistingTransactionAction(
-        action: TransactionAction.FormatInitialStateForExistingTransaction
+        action: TransactionAction.FormatInitialStateForExistingTransaction,
+        state: TransactionState
     ): Flow<TransactionEffect> {
         return flowOfSingleValue {
             val chosenMoneyAccount = getMoneyAccount(action.moneyAccountId)
             val chosenCategory = getCategory(
+                state = state,
                 userId = action.userId,
                 categoryId = action.categoryId
             )
@@ -293,7 +294,7 @@ class TransactionActionExecutor @Inject constructor(
         }
         return flowOfSingleValue {
             TransactionEffect.CategoryChanged(
-                getCategory(categoryId = intent.categoryId, userId = state.userId)
+                getCategory(categoryId = intent.categoryId, userId = state.userId, state = state)
             )
         }
     }
@@ -352,13 +353,8 @@ class TransactionActionExecutor @Inject constructor(
     }
 
     private fun handleEnterAmountIntent(
-        intent: TransactionIntent.EnterAmount,
-        state: TransactionState
+        intent: TransactionIntent.EnterAmount
     ): Flow<TransactionEffect> {
-        // Check if money account is initialized.
-        if (state.chosenMoneyAccount.account == MoneyAccount.EMPTY) {
-            return emptyFlow()
-        }
         return flowOfSingleValue {
             TransactionEffect.AmountEntered(enteredAmount = amountParser.parse(intent.amount))
         }
@@ -374,6 +370,7 @@ class TransactionActionExecutor @Inject constructor(
     private suspend fun getCategory(
         categoryId: Id?,
         userId: Id,
+        state: TransactionState
     ): TransactionChosenCategory {
         if (categoryId == null) {
             return formatChosenCategory(categoryWithParent = null)
@@ -392,7 +389,17 @@ class TransactionActionExecutor @Inject constructor(
             .firstOrNull { it.parentCategory != null }
             ?: categories.first()
 
-        return formatChosenCategory(categoryWithParent)
+        // Check if chosen category has the same type as current transaction operation
+        // (i.e if operation is expense, category must be expense too).
+        return when (state.operation) {
+            is TransactionChosenOperation.Plain -> {
+                if (categoryWithParent.category.type == state.operation.type.toCategoryType()) {
+                    formatChosenCategory(categoryWithParent)
+                } else {
+                    formatChosenCategory(categoryWithParent = null)
+                }
+            }
+        }
     }
 
     private fun formatChosenCategory(

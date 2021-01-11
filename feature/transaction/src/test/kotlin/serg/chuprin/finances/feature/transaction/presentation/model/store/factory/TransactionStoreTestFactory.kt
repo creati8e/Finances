@@ -28,6 +28,7 @@ import serg.chuprin.finances.feature.transaction.presentation.model.formatter.Tr
 import serg.chuprin.finances.feature.transaction.presentation.model.store.TransactionActionExecutor
 import serg.chuprin.finances.feature.transaction.presentation.model.store.TransactionStoreBootstrapper
 import serg.chuprin.finances.feature.transaction.presentation.model.store.TransactionStoreFactory
+import java.math.BigDecimal
 import java.util.*
 
 /**
@@ -47,7 +48,12 @@ object TransactionStoreTestFactory {
 
         // endregion
 
-        val amountParser = mockk<AmountParser>()
+        val amountParser = mockk<AmountParser>().apply {
+            val amountSlot = slot<String>()
+            every { parse(capture(amountSlot)) } answers {
+                runCatching { BigDecimal(amountSlot.captured) }.getOrNull()
+            }
+        }
         val resourceManger = mockk<ResourceManger>().apply {
             every { getString(any()) } returns "some_string"
         }
@@ -122,19 +128,23 @@ object TransactionStoreTestFactory {
 
     private fun createTestCategories(ownerId: Id): CategoryIdToCategory {
         return CategoryIdToCategory(
-            (0..5)
-                .map { index -> Id.existing("$index") }
+            (0..10)
                 .associateBy(
-                    { id -> id },
-                    { id ->
+                    { index -> Id.existing("$index") },
+                    { index ->
+                        val categoryType = if (index <= 5) {
+                            CategoryType.EXPENSE
+                        } else {
+                            CategoryType.INCOME
+                        }
                         CategoryWithParent(
                             category = Category(
-                                id = id,
                                 ownerId = ownerId,
                                 colorHex = "#000",
+                                type = categoryType,
                                 parentCategoryId = null,
-                                type = CategoryType.EXPENSE,
-                                name = "Category_${id.value}"
+                                id = Id.existing("$index"),
+                                name = "Category_${index}"
                             ),
                             parentCategory = null
                         )

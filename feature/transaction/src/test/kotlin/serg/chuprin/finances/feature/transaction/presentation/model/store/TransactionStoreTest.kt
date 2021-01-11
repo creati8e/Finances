@@ -18,10 +18,7 @@ import serg.chuprin.finances.feature.transaction.domain.model.TransactionChosenO
 import serg.chuprin.finances.feature.transaction.presentation.model.store.factory.TransactionStoreTestFactory
 import serg.chuprin.finances.feature.transaction.presentation.model.store.factory.TransactionTestStore
 import strikt.api.expectThat
-import strikt.assertions.isA
-import strikt.assertions.isEqualTo
-import strikt.assertions.isFalse
-import strikt.assertions.isNull
+import strikt.assertions.*
 import java.math.BigDecimal
 import java.time.LocalDate
 
@@ -83,9 +80,27 @@ object TransactionStoreTest : Spek({
 
             chooseMoneyAccount(testStore, moneyAccounts)
 
-            clickOnChooseCategoryButton(testStore)
+            clickOnChooseCategoryButton(testStore, CategoryType.EXPENSE)
 
-            chooseCategory(testStore, categories)
+            chooseRandomNotChosenCategory(
+                testStore,
+                categories,
+                CategoryType.EXPENSE,
+                shouldSavingButtonBeEnabled = false
+            )
+
+            clickOnTransactionOperation(testStore)
+
+            enterAmount(testStore)
+
+            clickOnChooseCategoryButton(testStore, CategoryType.INCOME)
+
+            chooseRandomNotChosenCategory(
+                testStore,
+                categories,
+                CategoryType.INCOME,
+                shouldSavingButtonBeEnabled = true
+            )
 
         }
 
@@ -93,14 +108,59 @@ object TransactionStoreTest : Spek({
 
 })
 
-private fun ScenarioBody.chooseCategory(
+private fun ScenarioBody.enterAmount(testStore: TransactionTestStore) {
+    When("Enter some amount") {
+        testStore.dispatch(TransactionIntent.EnterAmount("50"))
+    }
+
+    Then("State has parsed amount and saving button became enabled") {
+        expectThat(testStore.state) {
+            get { enteredAmount }
+                .describedAs("Entered amount")
+                .isEqualTo(BigDecimal(50))
+
+            get { saveButtonIsEnabled }
+                .describedAs("Save transaction button is enabled")
+                .isTrue()
+        }
+    }
+}
+
+private fun ScenarioBody.clickOnTransactionOperation(testStore: TransactionTestStore) {
+    When("Change transaction operation from expense to income") {
+        testStore.dispatch(
+            TransactionIntent.ClickOnOperationType(
+                TransactionChosenOperation.Plain(PlainTransactionType.INCOME)
+            )
+        )
+    }
+
+    Then("Chosen category is reset") {
+        expectThat(testStore.state) {
+            get { chosenCategory.category }
+                .describedAs("Chosen category")
+                .isEqualTo(null)
+        }
+    }
+}
+
+private fun ScenarioBody.chooseRandomNotChosenCategory(
     testStore: TransactionTestStore,
-    categories: () -> CategoryIdToCategory
+    categories: () -> CategoryIdToCategory,
+    categoryType: CategoryType,
+    shouldSavingButtonBeEnabled: Boolean
 ) {
     lateinit var chosenCategory: Category
 
     When("Choose category") {
-        chosenCategory = categories().entries.last().value.category
+        chosenCategory = categories().entries
+            .first { (id, categoryWithParent) ->
+                val hasRequiredType = categoryWithParent.category.type == categoryType
+                val isNotCurrentlyChosen = id != testStore.state.chosenCategory.category?.id
+                hasRequiredType && isNotCurrentlyChosen
+            }
+            .value
+            .category
         testStore.dispatch(TransactionIntent.ChooseCategory(chosenCategory.id))
     }
 
@@ -112,12 +172,15 @@ private fun ScenarioBody.chooseCategory(
 
             get { saveButtonIsEnabled }
                 .describedAs("Save transaction button is enabled")
-                .isFalse()
+                .isEqualTo(shouldSavingButtonBeEnabled)
         }
     }
 }
 
-private fun ScenarioBody.clickOnChooseCategoryButton(testStore: TransactionTestStore) {
+private fun ScenarioBody.clickOnChooseCategoryButton(
+    testStore: TransactionTestStore,
+    expectedCategoryType: CategoryType
+) {
     When("Click on choose category button") {
         testStore.dispatch(TransactionIntent.ClickOnCategory)
     }
@@ -134,7 +197,7 @@ private fun ScenarioBody.clickOnChooseCategoryButton(testStore: TransactionTestS
 
             .get { categoryType }
             .describedAs("Category type")
-            .isEqualTo(CategoryType.EXPENSE)
+            .isEqualTo(expectedCategoryType)
     }
 }
 
