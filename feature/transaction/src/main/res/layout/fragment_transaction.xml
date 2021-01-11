@@ -76,6 +76,8 @@
                 android:layout_marginTop="16dp"
                 android:background="@null"
                 android:gravity="center_horizontal"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
                 android:text="0"
                 android:textSize="30sp"
                 tools:ignore="HardcodedText" />

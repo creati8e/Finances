@@ -160,6 +160,8 @@ class TransactionFragment :
     }
 
     private fun setAmountInput() {
+        amountEditText.isHorizontalFadingEdgeEnabled = true
+        amountEditText.setFadingEdgeLength(requireContext().dpToPx(8))
         amountEditText.setFormatter { input ->
             val currency = viewModel.currency
             if (currency == null) {
