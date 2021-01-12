@@ -33,6 +33,9 @@ class TransactionViewModel @Inject constructor(
             }
         }
 
+    val currencySymbolLiveData: LiveData<String> =
+        store.observeParticularStateAsLiveData(TransactionState::currencySymbol)
+
     val enteredAmountLiveData: LiveData<BigDecimal> = store
         .stateFlow
         .mapNotNull { state -> state.enteredAmount }

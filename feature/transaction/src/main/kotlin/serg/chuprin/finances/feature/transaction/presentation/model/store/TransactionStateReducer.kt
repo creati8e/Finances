@@ -47,6 +47,7 @@ class TransactionStateReducer : StoreStateReducer<TransactionEffect, Transaction
             is TransactionEffect.MoneyAccountChanged -> {
                 state.copy(
                     chosenMoneyAccount = what.chosenMoneyAccount,
+                    currencySymbol = what.chosenMoneyAccount.account.currency.symbol,
                     saveButtonIsEnabled = checkSaveButtonEnabledStatus(
                         state.transactionDefaultData,
                         state.chosenDate,
@@ -92,6 +93,7 @@ class TransactionStateReducer : StoreStateReducer<TransactionEffect, Transaction
                     chosenCategory = what.chosenCategory,
                     chosenMoneyAccount = what.chosenMoneyAccount,
                     transactionDefaultData = what.transactionDefaultData,
+                    currencySymbol = what.chosenMoneyAccount.account.currency.symbol,
                     transactionDeletionButtonIsVisible = what.transactionDeletionButtonIsVisible
                 )
             }

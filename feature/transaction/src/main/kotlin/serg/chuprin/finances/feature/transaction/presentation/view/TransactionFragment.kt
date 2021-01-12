@@ -123,6 +123,7 @@ class TransactionFragment :
             enteredAmountLiveData(amountEditText::setAmount)
             isSaveButtonEnabledLiveData(saveIcon::setEnabled)
             chosenCategoryLiveData(chosenCategoryTextView::setText)
+            currencySymbolLiveData(amountEditText::setCurrencySymbol)
             chosenMoneyAccountLiveData(chosenMoneyAccountTextView::setText)
             transactionDeletionButtonVisibilityLiveDate(deleteTransactionButton::makeVisibleOrGone)
 

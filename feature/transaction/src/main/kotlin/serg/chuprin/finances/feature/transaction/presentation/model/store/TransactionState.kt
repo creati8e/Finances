@@ -17,6 +17,7 @@ import java.time.LocalDate
  */
 data class TransactionState(
     val userId: Id = Id.UNKNOWN,
+    val currencySymbol: String = EMPTY_STRING,
     val operation: TransactionChosenOperation = TransactionChosenOperation.Plain(
         PlainTransactionType.EXPENSE
     ),
