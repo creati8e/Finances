@@ -1,5 +1,6 @@
 package serg.chuprin.finances.feature.onboarding.presentation.accountssetup.model.store.state
 
+import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
 import java.math.BigDecimal
 
 /**
@@ -16,6 +17,7 @@ sealed class AccountsSetupOnboardingStepState {
      * 2 step.
      */
     data class CashBalanceEnter(
+        val currencySymbol: String = EMPTY_STRING,
         val balance: BigDecimal? = BigDecimal.ZERO,
         val acceptBalanceButtonIsEnabled: Boolean = false
     ) : AccountsSetupOnboardingStepState()
@@ -29,6 +31,7 @@ sealed class AccountsSetupOnboardingStepState {
      * 4 step.
      */
     data class BankCardBalanceEnter(
+        val currencySymbol: String = EMPTY_STRING,
         val balance: BigDecimal? = BigDecimal.ZERO,
         val acceptBalanceButtonIsEnabled: Boolean = false
     ) : AccountsSetupOnboardingStepState()
@@ -44,6 +47,12 @@ sealed class AccountsSetupOnboardingStepState {
         get() {
             return (this as? CashBalanceEnter)?.balance
                 ?: (this as? BankCardBalanceEnter)?.balance
+        }
+
+    val currencySymbolOrEmpty: String
+        get() {
+            return (this as? CashBalanceEnter)?.currencySymbol
+                ?: (this as? BankCardBalanceEnter)?.currencySymbol.orEmpty()
         }
 
 }

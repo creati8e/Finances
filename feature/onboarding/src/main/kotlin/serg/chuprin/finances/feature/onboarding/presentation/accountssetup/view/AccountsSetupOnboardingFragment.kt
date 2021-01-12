@@ -72,6 +72,7 @@ class AccountsSetupOnboardingFragment : BaseFragment(R.layout.fragment_onboardin
             eventsLiveData(::handleEvent)
             stepStateLiveData(::handleStepState)
             balanceLiveData(balanceEditText::setAmount)
+            currencySymbolLiveDate(balanceEditText::setCurrencySymbol)
         }
     }
 

@@ -36,6 +36,10 @@ class AccountsSetupOnboardingViewModel @Inject constructor(
         .mapNotNull { state -> state.stepState.balanceOrNull }
         .asLiveData()
 
+    val currencySymbolLiveDate: LiveData<String> = store.observeParticularStateAsLiveData { state ->
+        state.stepState.currencySymbolOrEmpty
+    }
+
     init {
         store.start(intentsFlow(), viewModelScope)
     }
