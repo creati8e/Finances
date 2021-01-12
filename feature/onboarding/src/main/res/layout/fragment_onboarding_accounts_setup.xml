@@ -43,9 +43,11 @@
 
         <serg.chuprin.finances.core.api.presentation.view.widget.AmountEditText
             android:id="@+id/balanceEditText"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="16sp"
+            android:layout_marginEnd="32dp"
             android:background="@null"
             android:gravity="center"
             android:imeOptions="actionDone"

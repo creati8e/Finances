@@ -7,6 +7,9 @@ import android.text.method.DigitsKeyListener
 import android.util.AttributeSet
 import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.textfield.TextInputEditText
+import serg.chuprin.finances.core.api.presentation.view.extensions.dpToPx
+import serg.chuprin.finances.core.api.presentation.view.extensions.drawableEnd
+import serg.chuprin.finances.core.api.presentation.view.extensions.getPrimaryTextColor
 import serg.chuprin.finances.core.api.presentation.view.extensions.shouldIgnoreChanges
 import java.math.BigDecimal
 
@@ -33,6 +36,11 @@ class AmountEditText : TextInputEditText {
     init {
         inputType = InputType.TYPE_CLASS_NUMBER
         keyListener = DigitsKeyListener.getInstance("0123456789.,")
+        compoundDrawablePadding = context.dpToPx(8)
+
+        if (isInEditMode) {
+            setCurrencySymbol("$")
+        }
     }
 
     override fun onAttachedToWindow() {
@@ -62,6 +70,14 @@ class AmountEditText : TextInputEditText {
             }
         }
         super.onSelectionChanged(start, end)
+    }
+
+    fun setCurrencySymbol(symbol: String) {
+        drawableEnd = TextDrawable(
+            text = symbol,
+            textColor = context.getPrimaryTextColor(),
+            textSize = textSize - (textSize / 4)
+        )
     }
 
     fun setFormatter(formatter: (String) -> String) {
