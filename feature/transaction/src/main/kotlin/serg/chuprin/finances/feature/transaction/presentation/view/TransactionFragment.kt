@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import reactivecircus.flowbinding.android.widget.afterTextChanges
+import serg.chuprin.finances.core.api.di.dependencies.findComponentDependencies
 import serg.chuprin.finances.core.api.extensions.toLocalDateUTC
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
@@ -64,7 +65,9 @@ class TransactionFragment :
 
     private val screenArguments by arguments<TransactionScreenArguments>()
 
-    private val component by component { TransactionComponent.get(screenArguments) }
+    private val component by component {
+        TransactionComponent.get(screenArguments, findComponentDependencies())
+    }
 
     private val tabsController = TransactionOperationTabsController()
 

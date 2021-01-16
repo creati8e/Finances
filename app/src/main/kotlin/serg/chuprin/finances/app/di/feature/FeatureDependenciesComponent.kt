@@ -18,6 +18,7 @@ import serg.chuprin.finances.feature.dashboard.setup.impl.di.DashboardWidgetsSet
 import serg.chuprin.finances.feature.moneyaccount.creation.presentation.di.MoneyAccountCreationDependencies
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.di.MoneyAccountDetailsDependencies
 import serg.chuprin.finances.feature.moneyaccounts.di.MoneyAccountsListDependencies
+import serg.chuprin.finances.feature.transaction.di.TransactionDependencies
 
 /**
  * Created by Sergey Chuprin on 16.01.2021.
@@ -108,6 +109,16 @@ object FeatureDependenciesModule {
         coreDependencies: CoreDependenciesProvider
     ): FeatureDependencies {
         return DaggerMoneyAccountsListDependenciesComponent
+            .builder()
+            .coreDependenciesProvider(coreDependencies)
+            .build()
+    }
+
+    @[Provides IntoMap FeatureDependenciesKey(TransactionDependencies::class)]
+    fun provideTransactionDependencies(
+        coreDependencies: CoreDependenciesProvider
+    ): FeatureDependencies {
+        return DaggerTransactionDependenciesComponent
             .builder()
             .coreDependenciesProvider(coreDependencies)
             .build()

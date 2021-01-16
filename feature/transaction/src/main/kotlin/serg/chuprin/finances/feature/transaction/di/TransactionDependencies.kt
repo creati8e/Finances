@@ -1,9 +1,8 @@
-package serg.chuprin.finances.feature.transaction
+package serg.chuprin.finances.feature.transaction.di
 
-import dagger.Component
-import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
-import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
+import serg.chuprin.finances.core.api.di.dependencies.FeatureDependencies
 import serg.chuprin.finances.core.api.domain.repository.CategoryRepository
+import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
@@ -15,7 +14,7 @@ import serg.chuprin.finances.core.api.presentation.navigation.TransactionNavigat
 /**
  * Created by Sergey Chuprin on 02.01.2021.
  */
-interface TransactionDependencies {
+interface TransactionDependencies : FeatureDependencies {
 
     val amountParser: AmountParser
     val resourceManger: ResourceManger
@@ -30,6 +29,3 @@ interface TransactionDependencies {
     val categoryRepository: CategoryRepository
 
 }
-
-@Component(dependencies = [CoreDependenciesProvider::class])
-interface TransactionDependenciesComponent : TransactionDependencies

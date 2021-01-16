@@ -6,10 +6,8 @@ import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.InjectableComponent
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.ViewModelComponent
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionScreenArguments
-import serg.chuprin.finances.feature.transaction.TransactionDependencies
 import serg.chuprin.finances.feature.transaction.presentation.model.viewmodel.TransactionViewModel
 import serg.chuprin.finances.feature.transaction.presentation.view.TransactionFragment
-import serg.chuprin.finances.injector.Injector
 
 /**
  * Created by Sergey Chuprin on 02.01.2021.
@@ -25,10 +23,13 @@ interface TransactionComponent :
 
     companion object {
 
-        fun get(screenArguments: TransactionScreenArguments): TransactionComponent {
+        fun get(
+            screenArguments: TransactionScreenArguments,
+            dependencies: TransactionDependencies
+        ): TransactionComponent {
             return DaggerTransactionComponent
                 .factory()
-                .newComponent(Injector.getTransactionDependencies(), screenArguments)
+                .newComponent(dependencies, screenArguments)
         }
 
     }
