@@ -98,13 +98,15 @@ open class BaseStateStore<I, SE, A, S, E>(
 
     private suspend fun processActions(coroutineScope: CoroutineScope) {
         coroutineScope.launch(CoroutineName("Effect reducer coroutine")) {
-            actionsChannel.asFlow()
+            val actionsFlow = actionsChannel.asFlow()
+            val eventConsumer = eventsChannel.asConsumer()
+            actionsFlow
                 .flatMapMerge { action ->
                     actionExecutor(
                         action,
                         state,
-                        eventsChannel.asConsumer(),
-                        actionsChannel.asFlow()
+                        eventConsumer,
+                        actionsFlow
                     )
                 }
                 // Execute all actions on background thread.
