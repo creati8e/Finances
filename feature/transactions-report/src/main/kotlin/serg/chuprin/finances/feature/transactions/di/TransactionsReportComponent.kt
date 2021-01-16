@@ -12,8 +12,6 @@ import serg.chuprin.finances.feature.transactions.domain.model.ReportDataPeriod
 import serg.chuprin.finances.feature.transactions.domain.model.TransactionReportFilter
 import serg.chuprin.finances.feature.transactions.presentation.model.viewmodel.TransactionsReportViewModel
 import serg.chuprin.finances.feature.transactions.presentation.view.TransactionsReportFragment
-import serg.chuprin.finances.feature.transactions.report.dependencies.TransactionsReportDependencies
-import serg.chuprin.finances.injector.Injector
 
 /**
  * Created by Sergey Chuprin on 12.05.2020.
@@ -28,12 +26,15 @@ interface TransactionsReportComponent :
 
     companion object {
 
-        fun get(arguments: TransactionsReportScreenArguments): TransactionsReportComponent {
+        fun get(
+            arguments: TransactionsReportScreenArguments,
+            dependencies: TransactionsReportDependencies
+        ): TransactionsReportComponent {
             val initialFilter = arguments.toFilter()
             return DaggerTransactionsReportComponent
                 .factory()
                 .newComponent(
-                    Injector.getTransactionsReportDependencies(),
+                    dependencies,
                     initialFilter,
                     initialFilter.reportDataPeriod.dataPeriod
                 )

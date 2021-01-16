@@ -1,7 +1,6 @@
-package serg.chuprin.finances.feature.transactions.report.dependencies
+package serg.chuprin.finances.feature.transactions.di
 
-import dagger.Component
-import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
+import serg.chuprin.finances.core.api.di.dependencies.FeatureDependencies
 import serg.chuprin.finances.core.api.domain.TransactionAmountCalculator
 import serg.chuprin.finances.core.api.domain.TransactionsByDayGrouper
 import serg.chuprin.finances.core.api.domain.linker.TransactionWithCategoriesLinker
@@ -14,13 +13,13 @@ import serg.chuprin.finances.core.api.presentation.builder.TransactionCellBuilde
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.formatter.CategoryColorFormatter
 import serg.chuprin.finances.core.api.presentation.formatter.DateTimeFormatter
-import serg.chuprin.finances.core.api.presentation.navigation.TransactionReportNavigation
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
+import serg.chuprin.finances.core.api.presentation.navigation.TransactionReportNavigation
 
 /**
  * Created by Sergey Chuprin on 12.05.2020.
  */
-interface TransactionsReportDependencies {
+interface TransactionsReportDependencies : FeatureDependencies {
 
     val transactionReportNavigation: TransactionReportNavigation
 
@@ -40,6 +39,3 @@ interface TransactionsReportDependencies {
     val transactionWithCategoriesLinker: TransactionWithCategoriesLinker
     val transactionCategoryRetrieverService: TransactionCategoryRetrieverService
 }
-
-@Component(dependencies = [CoreDependenciesProvider::class])
-internal interface TransactionsReportDependenciesComponent : TransactionsReportDependencies

@@ -7,8 +7,6 @@ import serg.chuprin.finances.feature.main.dependencies.DaggerAppLauncherDependen
 import serg.chuprin.finances.feature.main.dependencies.DaggerAuthorizedGraphLauncherDependenciesComponent
 import serg.chuprin.finances.feature.onboarding.dependencies.DaggerOnboardingFeatureDependenciesComponent
 import serg.chuprin.finances.feature.onboarding.dependencies.OnboardingFeatureDependencies
-import serg.chuprin.finances.feature.transactions.report.dependencies.DaggerTransactionsReportDependenciesComponent
-import serg.chuprin.finances.feature.transactions.report.dependencies.TransactionsReportDependencies
 import serg.chuprin.finances.feature.userprofile.dependencies.DaggerUserProfileDependenciesComponent
 import serg.chuprin.finances.feature.userprofile.dependencies.UserProfileDependencies
 
@@ -40,13 +38,6 @@ object Injector {
 
     fun getOnboardingFeatureDependencies(): OnboardingFeatureDependencies {
         return DaggerOnboardingFeatureDependenciesComponent
-            .builder()
-            .coreDependenciesProvider(CoreDependenciesComponent.get())
-            .build()
-    }
-
-    fun getTransactionsReportDependencies(): TransactionsReportDependencies {
-        return DaggerTransactionsReportDependenciesComponent
             .builder()
             .coreDependenciesProvider(CoreDependenciesComponent.get())
             .build()

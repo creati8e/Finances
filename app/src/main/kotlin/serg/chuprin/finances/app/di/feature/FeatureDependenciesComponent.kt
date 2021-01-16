@@ -19,6 +19,7 @@ import serg.chuprin.finances.feature.moneyaccount.creation.presentation.di.Money
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.di.MoneyAccountDetailsDependencies
 import serg.chuprin.finances.feature.moneyaccounts.di.MoneyAccountsListDependencies
 import serg.chuprin.finances.feature.transaction.di.TransactionDependencies
+import serg.chuprin.finances.feature.transactions.di.TransactionsReportDependencies
 
 /**
  * Created by Sergey Chuprin on 16.01.2021.
@@ -119,6 +120,16 @@ object FeatureDependenciesModule {
         coreDependencies: CoreDependenciesProvider
     ): FeatureDependencies {
         return DaggerTransactionDependenciesComponent
+            .builder()
+            .coreDependenciesProvider(coreDependencies)
+            .build()
+    }
+
+    @[Provides IntoMap FeatureDependenciesKey(TransactionsReportDependencies::class)]
+    fun provideTransactionsReportDependencies(
+        coreDependencies: CoreDependenciesProvider
+    ): FeatureDependencies {
+        return DaggerTransactionsReportDependenciesComponent
             .builder()
             .coreDependenciesProvider(coreDependencies)
             .build()

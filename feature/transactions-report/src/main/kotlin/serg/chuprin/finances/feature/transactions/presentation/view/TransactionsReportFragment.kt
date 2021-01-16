@@ -9,9 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.fragment_transactions_report.*
-import serg.chuprin.finances.core.api.presentation.navigation.TransactionReportNavigation
+import serg.chuprin.finances.core.api.di.dependencies.findComponentDependencies
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
+import serg.chuprin.finances.core.api.presentation.navigation.TransactionReportNavigation
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionsReportScreenArguments
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.adapter.decoration.CellDividerDecoration
@@ -52,7 +53,9 @@ class TransactionsReportFragment : BaseFragment(R.layout.fragment_transactions_r
 
     private val viewModel by viewModelFromComponent { component }
 
-    private val component by component { TransactionsReportComponent.get(screenArguments) }
+    private val component by component {
+        TransactionsReportComponent.get(screenArguments, findComponentDependencies())
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

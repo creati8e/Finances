@@ -6,7 +6,6 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":injector"))
     implementation(project(":core:api"))
     implementation(project(":core:category-shares"))
 
