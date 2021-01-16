@@ -1,7 +1,6 @@
-package serg.chuprin.finances.feature.onboarding.dependencies
+package serg.chuprin.finances.feature.onboarding.presentation.launch.di
 
-import dagger.Component
-import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
+import serg.chuprin.finances.core.api.di.dependencies.FeatureDependencies
 import serg.chuprin.finances.core.api.domain.repository.*
 import serg.chuprin.finances.core.api.domain.usecase.SearchCurrenciesUseCase
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStoreProvider
@@ -13,7 +12,7 @@ import serg.chuprin.finances.core.api.presentation.navigation.OnboardingNavigati
 /**
  * Created by Sergey Chuprin on 09.04.2020.
  */
-interface OnboardingFeatureDependencies {
+interface OnboardingFeatureDependencies : FeatureDependencies {
 
     val amountParser: AmountParser
 
@@ -47,6 +46,3 @@ interface OnboardingFeatureDependencies {
 
     // endregion
 }
-
-@Component(dependencies = [CoreDependenciesProvider::class])
-internal interface OnboardingFeatureDependenciesComponent : OnboardingFeatureDependencies

@@ -12,6 +12,7 @@ import com.google.android.material.transition.MaterialSharedAxis
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.fragment_onboarding_accounts_setup.*
+import serg.chuprin.finances.core.api.di.dependencies.findComponentDependencies
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
@@ -42,7 +43,9 @@ class AccountsSetupOnboardingFragment : BaseFragment(R.layout.fragment_onboardin
 
     private val viewModel by viewModelFromComponent { component }
 
-    private val component by component { OnboardingFeatureComponent.get().accountsSetupComponent() }
+    private val component by component {
+        OnboardingFeatureComponent.get(findComponentDependencies()).accountsSetupComponent()
+    }
 
     private var textWatcher: TextWatcher? = null
 

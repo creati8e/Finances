@@ -8,7 +8,6 @@ plugins {
 
 dependencies {
     implementation(project(":core:api"))
-    implementation(project(":injector"))
 
     implementation(Libraries.KOTLIN)
     implementation(Libraries.Coroutines.CORE)

@@ -2,6 +2,7 @@ package serg.chuprin.finances.feature.onboarding.presentation.launch.view
 
 import android.os.Bundle
 import android.view.View
+import serg.chuprin.finances.core.api.di.dependencies.findComponentDependencies
 import serg.chuprin.finances.core.api.domain.model.OnboardingStep
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
@@ -13,7 +14,9 @@ import serg.chuprin.finances.feature.onboarding.presentation.launch.di.Onboardin
  */
 class OnboardingLaunchFragment : BaseFragment(R.layout.fragment_onboarding_launch) {
 
-    private val viewModel by viewModelFromComponent { OnboardingFeatureComponent.get() }
+    private val viewModel by viewModelFromComponent {
+        OnboardingFeatureComponent.get(findComponentDependencies())
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
