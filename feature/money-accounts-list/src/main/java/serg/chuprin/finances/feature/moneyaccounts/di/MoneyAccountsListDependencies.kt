@@ -1,7 +1,6 @@
-package serg.chuprin.finances.feature.moneyaccounts.list.dependencies
+package serg.chuprin.finances.feature.moneyaccounts.di
 
-import dagger.Component
-import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
+import serg.chuprin.finances.core.api.di.dependencies.FeatureDependencies
 import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.api.domain.service.MoneyAccountBalanceService
@@ -12,7 +11,7 @@ import serg.chuprin.finances.core.api.presentation.navigation.MoneyAccountsListN
 /**
  * Created by Sergey Chuprin on 26.04.2020.
  */
-interface MoneyAccountsListDependencies {
+interface MoneyAccountsListDependencies : FeatureDependencies {
     val userRepository: UserRepository
     val moneyAccountRepository: MoneyAccountRepository
 
@@ -25,6 +24,3 @@ interface MoneyAccountsListDependencies {
     val transitionNameBuilder: TransitionNameBuilder
 
 }
-
-@Component(dependencies = [CoreDependenciesProvider::class])
-internal interface MoneyAccountsListDependenciesComponent : MoneyAccountsListDependencies

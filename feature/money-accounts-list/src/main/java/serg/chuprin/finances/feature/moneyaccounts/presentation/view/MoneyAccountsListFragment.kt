@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.fragment_money_accounts_list.*
+import serg.chuprin.finances.core.api.di.dependencies.findComponentDependencies
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.navigation.MoneyAccountsListNavigation
@@ -39,7 +40,9 @@ class MoneyAccountsListFragment : BaseFragment(R.layout.fragment_money_accounts_
 
     private val viewModel by viewModelFromComponent { component }
 
-    private val component by component { MoneyAccountsListComponent.get(fragmentArguments()) }
+    private val component by component {
+        MoneyAccountsListComponent.get(fragmentArguments(), findComponentDependencies())
+    }
 
     private val cellsAdapter = DiffMultiViewAdapter(DiffCallback()).apply {
         registerRenderer(ZeroDataCellRenderer())
