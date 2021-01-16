@@ -22,6 +22,7 @@ import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter
 import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ZeroDataCellRenderer
 import serg.chuprin.finances.core.api.presentation.view.extensions.*
+import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.application
 import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.fragmentArguments
 import serg.chuprin.finances.feature.categories.impl.R
 import serg.chuprin.finances.feature.categories.impl.presentation.di.CategoriesListComponent
@@ -40,7 +41,7 @@ import serg.chuprin.finances.feature.categories.impl.presentation.view.adapter.r
 class CategoriesListFragment : BaseFragment(R.layout.fragment_categories_list) {
 
     private val viewModel by viewModelFromComponent {
-        CategoriesListComponent.get(fragmentArguments())
+        CategoriesListComponent.get(fragmentArguments(), application)
     }
 
     private val cellsAdapter =

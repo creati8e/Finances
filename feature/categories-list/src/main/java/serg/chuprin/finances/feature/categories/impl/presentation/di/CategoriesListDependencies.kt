@@ -1,7 +1,5 @@
-package serg.chuprin.finances.feature.categories
+package serg.chuprin.finances.feature.categories.impl.presentation.di
 
-import dagger.Component
-import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
 import serg.chuprin.finances.core.api.domain.repository.CategoryRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.api.presentation.formatter.CategoryColorFormatter
@@ -10,13 +8,12 @@ import serg.chuprin.finances.core.api.presentation.formatter.CategoryColorFormat
  * Created by Sergey Chuprin on 28.12.2020.
  */
 interface CategoriesListDependencies {
-
     val categoryColorFormatter: CategoryColorFormatter
 
     val userRepository: UserRepository
     val categoryRepository: CategoryRepository
-
 }
 
-@Component(dependencies = [CoreDependenciesProvider::class])
-internal interface CategoriesListDependenciesComponent : CategoriesListDependencies
+interface CategoriesListDependenciesProvider {
+    val categoriesListDependencies: CategoriesListDependencies
+}
