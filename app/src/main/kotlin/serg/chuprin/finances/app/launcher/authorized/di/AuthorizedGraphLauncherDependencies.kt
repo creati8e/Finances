@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.main.dependencies
+package serg.chuprin.finances.app.launcher.authorized.di
 
 import dagger.Component
 import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider

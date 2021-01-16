@@ -3,6 +3,7 @@ package serg.chuprin.finances.app.launcher.authorized
 import android.os.Bundle
 import serg.chuprin.finances.app.launcher.authorized.AuthorizedGraphLauncherFragmentDirections.navigateFromAuthorizedGraphToDashboard
 import serg.chuprin.finances.app.launcher.authorized.AuthorizedGraphLauncherFragmentDirections.navigateFromAuthorizedGraphToOnboarding
+import serg.chuprin.finances.app.launcher.authorized.di.AuthorizedGraphComponent
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 
