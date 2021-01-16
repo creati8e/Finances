@@ -1,5 +1,6 @@
 package serg.chuprin.finances.core.api.presentation.view.extensions.fragment
 
+import android.app.Application
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.ActionBar
@@ -33,3 +34,6 @@ fun Fragment.setupToolbar(toolbar: Toolbar, block: (ActionBar.() -> Unit)? = nul
 fun Fragment.setToolbarTitle(title: String) {
     (requireActivity() as AppCompatActivity).supportActionBar!!.title = title
 }
+
+val Fragment.application: Application
+    get() = requireActivity().application

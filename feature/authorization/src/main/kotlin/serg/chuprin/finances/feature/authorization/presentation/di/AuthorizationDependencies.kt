@@ -1,7 +1,5 @@
-package serg.chuprin.finances.feature.authorization.dependencies
+package serg.chuprin.finances.feature.authorization.presentation.di
 
-import dagger.Component
-import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
 import serg.chuprin.finances.core.api.domain.gateway.AuthorizationGateway
 import serg.chuprin.finances.core.api.domain.repository.OnboardingRepository
 import serg.chuprin.finances.core.api.presentation.navigation.AuthorizationNavigation
@@ -15,5 +13,6 @@ interface AuthorizationDependencies {
     val authorizationNavigation: AuthorizationNavigation
 }
 
-@Component(dependencies = [CoreDependenciesProvider::class])
-internal interface AuthorizationDependenciesComponent : AuthorizationDependencies
+interface AuthorizationDependenciesProvider {
+    val authorizationDependencies: AuthorizationDependencies
+}

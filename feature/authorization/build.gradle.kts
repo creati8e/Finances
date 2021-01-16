@@ -9,7 +9,6 @@ dependencies {
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf(".*jar"))))
 
-    implementation(project(":injector"))
     implementation(project(":core:api"))
     implementation(project(":core:firebase"))
 
