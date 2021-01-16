@@ -7,20 +7,11 @@ import serg.chuprin.finances.feature.main.dependencies.DaggerAppLauncherDependen
 import serg.chuprin.finances.feature.main.dependencies.DaggerAuthorizedGraphLauncherDependenciesComponent
 import serg.chuprin.finances.feature.onboarding.dependencies.DaggerOnboardingFeatureDependenciesComponent
 import serg.chuprin.finances.feature.onboarding.dependencies.OnboardingFeatureDependencies
-import serg.chuprin.finances.feature.userprofile.dependencies.DaggerUserProfileDependenciesComponent
-import serg.chuprin.finances.feature.userprofile.dependencies.UserProfileDependencies
 
 /**
  * Created by Sergey Chuprin on 03.04.2020.
  */
 object Injector {
-
-    fun getUserProfileDependencies(): UserProfileDependencies {
-        return DaggerUserProfileDependenciesComponent
-            .builder()
-            .coreDependenciesProvider(CoreDependenciesComponent.get())
-            .build()
-    }
 
     fun getAppLauncherDependencies(): AppLauncherDependencies {
         return DaggerAppLauncherDependenciesComponent

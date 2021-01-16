@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.fragment_user_profile.*
+import serg.chuprin.finances.core.api.di.dependencies.findComponentDependencies
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
@@ -50,7 +51,7 @@ class UserProfileFragment :
 
     private val viewModel by viewModelFromComponent { component }
 
-    private val component by component { UserProfileComponent.get() }
+    private val component by component { UserProfileComponent.get(findComponentDependencies()) }
 
     private val cellsAdapter = UserProfileCellsListAdapter()
 

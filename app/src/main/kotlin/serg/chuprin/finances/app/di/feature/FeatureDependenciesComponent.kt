@@ -20,6 +20,7 @@ import serg.chuprin.finances.feature.moneyaccount.details.presentation.di.MoneyA
 import serg.chuprin.finances.feature.moneyaccounts.di.MoneyAccountsListDependencies
 import serg.chuprin.finances.feature.transaction.di.TransactionDependencies
 import serg.chuprin.finances.feature.transactions.di.TransactionsReportDependencies
+import serg.chuprin.finances.feature.userprofile.presentation.di.UserProfileDependencies
 
 /**
  * Created by Sergey Chuprin on 16.01.2021.
@@ -120,6 +121,16 @@ object FeatureDependenciesModule {
         coreDependencies: CoreDependenciesProvider
     ): FeatureDependencies {
         return DaggerTransactionDependenciesComponent
+            .builder()
+            .coreDependenciesProvider(coreDependencies)
+            .build()
+    }
+
+    @[Provides IntoMap FeatureDependenciesKey(UserProfileDependencies::class)]
+    fun provideUserProfileDependencies(
+        coreDependencies: CoreDependenciesProvider
+    ): FeatureDependencies {
+        return DaggerUserProfileDependenciesComponent
             .builder()
             .coreDependenciesProvider(coreDependencies)
             .build()

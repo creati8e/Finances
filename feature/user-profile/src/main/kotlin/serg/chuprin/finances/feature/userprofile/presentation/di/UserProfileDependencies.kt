@@ -1,7 +1,6 @@
-package serg.chuprin.finances.feature.userprofile.dependencies
+package serg.chuprin.finances.feature.userprofile.presentation.di
 
-import dagger.Component
-import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
+import serg.chuprin.finances.core.api.di.dependencies.FeatureDependencies
 import serg.chuprin.finances.core.api.domain.gateway.AuthorizationGateway
 import serg.chuprin.finances.core.api.domain.repository.DataRepository
 import serg.chuprin.finances.core.api.domain.repository.OnboardingRepository
@@ -14,7 +13,7 @@ import serg.chuprin.finances.core.api.presentation.navigation.UserProfileNavigat
 /**
  * Created by Sergey Chuprin on 31.07.2020.
  */
-interface UserProfileDependencies {
+interface UserProfileDependencies : FeatureDependencies {
 
     val userRepository: UserRepository
     val dataRepository: DataRepository
@@ -26,6 +25,3 @@ interface UserProfileDependencies {
     val userProfileNavigation: UserProfileNavigation
     val dataPeriodTypePopupMenuCellsBuilder: DataPeriodTypePopupMenuCellsBuilder
 }
-
-@Component(dependencies = [CoreDependenciesProvider::class])
-internal interface UserProfileDependenciesComponent : UserProfileDependencies
