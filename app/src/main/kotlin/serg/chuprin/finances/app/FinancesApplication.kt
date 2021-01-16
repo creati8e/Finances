@@ -16,7 +16,6 @@ class FinancesApplication : Application(), HasFeatureDependencies {
     override lateinit var featureDependencies: FeatureDependenciesProvider
 
     override fun onCreate() {
-
         super.onCreate()
         System.setProperty(
             "kotlinx.coroutines.debug",
@@ -28,7 +27,7 @@ class FinancesApplication : Application(), HasFeatureDependencies {
     private fun initializeComponents() {
         CoreDependenciesComponent.init(this, NavigationComponent.instance)
         CoreDependenciesComponent.get().appInitializer.initialize(this)
-        FeatureDependenciesComponent.init()
+        FeatureDependenciesComponent.init(CoreDependenciesComponent.get())
         featureDependencies = FeatureDependenciesComponent.get().featureDependencies
     }
 

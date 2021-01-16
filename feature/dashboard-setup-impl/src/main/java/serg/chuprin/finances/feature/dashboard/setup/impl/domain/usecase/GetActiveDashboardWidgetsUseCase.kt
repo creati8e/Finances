@@ -8,7 +8,7 @@ import javax.inject.Inject
  * Created by Sergey Chuprin on 29.11.2020.
  */
 class GetActiveDashboardWidgetsUseCase @Inject constructor(
-    private val dashboardWidgetsRepository: DashboardWidgetsRepository
+     val dashboardWidgetsRepository: DashboardWidgetsRepository
 ) {
 
     suspend fun execute(): Set<CustomizableDashboardWidget> {

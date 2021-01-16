@@ -4,7 +4,6 @@ plugins {
 }
 
 dependencies {
-
     implementation(project(":core:api"))
     implementation(Libraries.KOTLIN)
 }

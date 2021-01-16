@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.fragment_dashboard_widgets_setup.*
+import serg.chuprin.finances.core.api.di.dependencies.findComponentDependencies
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
@@ -33,7 +34,9 @@ class DashboardWidgetsSetupFragment : BaseFragment(R.layout.fragment_dashboard_w
 
     private val viewModel by viewModelFromComponent { component }
 
-    private val component by component { DashboardWidgetsSetupComponent.get() }
+    private val component by component {
+        DashboardWidgetsSetupComponent.get(findComponentDependencies())
+    }
 
     private val widgetCellsAdapter = DiffMultiViewAdapter(
         DiffCallback<DraggableDashboardWidgetCell>()
