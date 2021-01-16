@@ -8,8 +8,6 @@ import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.Vi
 import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountDetailsScreenArguments
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.model.viewmodel.MoneyAccountDetailsViewModel
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.view.MoneyAccountDetailsFragment
-import serg.chuprin.finances.feature.moneyaccounts.details.dependencies.MoneyAccountDetailsDependencies
-import serg.chuprin.finances.injector.Injector
 
 /**
  * Created by Sergey Chuprin on 07.05.2020.
@@ -25,12 +23,15 @@ interface MoneyAccountDetailsComponent :
 
     companion object {
 
-        fun get(screenArguments: MoneyAccountDetailsScreenArguments): MoneyAccountDetailsComponent {
+        fun get(
+            screenArguments: MoneyAccountDetailsScreenArguments,
+            dependencies: MoneyAccountDetailsDependencies
+        ): MoneyAccountDetailsComponent {
             return DaggerMoneyAccountDetailsComponent
                 .factory()
                 .newComponent(
-                    moneyAccountId = screenArguments.moneyAccountId.value,
-                    dependencies = Injector.getMoneyAccountDetailsDependencies()
+                    dependencies = dependencies,
+                    moneyAccountId = screenArguments.moneyAccountId.value
                 )
         }
 

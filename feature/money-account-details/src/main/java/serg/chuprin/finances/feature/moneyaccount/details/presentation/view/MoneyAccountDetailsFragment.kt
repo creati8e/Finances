@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.fragment_money_account_details.*
+import serg.chuprin.finances.core.api.di.dependencies.findComponentDependencies
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.navigation.MoneyAccountDetailsNavigation
@@ -47,7 +48,9 @@ class MoneyAccountDetailsFragment : BaseFragment(R.layout.fragment_money_account
 
     private val screenArguments by arguments<MoneyAccountDetailsScreenArguments>()
 
-    private val component by component { MoneyAccountDetailsComponent.get(screenArguments) }
+    private val component by component {
+        MoneyAccountDetailsComponent.get(screenArguments, findComponentDependencies())
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

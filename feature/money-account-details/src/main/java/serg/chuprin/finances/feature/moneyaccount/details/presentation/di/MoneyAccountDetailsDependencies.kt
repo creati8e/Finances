@@ -1,7 +1,6 @@
-package serg.chuprin.finances.feature.moneyaccounts.details.dependencies
+package serg.chuprin.finances.feature.moneyaccount.details.presentation.di
 
-import dagger.Component
-import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
+import serg.chuprin.finances.core.api.di.dependencies.FeatureDependencies
 import serg.chuprin.finances.core.api.domain.TransactionAmountCalculator
 import serg.chuprin.finances.core.api.domain.TransactionsByDayGrouper
 import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
@@ -17,7 +16,7 @@ import serg.chuprin.finances.core.api.presentation.navigation.MoneyAccountDetail
 /**
  * Created by Sergey Chuprin on 07.05.2020.
  */
-interface MoneyAccountDetailsDependencies {
+interface MoneyAccountDetailsDependencies : FeatureDependencies {
 
     val navigation: MoneyAccountDetailsNavigation
 
@@ -36,6 +35,3 @@ interface MoneyAccountDetailsDependencies {
     val amountFormatter: AmountFormatter
     val dateTimeFormatter: DateTimeFormatter
 }
-
-@Component(dependencies = [CoreDependenciesProvider::class])
-internal interface MoneyAccountDetailsDependenciesComponent : MoneyAccountDetailsDependencies
