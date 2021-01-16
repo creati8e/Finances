@@ -1,6 +1,6 @@
 package serg.chuprin.finances.feature.categories.impl.presentation.di
 
-import android.app.Application
+import com.github.ajalt.timberkt.Timber
 import dagger.BindsInstance
 import dagger.Component
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
@@ -22,15 +22,11 @@ interface CategoriesListComponent : ViewModelComponent<CategoriesListViewModel> 
 
         fun get(
             arguments: CategoriesListScreenArguments,
-            application: Application
+            dependencies: CategoriesListDependencies
         ): CategoriesListComponent {
             return DaggerCategoriesListComponent
                 .factory()
-                .newComponent(dependencies(application), arguments)
-        }
-
-        private fun dependencies(application: Application): CategoriesListDependencies {
-            return (application as CategoriesListDependenciesProvider).categoriesListDependencies
+                .newComponent(dependencies, arguments)
         }
 
     }

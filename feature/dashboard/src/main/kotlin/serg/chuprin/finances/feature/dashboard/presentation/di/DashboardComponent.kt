@@ -1,6 +1,5 @@
 package serg.chuprin.finances.feature.dashboard.presentation.di
 
-import android.app.Application
 import dagger.Component
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.InjectableComponent
@@ -22,8 +21,7 @@ interface DashboardComponent :
 
     companion object {
 
-        fun get(application: Application): DashboardComponent {
-            val dependencies = (application as DashboardDependenciesProvider).dashboardDependencies
+        fun get(dependencies: DashboardDependencies): DashboardComponent {
             return DaggerDashboardComponent
                 .builder()
                 .dashboardDependencies(dependencies)

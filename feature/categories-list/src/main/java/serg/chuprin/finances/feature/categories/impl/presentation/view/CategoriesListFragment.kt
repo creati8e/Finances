@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.fragment_categories_list.*
+import serg.chuprin.finances.core.api.di.dependencies.findComponentDependencies
 import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.screen.arguments.CategoriesListScreenArguments
@@ -22,7 +23,6 @@ import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter
 import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ZeroDataCellRenderer
 import serg.chuprin.finances.core.api.presentation.view.extensions.*
-import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.application
 import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.fragmentArguments
 import serg.chuprin.finances.feature.categories.impl.R
 import serg.chuprin.finances.feature.categories.impl.presentation.di.CategoriesListComponent
@@ -41,7 +41,7 @@ import serg.chuprin.finances.feature.categories.impl.presentation.view.adapter.r
 class CategoriesListFragment : BaseFragment(R.layout.fragment_categories_list) {
 
     private val viewModel by viewModelFromComponent {
-        CategoriesListComponent.get(fragmentArguments(), application)
+        CategoriesListComponent.get(fragmentArguments(), findComponentDependencies())
     }
 
     private val cellsAdapter =

@@ -12,6 +12,7 @@ import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.cell_widget_dashboard_money_accounts.view.*
 import kotlinx.android.synthetic.main.fragment_dashboard.*
+import serg.chuprin.finances.core.api.di.dependencies.findComponentDependencies
 import serg.chuprin.finances.core.api.presentation.model.AppDebugMenu
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
@@ -21,7 +22,6 @@ import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionS
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter
 import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ZeroDataCellRenderer
-import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.application
 import serg.chuprin.finances.core.api.presentation.view.extensions.getDimenDpFloat
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisibleOrGone
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
@@ -57,7 +57,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 
     private val viewModel by viewModelFromComponent { component }
 
-    private val component by component { DashboardComponent.get(application) }
+    private val component by component { DashboardComponent.get(findComponentDependencies()) }
 
     private lateinit var cellsAdapter: DiffMultiViewAdapter<BaseCell>
 

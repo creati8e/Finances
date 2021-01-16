@@ -1,5 +1,6 @@
 package serg.chuprin.finances.feature.dashboard.presentation.di
 
+import serg.chuprin.finances.core.api.di.dependencies.FeatureDependencies
 import serg.chuprin.finances.core.api.domain.TransactionAmountCalculator
 import serg.chuprin.finances.core.api.domain.linker.TransactionWithCategoriesLinker
 import serg.chuprin.finances.core.api.domain.repository.CategoryRepository
@@ -22,7 +23,7 @@ import serg.chuprin.finances.feature.dashboard.setup.domain.repository.Dashboard
 /**
  * Created by Sergey Chuprin on 03.04.2020.
  */
-interface DashboardDependencies {
+interface DashboardDependencies : FeatureDependencies {
 
     val appDebugMenu: AppDebugMenu
     val dashboardNavigation: DashboardNavigation
@@ -46,8 +47,4 @@ interface DashboardDependencies {
 
     val moneyAccountBalanceService: MoneyAccountBalanceService
     val transactionCategoryRetrieverService: TransactionCategoryRetrieverService
-}
-
-interface DashboardDependenciesProvider {
-    val dashboardDependencies: DashboardDependencies
 }

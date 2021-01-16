@@ -1,6 +1,5 @@
 package serg.chuprin.finances.feature.authorization.presentation.di
 
-import android.app.Application
 import dagger.Component
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.InjectableComponent
@@ -18,15 +17,11 @@ interface AuthorizationComponent :
 
     companion object {
 
-        fun get(application: Application): AuthorizationComponent {
+        fun get(dependencies: AuthorizationDependencies): AuthorizationComponent {
             return DaggerAuthorizationComponent
                 .builder()
-                .authorizationDependencies(dependencies(application))
+                .authorizationDependencies(dependencies)
                 .build()
-        }
-
-        private fun dependencies(application: Application): AuthorizationDependencies {
-            return (application as AuthorizationDependenciesProvider).authorizationDependencies
         }
 
     }

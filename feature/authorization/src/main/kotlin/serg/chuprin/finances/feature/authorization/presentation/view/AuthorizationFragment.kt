@@ -9,11 +9,11 @@ import com.google.android.gms.common.api.CommonStatusCodes
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.fragment_authorization.*
+import serg.chuprin.finances.core.api.di.dependencies.findComponentDependencies
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.navigation.AuthorizationNavigation
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
-import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.application
 import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.shortToast
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeGone
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisible
@@ -40,7 +40,7 @@ class AuthorizationFragment : BaseFragment(R.layout.fragment_authorization) {
 
     private val viewModel by viewModelFromComponent { component }
 
-    private val component by component { AuthorizationComponent.get(application) }
+    private val component by component { AuthorizationComponent.get(findComponentDependencies()) }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
