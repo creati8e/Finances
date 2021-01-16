@@ -1,13 +1,6 @@
 rootProject.name = "Finances"
 include ':app'
 
-// region Injectors
-
-include ':injector'
-
-// endregion
-
-
 // region Core
 
 include ':core:api'
