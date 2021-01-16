@@ -24,9 +24,21 @@ internal interface DashboardWidgetsSetupModule {
 
     }
 
+    /**
+     * Bind unscoped repository for API.
+     */
     @Binds
     fun bindsDashboardWidgetsRepository(
         impl: DashboardWidgetsRepositoryImpl
     ): DashboardWidgetsRepository
+
+    /**
+     * Bind screen scoped repository for usage on screen.
+     */
+    @[Binds ScreenScope ScreenScoped]
+    fun bindsDashboardWidgetsRepositoryApi(
+        impl: DashboardWidgetsRepositoryImpl
+    ): DashboardWidgetsRepository
+
 
 }
