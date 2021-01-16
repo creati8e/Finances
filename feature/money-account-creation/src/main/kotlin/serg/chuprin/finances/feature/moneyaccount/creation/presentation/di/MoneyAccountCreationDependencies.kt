@@ -1,7 +1,6 @@
-package serg.chuprin.finances.feature.moneyaccounts.creation
+package serg.chuprin.finances.feature.moneyaccount.creation.presentation.di
 
-import dagger.Component
-import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
+import serg.chuprin.finances.core.api.di.dependencies.FeatureDependencies
 import serg.chuprin.finances.core.api.domain.repository.*
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStoreProvider
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
@@ -10,7 +9,7 @@ import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
 /**
  * Created by Sergey Chuprin on 01.06.2020.
  */
-interface MoneyAccountCreationDependencies {
+interface MoneyAccountCreationDependencies : FeatureDependencies {
     val amountParser: AmountParser
     val amountFormatter: AmountFormatter
 
@@ -22,6 +21,3 @@ interface MoneyAccountCreationDependencies {
 
     val currencyChoiceStoreProvider: CurrencyChoiceStoreProvider
 }
-
-@Component(dependencies = [CoreDependenciesProvider::class])
-interface MoneyAccountCreationDependenciesComponent : MoneyAccountCreationDependencies

@@ -10,6 +10,7 @@ import androidx.core.widget.doAfterTextChanged
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.fragment_money_account_creation.*
+import serg.chuprin.finances.core.api.di.dependencies.findComponentDependencies
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceIntent
 import serg.chuprin.finances.core.api.presentation.currencychoice.view.CurrencyChoiceListController
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
@@ -39,7 +40,9 @@ class MoneyAccountCreationFragment : BaseFragment(R.layout.fragment_money_accoun
 
     private val viewModel by viewModelFromComponent { component }
 
-    private val component by component { MoneyAccountCreationComponent.get() }
+    private val component by component {
+        MoneyAccountCreationComponent.get(findComponentDependencies())
+    }
 
     private val currencyChoiceListController
         get() = _currencyChoiceListController!!

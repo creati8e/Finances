@@ -6,8 +6,6 @@ import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.In
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.ViewModelComponent
 import serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.viewmodel.MoneyAccountCreationViewModel
 import serg.chuprin.finances.feature.moneyaccount.creation.presentation.view.MoneyAccountCreationFragment
-import serg.chuprin.finances.feature.moneyaccounts.creation.MoneyAccountCreationDependencies
-import serg.chuprin.finances.injector.Injector
 
 /**
  * Created by Sergey Chuprin on 01.06.2020.
@@ -22,10 +20,10 @@ interface MoneyAccountCreationComponent :
 
     companion object {
 
-        fun get(): MoneyAccountCreationComponent {
+        fun get(dependencies: MoneyAccountCreationDependencies): MoneyAccountCreationComponent {
             return DaggerMoneyAccountCreationComponent
                 .builder()
-                .moneyAccountCreationDependencies(Injector.getMoneyAccountCreationDependencies())
+                .moneyAccountCreationDependencies(dependencies)
                 .build()
         }
 

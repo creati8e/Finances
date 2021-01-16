@@ -4,10 +4,7 @@ import dagger.Component
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
-import serg.chuprin.finances.app.di.feature.dependencies.DaggerAuthorizationDependenciesComponent
-import serg.chuprin.finances.app.di.feature.dependencies.DaggerCategoriesListDependenciesComponent
-import serg.chuprin.finances.app.di.feature.dependencies.DaggerDashboardDependenciesComponent
-import serg.chuprin.finances.app.di.feature.dependencies.DaggerDashboardWidgetsSetupDependenciesComponent
+import serg.chuprin.finances.app.di.feature.dependencies.*
 import serg.chuprin.finances.core.api.di.dependencies.FeatureDependencies
 import serg.chuprin.finances.core.api.di.dependencies.HasFeatureDependencies
 import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
@@ -18,6 +15,7 @@ import serg.chuprin.finances.feature.categories.impl.presentation.di.CategoriesL
 import serg.chuprin.finances.feature.dashboard.presentation.di.DashboardDependencies
 import serg.chuprin.finances.feature.dashboard.setup.impl.di.DashboardWidgetsSetupComponent
 import serg.chuprin.finances.feature.dashboard.setup.impl.di.DashboardWidgetsSetupDependencies
+import serg.chuprin.finances.feature.moneyaccount.creation.presentation.di.MoneyAccountCreationDependencies
 
 /**
  * Created by Sergey Chuprin on 16.01.2021.
@@ -80,6 +78,16 @@ object FeatureDependenciesModule {
             .dashboardWidgetsSetupApi(
                 DashboardWidgetsSetupComponent.get(widgetsSetupDependencies)
             )
+            .build()
+    }
+
+    @[Provides IntoMap FeatureDependenciesKey(MoneyAccountCreationDependencies::class)]
+    fun provideMoneyAccountCreationDependencies(
+        coreDependencies: CoreDependenciesProvider
+    ): FeatureDependencies {
+        return DaggerMoneyAccountCreationDependenciesComponent
+            .builder()
+            .coreDependenciesProvider(coreDependencies)
             .build()
     }
 
