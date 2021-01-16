@@ -1,7 +1,5 @@
-package serg.chuprin.finances.injector.dashboard.dependencies
+package serg.chuprin.finances.feature.dashboard.presentation.di
 
-import dagger.Component
-import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
 import serg.chuprin.finances.core.api.domain.TransactionAmountCalculator
 import serg.chuprin.finances.core.api.domain.linker.TransactionWithCategoriesLinker
 import serg.chuprin.finances.core.api.domain.repository.CategoryRepository
@@ -19,7 +17,6 @@ import serg.chuprin.finances.core.api.presentation.model.AppDebugMenu
 import serg.chuprin.finances.core.api.presentation.model.builder.DataPeriodTypePopupMenuCellsBuilder
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.api.presentation.navigation.DashboardNavigation
-import serg.chuprin.finances.feature.dashboard.setup.DashboardWidgetsSetupApi
 import serg.chuprin.finances.feature.dashboard.setup.domain.repository.DashboardWidgetsRepository
 
 /**
@@ -51,10 +48,6 @@ interface DashboardDependencies {
     val transactionCategoryRetrieverService: TransactionCategoryRetrieverService
 }
 
-@Component(
-    dependencies = [
-        CoreDependenciesProvider::class,
-        DashboardWidgetsSetupApi::class
-    ]
-)
-internal interface DashboardDependenciesComponent : DashboardDependencies
+interface DashboardDependenciesProvider {
+    val dashboardDependencies: DashboardDependencies
+}

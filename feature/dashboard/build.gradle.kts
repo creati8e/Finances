@@ -9,7 +9,6 @@ dependencies {
     implementation(project(":core:api"))
     implementation(project(":core:pie-chart"))
     implementation(project(":core:category-shares"))
-    implementation(project(":injector-dashboard"))
     implementation(project(":feature:dashboard-setup-api"))
 
     implementation(Libraries.KOTLIN)

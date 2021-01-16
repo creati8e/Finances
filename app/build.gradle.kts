@@ -53,6 +53,7 @@ dependencies {
 
     // region Modules.
 
+    // TODO: Is it really needed here?
     implementation(project(":injector"))
     implementation(project(":core:impl"))
     implementation(project(":feature:dashboard"))

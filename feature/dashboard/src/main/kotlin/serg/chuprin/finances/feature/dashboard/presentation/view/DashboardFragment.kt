@@ -21,6 +21,7 @@ import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionS
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter
 import serg.chuprin.finances.core.api.presentation.view.adapter.renderer.ZeroDataCellRenderer
+import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.application
 import serg.chuprin.finances.core.api.presentation.view.extensions.getDimenDpFloat
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisibleOrGone
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
@@ -56,7 +57,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 
     private val viewModel by viewModelFromComponent { component }
 
-    private val component by component { DashboardComponent.get() }
+    private val component by component { DashboardComponent.get(application) }
 
     private lateinit var cellsAdapter: DiffMultiViewAdapter<BaseCell>
 
