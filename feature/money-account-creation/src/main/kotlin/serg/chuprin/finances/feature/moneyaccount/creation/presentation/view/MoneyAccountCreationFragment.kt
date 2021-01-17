@@ -25,7 +25,7 @@ import serg.chuprin.finances.core.api.presentation.view.extensions.shouldIgnoreC
 import serg.chuprin.finances.core.api.presentation.view.menuConfig
 import serg.chuprin.finances.core.api.presentation.view.setSharedElementTransitions
 import serg.chuprin.finances.feature.moneyaccount.creation.R
-import serg.chuprin.finances.feature.moneyaccount.creation.presentation.di.MoneyAccountCreationComponent
+import serg.chuprin.finances.feature.moneyaccount.creation.di.MoneyAccountCreationComponent
 import serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.store.MoneyAccountCreationEvent
 import serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.store.MoneyAccountCreationIntent
 import javax.inject.Inject

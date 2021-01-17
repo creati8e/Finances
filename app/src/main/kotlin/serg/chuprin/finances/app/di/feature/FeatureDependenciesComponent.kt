@@ -15,7 +15,7 @@ import serg.chuprin.finances.feature.categories.list.di.CategoriesListDependenci
 import serg.chuprin.finances.feature.dashboard.di.DashboardDependencies
 import serg.chuprin.finances.feature.dashboard.setup.impl.di.DashboardWidgetsSetupComponent
 import serg.chuprin.finances.feature.dashboard.setup.impl.di.DashboardWidgetsSetupDependencies
-import serg.chuprin.finances.feature.moneyaccount.creation.presentation.di.MoneyAccountCreationDependencies
+import serg.chuprin.finances.feature.moneyaccount.creation.di.MoneyAccountCreationDependencies
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.di.MoneyAccountDetailsDependencies
 import serg.chuprin.finances.feature.moneyaccounts.di.MoneyAccountsListDependencies
 import serg.chuprin.finances.feature.onboarding.presentation.launch.di.OnboardingFeatureDependencies
