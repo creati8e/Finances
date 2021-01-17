@@ -16,10 +16,11 @@ import serg.chuprin.finances.core.api.presentation.currencychoice.view.CurrencyC
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
+import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountScreenArguments
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.MenuConfig
 import serg.chuprin.finances.core.api.presentation.view.extensions.doIgnoringChanges
-import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.fragmentArguments
+import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.arguments
 import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.setToolbarTitle
 import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.setupToolbar
 import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.shortToast
@@ -44,11 +45,13 @@ class MoneyAccountCreationFragment : BaseFragment(R.layout.fragment_money_accoun
     private val viewModel by viewModelFromComponent { component }
 
     private val component by component {
-        MoneyAccountCreationComponent.get(fragmentArguments(), findComponentDependencies())
+        MoneyAccountCreationComponent.get(screenArguments, findComponentDependencies())
     }
 
     private val currencyChoiceListController
         get() = _currencyChoiceListController!!
+
+    private val screenArguments by arguments<MoneyAccountScreenArguments>()
 
     private var accountNameEditTextTextWatcher: TextWatcher? = null
     private var balanceEditTextTextWatcher: TextWatcher? = null
@@ -79,6 +82,8 @@ class MoneyAccountCreationFragment : BaseFragment(R.layout.fragment_money_accoun
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(R.drawable.ic_close)
         }
+
+        view.transitionName = screenArguments.transitionName
 
         balanceEditText.setFormatter { input ->
             val currency = viewModel.currency
