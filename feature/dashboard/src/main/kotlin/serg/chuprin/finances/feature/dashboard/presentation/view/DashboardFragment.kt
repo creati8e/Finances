@@ -30,7 +30,7 @@ import serg.chuprin.finances.core.api.presentation.view.popup.menu.PopupMenuWind
 import serg.chuprin.finances.core.api.presentation.view.setSharedElementTransitions
 import serg.chuprin.finances.feature.dashboard.BuildConfig
 import serg.chuprin.finances.feature.dashboard.R
-import serg.chuprin.finances.feature.dashboard.presentation.di.DashboardComponent
+import serg.chuprin.finances.feature.dashboard.di.DashboardComponent
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardLoadingCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.store.DashboardEvent

@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.dashboard.presentation.di
+package serg.chuprin.finances.feature.dashboard.di
 
 import dagger.Binds
 import dagger.Module
