@@ -1,6 +1,8 @@
 package serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.store
 
 import serg.chuprin.finances.core.mvi.reducer.StoreStateReducer
+import serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.MoneyAccountDefaultData
+import java.math.BigDecimal
 
 /**
  * Created by Sergey Chuprin on 01.06.2020.
@@ -19,16 +21,41 @@ class MoneyAccountCreationStateReducer :
             is MoneyAccountCreationEffect.AccountNameEntered -> {
                 state.copy(
                     moneyAccountName = what.accountName,
-                    savingButtonIsEnabled = what.accountName.isNotBlank() && state.balance != null
+                    savingButtonIsEnabled = isSavingButtonEnabled(
+                        state.moneyAccountDefaultData,
+                        state.balance,
+                        what.accountName
+                    )
                 )
             }
             is MoneyAccountCreationEffect.BalanceEntered -> {
                 state.copy(
                     balance = what.balance,
-                    savingButtonIsEnabled = state.moneyAccountName.isNotBlank() && what.balance != null
+                    savingButtonIsEnabled = isSavingButtonEnabled(
+                        state.moneyAccountDefaultData,
+                        what.balance,
+                        state.moneyAccountName
+                    )
+                )
+            }
+            is MoneyAccountCreationEffect.InitialStateForExistingAccountFormatted -> {
+                state.copy(
+                    balance = what.balance,
+                    moneyAccountName = what.accountName
                 )
             }
         }
+    }
+
+    private fun isSavingButtonEnabled(
+        defaultData: MoneyAccountDefaultData?,
+        balance: BigDecimal?,
+        accountName: String
+    ): Boolean {
+        if (defaultData == null) {
+            return accountName.isNotBlank() && balance != null
+        }
+        return defaultData.accountName != accountName || defaultData.balance != balance
     }
 
 }

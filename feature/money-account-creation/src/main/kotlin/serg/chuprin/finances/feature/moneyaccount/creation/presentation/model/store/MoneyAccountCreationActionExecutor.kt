@@ -51,6 +51,20 @@ class MoneyAccountCreationActionExecutor @Inject constructor(
             is MoneyAccountCreationAction.UpdateCurrencyChoiceState -> {
                 handleUpdateCurrencyChoiceStateAction(action)
             }
+            is MoneyAccountCreationAction.SetInitialStateForExistingAccount -> {
+                handleSetInitialStateForExistingAccountAction(action)
+            }
+        }
+    }
+
+    private fun handleSetInitialStateForExistingAccountAction(
+        action: MoneyAccountCreationAction.SetInitialStateForExistingAccount
+    ): Flow<MoneyAccountCreationEffect> {
+        return flowOfSingleValue {
+            MoneyAccountCreationEffect.InitialStateForExistingAccountFormatted(
+                balance = action.balance,
+                accountName = action.accountName
+            )
         }
     }
 

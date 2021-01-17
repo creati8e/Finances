@@ -30,6 +30,9 @@ class MoneyAccountCreationViewModel @Inject constructor(
     val currencyCellsLiveData: LiveData<List<BaseCell>> =
         store.observeParticularStateAsLiveData(MoneyAccountCreationState::currentCells)
 
+    val accountNameLiveData: LiveData<String> =
+        store.observeParticularStateAsLiveData(MoneyAccountCreationState::moneyAccountName)
+
     val balanceStateLiveData: LiveData<BigDecimal> = store
         .stateFlow
         .mapNotNull { state -> state.balance }

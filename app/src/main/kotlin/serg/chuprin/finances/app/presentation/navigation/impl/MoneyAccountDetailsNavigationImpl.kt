@@ -2,9 +2,12 @@ package serg.chuprin.finances.app.presentation.navigation.impl
 
 import android.view.View
 import androidx.navigation.NavController
-import serg.chuprin.finances.feature.moneyaccount.details.presentation.MoneyAccountDetailsNavigation
+import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountScreenArguments
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionScreenArguments
 import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.toBundle
+import serg.chuprin.finances.feature.moneyaccount.creation.presentation.view.MoneyAccountCreationFragment
+import serg.chuprin.finances.feature.moneyaccount.details.presentation.MoneyAccountDetailsNavigation
+import serg.chuprin.finances.feature.moneyaccount.details.presentation.view.MoneyAccountDetailsFragmentDirections.navigateFromMoneyAccountDetailsToMoneyAccountEditing
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.view.MoneyAccountDetailsFragmentDirections.navigateFromMoneyAccountDetailsToTransaction
 import serg.chuprin.finances.feature.transaction.presentation.view.TransactionFragment
 
@@ -21,6 +24,19 @@ class MoneyAccountDetailsNavigationImpl : MoneyAccountDetailsNavigation {
         navController.navigate(
             navigateFromMoneyAccountDetailsToTransaction().actionId,
             arguments.toBundle<TransactionFragment>(),
+            null,
+            sharedElementView.toNavigatorExtras()
+        )
+    }
+
+    override fun navigateToMoneyAccount(
+        navController: NavController,
+        arguments: MoneyAccountScreenArguments,
+        sharedElementView: View
+    ) {
+        navController.navigate(
+            navigateFromMoneyAccountDetailsToMoneyAccountEditing().actionId,
+            arguments.toBundle<MoneyAccountCreationFragment>(),
             null,
             sharedElementView.toNavigatorExtras()
         )

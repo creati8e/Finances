@@ -3,6 +3,7 @@ package serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.s
 import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceState
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStateDelegate
+import serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.MoneyAccountDefaultData
 import java.math.BigDecimal
 
 /**
@@ -12,5 +13,9 @@ data class MoneyAccountCreationState(
     val balance: BigDecimal? = BigDecimal.ZERO,
     val moneyAccountName: String = EMPTY_STRING,
     val savingButtonIsEnabled: Boolean = false,
+    val currencyPickerIsClickable: Boolean = false,
+    // Default data of existing account, if present.
+    // Used only for checking if some data is changed for existing account.
+    val moneyAccountDefaultData: MoneyAccountDefaultData? = null,
     val currencyChoiceState: CurrencyChoiceState = CurrencyChoiceState()
 ) : CurrencyChoiceStateDelegate by currencyChoiceState

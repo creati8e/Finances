@@ -8,6 +8,11 @@ import java.math.BigDecimal
  */
 sealed class MoneyAccountCreationEffect {
 
+    class InitialStateForExistingAccountFormatted(
+        val balance: BigDecimal,
+        val accountName: String
+    ) : MoneyAccountCreationEffect()
+
     class AccountNameEntered(
         val accountName: String
     ) : MoneyAccountCreationEffect()

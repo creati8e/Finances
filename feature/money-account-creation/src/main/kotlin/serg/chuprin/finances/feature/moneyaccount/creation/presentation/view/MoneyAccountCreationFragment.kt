@@ -18,6 +18,8 @@ import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.co
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.MenuConfig
+import serg.chuprin.finances.core.api.presentation.view.extensions.doIgnoringChanges
+import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.fragmentArguments
 import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.setupToolbar
 import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.shortToast
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
@@ -41,7 +43,7 @@ class MoneyAccountCreationFragment : BaseFragment(R.layout.fragment_money_accoun
     private val viewModel by viewModelFromComponent { component }
 
     private val component by component {
-        MoneyAccountCreationComponent.get(findComponentDependencies())
+        MoneyAccountCreationComponent.get(fragmentArguments(), findComponentDependencies())
     }
 
     private val currencyChoiceListController
@@ -113,6 +115,11 @@ class MoneyAccountCreationFragment : BaseFragment(R.layout.fragment_money_accoun
                 menu?.setSavingMenuItemEnabled(isEnabled)
             }
             balanceStateLiveData(balanceEditText::setAmount)
+            accountNameLiveData { accountName ->
+                accountNameEditText.doIgnoringChanges {
+                    setText(accountName)
+                }
+            }
         }
     }
 
