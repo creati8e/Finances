@@ -2,10 +2,7 @@ package serg.chuprin.finances.feature.dashboard.presentation
 
 import android.view.View
 import androidx.navigation.NavController
-import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountDetailsScreenArguments
-import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountsListScreenArguments
-import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionScreenArguments
-import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionsReportScreenArguments
+import serg.chuprin.finances.core.api.presentation.screen.arguments.*
 
 /**
  * Created by Sergey Chuprin on 06.05.2020.
@@ -18,7 +15,11 @@ interface DashboardNavigation {
         sharedElementView: View
     )
 
-    fun navigateToMoneyAccountCreation(navController: NavController, vararg sharedElementView: View)
+    fun navigateToMoneyAccountCreation(
+        navController: NavController,
+        screenArguments: MoneyAccountScreenArguments,
+        vararg sharedElementView: View
+    )
 
     fun navigateToMoneyAccountsList(
         navController: NavController,

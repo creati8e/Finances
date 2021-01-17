@@ -1,10 +1,7 @@
 package serg.chuprin.finances.feature.dashboard.presentation.model.store
 
 import serg.chuprin.finances.core.api.presentation.model.cells.DataPeriodTypePopupMenuCell
-import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountDetailsScreenArguments
-import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountsListScreenArguments
-import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionScreenArguments
-import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionsReportScreenArguments
+import serg.chuprin.finances.core.api.presentation.screen.arguments.*
 
 /**
  * Created by Sergey Chuprin on 16.04.2020.
@@ -31,6 +28,8 @@ sealed class DashboardEvent {
         val screenArguments: MoneyAccountsListScreenArguments
     ) : DashboardEvent()
 
-    object NavigateToMoneyAccountCreationScreen : DashboardEvent()
+    class NavigateToMoneyAccountCreationScreen(
+        val screenArguments: MoneyAccountScreenArguments
+    ) : DashboardEvent()
 
 }

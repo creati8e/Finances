@@ -2,6 +2,7 @@ package serg.chuprin.finances.app.presentation.navigation.impl
 
 import android.view.View
 import androidx.navigation.NavController
+import serg.chuprin.finances.app.presentation.navigation.extensions.toNavigatorExtras
 import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountScreenArguments
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionScreenArguments
 import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.toBundle

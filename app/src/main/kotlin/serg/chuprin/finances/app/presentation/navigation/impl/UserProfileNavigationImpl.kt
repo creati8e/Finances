@@ -3,6 +3,7 @@ package serg.chuprin.finances.app.presentation.navigation.impl
 import android.view.View
 import androidx.navigation.NavController
 import serg.chuprin.finances.app.R
+import serg.chuprin.finances.app.presentation.navigation.extensions.buildExtrasForSharedElements
 import serg.chuprin.finances.feature.userprofile.presentation.UserProfileNavigation
 import serg.chuprin.finances.core.api.presentation.screen.arguments.CategoriesListScreenArguments
 import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.toBundle

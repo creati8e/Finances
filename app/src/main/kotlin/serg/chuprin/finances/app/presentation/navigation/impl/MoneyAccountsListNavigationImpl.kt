@@ -3,6 +3,7 @@ package serg.chuprin.finances.app.presentation.navigation.impl
 import android.view.View
 import androidx.navigation.NavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import serg.chuprin.finances.app.presentation.navigation.extensions.buildExtrasForSharedElements
 import serg.chuprin.finances.feature.moneyaccounts.presentation.MoneyAccountsListNavigation
 import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountDetailsScreenArguments
 import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.toBundle

@@ -17,7 +17,6 @@ import serg.chuprin.finances.core.api.presentation.model.AppDebugMenu
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
-import serg.chuprin.finances.feature.dashboard.presentation.DashboardNavigation
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionScreenArguments
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter
@@ -31,6 +30,7 @@ import serg.chuprin.finances.core.api.presentation.view.setSharedElementTransiti
 import serg.chuprin.finances.feature.dashboard.BuildConfig
 import serg.chuprin.finances.feature.dashboard.R
 import serg.chuprin.finances.feature.dashboard.di.DashboardComponent
+import serg.chuprin.finances.feature.dashboard.presentation.DashboardNavigation
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardLoadingCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.cells.DashboardWidgetCell
 import serg.chuprin.finances.feature.dashboard.presentation.model.store.DashboardEvent
@@ -151,12 +151,16 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
                     recyclerView.findViewWithTag(event.screenArguments.transitionName)
                 )
             }
-            DashboardEvent.NavigateToMoneyAccountCreationScreen -> {
+            is DashboardEvent.NavigateToMoneyAccountCreationScreen -> {
                 val sharedElementView = recyclerView.addAccountButton
                 if (sharedElementView != null) {
-                    navigation.navigateToMoneyAccountCreation(navController, sharedElementView)
+                    navigation.navigateToMoneyAccountCreation(
+                        navController,
+                        event.screenArguments,
+                        sharedElementView
+                    )
                 } else {
-                    navigation.navigateToMoneyAccountCreation(navController)
+                    navigation.navigateToMoneyAccountCreation(navController, event.screenArguments)
                 }
             }
             is DashboardEvent.NavigateToTransactionsReportScreen -> {
