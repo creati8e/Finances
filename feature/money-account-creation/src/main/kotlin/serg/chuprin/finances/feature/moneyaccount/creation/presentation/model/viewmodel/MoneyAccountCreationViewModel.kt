@@ -27,6 +27,9 @@ class MoneyAccountCreationViewModel @Inject constructor(
     val currency: Currency?
         get() = store.state.chosenCurrency
 
+    val currencyPickerIsClickableLiveData: LiveData<Boolean> =
+        store.observeParticularStateAsLiveData(MoneyAccountCreationState::currencyPickerIsClickable)
+
     val currencyCellsLiveData: LiveData<List<BaseCell>> =
         store.observeParticularStateAsLiveData(MoneyAccountCreationState::currentCells)
 

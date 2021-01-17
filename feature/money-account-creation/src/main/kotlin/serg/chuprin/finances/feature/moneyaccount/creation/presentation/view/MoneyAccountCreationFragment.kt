@@ -110,6 +110,7 @@ class MoneyAccountCreationFragment : BaseFragment(R.layout.fragment_money_accoun
             eventLiveData(::handleEvent)
             currencyCellsLiveData(currencyChoiceView::setCells)
             chosenCurrencyDisplayNameLiveData(chosenCurrencyTextView::setText)
+            currencyPickerIsClickableLiveData(chosenCurrencyTextView::setEnabled)
             currencyPickerVisibilityLiveData(currencyChoiceListController::showOrHide)
             savingButtonIsEnabledLiveData { isEnabled ->
                 menu?.setSavingMenuItemEnabled(isEnabled)

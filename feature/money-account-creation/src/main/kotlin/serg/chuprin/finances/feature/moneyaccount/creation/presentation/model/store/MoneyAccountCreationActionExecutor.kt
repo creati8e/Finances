@@ -3,6 +3,7 @@ package serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.s
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceIntent
@@ -54,7 +55,14 @@ class MoneyAccountCreationActionExecutor @Inject constructor(
             is MoneyAccountCreationAction.SetInitialStateForExistingAccount -> {
                 handleSetInitialStateForExistingAccountAction(action)
             }
+            MoneyAccountCreationAction.MakeCurrencyPickerClickable -> {
+                handleMakeCurrencyPickerClickableAction()
+            }
         }
+    }
+
+    private fun handleMakeCurrencyPickerClickableAction(): Flow<MoneyAccountCreationEffect> {
+        return flowOf(MoneyAccountCreationEffect.CurrencyPickerClickabilityChanged(true))
     }
 
     private fun handleSetInitialStateForExistingAccountAction(

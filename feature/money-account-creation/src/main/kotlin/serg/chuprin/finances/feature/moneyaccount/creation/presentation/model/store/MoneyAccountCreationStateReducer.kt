@@ -41,9 +41,13 @@ class MoneyAccountCreationStateReducer :
             is MoneyAccountCreationEffect.InitialStateForExistingAccountFormatted -> {
                 state.copy(
                     balance = what.balance,
+                    currencyPickerIsClickable = false,
                     moneyAccountName = what.accountName,
                     moneyAccountDefaultData = what.moneyAccountDefaultData
                 )
+            }
+            is MoneyAccountCreationEffect.CurrencyPickerClickabilityChanged -> {
+                state.copy(currencyPickerIsClickable = what.isClickable)
             }
         }
     }

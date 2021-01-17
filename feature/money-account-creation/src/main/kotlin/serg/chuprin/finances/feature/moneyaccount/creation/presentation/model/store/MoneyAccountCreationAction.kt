@@ -9,6 +9,8 @@ import java.math.BigDecimal
  */
 sealed class MoneyAccountCreationAction {
 
+    object MakeCurrencyPickerClickable : MoneyAccountCreationAction()
+
     class SetInitialStateForExistingAccount(
         val accountName: String,
         val balance: BigDecimal,

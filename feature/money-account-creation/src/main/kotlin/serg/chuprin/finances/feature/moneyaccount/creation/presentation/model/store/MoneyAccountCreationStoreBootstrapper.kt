@@ -1,8 +1,8 @@
 package serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.store
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.domain.TransactionAmountCalculator
 import serg.chuprin.finances.core.api.domain.model.Id
@@ -34,7 +34,9 @@ class MoneyAccountCreationStoreBootstrapper @Inject constructor(
                     buildActionForExistingMoneyAccount(screenArguments.moneyAccountId)
                 }
             }
-            is MoneyAccountScreenArguments.Creation -> emptyFlow()
+            is MoneyAccountScreenArguments.Creation -> {
+                flowOf(MoneyAccountCreationAction.MakeCurrencyPickerClickable)
+            }
         }
     }
 
