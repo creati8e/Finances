@@ -24,7 +24,7 @@ import serg.chuprin.finances.core.api.presentation.view.extensions.getAttributeC
 import serg.chuprin.finances.core.api.presentation.view.popup.menu.PopupMenuWindow
 import serg.chuprin.finances.core.api.presentation.view.setSharedElementTransitions
 import serg.chuprin.finances.feature.userprofile.R
-import serg.chuprin.finances.feature.userprofile.presentation.di.UserProfileComponent
+import serg.chuprin.finances.feature.userprofile.di.UserProfileComponent
 import serg.chuprin.finances.feature.userprofile.presentation.model.cells.UserProfileCategoriesCell
 import serg.chuprin.finances.feature.userprofile.presentation.model.cells.UserProfileDataPeriodTypeCell
 import serg.chuprin.finances.feature.userprofile.presentation.model.cells.UserProfileLogoutCell

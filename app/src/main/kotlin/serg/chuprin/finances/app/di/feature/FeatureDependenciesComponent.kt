@@ -21,7 +21,7 @@ import serg.chuprin.finances.feature.moneyaccounts.di.MoneyAccountsListDependenc
 import serg.chuprin.finances.feature.onboarding.di.OnboardingFeatureDependencies
 import serg.chuprin.finances.feature.transaction.di.TransactionDependencies
 import serg.chuprin.finances.feature.transactions.di.TransactionsReportDependencies
-import serg.chuprin.finances.feature.userprofile.presentation.di.UserProfileDependencies
+import serg.chuprin.finances.feature.userprofile.di.UserProfileDependencies
 
 /**
  * Created by Sergey Chuprin on 16.01.2021.

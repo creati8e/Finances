@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.userprofile.presentation.di
+package serg.chuprin.finances.feature.userprofile.di
 
 import dagger.Module
 import dagger.Provides
