@@ -30,6 +30,9 @@ class MoneyAccountCreationViewModel @Inject constructor(
     val currencyPickerIsClickableLiveData: LiveData<Boolean> =
         store.observeParticularStateAsLiveData(MoneyAccountCreationState::currencyPickerIsClickable)
 
+    val accountDeletionButtonVisibilityLiveData: LiveData<Boolean> =
+        store.observeParticularStateAsLiveData(MoneyAccountCreationState::accountDeletionButtonIsVisible)
+
     val toolbarTitleLiveData: LiveData<String> =
         store.observeParticularStateAsLiveData(MoneyAccountCreationState::toolbarTitle)
 

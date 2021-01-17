@@ -41,10 +41,11 @@ class MoneyAccountCreationStateReducer :
             is MoneyAccountCreationEffect.InitialStateApplied -> {
                 state.copy(
                     balance = what.balance,
-                    moneyAccountName = what.accountName,
                     toolbarTitle = what.toolbarTitle,
+                    moneyAccountName = what.accountName,
                     moneyAccountDefaultData = what.moneyAccountDefaultData,
-                    currencyPickerIsClickable = what.currencyPickerIsClickable
+                    currencyPickerIsClickable = what.currencyPickerIsClickable,
+                    accountDeletionButtonIsVisible = what.accountDeletionButtonIsVisible
                 )
             }
         }

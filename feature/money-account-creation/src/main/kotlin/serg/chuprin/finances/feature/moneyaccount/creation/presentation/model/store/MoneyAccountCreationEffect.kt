@@ -14,6 +14,7 @@ sealed class MoneyAccountCreationEffect {
         val accountName: String,
         val toolbarTitle: String,
         val currencyPickerIsClickable: Boolean,
+        val accountDeletionButtonIsVisible: Boolean,
         val moneyAccountDefaultData: MoneyAccountDefaultData?
     ) : MoneyAccountCreationEffect()
 

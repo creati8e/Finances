@@ -19,11 +19,14 @@ import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.vi
 import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountScreenArguments
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.MenuConfig
+import serg.chuprin.finances.core.api.presentation.view.dialog.info.InfoDialogFragment
+import serg.chuprin.finances.core.api.presentation.view.dialog.info.showInfoDialog
 import serg.chuprin.finances.core.api.presentation.view.extensions.doIgnoringChanges
 import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.arguments
 import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.setToolbarTitle
 import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.setupToolbar
 import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.shortToast
+import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisibleOrGone
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
 import serg.chuprin.finances.core.api.presentation.view.extensions.shouldIgnoreChanges
 import serg.chuprin.finances.core.api.presentation.view.menuConfig
@@ -37,7 +40,13 @@ import javax.inject.Inject
 /**
  * Created by Sergey Chuprin on 10.05.2020.
  */
-class MoneyAccountCreationFragment : BaseFragment(R.layout.fragment_money_account_creation) {
+class MoneyAccountCreationFragment :
+    BaseFragment(R.layout.fragment_money_account_creation),
+    InfoDialogFragment.Callback {
+
+    private companion object {
+        private const val RC_ACCOUNT_DELETION = 12124
+    }
 
     @Inject
     lateinit var amountFormatter: AmountFormatter
@@ -83,6 +92,10 @@ class MoneyAccountCreationFragment : BaseFragment(R.layout.fragment_money_accoun
             setHomeAsUpIndicator(R.drawable.ic_close)
         }
 
+        deleteAccountButton.onClick {
+            viewModel.dispatchIntent(MoneyAccountCreationIntent.ClickOnDeleteButton)
+        }
+
         view.transitionName = screenArguments.transitionName
 
         balanceEditText.setFormatter { input ->
@@ -94,24 +107,8 @@ class MoneyAccountCreationFragment : BaseFragment(R.layout.fragment_money_accoun
             }
         }
 
-        _currencyChoiceListController = CurrencyChoiceListController(
-            animationContainer = constraintLayout,
-            chosenCurrencyTextView = chosenCurrencyTextView,
-            currencyChoiceView = currencyChoiceView
-        )
+        setupCurrencyPicker()
 
-        currencyChoiceView.onCurrencyCellChosen = { cell ->
-            viewModel.dispatch(CurrencyChoiceIntent.ClickOnCurrencyCell(cell))
-        }
-        currencyChoiceView.onCloseClicked = {
-            viewModel.dispatch(CurrencyChoiceIntent.ClickOnCloseCurrencyPicker)
-        }
-        currencyChoiceView.onSearchQueryChanged = { searchQuery ->
-            viewModel.dispatch(CurrencyChoiceIntent.EnterCurrencySearchQuery(searchQuery))
-        }
-        chosenCurrencyTextView.onClick {
-            viewModel.dispatch(CurrencyChoiceIntent.ClickOnCurrencyPicker)
-        }
         with(viewModel) {
             eventLiveData(::handleEvent)
             toolbarTitleLiveData(::setToolbarTitle)
@@ -119,6 +116,7 @@ class MoneyAccountCreationFragment : BaseFragment(R.layout.fragment_money_accoun
             chosenCurrencyDisplayNameLiveData(chosenCurrencyTextView::setText)
             currencyPickerIsClickableLiveData(chosenCurrencyTextView::setEnabled)
             currencyPickerVisibilityLiveData(currencyChoiceListController::showOrHide)
+            accountDeletionButtonVisibilityLiveData(deleteAccountButton::makeVisibleOrGone)
             savingButtonIsEnabledLiveData { isEnabled ->
                 menu?.setSavingMenuItemEnabled(isEnabled)
             }
@@ -180,6 +178,12 @@ class MoneyAccountCreationFragment : BaseFragment(R.layout.fragment_money_accoun
         }
     }
 
+    override fun onInfoDialogPositiveButtonClick(requestCode: Int) {
+        if (requestCode == RC_ACCOUNT_DELETION) {
+            viewModel.dispatchIntent(MoneyAccountCreationIntent.ClickOnConfirmAccountDeletion)
+        }
+    }
+
     private fun handleEvent(event: MoneyAccountCreationEvent) {
         return when (event) {
             MoneyAccountCreationEvent.CloseScreen -> {
@@ -189,6 +193,15 @@ class MoneyAccountCreationFragment : BaseFragment(R.layout.fragment_money_accoun
             MoneyAccountCreationEvent.ShowAccountCreatedMessage -> {
                 shortToast(R.string.money_account_creation_account_created_message)
             }
+            MoneyAccountCreationEvent.ShowAccountDeletionDialog -> {
+                showInfoDialog(
+                    title = R.string.money_account_deletion_dialog_title,
+                    message = R.string.money_account_deletion_dialog_message,
+                    positiveText = R.string.yes,
+                    negativeText = R.string.no,
+                    callbackRequestCode = RC_ACCOUNT_DELETION
+                )
+            }
         }
     }
 
@@ -196,6 +209,27 @@ class MoneyAccountCreationFragment : BaseFragment(R.layout.fragment_money_accoun
         with(findItem(R.id.menu_action_save)) {
             this.isEnabled = isEnabled
             icon.mutate().alpha = if (isEnabled) 255 else 135
+        }
+    }
+
+    private fun setupCurrencyPicker() {
+        _currencyChoiceListController = CurrencyChoiceListController(
+            animationContainer = constraintLayout,
+            chosenCurrencyTextView = chosenCurrencyTextView,
+            currencyChoiceView = currencyChoiceView
+        )
+
+        currencyChoiceView.onCurrencyCellChosen = { cell ->
+            viewModel.dispatch(CurrencyChoiceIntent.ClickOnCurrencyCell(cell))
+        }
+        currencyChoiceView.onCloseClicked = {
+            viewModel.dispatch(CurrencyChoiceIntent.ClickOnCloseCurrencyPicker)
+        }
+        currencyChoiceView.onSearchQueryChanged = { searchQuery ->
+            viewModel.dispatch(CurrencyChoiceIntent.EnterCurrencySearchQuery(searchQuery))
+        }
+        chosenCurrencyTextView.onClick {
+            viewModel.dispatch(CurrencyChoiceIntent.ClickOnCurrencyPicker)
         }
     }
 

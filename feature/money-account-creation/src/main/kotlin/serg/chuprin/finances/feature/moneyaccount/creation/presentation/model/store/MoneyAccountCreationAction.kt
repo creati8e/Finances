@@ -14,6 +14,7 @@ sealed class MoneyAccountCreationAction {
         val balance: BigDecimal,
         val toolbarTitle: String,
         val currencyPickerIsClickable: Boolean,
+        val accountDeletionButtonIsVisible: Boolean,
         val moneyAccountDefaultData: MoneyAccountDefaultData?
     ) : MoneyAccountCreationAction()
 

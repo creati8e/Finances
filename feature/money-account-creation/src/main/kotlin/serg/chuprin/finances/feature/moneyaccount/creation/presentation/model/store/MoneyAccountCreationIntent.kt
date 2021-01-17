@@ -9,6 +9,10 @@ sealed class MoneyAccountCreationIntent {
 
     object ClickOnSaveButton : MoneyAccountCreationIntent()
 
+    object ClickOnDeleteButton : MoneyAccountCreationIntent()
+
+    object ClickOnConfirmAccountDeletion : MoneyAccountCreationIntent()
+
     class EnterAccountName(
         val accountName: String
     ) : MoneyAccountCreationIntent()

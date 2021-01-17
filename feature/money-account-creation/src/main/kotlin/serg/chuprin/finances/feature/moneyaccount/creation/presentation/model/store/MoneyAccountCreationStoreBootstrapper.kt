@@ -52,6 +52,7 @@ class MoneyAccountCreationStoreBootstrapper @Inject constructor(
             balance = BigDecimal.ZERO,
             moneyAccountDefaultData = null,
             currencyPickerIsClickable = true,
+            accountDeletionButtonIsVisible = false,
             toolbarTitle = resourceManger.getString(R.string.money_account_creation_toolbar_title)
         )
     }
@@ -66,6 +67,7 @@ class MoneyAccountCreationStoreBootstrapper @Inject constructor(
             balance = balance,
             accountName = account.name,
             currencyPickerIsClickable = false,
+            accountDeletionButtonIsVisible = true,
             moneyAccountDefaultData = MoneyAccountDefaultData(balance, account.name),
             toolbarTitle = resourceManger.getString(R.string.money_account_editing_toolbar_title)
         )

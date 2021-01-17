@@ -46,6 +46,12 @@ class MoneyAccountCreationActionExecutor @Inject constructor(
                     is MoneyAccountCreationIntent.EnterBalance -> {
                         handleEnterAmountIntent(intent)
                     }
+                    MoneyAccountCreationIntent.ClickOnDeleteButton -> {
+                        handleClickOnDeleteButtonIntent(eventConsumer)
+                    }
+                    MoneyAccountCreationIntent.ClickOnConfirmAccountDeletion -> {
+                        handleClickOnConfirmAccountDeletionIntent()
+                    }
                 }
             }
             is MoneyAccountCreationAction.UpdateCurrencyChoiceState -> {
@@ -54,6 +60,18 @@ class MoneyAccountCreationActionExecutor @Inject constructor(
             is MoneyAccountCreationAction.SetInitialState -> {
                 handleSetInitialStateForExistingAccountAction(action)
             }
+        }
+    }
+
+    private fun handleClickOnConfirmAccountDeletionIntent(): Flow<MoneyAccountCreationEffect> {
+        TODO("Not yet implemented")
+    }
+
+    private fun handleClickOnDeleteButtonIntent(
+        eventConsumer: Consumer<MoneyAccountCreationEvent>
+    ): Flow<MoneyAccountCreationEffect> {
+        return emptyFlowAction {
+            eventConsumer(MoneyAccountCreationEvent.ShowAccountDeletionDialog)
         }
     }
 
@@ -66,7 +84,8 @@ class MoneyAccountCreationActionExecutor @Inject constructor(
                 accountName = action.accountName,
                 toolbarTitle = action.toolbarTitle,
                 moneyAccountDefaultData = action.moneyAccountDefaultData,
-                currencyPickerIsClickable = action.currencyPickerIsClickable
+                currencyPickerIsClickable = action.currencyPickerIsClickable,
+                accountDeletionButtonIsVisible = action.accountDeletionButtonIsVisible
             )
         }
     }

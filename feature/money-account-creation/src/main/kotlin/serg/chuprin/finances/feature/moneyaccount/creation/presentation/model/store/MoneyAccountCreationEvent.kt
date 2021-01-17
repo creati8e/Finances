@@ -7,6 +7,8 @@ sealed class MoneyAccountCreationEvent {
 
     object CloseScreen : MoneyAccountCreationEvent()
 
+    object ShowAccountDeletionDialog : MoneyAccountCreationEvent()
+
     object ShowAccountCreatedMessage : MoneyAccountCreationEvent()
 
 }

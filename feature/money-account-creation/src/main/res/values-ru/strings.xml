@@ -5,6 +5,11 @@
     <string name="money_account_editing_toolbar_title">Редактирование счета</string>
     <string name="money_account_creation_menu_create">Создать</string>
     <string name="money_account_creation_hint_name">Название</string>
+    <string name="money_account_delete_button">Удалить счет</string>
+    <string name="money_account_deletion_dialog_message">
+        Вы уверены? Счет со всем транзакциями будет удален.
+    </string>
+    <string name="money_account_deletion_dialog_title">Удаление счета</string>
     <string name="money_account_creation_hint_initial_balance">Начальный баланс</string>
     <string name="money_account_creation_account_created_message">Счет создан</string>
 

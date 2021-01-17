@@ -15,6 +15,7 @@ data class MoneyAccountCreationState(
     val moneyAccountName: String = EMPTY_STRING,
     val savingButtonIsEnabled: Boolean = false,
     val currencyPickerIsClickable: Boolean = false,
+    val accountDeletionButtonIsVisible: Boolean = false,
     // Default data of existing account, if present.
     // Used only for checking if some data is changed for existing account.
     val moneyAccountDefaultData: MoneyAccountDefaultData? = null,
