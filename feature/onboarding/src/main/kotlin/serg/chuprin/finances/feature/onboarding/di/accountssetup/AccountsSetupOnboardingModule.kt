@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.onboarding.presentation.accountssetup.di
+package serg.chuprin.finances.feature.onboarding.di.accountssetup
 
 import dagger.Module
 import dagger.Provides

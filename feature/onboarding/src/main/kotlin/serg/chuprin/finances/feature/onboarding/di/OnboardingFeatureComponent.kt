@@ -1,11 +1,11 @@
-package serg.chuprin.finances.feature.onboarding.presentation.launch.di
+package serg.chuprin.finances.feature.onboarding.di
 
 import dagger.Component
 import serg.chuprin.finances.core.api.di.scopes.FeatureScope
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.InjectableComponent
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.ViewModelComponent
-import serg.chuprin.finances.feature.onboarding.presentation.accountssetup.di.AccountsSetupOnboardingComponent
-import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.di.CurrencyChoiceOnboardingComponent
+import serg.chuprin.finances.feature.onboarding.di.accountssetup.AccountsSetupOnboardingComponent
+import serg.chuprin.finances.feature.onboarding.di.currencychoice.CurrencyChoiceOnboardingComponent
 import serg.chuprin.finances.feature.onboarding.presentation.launch.model.viewmodel.OnboardingLaunchViewModel
 import serg.chuprin.finances.feature.onboarding.presentation.launch.view.OnboardingLaunchFragment
 
@@ -20,8 +20,7 @@ interface OnboardingFeatureComponent :
     companion object {
 
         fun get(dependencies: OnboardingFeatureDependencies): OnboardingFeatureComponent {
-            return DaggerOnboardingFeatureComponent
-                .builder()
+            return DaggerOnboardingFeatureComponent.builder()
                 .onboardingFeatureDependencies(dependencies)
                 .build()
         }

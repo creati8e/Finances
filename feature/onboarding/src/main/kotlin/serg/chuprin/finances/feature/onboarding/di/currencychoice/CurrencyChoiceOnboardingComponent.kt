@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.onboarding.presentation.currencychoice.di
+package serg.chuprin.finances.feature.onboarding.di.currencychoice
 
 import dagger.Subcomponent
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope

@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.onboarding.presentation.launch.di
+package serg.chuprin.finances.feature.onboarding.di
 
 import serg.chuprin.finances.core.api.di.dependencies.FeatureDependencies
 import serg.chuprin.finances.core.api.domain.repository.*

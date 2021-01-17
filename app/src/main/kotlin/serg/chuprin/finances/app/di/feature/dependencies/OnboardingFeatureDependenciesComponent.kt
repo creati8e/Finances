@@ -2,7 +2,7 @@ package serg.chuprin.finances.app.di.feature.dependencies
 
 import dagger.Component
 import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
-import serg.chuprin.finances.feature.onboarding.presentation.launch.di.OnboardingFeatureDependencies
+import serg.chuprin.finances.feature.onboarding.di.OnboardingFeatureDependencies
 
 /**
  * Created by Sergey Chuprin on 16.01.2021.

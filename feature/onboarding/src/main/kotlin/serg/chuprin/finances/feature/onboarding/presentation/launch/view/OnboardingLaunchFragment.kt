@@ -7,7 +7,7 @@ import serg.chuprin.finances.core.api.domain.model.OnboardingStep
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.feature.onboarding.R
-import serg.chuprin.finances.feature.onboarding.presentation.launch.di.OnboardingFeatureComponent
+import serg.chuprin.finances.feature.onboarding.di.OnboardingFeatureComponent
 
 /**
  * Created by Sergey Chuprin on 06.04.2020.

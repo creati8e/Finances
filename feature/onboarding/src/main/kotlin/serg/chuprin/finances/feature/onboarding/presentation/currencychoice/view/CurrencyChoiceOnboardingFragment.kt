@@ -19,7 +19,7 @@ import serg.chuprin.finances.feature.onboarding.R
 import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.model.store.CurrencyChoiceOnboardingEvent
 import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.model.store.CurrencyChoiceOnboardingIntent
 import serg.chuprin.finances.feature.onboarding.presentation.currencychoice.view.CurrencyChoiceOnboardingFragmentDirections.navigateFromCurrencyChoiceOnboardingToAccountsSetupOnboarding
-import serg.chuprin.finances.feature.onboarding.presentation.launch.di.OnboardingFeatureComponent
+import serg.chuprin.finances.feature.onboarding.di.OnboardingFeatureComponent
 
 /**
  * Created by Sergey Chuprin on 05.04.2020.
