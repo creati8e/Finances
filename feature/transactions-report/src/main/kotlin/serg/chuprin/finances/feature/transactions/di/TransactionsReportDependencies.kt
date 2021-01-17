@@ -14,7 +14,7 @@ import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.formatter.CategoryColorFormatter
 import serg.chuprin.finances.core.api.presentation.formatter.DateTimeFormatter
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
-import serg.chuprin.finances.core.api.presentation.navigation.TransactionReportNavigation
+import serg.chuprin.finances.feature.transactions.presentation.TransactionReportNavigation
 
 /**
  * Created by Sergey Chuprin on 12.05.2020.

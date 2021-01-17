@@ -9,7 +9,7 @@ import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.formatter.CategoryWithParentFormatter
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
-import serg.chuprin.finances.core.api.presentation.navigation.TransactionNavigation
+import serg.chuprin.finances.feature.transaction.presentation.TransactionNavigation
 
 /**
  * Created by Sergey Chuprin on 02.01.2021.

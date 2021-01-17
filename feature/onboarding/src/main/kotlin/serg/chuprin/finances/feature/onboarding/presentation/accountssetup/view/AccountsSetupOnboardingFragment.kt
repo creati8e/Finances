@@ -16,7 +16,7 @@ import serg.chuprin.finances.core.api.di.dependencies.findComponentDependencies
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
-import serg.chuprin.finances.core.api.presentation.navigation.OnboardingNavigation
+import serg.chuprin.finances.feature.onboarding.presentation.OnboardingNavigation
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.extensions.*
 import serg.chuprin.finances.feature.onboarding.R

@@ -14,7 +14,7 @@ import serg.chuprin.finances.core.api.di.dependencies.findComponentDependencies
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
-import serg.chuprin.finances.core.api.presentation.navigation.UserProfileNavigation
+import serg.chuprin.finances.feature.userprofile.presentation.UserProfileNavigation
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.adapter.decoration.CellDividerDecoration
 import serg.chuprin.finances.core.api.presentation.view.dialog.info.InfoDialogFragment

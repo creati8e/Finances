@@ -22,7 +22,7 @@ import serg.chuprin.finances.core.api.extensions.toLocalDateUTC
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
-import serg.chuprin.finances.core.api.presentation.navigation.TransactionNavigation
+import serg.chuprin.finances.feature.transaction.presentation.TransactionNavigation
 import serg.chuprin.finances.core.api.presentation.screen.arguments.CategoriesListScreenArguments
 import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountsListScreenArguments
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionScreenArguments

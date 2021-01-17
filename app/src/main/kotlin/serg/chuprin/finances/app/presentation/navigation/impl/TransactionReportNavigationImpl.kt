@@ -2,7 +2,7 @@ package serg.chuprin.finances.app.presentation.navigation.impl
 
 import android.view.View
 import androidx.navigation.NavController
-import serg.chuprin.finances.core.api.presentation.navigation.TransactionReportNavigation
+import serg.chuprin.finances.feature.transactions.presentation.TransactionReportNavigation
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionScreenArguments
 import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.toBundle
 import serg.chuprin.finances.feature.transaction.presentation.view.TransactionFragment

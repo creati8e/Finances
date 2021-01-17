@@ -1,4 +1,4 @@
-package serg.chuprin.finances.core.api.presentation.navigation
+package serg.chuprin.finances.feature.authorization.presentation
 
 import androidx.navigation.NavController
 
@@ -7,7 +7,6 @@ import androidx.navigation.NavController
  *
  * Represents actions available to perform from authorization screen.
  */
-// TODO: Move all navigation interfaces to feature modules.
 interface AuthorizationNavigation {
 
     fun navigateToAuthorizedGraph(navController: NavController)

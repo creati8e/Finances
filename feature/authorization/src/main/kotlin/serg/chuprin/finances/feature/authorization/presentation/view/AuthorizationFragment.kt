@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.fragment_authorization.*
 import serg.chuprin.finances.core.api.di.dependencies.findComponentDependencies
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
-import serg.chuprin.finances.core.api.presentation.navigation.AuthorizationNavigation
+import serg.chuprin.finances.feature.authorization.presentation.AuthorizationNavigation
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.shortToast
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeGone

@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.fragment_transactions_report.*
 import serg.chuprin.finances.core.api.di.dependencies.findComponentDependencies
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
-import serg.chuprin.finances.core.api.presentation.navigation.TransactionReportNavigation
+import serg.chuprin.finances.feature.transactions.presentation.TransactionReportNavigation
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionsReportScreenArguments
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.adapter.decoration.CellDividerDecoration

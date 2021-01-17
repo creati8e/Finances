@@ -7,7 +7,7 @@ import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.Cu
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
-import serg.chuprin.finances.core.api.presentation.navigation.OnboardingNavigation
+import serg.chuprin.finances.feature.onboarding.presentation.OnboardingNavigation
 
 /**
  * Created by Sergey Chuprin on 09.04.2020.

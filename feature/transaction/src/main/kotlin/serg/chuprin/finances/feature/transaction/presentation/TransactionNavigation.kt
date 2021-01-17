@@ -1,4 +1,4 @@
-package serg.chuprin.finances.core.api.presentation.navigation
+package serg.chuprin.finances.feature.transaction.presentation
 
 import androidx.navigation.NavController
 import serg.chuprin.finances.core.api.presentation.screen.arguments.CategoriesListScreenArguments

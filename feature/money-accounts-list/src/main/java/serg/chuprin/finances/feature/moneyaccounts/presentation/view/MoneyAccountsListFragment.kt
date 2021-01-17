@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.fragment_money_accounts_list.*
 import serg.chuprin.finances.core.api.di.dependencies.findComponentDependencies
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
-import serg.chuprin.finances.core.api.presentation.navigation.MoneyAccountsListNavigation
+import serg.chuprin.finances.feature.moneyaccounts.presentation.MoneyAccountsListNavigation
 import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountsListScreenArguments
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter

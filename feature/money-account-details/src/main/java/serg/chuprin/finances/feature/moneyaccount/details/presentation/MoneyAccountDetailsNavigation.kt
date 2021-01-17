@@ -1,4 +1,4 @@
-package serg.chuprin.finances.core.api.presentation.navigation
+package serg.chuprin.finances.feature.moneyaccount.details.presentation
 
 import android.view.View
 import androidx.navigation.NavController
@@ -7,7 +7,7 @@ import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionS
 /**
  * Created by Sergey Chuprin on 03.01.2021.
  */
-interface TransactionReportNavigation {
+interface MoneyAccountDetailsNavigation {
 
     fun navigateToTransaction(
         navController: NavController,

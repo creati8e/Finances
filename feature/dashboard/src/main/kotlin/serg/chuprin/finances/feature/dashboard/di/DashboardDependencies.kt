@@ -17,7 +17,7 @@ import serg.chuprin.finances.core.api.presentation.formatter.DataPeriodFormatter
 import serg.chuprin.finances.core.api.presentation.model.AppDebugMenu
 import serg.chuprin.finances.core.api.presentation.model.builder.DataPeriodTypePopupMenuCellsBuilder
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
-import serg.chuprin.finances.core.api.presentation.navigation.DashboardNavigation
+import serg.chuprin.finances.feature.dashboard.presentation.DashboardNavigation
 import serg.chuprin.finances.feature.dashboard.setup.domain.repository.DashboardWidgetsRepository
 
 /**

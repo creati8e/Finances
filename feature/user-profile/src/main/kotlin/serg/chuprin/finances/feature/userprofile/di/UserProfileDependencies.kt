@@ -8,7 +8,7 @@ import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.api.presentation.formatter.DataPeriodFormatter
 import serg.chuprin.finances.core.api.presentation.model.builder.DataPeriodTypePopupMenuCellsBuilder
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
-import serg.chuprin.finances.core.api.presentation.navigation.UserProfileNavigation
+import serg.chuprin.finances.feature.userprofile.presentation.UserProfileNavigation
 
 /**
  * Created by Sergey Chuprin on 31.07.2020.
