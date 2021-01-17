@@ -7,12 +7,12 @@ APKs are hosted on [AppCenter](https://install.appcenter.ms/users/gregamer-gmail
 - **GitHub Actions** for CI and CD
 - **Kotlin serialization** for parsing JSONs
 - **Gradle Kotlin DSL** for build scripts configuration
-- **Multi module architecture** for faster builds and code separation
+- [**Multi module architecture**](feature/README.md) for faster builds and code separation
 - **Clean architecture** for architecture
 - **Coroutines** and **Kotlin Flow** for async work
 - **Java 8 desugaring** for working with date, time and optional
 - **Dagger 2** for DI
-- **MVI** for presentation layer
+- [**MVI**](core/mvi/src/main/kotlin/serg/chuprin/finances/core/mvi) for presentation layer
 - **Firebase** (Authentication, Firestore) for storing data
 - **Jetpack** (Navigation, ViewModel, LiveData, Lifecycle) for
   presentation layer
@@ -35,7 +35,7 @@ APKs are hosted on [AppCenter](https://install.appcenter.ms/users/gregamer-gmail
 - [MVI implementation](core/mvi/src/main/kotlin/serg/chuprin/finances/core/mvi)
 - [Pie chart](core/pie-chart/src/main/kotlin/serg/chuprin/finances/core/piechart/PieChartView.kt)
 - [Modules configuration](build.gradle.kts)
-- 
+
 # Screens
 |    Screen     | Remarks                                                                    | How it looks                                             |
 |:-------------:|:---------------------------------------------------------------------------|:---------------------------------------------------------|
@@ -56,4 +56,3 @@ Some other screens not listed above
 - Filter button on transactions report screen is not working
 - Clicking on category on transactions report screen is not working
 - Editing balance transaction is not supported yet
-- ... 
