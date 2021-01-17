@@ -63,7 +63,8 @@ class MoneyAccountCreationActionExecutor @Inject constructor(
         return flowOfSingleValue {
             MoneyAccountCreationEffect.InitialStateForExistingAccountFormatted(
                 balance = action.balance,
-                accountName = action.accountName
+                accountName = action.accountName,
+                moneyAccountDefaultData = action.moneyAccountDefaultData
             )
         }
     }

@@ -41,7 +41,8 @@ class MoneyAccountCreationStateReducer :
             is MoneyAccountCreationEffect.InitialStateForExistingAccountFormatted -> {
                 state.copy(
                     balance = what.balance,
-                    moneyAccountName = what.accountName
+                    moneyAccountName = what.accountName,
+                    moneyAccountDefaultData = what.moneyAccountDefaultData
                 )
             }
         }

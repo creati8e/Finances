@@ -20,11 +20,12 @@ import javax.inject.Inject
 @ScreenScope
 class MoneyAccountCreationStore @Inject constructor(
     actionExecutor: MoneyAccountCreationActionExecutor,
+    bootstrapper: MoneyAccountCreationStoreBootstrapper,
     private val currencyChoiceStore: CurrencyChoiceStore
 ) : BaseStateStore<MoneyAccountCreationIntent, MoneyAccountCreationEffect, MoneyAccountCreationAction, MoneyAccountCreationState, MoneyAccountCreationEvent>(
     MoneyAccountCreationState(),
     MoneyAccountCreationStateReducer(),
-    BypassStoreBootstrapper(),
+    bootstrapper,
     actionExecutor,
     intentToActionMapper = MoneyAccountCreationAction::ExecuteIntent
 ), CurrencyChoiceStoreIntentDispatcher by currencyChoiceStore {

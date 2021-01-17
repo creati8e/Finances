@@ -1,6 +1,7 @@
 package serg.chuprin.finances.feature.moneyaccount.creation.di
 
 import serg.chuprin.finances.core.api.di.dependencies.FeatureDependencies
+import serg.chuprin.finances.core.api.domain.TransactionAmountCalculator
 import serg.chuprin.finances.core.api.domain.repository.*
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStoreProvider
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
@@ -20,4 +21,6 @@ interface MoneyAccountCreationDependencies : FeatureDependencies {
     val moneyAccountRepository: MoneyAccountRepository
 
     val currencyChoiceStoreProvider: CurrencyChoiceStoreProvider
+
+    val transactionAmountCalculator: TransactionAmountCalculator
 }

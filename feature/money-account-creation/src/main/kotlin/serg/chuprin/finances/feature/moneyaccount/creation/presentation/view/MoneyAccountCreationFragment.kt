@@ -118,6 +118,7 @@ class MoneyAccountCreationFragment : BaseFragment(R.layout.fragment_money_accoun
             accountNameLiveData { accountName ->
                 accountNameEditText.doIgnoringChanges {
                     setText(accountName)
+                    setSelection(accountName.length, accountName.length)
                 }
             }
         }
