@@ -5,7 +5,6 @@ import dagger.BindsInstance
 import dagger.Component
 import serg.chuprin.finances.core.api.di.Initializer
 import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
-import serg.chuprin.finances.core.api.di.provider.CoreNavigationProvider
 import serg.chuprin.finances.core.api.di.scopes.AppScope
 import serg.chuprin.finances.core.impl.di.module.*
 
@@ -26,9 +25,7 @@ import serg.chuprin.finances.core.impl.di.module.*
         CorePreferencesModule::class,
         CoreRepositoriesModule::class,
         CoreInitializersModule::class
-    ],
-    // Navigation is implemented in :app module.
-    dependencies = [CoreNavigationProvider::class]
+    ]
 )
 interface CoreDependenciesComponent : CoreDependenciesProvider {
 
@@ -38,11 +35,10 @@ interface CoreDependenciesComponent : CoreDependenciesProvider {
 
         fun get(): CoreDependenciesComponent = component
 
-        fun init(context: Context, navigationProvider: CoreNavigationProvider) {
+        fun init(context: Context) {
             component = DaggerCoreDependenciesComponent
                 .builder()
                 .context(context)
-                .navigationProvider(navigationProvider)
                 .build()
         }
 
@@ -53,8 +49,6 @@ interface CoreDependenciesComponent : CoreDependenciesProvider {
 
         @BindsInstance
         fun context(context: Context): Builder
-
-        fun navigationProvider(provider: CoreNavigationProvider): Builder
 
         fun build(): CoreDependenciesComponent
 

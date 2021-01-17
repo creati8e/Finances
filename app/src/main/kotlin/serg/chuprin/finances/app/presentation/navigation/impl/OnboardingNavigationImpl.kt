@@ -1,4 +1,4 @@
-package serg.chuprin.finances.app.di.navigation
+package serg.chuprin.finances.app.presentation.navigation.impl
 
 import androidx.navigation.NavController
 import serg.chuprin.finances.app.AuthorizedGraphDirections.navigateFromOnboardingToDashboard

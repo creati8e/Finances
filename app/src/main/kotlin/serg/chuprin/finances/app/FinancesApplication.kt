@@ -2,7 +2,7 @@ package serg.chuprin.finances.app
 
 import android.app.Application
 import serg.chuprin.finances.app.di.feature.FeatureDependenciesComponent
-import serg.chuprin.finances.app.di.navigation.NavigationComponent
+import serg.chuprin.finances.app.di.navigation.AppNavigationComponent
 import serg.chuprin.finances.core.api.di.dependencies.FeatureDependenciesProvider
 import serg.chuprin.finances.core.api.di.dependencies.HasFeatureDependencies
 import serg.chuprin.finances.core.impl.di.CoreDependenciesComponent
@@ -25,10 +25,15 @@ class FinancesApplication : Application(), HasFeatureDependencies {
     }
 
     private fun initializeComponents() {
-        CoreDependenciesComponent.init(this, NavigationComponent.instance)
+        CoreDependenciesComponent.init(this)
         CoreDependenciesComponent.get().appInitializer.initialize(this)
-        FeatureDependenciesComponent.init(CoreDependenciesComponent.get())
-        featureDependencies = FeatureDependenciesComponent.get().featureDependencies
+
+        featureDependencies = FeatureDependenciesComponent
+            .initAndGet(
+                CoreDependenciesComponent.get(),
+                AppNavigationComponent.instance
+            )
+            .featureDependencies
     }
 
 }

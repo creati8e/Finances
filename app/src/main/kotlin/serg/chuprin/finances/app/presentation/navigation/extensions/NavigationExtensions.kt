@@ -1,4 +1,4 @@
-package serg.chuprin.finances.app.di.navigation
+package serg.chuprin.finances.app.presentation.navigation.impl
 
 import android.view.View
 import androidx.navigation.fragment.FragmentNavigator

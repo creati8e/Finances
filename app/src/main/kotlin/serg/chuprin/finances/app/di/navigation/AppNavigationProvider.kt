@@ -1,4 +1,4 @@
-package serg.chuprin.finances.core.api.di.provider
+package serg.chuprin.finances.app.di.navigation
 
 import serg.chuprin.finances.core.api.presentation.navigation.TransactionReportNavigation
 import serg.chuprin.finances.core.api.presentation.navigation.*
@@ -6,7 +6,7 @@ import serg.chuprin.finances.core.api.presentation.navigation.*
 /**
  * Created by Sergey Chuprin on 03.04.2020.
  */
-interface CoreNavigationProvider {
+interface AppNavigationProvider {
 
     val transactionNavigation: TransactionNavigation
 

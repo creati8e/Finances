@@ -1,18 +1,15 @@
 package serg.chuprin.finances.app.di.navigation
 
-import androidx.navigation.NavController
 import dagger.Module
 import dagger.Provides
-import serg.chuprin.finances.app.R
-import serg.chuprin.finances.core.api.di.provider.CoreNavigationProvider
-import serg.chuprin.finances.core.api.presentation.navigation.TransactionReportNavigation
+import serg.chuprin.finances.app.presentation.navigation.impl.*
 import serg.chuprin.finances.core.api.presentation.navigation.*
 
 /**
  * Created by Sergey Chuprin on 03.04.2020.
  */
 @Module
-object NavigationModule : CoreNavigationProvider {
+object AppNavigationModule : AppNavigationProvider {
 
     @get:Provides
     override val moneyAccountDetailsNavigation: MoneyAccountDetailsNavigation
@@ -44,14 +41,6 @@ object NavigationModule : CoreNavigationProvider {
 
     @get:Provides
     override val authorizationNavigation: AuthorizationNavigation
-        get() {
-            return object : AuthorizationNavigation {
-
-                override fun navigateToAuthorizedGraph(navController: NavController) {
-                    navController.navigate(R.id.navigateToAuthorizedGraph)
-                }
-
-            }
-        }
+        get() = AuthorizationNavigationImpl()
 
 }

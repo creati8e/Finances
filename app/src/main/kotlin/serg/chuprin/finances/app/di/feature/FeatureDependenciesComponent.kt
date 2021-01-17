@@ -5,6 +5,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
 import serg.chuprin.finances.app.di.feature.dependencies.*
+import serg.chuprin.finances.app.di.navigation.AppNavigationProvider
 import serg.chuprin.finances.core.api.di.dependencies.FeatureDependencies
 import serg.chuprin.finances.core.api.di.dependencies.HasFeatureDependencies
 import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
@@ -29,7 +30,7 @@ import serg.chuprin.finances.feature.userprofile.di.UserProfileDependencies
 @AppScope
 @Component(
     modules = [FeatureDependenciesModule::class],
-    dependencies = [CoreDependenciesProvider::class]
+    dependencies = [CoreDependenciesProvider::class, AppNavigationProvider::class]
 )
 interface FeatureDependenciesComponent : HasFeatureDependencies {
 
@@ -37,13 +38,16 @@ interface FeatureDependenciesComponent : HasFeatureDependencies {
 
         private lateinit var component: FeatureDependenciesComponent
 
-        fun get(): FeatureDependenciesComponent = component
-
-        fun init(coreDependencies: CoreDependenciesProvider) {
+        fun initAndGet(
+            coreDependencies: CoreDependenciesProvider,
+            navigationProvider: AppNavigationProvider
+        ): FeatureDependenciesComponent {
             component = DaggerFeatureDependenciesComponent
                 .builder()
                 .coreDependenciesProvider(coreDependencies)
+                .appNavigationProvider(navigationProvider)
                 .build()
+            return component
         }
 
     }
@@ -55,32 +59,38 @@ object FeatureDependenciesModule {
 
     @[Provides IntoMap FeatureDependenciesKey(AuthorizationDependencies::class)]
     fun provideAuthorizationDependencies(
-        coreDependencies: CoreDependenciesProvider
+        coreDependencies: CoreDependenciesProvider,
+        navigationProvider: AppNavigationProvider
     ): FeatureDependencies {
         return DaggerAuthorizationDependenciesComponent
             .builder()
             .coreDependenciesProvider(coreDependencies)
+            .appNavigationProvider(navigationProvider)
             .build()
     }
 
     @[Provides IntoMap FeatureDependenciesKey(CategoriesListDependencies::class)]
     fun provideCategoriesListDependencies(
-        coreDependencies: CoreDependenciesProvider
+        coreDependencies: CoreDependenciesProvider,
+        navigationProvider: AppNavigationProvider
     ): FeatureDependencies {
         return DaggerCategoriesListDependenciesComponent
             .builder()
             .coreDependenciesProvider(coreDependencies)
+            .appNavigationProvider(navigationProvider)
             .build()
     }
 
     @[Provides IntoMap FeatureDependenciesKey(DashboardDependencies::class)]
     fun provideDashboardDependencies(
         coreDependencies: CoreDependenciesProvider,
+        navigationProvider: AppNavigationProvider,
         widgetsSetupDependencies: DashboardWidgetsSetupDependencies
     ): FeatureDependencies {
         return DaggerDashboardDependenciesComponent
             .builder()
             .coreDependenciesProvider(coreDependencies)
+            .appNavigationProvider(navigationProvider)
             .dashboardWidgetsSetupApi(
                 DashboardWidgetsSetupComponent.get(widgetsSetupDependencies)
             )
@@ -89,71 +99,85 @@ object FeatureDependenciesModule {
 
     @[Provides IntoMap FeatureDependenciesKey(MoneyAccountCreationDependencies::class)]
     fun provideMoneyAccountCreationDependencies(
-        coreDependencies: CoreDependenciesProvider
+        coreDependencies: CoreDependenciesProvider,
+        navigationProvider: AppNavigationProvider
     ): FeatureDependencies {
         return DaggerMoneyAccountCreationDependenciesComponent
             .builder()
             .coreDependenciesProvider(coreDependencies)
+            .appNavigationProvider(navigationProvider)
             .build()
     }
 
     @[Provides IntoMap FeatureDependenciesKey(MoneyAccountDetailsDependencies::class)]
     fun provideMoneyAccountDetailsDependencies(
-        coreDependencies: CoreDependenciesProvider
+        coreDependencies: CoreDependenciesProvider,
+        navigationProvider: AppNavigationProvider
     ): FeatureDependencies {
         return DaggerMoneyAccountDetailsDependenciesComponent
             .builder()
             .coreDependenciesProvider(coreDependencies)
+            .appNavigationProvider(navigationProvider)
             .build()
     }
 
     @[Provides IntoMap FeatureDependenciesKey(MoneyAccountsListDependencies::class)]
     fun provideMoneyAccountsListDependencies(
-        coreDependencies: CoreDependenciesProvider
+        coreDependencies: CoreDependenciesProvider,
+        navigationProvider: AppNavigationProvider
     ): FeatureDependencies {
         return DaggerMoneyAccountsListDependenciesComponent
             .builder()
             .coreDependenciesProvider(coreDependencies)
+            .appNavigationProvider(navigationProvider)
             .build()
     }
 
     @[Provides IntoMap FeatureDependenciesKey(TransactionDependencies::class)]
     fun provideTransactionDependencies(
-        coreDependencies: CoreDependenciesProvider
+        coreDependencies: CoreDependenciesProvider,
+        navigationProvider: AppNavigationProvider
     ): FeatureDependencies {
         return DaggerTransactionDependenciesComponent
             .builder()
             .coreDependenciesProvider(coreDependencies)
+            .appNavigationProvider(navigationProvider)
             .build()
     }
 
     @[Provides IntoMap FeatureDependenciesKey(UserProfileDependencies::class)]
     fun provideUserProfileDependencies(
-        coreDependencies: CoreDependenciesProvider
+        coreDependencies: CoreDependenciesProvider,
+        navigationProvider: AppNavigationProvider
     ): FeatureDependencies {
         return DaggerUserProfileDependenciesComponent
             .builder()
             .coreDependenciesProvider(coreDependencies)
+            .appNavigationProvider(navigationProvider)
             .build()
     }
 
     @[Provides IntoMap FeatureDependenciesKey(OnboardingFeatureDependencies::class)]
     fun provideOnboardingFeatureDependencies(
-        coreDependencies: CoreDependenciesProvider
+        coreDependencies: CoreDependenciesProvider,
+        navigationProvider: AppNavigationProvider
     ): FeatureDependencies {
         return DaggerOnboardingFeatureDependenciesComponent
             .builder()
             .coreDependenciesProvider(coreDependencies)
+            .appNavigationProvider(navigationProvider)
             .build()
     }
 
     @[Provides IntoMap FeatureDependenciesKey(TransactionsReportDependencies::class)]
     fun provideTransactionsReportDependencies(
-        coreDependencies: CoreDependenciesProvider
+        coreDependencies: CoreDependenciesProvider,
+        navigationProvider: AppNavigationProvider
     ): FeatureDependencies {
         return DaggerTransactionsReportDependenciesComponent
             .builder()
             .coreDependenciesProvider(coreDependencies)
+            .appNavigationProvider(navigationProvider)
             .build()
     }
 
@@ -171,11 +195,13 @@ object FeatureDependenciesModule {
      */
     @[Provides]
     fun provideDashboardWidgetsSetupDependencies(
-        coreDependencies: CoreDependenciesProvider
+        coreDependencies: CoreDependenciesProvider,
+        navigationProvider: AppNavigationProvider
     ): DashboardWidgetsSetupDependencies {
         return DaggerDashboardWidgetsSetupDependenciesComponent
             .builder()
             .coreDependenciesProvider(coreDependencies)
+            .appNavigationProvider(navigationProvider)
             .build()
     }
 
