@@ -22,7 +22,7 @@ import serg.chuprin.finances.core.api.presentation.view.extensions.getColorInt
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
 import serg.chuprin.finances.core.api.presentation.view.setSharedElementTransitions
 import serg.chuprin.finances.feature.moneyaccount.details.R
-import serg.chuprin.finances.feature.moneyaccount.details.presentation.di.MoneyAccountDetailsComponent
+import serg.chuprin.finances.feature.moneyaccount.details.di.MoneyAccountDetailsComponent
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.model.store.MoneyAccountDetailsEvent
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.model.store.MoneyAccountDetailsIntent
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.view.adapter.MoneyAccountDetailsTransactionsAdapter

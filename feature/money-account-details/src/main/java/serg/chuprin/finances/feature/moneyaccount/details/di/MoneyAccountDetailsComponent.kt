@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.moneyaccount.details.presentation.di
+package serg.chuprin.finances.feature.moneyaccount.details.di
 
 import dagger.BindsInstance
 import dagger.Component

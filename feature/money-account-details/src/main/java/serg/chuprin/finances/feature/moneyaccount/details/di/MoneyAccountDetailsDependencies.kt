@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.moneyaccount.details.presentation.di
+package serg.chuprin.finances.feature.moneyaccount.details.di
 
 import serg.chuprin.finances.core.api.di.dependencies.FeatureDependencies
 import serg.chuprin.finances.core.api.domain.TransactionAmountCalculator
