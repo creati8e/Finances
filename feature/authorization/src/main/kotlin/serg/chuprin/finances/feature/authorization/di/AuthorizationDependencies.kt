@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.authorization.presentation.di
+package serg.chuprin.finances.feature.authorization.di
 
 import serg.chuprin.finances.core.api.di.dependencies.FeatureDependencies
 import serg.chuprin.finances.core.api.domain.gateway.AuthorizationGateway

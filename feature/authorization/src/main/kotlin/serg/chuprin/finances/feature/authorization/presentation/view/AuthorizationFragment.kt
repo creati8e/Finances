@@ -19,7 +19,7 @@ import serg.chuprin.finances.core.api.presentation.view.extensions.makeGone
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisible
 import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
 import serg.chuprin.finances.feature.authorization.R
-import serg.chuprin.finances.feature.authorization.presentation.di.AuthorizationComponent
+import serg.chuprin.finances.feature.authorization.di.AuthorizationComponent
 import serg.chuprin.finances.feature.authorization.presentation.model.SignInState
 import javax.inject.Inject
 
