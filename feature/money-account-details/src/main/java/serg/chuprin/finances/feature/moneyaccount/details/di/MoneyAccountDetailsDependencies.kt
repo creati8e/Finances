@@ -11,12 +11,15 @@ import serg.chuprin.finances.core.api.domain.usecase.MarkMoneyAccountAsFavoriteU
 import serg.chuprin.finances.core.api.presentation.builder.TransactionCellBuilder
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.formatter.DateTimeFormatter
+import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.MoneyAccountDetailsNavigation
 
 /**
  * Created by Sergey Chuprin on 07.05.2020.
  */
 interface MoneyAccountDetailsDependencies : FeatureDependencies {
+
+    val resourceManger: ResourceManger
 
     val navigation: MoneyAccountDetailsNavigation
 

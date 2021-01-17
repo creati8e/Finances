@@ -9,6 +9,8 @@ sealed class MoneyAccountDetailsIntent {
 
     object ClickOnFavoriteIcon : MoneyAccountDetailsIntent()
 
+    object ClickOnEditingButton : MoneyAccountDetailsIntent()
+
     class ClickOnTransactionCell(
         val transactionCell: TransactionCell
     ) : MoneyAccountDetailsIntent()

@@ -47,6 +47,7 @@
         android:id="@+id/settingImageView"
         style="@style/ToolbarIcon"
         android:src="@drawable/ic_settings"
+        android:transitionName="@string/transition_name_money_account_editing"
         app:layout_constraintEnd_toStartOf="@id/favoriteImageView"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="?android:attr/textColorPrimary" />

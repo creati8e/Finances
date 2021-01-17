@@ -51,4 +51,9 @@
         transition_dashboard_widgets_setup
     </string>
 
+    <string name="transition_name_money_account_editing"
+        translatable="false">
+        transition_name_money_account_editing
+    </string>
+
 </resources>

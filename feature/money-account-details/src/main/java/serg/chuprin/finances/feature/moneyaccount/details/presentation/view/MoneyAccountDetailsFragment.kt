@@ -12,7 +12,6 @@ import kotlinx.android.synthetic.main.fragment_money_account_details.*
 import serg.chuprin.finances.core.api.di.dependencies.findComponentDependencies
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
-import serg.chuprin.finances.feature.moneyaccount.details.presentation.MoneyAccountDetailsNavigation
 import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountDetailsScreenArguments
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.adapter.decoration.CellDividerDecoration
@@ -23,6 +22,7 @@ import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
 import serg.chuprin.finances.core.api.presentation.view.setSharedElementTransitions
 import serg.chuprin.finances.feature.moneyaccount.details.R
 import serg.chuprin.finances.feature.moneyaccount.details.di.MoneyAccountDetailsComponent
+import serg.chuprin.finances.feature.moneyaccount.details.presentation.MoneyAccountDetailsNavigation
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.model.store.MoneyAccountDetailsEvent
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.model.store.MoneyAccountDetailsIntent
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.view.adapter.MoneyAccountDetailsTransactionsAdapter
@@ -93,9 +93,11 @@ class MoneyAccountDetailsFragment : BaseFragment(R.layout.fragment_money_account
         backButton.onClick {
             navController.navigateUp()
         }
-
         favoriteImageView.onClick {
             viewModel.dispatchIntent(MoneyAccountDetailsIntent.ClickOnFavoriteIcon)
+        }
+        settingImageView.onClick {
+            viewModel.dispatchIntent(MoneyAccountDetailsIntent.ClickOnEditingButton)
         }
     }
 
@@ -128,6 +130,13 @@ class MoneyAccountDetailsFragment : BaseFragment(R.layout.fragment_money_account
                     navController,
                     event.screenArguments,
                     sharedElementView
+                )
+            }
+            is MoneyAccountDetailsEvent.NavigateToMoneyAccountEditingScreen -> {
+                navigation.navigateToMoneyAccount(
+                    navController,
+                    event.screenArguments,
+                    settingImageView
                 )
             }
         }

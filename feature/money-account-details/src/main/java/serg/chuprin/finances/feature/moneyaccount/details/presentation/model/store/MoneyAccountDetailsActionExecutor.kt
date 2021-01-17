@@ -2,6 +2,7 @@ package serg.chuprin.finances.feature.moneyaccount.details.presentation.model.st
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.TransactionsGroupedByDay
 import serg.chuprin.finances.core.api.domain.usecase.MarkMoneyAccountAsFavoriteUseCase
 import serg.chuprin.finances.core.api.presentation.builder.TransactionCellBuilder
@@ -11,6 +12,8 @@ import serg.chuprin.finances.core.api.presentation.formatter.DateTimeFormatter
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.cells.DateDividerCell
 import serg.chuprin.finances.core.api.presentation.model.cells.ZeroDataCell
+import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
+import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountScreenArguments
 import serg.chuprin.finances.core.api.presentation.screen.arguments.TransactionScreenArguments
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
@@ -23,6 +26,9 @@ import javax.inject.Inject
  * Created by Sergey Chuprin on 07.05.2020.
  */
 class MoneyAccountDetailsActionExecutor @Inject constructor(
+    // TODO: Change type to Id.
+    private val moneyAccountId: String,
+    private val resourceManger: ResourceManger,
     private val amountFormatter: AmountFormatter,
     private val dateTimeFormatter: DateTimeFormatter,
     private val transactionCellBuilder: TransactionCellBuilder,
@@ -47,8 +53,27 @@ class MoneyAccountDetailsActionExecutor @Inject constructor(
                     is MoneyAccountDetailsIntent.ClickOnTransactionCell -> {
                         handleClickOnTransactionCellIntent(intent, eventConsumer)
                     }
+                    MoneyAccountDetailsIntent.ClickOnEditingButton -> {
+                        handleClickOnEditingButtonIntent(eventConsumer)
+                    }
                 }
             }
+        }
+    }
+
+    private fun handleClickOnEditingButtonIntent(
+        eventConsumer: Consumer<MoneyAccountDetailsEvent>
+    ): Flow<MoneyAccountDetailsEffect> {
+        return emptyFlowAction {
+            val screenArguments = MoneyAccountScreenArguments.Editing(
+                moneyAccountId = Id.existing(moneyAccountId),
+                transitionName = resourceManger.getString(
+                    R.string.transition_name_money_account_editing
+                )
+            )
+            eventConsumer(
+                MoneyAccountDetailsEvent.NavigateToMoneyAccountEditingScreen(screenArguments)
+            )
         }
     }
 
