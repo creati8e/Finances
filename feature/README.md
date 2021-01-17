@@ -1,10 +1,10 @@
 # Multi-module architecture
 
-In general there are 2 gradle modules existing: core modules and feature
+In general there are 2 gradle module types existing: core modules and feature
 modules.
 
 #### Module dependency rules
-Core modules can depends only on other feature modules.
+Core modules can depends only on other core modules.
 * Feature modules can depends only on core modules, or apis of other
   feature modules.
 
@@ -16,8 +16,8 @@ modules).
 
 #### DI for feature modules
 
-Feature dependencies are satisfied via **application**. It contains
-Dagger component with a map of all feature dependencies (multibindings).
+Feature dependencies are satisfied via **application**. Application contains
+Dagger component with a map of all feature dependencies (dagger multibindings).
 
 Each feature module describes their dependencies in interface called
 **MyFeatureDependencies**.  
