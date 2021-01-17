@@ -166,7 +166,7 @@
 
         <fragment
             android:id="@+id/categoriesListFragment"
-            android:name="serg.chuprin.finances.feature.categories.impl.presentation.view.CategoriesListFragment"
+            android:name="serg.chuprin.finances.feature.categories.list.presentation.view.CategoriesListFragment"
             android:label="CategoriesListFragment"
             tools:layout="@layout/fragment_categories_list" />
 
