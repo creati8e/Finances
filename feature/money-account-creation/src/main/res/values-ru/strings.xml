@@ -2,6 +2,7 @@
 <resources>
 
     <string name="money_account_creation_toolbar_title">Создание счета</string>
+    <string name="money_account_editing_toolbar_title">Редактирование счета</string>
     <string name="money_account_creation_menu_create">Создать</string>
     <string name="money_account_creation_hint_name">Название</string>
     <string name="money_account_creation_hint_initial_balance">Начальный баланс</string>

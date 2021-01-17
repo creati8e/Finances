@@ -9,14 +9,12 @@ import java.math.BigDecimal
  */
 sealed class MoneyAccountCreationEffect {
 
-    class CurrencyPickerClickabilityChanged(
-        val isClickable: Boolean
-    ) : MoneyAccountCreationEffect()
-
-    class InitialStateForExistingAccountFormatted(
+    class InitialStateApplied(
         val balance: BigDecimal,
         val accountName: String,
-        val moneyAccountDefaultData: MoneyAccountDefaultData
+        val toolbarTitle: String,
+        val currencyPickerIsClickable: Boolean,
+        val moneyAccountDefaultData: MoneyAccountDefaultData?
     ) : MoneyAccountCreationEffect()
 
     class AccountNameEntered(

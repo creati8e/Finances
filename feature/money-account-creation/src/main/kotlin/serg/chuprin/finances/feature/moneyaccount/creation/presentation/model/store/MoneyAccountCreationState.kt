@@ -11,6 +11,7 @@ import java.math.BigDecimal
  */
 data class MoneyAccountCreationState(
     val balance: BigDecimal? = BigDecimal.ZERO,
+    val toolbarTitle: String = EMPTY_STRING,
     val moneyAccountName: String = EMPTY_STRING,
     val savingButtonIsEnabled: Boolean = false,
     val currencyPickerIsClickable: Boolean = false,

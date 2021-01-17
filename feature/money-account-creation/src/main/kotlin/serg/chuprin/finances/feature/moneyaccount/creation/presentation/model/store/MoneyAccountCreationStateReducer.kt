@@ -38,16 +38,14 @@ class MoneyAccountCreationStateReducer :
                     )
                 )
             }
-            is MoneyAccountCreationEffect.InitialStateForExistingAccountFormatted -> {
+            is MoneyAccountCreationEffect.InitialStateApplied -> {
                 state.copy(
                     balance = what.balance,
-                    currencyPickerIsClickable = false,
                     moneyAccountName = what.accountName,
-                    moneyAccountDefaultData = what.moneyAccountDefaultData
+                    toolbarTitle = what.toolbarTitle,
+                    moneyAccountDefaultData = what.moneyAccountDefaultData,
+                    currencyPickerIsClickable = what.currencyPickerIsClickable
                 )
-            }
-            is MoneyAccountCreationEffect.CurrencyPickerClickabilityChanged -> {
-                state.copy(currencyPickerIsClickable = what.isClickable)
             }
         }
     }

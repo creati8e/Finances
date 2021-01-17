@@ -3,7 +3,6 @@ package serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.s
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceIntent
@@ -52,27 +51,22 @@ class MoneyAccountCreationActionExecutor @Inject constructor(
             is MoneyAccountCreationAction.UpdateCurrencyChoiceState -> {
                 handleUpdateCurrencyChoiceStateAction(action)
             }
-            is MoneyAccountCreationAction.SetInitialStateForExistingAccount -> {
+            is MoneyAccountCreationAction.SetInitialState -> {
                 handleSetInitialStateForExistingAccountAction(action)
-            }
-            MoneyAccountCreationAction.MakeCurrencyPickerClickable -> {
-                handleMakeCurrencyPickerClickableAction()
             }
         }
     }
 
-    private fun handleMakeCurrencyPickerClickableAction(): Flow<MoneyAccountCreationEffect> {
-        return flowOf(MoneyAccountCreationEffect.CurrencyPickerClickabilityChanged(true))
-    }
-
     private fun handleSetInitialStateForExistingAccountAction(
-        action: MoneyAccountCreationAction.SetInitialStateForExistingAccount
+        action: MoneyAccountCreationAction.SetInitialState
     ): Flow<MoneyAccountCreationEffect> {
         return flowOfSingleValue {
-            MoneyAccountCreationEffect.InitialStateForExistingAccountFormatted(
+            MoneyAccountCreationEffect.InitialStateApplied(
                 balance = action.balance,
                 accountName = action.accountName,
-                moneyAccountDefaultData = action.moneyAccountDefaultData
+                toolbarTitle = action.toolbarTitle,
+                moneyAccountDefaultData = action.moneyAccountDefaultData,
+                currencyPickerIsClickable = action.currencyPickerIsClickable
             )
         }
     }
