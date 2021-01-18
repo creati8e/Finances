@@ -37,7 +37,10 @@ open class BaseStateStore<I, SE, A, S, E>(
     protected val actionExecutor: StoreActionExecutor<A, S, SE, E>,
     protected val intentToActionMapper: StoreIntentToActionMapper<I, A>,
     protected val backgroundDispatcher: CoroutineDispatcher = Dispatchers.Default,
-    protected val reducerDispatcher: CoroutineDispatcher = newSingleThreadContext("Reducer thread")
+    protected val reducerDispatcher: CoroutineDispatcher =
+        newSingleThreadContext("Reducer coroutine context"),
+    protected val bootstrapperDispatcher: CoroutineDispatcher =
+        newSingleThreadContext("Bootstrapper coroutine context")
 ) : StateStore<I, S, E> {
 
     override val state: S
@@ -88,7 +91,7 @@ open class BaseStateStore<I, SE, A, S, E>(
     private suspend fun bootstrap(coroutineScope: CoroutineScope) {
         coroutineScope.launch(CoroutineName("Bootstrapper coroutine")) {
             bootstrapper()
-                .flowOn(backgroundDispatcher)
+                .flowOn(bootstrapperDispatcher)
                 .collect { action ->
                     ensureActive()
                     actionsChannel.send(action)

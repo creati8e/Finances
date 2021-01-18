@@ -36,6 +36,7 @@ open class TestStoreImpl<I, SE, A, S, E>(
     initialState = initialState,
     bootstrapper = bootstrapper,
     reducerDispatcher = TestCoroutineDispatcher(),
+    bootstrapperDispatcher = TestCoroutineDispatcher(),
     backgroundDispatcher = TestCoroutineDispatcher(),
     intentToActionMapper = intentToActionMapper
 ), TestStore<I, S, E> {

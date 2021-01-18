@@ -40,7 +40,8 @@ abstract class AbsStoreFactory<I, SE, A, S, E, STORE : BaseStore<I, S, E>>(
             bootstrapper = bootstrapper,
             intentToActionMapper = intentToActionMapper,
             backgroundDispatcher = Dispatchers.Default,
-            reducerDispatcher = newSingleThreadContext("Reducer")
+            reducerDispatcher = newSingleThreadContext("Reducer coroutine context"),
+            bootstrapperDispatcher = newSingleThreadContext("Bootstrapper coroutine context")
         ) {}
     }
 
