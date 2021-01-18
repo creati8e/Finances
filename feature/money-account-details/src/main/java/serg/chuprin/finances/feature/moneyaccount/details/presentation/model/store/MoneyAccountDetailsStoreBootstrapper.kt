@@ -18,9 +18,7 @@ class MoneyAccountDetailsStoreBootstrapper @Inject constructor(
     override fun invoke(): Flow<MoneyAccountDetailsAction> {
         return getMoneyAccountDetailsUseCase
             .execute(Id.existing(moneyAccountId))
-            .map { moneyAccountDetails ->
-                MoneyAccountDetailsAction.FormatDetails(moneyAccountDetails)
-            }
+            .map(MoneyAccountDetailsAction::FormatDetails)
     }
 
 }

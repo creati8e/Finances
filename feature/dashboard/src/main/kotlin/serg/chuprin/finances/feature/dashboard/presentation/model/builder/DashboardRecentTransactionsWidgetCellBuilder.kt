@@ -35,11 +35,12 @@ class DashboardRecentTransactionsWidgetCellBuilder @Inject constructor(
         if (transactionToCategory.isEmpty()) {
             return listOf(DashboardRecentTransactionsZeroDataCell())
         }
-        return transactionToCategory.map { (transaction, categoryWithParent) ->
+        return transactionToCategory.mapNotNull { (transaction, categoryWithParent) ->
+            val moneyAccount = moneyAccounts[transaction.moneyAccountId] ?: return@mapNotNull null
             transactionCellBuilder.build(
                 transaction = transaction,
+                moneyAccount = moneyAccount,
                 categoryWithParent = categoryWithParent,
-                moneyAccount = moneyAccounts.getValue(transaction.moneyAccountId),
                 dateTimeFormattingMode = TransactionCellBuilder.DateTimeFormattingMode.DATE_AND_TIME
             )
         }

@@ -8,11 +8,13 @@ import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceIntent
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStore
 import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
+import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountScreenArguments
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
 import serg.chuprin.finances.core.mvi.invoke
 import serg.chuprin.finances.feature.moneyaccount.creation.domain.usecase.CreateMoneyAccountUseCase
+import serg.chuprin.finances.feature.moneyaccount.creation.domain.usecase.DeleteMoneyAccountUseCase
 import javax.inject.Inject
 
 /**
@@ -22,7 +24,9 @@ import javax.inject.Inject
 class MoneyAccountCreationActionExecutor @Inject constructor(
     private val amountParser: AmountParser,
     private val currencyChoiceStore: CurrencyChoiceStore,
-    private val createMoneyAccountUseCase: CreateMoneyAccountUseCase
+    private val screenArguments: MoneyAccountScreenArguments,
+    private val createMoneyAccountUseCase: CreateMoneyAccountUseCase,
+    private val deleteMoneyAccountUseCase: DeleteMoneyAccountUseCase
 ) : StoreActionExecutor<MoneyAccountCreationAction, MoneyAccountCreationState, MoneyAccountCreationEffect, MoneyAccountCreationEvent> {
 
     override fun invoke(
@@ -50,7 +54,7 @@ class MoneyAccountCreationActionExecutor @Inject constructor(
                         handleClickOnDeleteButtonIntent(eventConsumer)
                     }
                     MoneyAccountCreationIntent.ClickOnConfirmAccountDeletion -> {
-                        handleClickOnConfirmAccountDeletionIntent()
+                        handleClickOnConfirmAccountDeletionIntent(eventConsumer)
                     }
                 }
             }
@@ -63,8 +67,16 @@ class MoneyAccountCreationActionExecutor @Inject constructor(
         }
     }
 
-    private fun handleClickOnConfirmAccountDeletionIntent(): Flow<MoneyAccountCreationEffect> {
-        TODO("Not yet implemented")
+    private fun handleClickOnConfirmAccountDeletionIntent(
+        eventConsumer: Consumer<MoneyAccountCreationEvent>
+    ): Flow<MoneyAccountCreationEffect> {
+        if (screenArguments !is MoneyAccountScreenArguments.Editing) {
+            return emptyFlow()
+        }
+        return flow {
+            deleteMoneyAccountUseCase.execute(moneyAccountId = screenArguments.moneyAccountId)
+            eventConsumer(MoneyAccountCreationEvent.CloseScreen)
+        }
     }
 
     private fun handleClickOnDeleteButtonIntent(
