@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.moneyaccount.creation.domain.usecase
+package serg.chuprin.finances.feature.moneyaccount.domain.usecase
 
 import serg.chuprin.finances.core.api.domain.model.Id
 import serg.chuprin.finances.core.api.domain.model.category.query.CategoriesQuery

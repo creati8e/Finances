@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.moneyaccount.creation.di
+package serg.chuprin.finances.feature.moneyaccount.di
 
 import dagger.BindsInstance
 import dagger.Component
@@ -6,8 +6,8 @@ import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.InjectableComponent
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.ViewModelComponent
 import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountScreenArguments
-import serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.viewmodel.MoneyAccountCreationViewModel
-import serg.chuprin.finances.feature.moneyaccount.creation.presentation.view.MoneyAccountCreationFragment
+import serg.chuprin.finances.feature.moneyaccount.presentation.model.viewmodel.MoneyAccountCreationViewModel
+import serg.chuprin.finances.feature.moneyaccount.presentation.view.MoneyAccountCreationFragment
 
 /**
  * Created by Sergey Chuprin on 01.06.2020.

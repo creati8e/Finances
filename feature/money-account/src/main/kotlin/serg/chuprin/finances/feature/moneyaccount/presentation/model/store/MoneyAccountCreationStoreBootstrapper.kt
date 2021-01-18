@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.store
+package serg.chuprin.finances.feature.moneyaccount.presentation.model.store
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -13,7 +13,7 @@ import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountScreenArguments
 import serg.chuprin.finances.core.mvi.bootstrapper.StoreBootstrapper
 import serg.chuprin.finances.feature.moneyaccount.creation.R
-import serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.MoneyAccountDefaultData
+import serg.chuprin.finances.feature.moneyaccount.presentation.model.MoneyAccountDefaultData
 import java.math.BigDecimal
 import javax.inject.Inject
 

@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.moneyaccount.creation.di
+package serg.chuprin.finances.feature.moneyaccount.di
 
 import dagger.Binds
 import dagger.Module
@@ -7,7 +7,7 @@ import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStore
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStoreBootstrapper
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStoreProvider
-import serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.CurrencyChoiceStoreBootstrapperImpl
+import serg.chuprin.finances.feature.moneyaccount.presentation.model.CurrencyChoiceStoreBootstrapperImpl
 
 /**
  * Created by Sergey Chuprin on 03.07.2020.

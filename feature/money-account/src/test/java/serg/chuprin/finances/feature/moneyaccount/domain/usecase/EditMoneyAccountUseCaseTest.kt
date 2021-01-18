@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.moneyaccount.creation.domain.usecase
+package serg.chuprin.finances.feature.moneyaccount.domain.usecase
 
 import io.mockk.*
 import kotlinx.coroutines.flow.flowOf
@@ -12,6 +12,7 @@ import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.model.transaction.TransactionType
 import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
+import serg.chuprin.finances.feature.moneyaccount.domain.usecase.EditMoneyAccountUseCase
 import strikt.api.expectThat
 import strikt.assertions.isEqualTo
 import strikt.assertions.isNotNull

@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.moneyaccount.creation.presentation.model
+package serg.chuprin.finances.feature.moneyaccount.presentation.model
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first

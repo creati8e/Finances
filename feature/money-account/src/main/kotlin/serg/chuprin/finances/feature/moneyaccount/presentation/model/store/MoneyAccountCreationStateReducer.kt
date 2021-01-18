@@ -1,7 +1,7 @@
-package serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.store
+package serg.chuprin.finances.feature.moneyaccount.presentation.model.store
 
 import serg.chuprin.finances.core.mvi.reducer.StoreStateReducer
-import serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.MoneyAccountDefaultData
+import serg.chuprin.finances.feature.moneyaccount.presentation.model.MoneyAccountDefaultData
 import java.math.BigDecimal
 
 /**

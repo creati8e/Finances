@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.moneyaccount.creation.di
+package serg.chuprin.finances.feature.moneyaccount.di
 
 import serg.chuprin.finances.core.api.di.dependencies.FeatureDependencies
 import serg.chuprin.finances.core.api.domain.MoneyAccountBalanceCalculator

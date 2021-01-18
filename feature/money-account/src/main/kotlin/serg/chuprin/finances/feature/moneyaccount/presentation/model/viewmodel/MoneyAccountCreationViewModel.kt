@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.viewmodel
+package serg.chuprin.finances.feature.moneyaccount.presentation.model.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
@@ -7,10 +7,10 @@ import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStoreIntentDispatcher
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.BaseStoreViewModel
-import serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.store.MoneyAccountCreationEvent
-import serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.store.MoneyAccountCreationIntent
-import serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.store.MoneyAccountCreationState
-import serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.store.MoneyAccountCreationStore
+import serg.chuprin.finances.feature.moneyaccount.presentation.model.store.MoneyAccountCreationEvent
+import serg.chuprin.finances.feature.moneyaccount.presentation.model.store.MoneyAccountCreationIntent
+import serg.chuprin.finances.feature.moneyaccount.presentation.model.store.MoneyAccountCreationState
+import serg.chuprin.finances.feature.moneyaccount.presentation.model.store.MoneyAccountCreationStore
 import java.math.BigDecimal
 import java.util.*
 import javax.inject.Inject

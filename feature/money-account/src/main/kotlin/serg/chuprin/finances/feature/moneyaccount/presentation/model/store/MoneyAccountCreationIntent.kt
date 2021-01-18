@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.store
+package serg.chuprin.finances.feature.moneyaccount.presentation.model.store
 
 /**
  * Created by Sergey Chuprin on 01.06.2020.

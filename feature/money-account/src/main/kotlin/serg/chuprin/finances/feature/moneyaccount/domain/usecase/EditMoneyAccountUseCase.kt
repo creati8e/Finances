@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.moneyaccount.creation.domain.usecase
+package serg.chuprin.finances.feature.moneyaccount.domain.usecase
 
 import com.github.ajalt.timberkt.Timber
 import kotlinx.coroutines.flow.firstOrNull

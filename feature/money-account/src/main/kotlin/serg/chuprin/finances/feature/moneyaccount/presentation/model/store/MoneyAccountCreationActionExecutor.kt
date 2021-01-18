@@ -1,4 +1,4 @@
-package serg.chuprin.finances.feature.moneyaccount.creation.presentation.model.store
+package serg.chuprin.finances.feature.moneyaccount.presentation.model.store
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
@@ -15,9 +15,9 @@ import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
 import serg.chuprin.finances.core.mvi.invoke
 import serg.chuprin.finances.feature.moneyaccount.creation.R
-import serg.chuprin.finances.feature.moneyaccount.creation.domain.usecase.CreateMoneyAccountUseCase
-import serg.chuprin.finances.feature.moneyaccount.creation.domain.usecase.DeleteMoneyAccountUseCase
-import serg.chuprin.finances.feature.moneyaccount.creation.domain.usecase.EditMoneyAccountUseCase
+import serg.chuprin.finances.feature.moneyaccount.domain.usecase.CreateMoneyAccountUseCase
+import serg.chuprin.finances.feature.moneyaccount.domain.usecase.DeleteMoneyAccountUseCase
+import serg.chuprin.finances.feature.moneyaccount.domain.usecase.EditMoneyAccountUseCase
 import javax.inject.Inject
 
 /**
