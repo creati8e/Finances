@@ -4,11 +4,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
-import serg.chuprin.finances.core.api.domain.TransactionAmountCalculator
+import serg.chuprin.finances.core.api.domain.MoneyAccountBalanceCalculator
 import serg.chuprin.finances.core.api.domain.model.Id
-import serg.chuprin.finances.core.api.domain.model.transaction.query.TransactionsQuery
 import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
-import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
 import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
@@ -25,10 +23,9 @@ import javax.inject.Inject
 @ScreenScope
 class MoneyAccountCreationStoreBootstrapper @Inject constructor(
     private val resourceManger: ResourceManger,
-    private val transactionRepository: TransactionRepository,
     private val screenArguments: MoneyAccountScreenArguments,
     private val moneyAccountRepository: MoneyAccountRepository,
-    private val transactionAmountCalculator: TransactionAmountCalculator
+    private val moneyAccountBalanceCalculator: MoneyAccountBalanceCalculator
 ) : StoreBootstrapper<MoneyAccountCreationAction> {
 
     override fun invoke(): Flow<MoneyAccountCreationAction> {
@@ -39,9 +36,7 @@ class MoneyAccountCreationStoreBootstrapper @Inject constructor(
                 }
             }
             is MoneyAccountScreenArguments.Creation -> {
-                flowOf(
-                    buildActionForAccountCreation()
-                )
+                flowOf(buildActionForAccountCreation())
             }
         }
     }
@@ -60,9 +55,8 @@ class MoneyAccountCreationStoreBootstrapper @Inject constructor(
     private suspend fun buildActionForExistingMoneyAccount(
         accountId: Id
     ): MoneyAccountCreationAction.SetInitialState {
-        // TODO: Create abstraction for calculation account balance.
         val account = moneyAccountRepository.accountFlow(accountId).first()!!
-        val balance = calculateAccountBalance(accountId)
+        val balance = moneyAccountBalanceCalculator.calculate(accountId)
         return MoneyAccountCreationAction.SetInitialState(
             balance = balance,
             accountName = account.name,
@@ -70,16 +64,6 @@ class MoneyAccountCreationStoreBootstrapper @Inject constructor(
             accountDeletionButtonIsVisible = true,
             moneyAccountDefaultData = MoneyAccountDefaultData(balance, account.name),
             toolbarTitle = resourceManger.getString(R.string.money_account_editing_toolbar_title)
-        )
-    }
-
-    private suspend fun calculateAccountBalance(accountId: Id): BigDecimal {
-        val transactions = transactionRepository.transactions(
-            TransactionsQuery(moneyAccountIds = setOf(accountId))
-        )
-        return transactionAmountCalculator.calculate(
-            transactions,
-            isAbsoluteAmount = false
         )
     }
 
