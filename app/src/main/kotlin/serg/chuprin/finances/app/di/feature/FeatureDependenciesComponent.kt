@@ -10,7 +10,6 @@ import serg.chuprin.finances.core.api.di.dependencies.FeatureDependencies
 import serg.chuprin.finances.core.api.di.dependencies.HasFeatureDependencies
 import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
 import serg.chuprin.finances.core.api.di.scopes.AppScope
-import serg.chuprin.finances.core.impl.di.dependencies.FeatureDependenciesKey
 import serg.chuprin.finances.feature.authorization.di.AuthorizationDependencies
 import serg.chuprin.finances.feature.categories.list.di.CategoriesListDependencies
 import serg.chuprin.finances.feature.dashboard.di.DashboardDependencies
