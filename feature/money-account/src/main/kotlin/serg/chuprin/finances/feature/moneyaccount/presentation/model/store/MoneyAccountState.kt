@@ -9,7 +9,7 @@ import java.math.BigDecimal
 /**
  * Created by Sergey Chuprin on 01.06.2020.
  */
-data class MoneyAccountCreationState(
+data class MoneyAccountState(
     val balance: BigDecimal? = BigDecimal.ZERO,
     val toolbarTitle: String = EMPTY_STRING,
     val moneyAccountName: String = EMPTY_STRING,

@@ -6,14 +6,14 @@
         transition_money_accounts_list_content
     </string>
 
-    <string name="transition_money_account"
+    <string name="transition_money_account_details"
         translatable="false">
         transition_money_account
     </string>
 
-    <string name="transition_money_account_creation"
+    <string name="transition_money_account"
         translatable="false">
-        transition_money_account_creation
+        transition_money_account
     </string>
 
     <string name="transition_dashboard_to_transactions_report_income"

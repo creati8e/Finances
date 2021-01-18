@@ -7,10 +7,10 @@ import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStoreIntentDispatcher
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.BaseStoreViewModel
-import serg.chuprin.finances.feature.moneyaccount.presentation.model.store.MoneyAccountCreationEvent
-import serg.chuprin.finances.feature.moneyaccount.presentation.model.store.MoneyAccountCreationIntent
-import serg.chuprin.finances.feature.moneyaccount.presentation.model.store.MoneyAccountCreationState
-import serg.chuprin.finances.feature.moneyaccount.presentation.model.store.MoneyAccountCreationStore
+import serg.chuprin.finances.feature.moneyaccount.presentation.model.store.MoneyAccountEvent
+import serg.chuprin.finances.feature.moneyaccount.presentation.model.store.MoneyAccountIntent
+import serg.chuprin.finances.feature.moneyaccount.presentation.model.store.MoneyAccountState
+import serg.chuprin.finances.feature.moneyaccount.presentation.model.store.MoneyAccountStore
 import java.math.BigDecimal
 import java.util.*
 import javax.inject.Inject
@@ -19,28 +19,28 @@ import javax.inject.Inject
  * Created by Sergey Chuprin on 01.06.2020.
  */
 @ScreenScope
-class MoneyAccountCreationViewModel @Inject constructor(
-    private val store: MoneyAccountCreationStore
-) : BaseStoreViewModel<MoneyAccountCreationIntent>(),
+class MoneyAccountViewModel @Inject constructor(
+    private val store: MoneyAccountStore
+) : BaseStoreViewModel<MoneyAccountIntent>(),
     CurrencyChoiceStoreIntentDispatcher by store {
 
     val currency: Currency?
         get() = store.state.chosenCurrency
 
     val currencyPickerIsClickableLiveData: LiveData<Boolean> =
-        store.observeParticularStateAsLiveData(MoneyAccountCreationState::currencyPickerIsClickable)
+        store.observeParticularStateAsLiveData(MoneyAccountState::currencyPickerIsClickable)
 
     val accountDeletionButtonVisibilityLiveData: LiveData<Boolean> =
-        store.observeParticularStateAsLiveData(MoneyAccountCreationState::accountDeletionButtonIsVisible)
+        store.observeParticularStateAsLiveData(MoneyAccountState::accountDeletionButtonIsVisible)
 
     val toolbarTitleLiveData: LiveData<String> =
-        store.observeParticularStateAsLiveData(MoneyAccountCreationState::toolbarTitle)
+        store.observeParticularStateAsLiveData(MoneyAccountState::toolbarTitle)
 
     val currencyCellsLiveData: LiveData<List<BaseCell>> =
-        store.observeParticularStateAsLiveData(MoneyAccountCreationState::currentCells)
+        store.observeParticularStateAsLiveData(MoneyAccountState::currentCells)
 
     val accountNameLiveData: LiveData<String> =
-        store.observeParticularStateAsLiveData(MoneyAccountCreationState::moneyAccountName)
+        store.observeParticularStateAsLiveData(MoneyAccountState::moneyAccountName)
 
     val balanceStateLiveData: LiveData<BigDecimal> = store
         .stateFlow
@@ -48,15 +48,15 @@ class MoneyAccountCreationViewModel @Inject constructor(
         .asLiveData()
 
     val savingButtonIsEnabledLiveData: LiveData<Boolean> =
-        store.observeParticularStateAsLiveData(MoneyAccountCreationState::savingButtonIsEnabled)
+        store.observeParticularStateAsLiveData(MoneyAccountState::savingButtonIsEnabled)
 
     val chosenCurrencyDisplayNameLiveData: LiveData<String> =
-        store.observeParticularStateAsLiveData(MoneyAccountCreationState::chosenCurrencyDisplayName)
+        store.observeParticularStateAsLiveData(MoneyAccountState::chosenCurrencyDisplayName)
 
     val currencyPickerVisibilityLiveData =
-        store.observeParticularStateAsLiveData(MoneyAccountCreationState::currencyPickerIsVisible)
+        store.observeParticularStateAsLiveData(MoneyAccountState::currencyPickerIsVisible)
 
-    val eventLiveData: LiveData<MoneyAccountCreationEvent> = store.observeEventsAsLiveData()
+    val eventLiveData: LiveData<MoneyAccountEvent> = store.observeEventsAsLiveData()
 
     val savingButtonIsEnabled: Boolean
         get() = store.state.savingButtonIsEnabled

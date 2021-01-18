@@ -15,7 +15,7 @@ import serg.chuprin.finances.feature.categories.list.di.CategoriesListDependenci
 import serg.chuprin.finances.feature.dashboard.di.DashboardDependencies
 import serg.chuprin.finances.feature.dashboard.setup.impl.di.DashboardWidgetsSetupComponent
 import serg.chuprin.finances.feature.dashboard.setup.impl.di.DashboardWidgetsSetupDependencies
-import serg.chuprin.finances.feature.moneyaccount.di.MoneyAccountCreationDependencies
+import serg.chuprin.finances.feature.moneyaccount.di.MoneyAccountDependencies
 import serg.chuprin.finances.feature.moneyaccount.details.di.MoneyAccountDetailsDependencies
 import serg.chuprin.finances.feature.moneyaccounts.di.MoneyAccountsListDependencies
 import serg.chuprin.finances.feature.onboarding.di.OnboardingFeatureDependencies
@@ -96,12 +96,12 @@ object FeatureDependenciesModule {
             .build()
     }
 
-    @[Provides IntoMap FeatureDependenciesKey(MoneyAccountCreationDependencies::class)]
+    @[Provides IntoMap FeatureDependenciesKey(MoneyAccountDependencies::class)]
     fun provideMoneyAccountCreationDependencies(
         coreDependencies: CoreDependenciesProvider,
         navigationProvider: AppNavigationProvider
     ): FeatureDependencies {
-        return DaggerMoneyAccountCreationDependenciesComponent
+        return DaggerMoneyAccountDependenciesComponent
             .builder()
             .coreDependenciesProvider(coreDependencies)
             .appNavigationProvider(navigationProvider)

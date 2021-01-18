@@ -7,7 +7,7 @@ import java.math.BigDecimal
 /**
  * Created by Sergey Chuprin on 01.06.2020.
  */
-sealed class MoneyAccountCreationAction {
+sealed class MoneyAccountAction {
 
     class SetInitialState(
         val accountName: String,
@@ -16,14 +16,14 @@ sealed class MoneyAccountCreationAction {
         val currencyPickerIsClickable: Boolean,
         val accountDeletionButtonIsVisible: Boolean,
         val moneyAccountDefaultData: MoneyAccountDefaultData?
-    ) : MoneyAccountCreationAction()
+    ) : MoneyAccountAction()
 
     class UpdateCurrencyChoiceState(
         val state: CurrencyChoiceState
-    ) : MoneyAccountCreationAction()
+    ) : MoneyAccountAction()
 
     class ExecuteIntent(
-        val intent: MoneyAccountCreationIntent
-    ) : MoneyAccountCreationAction()
+        val intent: MoneyAccountIntent
+    ) : MoneyAccountAction()
 
 }

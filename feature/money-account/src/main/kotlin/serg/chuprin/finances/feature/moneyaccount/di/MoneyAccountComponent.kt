@@ -6,27 +6,27 @@ import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.InjectableComponent
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.ViewModelComponent
 import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountScreenArguments
-import serg.chuprin.finances.feature.moneyaccount.presentation.model.viewmodel.MoneyAccountCreationViewModel
-import serg.chuprin.finances.feature.moneyaccount.presentation.view.MoneyAccountCreationFragment
+import serg.chuprin.finances.feature.moneyaccount.presentation.model.viewmodel.MoneyAccountViewModel
+import serg.chuprin.finances.feature.moneyaccount.presentation.view.MoneyAccountFragment
 
 /**
  * Created by Sergey Chuprin on 01.06.2020.
  */
 @[ScreenScope Component(
-    modules = [MoneyAccountCreationModule::class],
-    dependencies = [MoneyAccountCreationDependencies::class]
+    modules = [MoneyAccountModule::class],
+    dependencies = [MoneyAccountDependencies::class]
 )]
-interface MoneyAccountCreationComponent :
-    ViewModelComponent<MoneyAccountCreationViewModel>,
-    InjectableComponent<MoneyAccountCreationFragment> {
+interface MoneyAccountComponent :
+    ViewModelComponent<MoneyAccountViewModel>,
+    InjectableComponent<MoneyAccountFragment> {
 
     companion object {
 
         fun get(
             screenArguments: MoneyAccountScreenArguments,
-            dependencies: MoneyAccountCreationDependencies
-        ): MoneyAccountCreationComponent {
-            return DaggerMoneyAccountCreationComponent
+            dependencies: MoneyAccountDependencies
+        ): MoneyAccountComponent {
+            return DaggerMoneyAccountComponent
                 .factory()
                 .newComponent(dependencies, screenArguments)
         }
@@ -37,10 +37,10 @@ interface MoneyAccountCreationComponent :
     interface Factory {
 
         fun newComponent(
-            dependencies: MoneyAccountCreationDependencies,
+            dependencies: MoneyAccountDependencies,
             @BindsInstance
             screenArguments: MoneyAccountScreenArguments
-        ): MoneyAccountCreationComponent
+        ): MoneyAccountComponent
 
     }
 

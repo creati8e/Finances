@@ -15,7 +15,7 @@ interface DashboardNavigation {
         sharedElementView: View
     )
 
-    fun navigateToMoneyAccountCreation(
+    fun navigateToMoneyAccount(
         navController: NavController,
         screenArguments: MoneyAccountScreenArguments,
         vararg sharedElementView: View

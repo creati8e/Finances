@@ -299,7 +299,7 @@ class DashboardActionExecutor @Inject constructor(
         titleRes = R.string.dashboard_no_money_accounts_zero_data_title,
         buttonRes = R.string.dashboard_no_money_accounts_zero_data_button,
         buttonTransitionName = resourceManger.getString(
-            CoreR.string.transition_money_account_creation
+            CoreR.string.transition_money_account
         )
     )
 

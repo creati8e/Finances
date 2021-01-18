@@ -113,7 +113,7 @@ class MoneyAccountsListFragment : BaseFragment(R.layout.fragment_money_accounts_
             }
             MoneyAccountsListEvent.NavigateToMoneyAccountCreationScreen -> {
                 val sharedElementView = accountCreationFab
-                navigation.navigateToMoneyAccountCreation(navController, sharedElementView)
+                navigation.navigateToMoneyAccount(navController, sharedElementView)
             }
             is MoneyAccountsListEvent.ChooseMoneyAccountAndCloseScreen -> {
                 val moneyAccountId = event.moneyAccountId.value

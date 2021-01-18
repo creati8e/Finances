@@ -9,7 +9,7 @@ import androidx.activity.addCallback
 import androidx.core.widget.doAfterTextChanged
 import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
-import kotlinx.android.synthetic.main.fragment_money_account_creation.*
+import kotlinx.android.synthetic.main.fragment_money_account.*
 import serg.chuprin.finances.core.api.di.dependencies.findComponentDependencies
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceIntent
 import serg.chuprin.finances.core.api.presentation.currencychoice.view.CurrencyChoiceListController
@@ -32,16 +32,16 @@ import serg.chuprin.finances.core.api.presentation.view.extensions.shouldIgnoreC
 import serg.chuprin.finances.core.api.presentation.view.menuConfig
 import serg.chuprin.finances.core.api.presentation.view.setSharedElementTransitions
 import serg.chuprin.finances.feature.moneyaccount.creation.R
-import serg.chuprin.finances.feature.moneyaccount.di.MoneyAccountCreationComponent
-import serg.chuprin.finances.feature.moneyaccount.presentation.model.store.MoneyAccountCreationEvent
-import serg.chuprin.finances.feature.moneyaccount.presentation.model.store.MoneyAccountCreationIntent
+import serg.chuprin.finances.feature.moneyaccount.di.MoneyAccountComponent
+import serg.chuprin.finances.feature.moneyaccount.presentation.model.store.MoneyAccountEvent
+import serg.chuprin.finances.feature.moneyaccount.presentation.model.store.MoneyAccountIntent
 import javax.inject.Inject
 
 /**
  * Created by Sergey Chuprin on 10.05.2020.
  */
-class MoneyAccountCreationFragment :
-    BaseFragment(R.layout.fragment_money_account_creation),
+class MoneyAccountFragment :
+    BaseFragment(R.layout.fragment_money_account),
     InfoDialogFragment.Callback {
 
     private companion object {
@@ -54,7 +54,7 @@ class MoneyAccountCreationFragment :
     private val viewModel by viewModelFromComponent { component }
 
     private val component by component {
-        MoneyAccountCreationComponent.get(screenArguments, findComponentDependencies())
+        MoneyAccountComponent.get(screenArguments, findComponentDependencies())
     }
 
     private val currencyChoiceListController
@@ -75,7 +75,7 @@ class MoneyAccountCreationFragment :
         super.onCreate(savedInstanceState)
         setSharedElementTransitions()
         requireActivity().onBackPressedDispatcher.addCallback(this) {
-            viewModel.dispatchIntent(MoneyAccountCreationIntent.BackPress)
+            viewModel.dispatchIntent(MoneyAccountIntent.BackPress)
         }
     }
 
@@ -93,7 +93,7 @@ class MoneyAccountCreationFragment :
         }
 
         deleteAccountButton.onClick {
-            viewModel.dispatchIntent(MoneyAccountCreationIntent.ClickOnDeleteButton)
+            viewModel.dispatchIntent(MoneyAccountIntent.ClickOnDeleteButton)
         }
 
         view.transitionName = screenArguments.transitionName
@@ -136,14 +136,14 @@ class MoneyAccountCreationFragment :
             // Check if this event is not self-change.
             if (!balanceEditText.shouldIgnoreChanges) {
                 val enteredBalance = editable?.toString().orEmpty()
-                viewModel.dispatchIntent(MoneyAccountCreationIntent.EnterBalance(enteredBalance))
+                viewModel.dispatchIntent(MoneyAccountIntent.EnterBalance(enteredBalance))
             }
         }
         accountNameEditTextTextWatcher = accountNameEditText.doAfterTextChanged { editable ->
             // Check if this event is not self-change.
             if (!accountNameEditText.shouldIgnoreChanges) {
                 val enteredName = editable?.toString().orEmpty()
-                viewModel.dispatchIntent(MoneyAccountCreationIntent.EnterAccountName(enteredName))
+                viewModel.dispatchIntent(MoneyAccountIntent.EnterAccountName(enteredName))
             }
         }
     }
@@ -169,7 +169,7 @@ class MoneyAccountCreationFragment :
             addMenu(R.menu.menu_money_account_creation)
             addMenuItemListener { menuItem ->
                 if (menuItem.itemId == R.id.menu_action_save) {
-                    viewModel.dispatchIntent(MoneyAccountCreationIntent.ClickOnSaveButton)
+                    viewModel.dispatchIntent(MoneyAccountIntent.ClickOnSaveButton)
                 }
             }
             addPrepareMenuListener { menu ->
@@ -180,20 +180,20 @@ class MoneyAccountCreationFragment :
 
     override fun onInfoDialogPositiveButtonClick(requestCode: Int) {
         if (requestCode == RC_ACCOUNT_DELETION) {
-            viewModel.dispatchIntent(MoneyAccountCreationIntent.ClickOnConfirmAccountDeletion)
+            viewModel.dispatchIntent(MoneyAccountIntent.ClickOnConfirmAccountDeletion)
         }
     }
 
-    private fun handleEvent(event: MoneyAccountCreationEvent) {
+    private fun handleEvent(event: MoneyAccountEvent) {
         return when (event) {
-            MoneyAccountCreationEvent.CloseScreen -> {
+            MoneyAccountEvent.CloseScreen -> {
                 navController.navigateUp()
                 Unit
             }
-            is MoneyAccountCreationEvent.ShowMessage -> {
+            is MoneyAccountEvent.ShowMessage -> {
                 shortToast(event.message)
             }
-            MoneyAccountCreationEvent.ShowAccountDeletionDialog -> {
+            MoneyAccountEvent.ShowAccountDeletionDialog -> {
                 showInfoDialog(
                     title = R.string.money_account_deletion_dialog_title,
                     message = R.string.money_account_deletion_dialog_message,

@@ -24,7 +24,7 @@ import javax.inject.Inject
  * Created by Sergey Chuprin on 01.06.2020.
  */
 @ScreenScope
-class MoneyAccountCreationActionExecutor @Inject constructor(
+class MoneyAccountActionExecutor @Inject constructor(
     private val amountParser: AmountParser,
     private val resourceManger: ResourceManger,
     private val currencyChoiceStore: CurrencyChoiceStore,
@@ -32,71 +32,71 @@ class MoneyAccountCreationActionExecutor @Inject constructor(
     private val editMoneyAccountUseCase: EditMoneyAccountUseCase,
     private val createMoneyAccountUseCase: CreateMoneyAccountUseCase,
     private val deleteMoneyAccountUseCase: DeleteMoneyAccountUseCase
-) : StoreActionExecutor<MoneyAccountCreationAction, MoneyAccountCreationState, MoneyAccountCreationEffect, MoneyAccountCreationEvent> {
+) : StoreActionExecutor<MoneyAccountAction, MoneyAccountState, MoneyAccountEffect, MoneyAccountEvent> {
 
     override fun invoke(
-        action: MoneyAccountCreationAction,
-        state: MoneyAccountCreationState,
-        eventConsumer: Consumer<MoneyAccountCreationEvent>,
-        actionsFlow: Flow<MoneyAccountCreationAction>
-    ): Flow<MoneyAccountCreationEffect> {
+        action: MoneyAccountAction,
+        state: MoneyAccountState,
+        eventConsumer: Consumer<MoneyAccountEvent>,
+        actionsFlow: Flow<MoneyAccountAction>
+    ): Flow<MoneyAccountEffect> {
         return when (action) {
-            is MoneyAccountCreationAction.ExecuteIntent -> {
+            is MoneyAccountAction.ExecuteIntent -> {
                 when (val intent = action.intent) {
-                    MoneyAccountCreationIntent.BackPress -> {
+                    MoneyAccountIntent.BackPress -> {
                         handleBackPressIntent(state, eventConsumer)
                     }
-                    MoneyAccountCreationIntent.ClickOnSaveButton -> {
+                    MoneyAccountIntent.ClickOnSaveButton -> {
                         handleClickOnSaveButtonIntent(state, eventConsumer)
                     }
-                    is MoneyAccountCreationIntent.EnterAccountName -> {
+                    is MoneyAccountIntent.EnterAccountName -> {
                         handleEnterTitleIntent(intent)
                     }
-                    is MoneyAccountCreationIntent.EnterBalance -> {
+                    is MoneyAccountIntent.EnterBalance -> {
                         handleEnterAmountIntent(intent)
                     }
-                    MoneyAccountCreationIntent.ClickOnDeleteButton -> {
+                    MoneyAccountIntent.ClickOnDeleteButton -> {
                         handleClickOnDeleteButtonIntent(eventConsumer)
                     }
-                    MoneyAccountCreationIntent.ClickOnConfirmAccountDeletion -> {
+                    MoneyAccountIntent.ClickOnConfirmAccountDeletion -> {
                         handleClickOnConfirmAccountDeletionIntent(eventConsumer)
                     }
                 }
             }
-            is MoneyAccountCreationAction.UpdateCurrencyChoiceState -> {
+            is MoneyAccountAction.UpdateCurrencyChoiceState -> {
                 handleUpdateCurrencyChoiceStateAction(action)
             }
-            is MoneyAccountCreationAction.SetInitialState -> {
+            is MoneyAccountAction.SetInitialState -> {
                 handleSetInitialStateForExistingAccountAction(action)
             }
         }
     }
 
     private fun handleClickOnConfirmAccountDeletionIntent(
-        eventConsumer: Consumer<MoneyAccountCreationEvent>
-    ): Flow<MoneyAccountCreationEffect> {
+        eventConsumer: Consumer<MoneyAccountEvent>
+    ): Flow<MoneyAccountEffect> {
         if (screenArguments !is MoneyAccountScreenArguments.Editing) {
             return emptyFlow()
         }
         return flow {
             deleteMoneyAccountUseCase.execute(moneyAccountId = screenArguments.moneyAccountId)
-            eventConsumer(MoneyAccountCreationEvent.CloseScreen)
+            eventConsumer(MoneyAccountEvent.CloseScreen)
         }
     }
 
     private fun handleClickOnDeleteButtonIntent(
-        eventConsumer: Consumer<MoneyAccountCreationEvent>
-    ): Flow<MoneyAccountCreationEffect> {
+        eventConsumer: Consumer<MoneyAccountEvent>
+    ): Flow<MoneyAccountEffect> {
         return emptyFlowAction {
-            eventConsumer(MoneyAccountCreationEvent.ShowAccountDeletionDialog)
+            eventConsumer(MoneyAccountEvent.ShowAccountDeletionDialog)
         }
     }
 
     private fun handleSetInitialStateForExistingAccountAction(
-        action: MoneyAccountCreationAction.SetInitialState
-    ): Flow<MoneyAccountCreationEffect> {
+        action: MoneyAccountAction.SetInitialState
+    ): Flow<MoneyAccountEffect> {
         return flowOfSingleValue {
-            MoneyAccountCreationEffect.InitialStateApplied(
+            MoneyAccountEffect.InitialStateApplied(
                 balance = action.balance,
                 accountName = action.accountName,
                 toolbarTitle = action.toolbarTitle,
@@ -108,9 +108,9 @@ class MoneyAccountCreationActionExecutor @Inject constructor(
     }
 
     private fun handleClickOnSaveButtonIntent(
-        state: MoneyAccountCreationState,
-        eventConsumer: Consumer<MoneyAccountCreationEvent>
-    ): Flow<MoneyAccountCreationEffect> {
+        state: MoneyAccountState,
+        eventConsumer: Consumer<MoneyAccountEvent>
+    ): Flow<MoneyAccountEffect> {
         if (state.savingButtonIsEnabled.not()) {
             return emptyFlow()
         }
@@ -126,11 +126,11 @@ class MoneyAccountCreationActionExecutor @Inject constructor(
                         moneyAccountId = screenArguments.moneyAccountId
                     )
                     eventConsumer(
-                        MoneyAccountCreationEvent.ShowMessage(
+                        MoneyAccountEvent.ShowMessage(
                             resourceManger.getString(R.string.money_account_account_edited_message)
                         )
                     )
-                    eventConsumer(MoneyAccountCreationEvent.CloseScreen)
+                    eventConsumer(MoneyAccountEvent.CloseScreen)
                 }
             }
             is MoneyAccountScreenArguments.Creation -> {
@@ -141,51 +141,51 @@ class MoneyAccountCreationActionExecutor @Inject constructor(
                         accountName = state.moneyAccountName
                     )
                     eventConsumer(
-                        MoneyAccountCreationEvent.ShowMessage(
+                        MoneyAccountEvent.ShowMessage(
                             resourceManger.getString(R.string.money_account_creation_account_created_message)
                         )
                     )
-                    eventConsumer(MoneyAccountCreationEvent.CloseScreen)
+                    eventConsumer(MoneyAccountEvent.CloseScreen)
                 }
             }
         }
     }
 
     private fun handleEnterTitleIntent(
-        intent: MoneyAccountCreationIntent.EnterAccountName
-    ): Flow<MoneyAccountCreationEffect> {
+        intent: MoneyAccountIntent.EnterAccountName
+    ): Flow<MoneyAccountEffect> {
         return flowOfSingleValue {
-            MoneyAccountCreationEffect.AccountNameEntered(intent.accountName)
+            MoneyAccountEffect.AccountNameEntered(intent.accountName)
         }
     }
 
     private fun handleEnterAmountIntent(
-        intent: MoneyAccountCreationIntent.EnterBalance
-    ): Flow<MoneyAccountCreationEffect> {
+        intent: MoneyAccountIntent.EnterBalance
+    ): Flow<MoneyAccountEffect> {
         return flowOfSingleValue {
-            MoneyAccountCreationEffect.BalanceEntered(amountParser.parse(intent.balance))
+            MoneyAccountEffect.BalanceEntered(amountParser.parse(intent.balance))
         }
     }
 
     private fun handleBackPressIntent(
-        state: MoneyAccountCreationState,
-        eventConsumer: Consumer<MoneyAccountCreationEvent>
-    ): Flow<MoneyAccountCreationEffect> {
+        state: MoneyAccountState,
+        eventConsumer: Consumer<MoneyAccountEvent>
+    ): Flow<MoneyAccountEffect> {
         if (state.currencyPickerIsVisible) {
             return emptyFlowAction {
                 currencyChoiceStore.dispatch(CurrencyChoiceIntent.ClickOnCloseCurrencyPicker)
             }
         }
         return emptyFlowAction {
-            eventConsumer(MoneyAccountCreationEvent.CloseScreen)
+            eventConsumer(MoneyAccountEvent.CloseScreen)
         }
     }
 
     private fun handleUpdateCurrencyChoiceStateAction(
-        action: MoneyAccountCreationAction.UpdateCurrencyChoiceState
-    ): Flow<MoneyAccountCreationEffect> {
+        action: MoneyAccountAction.UpdateCurrencyChoiceState
+    ): Flow<MoneyAccountEffect> {
         return flowOfSingleValue {
-            MoneyAccountCreationEffect.CurrencyChoiceStateUpdated(action.state)
+            MoneyAccountEffect.CurrencyChoiceStateUpdated(action.state)
         }
     }
 

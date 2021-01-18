@@ -6,7 +6,7 @@
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:transitionName="@string/transition_money_account_creation">
+    android:transitionName="@string/transition_money_account">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"

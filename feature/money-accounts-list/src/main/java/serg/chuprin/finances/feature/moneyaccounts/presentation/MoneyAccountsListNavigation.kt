@@ -10,7 +10,7 @@ import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccount
  */
 interface MoneyAccountsListNavigation {
 
-    fun navigateToMoneyAccountCreation(
+    fun navigateToMoneyAccount(
         navController: NavController,
         vararg sharedElementView: FloatingActionButton
     )

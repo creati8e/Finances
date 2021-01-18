@@ -37,7 +37,7 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
         android:src="@drawable/ic_add"
-        android:transitionName="@string/transition_money_account_creation"
+        android:transitionName="@string/transition_money_account"
         android:visibility="invisible"
         app:backgroundTint="?colorAccent"
         tools:ignore="ContentDescription" />

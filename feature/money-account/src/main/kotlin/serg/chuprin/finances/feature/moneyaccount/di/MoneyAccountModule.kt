@@ -13,7 +13,7 @@ import serg.chuprin.finances.feature.moneyaccount.presentation.model.CurrencyCho
  * Created by Sergey Chuprin on 03.07.2020.
  */
 @Module
-interface MoneyAccountCreationModule {
+interface MoneyAccountModule {
 
     companion object {
 

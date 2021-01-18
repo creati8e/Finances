@@ -154,13 +154,13 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
             is DashboardEvent.NavigateToMoneyAccountCreationScreen -> {
                 val sharedElementView = recyclerView.addAccountButton
                 if (sharedElementView != null) {
-                    navigation.navigateToMoneyAccountCreation(
+                    navigation.navigateToMoneyAccount(
                         navController,
                         event.screenArguments,
                         sharedElementView
                     )
                 } else {
-                    navigation.navigateToMoneyAccountCreation(navController, event.screenArguments)
+                    navigation.navigateToMoneyAccount(navController, event.screenArguments)
                 }
             }
             is DashboardEvent.NavigateToTransactionsReportScreen -> {

@@ -8,7 +8,7 @@ import serg.chuprin.finances.feature.moneyaccounts.presentation.MoneyAccountsLis
 import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountDetailsScreenArguments
 import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.toBundle
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.view.MoneyAccountDetailsFragment
-import serg.chuprin.finances.feature.moneyaccounts.presentation.view.MoneyAccountsListFragmentDirections.navigateFromMoneyAccountsListToMoneyAccountCreation
+import serg.chuprin.finances.feature.moneyaccounts.presentation.view.MoneyAccountsListFragmentDirections.navigateFromMoneyAccountsListToMoneyAccount
 import serg.chuprin.finances.feature.moneyaccounts.presentation.view.MoneyAccountsListFragmentDirections.navigateFromMoneyAccountsListToMoneyAccountDetails
 
 /**
@@ -16,12 +16,13 @@ import serg.chuprin.finances.feature.moneyaccounts.presentation.view.MoneyAccoun
  */
 class MoneyAccountsListNavigationImpl : MoneyAccountsListNavigation {
 
-    override fun navigateToMoneyAccountCreation(
+    // TODO: Fix transition.
+    override fun navigateToMoneyAccount(
         navController: NavController,
         vararg sharedElementView: FloatingActionButton
     ) {
         navController.navigate(
-            navigateFromMoneyAccountsListToMoneyAccountCreation(),
+            navigateFromMoneyAccountsListToMoneyAccount(),
             buildExtrasForSharedElements(sharedElementView)
         )
     }

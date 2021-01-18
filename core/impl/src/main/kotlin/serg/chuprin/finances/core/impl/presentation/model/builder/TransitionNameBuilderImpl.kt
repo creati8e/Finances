@@ -21,7 +21,7 @@ internal class TransitionNameBuilderImpl @Inject constructor(
         }
 
     override fun buildForMoneyAccountCreation(): String {
-        return resourceManger.getString(R.string.transition_money_account_creation)
+        return resourceManger.getString(R.string.transition_money_account)
     }
 
     override fun buildForTransaction(transactionId: Id?): String {
@@ -49,7 +49,7 @@ internal class TransitionNameBuilderImpl @Inject constructor(
     }
 
     override fun buildForForMoneyAccountDetails(moneyAccountId: Id): String {
-        return "${resourceManger.getString(R.string.transition_money_account)}${moneyAccountId.value}"
+        return "${resourceManger.getString(R.string.transition_money_account_details)}${moneyAccountId.value}"
     }
 
 }

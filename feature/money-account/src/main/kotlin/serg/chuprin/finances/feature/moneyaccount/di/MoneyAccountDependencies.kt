@@ -12,7 +12,7 @@ import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
 /**
  * Created by Sergey Chuprin on 01.06.2020.
  */
-interface MoneyAccountCreationDependencies : FeatureDependencies {
+interface MoneyAccountDependencies : FeatureDependencies {
     val amountParser: AmountParser
     val amountFormatter: AmountFormatter
 

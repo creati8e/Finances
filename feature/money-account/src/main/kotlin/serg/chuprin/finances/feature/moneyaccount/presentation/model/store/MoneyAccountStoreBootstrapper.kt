@@ -21,14 +21,14 @@ import javax.inject.Inject
  * Created by Sergey Chuprin on 17.01.2021.
  */
 @ScreenScope
-class MoneyAccountCreationStoreBootstrapper @Inject constructor(
+class MoneyAccountStoreBootstrapper @Inject constructor(
     private val resourceManger: ResourceManger,
     private val screenArguments: MoneyAccountScreenArguments,
     private val moneyAccountRepository: MoneyAccountRepository,
     private val moneyAccountBalanceCalculator: MoneyAccountBalanceCalculator
-) : StoreBootstrapper<MoneyAccountCreationAction> {
+) : StoreBootstrapper<MoneyAccountAction> {
 
-    override fun invoke(): Flow<MoneyAccountCreationAction> {
+    override fun invoke(): Flow<MoneyAccountAction> {
         return when (screenArguments) {
             is MoneyAccountScreenArguments.Editing -> {
                 flowOfSingleValue {
@@ -41,8 +41,8 @@ class MoneyAccountCreationStoreBootstrapper @Inject constructor(
         }
     }
 
-    private fun buildActionForAccountCreation(): MoneyAccountCreationAction.SetInitialState {
-        return MoneyAccountCreationAction.SetInitialState(
+    private fun buildActionForAccountCreation(): MoneyAccountAction.SetInitialState {
+        return MoneyAccountAction.SetInitialState(
             accountName = EMPTY_STRING,
             balance = BigDecimal.ZERO,
             moneyAccountDefaultData = null,
@@ -54,10 +54,10 @@ class MoneyAccountCreationStoreBootstrapper @Inject constructor(
 
     private suspend fun buildActionForExistingMoneyAccount(
         accountId: Id
-    ): MoneyAccountCreationAction.SetInitialState {
+    ): MoneyAccountAction.SetInitialState {
         val account = moneyAccountRepository.accountFlow(accountId).first()!!
         val balance = moneyAccountBalanceCalculator.calculate(accountId)
-        return MoneyAccountCreationAction.SetInitialState(
+        return MoneyAccountAction.SetInitialState(
             balance = balance,
             accountName = account.name,
             currencyPickerIsClickable = false,

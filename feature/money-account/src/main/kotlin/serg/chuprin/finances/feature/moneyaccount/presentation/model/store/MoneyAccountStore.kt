@@ -10,7 +10,6 @@ import kotlinx.coroutines.launch
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStore
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStoreIntentDispatcher
-import serg.chuprin.finances.core.mvi.bootstrapper.BypassStoreBootstrapper
 import serg.chuprin.finances.core.mvi.store.BaseStateStore
 import javax.inject.Inject
 
@@ -18,19 +17,19 @@ import javax.inject.Inject
  * Created by Sergey Chuprin on 01.06.2020.
  */
 @ScreenScope
-class MoneyAccountCreationStore @Inject constructor(
-    actionExecutor: MoneyAccountCreationActionExecutor,
-    bootstrapper: MoneyAccountCreationStoreBootstrapper,
+class MoneyAccountStore @Inject constructor(
+    actionExecutor: MoneyAccountActionExecutor,
+    bootstrapper: MoneyAccountStoreBootstrapper,
     private val currencyChoiceStore: CurrencyChoiceStore
-) : BaseStateStore<MoneyAccountCreationIntent, MoneyAccountCreationEffect, MoneyAccountCreationAction, MoneyAccountCreationState, MoneyAccountCreationEvent>(
-    MoneyAccountCreationState(),
-    MoneyAccountCreationStateReducer(),
+) : BaseStateStore<MoneyAccountIntent, MoneyAccountEffect, MoneyAccountAction, MoneyAccountState, MoneyAccountEvent>(
+    MoneyAccountState(),
+    MoneyAccountStateReducer(),
     bootstrapper,
     actionExecutor,
-    intentToActionMapper = MoneyAccountCreationAction::ExecuteIntent
+    intentToActionMapper = MoneyAccountAction::ExecuteIntent
 ), CurrencyChoiceStoreIntentDispatcher by currencyChoiceStore {
 
-    override fun start(intentsFlow: Flow<MoneyAccountCreationIntent>, scope: CoroutineScope): Job {
+    override fun start(intentsFlow: Flow<MoneyAccountIntent>, scope: CoroutineScope): Job {
         return scope.launch {
             currencyChoiceStore.start(emptyFlow(), scope)
             super.start(intentsFlow, scope)
@@ -38,7 +37,7 @@ class MoneyAccountCreationStore @Inject constructor(
                 .stateFlow
                 .collect {
                     ensureActive()
-                    dispatchAction(MoneyAccountCreationAction.UpdateCurrencyChoiceState(it))
+                    dispatchAction(MoneyAccountAction.UpdateCurrencyChoiceState(it))
                 }
         }
     }

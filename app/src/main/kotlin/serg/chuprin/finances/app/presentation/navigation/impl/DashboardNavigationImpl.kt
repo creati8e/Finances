@@ -8,7 +8,7 @@ import serg.chuprin.finances.core.api.presentation.screen.arguments.*
 import serg.chuprin.finances.core.api.presentation.view.extensions.fragment.toBundle
 import serg.chuprin.finances.feature.dashboard.presentation.DashboardNavigation
 import serg.chuprin.finances.feature.dashboard.presentation.view.DashboardFragmentDirections.*
-import serg.chuprin.finances.feature.moneyaccount.presentation.view.MoneyAccountCreationFragment
+import serg.chuprin.finances.feature.moneyaccount.presentation.view.MoneyAccountFragment
 import serg.chuprin.finances.feature.moneyaccount.details.presentation.view.MoneyAccountDetailsFragment
 import serg.chuprin.finances.feature.moneyaccounts.presentation.view.MoneyAccountsListFragment
 import serg.chuprin.finances.feature.transaction.presentation.view.TransactionFragment
@@ -45,14 +45,14 @@ class DashboardNavigationImpl : DashboardNavigation {
         )
     }
 
-    override fun navigateToMoneyAccountCreation(
+    override fun navigateToMoneyAccount(
         navController: NavController,
         screenArguments: MoneyAccountScreenArguments,
         vararg sharedElementView: View
     ) {
         navController.navigate(
-            navigateFromDashboardToMoneyAccountCreation().actionId,
-            screenArguments.toBundle<MoneyAccountCreationFragment>(),
+            navigateFromDashboardToMoneyAccount().actionId,
+            screenArguments.toBundle<MoneyAccountFragment>(),
             null,
             buildExtrasForSharedElements(sharedElementView)
         )

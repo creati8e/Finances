@@ -7,7 +7,7 @@ import java.math.BigDecimal
 /**
  * Created by Sergey Chuprin on 01.06.2020.
  */
-sealed class MoneyAccountCreationEffect {
+sealed class MoneyAccountEffect {
 
     class InitialStateApplied(
         val balance: BigDecimal,
@@ -16,18 +16,18 @@ sealed class MoneyAccountCreationEffect {
         val currencyPickerIsClickable: Boolean,
         val accountDeletionButtonIsVisible: Boolean,
         val moneyAccountDefaultData: MoneyAccountDefaultData?
-    ) : MoneyAccountCreationEffect()
+    ) : MoneyAccountEffect()
 
     class AccountNameEntered(
         val accountName: String
-    ) : MoneyAccountCreationEffect()
+    ) : MoneyAccountEffect()
 
     class BalanceEntered(
         val balance: BigDecimal?
-    ) : MoneyAccountCreationEffect()
+    ) : MoneyAccountEffect()
 
     class CurrencyChoiceStateUpdated(
         val state: CurrencyChoiceState
-    ) : MoneyAccountCreationEffect()
+    ) : MoneyAccountEffect()
 
 }

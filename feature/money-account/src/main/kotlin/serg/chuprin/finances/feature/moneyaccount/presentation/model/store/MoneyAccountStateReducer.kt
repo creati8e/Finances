@@ -7,18 +7,18 @@ import java.math.BigDecimal
 /**
  * Created by Sergey Chuprin on 01.06.2020.
  */
-class MoneyAccountCreationStateReducer :
-    StoreStateReducer<MoneyAccountCreationEffect, MoneyAccountCreationState> {
+class MoneyAccountStateReducer :
+    StoreStateReducer<MoneyAccountEffect, MoneyAccountState> {
 
     override fun invoke(
-        what: MoneyAccountCreationEffect,
-        state: MoneyAccountCreationState
-    ): MoneyAccountCreationState {
+        what: MoneyAccountEffect,
+        state: MoneyAccountState
+    ): MoneyAccountState {
         return when (what) {
-            is MoneyAccountCreationEffect.CurrencyChoiceStateUpdated -> {
+            is MoneyAccountEffect.CurrencyChoiceStateUpdated -> {
                 state.copy(currencyChoiceState = what.state)
             }
-            is MoneyAccountCreationEffect.AccountNameEntered -> {
+            is MoneyAccountEffect.AccountNameEntered -> {
                 state.copy(
                     moneyAccountName = what.accountName,
                     savingButtonIsEnabled = isSavingButtonEnabled(
@@ -28,7 +28,7 @@ class MoneyAccountCreationStateReducer :
                     )
                 )
             }
-            is MoneyAccountCreationEffect.BalanceEntered -> {
+            is MoneyAccountEffect.BalanceEntered -> {
                 state.copy(
                     balance = what.balance,
                     savingButtonIsEnabled = isSavingButtonEnabled(
@@ -38,7 +38,7 @@ class MoneyAccountCreationStateReducer :
                     )
                 )
             }
-            is MoneyAccountCreationEffect.InitialStateApplied -> {
+            is MoneyAccountEffect.InitialStateApplied -> {
                 state.copy(
                     balance = what.balance,
                     toolbarTitle = what.toolbarTitle,
