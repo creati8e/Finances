@@ -1,4 +1,4 @@
-package serg.chuprin.finances.core.impl.presentation.feature.factory
+package serg.chuprin.finances.core.currency.choice.impl.presentation.model.store.factory
 
 import serg.chuprin.finances.core.api.domain.repository.CurrencyRepository
 import serg.chuprin.finances.core.currency.choice.api.presentation.model.store.CurrencyChoiceIntent

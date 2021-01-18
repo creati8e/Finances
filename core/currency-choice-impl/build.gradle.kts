@@ -40,5 +40,6 @@ dependencies {
 
     // Architecture components.
     implementation(Libraries.Android.Lifecycle)
+    testImplementation(project(":core:test"))
 
 }

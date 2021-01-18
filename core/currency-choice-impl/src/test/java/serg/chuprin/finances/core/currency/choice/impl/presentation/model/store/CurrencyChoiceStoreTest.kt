@@ -1,14 +1,13 @@
-package serg.chuprin.finances.core.impl.presentation.feature
+package serg.chuprin.finances.core.currency.choice.impl.presentation.model.store
 
 import io.mockk.coEvery
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 import serg.chuprin.finances.core.api.domain.repository.CurrencyRepository
-import serg.chuprin.finances.core.currency.choice.api.presentation.model.cells.CurrencyCell
-import serg.chuprin.finances.core.currency.choice.api.presentation.model.store.CurrencyChoiceIntent
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.cells.ZeroDataCell
-import serg.chuprin.finances.core.impl.presentation.feature.factory.CurrencyChoiceStoreTestFactory
+import serg.chuprin.finances.core.currency.choice.api.presentation.model.store.CurrencyChoiceIntent
+import serg.chuprin.finances.core.currency.choice.impl.presentation.model.store.factory.CurrencyChoiceStoreTestFactory
 import strikt.api.expectThat
 import strikt.assertions.*
 import java.util.*
