@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
-import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStore
-import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStoreIntentDispatcher
+import serg.chuprin.finances.core.currency.choice.api.presentation.model.store.CurrencyChoiceStore
+import serg.chuprin.finances.core.currency.choice.api.presentation.model.store.CurrencyChoiceStoreIntentDispatcher
 import serg.chuprin.finances.core.mvi.bootstrapper.BypassStoreBootstrapper
 import serg.chuprin.finances.core.mvi.store.BaseStateStore
 import javax.inject.Inject

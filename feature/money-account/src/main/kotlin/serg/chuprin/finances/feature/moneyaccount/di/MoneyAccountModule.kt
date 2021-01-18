@@ -4,9 +4,9 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
-import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStore
-import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStoreBootstrapper
-import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStoreProvider
+import serg.chuprin.finances.core.currency.choice.api.presentation.model.store.CurrencyChoiceStore
+import serg.chuprin.finances.core.currency.choice.api.presentation.model.store.CurrencyChoiceStoreBootstrapper
+import serg.chuprin.finances.core.currency.choice.api.presentation.model.store.CurrencyChoiceStoreFactoryApi
 import serg.chuprin.finances.feature.moneyaccount.presentation.model.CurrencyChoiceStoreBootstrapperImpl
 import serg.chuprin.finances.feature.moneyaccount.presentation.model.store.MoneyAccountStore
 import serg.chuprin.finances.feature.moneyaccount.presentation.model.store.MoneyAccountStoreFactory
@@ -21,10 +21,10 @@ interface MoneyAccountModule {
 
         @[Provides ScreenScope]
         fun provideCurrencyChoiceStore(
-            provider: CurrencyChoiceStoreProvider,
+            provider: CurrencyChoiceStoreFactoryApi,
             storeBootstrapper: CurrencyChoiceStoreBootstrapper
         ): CurrencyChoiceStore {
-            return provider.provide(storeBootstrapper)
+            return provider.create(storeBootstrapper)
         }
 
         @[Provides ScreenScope]

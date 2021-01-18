@@ -9,8 +9,8 @@ import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.fragment_onboarding_currency_choice.*
 import serg.chuprin.finances.core.api.di.dependencies.findComponentDependencies
-import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceIntent
-import serg.chuprin.finances.core.api.presentation.currencychoice.view.CurrencyChoiceListController
+import serg.chuprin.finances.core.currency.choice.api.presentation.model.store.CurrencyChoiceIntent
+import serg.chuprin.finances.core.currency.choice.api.presentation.view.CurrencyChoiceListController
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.extensions.makeVisible

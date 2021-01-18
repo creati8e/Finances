@@ -6,8 +6,8 @@ import serg.chuprin.finances.core.api.domain.repository.CurrencyRepository
 import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
 import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
-import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStoreBootstrapper
-import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStoreInitialParams
+import serg.chuprin.finances.core.currency.choice.api.presentation.model.store.CurrencyChoiceStoreBootstrapper
+import serg.chuprin.finances.core.currency.choice.api.presentation.model.store.CurrencyChoiceStoreInitialParams
 import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountScreenArguments
 import java.util.*
 import javax.inject.Inject

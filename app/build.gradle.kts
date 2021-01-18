@@ -66,6 +66,8 @@ dependencies {
     implementation(project(":feature:dashboard-setup-impl"))
     implementation(project(":feature:money-account-details"))
     implementation(project(":feature:money-account"))
+    implementation(project(":core:currency-choice-api"))
+    implementation(project(":core:currency-choice-impl"))
 
     // endregion
 

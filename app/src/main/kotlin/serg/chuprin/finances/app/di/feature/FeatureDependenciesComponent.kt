@@ -10,13 +10,15 @@ import serg.chuprin.finances.core.api.di.dependencies.FeatureDependencies
 import serg.chuprin.finances.core.api.di.dependencies.HasFeatureDependencies
 import serg.chuprin.finances.core.api.di.provider.CoreDependenciesProvider
 import serg.chuprin.finances.core.api.di.scopes.AppScope
+import serg.chuprin.finances.core.currency.choice.impl.di.CurrencyChoiceComponent
+import serg.chuprin.finances.core.currency.choice.impl.di.CurrencyChoiceDependencies
 import serg.chuprin.finances.feature.authorization.di.AuthorizationDependencies
 import serg.chuprin.finances.feature.categories.list.di.CategoriesListDependencies
 import serg.chuprin.finances.feature.dashboard.di.DashboardDependencies
 import serg.chuprin.finances.feature.dashboard.setup.impl.di.DashboardWidgetsSetupComponent
 import serg.chuprin.finances.feature.dashboard.setup.impl.di.DashboardWidgetsSetupDependencies
-import serg.chuprin.finances.feature.moneyaccount.di.MoneyAccountDependencies
 import serg.chuprin.finances.feature.moneyaccount.details.di.MoneyAccountDetailsDependencies
+import serg.chuprin.finances.feature.moneyaccount.di.MoneyAccountDependencies
 import serg.chuprin.finances.feature.moneyaccounts.di.MoneyAccountsListDependencies
 import serg.chuprin.finances.feature.onboarding.di.OnboardingFeatureDependencies
 import serg.chuprin.finances.feature.transaction.di.TransactionDependencies
@@ -97,14 +99,16 @@ object FeatureDependenciesModule {
     }
 
     @[Provides IntoMap FeatureDependenciesKey(MoneyAccountDependencies::class)]
-    fun provideMoneyAccountCreationDependencies(
+    fun provideMoneyAccountDependencies(
         coreDependencies: CoreDependenciesProvider,
-        navigationProvider: AppNavigationProvider
+        navigationProvider: AppNavigationProvider,
+        currencyChoiceDependencies: CurrencyChoiceDependencies
     ): FeatureDependencies {
         return DaggerMoneyAccountDependenciesComponent
             .builder()
             .coreDependenciesProvider(coreDependencies)
             .appNavigationProvider(navigationProvider)
+            .currencyChoiceStoreApi(CurrencyChoiceComponent.get(currencyChoiceDependencies))
             .build()
     }
 
@@ -159,12 +163,14 @@ object FeatureDependenciesModule {
     @[Provides IntoMap FeatureDependenciesKey(OnboardingFeatureDependencies::class)]
     fun provideOnboardingFeatureDependencies(
         coreDependencies: CoreDependenciesProvider,
-        navigationProvider: AppNavigationProvider
+        navigationProvider: AppNavigationProvider,
+        currencyChoiceDependencies: CurrencyChoiceDependencies
     ): FeatureDependencies {
         return DaggerOnboardingFeatureDependenciesComponent
             .builder()
             .coreDependenciesProvider(coreDependencies)
             .appNavigationProvider(navigationProvider)
+            .currencyChoiceStoreApi(CurrencyChoiceComponent.get(currencyChoiceDependencies))
             .build()
     }
 
@@ -201,6 +207,16 @@ object FeatureDependenciesModule {
             .builder()
             .coreDependenciesProvider(coreDependencies)
             .appNavigationProvider(navigationProvider)
+            .build()
+    }
+
+    @[Provides]
+    fun provideCurrencyChoiceDependencies(
+        coreDependencies: CoreDependenciesProvider
+    ): CurrencyChoiceDependencies {
+        return DaggerCurrencyChoiceDependenciesComponent
+            .builder()
+            .coreDependenciesProvider(coreDependencies)
             .build()
     }
 

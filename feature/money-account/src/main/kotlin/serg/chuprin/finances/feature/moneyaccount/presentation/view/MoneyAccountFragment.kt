@@ -11,8 +11,8 @@ import de.halfbit.edgetoedge.Edge
 import de.halfbit.edgetoedge.edgeToEdge
 import kotlinx.android.synthetic.main.fragment_money_account.*
 import serg.chuprin.finances.core.api.di.dependencies.findComponentDependencies
-import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceIntent
-import serg.chuprin.finances.core.api.presentation.currencychoice.view.CurrencyChoiceListController
+import serg.chuprin.finances.core.currency.choice.api.presentation.model.store.CurrencyChoiceIntent
+import serg.chuprin.finances.core.currency.choice.api.presentation.view.CurrencyChoiceListController
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent

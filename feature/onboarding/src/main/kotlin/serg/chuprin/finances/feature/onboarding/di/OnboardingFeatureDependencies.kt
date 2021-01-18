@@ -3,7 +3,7 @@ package serg.chuprin.finances.feature.onboarding.di
 import serg.chuprin.finances.core.api.di.dependencies.FeatureDependencies
 import serg.chuprin.finances.core.api.domain.repository.*
 import serg.chuprin.finances.core.api.domain.usecase.SearchCurrenciesUseCase
-import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStoreProvider
+import serg.chuprin.finances.core.currency.choice.api.presentation.model.store.CurrencyChoiceStoreFactoryApi
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
@@ -22,7 +22,7 @@ interface OnboardingFeatureDependencies : FeatureDependencies {
 
     val onboardingNavigation: OnboardingNavigation
 
-    val currencyChoiceStoreProvider: CurrencyChoiceStoreProvider
+    val currencyChoiceStoreProvider: CurrencyChoiceStoreFactoryApi
 
     // region Repositories.
 

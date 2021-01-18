@@ -8,6 +8,7 @@ plugins {
 
 dependencies {
     implementation(project(":core:api"))
+    implementation(project(":core:currency-choice-api"))
 
     implementation(Libraries.KOTLIN)
     implementation(Libraries.Coroutines.CORE)

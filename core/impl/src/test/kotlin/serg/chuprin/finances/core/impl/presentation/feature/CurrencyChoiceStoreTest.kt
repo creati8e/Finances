@@ -4,8 +4,8 @@ import io.mockk.coEvery
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 import serg.chuprin.finances.core.api.domain.repository.CurrencyRepository
-import serg.chuprin.finances.core.api.presentation.currencychoice.model.cells.CurrencyCell
-import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceIntent
+import serg.chuprin.finances.core.currency.choice.api.presentation.model.cells.CurrencyCell
+import serg.chuprin.finances.core.currency.choice.api.presentation.model.store.CurrencyChoiceIntent
 import serg.chuprin.finances.core.api.presentation.model.cells.BaseCell
 import serg.chuprin.finances.core.api.presentation.model.cells.ZeroDataCell
 import serg.chuprin.finances.core.impl.presentation.feature.factory.CurrencyChoiceStoreTestFactory
@@ -80,11 +80,12 @@ object CurrencyChoiceStoreTest : Spek({
             }
 
             val newChosenCurrency = availableCurrencies.last()
-            val newChosenCurrencyCell = CurrencyCell(
-                isChosen = true,
-                currency = newChosenCurrency,
-                displayName = newChosenCurrency.displayName
-            )
+            val newChosenCurrencyCell =
+                serg.chuprin.finances.core.currency.choice.api.presentation.model.cells.CurrencyCell(
+                    isChosen = true,
+                    currency = newChosenCurrency,
+                    displayName = newChosenCurrency.displayName
+                )
 
             When("New currency is picked from picker") {
                 store.dispatch(CurrencyChoiceIntent.ClickOnCurrencyCell(newChosenCurrencyCell))
@@ -229,15 +230,15 @@ private val availableCurrencies = listOf(
 
 private fun List<BaseCell>.assertContainsCurrencies(currencies: List<Currency>) {
     expectThat(this)
-        .all { isA<CurrencyCell>() }
-        .map { (it as CurrencyCell).currency }
+        .all { isA<serg.chuprin.finances.core.currency.choice.api.presentation.model.cells.CurrencyCell>() }
+        .map { (it as serg.chuprin.finances.core.currency.choice.api.presentation.model.cells.CurrencyCell).currency }
         .containsExactlyInAnyOrder(currencies)
 }
 
 private fun List<BaseCell>.assertContainsSingleChosenCurrency(chosenCurrency: Currency) {
     expectThat(this)
         .one {
-            isA<CurrencyCell>()
+            isA<serg.chuprin.finances.core.currency.choice.api.presentation.model.cells.CurrencyCell>()
                 .and {
                     get { isChosen }.isEqualTo(true)
                 }

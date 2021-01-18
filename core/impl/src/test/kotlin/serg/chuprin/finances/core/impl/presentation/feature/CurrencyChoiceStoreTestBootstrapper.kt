@@ -3,7 +3,7 @@ package serg.chuprin.finances.core.impl.presentation.feature
 import kotlinx.coroutines.flow.Flow
 import serg.chuprin.finances.core.api.domain.repository.CurrencyRepository
 import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
-import serg.chuprin.finances.core.impl.presentation.model.store.currencychoice.CurrencyChoiceAction
+import serg.chuprin.finances.core.currency.choice.impl.presentation.model.store.CurrencyChoiceAction
 import serg.chuprin.finances.core.mvi.bootstrapper.StoreBootstrapper
 
 /**
@@ -11,11 +11,11 @@ import serg.chuprin.finances.core.mvi.bootstrapper.StoreBootstrapper
  */
 class CurrencyChoiceStoreTestBootstrapper(
     private val currencyRepository: CurrencyRepository,
-) : StoreBootstrapper<CurrencyChoiceAction> {
+) : StoreBootstrapper<serg.chuprin.finances.core.currency.choice.impl.presentation.model.store.CurrencyChoiceAction> {
 
-    override fun invoke(): Flow<CurrencyChoiceAction> {
+    override fun invoke(): Flow<serg.chuprin.finances.core.currency.choice.impl.presentation.model.store.CurrencyChoiceAction> {
         return flowOfSingleValue {
-            CurrencyChoiceAction.SetCurrenciesParams(
+            serg.chuprin.finances.core.currency.choice.impl.presentation.model.store.CurrencyChoiceAction.SetCurrenciesParams(
                 chosenCurrency = currencyRepository.getDefaultCurrency(),
                 availableCurrencies = currencyRepository.getAvailableCurrencies()
             )

@@ -1,15 +1,12 @@
 package serg.chuprin.finances.feature.moneyaccount.presentation.model.store
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.launch
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
-import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceIntent
-import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStore
+import serg.chuprin.finances.core.currency.choice.api.presentation.model.store.CurrencyChoiceIntent
+import serg.chuprin.finances.core.currency.choice.api.presentation.model.store.CurrencyChoiceStore
 import serg.chuprin.finances.core.mvi.store.BaseStateStore
 import serg.chuprin.finances.core.mvi.store.factory.AbsStoreFactory
 import javax.inject.Inject

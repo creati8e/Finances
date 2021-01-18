@@ -10,6 +10,8 @@ include ':core:test'
 include ':core:firebase'
 include ':core:pie-chart'
 include ':core:category-shares'
+include ':core:currency-choice-api'
+include ':core:currency-choice-impl'
 
 // endregion
 
