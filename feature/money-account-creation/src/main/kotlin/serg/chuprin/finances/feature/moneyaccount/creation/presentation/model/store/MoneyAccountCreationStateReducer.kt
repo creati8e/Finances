@@ -56,10 +56,12 @@ class MoneyAccountCreationStateReducer :
         balance: BigDecimal?,
         accountName: String
     ): Boolean {
+        val hasValidNameAndBalance = accountName.isNotBlank() && balance != null
         if (defaultData == null) {
-            return accountName.isNotBlank() && balance != null
+            return hasValidNameAndBalance
         }
-        return defaultData.accountName != accountName || defaultData.balance != balance
+        return hasValidNameAndBalance
+                && (defaultData.accountName != accountName || defaultData.balance != balance)
     }
 
 }
