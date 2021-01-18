@@ -1,6 +1,8 @@
 package serg.chuprin.finances.core.mvi.store.factory
 
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExecutorCoroutineDispatcher
 import kotlinx.coroutines.newSingleThreadContext
 import serg.chuprin.finances.core.mvi.bootstrapper.StoreBootstrapper
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
@@ -24,6 +26,15 @@ abstract class AbsStoreFactory<I, SE, A, S, E, STORE : BaseStore<I, S, E>>(
     val intentToActionMapper: StoreIntentToActionMapper<I, A>,
 ) : StoreFactory<I, S, E, STORE> {
 
+    protected val backgroundDispatcher: CoroutineDispatcher
+        get() = Dispatchers.Default
+
+    protected val reducerDispatcher: ExecutorCoroutineDispatcher
+        get() = newSingleThreadContext("Reducer coroutine context")
+
+    protected val bootstrapperDispatcher: ExecutorCoroutineDispatcher
+        get() = newSingleThreadContext("Bootstrapper coroutine context")
+
     override fun create(): STORE {
         @Suppress("UNCHECKED_CAST")
         return createBaseStore() as STORE
@@ -38,10 +49,10 @@ abstract class AbsStoreFactory<I, SE, A, S, E, STORE : BaseStore<I, S, E>>(
             actionExecutor = actionExecutor,
             initialState = initialState,
             bootstrapper = bootstrapper,
+            reducerDispatcher = reducerDispatcher,
             intentToActionMapper = intentToActionMapper,
-            backgroundDispatcher = Dispatchers.Default,
-            reducerDispatcher = newSingleThreadContext("Reducer coroutine context"),
-            bootstrapperDispatcher = newSingleThreadContext("Bootstrapper coroutine context")
+            backgroundDispatcher = backgroundDispatcher,
+            bootstrapperDispatcher = bootstrapperDispatcher
         ) {}
     }
 
