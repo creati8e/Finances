@@ -7,6 +7,7 @@ import serg.chuprin.finances.core.api.presentation.builder.TransitionNameBuilder
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.model.cells.ZeroDataCell
 import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountDetailsScreenArguments
+import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountScreenArguments
 import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountsListScreenArguments
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
@@ -64,7 +65,12 @@ class MoneyAccountsListActionExecutor @Inject constructor(
         eventConsumer: Consumer<MoneyAccountsListEvent>
     ): Flow<MoneyAccountsListEffect> {
         return emptyFlowAction {
-            eventConsumer(MoneyAccountsListEvent.NavigateToMoneyAccountCreationScreen)
+            val screenArguments = MoneyAccountScreenArguments.Creation(
+                transitionNameBuilder.buildForMoneyAccountCreation()
+            )
+            eventConsumer(
+                MoneyAccountsListEvent.NavigateToMoneyAccountCreationScreen(screenArguments)
+            )
         }
     }
 

@@ -12,7 +12,6 @@ import kotlinx.android.synthetic.main.fragment_money_accounts_list.*
 import serg.chuprin.finances.core.api.di.dependencies.findComponentDependencies
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.component
 import serg.chuprin.finances.core.api.presentation.model.viewmodel.extensions.viewModelFromComponent
-import serg.chuprin.finances.feature.moneyaccounts.presentation.MoneyAccountsListNavigation
 import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountsListScreenArguments
 import serg.chuprin.finances.core.api.presentation.view.BaseFragment
 import serg.chuprin.finances.core.api.presentation.view.adapter.DiffMultiViewAdapter
@@ -24,6 +23,7 @@ import serg.chuprin.finances.core.api.presentation.view.extensions.onClick
 import serg.chuprin.finances.core.api.presentation.view.setSharedElementTransitions
 import serg.chuprin.finances.feature.moneyaccounts.R
 import serg.chuprin.finances.feature.moneyaccounts.di.MoneyAccountsListComponent
+import serg.chuprin.finances.feature.moneyaccounts.presentation.MoneyAccountsListNavigation
 import serg.chuprin.finances.feature.moneyaccounts.presentation.model.cells.MoneyAccountCell
 import serg.chuprin.finances.feature.moneyaccounts.presentation.model.store.MoneyAccountsListEvent
 import serg.chuprin.finances.feature.moneyaccounts.presentation.model.store.MoneyAccountsListIntent
@@ -111,9 +111,13 @@ class MoneyAccountsListFragment : BaseFragment(R.layout.fragment_money_accounts_
                     moneyAccountsRecyclerView.findViewWithTag(event.screenArguments.transitionName)
                 )
             }
-            MoneyAccountsListEvent.NavigateToMoneyAccountCreationScreen -> {
+            is MoneyAccountsListEvent.NavigateToMoneyAccountCreationScreen -> {
                 val sharedElementView = accountCreationFab
-                navigation.navigateToMoneyAccount(navController, sharedElementView)
+                navigation.navigateToMoneyAccount(
+                    navController,
+                    event.screnArguments,
+                    sharedElementView
+                )
             }
             is MoneyAccountsListEvent.ChooseMoneyAccountAndCloseScreen -> {
                 val moneyAccountId = event.moneyAccountId.value
