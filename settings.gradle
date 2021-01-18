@@ -27,6 +27,6 @@ include ':feature:money-accounts-list'
 include ':feature:dashboard-setup-api'
 include ':feature:dashboard-setup-impl'
 include ':feature:money-account-details'
-include ':feature:money-account-creation'
+include ':feature:money-account'
 
 // endregion
