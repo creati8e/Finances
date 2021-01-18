@@ -12,5 +12,6 @@
     <string name="money_account_deletion_dialog_title">Account deletion</string>
     <string name="money_account_creation_hint_initial_balance">Initial balance</string>
     <string name="money_account_creation_account_created_message">Account is created</string>
+    <string name="money_account_account_edited_message">Account edited successfully</string>
 
 </resources>

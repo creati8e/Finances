@@ -9,6 +9,8 @@ sealed class MoneyAccountCreationEvent {
 
     object ShowAccountDeletionDialog : MoneyAccountCreationEvent()
 
-    object ShowAccountCreatedMessage : MoneyAccountCreationEvent()
+    class ShowMessage(
+        val message: String
+    ) : MoneyAccountCreationEvent()
 
 }

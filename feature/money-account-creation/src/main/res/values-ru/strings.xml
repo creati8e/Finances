@@ -12,5 +12,6 @@
     <string name="money_account_deletion_dialog_title">Удаление счета</string>
     <string name="money_account_creation_hint_initial_balance">Начальный баланс</string>
     <string name="money_account_creation_account_created_message">Счет создан</string>
+    <string name="money_account_account_edited_message">Счет отредактирован</string>
 
 </resources>

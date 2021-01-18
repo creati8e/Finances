@@ -7,14 +7,17 @@ import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceIntent
 import serg.chuprin.finances.core.api.presentation.currencychoice.model.store.CurrencyChoiceStore
+import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
 import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountScreenArguments
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
 import serg.chuprin.finances.core.mvi.invoke
+import serg.chuprin.finances.feature.moneyaccount.creation.R
 import serg.chuprin.finances.feature.moneyaccount.creation.domain.usecase.CreateMoneyAccountUseCase
 import serg.chuprin.finances.feature.moneyaccount.creation.domain.usecase.DeleteMoneyAccountUseCase
+import serg.chuprin.finances.feature.moneyaccount.creation.domain.usecase.EditMoneyAccountUseCase
 import javax.inject.Inject
 
 /**
@@ -23,8 +26,10 @@ import javax.inject.Inject
 @ScreenScope
 class MoneyAccountCreationActionExecutor @Inject constructor(
     private val amountParser: AmountParser,
+    private val resourceManger: ResourceManger,
     private val currencyChoiceStore: CurrencyChoiceStore,
     private val screenArguments: MoneyAccountScreenArguments,
+    private val editMoneyAccountUseCase: EditMoneyAccountUseCase,
     private val createMoneyAccountUseCase: CreateMoneyAccountUseCase,
     private val deleteMoneyAccountUseCase: DeleteMoneyAccountUseCase
 ) : StoreActionExecutor<MoneyAccountCreationAction, MoneyAccountCreationState, MoneyAccountCreationEffect, MoneyAccountCreationEvent> {
@@ -111,14 +116,38 @@ class MoneyAccountCreationActionExecutor @Inject constructor(
         }
         val balance = state.balance ?: return emptyFlow()
         val chosenCurrency = state.chosenCurrency ?: return emptyFlow()
-        return flow {
-            createMoneyAccountUseCase.execute(
-                currency = chosenCurrency,
-                initialBalance = balance,
-                accountName = state.moneyAccountName
-            )
-            eventConsumer(MoneyAccountCreationEvent.ShowAccountCreatedMessage)
-            eventConsumer(MoneyAccountCreationEvent.CloseScreen)
+
+        return when (screenArguments) {
+            is MoneyAccountScreenArguments.Editing -> {
+                flow {
+                    editMoneyAccountUseCase.execute(
+                        newBalance = balance,
+                        newName = state.moneyAccountName,
+                        moneyAccountId = screenArguments.moneyAccountId
+                    )
+                    eventConsumer(
+                        MoneyAccountCreationEvent.ShowMessage(
+                            resourceManger.getString(R.string.money_account_account_edited_message)
+                        )
+                    )
+                    eventConsumer(MoneyAccountCreationEvent.CloseScreen)
+                }
+            }
+            is MoneyAccountScreenArguments.Creation -> {
+                flow {
+                    createMoneyAccountUseCase.execute(
+                        currency = chosenCurrency,
+                        initialBalance = balance,
+                        accountName = state.moneyAccountName
+                    )
+                    eventConsumer(
+                        MoneyAccountCreationEvent.ShowMessage(
+                            resourceManger.getString(R.string.money_account_creation_account_created_message)
+                        )
+                    )
+                    eventConsumer(MoneyAccountCreationEvent.CloseScreen)
+                }
+            }
         }
     }
 

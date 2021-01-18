@@ -190,8 +190,8 @@ class MoneyAccountCreationFragment :
                 navController.navigateUp()
                 Unit
             }
-            MoneyAccountCreationEvent.ShowAccountCreatedMessage -> {
-                shortToast(R.string.money_account_creation_account_created_message)
+            is MoneyAccountCreationEvent.ShowMessage -> {
+                shortToast(event.message)
             }
             MoneyAccountCreationEvent.ShowAccountDeletionDialog -> {
                 showInfoDialog(
