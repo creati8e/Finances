@@ -110,11 +110,6 @@
             android:label="MoneyAccountDetailsFragment"
             tools:layout="@layout/fragment_money_account_details">
 
-            <!--TODO: Delete.-->
-            <action
-                android:id="@+id/navigateFromMoneyAccountDetailsToTransactionsReport"
-                app:destination="@id/transactionsReportFragment" />
-
             <action
                 android:id="@+id/navigateFromMoneyAccountDetailsToTransaction"
                 app:destination="@id/transactionFragment" />
