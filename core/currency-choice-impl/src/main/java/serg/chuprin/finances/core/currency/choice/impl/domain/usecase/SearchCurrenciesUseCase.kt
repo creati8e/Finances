@@ -1,4 +1,4 @@
-package serg.chuprin.finances.core.api.domain.usecase
+package serg.chuprin.finances.core.currency.choice.impl.domain.usecase
 
 import serg.chuprin.finances.core.api.domain.repository.CurrencyRepository
 import java.util.*

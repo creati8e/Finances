@@ -2,7 +2,7 @@ package serg.chuprin.finances.core.currency.choice.impl.presentation.model.store
 
 import io.mockk.mockk
 import serg.chuprin.finances.core.api.domain.repository.CurrencyRepository
-import serg.chuprin.finances.core.api.domain.usecase.SearchCurrenciesUseCase
+import serg.chuprin.finances.core.currency.choice.impl.domain.usecase.SearchCurrenciesUseCase
 import serg.chuprin.finances.core.currency.choice.impl.presentation.model.store.CurrencyChoiceActionExecutor
 import serg.chuprin.finances.core.currency.choice.impl.presentation.model.store.CurrencyChoiceStoreFactory
 import serg.chuprin.finances.core.currency.choice.impl.presentation.model.store.CurrencyChoiceStoreTestBootstrapper

@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flowOf
 import serg.chuprin.finances.core.api.R
-import serg.chuprin.finances.core.api.domain.usecase.SearchCurrenciesUseCase
+import serg.chuprin.finances.core.currency.choice.impl.domain.usecase.SearchCurrenciesUseCase
 import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
 import serg.chuprin.finances.core.api.extensions.flow.takeUntil
 import serg.chuprin.finances.core.api.presentation.model.cells.ZeroDataCell

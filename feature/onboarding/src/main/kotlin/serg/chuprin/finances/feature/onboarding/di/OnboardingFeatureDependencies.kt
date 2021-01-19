@@ -2,11 +2,10 @@ package serg.chuprin.finances.feature.onboarding.di
 
 import serg.chuprin.finances.core.api.di.dependencies.FeatureDependencies
 import serg.chuprin.finances.core.api.domain.repository.*
-import serg.chuprin.finances.core.api.domain.usecase.SearchCurrenciesUseCase
-import serg.chuprin.finances.core.currency.choice.api.presentation.model.store.CurrencyChoiceStoreFactoryApi
 import serg.chuprin.finances.core.api.presentation.formatter.AmountFormatter
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
+import serg.chuprin.finances.core.currency.choice.api.presentation.model.store.CurrencyChoiceStoreFactoryApi
 import serg.chuprin.finances.feature.onboarding.presentation.OnboardingNavigation
 
 /**
@@ -40,9 +39,4 @@ interface OnboardingFeatureDependencies : FeatureDependencies {
 
     // endregion
 
-    // region Use cases.
-
-    val searchCurrenciesUseCase: SearchCurrenciesUseCase
-
-    // endregion
 }
