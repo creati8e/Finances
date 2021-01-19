@@ -31,7 +31,7 @@ interface MoneyAccountDetailsComponent :
                 .factory()
                 .newComponent(
                     dependencies = dependencies,
-                    moneyAccountId = screenArguments.moneyAccountId.value
+                    screenArguments = screenArguments
                 )
         }
 
@@ -42,8 +42,7 @@ interface MoneyAccountDetailsComponent :
 
         fun newComponent(
             dependencies: MoneyAccountDetailsDependencies,
-            // Dagger failing to bind inline class. So bind string instead.
-            @BindsInstance moneyAccountId: String
+            @BindsInstance screenArguments: MoneyAccountDetailsScreenArguments
         ): MoneyAccountDetailsComponent
 
     }
