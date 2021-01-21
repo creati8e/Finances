@@ -40,5 +40,7 @@ dependencies {
 
     // Architecture components.
     implementation(Libraries.Android.Lifecycle)
+    testImplementation(project(":core:test"))
+    testImplementation(project(":core:currency-choice-impl"))
 
 }

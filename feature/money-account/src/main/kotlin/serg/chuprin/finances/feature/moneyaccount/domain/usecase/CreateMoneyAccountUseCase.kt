@@ -9,9 +9,9 @@ import serg.chuprin.finances.core.api.domain.repository.CategoryRepository
 import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
 import serg.chuprin.finances.core.api.domain.repository.UserRepository
+import serg.chuprin.finances.feature.moneyaccount.domain.model.MoneyAccountCreationParams
 import java.math.BigDecimal
 import java.time.LocalDateTime
-import java.util.*
 import javax.inject.Inject
 
 /**
@@ -24,19 +24,15 @@ class CreateMoneyAccountUseCase @Inject constructor(
     private val moneyAccountRepository: MoneyAccountRepository
 ) {
 
-    suspend fun execute(
-        currency: Currency,
-        accountName: String,
-        initialBalance: BigDecimal
-    ) {
+    suspend fun execute(params: MoneyAccountCreationParams) {
         val moneyAccountId = Id.createNew()
-        val currencyCode = currency.currencyCode
+        val currencyCode = params.currency.currencyCode
         val userId = userRepository.getCurrentUser().id
 
-        createMoneyAccount(userId, accountName, moneyAccountId, currencyCode)
+        createMoneyAccount(userId, params.accountName, moneyAccountId, currencyCode)
 
-        if (initialBalance != BigDecimal.ZERO) {
-            createBalanceTransaction(userId, moneyAccountId, initialBalance, currencyCode)
+        if (params.initialBalance != BigDecimal.ZERO) {
+            createBalanceTransaction(userId, moneyAccountId, params.initialBalance, currencyCode)
         }
         createPredefinedCategoriesIfNotExists(userId)
     }

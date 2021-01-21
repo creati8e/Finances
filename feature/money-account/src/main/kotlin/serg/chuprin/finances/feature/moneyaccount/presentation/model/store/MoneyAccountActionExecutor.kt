@@ -5,16 +5,18 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flow
 import serg.chuprin.finances.core.api.di.scopes.ScreenScope
 import serg.chuprin.finances.core.api.extensions.flow.flowOfSingleValue
-import serg.chuprin.finances.core.currency.choice.api.presentation.model.store.CurrencyChoiceIntent
-import serg.chuprin.finances.core.currency.choice.api.presentation.model.store.CurrencyChoiceStore
 import serg.chuprin.finances.core.api.presentation.model.manager.ResourceManger
 import serg.chuprin.finances.core.api.presentation.model.parser.AmountParser
 import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountScreenArguments
+import serg.chuprin.finances.core.currency.choice.api.presentation.model.store.CurrencyChoiceIntent
+import serg.chuprin.finances.core.currency.choice.api.presentation.model.store.CurrencyChoiceState
 import serg.chuprin.finances.core.mvi.Consumer
 import serg.chuprin.finances.core.mvi.executor.StoreActionExecutor
 import serg.chuprin.finances.core.mvi.executor.emptyFlowAction
 import serg.chuprin.finances.core.mvi.invoke
+import serg.chuprin.finances.core.mvi.store.BaseStore
 import serg.chuprin.finances.feature.moneyaccount.creation.R
+import serg.chuprin.finances.feature.moneyaccount.domain.model.MoneyAccountCreationParams
 import serg.chuprin.finances.feature.moneyaccount.domain.usecase.CreateMoneyAccountUseCase
 import serg.chuprin.finances.feature.moneyaccount.domain.usecase.DeleteMoneyAccountUseCase
 import serg.chuprin.finances.feature.moneyaccount.domain.usecase.EditMoneyAccountUseCase
@@ -27,7 +29,7 @@ import javax.inject.Inject
 class MoneyAccountActionExecutor @Inject constructor(
     private val amountParser: AmountParser,
     private val resourceManger: ResourceManger,
-    private val currencyChoiceStore: CurrencyChoiceStore,
+    private val currencyChoiceStore: BaseStore<CurrencyChoiceIntent, CurrencyChoiceState, Nothing>,
     private val screenArguments: MoneyAccountScreenArguments,
     private val editMoneyAccountUseCase: EditMoneyAccountUseCase,
     private val createMoneyAccountUseCase: CreateMoneyAccountUseCase,
@@ -136,9 +138,11 @@ class MoneyAccountActionExecutor @Inject constructor(
             is MoneyAccountScreenArguments.Creation -> {
                 flow {
                     createMoneyAccountUseCase.execute(
-                        currency = chosenCurrency,
-                        initialBalance = balance,
-                        accountName = state.moneyAccountName
+                        MoneyAccountCreationParams(
+                            currency = chosenCurrency,
+                            initialBalance = balance,
+                            accountName = state.moneyAccountName
+                        )
                     )
                     eventConsumer(
                         MoneyAccountEvent.ShowMessage(
