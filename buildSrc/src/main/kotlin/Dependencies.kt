@@ -56,13 +56,13 @@ object Libraries {
 
         }
 
-        const val CORE = "androidx.core:core-ktx:1.5.0-alpha05"
+        const val CORE = "androidx.core:core-ktx:1.5.0-beta01"
 
-        const val APPCOMPAT = "androidx.appcompat:appcompat:1.3.0-alpha02"
+        const val APPCOMPAT = "androidx.appcompat:appcompat:1.3.0-beta01"
         const val FRAGMENT = "androidx.fragment:fragment-ktx:1.3.0-rc01"
         const val TRANSITION = "androidx.transition:transition-ktx:1.4.0-rc01"
         const val VIEWPAGER = "androidx.viewpager2:viewpager2:1.1.0-alpha01"
-        const val DESIGN = "com.google.android.material:material:1.3.0-beta01"
+        const val DESIGN = "com.google.android.material:material:1.3.0-rc01"
         const val RECYCLER_VIEW = "androidx.recyclerview:recyclerview:1.2.0-beta01"
         const val CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:2.0.2"
 
@@ -130,14 +130,14 @@ object Libraries {
     }
 
     object Infrastructure {
-        const val AUTH = "com.google.firebase:firebase-auth:20.0.1"
+        const val AUTH = "com.google.firebase:firebase-auth:20.0.2"
         const val FIRESTORE = "com.google.firebase:firebase-firestore-ktx:22.0.1"
         const val GMS_AUTH = "com.google.android.gms:play-services-auth:19.0.0"
         const val PLAY_SERVICES_KTX = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.4.2"
     }
 
     object DebugMenu {
-        private const val VER = "2.4.3"
+        private const val VER = "2.4.4"
 
         const val DEBUG = "com.github.pandulapeter.beagle:ui-drawer:$VER"
         const val RELEASE = "com.github.pandulapeter.beagle:noop:$VER"
