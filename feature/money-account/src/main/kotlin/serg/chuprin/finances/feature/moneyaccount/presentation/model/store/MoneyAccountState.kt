@@ -14,6 +14,7 @@ data class MoneyAccountState(
     val toolbarTitle: String = EMPTY_STRING,
     val moneyAccountName: String = EMPTY_STRING,
     val savingButtonIsEnabled: Boolean = false,
+    // TODO: Maybe move to CurrencyChoiceStore.
     val currencyPickerIsClickable: Boolean = false,
     val accountDeletionButtonIsVisible: Boolean = false,
     // Default data of existing account, if present.

@@ -1,14 +1,18 @@
 package serg.chuprin.finances.feature.moneyaccount.presentation.model.store
 
 import io.mockk.*
+import kotlinx.coroutines.flow.flowOf
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
+import serg.chuprin.finances.core.api.domain.model.Id
+import serg.chuprin.finances.core.api.domain.model.moneyaccount.MoneyAccount
 import serg.chuprin.finances.core.api.extensions.EMPTY_STRING
 import serg.chuprin.finances.core.api.extensions.containsType
 import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccountScreenArguments
 import serg.chuprin.finances.core.currency.choice.api.presentation.model.cells.CurrencyCell
 import serg.chuprin.finances.core.currency.choice.api.presentation.model.store.CurrencyChoiceIntent
 import serg.chuprin.finances.feature.moneyaccount.domain.model.MoneyAccountCreationParams
+import serg.chuprin.finances.feature.moneyaccount.presentation.model.MoneyAccountDefaultData
 import strikt.api.expectThat
 import strikt.assertions.*
 import java.math.BigDecimal
@@ -117,6 +121,120 @@ object MoneyAccountStoreTest : Spek({
                 expectThat(moneyAccountStore.capturedEvents.takeLast(2)) {
                     get { containsType<MoneyAccountEvent.ShowMessage>() }.isTrue()
                     get { containsType<MoneyAccountEvent.CloseScreen>() }.isTrue()
+                }
+            }
+
+        }
+
+        Scenario("Money account editing") {
+
+            // region Given data.
+
+            val accountCurrency = "RUB"
+            val accountName = "account_name"
+            val accountBalance = BigDecimal(550)
+            val accountId = Id.existing("account_id")
+
+            val account = MoneyAccount(
+                id = accountId,
+                name = accountName,
+                isFavorite = false,
+                currencyCode = accountCurrency,
+                ownerId = Id.existing("user_id")
+            )
+
+            // endregion
+
+
+            val storeParams = MoneyAccountStoreCreator.create(
+                MoneyAccountScreenArguments.Editing(
+                    transitionName = EMPTY_STRING,
+                    moneyAccountId = accountId
+                )
+            )
+            val moneyAccountStore = storeParams.moneyAccountStore
+            val currencyChoiceStore = storeParams.currencyChoiceStore
+
+
+            Given("Account with name '$accountName', balance '$accountBalance' and '$accountCurrency' currency") {
+                coEvery { storeParams.balanceCalculator.calculate(accountId) } answers {
+                    accountBalance
+                }
+                every { storeParams.moneyAccountRepository.accountFlow(accountId) } answers {
+                    flowOf(account)
+                }
+            }
+
+            When("Store is started") {
+                moneyAccountStore.start()
+            }
+
+            Then("Correct initial state is produced") {
+                expectThat(moneyAccountStore.state) {
+                    get("Balance") { balance }.isEqualTo(accountBalance)
+                    get("Saving button is enabled") { savingButtonIsEnabled }.isFalse()
+                    get("Money account name") { moneyAccountName }.isEqualTo(account.name)
+                    get("Currency picker is clickable") { currencyPickerIsClickable }.isFalse()
+
+                    get("Account deletion button is visible") {
+                        accountDeletionButtonIsVisible
+                    }.isTrue()
+
+                    get("Money account default data") { moneyAccountDefaultData }.isEqualTo(
+                        MoneyAccountDefaultData(accountBalance, accountName)
+                    )
+
+                    get("Currency choice state") {
+                        currencyChoiceState
+                    }.isEqualTo(currencyChoiceStore.state)
+
+                    get("Chosen currency") {
+                        chosenCurrency?.currencyCode
+                    }.isEqualTo(accountCurrency)
+                }
+            }
+
+            When("Modify account name") {
+                moneyAccountStore.dispatch(MoneyAccountIntent.EnterAccountName("changed"))
+            }
+
+            Then("State is updated and saving button became enabled") {
+                expectThat(moneyAccountStore.state) {
+                    get("Money account name") { moneyAccountName }.isEqualTo("changed")
+                    get("Saving button is enabled") { savingButtonIsEnabled }.isTrue()
+                }
+            }
+
+            When("Revert account name") {
+                moneyAccountStore.dispatch(MoneyAccountIntent.EnterAccountName(accountName))
+            }
+
+            Then("State is updated and saving button became disabled") {
+                expectThat(moneyAccountStore.state) {
+                    get("Money account name") { moneyAccountName }.isEqualTo(accountName)
+                    get("Saving button is enabled") { savingButtonIsEnabled }.isFalse()
+                }
+            }
+
+            When("Modify account balance") {
+                moneyAccountStore.dispatch(MoneyAccountIntent.EnterBalance("100"))
+            }
+
+            Then("State is updated and saving button became enabled") {
+                expectThat(moneyAccountStore.state) {
+                    get("Balance") { balance }.isEqualTo(BigDecimal(100))
+                    get("Saving button is enabled") { savingButtonIsEnabled }.isTrue()
+                }
+            }
+
+            When("Revert account balance") {
+                moneyAccountStore.dispatch(MoneyAccountIntent.EnterBalance(accountBalance.toString()))
+            }
+
+            Then("State is updated and saving button became disabled") {
+                expectThat(moneyAccountStore.state) {
+                    get("Balance") { balance }.isEqualTo(accountBalance)
+                    get("Saving button is enabled") { savingButtonIsEnabled }.isFalse()
                 }
             }
 
