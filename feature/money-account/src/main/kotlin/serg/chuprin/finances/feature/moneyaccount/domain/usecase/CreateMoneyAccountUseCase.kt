@@ -25,14 +25,16 @@ class CreateMoneyAccountUseCase @Inject constructor(
 ) {
 
     suspend fun execute(params: MoneyAccountCreationParams) {
+        val (currency, accountName, initialBalance) = params
+
         val moneyAccountId = Id.createNew()
-        val currencyCode = params.currency.currencyCode
+        val currencyCode = currency.currencyCode
         val userId = userRepository.getCurrentUser().id
 
-        createMoneyAccount(userId, params.accountName, moneyAccountId, currencyCode)
+        createMoneyAccount(userId, accountName, moneyAccountId, currencyCode)
 
-        if (params.initialBalance != BigDecimal.ZERO) {
-            createBalanceTransaction(userId, moneyAccountId, params.initialBalance, currencyCode)
+        if (initialBalance != BigDecimal.ZERO) {
+            createBalanceTransaction(userId, moneyAccountId, initialBalance, currencyCode)
         }
         createPredefinedCategoriesIfNotExists(userId)
     }

@@ -17,6 +17,7 @@ import serg.chuprin.finances.core.mvi.invoke
 import serg.chuprin.finances.core.mvi.store.BaseStore
 import serg.chuprin.finances.feature.moneyaccount.creation.R
 import serg.chuprin.finances.feature.moneyaccount.domain.model.MoneyAccountCreationParams
+import serg.chuprin.finances.feature.moneyaccount.domain.model.MoneyAccountEditingParams
 import serg.chuprin.finances.feature.moneyaccount.domain.usecase.CreateMoneyAccountUseCase
 import serg.chuprin.finances.feature.moneyaccount.domain.usecase.DeleteMoneyAccountUseCase
 import serg.chuprin.finances.feature.moneyaccount.domain.usecase.EditMoneyAccountUseCase
@@ -123,9 +124,11 @@ class MoneyAccountActionExecutor @Inject constructor(
             is MoneyAccountScreenArguments.Editing -> {
                 flow {
                     editMoneyAccountUseCase.execute(
-                        newBalance = balance,
-                        newName = state.moneyAccountName,
-                        moneyAccountId = screenArguments.moneyAccountId
+                        MoneyAccountEditingParams(
+                            newBalance = balance,
+                            newName = state.moneyAccountName,
+                            moneyAccountId = screenArguments.moneyAccountId
+                        )
                     )
                     eventConsumer(
                         MoneyAccountEvent.ShowMessage(

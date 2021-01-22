@@ -10,4 +10,10 @@ class MoneyAccountCreationParams(
     val currency: Currency,
     val accountName: String,
     val initialBalance: BigDecimal
-)
+) {
+
+    operator fun component1() = currency
+    operator fun component2() = accountName
+    operator fun component3() = initialBalance
+
+}

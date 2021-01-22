@@ -9,6 +9,7 @@ import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.model.transaction.TransactionType
 import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
+import serg.chuprin.finances.feature.moneyaccount.domain.model.MoneyAccountEditingParams
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import javax.inject.Inject
@@ -22,7 +23,9 @@ class EditMoneyAccountUseCase @Inject constructor(
     private val moneyAccountBalanceCalculator: MoneyAccountBalanceCalculator
 ) {
 
-    suspend fun execute(moneyAccountId: Id, newName: String, newBalance: BigDecimal) {
+    suspend fun execute(params: MoneyAccountEditingParams) {
+        val (moneyAccountId, newName, newBalance) = params
+
         require(newBalance >= BigDecimal.ZERO) {
             "Negative balances is not supported yet"
         }

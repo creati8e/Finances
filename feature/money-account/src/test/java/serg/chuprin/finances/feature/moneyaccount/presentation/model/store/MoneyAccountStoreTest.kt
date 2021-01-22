@@ -12,6 +12,7 @@ import serg.chuprin.finances.core.api.presentation.screen.arguments.MoneyAccount
 import serg.chuprin.finances.core.currency.choice.api.presentation.model.cells.CurrencyCell
 import serg.chuprin.finances.core.currency.choice.api.presentation.model.store.CurrencyChoiceIntent
 import serg.chuprin.finances.feature.moneyaccount.domain.model.MoneyAccountCreationParams
+import serg.chuprin.finances.feature.moneyaccount.domain.model.MoneyAccountEditingParams
 import serg.chuprin.finances.feature.moneyaccount.presentation.model.MoneyAccountDefaultData
 import strikt.api.expectThat
 import strikt.assertions.*
@@ -238,10 +239,106 @@ object MoneyAccountStoreTest : Spek({
                 }
             }
 
+            When("Modify account balance") {
+                moneyAccountStore.dispatch(MoneyAccountIntent.EnterBalance("50"))
+            }
+
+            Then("State is updated and saving button became enabled") {
+                expectThat(moneyAccountStore.state) {
+                    get("Balance") { balance }.isEqualTo(BigDecimal(50))
+                    get("Saving button is enabled") { savingButtonIsEnabled }.isTrue()
+                }
+            }
+
+            val accountEditingParamsSlot = slot<MoneyAccountEditingParams>()
+
+            When("Click on saving button") {
+                coEvery {
+                    storeParams.editMoneyAccountUseCase.execute(capture(accountEditingParamsSlot))
+                } just runs
+                moneyAccountStore.dispatch(MoneyAccountIntent.ClickOnSaveButton)
+            }
+
+            Then("Transaction is edited and screen is closed") {
+                coVerify { storeParams.editMoneyAccountUseCase.execute(any()) }
+
+                expectThat(accountEditingParamsSlot.captured) {
+                    get { moneyAccountId }.isEqualTo(accountId)
+                    get { newBalance }.isEqualTo(moneyAccountStore.state.balance)
+                    get { newName }.isEqualTo(moneyAccountStore.state.moneyAccountName)
+                }
+
+                expectThat(moneyAccountStore.capturedEvents.takeLast(2)) {
+                    get { containsType<MoneyAccountEvent.ShowMessage>() }.isTrue()
+                    get { containsType<MoneyAccountEvent.CloseScreen>() }.isTrue()
+                }
+            }
+
+        }
+
+        Scenario("Existing money account deletion") {
+
+            // region Given data.
+
+            val accountCurrency = "RUB"
+            val accountName = "account_name"
+            val accountBalance = BigDecimal(550)
+            val accountId = Id.existing("account_id")
+
+            val account = MoneyAccount(
+                id = accountId,
+                name = accountName,
+                isFavorite = false,
+                currencyCode = accountCurrency,
+                ownerId = Id.existing("user_id")
+            )
+
+            // endregion
+
+
+            val storeParams = MoneyAccountStoreCreator.create(
+                MoneyAccountScreenArguments.Editing(
+                    transitionName = EMPTY_STRING,
+                    moneyAccountId = accountId
+                )
+            )
+            val moneyAccountStore = storeParams.moneyAccountStore
+
+            Given(
+                "Store is started for account with " +
+                        "name '$accountName', " +
+                        "balance '$accountBalance' " +
+                        "and '$accountCurrency' currency"
+            ) {
+                coEvery { storeParams.balanceCalculator.calculate(accountId) } answers {
+                    accountBalance
+                }
+                every { storeParams.moneyAccountRepository.accountFlow(accountId) } answers {
+                    flowOf(account)
+                }
+                moneyAccountStore.start()
+            }
+
+            When("Click on deletion button") {
+                moneyAccountStore.dispatch(MoneyAccountIntent.ClickOnDeleteButton)
+            }
+
+            Then("Dialog showing event is produced") {
+                expectThat(moneyAccountStore.lastEvent).isA<MoneyAccountEvent.ShowAccountDeletionDialog>()
+            }
+
+            When("Click on confirm deletion button") {
+                coEvery { storeParams.deleteMoneyAccountUseCase.execute(accountId) } just runs
+                moneyAccountStore.dispatch(MoneyAccountIntent.ClickOnConfirmAccountDeletion)
+            }
+
+            Then("Dialog showing event is produced") {
+                coVerify { storeParams.deleteMoneyAccountUseCase.execute(accountId) }
+                expectThat(moneyAccountStore.lastEvent).isA<MoneyAccountEvent.CloseScreen>()
+            }
+
         }
 
     }
 
 })
-
-

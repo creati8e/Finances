@@ -12,7 +12,7 @@ import serg.chuprin.finances.core.api.domain.model.transaction.Transaction
 import serg.chuprin.finances.core.api.domain.model.transaction.TransactionType
 import serg.chuprin.finances.core.api.domain.repository.MoneyAccountRepository
 import serg.chuprin.finances.core.api.domain.repository.TransactionRepository
-import serg.chuprin.finances.feature.moneyaccount.domain.usecase.EditMoneyAccountUseCase
+import serg.chuprin.finances.feature.moneyaccount.domain.model.MoneyAccountEditingParams
 import strikt.api.expectThat
 import strikt.assertions.isEqualTo
 import strikt.assertions.isNotNull
@@ -47,9 +47,11 @@ object EditMoneyAccountUseCaseTest : Spek({
                 exception = runCatching {
                     runBlockingTest {
                         useCase.execute(
-                            moneyAccountId = Id.existing("1"),
-                            newName = "accountName",
-                            newBalance = BigDecimal.ONE.negate()
+                            MoneyAccountEditingParams(
+                                newName = "accountName",
+                                moneyAccountId = Id.existing("1"),
+                                newBalance = BigDecimal.ONE.negate()
+                            )
                         )
                     }
                 }.exceptionOrNull()
@@ -83,7 +85,15 @@ object EditMoneyAccountUseCaseTest : Spek({
             }
 
             When("Execute use case") {
-                runBlockingTest { useCase.execute(moneyAccount.id, accountName, accountBalance) }
+                runBlockingTest {
+                    useCase.execute(
+                        MoneyAccountEditingParams(
+                            moneyAccountId = moneyAccount.id,
+                            newName = accountName,
+                            newBalance = accountBalance
+                        )
+                    )
+                }
             }
 
             Then("Account is not modified") {
@@ -132,7 +142,13 @@ object EditMoneyAccountUseCaseTest : Spek({
 
             When("Execute use case") {
                 runBlockingTest {
-                    useCase.execute(moneyAccount.id, accountNewName, accountNewBalance)
+                    useCase.execute(
+                        MoneyAccountEditingParams(
+                            moneyAccountId = moneyAccount.id,
+                            newName = accountNewName,
+                            newBalance = accountNewBalance
+                        )
+                    )
                 }
             }
 
