@@ -173,10 +173,7 @@ fun Project.addKotlinCompilerFlags() {
                 "-XXLanguage:+InlineClasses",
                 "-Xallow-result-return-type",
                 "-Xopt-in=kotlin.RequiresOptIn",
-                "-Xopt-in=kotlinx.coroutines.FlowPreview",
-                "-Xuse-experimental=kotlin.ExperimentalStdlibApi",
-                "-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi",
-                "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi"
+                "-Xuse-experimental=kotlin.ExperimentalStdlibApi"
             )
         }
     }
