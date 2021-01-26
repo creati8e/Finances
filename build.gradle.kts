@@ -2,7 +2,6 @@ import com.android.build.gradle.LibraryExtension
 import com.android.build.gradle.TestedExtension
 import com.android.build.gradle.internal.dsl.BuildType
 import com.vanniktech.dependency.graph.generator.DependencyGraphGeneratorExtension
-import com.vanniktech.dependency.graph.generator.DependencyGraphGeneratorPlugin
 import de.mannodermaus.gradle.plugins.junit5.junitPlatform
 import guru.nidi.graphviz.attribute.Color
 import guru.nidi.graphviz.attribute.Style
@@ -14,6 +13,7 @@ import serg.chuprin.finances.config.setIsDebugMenuEnabled
 
 plugins {
     id("com.github.ben-manes.versions") version ("0.36.0")
+    id("com.vanniktech.dependency.graph.generator") version ("0.5.0")
 }
 
 buildscript {
@@ -83,6 +83,24 @@ subprojects {
                 }
             }
     }
+}
+
+// Task name is generateDependencyGraphModules.
+dependencyGraphGenerator {
+    generators = listOf(DependencyGraphGeneratorExtension.Generator(
+        name = "Modules",
+        children = { false },
+        include = { dependency ->
+            dependency.moduleGroup.startsWith(
+                "finances",
+                ignoreCase = true
+            )
+        },
+        dependencyNode = { node: MutableNode, _: ResolvedDependency ->
+            node.add(Style.FILLED, Color.rgb("#FFCB2B"))
+        }
+
+    ))
 }
 
 fun Project.enableDesugaring(testedExtension: TestedExtension) {
@@ -190,19 +208,6 @@ fun Project.forceDependencyVersions() {
         }
     }
 }
-
-plugins.apply(DependencyGraphGeneratorPlugin::class)
-
-// Task name is generateDependencyGraphModules.
-val modulesGenerator = DependencyGraphGeneratorExtension.Generator(
-    name = "Modules",
-    children = { false },
-    include = { dependency -> dependency.moduleGroup.startsWith("finances", ignoreCase = true) },
-    dependencyNode = { node: MutableNode, _: ResolvedDependency ->
-        node.add(Style.FILLED, Color.rgb("#FFCB2B"))
-    }
-)
-extensions.getByType(DependencyGraphGeneratorExtension::class).generators = listOf(modulesGenerator)
 
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
